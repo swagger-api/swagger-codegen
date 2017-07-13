@@ -8,27 +8,25 @@ import Foundation
 
 class APIHelper {
     static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
-        var destination = [String:Any]()
-        for (key, nillableValue) in source {
-            if let value: Any = nillableValue {
-                destination[key] = value
-            }
+        let result = source.reduce([String:Any]()) { (dict, tuple:(key: String, value: Any?)) -> [String:Any] in
+            guard let value = tuple.value else { return dict }
+            var dict = dict
+            dict.updateValue(value, forKey: tuple.key)
+            return dict
         }
-
-        if destination.isEmpty {
-            return nil
-        }
-        return destination
+        
+        if result.isEmpty { return nil }
+        return result
     }
-
+    
     static func rejectNilHeaders(_ source: [String:Any?]) -> [String:String] {
-        var destination = [String:String]()
-        for (key, nillableValue) in source {
-            if let value: Any = nillableValue {
-                destination[key] = "\(value)"
-            }
+        let result = source.reduce([String:String]()) { (dict, tuple:(key: String, value: Any?)) -> [String:String] in
+            guard let value = tuple.value else { return dict }
+            var dict = dict
+            dict.updateValue("\(value)", forKey: tuple.key)
+            return dict
         }
-        return destination
+        return result
     }
 
     static func convertBoolToString(_ source: [String: Any]?) -> [String:Any]? {
@@ -48,32 +46,13 @@ class APIHelper {
         }
         return destination
     }
-
+    
     static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
-        let returnValues = values
-            .filter { $0.1 != nil }
-            .map { (item: (_key: String, _value: Any?)) -> [URLQueryItem] in
-                if let value = item._value as? Array<String> {
-                    return value.map { (v) -> URLQueryItem in
-                        URLQueryItem(
-                            name: item._key,
-                            value: v
-                        )
-                    }
-                } else {
-                    return [URLQueryItem(
-                        name: item._key,
-                        value: "\(item._value!)"
-                    )]
-                }
-            }
-            .flatMap { $0 }
-
-        if returnValues.count == 0 {
-            return nil
+        let returnValues = values.flatMap { (item: (key: String, value: Any?)) -> URLQueryItem? in
+            guard let value = item.value else { return nil }
+            return URLQueryItem(name: item.key, value:"\(value)")
         }
-
+        if returnValues.isEmpty { return nil }
         return returnValues
     }
-
 }
