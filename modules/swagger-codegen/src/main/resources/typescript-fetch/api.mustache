@@ -39,7 +39,9 @@ export class {{classname}} {
 {{#operation}}
     /**
      * {{notes}}
-     {{#summary}}* @summary {{&summary}}{{/summary}}
+     {{#summary}}
+     * @summary {{&summary}}
+     {{/summary}}
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraRequestOptions?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
