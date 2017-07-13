@@ -96,7 +96,7 @@ export class {{classname}} {
                     return undefined;
                 } else {
 {{^isResponseFile}}
-                    return ObjectSerializer.deserialize(response.json(), "{{returnType}}") || {};
+                    return ObjectSerializer.deserialize(response.json(), "{{{returnType}}}") || {};
 {{/isResponseFile}}
 {{#isResponseFile}}
                     return response.blob();
@@ -255,7 +255,7 @@ export class {{classname}} {
             method: {{httpMethod}},
             headers: headers,
 {{#bodyParam}}
-            body: {{paramName}} == null ? '' : JSON.stringify(ObjectSerializer.serialize({{paramName}}, "{{dataType}}")), // https://github.com/angular/angular/issues/10612
+            body: {{paramName}} == null ? '' : JSON.stringify(ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
             body: formParams.toString(),
