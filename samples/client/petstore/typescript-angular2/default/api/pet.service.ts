@@ -118,7 +118,7 @@ export class PetService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return ObjectSerializer.deserialize(response.json(), "Array&lt;Pet&gt;") || {};
+                    return ObjectSerializer.deserialize(response.json(), "Array<Pet>") || {};
                 }
             });
     }
@@ -134,7 +134,7 @@ export class PetService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return ObjectSerializer.deserialize(response.json(), "Array&lt;Pet&gt;") || {};
+                    return ObjectSerializer.deserialize(response.json(), "Array<Pet>") || {};
                 }
             });
     }

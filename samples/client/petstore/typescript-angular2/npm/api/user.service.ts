@@ -271,7 +271,7 @@ export class UserService {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array&lt;User&gt;")), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array<User>")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -311,7 +311,7 @@ export class UserService {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array&lt;User&gt;")), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array<User>")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
