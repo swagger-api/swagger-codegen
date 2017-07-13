@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="Uuid">Uuid.</param>
         /// <param name="DateTime">DateTime.</param>
         /// <param name="Map">Map.</param>
-        public MixedPropertiesAndAdditionalPropertiesClass(Guid? Uuid = null, DateTime? DateTime = null, Dictionary<string, Animal> Map = null)
+        public MixedPropertiesAndAdditionalPropertiesClass(Guid? Uuid = default(Guid?), DateTime? DateTime = default(DateTime?), Dictionary<string, Animal> Map = default(Dictionary<string, Animal>))
         {
             this.Uuid = Uuid;
             this.DateTime = DateTime;
@@ -47,16 +48,19 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="uuid", EmitDefaultValue=false)]
         public Guid? Uuid { get; set; }
+
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
         [DataMember(Name="dateTime", EmitDefaultValue=false)]
         public DateTime? DateTime { get; set; }
+
         /// <summary>
         /// Gets or Sets Map
         /// </summary>
         [DataMember(Name="map", EmitDefaultValue=false)]
         public Dictionary<string, Animal> Map { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -142,8 +146,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
@@ -23,6 +24,7 @@ import io.swagger.client.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Pet
@@ -42,7 +44,7 @@ public class Pet {
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
@@ -58,6 +60,11 @@ public class Pet {
 
     StatusEnum(String value) {
       this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
@@ -88,7 +95,7 @@ public class Pet {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -106,7 +113,8 @@ public class Pet {
    * Get category
    * @return category
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @Valid
+  @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
   }
@@ -149,7 +157,7 @@ public class Pet {
    * @return photoUrls
   **/
   @NotNull
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -164,6 +172,9 @@ public class Pet {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<Tag>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -172,7 +183,8 @@ public class Pet {
    * Get tags
    * @return tags
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @Valid
+  @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -190,7 +202,7 @@ public class Pet {
    * pet status in the store
    * @return status
   **/
-  @ApiModelProperty(example = "null", value = "pet status in the store")
+  @ApiModelProperty(value = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }

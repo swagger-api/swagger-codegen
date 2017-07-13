@@ -1,31 +1,26 @@
-# work in progress: the goal is to move all the existing tests
-# handled by travis-ci to circle CI so that travis-ci can test
-# objc/swift API client instead
+# Java-related client, server tests
 machine:
-  environment:
-    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
   java:
-    # TODO we also need to test oraclejdk8
-    version: oraclejdk7
-  node:
-    version: 5.0.0
+    version: openjdk8
   services:
     - docker
   # Override /etc/hosts
   hosts:
     petstore.swagger.io: 127.0.0.1
+  environment:
+    DOCKER_GENERATOR_IMAGE_NAME: swaggerapi/swagger-generator
+    DOCKER_CODEGEN_CLI_IMAGE_NAME: swaggerapi/swagger-codegen-cli
 
 dependencies:
   cache_directories:
-    - ~/.jspm
-    - ~/.npm
-    - ~/builder
-    - ~/.m2
+    - "~/.m2"
+    - "~/.sbt"
+
   pre:
-    - export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=256m"
-    - gem install bundler
-    - npm install -g typescript
-    - sudo pip install virtualenv
+    - sudo add-apt-repository ppa:duggan/bats --yes
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq bats
+    - sudo apt-get install -qq curl
     # to run petstore server locally via docker
     - docker pull swaggerapi/petstore
     - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
@@ -33,12 +28,22 @@ dependencies:
     # show host table to confirm petstore.swagger.io is mapped to localhost
     - cat /etc/hosts
   override:
-    #- rvm --default use 2.1.0
-    #- ruby -v
+    - cp pom.xml.circleci pom.xml
 
 test:
   override:
-    - mvn verify -Psamples
-    #- mvn -q clean install
-    #- jdk_switcher use oraclejdk8
-    #- mvn -q clean install
+    ## test with jdk8
+    - java -version
+    - mvn -q clean verify -Psamples
+    # skip the rest if previous mvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## test with jdk7
+    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+    - java -version
+    - mvn -q clean verify -Psamples
+    # skip the rest if previous mvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## docker: build generator image and push to Docker Hub
+    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME ./modules/swagger-generator && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_GENERATOR_IMAGE_NAME:latest $DOCKER_GENERATOR_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_GENERATOR_IMAGE_NAME; fi; fi
+    ## docker: build cli image and push to Docker Hub
+    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME ./modules/swagger-codegen-cli && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest $DOCKER_CODEGEN_CLI_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME; fi; fi

@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -33,7 +34,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="ReadOnlyFirst" /> class.
         /// </summary>
         /// <param name="Baz">Baz.</param>
-        public ReadOnlyFirst(string Baz = null)
+        public ReadOnlyFirst(string Baz = default(string))
         {
             this.Baz = Baz;
         }
@@ -43,11 +44,13 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="bar", EmitDefaultValue=false)]
         public string Bar { get; private set; }
+
         /// <summary>
         /// Gets or Sets Baz
         /// </summary>
         [DataMember(Name="baz", EmitDefaultValue=false)]
         public string Baz { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -125,8 +128,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

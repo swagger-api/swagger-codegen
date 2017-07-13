@@ -6,11 +6,13 @@ import static io.swagger.codegen.CodegenType.SERVER;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.StringUtils.capitalize;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
@@ -47,7 +49,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private static final Map<String, Predicate<Property>> propertyToSwaggerTypeMapping =
             createPropertyToSwaggerTypeMapping();
 
-    private final String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
+    private String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
 
     private final Map<String, DependencyInfo> dependencies = new HashMap<>();
     private final Set<String> parentModels = new HashSet<>();
@@ -73,6 +75,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addOption(PACKAGE_VERSION, "C# package version.", packageVersion);
         addOption(SOURCE_FOLDER, SOURCE_FOLDER_DESC, sourceFolder);
         addOption(INTERFACE_PREFIX, INTERFACE_PREFIX_DESC, interfacePrefix);
+        addOption(OPTIONAL_PROJECT_GUID,OPTIONAL_PROJECT_GUID_DESC, null);
 
         // CLI Switches
         addSwitch(SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_BY_REQUIRED_FLAG_DESC, sortParamsByRequiredFlag);
@@ -118,6 +121,11 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("Solution.mustache", "", packageName + ".sln"));
             supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder(), packageName + ".csproj"));
         }
+        
+        if (additionalProperties.containsKey(OPTIONAL_PROJECT_GUID)) {
+            setPackageGuid((String) additionalProperties.get(OPTIONAL_PROJECT_GUID));
+        }
+
         additionalProperties.put("packageGuid", packageGuid);
 
         setupModelTemplate();
@@ -186,6 +194,10 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         return sourceFolder() + File.separator + fileName;
     }
 
+    public void setPackageGuid(String packageGuid) {
+        this.packageGuid = packageGuid;
+    }
+    
     @Override
     public String apiFileFolder() {
         return outputFolder + File.separator + sourceFolder() + File.separator + API_NAMESPACE;
@@ -217,34 +229,13 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private void postProcessParentModels(final Map<String, Object> models) {
         log.debug("Processing parents:  " + parentModels);
         for (final String parent : parentModels) {
-            final CodegenModel parentModel = modelByName(parent, models);
+            final CodegenModel parentModel = ModelUtils.getModelByName(parent, models);
             parentModel.hasChildren = true;
             final Collection<CodegenModel> childrenModels = childrenByParent.get(parent);
             for (final CodegenModel child : childrenModels) {
                 processParentPropertiesInChildModel(parentModel, child);
             }
         }
-    }
-
-    private CodegenModel modelByName(final String name, final Map<String, Object> models) {
-        final Object data = models.get(name);
-        if (data instanceof Map) {
-            final Map<?, ?> dataMap = (Map<?, ?>) data;
-            final Object dataModels = dataMap.get("models");
-            if (dataModels instanceof List) {
-                final List<?> dataModelsList = (List<?>) dataModels;
-                for (final Object entry : dataModelsList) {
-                    if (entry instanceof Map) {
-                        final Map<?, ?> entryMap = (Map<?, ?>) entry;
-                        final Object model = entryMap.get("model");
-                        if (model instanceof CodegenModel) {
-                            return (CodegenModel) model;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private void processParentPropertiesInChildModel(final CodegenModel parent, final CodegenModel child) {

@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -43,7 +44,7 @@ namespace IO.Swagger.Model
         /// <param name="ClassName">ClassName (required).</param>
         /// <param name="Color">Color (default to &quot;red&quot;).</param>
         /// <param name="Breed">Breed.</param>
-        public Dog(string ClassName = null, string Color = null, string Breed = null)
+        public Dog(string ClassName = default(string), string Color = "red", string Breed = default(string))
         {
             // to ensure "ClassName" is required (not null)
             if (ClassName == null)
@@ -71,16 +72,19 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="className", EmitDefaultValue=false)]
         public string ClassName { get; set; }
+
         /// <summary>
         /// Gets or Sets Color
         /// </summary>
         [DataMember(Name="color", EmitDefaultValue=false)]
         public string Color { get; set; }
+
         /// <summary>
         /// Gets or Sets Breed
         /// </summary>
         [DataMember(Name="breed", EmitDefaultValue=false)]
         public string Breed { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -166,8 +170,15 @@ namespace IO.Swagger.Model
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Trigger when a property changed
+        /// </summary>
+        /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
             // NOTE: property changed is handled via "code weaving" using Fody.
@@ -179,8 +190,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -33,7 +34,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="ArrayOfNumberOnly" /> class.
         /// </summary>
         /// <param name="ArrayNumber">ArrayNumber.</param>
-        public ArrayOfNumberOnly(List<decimal?> ArrayNumber = null)
+        public ArrayOfNumberOnly(List<decimal?> ArrayNumber = default(List<decimal?>))
         {
             this.ArrayNumber = ArrayNumber;
         }
@@ -43,6 +44,7 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="ArrayNumber", EmitDefaultValue=false)]
         public List<decimal?> ArrayNumber { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -112,8 +114,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

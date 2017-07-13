@@ -15,7 +15,10 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QBuffer>
+#include <QtGlobal>
 
+
+namespace Swagger {
 
 HttpRequestInput::HttpRequestInput() {
     initialize();
@@ -290,8 +293,16 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         manager->deleteResource(request);
     }
     else {
-        QBuffer buff(&request_content);
-        manager->sendCustomRequest(request, input->http_method.toLatin1(), &buff);
+#if (QT_VERSION >= 0x050800)
+        manager->sendCustomRequest(request, input->http_method.toLatin1(), request_content);
+#else
+        QBuffer *buffer = new QBuffer;
+        buffer->setData(request_content);
+        buffer->open(QIODevice::ReadOnly);
+
+        QNetworkReply* reply = manager->sendCustomRequest(request, input->http_method.toLatin1(), buffer);
+        buffer->setParent(reply);
+#endif
     }
 
 }
@@ -308,4 +319,6 @@ void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
     reply->deleteLater();
 
     emit on_execution_finished(this);
+}
+
 }

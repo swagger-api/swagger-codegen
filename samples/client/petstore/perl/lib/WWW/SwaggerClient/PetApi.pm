@@ -28,25 +28,22 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use WWW::SwaggerClient::ApiClient;
-use WWW::SwaggerClient::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => WWW::SwaggerClient::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'WWW::SwaggerClient::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = WWW::SwaggerClient::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
@@ -83,7 +80,6 @@ sub add_pet {
 
     # parse inputs
     my $_resource_path = '/pet';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'POST';
     my $query_params = {};
@@ -151,7 +147,6 @@ sub delete_pet {
 
     # parse inputs
     my $_resource_path = '/pet/{petId}';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'DELETE';
     my $query_params = {};
@@ -220,7 +215,6 @@ sub find_pets_by_status {
 
     # parse inputs
     my $_resource_path = '/pet/findByStatus';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'GET';
     my $query_params = {};
@@ -286,7 +280,6 @@ sub find_pets_by_tags {
 
     # parse inputs
     my $_resource_path = '/pet/findByTags';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'GET';
     my $query_params = {};
@@ -352,7 +345,6 @@ sub get_pet_by_id {
 
     # parse inputs
     my $_resource_path = '/pet/{petId}';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'GET';
     my $query_params = {};
@@ -420,7 +412,6 @@ sub update_pet {
 
     # parse inputs
     my $_resource_path = '/pet';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'PUT';
     my $query_params = {};
@@ -494,7 +485,6 @@ sub update_pet_with_form {
 
     # parse inputs
     my $_resource_path = '/pet/{petId}';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'POST';
     my $query_params = {};
@@ -580,7 +570,6 @@ sub upload_file {
 
     # parse inputs
     my $_resource_path = '/pet/{petId}/uploadImage';
-    $_resource_path =~ s/{format}/json/; # default format to json
 
     my $_method = 'POST';
     my $query_params = {};

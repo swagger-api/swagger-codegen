@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.models.ExternalDocs;
+import io.swagger.models.Tag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,14 +29,16 @@ public class CodegenOperation {
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
-    public List<String> tags;
+    public List<Tag> tags;
     public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
     public Set<String> imports = new HashSet<String>();
     public List<Map<String, String>> examples;
     public ExternalDocs externalDocs;
     public Map<String, Object> vendorExtensions;
     public String nickname; // legacy support
-    public String operationIdLowerCase; // for mardown documentation
+    public String operationIdLowerCase; // for markdown documentation
+    public String operationIdCamelCase; // for class names
+    public String operationIdSnakeCase;
 
     /**
      * Check if there's at least one parameter
@@ -115,7 +118,7 @@ public class CodegenOperation {
      * @return true if act as Restful show method, false otherwise
      */
     public boolean isRestfulShow() {
-        return "GET".equals(httpMethod) && isMemberPath();
+        return "GET".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -124,7 +127,7 @@ public class CodegenOperation {
      * @return true if act as Restful create method, false otherwise
      */
     public boolean isRestfulCreate() {
-        return "POST".equals(httpMethod) && "".equals(pathWithoutBaseName());
+        return "POST".equalsIgnoreCase(httpMethod) && "".equals(pathWithoutBaseName());
     }
 
     /**
@@ -133,7 +136,7 @@ public class CodegenOperation {
      * @return true if act as Restful update method, false otherwise
      */
     public boolean isRestfulUpdate() {
-        return Arrays.asList("PUT", "PATCH").contains(httpMethod) && isMemberPath();
+        return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase()) && isMemberPath();
     }
 
     /**
@@ -142,7 +145,7 @@ public class CodegenOperation {
      * @return true if act as Restful destroy method, false otherwise
      */
     public boolean isRestfulDestroy() {
-        return "DELETE".equals(httpMethod) && isMemberPath();
+        return "DELETE".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -170,7 +173,6 @@ public class CodegenOperation {
      */
     private boolean isMemberPath() {
         if (pathParams.size() != 1) return false;
-
         String id = pathParams.get(0).baseName;
         return ("/{" + id + "}").equals(pathWithoutBaseName());
     }
@@ -279,7 +281,9 @@ public class CodegenOperation {
             return false;
         if ( prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null )
             return false;
-        return operationIdLowerCase != null ? operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase == null;
+        if ( operationIdLowerCase != null ? !operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase != null )
+            return false;
+        return operationIdCamelCase != null ? operationIdCamelCase.equals(that.operationIdCamelCase) : that.operationIdCamelCase == null;
 
     }
 
@@ -332,6 +336,7 @@ public class CodegenOperation {
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (prioritizedContentTypes != null ? prioritizedContentTypes.hashCode() : 0);
         result = 31 * result + (operationIdLowerCase != null ? operationIdLowerCase.hashCode() : 0);
+        result = 31 * result + (operationIdCamelCase != null ? operationIdCamelCase.hashCode() : 0);
         return result;
     }
 }

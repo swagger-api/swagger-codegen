@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -38,7 +39,7 @@ namespace IO.Swagger.Model
         /// <param name="ArrayOfString">ArrayOfString.</param>
         /// <param name="ArrayArrayOfInteger">ArrayArrayOfInteger.</param>
         /// <param name="ArrayArrayOfModel">ArrayArrayOfModel.</param>
-        public ArrayTest(List<string> ArrayOfString = null, List<List<long?>> ArrayArrayOfInteger = null, List<List<ReadOnlyFirst>> ArrayArrayOfModel = null)
+        public ArrayTest(List<string> ArrayOfString = default(List<string>), List<List<long?>> ArrayArrayOfInteger = default(List<List<long?>>), List<List<ReadOnlyFirst>> ArrayArrayOfModel = default(List<List<ReadOnlyFirst>>))
         {
             this.ArrayOfString = ArrayOfString;
             this.ArrayArrayOfInteger = ArrayArrayOfInteger;
@@ -50,16 +51,19 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="array_of_string", EmitDefaultValue=false)]
         public List<string> ArrayOfString { get; set; }
+
         /// <summary>
         /// Gets or Sets ArrayArrayOfInteger
         /// </summary>
         [DataMember(Name="array_array_of_integer", EmitDefaultValue=false)]
         public List<List<long?>> ArrayArrayOfInteger { get; set; }
+
         /// <summary>
         /// Gets or Sets ArrayArrayOfModel
         /// </summary>
         [DataMember(Name="array_array_of_model", EmitDefaultValue=false)]
         public List<List<ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -145,8 +149,15 @@ namespace IO.Swagger.Model
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Trigger when a property changed
+        /// </summary>
+        /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
             // NOTE: property changed is handled via "code weaving" using Fody.
@@ -158,8 +169,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

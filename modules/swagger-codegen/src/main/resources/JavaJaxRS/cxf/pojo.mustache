@@ -19,15 +19,15 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @ApiModel(description="{{{description}}}")
 {{/description}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
-  {{#vars}}{{#isEnum}}
+  {{#vars}}{{#isEnum}}{{^isContainer}}
 
-{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
+{{>enumClass}}{{/isContainer}}{{/isEnum}}{{#items.isEnum}}{{#items}}
 
-{{>enumClass}}{{/items}}{{/items.isEnum}}
+{{^isContainer}}{{>enumClass}}{{/isContainer}}{{/items}}{{/items.isEnum}}
 {{#useJaxbAnnotations}}
   @XmlElement(name="{{baseName}}"{{#required}}, required = {{required}}{{/required}})
 {{/useJaxbAnnotations}}
-  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+  @ApiModelProperty({{#example}}example = "{{{example}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
 
   {{#vars}}
@@ -94,7 +94,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

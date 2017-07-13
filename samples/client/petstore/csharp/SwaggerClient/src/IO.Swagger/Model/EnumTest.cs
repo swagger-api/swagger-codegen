@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -117,7 +118,7 @@ namespace IO.Swagger.Model
         /// <param name="EnumInteger">EnumInteger.</param>
         /// <param name="EnumNumber">EnumNumber.</param>
         /// <param name="OuterEnum">OuterEnum.</param>
-        public EnumTest(EnumStringEnum? EnumString = null, EnumIntegerEnum? EnumInteger = null, EnumNumberEnum? EnumNumber = null, OuterEnum? OuterEnum = null)
+        public EnumTest(EnumStringEnum? EnumString = default(EnumStringEnum?), EnumIntegerEnum? EnumInteger = default(EnumIntegerEnum?), EnumNumberEnum? EnumNumber = default(EnumNumberEnum?), OuterEnum OuterEnum = default(OuterEnum))
         {
             this.EnumString = EnumString;
             this.EnumInteger = EnumInteger;
@@ -125,11 +126,15 @@ namespace IO.Swagger.Model
             this.OuterEnum = OuterEnum;
         }
         
+
+
+
         /// <summary>
         /// Gets or Sets OuterEnum
         /// </summary>
         [DataMember(Name="outerEnum", EmitDefaultValue=false)]
-        public OuterEnum? OuterEnum { get; set; }
+        public OuterEnum OuterEnum { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -223,8 +228,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

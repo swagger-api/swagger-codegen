@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.UUID;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * FormatTest
@@ -48,7 +51,7 @@ public class FormatTest   {
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("password")
   private String password = null;
@@ -65,6 +68,8 @@ public class FormatTest   {
    * @return integer
   **/
   @ApiModelProperty(value = "")
+
+ @Min(10) @Max(100)
   public Integer getInteger() {
     return integer;
   }
@@ -85,6 +90,8 @@ public class FormatTest   {
    * @return int32
   **/
   @ApiModelProperty(value = "")
+
+ @Min(20) @Max(200)
   public Integer getInt32() {
     return int32;
   }
@@ -103,6 +110,8 @@ public class FormatTest   {
    * @return int64
   **/
   @ApiModelProperty(value = "")
+
+
   public Long getInt64() {
     return int64;
   }
@@ -123,6 +132,10 @@ public class FormatTest   {
    * @return number
   **/
   @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+ @DecimalMin("32.1") @DecimalMax("543.2")
   public BigDecimal getNumber() {
     return number;
   }
@@ -143,6 +156,8 @@ public class FormatTest   {
    * @return _float
   **/
   @ApiModelProperty(value = "")
+
+ @DecimalMin("54.3") @DecimalMax("987.6")
   public Float getFloat() {
     return _float;
   }
@@ -163,6 +178,8 @@ public class FormatTest   {
    * @return _double
   **/
   @ApiModelProperty(value = "")
+
+ @DecimalMin("67.8") @DecimalMax("123.4")
   public Double getDouble() {
     return _double;
   }
@@ -181,6 +198,8 @@ public class FormatTest   {
    * @return string
   **/
   @ApiModelProperty(value = "")
+
+ @Pattern(regexp="/[a-z]/i")
   public String getString() {
     return string;
   }
@@ -199,6 +218,9 @@ public class FormatTest   {
    * @return _byte
   **/
   @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
   public byte[] getByte() {
     return _byte;
   }
@@ -217,6 +239,8 @@ public class FormatTest   {
    * @return binary
   **/
   @ApiModelProperty(value = "")
+
+
   public byte[] getBinary() {
     return binary;
   }
@@ -235,6 +259,10 @@ public class FormatTest   {
    * @return date
   **/
   @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
   public LocalDate getDate() {
     return date;
   }
@@ -253,6 +281,9 @@ public class FormatTest   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -261,7 +292,7 @@ public class FormatTest   {
     this.dateTime = dateTime;
   }
 
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -271,11 +302,14 @@ public class FormatTest   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-  public String getUuid() {
+
+  @Valid
+
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -289,6 +323,9 @@ public class FormatTest   {
    * @return password
   **/
   @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+ @Size(min=10,max=64)
   public String getPassword() {
     return password;
   }

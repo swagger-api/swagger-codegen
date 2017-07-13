@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * Model for testing model name same as property name
@@ -45,7 +50,7 @@ public class Name {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public Integer getName() {
     return name;
   }
@@ -58,7 +63,7 @@ public class Name {
    * Get snakeCase
    * @return snakeCase
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -72,7 +77,7 @@ public class Name {
    * Get property
    * @return property
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getProperty() {
     return property;
   }
@@ -85,7 +90,7 @@ public class Name {
    * Get _123Number
    * @return _123Number
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer get123Number() {
     return _123Number;
   }

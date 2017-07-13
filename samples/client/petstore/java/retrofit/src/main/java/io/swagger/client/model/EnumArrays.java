@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +33,10 @@ public class EnumArrays {
   /**
    * Gets or Sets justSymbol
    */
+  @JsonAdapter(JustSymbolEnum.Adapter.class)
   public enum JustSymbolEnum {
-    @SerializedName(">=")
     GREATER_THAN_OR_EQUAL_TO(">="),
     
-    @SerializedName("$")
     DOLLAR("$");
 
     private String value;
@@ -41,9 +45,35 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static JustSymbolEnum fromValue(String text) {
+      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<JustSymbolEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final JustSymbolEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public JustSymbolEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return JustSymbolEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -53,11 +83,10 @@ public class EnumArrays {
   /**
    * Gets or Sets arrayEnum
    */
+  @JsonAdapter(ArrayEnumEnum.Adapter.class)
   public enum ArrayEnumEnum {
-    @SerializedName("fish")
     FISH("fish"),
     
-    @SerializedName("crab")
     CRAB("crab");
 
     private String value;
@@ -66,14 +95,40 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
     }
+
+    public static ArrayEnumEnum fromValue(String text) {
+      for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<ArrayEnumEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final ArrayEnumEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ArrayEnumEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return ArrayEnumEnum.fromValue(String.valueOf(value));
+      }
+    }
   }
 
   @SerializedName("array_enum")
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
+  private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
@@ -84,7 +139,7 @@ public class EnumArrays {
    * Get justSymbol
    * @return justSymbol
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -99,6 +154,9 @@ public class EnumArrays {
   }
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
+    if (this.arrayEnum == null) {
+      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+    }
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
@@ -107,7 +165,7 @@ public class EnumArrays {
    * Get arrayEnum
    * @return arrayEnum
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }

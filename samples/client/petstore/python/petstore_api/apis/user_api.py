@@ -20,7 +20,6 @@ import re
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..configuration import Configuration
 from ..api_client import ApiClient
 
 
@@ -32,35 +31,27 @@ class UserApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
-        if api_client:
-            self.api_client = api_client
-        else:
-            if not config.api_client:
-                config.api_client = ApiClient()
-            self.api_client = config.api_client
+        if api_client is None:
+            api_client = ApiClient()
+        self.api_client = api_client
 
     def create_user(self, body, **kwargs):
         """
         Create user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_user(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_user(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param User body: Created user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.create_user_with_http_info(body, **kwargs)
         else:
             (data) = self.create_user_with_http_info(body, **kwargs)
@@ -71,15 +62,11 @@ class UserApi(object):
         Create user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_user_with_http_info(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_user_with_http_info(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param User body: Created user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -87,7 +74,7 @@ class UserApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -108,10 +95,9 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -128,7 +114,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'POST',
+        return self.api_client.call_api('/user', 'POST',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -137,7 +123,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -148,22 +134,18 @@ class UserApi(object):
         Creates list of users with given input array
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_users_with_array_input(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_users_with_array_input(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.create_users_with_array_input_with_http_info(body, **kwargs)
         else:
             (data) = self.create_users_with_array_input_with_http_info(body, **kwargs)
@@ -174,15 +156,11 @@ class UserApi(object):
         Creates list of users with given input array
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_users_with_array_input_with_http_info(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_users_with_array_input_with_http_info(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -190,7 +168,7 @@ class UserApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -211,10 +189,9 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/createWithArray'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -231,7 +208,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'POST',
+        return self.api_client.call_api('/user/createWithArray', 'POST',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -240,7 +217,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -251,22 +228,18 @@ class UserApi(object):
         Creates list of users with given input array
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_users_with_list_input(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_users_with_list_input(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.create_users_with_list_input_with_http_info(body, **kwargs)
         else:
             (data) = self.create_users_with_list_input_with_http_info(body, **kwargs)
@@ -277,15 +250,11 @@ class UserApi(object):
         Creates list of users with given input array
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.create_users_with_list_input_with_http_info(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.create_users_with_list_input_with_http_info(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -293,7 +262,7 @@ class UserApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -314,10 +283,9 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/createWithList'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -334,7 +302,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'POST',
+        return self.api_client.call_api('/user/createWithList', 'POST',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -343,7 +311,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -354,22 +322,18 @@ class UserApi(object):
         Delete user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.delete_user(username, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.delete_user(username, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The name that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.delete_user_with_http_info(username, **kwargs)
         else:
             (data) = self.delete_user_with_http_info(username, **kwargs)
@@ -380,15 +344,11 @@ class UserApi(object):
         Delete user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.delete_user_with_http_info(username, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.delete_user_with_http_info(username, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The name that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -396,7 +356,7 @@ class UserApi(object):
         """
 
         all_params = ['username']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -417,12 +377,11 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/{username}'.replace('{format}', 'json')
         path_params = {}
         if 'username' in params:
             path_params['username'] = params['username']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -437,7 +396,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'DELETE',
+        return self.api_client.call_api('/user/{username}', 'DELETE',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -446,7 +405,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -457,22 +416,18 @@ class UserApi(object):
         Get user by user name
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_user_by_name(username, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.get_user_by_name(username, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The name that needs to be fetched. Use user1 for testing.  (required)
         :return: User
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.get_user_by_name_with_http_info(username, **kwargs)
         else:
             (data) = self.get_user_by_name_with_http_info(username, **kwargs)
@@ -483,15 +438,11 @@ class UserApi(object):
         Get user by user name
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_user_by_name_with_http_info(username, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.get_user_by_name_with_http_info(username, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The name that needs to be fetched. Use user1 for testing.  (required)
         :return: User
                  If the method is called asynchronously,
@@ -499,7 +450,7 @@ class UserApi(object):
         """
 
         all_params = ['username']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -520,12 +471,11 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/{username}'.replace('{format}', 'json')
         path_params = {}
         if 'username' in params:
             path_params['username'] = params['username']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -540,7 +490,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/user/{username}', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -549,7 +499,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type='User',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -560,15 +510,11 @@ class UserApi(object):
         Logs user into the system
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.login_user(username, password, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.login_user(username, password, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The user name for login (required)
         :param str password: The password for login in clear text (required)
         :return: str
@@ -576,7 +522,7 @@ class UserApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.login_user_with_http_info(username, password, **kwargs)
         else:
             (data) = self.login_user_with_http_info(username, password, **kwargs)
@@ -587,15 +533,11 @@ class UserApi(object):
         Logs user into the system
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.login_user_with_http_info(username, password, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.login_user_with_http_info(username, password, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: The user name for login (required)
         :param str password: The password for login in clear text (required)
         :return: str
@@ -604,7 +546,7 @@ class UserApi(object):
         """
 
         all_params = ['username', 'password']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -628,14 +570,13 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/login'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
         if 'username' in params:
-            query_params['username'] = params['username']
+            query_params.append(('username', params['username']))
         if 'password' in params:
-            query_params['password'] = params['password']
+            query_params.append(('password', params['password']))
 
         header_params = {}
 
@@ -650,7 +591,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/user/login', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -659,7 +600,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type='str',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -670,21 +611,17 @@ class UserApi(object):
         Logs out current logged in user session
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.logout_user(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.logout_user(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.logout_user_with_http_info(**kwargs)
         else:
             (data) = self.logout_user_with_http_info(**kwargs)
@@ -695,22 +632,18 @@ class UserApi(object):
         Logs out current logged in user session
         
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.logout_user_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.logout_user_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
         all_params = []
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -727,10 +660,9 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/logout'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -745,7 +677,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/user/logout', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -754,7 +686,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -765,15 +697,11 @@ class UserApi(object):
         Updated user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_user(username, body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.update_user(username, body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: name that need to be deleted (required)
         :param User body: Updated user object (required)
         :return: None
@@ -781,7 +709,7 @@ class UserApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.update_user_with_http_info(username, body, **kwargs)
         else:
             (data) = self.update_user_with_http_info(username, body, **kwargs)
@@ -792,15 +720,11 @@ class UserApi(object):
         Updated user
         This can only be done by the logged in user.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_user_with_http_info(username, body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.update_user_with_http_info(username, body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str username: name that need to be deleted (required)
         :param User body: Updated user object (required)
         :return: None
@@ -809,7 +733,7 @@ class UserApi(object):
         """
 
         all_params = ['username', 'body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -833,12 +757,11 @@ class UserApi(object):
 
         collection_formats = {}
 
-        resource_path = '/user/{username}'.replace('{format}', 'json')
         path_params = {}
         if 'username' in params:
             path_params['username'] = params['username']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -855,7 +778,7 @@ class UserApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'PUT',
+        return self.api_client.call_api('/user/{username}', 'PUT',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -864,7 +787,7 @@ class UserApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),

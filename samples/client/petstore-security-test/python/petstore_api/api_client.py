@@ -59,18 +59,15 @@ class ApiClient(object):
         'object': object,
     }
 
-    def __init__(self, host=None, header_name=None, header_value=None, cookie=None):
-        """
-        Constructor of the class.
-        """
-        self.rest_client = RESTClientObject()
+    def __init__(self, configuration=None, header_name=None, header_value=None, cookie=None):
+        if configuration is None:
+            configuration = Configuration()
+        self.configuration = configuration
+
+        self.rest_client = RESTClientObject(configuration)
         self.default_headers = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
-        if host is None:
-            self.host = Configuration().host
-        else:
-            self.host = host
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
@@ -99,6 +96,8 @@ class ApiClient(object):
                    _return_http_data_only=None, collection_formats=None, _preload_content=True,
                    _request_timeout=None):
 
+        config = Configuration()
+
         # header parameters
         header_params = header_params or {}
         header_params.update(self.default_headers)
@@ -115,8 +114,9 @@ class ApiClient(object):
             path_params = self.parameters_to_tuples(path_params,
                                                     collection_formats)
             for k, v in path_params:
+                # specified safe chars, encode everything
                 resource_path = resource_path.replace(
-                    '{%s}' % k, quote(str(v), safe=""))
+                    '{%s}' % k, quote(str(v), safe=config.safe_chars_for_path_param))
 
         # query parameters
         if query_params:
@@ -139,7 +139,7 @@ class ApiClient(object):
             body = self.sanitize_for_serialization(body)
 
         # request url
-        url = self.host + resource_path
+        url = self.configuration.host + resource_path
 
         # perform request and return response
         response_data = self.request(method, url,
@@ -496,13 +496,11 @@ class ApiClient(object):
         :param querys: Query parameters tuple list to be updated.
         :param auth_settings: Authentication setting identifiers list.
         """
-        config = Configuration()
-
         if not auth_settings:
             return
 
         for auth in auth_settings:
-            auth_setting = config.auth_settings().get(auth)
+            auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
                 if not auth_setting['value']:
                     continue
@@ -523,9 +521,7 @@ class ApiClient(object):
         :param response:  RESTResponse.
         :return: file path.
         """
-        config = Configuration()
-
-        fd, path = tempfile.mkstemp(dir=config.temp_folder_path)
+        fd, path = tempfile.mkstemp(dir=self.configuration.temp_folder_path)
         os.close(fd)
         os.remove(path)
 
@@ -614,16 +610,17 @@ class ApiClient(object):
         :param klass: class literal.
         :return: model object.
         """
-        instance = klass()
-
-        if not instance.swagger_types:
+        if not klass.swagger_types:
             return data
 
-        for attr, attr_type in iteritems(instance.swagger_types):
+        kwargs = {}
+        for attr, attr_type in iteritems(klass.swagger_types):
             if data is not None \
-               and instance.attribute_map[attr] in data \
+               and klass.attribute_map[attr] in data \
                and isinstance(data, (list, dict)):
-                value = data[instance.attribute_map[attr]]
-                setattr(instance, attr, self.__deserialize(value, attr_type))
+                value = data[klass.attribute_map[attr]]
+                kwargs[attr] = self.__deserialize(value, attr_type)
+
+        instance = klass(**kwargs)     
 
         return instance

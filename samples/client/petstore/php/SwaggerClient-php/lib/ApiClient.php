@@ -13,7 +13,7 @@
 /**
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -167,7 +167,7 @@ class ApiClient
         if ($this->config->getCurlConnectTimeout() != 0) {
             curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->config->getCurlConnectTimeout());
         }
-        
+
         // return the result on success, rather than just true
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
@@ -197,6 +197,10 @@ class ApiClient
 
         if (!empty($queryParams)) {
             $url = ($url . '?' . http_build_query($queryParams));
+        }
+
+        if ($this->config->getAllowEncoding()) {
+            curl_setopt($curl, CURLOPT_ENCODING, '');
         }
 
         if ($method === self::$POST) {

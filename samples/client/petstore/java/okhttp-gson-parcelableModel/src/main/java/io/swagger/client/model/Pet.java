@@ -14,11 +14,16 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
 import io.swagger.client.model.Tag;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
@@ -42,19 +47,17 @@ public class Pet implements Parcelable {
   private List<String> photoUrls = new ArrayList<String>();
 
   @SerializedName("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
    */
+  @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
-    @SerializedName("available")
     AVAILABLE("available"),
     
-    @SerializedName("pending")
     PENDING("pending"),
     
-    @SerializedName("sold")
     SOLD("sold");
 
     private String value;
@@ -63,9 +66,35 @@ public class Pet implements Parcelable {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return StatusEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -81,7 +110,7 @@ public class Pet implements Parcelable {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -99,7 +128,7 @@ public class Pet implements Parcelable {
    * Get category
    * @return category
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
   }
@@ -140,7 +169,7 @@ public class Pet implements Parcelable {
    * Get photoUrls
    * @return photoUrls
   **/
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -155,6 +184,9 @@ public class Pet implements Parcelable {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<Tag>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -163,7 +195,7 @@ public class Pet implements Parcelable {
    * Get tags
    * @return tags
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -181,7 +213,7 @@ public class Pet implements Parcelable {
    * pet status in the store
    * @return status
   **/
-  @ApiModelProperty(example = "null", value = "pet status in the store")
+  @ApiModelProperty(value = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
@@ -262,7 +294,7 @@ public class Pet implements Parcelable {
   Pet(Parcel in) {
     
     id = (Long)in.readValue(null);
-    category = (Category)in.readValue(null);
+    category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);
     photoUrls = (List<String>)in.readValue(null);
     tags = (List<Tag>)in.readValue(Tag.class.getClassLoader());

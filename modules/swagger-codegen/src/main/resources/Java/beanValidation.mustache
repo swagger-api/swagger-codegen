@@ -1,52 +1,16 @@
 {{#required}}
   @NotNull
 {{/required}}
-{{#pattern}}
-  @Pattern(regexp="{{pattern}}")
-{{/pattern}}
-{{#minLength}}
-{{#maxLength}}
-  @Size(min={{minLength}},max={{maxLength}})
-{{/maxLength}}
-{{/minLength}}
-{{#minLength}}
-{{^maxLength}}
-  @Size(min={{minLength}})
-{{/maxLength}}
-{{/minLength}}
-{{^minLength}}
-{{#maxLength}}
-  @Size(max={{maxLength}})
-  {{/maxLength}}
-  {{/minLength}}
-{{#minItems}}
-{{#maxItems}}
-  @Size(min={{minItems}},max={{maxItems}})
-{{/maxItems}}
-{{/minItems}}
-{{#minItems}}
-{{^maxItems}}
-  @Size(min={{minItems}})
-{{/maxItems}}
-{{/minItems}}
-{{^minItems}}
-{{#maxItems}}
-  @Size(max={{maxItems}})
-  {{/maxItems}}
-  {{/minItems}}
-{{#minimum}}
-  {{#isInteger}}
-  @Min({{minimum}})
-  {{/isInteger}}
-  {{#isLong}}
-  @Min({{minimum}})
-  {{/isLong}}
-{{/minimum}}
-{{#maximum}}
-  {{#isInteger}}
-  @Max({{maximum}})
-  {{/isInteger}}
-  {{#isLong}}
-  @Max({{maximum}})
-  {{/isLong}}
-{{/maximum}}
+{{#isContainer}}
+{{^isPrimitiveType}}
+{{^isEnum}}
+  @Valid
+{{/isEnum}}
+{{/isPrimitiveType}}
+{{/isContainer}}
+{{#isNotContainer}}
+{{^isPrimitiveType}}
+  @Valid
+{{/isPrimitiveType}}
+{{/isNotContainer}}
+{{>beanValidationCore}}

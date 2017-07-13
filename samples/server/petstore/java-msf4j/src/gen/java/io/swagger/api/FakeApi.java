@@ -7,9 +7,10 @@ import io.swagger.api.factories.FakeApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
+import io.swagger.model.OuterComposite;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -32,11 +33,59 @@ import javax.ws.rs.*;
 public class FakeApi  {
    private final FakeApiService delegate = FakeApiServiceFactory.getFakeApi();
 
+    @POST
+    @Path("/outer/boolean")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
+    public Response fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body" ) Boolean body
+)
+    throws NotFoundException {
+        return delegate.fakeOuterBooleanSerialize(body);
+    }
+    @POST
+    @Path("/outer/composite")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
+    public Response fakeOuterCompositeSerialize(@ApiParam(value = "Input composite as post body" ) OuterComposite body
+)
+    throws NotFoundException {
+        return delegate.fakeOuterCompositeSerialize(body);
+    }
+    @POST
+    @Path("/outer/number")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
+    public Response fakeOuterNumberSerialize(@ApiParam(value = "Input number as post body" ) BigDecimal body
+)
+    throws NotFoundException {
+        return delegate.fakeOuterNumberSerialize(body);
+    }
+    @POST
+    @Path("/outer/string")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Output string", response = String.class) })
+    public Response fakeOuterStringSerialize(@ApiParam(value = "Input string as post body" ) String body
+)
+    throws NotFoundException {
+        return delegate.fakeOuterStringSerialize(body);
+    }
     @PATCH
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test \"client\" model", notes = "", response = Client.class, tags={ "fake", })
+    @io.swagger.annotations.ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testClientModel(@ApiParam(value = "client model" ,required=true) Client body
@@ -75,9 +124,9 @@ public class FakeApi  {
     }
     @GET
     
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "", response = void.class, tags={ "fake", })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = void.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = void.class),
         
@@ -88,8 +137,8 @@ public class FakeApi  {
 ,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg")@HeaderParam("enum_header_string") String enumHeaderString
 ,@ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $") @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
 ,@ApiParam(value = "Query parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
-,@ApiParam(value = "Query parameter enum test (double)") @QueryParam("enum_query_integer") BigDecimal enumQueryInteger
-,@ApiParam(value = "Query parameter enum test (double)")  @FormParam("enum_query_double")  Double enumQueryDouble
+,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1, -2") @QueryParam("enum_query_integer") Integer enumQueryInteger
+,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2")  @FormParam("enum_query_double")  Double enumQueryDouble
 )
     throws NotFoundException {
         return delegate.testEnumParameters(enumFormStringArray,enumFormString,enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,enumQueryDouble);

@@ -16,10 +16,12 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * NumberOnly
@@ -38,7 +40,8 @@ public class NumberOnly {
    * Get justNumber
    * @return justNumber
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @Valid
+  @ApiModelProperty(value = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }

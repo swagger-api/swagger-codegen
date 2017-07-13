@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="Code">Code.</param>
         /// <param name="Type">Type.</param>
         /// <param name="Message">Message.</param>
-        public ApiResponse(int? Code = null, string Type = null, string Message = null)
+        public ApiResponse(int? Code = default(int?), string Type = default(string), string Message = default(string))
         {
             this.Code = Code;
             this.Type = Type;
@@ -47,16 +48,19 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="code", EmitDefaultValue=false)]
         public int? Code { get; set; }
+
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name="type", EmitDefaultValue=false)]
         public string Type { get; set; }
+
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
         [DataMember(Name="message", EmitDefaultValue=false)]
         public string Message { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -142,8 +146,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

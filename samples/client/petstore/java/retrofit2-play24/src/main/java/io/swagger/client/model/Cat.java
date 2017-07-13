@@ -16,10 +16,12 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Cat
@@ -38,7 +40,7 @@ public class Cat extends Animal {
    * Get declawed
    * @return declawed
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getDeclawed() {
     return declawed;
   }

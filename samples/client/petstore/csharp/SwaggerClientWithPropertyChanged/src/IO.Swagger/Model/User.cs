@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -43,7 +44,7 @@ namespace IO.Swagger.Model
         /// <param name="Password">Password.</param>
         /// <param name="Phone">Phone.</param>
         /// <param name="UserStatus">User Status.</param>
-        public User(long? Id = null, string Username = null, string FirstName = null, string LastName = null, string Email = null, string Password = null, string Phone = null, int? UserStatus = null)
+        public User(long? Id = default(long?), string Username = default(string), string FirstName = default(string), string LastName = default(string), string Email = default(string), string Password = default(string), string Phone = default(string), int? UserStatus = default(int?))
         {
             this.Id = Id;
             this.Username = Username;
@@ -60,42 +61,50 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="id", EmitDefaultValue=false)]
         public long? Id { get; set; }
+
         /// <summary>
         /// Gets or Sets Username
         /// </summary>
         [DataMember(Name="username", EmitDefaultValue=false)]
         public string Username { get; set; }
+
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
         [DataMember(Name="firstName", EmitDefaultValue=false)]
         public string FirstName { get; set; }
+
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
         [DataMember(Name="lastName", EmitDefaultValue=false)]
         public string LastName { get; set; }
+
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
         [DataMember(Name="email", EmitDefaultValue=false)]
         public string Email { get; set; }
+
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
         [DataMember(Name="password", EmitDefaultValue=false)]
         public string Password { get; set; }
+
         /// <summary>
         /// Gets or Sets Phone
         /// </summary>
         [DataMember(Name="phone", EmitDefaultValue=false)]
         public string Phone { get; set; }
+
         /// <summary>
         /// User Status
         /// </summary>
         /// <value>User Status</value>
         [DataMember(Name="userStatus", EmitDefaultValue=false)]
         public int? UserStatus { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -221,8 +230,15 @@ namespace IO.Swagger.Model
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Trigger when a property changed
+        /// </summary>
+        /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
             // NOTE: property changed is handled via "code weaving" using Fody.
@@ -234,8 +250,13 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { 
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
             yield break;
         }
     }

@@ -3,7 +3,6 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 import rx.Observable;
-
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
@@ -23,10 +22,9 @@ public interface StoreApi {
    * @param orderId ID of the order that needs to be deleted (required)
    * @return Call&lt;Void&gt;
    */
-  
-  @DELETE("store/order/{orderId}")
+  @DELETE("store/order/{order_id}")
   Observable<Void> deleteOrder(
-    @retrofit2.http.Path("orderId") String orderId
+    @retrofit2.http.Path("order_id") String orderId
   );
 
   /**
@@ -34,7 +32,6 @@ public interface StoreApi {
    * Returns a map of status codes to quantities
    * @return Call&lt;Map&lt;String, Integer&gt;&gt;
    */
-  
   @GET("store/inventory")
   Observable<Map<String, Integer>> getInventory();
     
@@ -45,10 +42,9 @@ public interface StoreApi {
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Call&lt;Order&gt;
    */
-  
-  @GET("store/order/{orderId}")
+  @GET("store/order/{order_id}")
   Observable<Order> getOrderById(
-    @retrofit2.http.Path("orderId") Long orderId
+    @retrofit2.http.Path("order_id") Long orderId
   );
 
   /**
@@ -57,7 +53,6 @@ public interface StoreApi {
    * @param body order placed for purchasing the pet (required)
    * @return Call&lt;Order&gt;
    */
-  
   @POST("store/order")
   Observable<Order> placeOrder(
     @retrofit2.http.Body Order body

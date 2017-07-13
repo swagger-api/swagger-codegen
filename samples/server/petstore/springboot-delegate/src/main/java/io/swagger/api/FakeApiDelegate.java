@@ -2,8 +2,9 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import io.swagger.model.OuterComposite;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,26 @@ import java.util.List;
  */
 
 public interface FakeApiDelegate {
+
+    /**
+     * @see FakeApi#fakeOuterBooleanSerialize
+     */
+    ResponseEntity<Boolean> fakeOuterBooleanSerialize(Boolean body);
+
+    /**
+     * @see FakeApi#fakeOuterCompositeSerialize
+     */
+    ResponseEntity<OuterComposite> fakeOuterCompositeSerialize(OuterComposite body);
+
+    /**
+     * @see FakeApi#fakeOuterNumberSerialize
+     */
+    ResponseEntity<BigDecimal> fakeOuterNumberSerialize(BigDecimal body);
+
+    /**
+     * @see FakeApi#fakeOuterStringSerialize
+     */
+    ResponseEntity<String> fakeOuterStringSerialize(String body);
 
     /**
      * @see FakeApi#testClientModel
@@ -38,7 +59,7 @@ public interface FakeApiDelegate {
         String string,
         byte[] binary,
         LocalDate date,
-        DateTime dateTime,
+        OffsetDateTime dateTime,
         String password,
         String paramCallback);
 
@@ -53,5 +74,11 @@ public interface FakeApiDelegate {
         String enumQueryString,
         Integer enumQueryInteger,
         Double enumQueryDouble);
+
+    /**
+     * @see FakeApi#testJsonFormData
+     */
+    ResponseEntity<Void> testJsonFormData(String param,
+        String param2);
 
 }

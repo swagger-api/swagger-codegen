@@ -1,6 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
@@ -8,12 +7,9 @@ import java.util.List;
 import javax.validation.constraints.*;
 
 
-/**
- * A pet for sale in the pet store
- **/
 import io.swagger.annotations.*;
 import java.util.Objects;
-@ApiModel(description = "A pet for sale in the pet store")
+
 
 public class Pet   {
   
@@ -63,7 +59,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -79,7 +75,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
   }
@@ -112,7 +108,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -129,7 +125,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -146,7 +142,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "pet status in the store")
+  @ApiModelProperty(value = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
@@ -156,7 +152,7 @@ public enum StatusEnum {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -196,10 +192,11 @@ public enum StatusEnum {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
+

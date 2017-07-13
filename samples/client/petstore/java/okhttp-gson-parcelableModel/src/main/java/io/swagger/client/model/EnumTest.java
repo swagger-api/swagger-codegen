@@ -14,10 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -29,14 +34,12 @@ public class EnumTest implements Parcelable {
   /**
    * Gets or Sets enumString
    */
+  @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
-    @SerializedName("UPPER")
     UPPER("UPPER"),
     
-    @SerializedName("lower")
     LOWER("lower"),
     
-    @SerializedName("")
     EMPTY("");
 
     private String value;
@@ -45,9 +48,35 @@ public class EnumTest implements Parcelable {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumStringEnum fromValue(String text) {
+      for (EnumStringEnum b : EnumStringEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumStringEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumStringEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumStringEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return EnumStringEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -57,11 +86,10 @@ public class EnumTest implements Parcelable {
   /**
    * Gets or Sets enumInteger
    */
+  @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
-    @SerializedName("1")
     NUMBER_1(1),
     
-    @SerializedName("-1")
     NUMBER_MINUS_1(-1);
 
     private Integer value;
@@ -70,9 +98,35 @@ public class EnumTest implements Parcelable {
       this.value = value;
     }
 
+    public Integer getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumIntegerEnum fromValue(String text) {
+      for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumIntegerEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumIntegerEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumIntegerEnum read(final JsonReader jsonReader) throws IOException {
+        Integer value = jsonReader.nextInt();
+        return EnumIntegerEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -82,11 +136,10 @@ public class EnumTest implements Parcelable {
   /**
    * Gets or Sets enumNumber
    */
+  @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
-    @SerializedName("1.1")
     NUMBER_1_DOT_1(1.1),
     
-    @SerializedName("-1.2")
     NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;
@@ -95,9 +148,35 @@ public class EnumTest implements Parcelable {
       this.value = value;
     }
 
+    public Double getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumNumberEnum fromValue(String text) {
+      for (EnumNumberEnum b : EnumNumberEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumNumberEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumNumberEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumNumberEnum read(final JsonReader jsonReader) throws IOException {
+        Double value = jsonReader.nextDouble();
+        return EnumNumberEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -116,7 +195,7 @@ public class EnumTest implements Parcelable {
    * Get enumString
    * @return enumString
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -134,7 +213,7 @@ public class EnumTest implements Parcelable {
    * Get enumInteger
    * @return enumInteger
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -152,7 +231,7 @@ public class EnumTest implements Parcelable {
    * Get enumNumber
    * @return enumNumber
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -170,7 +249,7 @@ public class EnumTest implements Parcelable {
    * Get outerEnum
    * @return outerEnum
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
@@ -245,7 +324,7 @@ public class EnumTest implements Parcelable {
     enumString = (EnumStringEnum)in.readValue(null);
     enumInteger = (EnumIntegerEnum)in.readValue(null);
     enumNumber = (EnumNumberEnum)in.readValue(null);
-    outerEnum = (OuterEnum)in.readValue(null);
+    outerEnum = (OuterEnum)in.readValue(OuterEnum.class.getClassLoader());
   }
   
   public int describeContents() {

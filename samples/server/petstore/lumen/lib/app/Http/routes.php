@@ -24,7 +24,7 @@ $app->get('/', function () use ($app) {
 /**
  * PATCH testClientModel
  * Summary: To test \&quot;client\&quot; model
- * Notes: 
+ * Notes: To test \&quot;client\&quot; model
  * Output-Formats: [application/json]
  */
 $app->PATCH('/v2/fake', 'FakeApi@testClientModel');
@@ -38,10 +38,45 @@ $app->POST('/v2/fake', 'FakeApi@testEndpointParameters');
 /**
  * GET testEnumParameters
  * Summary: To test enum parameters
- * Notes: 
+ * Notes: To test enum parameters
  * Output-Formats: [*/*]
  */
 $app->GET('/v2/fake', 'FakeApi@testEnumParameters');
+/**
+ * POST fakeOuterBooleanSerialize
+ * Summary: 
+ * Notes: Test serialization of outer boolean types
+
+ */
+$app->POST('/v2/fake/outer/boolean', 'FakeApi@fakeOuterBooleanSerialize');
+/**
+ * POST fakeOuterCompositeSerialize
+ * Summary: 
+ * Notes: Test serialization of object with outer number type
+
+ */
+$app->POST('/v2/fake/outer/composite', 'FakeApi@fakeOuterCompositeSerialize');
+/**
+ * POST fakeOuterNumberSerialize
+ * Summary: 
+ * Notes: Test serialization of outer number types
+
+ */
+$app->POST('/v2/fake/outer/number', 'FakeApi@fakeOuterNumberSerialize');
+/**
+ * POST fakeOuterStringSerialize
+ * Summary: 
+ * Notes: Test serialization of outer string types
+
+ */
+$app->POST('/v2/fake/outer/string', 'FakeApi@fakeOuterStringSerialize');
+/**
+ * PATCH testClassname
+ * Summary: To test class name in snake case
+ * Notes: 
+ * Output-Formats: [application/json]
+ */
+$app->PATCH('/v2/fake_classname_test', 'Fake_classname_tags123Api@testClassname');
 /**
  * POST addPet
  * Summary: Add a new pet to the store
@@ -118,14 +153,14 @@ $app->POST('/v2/store/order', 'StoreApi@placeOrder');
  * Notes: For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  * Output-Formats: [application/xml, application/json]
  */
-$app->DELETE('/v2/store/order/{orderId}', 'StoreApi@deleteOrder');
+$app->DELETE('/v2/store/order/{order_id}', 'StoreApi@deleteOrder');
 /**
  * GET getOrderById
  * Summary: Find purchase order by ID
  * Notes: For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  * Output-Formats: [application/xml, application/json]
  */
-$app->GET('/v2/store/order/{orderId}', 'StoreApi@getOrderById');
+$app->GET('/v2/store/order/{order_id}', 'StoreApi@getOrderById');
 /**
  * POST createUser
  * Summary: Create user

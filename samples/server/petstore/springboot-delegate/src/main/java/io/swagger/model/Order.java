@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.DateTime;
+import org.threeten.bp.OffsetDateTime;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Order
@@ -23,7 +25,7 @@ public class Order   {
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
-  private DateTime shipDate = null;
+  private OffsetDateTime shipDate = null;
 
   /**
    * Order Status
@@ -74,6 +76,8 @@ public class Order   {
    * @return id
   **/
   @ApiModelProperty(value = "")
+
+
   public Long getId() {
     return id;
   }
@@ -92,6 +96,8 @@ public class Order   {
    * @return petId
   **/
   @ApiModelProperty(value = "")
+
+
   public Long getPetId() {
     return petId;
   }
@@ -110,6 +116,8 @@ public class Order   {
    * @return quantity
   **/
   @ApiModelProperty(value = "")
+
+
   public Integer getQuantity() {
     return quantity;
   }
@@ -118,7 +126,7 @@ public class Order   {
     this.quantity = quantity;
   }
 
-  public Order shipDate(DateTime shipDate) {
+  public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
@@ -128,11 +136,14 @@ public class Order   {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
-  public DateTime getShipDate() {
+
+  @Valid
+
+  public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(DateTime shipDate) {
+  public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -146,6 +157,8 @@ public class Order   {
    * @return status
   **/
   @ApiModelProperty(value = "Order Status")
+
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -164,6 +177,8 @@ public class Order   {
    * @return complete
   **/
   @ApiModelProperty(value = "")
+
+
   public Boolean getComplete() {
     return complete;
   }

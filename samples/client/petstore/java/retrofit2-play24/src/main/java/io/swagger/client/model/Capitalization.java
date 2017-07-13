@@ -16,9 +16,11 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Capitalization
@@ -52,7 +54,7 @@ public class Capitalization {
    * Get smallCamel
    * @return smallCamel
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -70,7 +72,7 @@ public class Capitalization {
    * Get capitalCamel
    * @return capitalCamel
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -88,7 +90,7 @@ public class Capitalization {
    * Get smallSnake
    * @return smallSnake
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -106,7 +108,7 @@ public class Capitalization {
    * Get capitalSnake
    * @return capitalSnake
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -124,7 +126,7 @@ public class Capitalization {
    * Get scAETHFlowPoints
    * @return scAETHFlowPoints
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -142,7 +144,7 @@ public class Capitalization {
    * Name of the pet 
    * @return ATT_NAME
   **/
-  @ApiModelProperty(example = "null", value = "Name of the pet ")
+  @ApiModelProperty(value = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }

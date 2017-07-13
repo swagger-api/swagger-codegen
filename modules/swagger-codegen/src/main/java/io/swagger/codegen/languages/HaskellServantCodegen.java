@@ -9,12 +9,14 @@ import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class HaskellServantCodegen extends DefaultCodegen implements CodegenConfig {
 
     // source folder where to write the files
     protected String sourceFolder = "src";
     protected String apiVersion = "0.0.1";
+    private static final Pattern LEADING_UNDERSCORE = Pattern.compile("^_+");
 
     /**
      * Configures the type of generator.
@@ -53,6 +55,12 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         specialCharReplacements.put("-", "Dash");
         specialCharReplacements.put(">", "GreaterThan");
         specialCharReplacements.put("<", "LessThan");
+
+        // backslash and double quote need double the escapement for both Java and Haskell
+        specialCharReplacements.remove("\\");
+        specialCharReplacements.remove("\"");
+        specialCharReplacements.put("\\\\", "Back_Slash");
+        specialCharReplacements.put("\\\"", "Double_Quote");
 
         // set the output folder here
         outputFolder = "generated-code/haskell-servant";
@@ -139,6 +147,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("number", "Double");
         typeMapping.put("integer", "Int");
         typeMapping.put("any", "Value");
+        typeMapping.put("UUID", "Text");
 
         importMapping.clear();
         importMapping.put("Map", "qualified Data.Map as Map");
@@ -389,7 +398,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // Query parameters appended to routes
         for (CodegenParameter param : op.queryParams) {
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             path.add("QueryParam \"" + param.baseName + "\" " + paramType);
@@ -420,7 +429,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             path.add("Header \"" + param.baseName + "\" " + param.dataType);
 
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             type.add("Maybe " + paramType);
@@ -461,10 +470,20 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     private String fixOperatorChars(String string) {
         StringBuilder sb = new StringBuilder();
-        for (char c : string.toCharArray()) {
-            if (specialCharReplacements.containsKey(c)) {
+        String name = string;
+        //Check if it is a reserved word, in which case the underscore is added when property name is generated.
+        if (string.startsWith("_")) {
+            if (reservedWords.contains(string.substring(1, string.length()))) {
+                name = string.substring(1, string.length());
+            } else if (reservedWordsMappings.containsValue(string)) {
+                name = LEADING_UNDERSCORE.matcher(string).replaceFirst("");
+            }
+        }
+        for (char c : name.toCharArray()) {
+            String cString = String.valueOf(c);
+            if (specialCharReplacements.containsKey(cString)) {
                 sb.append("'");
-                sb.append(specialCharReplacements.get(c));
+                sb.append(specialCharReplacements.get(cString));
             } else {
                 sb.append(c);
             }
@@ -491,7 +510,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // From the model name, compute the prefix for the fields.
         String prefix = camelize(model.classname, true);
         for(CodegenProperty prop : model.vars) {
-            prop.name = prefix + camelize(fixOperatorChars(prop.name));
+            prop.name = toVarName(prefix + camelize(fixOperatorChars(prop.name)));
         }
 
         // Create newtypes for things with non-object types

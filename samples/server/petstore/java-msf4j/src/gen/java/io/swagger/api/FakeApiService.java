@@ -6,9 +6,10 @@ import io.swagger.model.*;
 import org.wso2.msf4j.formparam.FormDataParam;
 import org.wso2.msf4j.formparam.FileInfo;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
+import io.swagger.model.OuterComposite;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -20,6 +21,14 @@ import javax.ws.rs.core.SecurityContext;
 
 
 public abstract class FakeApiService {
+    public abstract Response fakeOuterBooleanSerialize(Boolean body
+ ) throws NotFoundException;
+    public abstract Response fakeOuterCompositeSerialize(OuterComposite body
+ ) throws NotFoundException;
+    public abstract Response fakeOuterNumberSerialize(BigDecimal body
+ ) throws NotFoundException;
+    public abstract Response fakeOuterStringSerialize(String body
+ ) throws NotFoundException;
     public abstract Response testClientModel(Client body
  ) throws NotFoundException;
     public abstract Response testEndpointParameters(BigDecimal number
@@ -43,7 +52,7 @@ public abstract class FakeApiService {
  ,String enumHeaderString
  ,List<String> enumQueryStringArray
  ,String enumQueryString
- ,BigDecimal enumQueryInteger
+ ,Integer enumQueryInteger
  ,Double enumQueryDouble
  ) throws NotFoundException;
 }

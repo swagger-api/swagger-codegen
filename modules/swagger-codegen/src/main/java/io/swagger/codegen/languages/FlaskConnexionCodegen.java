@@ -34,6 +34,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     protected String packageVersion;
     protected String controllerPackage;
     protected String defaultController;
+    protected Map<Character, String> regexModifiers;
 
     public FlaskConnexionCodegen() {
         super();
@@ -50,6 +51,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         languageSpecificPrimitives.add("datetime");
         languageSpecificPrimitives.add("date");
         languageSpecificPrimitives.add("file");
+        languageSpecificPrimitives.add("object");
 
         typeMapping.clear();
         typeMapping.put("integer", "int");
@@ -65,6 +67,18 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("DateTime", "datetime");
         typeMapping.put("object", "object");
         typeMapping.put("file", "file");
+        typeMapping.put("UUID", "str");
+
+        // from https://docs.python.org/release/2.5.4/ref/keywords.html
+        setReservedWordsLowerCase(
+                Arrays.asList(
+                    // @property
+                    "property",
+                    // python reserved words
+                    "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
+                    "assert", "else", "if", "pass", "yield", "break", "except", "import",
+                    "print", "class", "exec", "in", "raise", "continue", "finally", "is",
+                    "return", "def", "for", "lambda", "try", "self", "None"));
 
         // set the output folder here
         outputFolder = "generated-code/connexion";
@@ -106,6 +120,16 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
+        supportingFiles.add(new SupportingFile("Dockerfile.mustache", "", "Dockerfile"));
+        supportingFiles.add(new SupportingFile("dockerignore.mustache", "", ".dockerignore"));
+
+        regexModifiers = new HashMap<Character, String>();
+        regexModifiers.put('i', "IGNORECASE");
+        regexModifiers.put('l', "LOCALE");
+        regexModifiers.put('m', "MULTILINE");
+        regexModifiers.put('s', "DOTALL");
+        regexModifiers.put('u', "UNICODE");
+        regexModifiers.put('x', "VERBOSE");
 
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
                 .defaultValue("swagger_server"));
@@ -117,6 +141,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 defaultValue("default_controller"));
         cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").
                 defaultValue("false"));
+        cliOptions.add(new CliOption("serverPort", "TCP port to listen to in app.run").
+                defaultValue("8080"));
     }
 
     @Override
@@ -407,39 +433,19 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toParamName(String name) {
+        // don't do name =removeNonNameElementToCamelCase(name); // this breaks connexion, which does not modify param names before sending them
+        if (reservedWords.contains(name)) {
+            return escapeReservedWord(name);
+        }
         // Param name is already sanitized in swagger spec processing
         return name;
     }
 
     @Override
     public String toModelFilename(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // remove dollar sign
-        name = name.replaceAll("$", "");
-
-        // model name cannot use reserved keyword, e.g. return
-        if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore(dropDots("model_" + name)));
-            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
-        }
-
-        // model name starts with number
-        if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + underscore("model_" + name));
-            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
-        }
-
-        if (!StringUtils.isEmpty(modelNamePrefix)) {
-            name = modelNamePrefix + "_" + name;
-        }
-
-        if (!StringUtils.isEmpty(modelNameSuffix)) {
-            name = name + "_" + modelNameSuffix;
-        }
-
         // underscore the model file name
         // PhoneNumber => phone_number
-        return underscore(dropDots(name));
+        return underscore(dropDots(toModelName(name)));
     }
 
     @Override
@@ -643,11 +649,60 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toModelImport(String name) {
-        String modelImport = "from ";
-        if (!"".equals(modelPackage())) {
-            modelImport += modelPackage() + ".";
+        String modelImport;
+        if (StringUtils.startsWithAny(name,"import", "from")) {
+            modelImport = name;
+        } else {
+            modelImport = "from ";
+            if (!"".equals(modelPackage())) {
+                modelImport += modelPackage() + ".";
+            }
+            modelImport += toModelFilename(name)+ " import " + name;
         }
-        modelImport += toModelFilename(name)+ " import " + name;
         return modelImport;
     }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
+        if (StringUtils.isNotEmpty(property.pattern)) {
+            addImport(model, "import re");
+        }
+        postProcessPattern(property.pattern, property.vendorExtensions);
+    }
+
+    @Override
+    public void postProcessParameter(CodegenParameter parameter){
+        postProcessPattern(parameter.pattern, parameter.vendorExtensions);
+    }
+
+    /*
+     * The swagger pattern spec follows the Perl convention and style of modifiers. Python
+     * does not support this in as natural a way so it needs to convert it. See
+     * https://docs.python.org/2/howto/regex.html#compilation-flags for details.
+     */
+    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions){
+        if(pattern != null) {
+            int i = pattern.lastIndexOf('/');
+
+            //Must follow Perl /pattern/modifiers convention
+            if(pattern.charAt(0) != '/' || i < 2) {
+                throw new IllegalArgumentException("Pattern must follow the Perl "
+                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+            }
+
+            String regex = pattern.substring(1, i).replace("'", "\\'");
+            List<String> modifiers = new ArrayList<String>();
+
+            for(char c : pattern.substring(i).toCharArray()) {
+                if(regexModifiers.containsKey(c)) {
+                    String modifier = regexModifiers.get(c);
+                    modifiers.add(modifier);
+                }
+            }
+
+            vendorExtensions.put("x-regex", regex);
+            vendorExtensions.put("x-modifiers", modifiers);
+        }
+    }
+
 }

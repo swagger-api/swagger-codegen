@@ -17,7 +17,7 @@
 
 #include <QList>
 #include <QString>
-#include "SWGUser.h"
+#include "User.h"
 
 #include <QObject>
 
@@ -34,14 +34,14 @@ public:
     QString host;
     QString basePath;
 
-    void createUser(SWGUser body);
-    void createUsersWithArrayInput(QList<SWGUser*>* body);
-    void createUsersWithListInput(QList<SWGUser*>* body);
+    void createUser(User body);
+    void createUsersWithArrayInput(QList<User*>* body);
+    void createUsersWithListInput(QList<User*>* body);
     void deleteUser(QString* username);
     void getUserByName(QString* username);
     void loginUser(QString* username, QString* password);
     void logoutUser();
-    void updateUser(QString* username, SWGUser body);
+    void updateUser(QString* username, User body);
     
 private:
     void createUserCallback (HttpRequestWorker * worker);
@@ -58,11 +58,21 @@ signals:
     void createUsersWithArrayInputSignal();
     void createUsersWithListInputSignal();
     void deleteUserSignal();
-    void getUserByNameSignal(SWGUser* summary);
+    void getUserByNameSignal(User* summary);
     void loginUserSignal(QString* summary);
     void logoutUserSignal();
     void updateUserSignal();
     
+    void createUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void createUsersWithArrayInputSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void createUsersWithListInputSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void deleteUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void getUserByNameSignalE(User* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    void loginUserSignalE(QString* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    void logoutUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void updateUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    
 };
+
 }
 #endif
