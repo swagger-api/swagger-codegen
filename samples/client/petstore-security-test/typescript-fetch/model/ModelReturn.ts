@@ -11,9 +11,15 @@
  * Do not edit the class manually.
  */
 
-import * as IsomorphicFetch                                  from 'isomorphic-fetch';
-import * as url                                              from 'url';
-import * as models                                           from '../model/models';
-import { COLLECTION_FORMATS }                                from '../variables';
-import { Configuration }                                     from '../configuration';
+import * as models from './models';
 
+/**
+ * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
+ */
+export interface ModelReturn {
+    /**
+     * property description  *_/ ' \" =end -- \\r\\n \\n \\r
+     */
+    return?: number;
+
+}

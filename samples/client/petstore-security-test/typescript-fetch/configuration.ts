@@ -11,9 +11,10 @@
  * Do not edit the class manually.
  */
 
-import * as IsomorphicFetch                                  from 'isomorphic-fetch';
-import * as url                                              from 'url';
-import * as models                                           from '../model/models';
-import { COLLECTION_FORMATS }                                from '../variables';
-import { Configuration }                                     from '../configuration';
-
+export class Configuration {
+    apiKey: string;
+    username: string;
+    password: string;
+    accessToken: string | (() => string);
+    withCredentials: boolean;
+}
