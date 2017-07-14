@@ -36,5 +36,5 @@ ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml
 java $JAVA_OPTS -jar $executable $ags
 
 echo "Typescript Petstore API client (npm setting)"
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-fetch -c bin/bin/typescript-fetch-petstore-with-npm.json -o samples/client/petstore/typescript-fetch/npm"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-fetch -c bin/typescript-fetch-petstore-with-npm.json -o samples/client/petstore/typescript-fetch/npm"
 java $JAVA_OPTS -jar $executable $ags
