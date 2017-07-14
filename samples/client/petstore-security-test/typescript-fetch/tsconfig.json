@@ -1,17 +1,26 @@
 {
-  "compilerOptions": {
-    "declaration": true,
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "outDir": "dist",
-    "rootDir": "."
-  },
-  "exclude": [
-    "dist",
-    "node_modules",
-    "typings/browser",
-    "typings/main",
-    "typings/main.d.ts"
-  ]
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "removeComments": false,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "noLib": false,
+        "declaration": true,
+        "lib": [
+            "dom",
+            "es6"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "filesGlob": [
+        "./model/*.ts",
+        "./api/*.ts"
+    ]
 }
