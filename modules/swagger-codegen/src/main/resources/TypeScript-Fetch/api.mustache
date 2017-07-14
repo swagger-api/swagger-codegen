@@ -90,7 +90,7 @@ export const {{classname}}FetchParamCreator = {
             .replace(`{${"{{baseName}}"}}`, `${ params["{{paramName}}"] }`){{/pathParams}};
         let urlObj = url.parse(baseUrl, true);
 {{#hasQueryParams}}
-        urlObj.query =  {{#supportsES6}}Object.{{/supportsES6}}assign({}, urlObj.query)
+        urlObj.query =  {{#supportsES6}}Object.{{/supportsES6}}assign({}, urlObj.query);
     {{#queryParams}}
         if (params["{{paramName}}"] !== undefined) {
             urlObj.query["{{baseName}}"] = params["{{paramName}}"];
