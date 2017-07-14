@@ -48,10 +48,25 @@ class APIHelper {
     }
     
     static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
-        let returnValues = values.flatMap { (item: (key: String, value: Any?)) -> URLQueryItem? in
-            guard let value = item.value else { return nil }
-            return URLQueryItem(name: item.key, value:"\(value)")
-        }
+        let returnValues = values
+            .filter { $0.1 != nil }
+            .map { (item: (_key: String, _value: Any?)) -> [URLQueryItem] in
+                if let value = item._value as? Array<String> {
+                    return value.map { (v) -> URLQueryItem in
+                        URLQueryItem(
+                            name: item._key,
+                            value: v
+                        )
+                    }
+                } else {
+                    return [URLQueryItem(
+                        name: item._key,
+                        value: "\(item._value!)"
+                    )]
+                }
+            }
+            .flatMap { $0 }
+ 
         if returnValues.isEmpty { return nil }
         return returnValues
     }
