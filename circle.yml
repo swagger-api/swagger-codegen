@@ -40,6 +40,8 @@ test:
     ## test with jdk7
     - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
     - java -version
+    # install to local maven cache
+    - mvn clean install
     - mvn -q clean verify -Psamples
     # skip the rest if previous mvn task fails
     - if [ $? -ne 0 ]; then exit 1; fi
