@@ -17,7 +17,6 @@ dependencies:
     - "~/.sbt"
 
   pre:
-    - sudo apt-get remove --auto-remove maven && sudo apt-get purge --auto-remove maven
     - sudo add-apt-repository ppa:duggan/bats --yes
     - sudo apt-get update -qq
     - sudo apt-get install -qq bats
@@ -29,7 +28,7 @@ dependencies:
     - cat /etc/hosts
     # upgrade maven
     - wget http://apache.mirrors.tds.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && tar xzvf apache-maven-3.3.9-bin.tar.gz
-    - sudo mv apache-maven-3.3.9 /usr/local/maven
+    - sudo rm -Rf /usr/local/maven && sudo mv apache-maven-3.3.9 /usr/local/maven
     - export M2_HOME=/usr/local/maven           
     - export M2=$M2_HOME/bin
     - export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
