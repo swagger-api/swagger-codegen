@@ -38,20 +38,20 @@ dependencies:
 
 test:
   override:
-    - /usr/local/maven/mvn -v
+    - /usr/local/maven/bin/mvn -v
     ## test with jdk8
     - java -version
     # install to local maven cache
-    - /usr/local/maven/mvn clean install
-    - /usr/local/maven/mvn -q clean verify -Psamples
-    # skip the rest if previous /usr/local/maven/mvn task fails
+    #- /usr/local/maven/bin/mvn clean install
+    - /usr/local/maven/bin/mvn -q clean verify -Psamples
+    # skip the rest if previous /usr/local/maven/bin/mvn task fails
     - if [ $? -ne 0 ]; then exit 1; fi
     ## test with jdk7
     - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
     - java -version
     # install to local maven cache
-    - /usr/local/maven/mvn clean install
-    - /usr/local/maven/mvn -q clean verify -Psamples
+    #- /usr/local/maven/bin/mvn clean install
+    - /usr/local/maven/bin/mvn -q clean verify -Psamples
     # skip the rest if previous /usr/local/maven/mvn task fails
     - if [ $? -ne 0 ]; then exit 1; fi
     ## docker: build generator image and push to Docker Hub
