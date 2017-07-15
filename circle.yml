@@ -32,6 +32,7 @@ dependencies:
 
 test:
   override:
+    - mvn -v
     ## test with jdk8
     - java -version
     # install to local maven cache
