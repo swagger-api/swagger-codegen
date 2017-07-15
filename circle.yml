@@ -26,16 +26,6 @@ dependencies:
     - docker ps -a
     # show host table to confirm petstore.swagger.io is mapped to localhost
     - cat /etc/hosts
-    # upgrade maven
-    - sudo rm -Rf /usr/local/apache-maven
-    - wget http://apache.mirrors.tds.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && tar xzvf apache-maven-3.3.9-bin.tar.gz
-    - sudo mv apache-maven-3.3.9 /usr/local/apache-maven
-      #- export M2_HOME=/usr/local/maven           
-      #- export M2=$M2_HOME/bin
-      #- export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
-      #- export PATH=$M2:$PATH
-    - ls /usr/local/apache-maven
-    - env
   override:
     - cp pom.xml.circleci pom.xml
 
@@ -44,20 +34,16 @@ test:
     - mvn -v
     ## test with jdk8
     - java -version
-    # install to local maven cache
-    - mvn clean install
-      #    - mvn -q clean verify -Psamples
-      #    # skip the rest if previous mvn task fails
-      #    - if [ $? -ne 0 ]; then exit 1; fi
-      #    ## test with jdk7
-      #    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
-      #    - java -version
-      #    # install to local maven cache
-      #    #- mvn clean install
-      #    - mvn -q clean verify -Psamples
-      #    # skip the rest if previous /usr/local/mavenmvn task fails
-      #    - if [ $? -ne 0 ]; then exit 1; fi
-      #    ## docker: build generator image and push to Docker Hub
-      #    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME ./modules/swagger-generator && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_GENERATOR_IMAGE_NAME:latest $DOCKER_GENERATOR_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_GENERATOR_IMAGE_NAME; fi; fi
-      #    ## docker: build cli image and push to Docker Hub
-      #    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME ./modules/swagger-codegen-cli && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest $DOCKER_CODEGEN_CLI_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME; fi; fi
+    - mvn -q clean verify -Psamples
+    # skip the rest if previous mvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## test with jdk7
+    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+    - java -version
+    - mvn -q clean verify -Psamples
+    # skip the rest if previous /usr/local/mavenmvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## docker: build generator image and push to Docker Hub
+    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME ./modules/swagger-generator && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_GENERATOR_IMAGE_NAME:latest $DOCKER_GENERATOR_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_GENERATOR_IMAGE_NAME; fi; fi
+    ## docker: build cli image and push to Docker Hub
+    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME ./modules/swagger-codegen-cli && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest $DOCKER_CODEGEN_CLI_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME; fi; fi
