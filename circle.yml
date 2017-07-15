@@ -28,7 +28,7 @@ dependencies:
     - cat /etc/hosts
     # upgrade maven
     - wget http://apache.mirrors.tds.net/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz && tar xzvf apache-maven-3.5.0-bin.tar.gz
-    - mv apache-maven-3.3.9 /usr/local/maven
+    - mv apache-maven-3.5.0 /usr/local/maven
     - export M2_HOME=/usr/local/maven           
     - export M2=$M2_HOME/bin
     - export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
