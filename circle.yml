@@ -17,6 +17,7 @@ dependencies:
     - "~/.sbt"
 
   pre:
+    - sudo apt-get remove --auto-remove maven && sudo apt-get purge --auto-remove maven
     - sudo add-apt-repository ppa:duggan/bats --yes
     - sudo apt-get update -qq
     - sudo apt-get install -qq bats
@@ -42,19 +43,19 @@ test:
     ## test with jdk8
     - java -version
     # install to local maven cache
-    #- /usr/local/maven/bin/mvn clean install
-    - /usr/local/maven/bin/mvn -q clean verify -Psamples
-    # skip the rest if previous /usr/local/maven/bin/mvn task fails
-    - if [ $? -ne 0 ]; then exit 1; fi
-    ## test with jdk7
-    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
-    - java -version
-    # install to local maven cache
-    #- /usr/local/maven/bin/mvn clean install
-    - /usr/local/maven/bin/mvn -q clean verify -Psamples
-    # skip the rest if previous /usr/local/maven/mvn task fails
-    - if [ $? -ne 0 ]; then exit 1; fi
-    ## docker: build generator image and push to Docker Hub
-    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME ./modules/swagger-generator && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_GENERATOR_IMAGE_NAME:latest $DOCKER_GENERATOR_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_GENERATOR_IMAGE_NAME; fi; fi
-    ## docker: build cli image and push to Docker Hub
-    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME ./modules/swagger-codegen-cli && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest $DOCKER_CODEGEN_CLI_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME; fi; fi
+    - /usr/local/maven/bin/mvn clean install
+      #    - /usr/local/maven/bin/mvn -q clean verify -Psamples
+      #    # skip the rest if previous /usr/local/maven/bin/mvn task fails
+      #    - if [ $? -ne 0 ]; then exit 1; fi
+      #    ## test with jdk7
+      #    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+      #    - java -version
+      #    # install to local maven cache
+      #    #- /usr/local/maven/bin/mvn clean install
+      #    - /usr/local/maven/bin/mvn -q clean verify -Psamples
+      #    # skip the rest if previous /usr/local/maven/mvn task fails
+      #    - if [ $? -ne 0 ]; then exit 1; fi
+      #    ## docker: build generator image and push to Docker Hub
+      #    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME ./modules/swagger-generator && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_GENERATOR_IMAGE_NAME:latest $DOCKER_GENERATOR_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_GENERATOR_IMAGE_NAME; fi; fi
+      #    ## docker: build cli image and push to Docker Hub
+      #    - if [ $DOCKER_HUB_USERNAME ]; then docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD && docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME ./modules/swagger-codegen-cli && if [ ! -z "$CIRCLE_TAG" ]; then docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest $DOCKER_CODEGEN_CLI_IMAGE_NAME:$CIRCLE_TAG; fi && if [ ! -z "$CIRCLE_TAG" ] || [ "$CIRCLE_BRANCH" = "master" ]; then docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME; fi; fi
