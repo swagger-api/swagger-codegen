@@ -34,12 +34,14 @@ dependencies:
     - export M2=$M2_HOME/bin
     - export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
     - export PATH=$M2:$PATH
+    - ls /usr/local/maven
+    - env
   override:
     - cp pom.xml.circleci pom.xml
 
 test:
   override:
-    - /usr/local/maven/bin/mvn -v
+    - mvn -v
     ## test with jdk8
     - java -version
     # install to local maven cache
