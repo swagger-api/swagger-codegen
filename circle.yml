@@ -21,13 +21,18 @@ dependencies:
     - sudo apt-get update -qq
     - sudo apt-get install -qq bats
     - sudo apt-get install -qq curl
-    - sudo apt-get install maven
-    # to run petstore server locally via docker
     - docker pull swaggerapi/petstore
     - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
     - docker ps -a
     # show host table to confirm petstore.swagger.io is mapped to localhost
     - cat /etc/hosts
+    # upgrade maven
+    - wget http://apache.mirrors.tds.net/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz && tar xzvf apache-maven-3.5.0-bin.tar.gz
+    - mv apache-maven-3.3.9 /usr/local/maven
+    - export M2_HOME=/usr/local/maven           
+    - export M2=$M2_HOME/bin
+    - export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
+    - export PATH=$M2:$PATH
   override:
     - cp pom.xml.circleci pom.xml
 
