@@ -1,6 +1,6 @@
 sudo: required
 language: objective-c
-osx_image: xcode9
+osx_image: xcode8.2
 cache:
   directories:
   - $HOME/.m2
