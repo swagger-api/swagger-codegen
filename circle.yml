@@ -29,11 +29,11 @@ dependencies:
     # upgrade maven
     - sudo rm -Rf /usr/local/apache-maven
     - wget http://apache.mirrors.tds.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && tar xzvf apache-maven-3.3.9-bin.tar.gz
-    - sudo rm -Rf /usr/local/maven && sudo mv apache-maven-3.3.9 /usr/local/maven
-    - export M2_HOME=/usr/local/maven           
-    - export M2=$M2_HOME/bin
-    - export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
-    - export PATH=$M2:$PATH
+    - sudo mv apache-maven-3.3.9 /usr/local/apache-maven
+      #- export M2_HOME=/usr/local/maven           
+      #- export M2=$M2_HOME/bin
+      #- export MAVEN_OPTS="-Xmx1048m -Xms256m -XX:MaxPermSize=312M"   
+      #- export PATH=$M2:$PATH
     - ls /usr/local/maven
     - env
   override:
