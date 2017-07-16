@@ -142,6 +142,9 @@ public class CodegenConstants {
     public static final String MODEL_PROPERTY_NAMING = "modelPropertyNaming";
     public static final String MODEL_PROPERTY_NAMING_DESC = "Naming convention for the property: 'camelCase', 'PascalCase', 'snake_case' and 'original', which keeps the original name";
 
+    public static final String MODEL_GETTERSETTER_NAMING = "modelGetterSetterNaming";
+    public static final String MODEL_GETTERSETTER_NAMING_DESC = "see description of "+MODEL_PROPERTY_NAMING;
+
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 

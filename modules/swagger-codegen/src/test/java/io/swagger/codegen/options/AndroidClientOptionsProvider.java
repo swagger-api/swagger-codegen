@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class AndroidClientOptionsProvider implements OptionsProvider {
+public class AndroidClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";
@@ -43,6 +43,7 @@ public class AndroidClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.LIBRARY, LIBRARY_VALUE)
                 .put(CodegenConstants.SERIALIZABLE_MODEL, SERIALIZABLE_MODEL_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

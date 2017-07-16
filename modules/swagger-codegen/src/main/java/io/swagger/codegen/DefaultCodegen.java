@@ -1,9 +1,36 @@
 package io.swagger.codegen;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.samskivert.mustache.Mustache.Compiler;
 
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
@@ -48,30 +75,6 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -86,6 +89,8 @@ public class DefaultCodegen {
     protected Map<String, String> importMapping = new HashMap<String, String>();
     protected String modelPackage = "", apiPackage = "", fileSuffix;
     protected String modelNamePrefix = "", modelNameSuffix = "";
+    protected String modelPropertyNaming = "camelCase";
+    protected String modelGetterSetterNaming = "PascalCase";
     protected String testPackage = "";
     protected Map<String, String> apiTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelTemplateFiles = new HashMap<String, String>();
@@ -160,6 +165,14 @@ public class DefaultCodegen {
 
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_SUFFIX)){
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
+            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_GETTERSETTER_NAMING)) {
+            setModelGetterSetterNaming((String) additionalProperties.get(CodegenConstants.MODEL_GETTERSETTER_NAMING));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
@@ -584,6 +597,36 @@ public class DefaultCodegen {
         this.modelNameSuffix = modelNameSuffix;
     }
 
+    public void setModelPropertyNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelPropertyNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model property naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
+    public String getModelPropertyNaming() {
+        return this.modelPropertyNaming;
+    }
+
+    public void setModelGetterSetterNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelGetterSetterNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model getter setter naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
+    public String getModelGetterSetterNaming() {
+        return this.modelGetterSetterNaming;
+    }
+
     public void setApiPackage(String apiPackage) {
         this.apiPackage = apiPackage;
     }
@@ -858,6 +901,9 @@ public class DefaultCodegen {
         // name formatting options
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
+
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_GETTERSETTER_NAMING, CodegenConstants.MODEL_GETTERSETTER_NAMING_DESC).defaultValue("PascalCase"));
 
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
@@ -1485,6 +1531,30 @@ public class DefaultCodegen {
         }
     }
 
+    public String getNameUsingModelPropertyNaming(String name) {
+        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
+            case original:    return name;
+            case camelCase:   return camelize(name, true);
+            case PascalCase:  return camelize(name, false);
+            case snake_case:  return underscore(name);
+            default:          throw new IllegalArgumentException("Invalid model property naming '" +
+                    name + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
+    public String getNameUsingModelGetterSetterNaming(String name) {
+        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelGetterSetterNaming())) {
+            case original:    return name;
+            case camelCase:   return camelize(name, true);
+            case PascalCase:  return camelize(name, false);
+            case snake_case:  return underscore(name);
+            default:          throw new IllegalArgumentException("Invalid model getter setter naming '" +
+                    name + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
     /**
      * Camelize the method name of the getter and setter
      *
@@ -1495,7 +1565,7 @@ public class DefaultCodegen {
         if (name == null || name.length() == 0) {
             return name;
         }
-        return camelize(toVarName(name));
+        return getNameUsingModelGetterSetterNaming(toVarName(name));
     }
 
     /**

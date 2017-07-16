@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class NodeJSServerOptionsProvider implements OptionsProvider {
+public class NodeJSServerOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String GOOGLE_CLOUD_FUNCTIONS = "false";
@@ -27,6 +27,7 @@ public class NodeJSServerOptionsProvider implements OptionsProvider {
                 .put(NodeJSServerCodegen.GOOGLE_CLOUD_FUNCTIONS, GOOGLE_CLOUD_FUNCTIONS)
                 .put(NodeJSServerCodegen.EXPORTED_NAME, EXPORTED_NAME)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

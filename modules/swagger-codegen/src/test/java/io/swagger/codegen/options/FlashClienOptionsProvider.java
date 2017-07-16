@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class FlashClienOptionsProvider implements OptionsProvider {
+public class FlashClienOptionsProvider extends AbstractClientOptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "io.swagger.flash";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String INVOKER_PACKAGE_VALUE = "io.swagger.flash";
@@ -24,6 +24,7 @@ public class FlashClienOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.INVOKER_PACKAGE, INVOKER_PACKAGE_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
+                //.putAll(super.createOptions())
                 .build();
     }
 

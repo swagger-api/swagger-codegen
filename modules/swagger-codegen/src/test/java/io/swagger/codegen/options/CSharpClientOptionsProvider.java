@@ -41,6 +41,9 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(CodegenConstants.NETCORE_PROJECT_FILE, "false")
                 .build();
+//        .put(CodegenConstants.MODEL_GETTERSETTER_NAMING, "original")
+//        .put(CodegenConstants.MODEL_NAME_PREFIX, "original")
+
     }
 
     @Override

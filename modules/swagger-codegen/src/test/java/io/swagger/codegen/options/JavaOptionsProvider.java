@@ -6,7 +6,7 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
 
-public class JavaOptionsProvider implements OptionsProvider {
+public class JavaOptionsProvider extends AbstractClientOptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";
@@ -73,6 +73,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(JavaClientCodegen.DATE_LIBRARY, "joda")
                 .put("hideGenerationTimestamp", "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                         //.put("supportJava6", "true")
                 .build();
     }

@@ -24,12 +24,13 @@ import io.swagger.models.properties.Property;
 
 public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
 
-    protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
     protected HashSet<String> languageGenericTypes;
 
     public AbstractTypeScriptClientCodegen() {
         super();
+
+        modelPropertyNaming= "camelCase";
 
         // clear import mapping (from default generator) as TS does not use it
         // at the moment
@@ -89,7 +90,6 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");
 
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
         cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
 
     }
@@ -97,10 +97,6 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     @Override
     public void processOpts() {
         super.processOpts();
-
-        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
-            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
-        }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
             setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6).toString()));
@@ -114,7 +110,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -244,34 +240,6 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return camelize(sanitizeName(operationId), true);
     }
 
-    public void setModelPropertyNaming(String naming) {
-        if ("original".equals(naming) || "camelCase".equals(naming) ||
-            "PascalCase".equals(naming) || "snake_case".equals(naming)) {
-            this.modelPropertyNaming = naming;
-        } else {
-            throw new IllegalArgumentException("Invalid model property naming '" +
-                                               naming + "'. Must be 'original', 'camelCase', " +
-                                               "'PascalCase' or 'snake_case'");
-        }
-    }
-
-    public String getModelPropertyNaming() {
-        return this.modelPropertyNaming;
-    }
-
-    public String getNameUsingModelPropertyNaming(String name) {
-        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
-            case original:    return name;
-            case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name);
-            case snake_case:  return underscore(name);
-            default:          throw new IllegalArgumentException("Invalid model property naming '" +
-                                                                 name + "'. Must be 'original', 'camelCase', " +
-                                                                 "'PascalCase' or 'snake_case'");
-        }
-
-    }
-
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("number".equals(datatype)) {
@@ -348,7 +316,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                     var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + "." + var.enumName);
                 }
             }
-        } 
+        }
 
         return objs;
     }
