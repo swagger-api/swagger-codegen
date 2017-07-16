@@ -198,8 +198,12 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
                 if let json: Any = response.result.value {
-                    let body = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
-                    completion(Response(response: response.response!, body: body), nil)
+                    do {
+                        let body = try Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
+                        completion(Response(response: response.response!, body: body), nil)
+                    } catch {
+                        completion(nil, error)
+                    }
                     return
                 } else if "" is T {
                     // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release

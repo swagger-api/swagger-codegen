@@ -12,6 +12,7 @@ protocol JSONEncodable {
 
 public enum ErrorResponse : Error {
     case Error(Int, Data?, Error)
+    case DecodeError(String)
 }
 
 open class Response<T> {
@@ -37,37 +38,48 @@ open class Response<T> {
 
 private var once = Int()
 class Decoders {
-    static fileprivate var decoders = Dictionary<String, ((AnyObject, AnyObject?) -> AnyObject)>()
+    static fileprivate var decoders = Dictionary<String, ((AnyObject, AnyObject?) throws -> AnyObject)>()
 
-    static func addDecoder<T>(clazz: T.Type, decoder: @escaping ((AnyObject, AnyObject?) -> T)) {
+    static func addDecoder<T>(clazz: T.Type, decoder: @escaping ((AnyObject, AnyObject?) throws -> T)) {
         let key = "\(T.self)"
-        decoders[key] = { decoder($0, $1) as AnyObject }
+        decoders[key] = { try decoder($0, $1) as AnyObject }
     }
 
-    static func decode<T>(clazz: T.Type, discriminator: String, source: AnyObject) -> T {
+    static func decode<T>(clazz: T.Type, discriminator: String, source: AnyObject) throws -> T {
         let key = discriminator;
-        if let decoder = decoders[key] {
-            return decoder(source, nil) as! T
-        } else {
-            fatalError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
+
+        guard let decoder = decoders[key], let decoded = try decoder(source, nil) as? T  else {
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
         }
+
+        return decoded
     }
 
-    static func decode<T>(clazz: [T].Type, source: AnyObject) -> [T] {
-        let array = source as! [AnyObject]
-        return array.map { Decoders.decode(clazz: T.self, source: $0, instance: nil) }
+    static func decode<T>(clazz: [T].Type, source: AnyObject) throws -> [T] {
+        guard let array = source as? [AnyObject] else {
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
+        }
+
+        var result = [T]()
+        for item in array {
+            result.append(try Decoders.decode(clazz: T.self, source: item, instance: nil))
+        }
+        return result
     }
 
-    static func decode<T, Key: Hashable>(clazz: [Key:T].Type, source: AnyObject) -> [Key:T] {
-        let sourceDictionary = source as! [Key: AnyObject]
+    static func decode<T, Key: Hashable>(clazz: [Key:T].Type, source: AnyObject) throws -> [Key:T] {
+        guard let sourceDictionary = source as? [Key: AnyObject] else {
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
+        }
+
         var dictionary = [Key:T]()
         for (key, value) in sourceDictionary {
-            dictionary[key] = Decoders.decode(clazz: T.self, source: value, instance: nil)
+            dictionary[key] = try Decoders.decode(clazz: T.self, source: value, instance: nil)
         }
         return dictionary
     }
 
-    static func decode<T>(clazz: T.Type, source: AnyObject, instance: AnyObject?) -> T {
+    static func decode<T>(clazz: T.Type, source: AnyObject, instance: AnyObject?) throws -> T {
         initialize()
         if T.self is Int32.Type && source is NSNumber {
             return (source as! NSNumber).int32Value as! T
@@ -86,38 +98,47 @@ class Decoders {
         }
 
         let key = "\(T.self)"
-        if let decoder = decoders[key] {
-           return decoder(source, instance) as! T
-        } else {
-            fatalError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
-        }
+        guard let decoder = decoders[key], let decoded = try decoder(source, instance) as? T else {
+           throw ErrorResponse.DecodeError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
+        } 
+
+        return decoded
     }
 
-    static func decodeOptional<T>(clazz: T.Type, source: AnyObject?) -> T? {
+    static func decodeOptional<T>(clazz: T.Type, source: AnyObject?) throws -> T? {
         if source is NSNull {
             return nil
         }
-        return source.map { (source: AnyObject) -> T in
-            Decoders.decode(clazz: clazz, source: source, instance: nil)
+        
+        guard let source = source else {
+            return nil
         }
+        
+        return try Decoders.decode(clazz: clazz, source: source, instance: nil)
     }
 
-    static func decodeOptional<T>(clazz: [T].Type, source: AnyObject?) -> [T]? {
+    static func decodeOptional<T>(clazz: [T].Type, source: AnyObject?) throws -> [T]? {
         if source is NSNull {
             return nil
         }
-        return source.map { (someSource: AnyObject) -> [T] in
-            Decoders.decode(clazz: clazz, source: someSource)
+        
+        guard let source = source else {
+            return nil
         }
+        
+        return try Decoders.decode(clazz: clazz, source: source)
     }
 
-    static func decodeOptional<T, Key: Hashable>(clazz: [Key:T].Type, source: AnyObject?) -> [Key:T]? {
+    static func decodeOptional<T, Key: Hashable>(clazz: [Key:T].Type, source: AnyObject?) throws -> [Key:T]? {
         if source is NSNull {
             return nil
         }
-        return source.map { (someSource: AnyObject) -> [Key:T] in
-            Decoders.decode(clazz: clazz, source: someSource)
+        
+        guard let source = source else {
+            return nil
         }
+        
+        return try Decoders.decode(clazz: clazz, source: source)
     }
 
     private static var __once: () = {
@@ -130,7 +151,6 @@ class Decoders {
             "yyyy-MM-dd HH:mm:ss"
         ].map { (format: String) -> DateFormatter in
             let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en_US_POSIX")
             formatter.dateFormat = format
             return formatter
         }
@@ -147,183 +167,207 @@ class Decoders {
                 // treat as a java date
                 return Date(timeIntervalSince1970: Double(sourceInt / 1000) )
             }
-            fatalError("formatter failed to parse \(source)")
+            throw ErrorResponse.DecodeError("formatter failed to parse \(source)")
         } 
 
         // Decoder for [AdditionalPropertiesClass]
-        Decoders.addDecoder(clazz: [AdditionalPropertiesClass].self) { (source: AnyObject, instance: AnyObject?) -> [AdditionalPropertiesClass] in
-            return Decoders.decode(clazz: [AdditionalPropertiesClass].self, source: source)
+        Decoders.addDecoder(clazz: [AdditionalPropertiesClass].self) { (source: AnyObject, instance: AnyObject?) throws -> [AdditionalPropertiesClass] in
+            return try Decoders.decode(clazz: [AdditionalPropertiesClass].self, source: source)
         }
         // Decoder for AdditionalPropertiesClass
-        Decoders.addDecoder(clazz: AdditionalPropertiesClass.self) { (source: AnyObject, instance: AnyObject?) -> AdditionalPropertiesClass in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: AdditionalPropertiesClass.self) { (source: AnyObject, instance: AnyObject?) throws -> AdditionalPropertiesClass in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias AdditionalPropertiesClass: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? AdditionalPropertiesClass() : instance as! AdditionalPropertiesClass
             
-            result.mapProperty = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_property"] as AnyObject?)
-            result.mapOfMapProperty = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_of_map_property"] as AnyObject?)
+            result.mapProperty = try Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_property"] as AnyObject?)
+            result.mapOfMapProperty = try Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_of_map_property"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Animal]
-        Decoders.addDecoder(clazz: [Animal].self) { (source: AnyObject, instance: AnyObject?) -> [Animal] in
-            return Decoders.decode(clazz: [Animal].self, source: source)
+        Decoders.addDecoder(clazz: [Animal].self) { (source: AnyObject, instance: AnyObject?) throws -> [Animal] in
+            return try Decoders.decode(clazz: [Animal].self, source: source)
         }
         // Decoder for Animal
-        Decoders.addDecoder(clazz: Animal.self) { (source: AnyObject, instance: AnyObject?) -> Animal in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Animal.self) { (source: AnyObject, instance: AnyObject?) throws -> Animal in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Animal: Maybe swagger file is insufficient")
+            }
             // Check discriminator to support inheritance
             if let discriminator = sourceDictionary["className"] as? String, instance == nil && discriminator != "Animal" {
-                return Decoders.decode(clazz: Animal.self, discriminator: discriminator, source: source)
+                return try Decoders.decode(clazz: Animal.self, discriminator: discriminator, source: source)
             }
             let result = instance == nil ? Animal() : instance as! Animal
             
-            result.className = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
-            result.color = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
+            result.className = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
+            result.color = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [AnimalFarm]
-        Decoders.addDecoder(clazz: [AnimalFarm].self) { (source: AnyObject, instance: AnyObject?) -> [AnimalFarm] in
-            return Decoders.decode(clazz: [AnimalFarm].self, source: source)
+        Decoders.addDecoder(clazz: [AnimalFarm].self) { (source: AnyObject, instance: AnyObject?) throws -> [AnimalFarm] in
+            return try Decoders.decode(clazz: [AnimalFarm].self, source: source)
         }
         // Decoder for AnimalFarm
-        Decoders.addDecoder(clazz: AnimalFarm.self) { (source: AnyObject, instance: AnyObject?) -> AnimalFarm in
-            let sourceArray = source as! [AnyObject]
-            return sourceArray.map({ Decoders.decode(clazz: Animal.self, source: $0, instance: nil) })
+        Decoders.addDecoder(clazz: AnimalFarm.self) { (source: AnyObject, instance: AnyObject?) throws -> AnimalFarm in
+            guard let sourceArray = source as? [AnyObject], let decoded = try Decoders.decode(clazz: Animal.self, source: sourceArray, instance: nil) else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to enum type AnimalFarm: Maybe swagger file is insufficient")
+            }
+            return decoded
         }
 
 
         // Decoder for [ApiResponse]
-        Decoders.addDecoder(clazz: [ApiResponse].self) { (source: AnyObject, instance: AnyObject?) -> [ApiResponse] in
-            return Decoders.decode(clazz: [ApiResponse].self, source: source)
+        Decoders.addDecoder(clazz: [ApiResponse].self) { (source: AnyObject, instance: AnyObject?) throws -> [ApiResponse] in
+            return try Decoders.decode(clazz: [ApiResponse].self, source: source)
         }
         // Decoder for ApiResponse
-        Decoders.addDecoder(clazz: ApiResponse.self) { (source: AnyObject, instance: AnyObject?) -> ApiResponse in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ApiResponse.self) { (source: AnyObject, instance: AnyObject?) throws -> ApiResponse in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ApiResponse: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ApiResponse() : instance as! ApiResponse
             
-            result.code = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["code"] as AnyObject?)
-            result.type = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["type"] as AnyObject?)
-            result.message = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"] as AnyObject?)
+            result.code = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["code"] as AnyObject?)
+            result.type = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["type"] as AnyObject?)
+            result.message = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["message"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [ArrayOfArrayOfNumberOnly]
-        Decoders.addDecoder(clazz: [ArrayOfArrayOfNumberOnly].self) { (source: AnyObject, instance: AnyObject?) -> [ArrayOfArrayOfNumberOnly] in
-            return Decoders.decode(clazz: [ArrayOfArrayOfNumberOnly].self, source: source)
+        Decoders.addDecoder(clazz: [ArrayOfArrayOfNumberOnly].self) { (source: AnyObject, instance: AnyObject?) throws -> [ArrayOfArrayOfNumberOnly] in
+            return try Decoders.decode(clazz: [ArrayOfArrayOfNumberOnly].self, source: source)
         }
         // Decoder for ArrayOfArrayOfNumberOnly
-        Decoders.addDecoder(clazz: ArrayOfArrayOfNumberOnly.self) { (source: AnyObject, instance: AnyObject?) -> ArrayOfArrayOfNumberOnly in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ArrayOfArrayOfNumberOnly.self) { (source: AnyObject, instance: AnyObject?) throws -> ArrayOfArrayOfNumberOnly in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ArrayOfArrayOfNumberOnly: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ArrayOfArrayOfNumberOnly() : instance as! ArrayOfArrayOfNumberOnly
             
-            result.arrayArrayNumber = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["ArrayArrayNumber"] as AnyObject?)
+            result.arrayArrayNumber = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["ArrayArrayNumber"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [ArrayOfNumberOnly]
-        Decoders.addDecoder(clazz: [ArrayOfNumberOnly].self) { (source: AnyObject, instance: AnyObject?) -> [ArrayOfNumberOnly] in
-            return Decoders.decode(clazz: [ArrayOfNumberOnly].self, source: source)
+        Decoders.addDecoder(clazz: [ArrayOfNumberOnly].self) { (source: AnyObject, instance: AnyObject?) throws -> [ArrayOfNumberOnly] in
+            return try Decoders.decode(clazz: [ArrayOfNumberOnly].self, source: source)
         }
         // Decoder for ArrayOfNumberOnly
-        Decoders.addDecoder(clazz: ArrayOfNumberOnly.self) { (source: AnyObject, instance: AnyObject?) -> ArrayOfNumberOnly in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ArrayOfNumberOnly.self) { (source: AnyObject, instance: AnyObject?) throws -> ArrayOfNumberOnly in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ArrayOfNumberOnly: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ArrayOfNumberOnly() : instance as! ArrayOfNumberOnly
             
-            result.arrayNumber = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["ArrayNumber"] as AnyObject?)
+            result.arrayNumber = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["ArrayNumber"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [ArrayTest]
-        Decoders.addDecoder(clazz: [ArrayTest].self) { (source: AnyObject, instance: AnyObject?) -> [ArrayTest] in
-            return Decoders.decode(clazz: [ArrayTest].self, source: source)
+        Decoders.addDecoder(clazz: [ArrayTest].self) { (source: AnyObject, instance: AnyObject?) throws -> [ArrayTest] in
+            return try Decoders.decode(clazz: [ArrayTest].self, source: source)
         }
         // Decoder for ArrayTest
-        Decoders.addDecoder(clazz: ArrayTest.self) { (source: AnyObject, instance: AnyObject?) -> ArrayTest in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ArrayTest.self) { (source: AnyObject, instance: AnyObject?) throws -> ArrayTest in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ArrayTest: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ArrayTest() : instance as! ArrayTest
             
-            result.arrayOfString = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_of_string"] as AnyObject?)
-            result.arrayArrayOfInteger = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_array_of_integer"] as AnyObject?)
-            result.arrayArrayOfModel = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_array_of_model"] as AnyObject?)
+            result.arrayOfString = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_of_string"] as AnyObject?)
+            result.arrayArrayOfInteger = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_array_of_integer"] as AnyObject?)
+            result.arrayArrayOfModel = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["array_array_of_model"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Capitalization]
-        Decoders.addDecoder(clazz: [Capitalization].self) { (source: AnyObject, instance: AnyObject?) -> [Capitalization] in
-            return Decoders.decode(clazz: [Capitalization].self, source: source)
+        Decoders.addDecoder(clazz: [Capitalization].self) { (source: AnyObject, instance: AnyObject?) throws -> [Capitalization] in
+            return try Decoders.decode(clazz: [Capitalization].self, source: source)
         }
         // Decoder for Capitalization
-        Decoders.addDecoder(clazz: Capitalization.self) { (source: AnyObject, instance: AnyObject?) -> Capitalization in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Capitalization.self) { (source: AnyObject, instance: AnyObject?) throws -> Capitalization in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Capitalization: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Capitalization() : instance as! Capitalization
             
-            result.smallCamel = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["smallCamel"] as AnyObject?)
-            result.capitalCamel = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["CapitalCamel"] as AnyObject?)
-            result.smallSnake = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["small_Snake"] as AnyObject?)
-            result.capitalSnake = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["Capital_Snake"] as AnyObject?)
-            result.sCAETHFlowPoints = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["SCA_ETH_Flow_Points"] as AnyObject?)
-            result.ATT_NAME = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ATT_NAME"] as AnyObject?)
+            result.smallCamel = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["smallCamel"] as AnyObject?)
+            result.capitalCamel = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["CapitalCamel"] as AnyObject?)
+            result.smallSnake = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["small_Snake"] as AnyObject?)
+            result.capitalSnake = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["Capital_Snake"] as AnyObject?)
+            result.sCAETHFlowPoints = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["SCA_ETH_Flow_Points"] as AnyObject?)
+            result.ATT_NAME = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ATT_NAME"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Category]
-        Decoders.addDecoder(clazz: [Category].self) { (source: AnyObject, instance: AnyObject?) -> [Category] in
-            return Decoders.decode(clazz: [Category].self, source: source)
+        Decoders.addDecoder(clazz: [Category].self) { (source: AnyObject, instance: AnyObject?) throws -> [Category] in
+            return try Decoders.decode(clazz: [Category].self, source: source)
         }
         // Decoder for Category
-        Decoders.addDecoder(clazz: Category.self) { (source: AnyObject, instance: AnyObject?) -> Category in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Category.self) { (source: AnyObject, instance: AnyObject?) throws -> Category in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Category: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Category() : instance as! Category
             
-            result.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
-            result.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
+            result.id = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
+            result.name = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [ClassModel]
-        Decoders.addDecoder(clazz: [ClassModel].self) { (source: AnyObject, instance: AnyObject?) -> [ClassModel] in
-            return Decoders.decode(clazz: [ClassModel].self, source: source)
+        Decoders.addDecoder(clazz: [ClassModel].self) { (source: AnyObject, instance: AnyObject?) throws -> [ClassModel] in
+            return try Decoders.decode(clazz: [ClassModel].self, source: source)
         }
         // Decoder for ClassModel
-        Decoders.addDecoder(clazz: ClassModel.self) { (source: AnyObject, instance: AnyObject?) -> ClassModel in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ClassModel.self) { (source: AnyObject, instance: AnyObject?) throws -> ClassModel in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ClassModel: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ClassModel() : instance as! ClassModel
             
-            result._class = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["_class"] as AnyObject?)
+            result._class = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["_class"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Client]
-        Decoders.addDecoder(clazz: [Client].self) { (source: AnyObject, instance: AnyObject?) -> [Client] in
-            return Decoders.decode(clazz: [Client].self, source: source)
+        Decoders.addDecoder(clazz: [Client].self) { (source: AnyObject, instance: AnyObject?) throws -> [Client] in
+            return try Decoders.decode(clazz: [Client].self, source: source)
         }
         // Decoder for Client
-        Decoders.addDecoder(clazz: Client.self) { (source: AnyObject, instance: AnyObject?) -> Client in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Client.self) { (source: AnyObject, instance: AnyObject?) throws -> Client in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Client: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Client() : instance as! Client
             
-            result.client = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["client"] as AnyObject?)
+            result.client = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["client"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [EnumArrays]
-        Decoders.addDecoder(clazz: [EnumArrays].self) { (source: AnyObject, instance: AnyObject?) -> [EnumArrays] in
-            return Decoders.decode(clazz: [EnumArrays].self, source: source)
+        Decoders.addDecoder(clazz: [EnumArrays].self) { (source: AnyObject, instance: AnyObject?) throws -> [EnumArrays] in
+            return try Decoders.decode(clazz: [EnumArrays].self, source: source)
         }
         // Decoder for EnumArrays
-        Decoders.addDecoder(clazz: EnumArrays.self) { (source: AnyObject, instance: AnyObject?) -> EnumArrays in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: EnumArrays.self) { (source: AnyObject, instance: AnyObject?) throws -> EnumArrays in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias EnumArrays: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? EnumArrays() : instance as! EnumArrays
             
             if let justSymbol = sourceDictionary["just_symbol"] as? String { 
@@ -339,27 +383,29 @@ class Decoders {
 
 
         // Decoder for [EnumClass]
-        Decoders.addDecoder(clazz: [EnumClass].self) { (source: AnyObject, instance: AnyObject?) -> [EnumClass] in
-            return Decoders.decode(clazz: [EnumClass].self, source: source)
+        Decoders.addDecoder(clazz: [EnumClass].self) { (source: AnyObject, instance: AnyObject?) throws -> [EnumClass] in
+            return try Decoders.decode(clazz: [EnumClass].self, source: source)
         }
         // Decoder for EnumClass
-        Decoders.addDecoder(clazz: EnumClass.self) { (source: AnyObject, instance: AnyObject?) -> EnumClass in
+        Decoders.addDecoder(clazz: EnumClass.self) { (source: AnyObject, instance: AnyObject?) throws -> EnumClass in
             if let source = source as? String {
                 if let result = EnumClass(rawValue: source) {
                     return result
                 }
             }
-            fatalError("Source \(source) is not convertible to enum type EnumClass: Maybe swagger file is insufficient")
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to enum type EnumClass: Maybe swagger file is insufficient")
         }
 
 
         // Decoder for [EnumTest]
-        Decoders.addDecoder(clazz: [EnumTest].self) { (source: AnyObject, instance: AnyObject?) -> [EnumTest] in
-            return Decoders.decode(clazz: [EnumTest].self, source: source)
+        Decoders.addDecoder(clazz: [EnumTest].self) { (source: AnyObject, instance: AnyObject?) throws -> [EnumTest] in
+            return try Decoders.decode(clazz: [EnumTest].self, source: source)
         }
         // Decoder for EnumTest
-        Decoders.addDecoder(clazz: EnumTest.self) { (source: AnyObject, instance: AnyObject?) -> EnumTest in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: EnumTest.self) { (source: AnyObject, instance: AnyObject?) throws -> EnumTest in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias EnumTest: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? EnumTest() : instance as! EnumTest
             
             if let enumString = sourceDictionary["enum_string"] as? String { 
@@ -374,76 +420,84 @@ class Decoders {
                 result.enumNumber = EnumTest.EnumNumber(rawValue: (enumNumber))
             }
             
-            result.outerEnum = Decoders.decodeOptional(clazz: OuterEnum.self, source: sourceDictionary["outerEnum"] as AnyObject?)
+            result.outerEnum = try Decoders.decodeOptional(clazz: OuterEnum.self, source: sourceDictionary["outerEnum"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [FormatTest]
-        Decoders.addDecoder(clazz: [FormatTest].self) { (source: AnyObject, instance: AnyObject?) -> [FormatTest] in
-            return Decoders.decode(clazz: [FormatTest].self, source: source)
+        Decoders.addDecoder(clazz: [FormatTest].self) { (source: AnyObject, instance: AnyObject?) throws -> [FormatTest] in
+            return try Decoders.decode(clazz: [FormatTest].self, source: source)
         }
         // Decoder for FormatTest
-        Decoders.addDecoder(clazz: FormatTest.self) { (source: AnyObject, instance: AnyObject?) -> FormatTest in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: FormatTest.self) { (source: AnyObject, instance: AnyObject?) throws -> FormatTest in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias FormatTest: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? FormatTest() : instance as! FormatTest
             
-            result.integer = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["integer"] as AnyObject?)
-            result.int32 = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["int32"] as AnyObject?)
-            result.int64 = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["int64"] as AnyObject?)
-            result.number = Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["number"] as AnyObject?)
-            result.float = Decoders.decodeOptional(clazz: Float.self, source: sourceDictionary["float"] as AnyObject?)
-            result.double = Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["double"] as AnyObject?)
-            result.string = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["string"] as AnyObject?)
-            result.byte = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["byte"] as AnyObject?)
-            result.binary = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["binary"] as AnyObject?)
-            result.date = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["date"] as AnyObject?)
-            result.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
-            result.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
-            result.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)
+            result.integer = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["integer"] as AnyObject?)
+            result.int32 = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["int32"] as AnyObject?)
+            result.int64 = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["int64"] as AnyObject?)
+            result.number = try Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["number"] as AnyObject?)
+            result.float = try Decoders.decodeOptional(clazz: Float.self, source: sourceDictionary["float"] as AnyObject?)
+            result.double = try Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["double"] as AnyObject?)
+            result.string = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["string"] as AnyObject?)
+            result.byte = try Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["byte"] as AnyObject?)
+            result.binary = try Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["binary"] as AnyObject?)
+            result.date = try Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["date"] as AnyObject?)
+            result.dateTime = try Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
+            result.uuid = try Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
+            result.password = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [HasOnlyReadOnly]
-        Decoders.addDecoder(clazz: [HasOnlyReadOnly].self) { (source: AnyObject, instance: AnyObject?) -> [HasOnlyReadOnly] in
-            return Decoders.decode(clazz: [HasOnlyReadOnly].self, source: source)
+        Decoders.addDecoder(clazz: [HasOnlyReadOnly].self) { (source: AnyObject, instance: AnyObject?) throws -> [HasOnlyReadOnly] in
+            return try Decoders.decode(clazz: [HasOnlyReadOnly].self, source: source)
         }
         // Decoder for HasOnlyReadOnly
-        Decoders.addDecoder(clazz: HasOnlyReadOnly.self) { (source: AnyObject, instance: AnyObject?) -> HasOnlyReadOnly in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: HasOnlyReadOnly.self) { (source: AnyObject, instance: AnyObject?) throws -> HasOnlyReadOnly in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias HasOnlyReadOnly: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? HasOnlyReadOnly() : instance as! HasOnlyReadOnly
             
-            result.bar = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["bar"] as AnyObject?)
-            result.foo = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["foo"] as AnyObject?)
+            result.bar = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["bar"] as AnyObject?)
+            result.foo = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["foo"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [List]
-        Decoders.addDecoder(clazz: [List].self) { (source: AnyObject, instance: AnyObject?) -> [List] in
-            return Decoders.decode(clazz: [List].self, source: source)
+        Decoders.addDecoder(clazz: [List].self) { (source: AnyObject, instance: AnyObject?) throws -> [List] in
+            return try Decoders.decode(clazz: [List].self, source: source)
         }
         // Decoder for List
-        Decoders.addDecoder(clazz: List.self) { (source: AnyObject, instance: AnyObject?) -> List in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: List.self) { (source: AnyObject, instance: AnyObject?) throws -> List in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias List: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? List() : instance as! List
             
-            result._123List = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["123-list"] as AnyObject?)
+            result._123List = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["123-list"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [MapTest]
-        Decoders.addDecoder(clazz: [MapTest].self) { (source: AnyObject, instance: AnyObject?) -> [MapTest] in
-            return Decoders.decode(clazz: [MapTest].self, source: source)
+        Decoders.addDecoder(clazz: [MapTest].self) { (source: AnyObject, instance: AnyObject?) throws -> [MapTest] in
+            return try Decoders.decode(clazz: [MapTest].self, source: source)
         }
         // Decoder for MapTest
-        Decoders.addDecoder(clazz: MapTest.self) { (source: AnyObject, instance: AnyObject?) -> MapTest in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: MapTest.self) { (source: AnyObject, instance: AnyObject?) throws -> MapTest in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias MapTest: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? MapTest() : instance as! MapTest
             
-            result.mapMapOfString = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_map_of_string"] as AnyObject?)
+            result.mapMapOfString = try Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_map_of_string"] as AnyObject?)
             if let mapOfEnumString = sourceDictionary["map_of_enum_string"] as? [String:String] { //TODO: handle enum map scenario
             }
             
@@ -452,173 +506,187 @@ class Decoders {
 
 
         // Decoder for [MixedPropertiesAndAdditionalPropertiesClass]
-        Decoders.addDecoder(clazz: [MixedPropertiesAndAdditionalPropertiesClass].self) { (source: AnyObject, instance: AnyObject?) -> [MixedPropertiesAndAdditionalPropertiesClass] in
-            return Decoders.decode(clazz: [MixedPropertiesAndAdditionalPropertiesClass].self, source: source)
+        Decoders.addDecoder(clazz: [MixedPropertiesAndAdditionalPropertiesClass].self) { (source: AnyObject, instance: AnyObject?) throws -> [MixedPropertiesAndAdditionalPropertiesClass] in
+            return try Decoders.decode(clazz: [MixedPropertiesAndAdditionalPropertiesClass].self, source: source)
         }
         // Decoder for MixedPropertiesAndAdditionalPropertiesClass
-        Decoders.addDecoder(clazz: MixedPropertiesAndAdditionalPropertiesClass.self) { (source: AnyObject, instance: AnyObject?) -> MixedPropertiesAndAdditionalPropertiesClass in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: MixedPropertiesAndAdditionalPropertiesClass.self) { (source: AnyObject, instance: AnyObject?) throws -> MixedPropertiesAndAdditionalPropertiesClass in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias MixedPropertiesAndAdditionalPropertiesClass: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? MixedPropertiesAndAdditionalPropertiesClass() : instance as! MixedPropertiesAndAdditionalPropertiesClass
             
-            result.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
-            result.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
-            result.map = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map"] as AnyObject?)
+            result.uuid = try Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
+            result.dateTime = try Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
+            result.map = try Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Model200Response]
-        Decoders.addDecoder(clazz: [Model200Response].self) { (source: AnyObject, instance: AnyObject?) -> [Model200Response] in
-            return Decoders.decode(clazz: [Model200Response].self, source: source)
+        Decoders.addDecoder(clazz: [Model200Response].self) { (source: AnyObject, instance: AnyObject?) throws -> [Model200Response] in
+            return try Decoders.decode(clazz: [Model200Response].self, source: source)
         }
         // Decoder for Model200Response
-        Decoders.addDecoder(clazz: Model200Response.self) { (source: AnyObject, instance: AnyObject?) -> Model200Response in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Model200Response.self) { (source: AnyObject, instance: AnyObject?) throws -> Model200Response in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Model200Response: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Model200Response() : instance as! Model200Response
             
-            result.name = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["name"] as AnyObject?)
-            result._class = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["class"] as AnyObject?)
+            result.name = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["name"] as AnyObject?)
+            result._class = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["class"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Name]
-        Decoders.addDecoder(clazz: [Name].self) { (source: AnyObject, instance: AnyObject?) -> [Name] in
-            return Decoders.decode(clazz: [Name].self, source: source)
+        Decoders.addDecoder(clazz: [Name].self) { (source: AnyObject, instance: AnyObject?) throws -> [Name] in
+            return try Decoders.decode(clazz: [Name].self, source: source)
         }
         // Decoder for Name
-        Decoders.addDecoder(clazz: Name.self) { (source: AnyObject, instance: AnyObject?) -> Name in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Name.self) { (source: AnyObject, instance: AnyObject?) throws -> Name in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Name: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Name() : instance as! Name
             
-            result.name = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["name"] as AnyObject?)
-            result.snakeCase = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["snake_case"] as AnyObject?)
-            result.property = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"] as AnyObject?)
-            result._123Number = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["123Number"] as AnyObject?)
+            result.name = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["name"] as AnyObject?)
+            result.snakeCase = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["snake_case"] as AnyObject?)
+            result.property = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["property"] as AnyObject?)
+            result._123Number = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["123Number"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [NumberOnly]
-        Decoders.addDecoder(clazz: [NumberOnly].self) { (source: AnyObject, instance: AnyObject?) -> [NumberOnly] in
-            return Decoders.decode(clazz: [NumberOnly].self, source: source)
+        Decoders.addDecoder(clazz: [NumberOnly].self) { (source: AnyObject, instance: AnyObject?) throws -> [NumberOnly] in
+            return try Decoders.decode(clazz: [NumberOnly].self, source: source)
         }
         // Decoder for NumberOnly
-        Decoders.addDecoder(clazz: NumberOnly.self) { (source: AnyObject, instance: AnyObject?) -> NumberOnly in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: NumberOnly.self) { (source: AnyObject, instance: AnyObject?) throws -> NumberOnly in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias NumberOnly: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? NumberOnly() : instance as! NumberOnly
             
-            result.justNumber = Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["JustNumber"] as AnyObject?)
+            result.justNumber = try Decoders.decodeOptional(clazz: Double.self, source: sourceDictionary["JustNumber"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Order]
-        Decoders.addDecoder(clazz: [Order].self) { (source: AnyObject, instance: AnyObject?) -> [Order] in
-            return Decoders.decode(clazz: [Order].self, source: source)
+        Decoders.addDecoder(clazz: [Order].self) { (source: AnyObject, instance: AnyObject?) throws -> [Order] in
+            return try Decoders.decode(clazz: [Order].self, source: source)
         }
         // Decoder for Order
-        Decoders.addDecoder(clazz: Order.self) { (source: AnyObject, instance: AnyObject?) -> Order in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Order.self) { (source: AnyObject, instance: AnyObject?) throws -> Order in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Order: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Order() : instance as! Order
             
-            result.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
-            result.petId = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["petId"] as AnyObject?)
-            result.quantity = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["quantity"] as AnyObject?)
-            result.shipDate = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["shipDate"] as AnyObject?)
+            result.id = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
+            result.petId = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["petId"] as AnyObject?)
+            result.quantity = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["quantity"] as AnyObject?)
+            result.shipDate = try Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["shipDate"] as AnyObject?)
             if let status = sourceDictionary["status"] as? String { 
                 result.status = Order.Status(rawValue: (status))
             }
             
-            result.complete = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["complete"] as AnyObject?)
+            result.complete = try Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["complete"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [OuterBoolean]
-        Decoders.addDecoder(clazz: [OuterBoolean].self) { (source: AnyObject, instance: AnyObject?) -> [OuterBoolean] in
-            return Decoders.decode(clazz: [OuterBoolean].self, source: source)
+        Decoders.addDecoder(clazz: [OuterBoolean].self) { (source: AnyObject, instance: AnyObject?) throws -> [OuterBoolean] in
+            return try Decoders.decode(clazz: [OuterBoolean].self, source: source)
         }
         // Decoder for OuterBoolean
-        Decoders.addDecoder(clazz: OuterBoolean.self) { (source: AnyObject, instance: AnyObject?) -> OuterBoolean in
+        Decoders.addDecoder(clazz: OuterBoolean.self) { (source: AnyObject, instance: AnyObject?) throws -> OuterBoolean in
             if let source = source as? Bool {
                 return source
             }
-            fatalError("Source \(source) is not convertible to typealias OuterBoolean: Maybe swagger file is insufficient")
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias OuterBoolean: Maybe swagger file is insufficient")
         }
 
 
         // Decoder for [OuterComposite]
-        Decoders.addDecoder(clazz: [OuterComposite].self) { (source: AnyObject, instance: AnyObject?) -> [OuterComposite] in
-            return Decoders.decode(clazz: [OuterComposite].self, source: source)
+        Decoders.addDecoder(clazz: [OuterComposite].self) { (source: AnyObject, instance: AnyObject?) throws -> [OuterComposite] in
+            return try Decoders.decode(clazz: [OuterComposite].self, source: source)
         }
         // Decoder for OuterComposite
-        Decoders.addDecoder(clazz: OuterComposite.self) { (source: AnyObject, instance: AnyObject?) -> OuterComposite in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: OuterComposite.self) { (source: AnyObject, instance: AnyObject?) throws -> OuterComposite in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias OuterComposite: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? OuterComposite() : instance as! OuterComposite
             
-            result.myNumber = Decoders.decodeOptional(clazz: OuterNumber.self, source: sourceDictionary["my_number"] as AnyObject?)
-            result.myString = Decoders.decodeOptional(clazz: OuterString.self, source: sourceDictionary["my_string"] as AnyObject?)
-            result.myBoolean = Decoders.decodeOptional(clazz: OuterBoolean.self, source: sourceDictionary["my_boolean"] as AnyObject?)
+            result.myNumber = try Decoders.decodeOptional(clazz: OuterNumber.self, source: sourceDictionary["my_number"] as AnyObject?)
+            result.myString = try Decoders.decodeOptional(clazz: OuterString.self, source: sourceDictionary["my_string"] as AnyObject?)
+            result.myBoolean = try Decoders.decodeOptional(clazz: OuterBoolean.self, source: sourceDictionary["my_boolean"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [OuterEnum]
-        Decoders.addDecoder(clazz: [OuterEnum].self) { (source: AnyObject, instance: AnyObject?) -> [OuterEnum] in
-            return Decoders.decode(clazz: [OuterEnum].self, source: source)
+        Decoders.addDecoder(clazz: [OuterEnum].self) { (source: AnyObject, instance: AnyObject?) throws -> [OuterEnum] in
+            return try Decoders.decode(clazz: [OuterEnum].self, source: source)
         }
         // Decoder for OuterEnum
-        Decoders.addDecoder(clazz: OuterEnum.self) { (source: AnyObject, instance: AnyObject?) -> OuterEnum in
+        Decoders.addDecoder(clazz: OuterEnum.self) { (source: AnyObject, instance: AnyObject?) throws -> OuterEnum in
             if let source = source as? String {
                 if let result = OuterEnum(rawValue: source) {
                     return result
                 }
             }
-            fatalError("Source \(source) is not convertible to enum type OuterEnum: Maybe swagger file is insufficient")
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to enum type OuterEnum: Maybe swagger file is insufficient")
         }
 
 
         // Decoder for [OuterNumber]
-        Decoders.addDecoder(clazz: [OuterNumber].self) { (source: AnyObject, instance: AnyObject?) -> [OuterNumber] in
-            return Decoders.decode(clazz: [OuterNumber].self, source: source)
+        Decoders.addDecoder(clazz: [OuterNumber].self) { (source: AnyObject, instance: AnyObject?) throws -> [OuterNumber] in
+            return try Decoders.decode(clazz: [OuterNumber].self, source: source)
         }
         // Decoder for OuterNumber
-        Decoders.addDecoder(clazz: OuterNumber.self) { (source: AnyObject, instance: AnyObject?) -> OuterNumber in
+        Decoders.addDecoder(clazz: OuterNumber.self) { (source: AnyObject, instance: AnyObject?) throws -> OuterNumber in
             if let source = source as? Double {
                 return source
             }
-            fatalError("Source \(source) is not convertible to typealias OuterNumber: Maybe swagger file is insufficient")
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias OuterNumber: Maybe swagger file is insufficient")
         }
 
 
         // Decoder for [OuterString]
-        Decoders.addDecoder(clazz: [OuterString].self) { (source: AnyObject, instance: AnyObject?) -> [OuterString] in
-            return Decoders.decode(clazz: [OuterString].self, source: source)
+        Decoders.addDecoder(clazz: [OuterString].self) { (source: AnyObject, instance: AnyObject?) throws -> [OuterString] in
+            return try Decoders.decode(clazz: [OuterString].self, source: source)
         }
         // Decoder for OuterString
-        Decoders.addDecoder(clazz: OuterString.self) { (source: AnyObject, instance: AnyObject?) -> OuterString in
+        Decoders.addDecoder(clazz: OuterString.self) { (source: AnyObject, instance: AnyObject?) throws -> OuterString in
             if let source = source as? String {
                 return source
             }
-            fatalError("Source \(source) is not convertible to typealias OuterString: Maybe swagger file is insufficient")
+            throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias OuterString: Maybe swagger file is insufficient")
         }
 
 
         // Decoder for [Pet]
-        Decoders.addDecoder(clazz: [Pet].self) { (source: AnyObject, instance: AnyObject?) -> [Pet] in
-            return Decoders.decode(clazz: [Pet].self, source: source)
+        Decoders.addDecoder(clazz: [Pet].self) { (source: AnyObject, instance: AnyObject?) throws -> [Pet] in
+            return try Decoders.decode(clazz: [Pet].self, source: source)
         }
         // Decoder for Pet
-        Decoders.addDecoder(clazz: Pet.self) { (source: AnyObject, instance: AnyObject?) -> Pet in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Pet.self) { (source: AnyObject, instance: AnyObject?) throws -> Pet in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Pet: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Pet() : instance as! Pet
             
-            result.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
-            result.category = Decoders.decodeOptional(clazz: Category.self, source: sourceDictionary["category"] as AnyObject?)
-            result.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
-            result.photoUrls = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"] as AnyObject?)
-            result.tags = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"] as AnyObject?)
+            result.id = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
+            result.category = try Decoders.decodeOptional(clazz: Category.self, source: sourceDictionary["category"] as AnyObject?)
+            result.name = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
+            result.photoUrls = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"] as AnyObject?)
+            result.tags = try Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"] as AnyObject?)
             if let status = sourceDictionary["status"] as? String { 
                 result.status = Pet.Status(rawValue: (status))
             }
@@ -628,118 +696,132 @@ class Decoders {
 
 
         // Decoder for [ReadOnlyFirst]
-        Decoders.addDecoder(clazz: [ReadOnlyFirst].self) { (source: AnyObject, instance: AnyObject?) -> [ReadOnlyFirst] in
-            return Decoders.decode(clazz: [ReadOnlyFirst].self, source: source)
+        Decoders.addDecoder(clazz: [ReadOnlyFirst].self) { (source: AnyObject, instance: AnyObject?) throws -> [ReadOnlyFirst] in
+            return try Decoders.decode(clazz: [ReadOnlyFirst].self, source: source)
         }
         // Decoder for ReadOnlyFirst
-        Decoders.addDecoder(clazz: ReadOnlyFirst.self) { (source: AnyObject, instance: AnyObject?) -> ReadOnlyFirst in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: ReadOnlyFirst.self) { (source: AnyObject, instance: AnyObject?) throws -> ReadOnlyFirst in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias ReadOnlyFirst: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? ReadOnlyFirst() : instance as! ReadOnlyFirst
             
-            result.bar = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["bar"] as AnyObject?)
-            result.baz = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["baz"] as AnyObject?)
+            result.bar = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["bar"] as AnyObject?)
+            result.baz = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["baz"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Return]
-        Decoders.addDecoder(clazz: [Return].self) { (source: AnyObject, instance: AnyObject?) -> [Return] in
-            return Decoders.decode(clazz: [Return].self, source: source)
+        Decoders.addDecoder(clazz: [Return].self) { (source: AnyObject, instance: AnyObject?) throws -> [Return] in
+            return try Decoders.decode(clazz: [Return].self, source: source)
         }
         // Decoder for Return
-        Decoders.addDecoder(clazz: Return.self) { (source: AnyObject, instance: AnyObject?) -> Return in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Return.self) { (source: AnyObject, instance: AnyObject?) throws -> Return in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Return: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Return() : instance as! Return
             
-            result._return = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["return"] as AnyObject?)
+            result._return = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["return"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [SpecialModelName]
-        Decoders.addDecoder(clazz: [SpecialModelName].self) { (source: AnyObject, instance: AnyObject?) -> [SpecialModelName] in
-            return Decoders.decode(clazz: [SpecialModelName].self, source: source)
+        Decoders.addDecoder(clazz: [SpecialModelName].self) { (source: AnyObject, instance: AnyObject?) throws -> [SpecialModelName] in
+            return try Decoders.decode(clazz: [SpecialModelName].self, source: source)
         }
         // Decoder for SpecialModelName
-        Decoders.addDecoder(clazz: SpecialModelName.self) { (source: AnyObject, instance: AnyObject?) -> SpecialModelName in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: SpecialModelName.self) { (source: AnyObject, instance: AnyObject?) throws -> SpecialModelName in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias SpecialModelName: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? SpecialModelName() : instance as! SpecialModelName
             
-            result.specialPropertyName = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["$special[property.name]"] as AnyObject?)
+            result.specialPropertyName = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["$special[property.name]"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Tag]
-        Decoders.addDecoder(clazz: [Tag].self) { (source: AnyObject, instance: AnyObject?) -> [Tag] in
-            return Decoders.decode(clazz: [Tag].self, source: source)
+        Decoders.addDecoder(clazz: [Tag].self) { (source: AnyObject, instance: AnyObject?) throws -> [Tag] in
+            return try Decoders.decode(clazz: [Tag].self, source: source)
         }
         // Decoder for Tag
-        Decoders.addDecoder(clazz: Tag.self) { (source: AnyObject, instance: AnyObject?) -> Tag in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Tag.self) { (source: AnyObject, instance: AnyObject?) throws -> Tag in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Tag: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Tag() : instance as! Tag
             
-            result.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
-            result.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
+            result.id = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
+            result.name = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [User]
-        Decoders.addDecoder(clazz: [User].self) { (source: AnyObject, instance: AnyObject?) -> [User] in
-            return Decoders.decode(clazz: [User].self, source: source)
+        Decoders.addDecoder(clazz: [User].self) { (source: AnyObject, instance: AnyObject?) throws -> [User] in
+            return try Decoders.decode(clazz: [User].self, source: source)
         }
         // Decoder for User
-        Decoders.addDecoder(clazz: User.self) { (source: AnyObject, instance: AnyObject?) -> User in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: User.self) { (source: AnyObject, instance: AnyObject?) throws -> User in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias User: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? User() : instance as! User
             
-            result.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
-            result.username = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["username"] as AnyObject?)
-            result.firstName = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["firstName"] as AnyObject?)
-            result.lastName = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["lastName"] as AnyObject?)
-            result.email = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["email"] as AnyObject?)
-            result.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)
-            result.phone = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["phone"] as AnyObject?)
-            result.userStatus = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["userStatus"] as AnyObject?)
+            result.id = try Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"] as AnyObject?)
+            result.username = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["username"] as AnyObject?)
+            result.firstName = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["firstName"] as AnyObject?)
+            result.lastName = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["lastName"] as AnyObject?)
+            result.email = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["email"] as AnyObject?)
+            result.password = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)
+            result.phone = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["phone"] as AnyObject?)
+            result.userStatus = try Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["userStatus"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Cat]
-        Decoders.addDecoder(clazz: [Cat].self) { (source: AnyObject, instance: AnyObject?) -> [Cat] in
-            return Decoders.decode(clazz: [Cat].self, source: source)
+        Decoders.addDecoder(clazz: [Cat].self) { (source: AnyObject, instance: AnyObject?) throws -> [Cat] in
+            return try Decoders.decode(clazz: [Cat].self, source: source)
         }
         // Decoder for Cat
-        Decoders.addDecoder(clazz: Cat.self) { (source: AnyObject, instance: AnyObject?) -> Cat in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Cat.self) { (source: AnyObject, instance: AnyObject?) throws -> Cat in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Cat: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Cat() : instance as! Cat
             if decoders["\(Animal.self)"] != nil {
-              _ = Decoders.decode(clazz: Animal.self, source: source, instance: result)
+              _ = try Decoders.decode(clazz: Animal.self, source: source, instance: result)
             }
             
-            result.className = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
-            result.color = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
-            result.declawed = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["declawed"] as AnyObject?)
+            result.className = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
+            result.color = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
+            result.declawed = try Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["declawed"] as AnyObject?)
             return result
         }
 
 
         // Decoder for [Dog]
-        Decoders.addDecoder(clazz: [Dog].self) { (source: AnyObject, instance: AnyObject?) -> [Dog] in
-            return Decoders.decode(clazz: [Dog].self, source: source)
+        Decoders.addDecoder(clazz: [Dog].self) { (source: AnyObject, instance: AnyObject?) throws -> [Dog] in
+            return try Decoders.decode(clazz: [Dog].self, source: source)
         }
         // Decoder for Dog
-        Decoders.addDecoder(clazz: Dog.self) { (source: AnyObject, instance: AnyObject?) -> Dog in
-            let sourceDictionary = source as! [AnyHashable: Any]
+        Decoders.addDecoder(clazz: Dog.self) { (source: AnyObject, instance: AnyObject?) throws -> Dog in
+            guard let sourceDictionary = source as? [AnyHashable: Any] else {
+                throw ErrorResponse.DecodeError("Source \(source) is not convertible to typealias Dog: Maybe swagger file is insufficient")
+            }
             let result = instance == nil ? Dog() : instance as! Dog
             if decoders["\(Animal.self)"] != nil {
-              _ = Decoders.decode(clazz: Animal.self, source: source, instance: result)
+              _ = try Decoders.decode(clazz: Animal.self, source: source, instance: result)
             }
             
-            result.className = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
-            result.color = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
-            result.breed = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["breed"] as AnyObject?)
+            result.className = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["className"] as AnyObject?)
+            result.color = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["color"] as AnyObject?)
+            result.breed = try Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["breed"] as AnyObject?)
             return result
         }
     }()
