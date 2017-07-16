@@ -107,7 +107,7 @@ public interface FakeApi extends ApiClient.Api {
     "Content-Type: application/xml; charset&#x3D;utf-8",
     "Accept: application/xml; charset&#x3D;utf-8,application/json; charset&#x3D;utf-8",
   })
-  void testEndpointParameters(@Param("number") BigDecimal number, @Param("_double") Double _double, @Param("patternWithoutDelimiter") String patternWithoutDelimiter, @Param("_byte") byte[] _byte, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("_float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") DateTime dateTime, @Param("password") String password, @Param("paramCallback") String paramCallback);
+  void testEndpointParameters(@Param("number") BigDecimal number, @Param("double") Double _double, @Param("pattern_without_delimiter") String patternWithoutDelimiter, @Param("byte") byte[] _byte, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") DateTime dateTime, @Param("password") String password, @Param("callback") String paramCallback);
 
   /**
    * To test enum parameters
@@ -129,7 +129,7 @@ public interface FakeApi extends ApiClient.Api {
     
     "enum_header_string: {enumHeaderString}"
   })
-  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryStringArray") List<String> enumQueryStringArray, @Param("enumQueryString") String enumQueryString, @Param("enumQueryInteger") Integer enumQueryInteger, @Param("enumQueryDouble") Double enumQueryDouble);
+  void testEnumParameters(@Param("enum_form_string_array") List<String> enumFormStringArray, @Param("enum_form_string") String enumFormString, @Param("enum_header_string_array") List<String> enumHeaderStringArray, @Param("enum_header_string") String enumHeaderString, @Param("enum_query_string_array") List<String> enumQueryStringArray, @Param("enum_query_string") String enumQueryString, @Param("enum_query_integer") Integer enumQueryInteger, @Param("enum_query_double") Double enumQueryDouble);
 
   /**
    * To test enum parameters
