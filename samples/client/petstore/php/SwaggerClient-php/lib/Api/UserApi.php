@@ -59,6 +59,11 @@ class UserApi
     protected $config;
 
     /**
+     * @var string
+     */
+    protected $specifiedReturnType;
+
+    /**
      * @param ClientInterface $client
      * @param Configuration $config
      * @param HeaderSelector $selector
@@ -79,6 +84,40 @@ class UserApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @params string $returnType
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function setReturnType($returnType)
+    {
+        if (!class_exists($returnType)) {
+            throw new \InvalidArgumentException($returnType . ' is not exists.');
+        }
+
+        return $this->specifiedReturnType = $returnType;
+    }
+
+    /**
+     * @params string $returnType
+     * @return string
+     */
+    protected function hydrationType($returnType)
+    {
+        if (!$this->specifiedReturnType) {
+            return $returnType;
+        }
+
+        $shouldReturnAsArray = strcasecmp(substr($returnType, -2), '[]') === 0;
+        $default = $shouldReturnAsArray ? substr($returnType, 0, strlen($returnType) - 2) : $returnType;
+
+        if (!is_subclass_of($this->specifiedReturnType, $default)) {
+            return $returnType;
+        }
+
+        return $this->specifiedReturnType . ($shouldReturnAsArray ? '[]' : '');
     }
 
     /**
@@ -913,7 +952,7 @@ class UserApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -971,7 +1010,7 @@ class UserApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1139,7 +1178,7 @@ class UserApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1199,7 +1238,7 @@ class UserApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
