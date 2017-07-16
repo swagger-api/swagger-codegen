@@ -72,8 +72,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Order</returns>
-        Order GetOrderById (long? orderId);
+        /// <returns>IO.Swagger.Model.Order</returns>
+        IO.Swagger.Model.Order GetOrderById (long? orderId);
 
         /// <summary>
         /// Find purchase order by ID
@@ -83,8 +83,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>ApiResponse of Order</returns>
-        ApiResponse<Order> GetOrderByIdWithHttpInfo (long? orderId);
+        /// <returns>ApiResponse of IO.Swagger.Model.Order</returns>
+        ApiResponse<IO.Swagger.Model.Order> GetOrderByIdWithHttpInfo (long? orderId);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -93,8 +93,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Order</returns>
-        Order PlaceOrder (Order body);
+        /// <returns>IO.Swagger.Model.Order</returns>
+        IO.Swagger.Model.Order PlaceOrder (IO.Swagger.Model.Order body);
 
         /// <summary>
         /// Place an order for a pet
@@ -104,8 +104,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>ApiResponse of Order</returns>
-        ApiResponse<Order> PlaceOrderWithHttpInfo (Order body);
+        /// <returns>ApiResponse of IO.Swagger.Model.Order</returns>
+        ApiResponse<IO.Swagger.Model.Order> PlaceOrderWithHttpInfo (IO.Swagger.Model.Order body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -156,8 +156,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId);
+        /// <returns>Task of IO.Swagger.Model.Order</returns>
+        System.Threading.Tasks.Task<IO.Swagger.Model.Order> GetOrderByIdAsync (long? orderId);
 
         /// <summary>
         /// Find purchase order by ID
@@ -167,8 +167,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId);
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Order)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -177,8 +177,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body);
+        /// <returns>Task of IO.Swagger.Model.Order</returns>
+        System.Threading.Tasks.Task<IO.Swagger.Model.Order> PlaceOrderAsync (IO.Swagger.Model.Order body);
 
         /// <summary>
         /// Place an order for a pet
@@ -188,8 +188,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body);
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Order)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Order>> PlaceOrderAsyncWithHttpInfo (IO.Swagger.Model.Order body);
         #endregion Asynchronous Operations
     }
 
@@ -572,10 +572,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Order</returns>
-        public Order GetOrderById (long? orderId)
+        /// <returns>IO.Swagger.Model.Order</returns>
+        public IO.Swagger.Model.Order GetOrderById (long? orderId)
         {
-             ApiResponse<Order> localVarResponse = GetOrderByIdWithHttpInfo(orderId);
+             ApiResponse<IO.Swagger.Model.Order> localVarResponse = GetOrderByIdWithHttpInfo(orderId);
              return localVarResponse.Data;
         }
 
@@ -584,8 +584,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>ApiResponse of Order</returns>
-        public ApiResponse< Order > GetOrderByIdWithHttpInfo (long? orderId)
+        /// <returns>ApiResponse of IO.Swagger.Model.Order</returns>
+        public ApiResponse< IO.Swagger.Model.Order > GetOrderByIdWithHttpInfo (long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -629,9 +629,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (IO.Swagger.Model.Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Order)));
         }
 
         /// <summary>
@@ -639,10 +639,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId)
+        /// <returns>Task of IO.Swagger.Model.Order</returns>
+        public async System.Threading.Tasks.Task<IO.Swagger.Model.Order> GetOrderByIdAsync (long? orderId)
         {
-             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
+             ApiResponse<IO.Swagger.Model.Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
              return localVarResponse.Data;
 
         }
@@ -652,8 +652,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
-        /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Order)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -697,9 +697,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (IO.Swagger.Model.Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Order)));
         }
 
         /// <summary>
@@ -707,10 +707,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Order</returns>
-        public Order PlaceOrder (Order body)
+        /// <returns>IO.Swagger.Model.Order</returns>
+        public IO.Swagger.Model.Order PlaceOrder (IO.Swagger.Model.Order body)
         {
-             ApiResponse<Order> localVarResponse = PlaceOrderWithHttpInfo(body);
+             ApiResponse<IO.Swagger.Model.Order> localVarResponse = PlaceOrderWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -719,8 +719,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>ApiResponse of Order</returns>
-        public ApiResponse< Order > PlaceOrderWithHttpInfo (Order body)
+        /// <returns>ApiResponse of IO.Swagger.Model.Order</returns>
+        public ApiResponse< IO.Swagger.Model.Order > PlaceOrderWithHttpInfo (IO.Swagger.Model.Order body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -771,9 +771,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (IO.Swagger.Model.Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Order)));
         }
 
         /// <summary>
@@ -781,10 +781,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body)
+        /// <returns>Task of IO.Swagger.Model.Order</returns>
+        public async System.Threading.Tasks.Task<IO.Swagger.Model.Order> PlaceOrderAsync (IO.Swagger.Model.Order body)
         {
-             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
+             ApiResponse<IO.Swagger.Model.Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -794,8 +794,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
-        /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body)
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Order)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Order>> PlaceOrderAsyncWithHttpInfo (IO.Swagger.Model.Order body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -846,9 +846,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (IO.Swagger.Model.Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Order)));
         }
 
     }

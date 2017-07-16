@@ -239,9 +239,9 @@ public class CSharpModelTest {
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
-        Assert.assertEquals(property1.datatype, "Children");
+        Assert.assertEquals(property1.datatype, "IO.Swagger.Children");
         Assert.assertEquals(property1.name, "Children");
-        Assert.assertEquals(property1.baseType, "Children");
+        Assert.assertEquals(property1.baseType, "IO.Swagger.Children");
         Assert.assertFalse(property1.required);
         Assert.assertTrue(property1.isNotContainer);
     }
@@ -262,8 +262,8 @@ public class CSharpModelTest {
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
-        Assert.assertEquals(property1.complexType, "Children");
-        Assert.assertEquals(property1.datatype, "List<Children>");
+        Assert.assertEquals(property1.complexType, "IO.Swagger.Children");
+        Assert.assertEquals(property1.datatype, "List<IO.Swagger.Children>");
         Assert.assertEquals(property1.name, "Children");
         Assert.assertEquals(property1.baseType, "List");
         Assert.assertEquals(property1.containerType, "array");
@@ -284,12 +284,12 @@ public class CSharpModelTest {
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
+        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("IO.Swagger.Children")).size(), 1);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
-        Assert.assertEquals(property1.complexType, "Children");
-        Assert.assertEquals(property1.datatype, "Dictionary<string, Children>");
+        Assert.assertEquals(property1.complexType, "IO.Swagger.Children");
+        Assert.assertEquals(property1.datatype, "Dictionary<string, IO.Swagger.Children>");
         Assert.assertEquals(property1.name, "Children");
         Assert.assertEquals(property1.baseType, "Dictionary");
         Assert.assertEquals(property1.containerType, "map");
@@ -310,9 +310,9 @@ public class CSharpModelTest {
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "an array model");
         Assert.assertEquals(cm.vars.size(), 0);
-        Assert.assertEquals(cm.parent, "List<Children>");
+        Assert.assertEquals(cm.parent, "List<IO.Swagger.Children>");
         Assert.assertEquals(cm.imports.size(), 1);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
+        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("IO.Swagger.Children")).size(), 1);
     }
 
     @Test(description = "convert an map model")
@@ -327,8 +327,8 @@ public class CSharpModelTest {
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a map model");
         Assert.assertEquals(cm.vars.size(), 0);
-        Assert.assertEquals(cm.parent, "Dictionary<String, Children>");
+        Assert.assertEquals(cm.parent, "Dictionary<String, IO.Swagger.Children>");
         Assert.assertEquals(cm.imports.size(), 1);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
+        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("IO.Swagger.Children")).size(), 1);
     }
 }

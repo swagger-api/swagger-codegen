@@ -68,6 +68,22 @@ namespace IO.Swagger.Client
             Timeout = timeout;
         }
 
+	/// <summary>
+        /// Gets the default base path of the rest API.
+        ///</summary>
+        private	static String _defaultBasePath = "http://petstore.swagger.io:80/v2";
+
+        public static  String defaultBasePath{
+            get{
+                return _defaultBasePath;
+            }
+            set{
+                _defaultBasePath=value;
+                if(Default!=null)
+                    Default.setApiClientUsingDefault();
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the Configuration class.
         /// </summary>
@@ -128,20 +144,20 @@ namespace IO.Swagger.Client
         /// <returns></returns>
         public void setApiClientUsingDefault (ApiClient apiClient = null)
         {
-            if (apiClient == null)
-            {
-                if (Default != null && Default.ApiClient == null)
-                    Default.ApiClient = new ApiClient();
-
-                ApiClient = Default != null ? Default.ApiClient : new ApiClient();
-            }
-            else
-            {
-                if (Default != null && Default.ApiClient == null)
-                    Default.ApiClient = apiClient;
-
-                ApiClient = apiClient;
-            }
+	     if(apiClient == null){
+                 if(Default!=null ){
+                     if(Default.ApiClient == null || !Default.ApiClient.RestClient.BaseUrl.ToString().Equals(defaultBasePath)){
+                         Default.ApiClient = new ApiClient(defaultBasePath);
+                     }
+                     ApiClient = Default.ApiClient;
+                 }else{
+                     ApiClient = new ApiClient(defaultBasePath);
+                 }
+             }else{
+                 if (Default != null && Default.ApiClient == null)
+                     Default.ApiClient = apiClient;
+                 ApiClient = apiClient;
+             }
         }
 
         private Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
