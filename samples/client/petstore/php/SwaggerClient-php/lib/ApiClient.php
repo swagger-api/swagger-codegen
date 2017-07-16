@@ -57,7 +57,7 @@ class ApiClient
     /**
      * Object Serializer
      *
-     * @var ObjectSerializer
+     * @var ObjectSerializerInterface
      */
     protected $serializer;
 
@@ -66,14 +66,15 @@ class ApiClient
      *
      * @param Configuration $config config for this ApiClient
      */
-    public function __construct(\Swagger\Client\Configuration $config = null)
+    public function __construct(\Swagger\Client\Configuration $config = null, ObjectSerializerInterface $objectSerializer = null)
     {
         if ($config === null) {
             $config = Configuration::getDefaultConfiguration();
         }
 
         $this->config = $config;
-        $this->serializer = new ObjectSerializer();
+
+        $this->serializer = $objectSerializer?: new ObjectSerializer();
     }
 
     /**
@@ -89,7 +90,7 @@ class ApiClient
     /**
      * Get the serializer
      *
-     * @return ObjectSerializer
+     * @return ObjectSerializerInterface
      */
     public function getSerializer()
     {
@@ -153,7 +154,7 @@ class ApiClient
         if ($postData and in_array('Content-Type: application/x-www-form-urlencoded', $headers, true)) {
             $postData = http_build_query($postData);
         } elseif ((is_object($postData) or is_array($postData)) and !in_array('Content-Type: multipart/form-data', $headers, true)) { // json model
-            $postData = json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($postData));
+            $postData = json_encode($this->serializer::sanitizeForSerialization($postData));
         }
 
         $url = $this->config->getHost() . $resourcePath;

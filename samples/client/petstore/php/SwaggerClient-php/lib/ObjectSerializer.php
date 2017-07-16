@@ -37,8 +37,23 @@ namespace Swagger\Client;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ObjectSerializer
+class ObjectSerializer implements ObjectSerializerInterface
 {
+
+    /**
+     * @var bool whether to ignore properties with NULL 
+     *           values during de/serialization
+     */
+    private static $ignoreNulls = true;
+
+    /**
+     * @var bool $ignoreNulls
+     */
+    public static function setIgnoreNulls($ignoreNulls)
+    {
+        static::$ignoreNulls = $ignoreNulls;
+    }
+    
     /**
      * Serialize data
      *
@@ -70,7 +85,9 @@ class ObjectSerializer
                     $imploded = implode("', '", $swaggerType::getAllowableEnumValues());
                     throw new \InvalidArgumentException("Invalid value for enum '$swaggerType', must be one of: '$imploded'");
                 }
-                if ($value !== null) {
+
+                $skipProperty = static::$ignoreNulls && $value !== null;
+                if (!$skipProperty) {
                     $values[$data::attributeMap()[$property]] = self::sanitizeForSerialization($value, $swaggerType, $formats[$property]);
                 }
             }

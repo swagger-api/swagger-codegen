@@ -405,10 +405,11 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      */
     public function __toString()
     {
+        $serializer = \{{invokerPackage}}\ObjectSerializerProvider::getInstance()->getSerializer();
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode($serializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         }
 
-        return json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode($serializer::sanitizeForSerialization($this));
     }
 }

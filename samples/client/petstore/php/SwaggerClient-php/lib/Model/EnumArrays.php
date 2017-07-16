@@ -316,11 +316,12 @@ class EnumArrays implements ArrayAccess
      */
     public function __toString()
     {
+        $serializer = \Swagger\Client\ObjectSerializerProvider::getInstance()->getSerializer();
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode($serializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         }
 
-        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode($serializer::sanitizeForSerialization($this));
     }
 }
 
