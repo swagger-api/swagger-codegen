@@ -197,7 +197,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 additionalProperties.remove("supportsAsync");
             }
             additionalProperties.put("validatable", false);
-        } else if (NETSTANDARD.equals(this.targetFramework)) {
+            additionalProperties.put("net35", true);
+        } else if (NETSTANDARD.equals(this.targetFramework)){
             setTargetFrameworkNuget("netstandard1.3");
             setSupportsAsync(Boolean.TRUE);
             setSupportsUWP(Boolean.FALSE);
@@ -301,7 +302,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 clientPackageDir, "SwaggerDateConverter.cs"));
         supportingFiles.add(new SupportingFile("JsonSubTypes.mustache",
                 clientPackageDir, "JsonSubTypes.cs"));
-        if (Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
+
+      if(Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
 
@@ -312,6 +314,11 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         } else if (Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder + File.separator, "project.json"));
         }
+
+        supportingFiles.add(new SupportingFile("IReadableConfiguration.mustache",
+                clientPackageDir, "IReadableConfiguration.cs"));
+        supportingFiles.add(new SupportingFile("GlobalConfiguration.mustache",
+                clientPackageDir, "GlobalConfiguration.cs"));
 
         // Only write out test related files if excludeTests is unset or explicitly set to false (see start of this method)
         if (Boolean.FALSE.equals(excludeTests)) {
@@ -579,7 +586,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 int count = 0, numVars = codegenProperties.size();
                 for (CodegenProperty codegenProperty : codegenProperties) {
                     count += 1;
-                    codegenProperty.hasMore = (count < numVars) ? true : null;
+                    codegenProperty.hasMore = count < numVars;
                 }
                 codegenModel.vars = codegenProperties;
             }

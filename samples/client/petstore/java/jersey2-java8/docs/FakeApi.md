@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
+[**testJsonFormData**](FakeApi.md#testJsonFormData) | **GET** /fake/jsonFormData | test json serialization of form data
 
 
 <a name="fakeOuterBooleanSerialize"></a>
@@ -266,7 +267,7 @@ FakeApi apiInstance = new FakeApi();
 BigDecimal number = new BigDecimal(); // BigDecimal | None
 Double _double = 3.4D; // Double | None
 String patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
-byte[] _byte = B; // byte[] | None
+byte[] _byte = _byte_example; // byte[] | None
 Integer integer = 56; // Integer | None
 Integer int32 = 56; // Integer | None
 Long int64 = 789L; // Long | None
@@ -374,4 +375,50 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: */*
+
+<a name="testJsonFormData"></a>
+# **testJsonFormData**
+> testJsonFormData(param, param2)
+
+test json serialization of form data
+
+
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.FakeApi;
+
+
+FakeApi apiInstance = new FakeApi();
+String param = "param_example"; // String | field1
+String param2 = "param2_example"; // String | field2
+try {
+    apiInstance.testJsonFormData(param, param2);
+} catch (ApiException e) {
+    System.err.println("Exception when calling FakeApi#testJsonFormData");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | **String**| field1 |
+ **param2** | **String**| field2 |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
