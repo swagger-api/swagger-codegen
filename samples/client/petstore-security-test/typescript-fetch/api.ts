@@ -1,3 +1,4 @@
+// tslint:disable
 /**
  * Swagger Petstore *_/ ' \" =end -- \\r\\n \\n \\r
  * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\  *_/ ' \" =end --       
@@ -10,68 +11,104 @@
  * Do not edit the class manually.
  */
 
-import * as querystring from "querystring";
-import * as url from "url";
 
-import * as isomorphicFetch from "isomorphic-fetch";
-import * as assign from "core-js/library/fn/object/assign";
-
-interface Dictionary<T> { [index: string]: T; }
-export interface FetchAPI { (url: string, init?: any): Promise<any>; }
+import * as url                                 	    from "url";
+import * as isomorphicFetch                     	    from "isomorphic-fetch";
 
 const BASE_PATH = "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r".replace(/\/+$/, "");
 
+/**
+ *
+ * @export
+ * @interface FetchAPI
+ */
+export interface FetchAPI {
+    (url: string, init?: any): Promise<any>;
+}
+
+/**
+ *  
+ * @export
+ * @interface FetchArgs
+ */
 export interface FetchArgs {
     url: string;
     options: any;
 }
 
+/**
+ * 
+ * @export
+ * @class BaseAPI
+ */
 export class BaseAPI {
-    basePath: string;
-    fetch: FetchAPI;
-
-    constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) {
-        this.basePath = basePath;
-        this.fetch = fetch;
+    constructor(public basePath: string = BASE_PATH, public fetch: FetchAPI = isomorphicFetch) {
     }
 };
 
 /**
+ * 
+ * @export
+ * @class RequiredError
+ * @extends {Error}
+ */
+export class RequiredError extends Error {
+    name: "RequiredError"
+    constructor(public field: string, msg?: string) {
+        super(msg);
+    }
+}
+
+/**
  * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
+ * @export
+ * @interface ModelReturn
  */
 export interface ModelReturn {
     /**
      * property description  *_/ ' \" =end -- \\r\\n \\n \\r
+     * @type {number}
+     * @memberof ModelReturn
      */
-    "return"?: number;
+    return?: number;
 }
-
 
 
 /**
  * FakeApi - fetch parameter creator
  */
 export const FakeApiFetchParamCreator = {
-    /** 
-     * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
-     * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+    /**
+     * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
      */
-    testCodeInjectEndRnNR(params: {  "test code inject * &#39; &quot; &#x3D;end  rn n r"?: string; }, options?: any): FetchArgs {
-        const baseUrl = `/fake`;
-        let urlObj = url.parse(baseUrl, true);
-        let fetchOptions: RequestInit = assign({}, { method: "PUT" }, options);
+    testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any): FetchArgs {
+        const path = `/fake`;
+        const urlObj = url.parse(path, true);
+        const headers = {} as any;
+        const formParams = new url.URLSearchParams();
 
-        let contentTypeHeader: Dictionary<string> = {};
-        contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
-        fetchOptions.body = querystring.stringify({
-            "test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r": params["test code inject * &#39; &quot; &#x3D;end  rn n r"],
-        });
-        if (contentTypeHeader) {
-            fetchOptions.headers = contentTypeHeader;
+        if (test code inject * &#39; &quot; &#x3D;end  rn n r !== undefined) {
+            formParams.set('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>test code inject * &#39; &quot; &#x3D;end  rn n r);
         }
+
+        headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        let requestOptions = {
+            method: 'PUT',
+            headers: headers,
+            body: formParams.toString(),
+        } as any;
+        if (options) {
+            requestOptions = Object.assign(requestOptions, options);
+        }
+
         return {
             url: url.format(urlObj),
-            options: fetchOptions,
+            options: requestOptions,
         };
     },
 };
@@ -80,12 +117,15 @@ export const FakeApiFetchParamCreator = {
  * FakeApi - functional programming interface
  */
 export const FakeApiFp = {
-    /** 
-     * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
-     * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+    /**
+     * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
      */
-    testCodeInjectEndRnNR(params: { "test code inject * &#39; &quot; &#x3D;end  rn n r"?: string;  }, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = FakeApiFetchParamCreator.testCodeInjectEndRnNR(params, options);
+    testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = FakeApiFetchParamCreator.testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -100,14 +140,21 @@ export const FakeApiFp = {
 
 /**
  * FakeApi - object-oriented interface
+ * @export
+ * @class FakeApi
+ * @extends {BaseAPI}
  */
 export class FakeApi extends BaseAPI {
-    /** 
-     * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
-     * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+    /**
+     * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FakeApi
      */
-    testCodeInjectEndRnNR(params: {  "test code inject * &#39; &quot; &#x3D;end  rn n r"?: string; }, options?: any) {
-        return FakeApiFp.testCodeInjectEndRnNR(params, options)(this.fetch, this.basePath);
+    public testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any) {
+        return FakeApiFp.testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options)(this.fetch, this.basePath);
     }
 };
 
@@ -116,12 +163,15 @@ export class FakeApi extends BaseAPI {
  */
 export const FakeApiFactory = function (fetch?: FetchAPI, basePath?: string) {
     return {
-        /** 
-         * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
-         * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+        /**
+         * 
+         * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+         * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
          */
-        testCodeInjectEndRnNR(params: {  "test code inject * &#39; &quot; &#x3D;end  rn n r"?: string; }, options?: any) {
-            return FakeApiFp.testCodeInjectEndRnNR(params, options)(fetch, basePath);
+        testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any) {
+            return FakeApiFp.testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options)(fetch, basePath);
         },
     };
 };
