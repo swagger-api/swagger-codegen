@@ -15,7 +15,7 @@
 /**
  * A User who is purchasing from the pet store
  */
-export class User {
+export interface User {
     id?: number;
 
     username?: string;
@@ -35,10 +35,12 @@ export class User {
      */
     userStatus?: number;
 
+}
 
-    static discriminator = undefined;
+export namespace User {
+    export const discriminator = undefined;
 
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
             "name": "id",
             "baseName": "id",
@@ -80,8 +82,7 @@ export class User {
             "type": "number"
         }    ];
 
-    static getAttributeTypeMap() {
+    export function getAttributeTypeMap() {
         return User.attributeTypeMap;
     }
 }
-

@@ -17,7 +17,7 @@ import { Tag } from './tag';
 /**
  * A pet for sale in the pet store
  */
-export class Pet {
+export interface Pet {
     id?: number;
 
     category?: Category;
@@ -33,10 +33,19 @@ export class Pet {
      */
     status?: Pet.StatusEnum;
 
+}
+export namespace Pet {
+    export enum StatusEnum {
+        Available = <any> 'available',
+        Pending = <any> 'pending',
+        Sold = <any> 'sold'
+    }
+}
 
-    static discriminator = undefined;
+export namespace Pet {
+    export const discriminator = undefined;
 
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
             "name": "id",
             "baseName": "id",
@@ -68,15 +77,7 @@ export class Pet {
             "type": "Pet.StatusEnum"
         }    ];
 
-    static getAttributeTypeMap() {
+    export function getAttributeTypeMap() {
         return Pet.attributeTypeMap;
     }
 }
-export namespace Pet {
-    export enum StatusEnum {
-        Available = <any> 'available',
-        Pending = <any> 'pending',
-        Sold = <any> 'sold'
-    }
-}
-

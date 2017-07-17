@@ -15,17 +15,19 @@
 /**
  * Describes the result of uploading an image resource
  */
-export class ApiResponse {
+export interface ApiResponse {
     code?: number;
 
     type?: string;
 
     message?: string;
 
+}
 
-    static discriminator = undefined;
+export namespace ApiResponse {
+    export const discriminator = undefined;
 
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
             "name": "code",
             "baseName": "code",
@@ -42,8 +44,7 @@ export class ApiResponse {
             "type": "string"
         }    ];
 
-    static getAttributeTypeMap() {
+    export function getAttributeTypeMap() {
         return ApiResponse.attributeTypeMap;
     }
 }
-
