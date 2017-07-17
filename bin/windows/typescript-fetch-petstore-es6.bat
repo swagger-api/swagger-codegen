@@ -1,3 +1,4 @@
+@ECHO OFF
 set executable=.\modules\swagger-codegen-cli\target\swagger-codegen-cli.jar
 
 If Not Exist %executable% (
