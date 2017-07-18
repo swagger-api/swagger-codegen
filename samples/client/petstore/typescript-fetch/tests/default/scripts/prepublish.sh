@@ -1,13 +1,12 @@
 #!/bin/bash
 
-npm install ../../builds/default
-typings install
-
+npm install ../../builds/with-npm-version
+ 
 # Build Node.js
-tsc
+npm run build
 
 # Build Webpack
-webpack
+npm run webpack
 
 # Build browserify
-browserify test -p [ tsify ] > ./dist/test.browserify-bundle.js
+npm run browserify

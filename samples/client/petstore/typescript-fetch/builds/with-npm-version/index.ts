@@ -11,12 +11,5 @@
  * Do not edit the class manually.
  */
 
-export class Configuration {
-    apiKey: {
-        api_key: string;
-    };
-    username: string;
-    password: string;
-    accessToken: string | ((name: string) => string);
-    basePath: string;
-}
+export * from "./api";
+export * from "./configuration";
