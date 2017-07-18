@@ -62,6 +62,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
             addNpmPackageGeneration();
         }
     }
+        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.ts"));
 
     private void addNpmPackageGeneration() {
         if(additionalProperties.containsKey(NPM_NAME)) {
