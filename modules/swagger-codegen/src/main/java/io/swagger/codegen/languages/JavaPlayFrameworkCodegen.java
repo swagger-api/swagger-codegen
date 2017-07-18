@@ -181,7 +181,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
             apiTemplateFiles.put("newApi.mustache", "ControllerImp.java");
         }
         if (this.useInterfaces) {
-            apiTemplateFiles.put("newApiInterface.mustache", "ControllerImpInterface.java");
+            apiTemplateFiles.put("newApiInterface.mustache", "ControllerInterface.java");
         }
 
         additionalProperties.put("javaVersion", "1.8");
