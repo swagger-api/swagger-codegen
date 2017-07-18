@@ -13,7 +13,7 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ApiResponse {
   #[serde(rename = "code")] code: Option<i32>,
-  #[serde(rename = "type")] Type_: Option<String>,
+  #[serde(rename = "type")] _type: Option<String>,
   #[serde(rename = "message")] message: Option<String>
 }
 
@@ -22,7 +22,7 @@ impl ApiResponse {
   pub fn new() -> ApiResponse {
     ApiResponse {
       code: None,
-      Type_: None,
+      _type: None,
       message: None
     }
   }
@@ -36,12 +36,12 @@ impl ApiResponse {
     self
   }
 
-  pub fn set_Type_(&mut self, Type_: String) {
-    self.Type_ = Some(Type_);
+  pub fn set__type(&mut self, _type: String) {
+    self._type = Some(_type);
   }
 
-  pub fn with_Type_(mut self, Type_: String) -> ApiResponse {
-    self.Type_ = Some(Type_);
+  pub fn with__type(mut self, _type: String) -> ApiResponse {
+    self._type = Some(_type);
     self
   }
 

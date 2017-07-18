@@ -167,7 +167,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
-        return camelize(name) + '_';
+        return '_' + name;
     }
 
     @Override
