@@ -23,17 +23,17 @@ use super::models;
 
 {{#apiInfo}}
 {{#apis}}
+mod {{classFilename}};
 {{#operations}}
 {{#operation}}
 {{#summary}}
-//{{{summary}}}
+///{{{summary}}}
 {{/summary}}
-mod {{classFilename}}_func;
 pub use self::{{classFilename}}::{{{operationId}}};
 {{#-last}}
 
-mod {{classFilename}}_api;
 pub use self::{{classFilename}}::{{classname}};
+
 {{/-last}}
 {{/operation}}
 {{/operations}}

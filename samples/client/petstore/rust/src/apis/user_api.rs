@@ -32,38 +32,24 @@ impl<C: hyper::client::Connect> UserApiImpl<C> {
 
 pub trait UserApi {
     fn CreateUser(&self, body: User) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
-    fn CreateUsersWithArrayInput(&self, body: []User) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
-    fn CreateUsersWithListInput(&self, body: []User) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
+    fn CreateUsersWithArrayInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>>;
+    fn CreateUsersWithListInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>>;
     fn DeleteUser(&self, username: String) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
-    fn GetUserByName(&self, username: String) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
-    fn LoginUser(&self, username: String, password: String) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
+    fn GetUserByName(&self, username: String) -> Box<Future<Item = User, Error = Error>>;
+    fn LoginUser(&self, username: String, password: String) -> Box<Future<Item = String, Error = Error>>;
     fn LogoutUser(&self, ) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait UserApi {
     fn UpdateUser(&self, username: String, body: User) -> Box<Future<Item = (), Error = Error>>;
 }
 
 
 impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn CreateUser(&self, body: ) -> Box<Future<Item = (), Error = Error>> {
+    fn CreateUser(&self, body: User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("{}/user", configuration.base_path).parse().unwrap());
+            format!("/user", configuration.base_path).parse().unwrap());
 
-        // body params
+        /// body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -75,15 +61,14 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             .and_then(|_| futures::future::ok(()))
         )
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn CreateUsersWithArrayInput(&self, body: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn CreateUsersWithArrayInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("{}/user/createWithArray", configuration.base_path).parse().unwrap());
+            format!("/user/createWithArray", configuration.base_path).parse().unwrap());
 
-        // body params
+        /// body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -95,15 +80,14 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             .and_then(|_| futures::future::ok(()))
         )
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn CreateUsersWithListInput(&self, body: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn CreateUsersWithListInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("{}/user/createWithList", configuration.base_path).parse().unwrap());
+            format!("/user/createWithList", configuration.base_path).parse().unwrap());
 
-        // body params
+        /// body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -115,53 +99,48 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             .and_then(|_| futures::future::ok(()))
         )
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn DeleteUser(&self, username: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn DeleteUser(&self, username: String) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
-            format!("{}/user/{username}", configuration.base_path).parse().unwrap());
+            format!("/user/{username}", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn GetUserByName(&self, username: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn GetUserByName(&self, username: String) -> Box<Future<Item = User, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("{}/user/{username}", configuration.base_path).parse().unwrap());
+            format!("/user/{username}", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn LoginUser(&self, username: password: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn LoginUser(&self, username: Stringpassword: String) -> Box<Future<Item = String, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("{}/user/login", configuration.base_path).parse().unwrap());
+            format!("/user/login", configuration.base_path).parse().unwrap());
 
-        // TODO query parameter username(username)
-        // TODO query parameter password(password)
+        /// TODO query parameter username(username)
+        /// TODO query parameter password(password)
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
+
     fn LogoutUser(&self, ) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("{}/user/logout", configuration.base_path).parse().unwrap());
+            format!("/user/logout", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn UpdateUser(&self, username: body: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn UpdateUser(&self, username: Stringbody: User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Put,
-            format!("{}/user/{username}", configuration.base_path).parse().unwrap());
+            format!("/user/{username}", configuration.base_path).parse().unwrap());
 
-        // body params
+        /// body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -173,4 +152,5 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             .and_then(|_| futures::future::ok(()))
         )
     }
+
 }

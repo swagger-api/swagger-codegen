@@ -43,10 +43,12 @@ impl<C: hyper::client::Connect> APIClient<C> {
 {{#apis}}
 {{#operations}}
 {{#operation}}
+{{#-last}}
   pub fn {{classFilename}}(&self) -> &{{classFilename}}::{{classname}}{
     self.{{classFilename}}.as_ref()
   }
 
+{{/-last}}
 {{/operation}}
 {{/operations}}
 {{/apis}}

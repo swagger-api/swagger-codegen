@@ -1,5 +1,5 @@
 [package]
-name = ""
+name = "swagger"
 version = "1.0.0"
 authors = ["Swagger Codegen team and contributors"]
 

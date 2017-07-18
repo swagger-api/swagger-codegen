@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByStatus**
-> []Pet FindPetsByStatus(ctx, status)
+> Vec<Pet> FindPetsByStatus(ctx, status)
 Finds Pets by status
 
 Multiple status values can be provided with comma separated strings
@@ -90,11 +90,11 @@ Multiple status values can be provided with comma separated strings
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **status** | [**[]String**](String.md)| Status values that need to be considered for filter | 
+  **status** | [**Vec&lt;String&gt;**](String.md)| Status values that need to be considered for filter | 
 
 ### Return type
 
-[**[]Pet**](Pet.md)
+[**Vec<Pet>**](Pet.md)
 
 ### Authorization
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByTags**
-> []Pet FindPetsByTags(ctx, tags)
+> Vec<Pet> FindPetsByTags(ctx, tags)
 Finds Pets by tags
 
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -118,11 +118,11 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **tags** | [**[]String**](String.md)| Tags to filter by | 
+  **tags** | [**Vec&lt;String&gt;**](String.md)| Tags to filter by | 
 
 ### Return type
 
-[**[]Pet**](Pet.md)
+[**Vec<Pet>**](Pet.md)
 
 ### Authorization
 

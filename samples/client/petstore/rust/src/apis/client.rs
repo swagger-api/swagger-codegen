@@ -27,76 +27,8 @@ impl<C: hyper::client::Connect> APIClient<C> {
     self.pet_api.as_ref()
   }
 
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
-  pub fn pet_api(&self) -> &pet_api::PetApi{
-    self.pet_api.as_ref()
-  }
-
   pub fn store_api(&self) -> &store_api::StoreApi{
     self.store_api.as_ref()
-  }
-
-  pub fn store_api(&self) -> &store_api::StoreApi{
-    self.store_api.as_ref()
-  }
-
-  pub fn store_api(&self) -> &store_api::StoreApi{
-    self.store_api.as_ref()
-  }
-
-  pub fn store_api(&self) -> &store_api::StoreApi{
-    self.store_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
-  }
-
-  pub fn user_api(&self) -> &user_api::UserApi{
-    self.user_api.as_ref()
   }
 
   pub fn user_api(&self) -> &user_api::UserApi{
