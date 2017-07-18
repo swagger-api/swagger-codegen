@@ -20,6 +20,10 @@
 @property(nonatomic) {{{ datatype }}} {{name}};
 {{/vars}}
 
+{{^parent}}
++ (NSDictionary *)modalDictionary;
+{{/parent}}
+
 @end
 {{/model}}
 {{/models}}
