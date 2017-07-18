@@ -1,13 +1,13 @@
 {
-  "name": "{{npmName}}",
-  "version": "{{npmVersion}}",
-  "description": "swagger client for {{npmName}}",
+  "name": "@swagger/typescript-fetch-petstore",
+  "version": "0.0.1",
+  "description": "swagger client for @swagger/typescript-fetch-petstore",
   "author": "Swagger Codegen Contributors",
   "keywords": [
     "fetch",
     "typescript",
     "swagger-client",
-    "{{npmName}}"
+    "@swagger/typescript-fetch-petstore"
   ],
   "license": "Unlicense",
   "main": "./dist/api.js",
@@ -23,10 +23,8 @@
   },
   "devDependencies": {
     "typescript": "^2.0"
-  }{{#npmRepository}},{{/npmRepository}}
-{{#npmRepository}}
+  },
   "publishConfig":{
-    "registry":"{{npmRepository}}"
+    "registry":"https://skimdb.npmjs.com/registry"
   }
-{{/npmRepository}}
 }

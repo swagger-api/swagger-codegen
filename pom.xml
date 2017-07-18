@@ -613,7 +613,7 @@
             </modules>
         </profile>
         <profile>
-            <id>typescript-fetch-client-tests-default</id>
+            <id>typescript-fetch-client-tests-npm</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -621,11 +621,11 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/tests/default</module>
+                <module>samples/client/petstore/typescript-fetch/tests/npm</module>
             </modules>
         </profile>
         <profile>
-            <id>typescript-fetch-client-builds-default</id>
+            <id>typescript-fetch-client-builds-npm</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -633,11 +633,11 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/default</module>
+                <module>samples/client/petstore/typescript-fetch/builds/npm</module>
             </modules>
         </profile>
         <profile>
-            <id>typescript-fetch-client-builds-es6-target</id>
+            <id>typescript-fetch-client-builds-es6</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -645,19 +645,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>typescript-fetch-client-builds-with-npm-version</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
+                <module>samples/client/petstore/typescript-fetch/builds/es6</module>
             </modules>
         </profile>
         <profile>

@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "{{#supportsES6}}es6{{/supportsES6}}{{^supportsES6}}es5{{/supportsES6}}",
+    "target": "es5",
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "dist",
-    "rootDir": "."{{^supportsES6}},
+    "rootDir": ".",
     "lib": [
       "es6"
     ]
-    {{/supportsES6}}
   },
   "exclude": [
     "dist",

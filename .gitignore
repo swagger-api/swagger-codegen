@@ -157,7 +157,8 @@ samples/client/petstore/typescript-node/npm/node_modules
 samples/client/petstore/typescript-node/**/typings
 samples/client/petstore/typescript-angular/**/typings
 samples/client/petstore/typescript-fetch/**/dist/
-samples/client/petstore/typescript-fetch/**/typings
+samples/client/petstore/typescript-fetch/**/npm-debug.log
+samples/client/petstore/typescript-fetch/**/node_modules/
 samples/client/petstore/typescript-angular2/npm/npm-debug.log
 samples/client/petstore/typescript-node/npm/npm-debug.log
 
