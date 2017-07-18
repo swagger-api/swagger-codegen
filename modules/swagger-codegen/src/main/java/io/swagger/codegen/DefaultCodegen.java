@@ -3611,7 +3611,7 @@ public class DefaultCodegen {
      * writes it back to additionalProperties to be usable as a boolean in
      * mustache files.
      *
-     * @param propertyKey
+     * @param propertyKey property key
      * @return property value as boolean
      */
     public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
