@@ -1,8 +1,12 @@
-mod pet;
-pub use self::pet::Pet;
-
-mod category;
+mod ApiResponse;
+pub use self::api_response::ApiResponse;
+mod Category;
 pub use self::category::Category;
-
-mod tag;
+mod Order;
+pub use self::order::Order;
+mod Pet;
+pub use self::pet::Pet;
+mod Tag;
 pub use self::tag::Tag;
+mod User;
+pub use self::user::User;
