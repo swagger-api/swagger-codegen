@@ -26,4 +26,9 @@ impl Pet {
   pub fn set_id(&mut self, id: i64) {
     self.id = Some(id);
   }
+
+  pub fn with_id(mut self, id: i64) -> Pet {
+    self.id = Some(id);
+    self
+  }
 }

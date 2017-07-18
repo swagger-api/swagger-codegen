@@ -29,3 +29,9 @@ pub use self::update_pet_with_form_api::update_pet_with_form;
 
 mod add_pet_api;
 pub use self::add_pet_api::add_pet;
+
+pub mod configuration;
+pub mod client;
+
+mod pet_api;
+pub use self::pet_api::PetAPI;
