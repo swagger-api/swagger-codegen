@@ -1,12 +1,12 @@
-mod ApiResponse;
+mod api_response;
 pub use self::api_response::ApiResponse;
-mod Category;
+mod category;
 pub use self::category::Category;
-mod Order;
+mod order;
 pub use self::order::Order;
-mod Pet;
+mod pet;
 pub use self::pet::Pet;
-mod Tag;
+mod tag;
 pub use self::tag::Tag;
-mod User;
+mod user;
 pub use self::user::User;

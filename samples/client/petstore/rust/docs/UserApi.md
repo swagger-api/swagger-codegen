@@ -51,7 +51,7 @@ Creates list of users with given input array
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**[]User**](User.md)| List of user object | 
+  **body** | [**Vec&lt;User&gt;**](User.md)| List of user object | 
 
 ### Return type
 
@@ -78,7 +78,7 @@ Creates list of users with given input array
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**[]User**](User.md)| List of user object | 
+  **body** | [**Vec&lt;User&gt;**](User.md)| List of user object | 
 
 ### Return type
 
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**String**](String.md)
+**String**
 
 ### Authorization
 

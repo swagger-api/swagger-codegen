@@ -37,13 +37,13 @@ var (
 	xmlCheck = regexp.MustCompile("(?i:[application|text]/xml)")
 )
 
-// APIClient manages communication with the Swagger Petstore API v1.0.0
-// In most cases there should be only one, shared, APIClient.
+/// APIClient manages communication with the Swagger Petstore API v1.0.0
+/// In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg 	*Configuration
-	common 	service 		// Reuse a single struct instead of allocating one for each service on the heap.
+	common 	service 		/// Reuse a single struct instead of allocating one for each service on the heap.
 
-	 // API Services
+	 /// API Services
 	PetApi	*PetApiService
 	StoreApi	*StoreApiService
 	UserApi	*UserApiService
@@ -53,8 +53,8 @@ type service struct {
 	client *APIClient
 }
 
-// NewAPIClient creates a new API client. Requires a userAgent string describing your application.
-// optionally a custom http.Client to allow for advanced features such as caching.
+/// NewAPIClient creates a new API client. Requires a userAgent string describing your application.
+/// optionally a custom http.Client to allow for advanced features such as caching.
 func NewAPIClient(cfg *Configuration) *APIClient {
 	if cfg.HTTPClient == nil {
 		cfg.HTTPClient = http.DefaultClient
@@ -64,7 +64,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.cfg = cfg
 	c.common.client = c
 
-	// API Services
+	/// API Services
 	c.PetApi = (*PetApiService)(&c.common)
 	c.StoreApi = (*StoreApiService)(&c.common)
 	c.UserApi = (*UserApiService)(&c.common)
@@ -77,7 +77,7 @@ func atoi(in string) (int, error) {
 }
 
 
-// selectHeaderContentType select a content type from the available list.
+/// selectHeaderContentType select a content type from the available list.
 func selectHeaderContentType(contentTypes []string) string {
 	if len(contentTypes) == 0 {
 		return ""
@@ -85,10 +85,10 @@ func selectHeaderContentType(contentTypes []string) string {
 	if contains(contentTypes, "application/json") {
 		return "application/json"
 	}
-	return contentTypes[0] // use the first content type specified in 'consumes'
+	return contentTypes[0] /// use the first content type specified in 'consumes'
 }
 
-// selectHeaderAccept join all accept types and return
+/// selectHeaderAccept join all accept types and return
 func selectHeaderAccept(accepts []string) string {
 	if len(accepts) == 0 {
 		return ""
@@ -101,7 +101,7 @@ func selectHeaderAccept(accepts []string) string {
 	return strings.Join(accepts, ",")
 }
 
-// contains is a case insenstive match, finding needle in a haystack
+/// contains is a case insenstive match, finding needle in a haystack
 func contains(haystack []string, needle string) bool {
 	for _, a := range haystack {
 		if strings.ToLower(a) == strings.ToLower(needle) {
@@ -111,21 +111,21 @@ func contains(haystack []string, needle string) bool {
 	return false
 }
 
-// Verify optional parameters are of the correct type.
+/// Verify optional parameters are of the correct type.
 func typeCheckParameter(obj interface{}, expected string, name string) error {
-	// Make sure there is an object.
+	/// Make sure there is an object.
 	if obj == nil {
 		return nil
 	}
 
-	// Check the type is as expected.
+	/// Check the type is as expected.
 	if reflect.TypeOf(obj).String() != expected {
 		return fmt.Errorf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String())
 	}
 	return nil
 }
 
-// parameterToString convert interface{} parameters to string, using a delimiter if format is provided.
+/// parameterToString convert interface{} parameters to string, using a delimiter if format is provided.
 func parameterToString(obj interface{}, collectionFormat string) string {
 	var delimiter string
 
@@ -147,17 +147,17 @@ func parameterToString(obj interface{}, collectionFormat string) string {
 	return fmt.Sprintf("%v", obj)
 }
 
-// callAPI do the request. 
+/// callAPI do the request. 
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 	 return c.cfg.HTTPClient.Do(request)
 }
 
-// Change base path to allow switching to mocks
+/// Change base path to allow switching to mocks
 func (c *APIClient) ChangeBasePath (path string) {
 	c.cfg.BasePath = path
 }
 
-// prepareRequest build the request
+/// prepareRequest build the request
 func (c *APIClient) prepareRequest (
 	ctx context.Context,
 	path string, method string,
@@ -170,7 +170,7 @@ func (c *APIClient) prepareRequest (
 
 	var body *bytes.Buffer
 
-	// Detect postBody type and post.
+	/// Detect postBody type and post.
 	if postBody != nil {
 		contentType := headerParams["Content-Type"]
 		if contentType == "" {
@@ -184,7 +184,7 @@ func (c *APIClient) prepareRequest (
 		}
 	}
 
-	// add form paramters and file if available.
+	/// add form paramters and file if available.
 	if len(formParams) > 0 || (len(fileBytes) > 0 && fileName != "") {
 		if body != nil {
 			return nil, errors.New("Cannot specify postBody and multipart form at the same time.")
@@ -194,19 +194,19 @@ func (c *APIClient) prepareRequest (
 
 		for k, v := range formParams {
 			for _, iv := range v {
-				if strings.HasPrefix(k, "@") { // file
+				if strings.HasPrefix(k, "@") { /// file
 					err = addFile(w, k[1:], iv)
 					if err != nil {
 						return nil, err
 					}
-				} else { // form value
+				} else { /// form value
 					w.WriteField(k, iv)
 				}
 			}
 		}
 		if len(fileBytes) > 0 && fileName != "" {
 			w.Boundary()
-			//_, fileNm := filepath.Split(fileName)
+			///_, fileNm := filepath.Split(fileName)
 			part, err := w.CreateFormFile("file", filepath.Base(fileName))
 			if err != nil {
 				return nil, err
@@ -215,22 +215,22 @@ func (c *APIClient) prepareRequest (
 			if err != nil {
 				return nil, err
 			}
-			// Set the Boundary in the Content-Type
+			/// Set the Boundary in the Content-Type
 			headerParams["Content-Type"] = w.FormDataContentType()
 		}
 		
-		// Set Content-Length
+		/// Set Content-Length
 		headerParams["Content-Length"] = fmt.Sprintf("%d", body.Len())
 		w.Close()
 	}
 
-	// Setup path and query paramters
+	/// Setup path and query paramters
 	url, err := url.Parse(path)
 	if err != nil {
 		return nil, err
 	}
 
-	// Adding Query Param
+	/// Adding Query Param
 	query := url.Query()
 	for k, v := range queryParams {
 		for _, iv := range v {
@@ -238,10 +238,10 @@ func (c *APIClient) prepareRequest (
 		}
 	}
 
-	// Encode the parameters.
+	/// Encode the parameters.
 	url.RawQuery = query.Encode()
 
-	// Generate a new request
+	/// Generate a new request
 	if body != nil {
 		localVarRequest, err = http.NewRequest(method, url.String(), body)
 	} else {
@@ -251,7 +251,7 @@ func (c *APIClient) prepareRequest (
 		return nil, err
 	}
 
-	// add header parameters, if any
+	/// add header parameters, if any
 	if len(headerParams) > 0 {
 		headers := http.Header{}
 		for h, v := range headerParams {
@@ -260,14 +260,14 @@ func (c *APIClient) prepareRequest (
 		localVarRequest.Header = headers
 	}
 	
-	// Add the user agent to the request.
+	/// Add the user agent to the request.
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
 	
-	// Walk through any authentication.
+	/// Walk through any authentication.
 	if ctx != nil {
-		// OAuth2 authentication
+		/// OAuth2 authentication
 		if tok, ok := ctx.Value(ContextOAuth2).(oauth2.TokenSource); ok {
-			// We were able to grab an oauth2 token from the context
+			/// We were able to grab an oauth2 token from the context
 			var latestToken *oauth2.Token
 			if latestToken, err = tok.Token(); err != nil {
 				return nil, err
@@ -276,12 +276,12 @@ func (c *APIClient) prepareRequest (
 			latestToken.SetAuthHeader(localVarRequest)
 		}
 
-		// Basic HTTP Authentication
+		/// Basic HTTP Authentication
 		if auth, ok := ctx.Value(ContextBasicAuth).(BasicAuth); ok {
 			localVarRequest.SetBasicAuth(auth.UserName, auth.Password)
 		}
 
-		// AccessToken Authentication
+		/// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer " + auth)
 		}
@@ -295,7 +295,7 @@ func (c *APIClient) prepareRequest (
 }
 
 
-// Add a file to the multipart request
+/// Add a file to the multipart request
 func addFile(w *multipart.Writer, fieldName, path string) error {
 	file, err := os.Open(path)
 	if err != nil {
@@ -312,12 +312,12 @@ func addFile(w *multipart.Writer, fieldName, path string) error {
 	return err
 }
 
-// Prevent trying to import "fmt"
+/// Prevent trying to import "fmt"
 func reportError(format string, a ...interface{}) (error) {
 	return fmt.Errorf(format, a...)
 }
 
-// Set request body from an interface{}
+/// Set request body from an interface{}
 func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err error) {
 	if bodyBuf == nil {
 		bodyBuf = &bytes.Buffer{}
@@ -346,7 +346,7 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 	return bodyBuf, nil
 }
 
-// detectContentType method is used to figure out `Request.Body` content type for request header
+/// detectContentType method is used to figure out `Request.Body` content type for request header
 func detectContentType(body interface{}) string {
 	contentType := "text/plain; charset=utf-8"
 	kind := reflect.TypeOf(body).Kind()
@@ -368,7 +368,7 @@ func detectContentType(body interface{}) string {
 }
 
 
-// Ripped from https://github.com/gregjones/httpcache/blob/master/httpcache.go
+/// Ripped from https:///github.com/gregjones/httpcache/blob/master/httpcache.go
 type cacheControl map[string]string
 
 func parseCacheControl(headers http.Header) cacheControl {
@@ -389,9 +389,9 @@ func parseCacheControl(headers http.Header) cacheControl {
 	return cc
 }
 
-// CacheExpires helper function to determine remaining time before repeating a request.
+/// CacheExpires helper function to determine remaining time before repeating a request.
 func CacheExpires(r *http.Response) (time.Time) {
-	// Figure out when the cache expires.
+	/// Figure out when the cache expires.
 	var expires time.Time
 	now, err := time.Parse(time.RFC1123, r.Header.Get("date"))
 	if err != nil {

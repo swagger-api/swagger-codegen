@@ -74,7 +74,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 				"i8", "i16", "i32", "i64",
 				"u8", "u16", "u32", "u64",
 				"f32", "f64",
-				"char", "bool")
+				"char", "bool", "String", "Vec<u8>")
             );
 
         instantiationTypes.clear();
@@ -93,17 +93,15 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("date", "string");
         typeMapping.put("DateTime", "String");
         typeMapping.put("password", "String");
+        // TODO  what should 'file' mapped to
         typeMapping.put("file", "File");
-        // map binary to string as a workaround
-        // the correct solution is to use []byte
-        typeMapping.put("binary", "String");
+        typeMapping.put("binary", "Vec<u8>");
         typeMapping.put("ByteArray", "String");
+        // TODO  what should 'object' mapped to
         typeMapping.put("object", "Object");
 
-        importMapping = new HashMap<String, String>();
-        importMapping.put("time.Time", "time");
-        importMapping.put("*os.File", "os");
-        importMapping.put("os", "io/ioutil");
+        // no need for rust
+        //importMapping = new HashMap<String, String>();
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Rust package name (convention: lowercase).")
@@ -154,11 +152,10 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("configuration.mustache", apiFolder, "configuration.rs"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", apiFolder, "api_client.rs"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
 
         supportingFiles.add(new SupportingFile("client.mustache", apiFolder, "client.rs"));
-        supportingFiles.add(new SupportingFile("api_mod.mustache", apiFolder, "api.rs"));
+        supportingFiles.add(new SupportingFile("api_mod.mustache", apiFolder, "mod.rs"));
         supportingFiles.add(new SupportingFile("model_mod.mustache", modelFolder, "mod.rs"));
         supportingFiles.add(new SupportingFile("lib.rs", "src", "lib.rs"));
         supportingFiles.add(new SupportingFile("Cargo.mustache", "", "Cargo.toml"));
@@ -278,13 +275,13 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         if(p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "[]" + getTypeDeclaration(inner);
+            return "Vec<" + getTypeDeclaration(inner) + ">";
         }
         else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
 
-            return getSwaggerType(p) + "[string]" + getTypeDeclaration(inner);
+            return getSwaggerType(p) + "[TODO]" + getTypeDeclaration(inner);
         }
         //return super.getTypeDeclaration(p);
 
@@ -344,87 +341,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
         }
 
-        // remove model imports to avoid error
-        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
-        if (imports == null)
-            return objs;
-
-        Iterator<Map<String, String>> iterator = imports.iterator();
-        while (iterator.hasNext()) {
-            String _import = iterator.next().get("import");
-            if (_import.startsWith(apiPackage()))
-                iterator.remove();
-        }
-
-        // if their is a return type, import encoding/json
-        for (CodegenOperation operation : operations) {
-            if(operation.returnBaseType != null ) {
-                imports.add(createMapping("import", "encoding/json"));
-                break; //just need to import once
-            }
-        }
-
-        // this will only import "fmt" if there are items in pathParams
-        for (CodegenOperation operation : operations) {
-            if(operation.pathParams != null && operation.pathParams.size() > 0) {
-                imports.add(createMapping("import", "fmt"));
-                break; //just need to import once
-            }
-        }
-
-        // recursively add import for mapping one type to multiple imports
-        List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
-        if (recursiveImports == null)
-            return objs;
-
-        ListIterator<Map<String, String>> listIterator = imports.listIterator();
-        while (listIterator.hasNext()) {
-            String _import = listIterator.next().get("import");
-            // if the import package happens to be found in the importMapping (key)
-            // add the corresponding import package to the list
-            if (importMapping.containsKey(_import)) {
-                listIterator.add(createMapping("import", importMapping.get(_import)));
-            }
-        }
-
         return objs;
-    }
-
-    @Override
-    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
-        // remove model imports to avoid error
-        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
-        final String prefix = modelPackage();
-        Iterator<Map<String, String>> iterator = imports.iterator();
-        while (iterator.hasNext()) {
-            String _import = iterator.next().get("import");
-            if (_import.startsWith(prefix))
-                iterator.remove();
-        }
-
-        // recursively add import for mapping one type to multiple imports
-        List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
-        if (recursiveImports == null)
-            return objs;
-
-        ListIterator<Map<String, String>> listIterator = imports.listIterator();
-        while (listIterator.hasNext()) {
-            String _import = listIterator.next().get("import");
-            // if the import package happens to be found in the importMapping (key)
-            // add the corresponding import package to the list
-            if (importMapping.containsKey(_import)) {
-                listIterator.add(createMapping("import", importMapping.get(_import)));
-            }
-        }
-
-        return postProcessModelsEnum(objs);
-    }
-
-    public Map<String, String> createMapping(String key, String value){
-        Map<String, String> customImport = new HashMap<String, String>();
-        customImport.put(key, value);
-
-        return customImport;
     }
 
     @Override

@@ -32,53 +32,44 @@ impl<C: hyper::client::Connect> StoreApiImpl<C> {
 
 pub trait StoreApi {
     fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait StoreApi {
-    fn GetInventory(&self, ) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait StoreApi {
-    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = (), Error = Error>>;
-}
-pub trait StoreApi {
-    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = (), Error = Error>>;
+    fn GetInventory(&self, ) -> Box<Future<Item = map[TODO]i32, Error = Error>>;
+    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>>;
+    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = Order, Error = Error>>;
 }
 
 
 impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
-    fn DeleteOrder(&self, order_id: ) -> Box<Future<Item = (), Error = Error>> {
+    fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
-            format!("{}/store/order/{orderId}", configuration.base_path).parse().unwrap());
+            format!("/store/order/{orderId}", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
-    fn GetInventory(&self, ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn GetInventory(&self, ) -> Box<Future<Item = map[TODO]i32, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("{}/store/inventory", configuration.base_path).parse().unwrap());
+            format!("/store/inventory", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
-    fn GetOrderById(&self, order_id: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("{}/store/order/{orderId}", configuration.base_path).parse().unwrap());
+            format!("/store/order/{orderId}", configuration.base_path).parse().unwrap());
 
     }
-}
-impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
-    fn PlaceOrder(&self, body: ) -> Box<Future<Item = (), Error = Error>> {
+
+    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("{}/store/order", configuration.base_path).parse().unwrap());
+            format!("/store/order", configuration.base_path).parse().unwrap());
 
-        // body params
+        /// body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -90,4 +81,5 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
             .and_then(|_| futures::future::ok(()))
         )
     }
+
 }

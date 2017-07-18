@@ -38,7 +38,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetInventory**
-> map[string]i32 GetInventory(ctx, )
+> map[TODO]i32 GetInventory(ctx, )
 Returns pet inventories by status
 
 Returns a map of status codes to quantities
@@ -48,7 +48,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**map[string]i32**](map.md)
+[**map[TODO]i32**](map.md)
 
 ### Authorization
 
