@@ -62,7 +62,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         )
     }
 
-    fn DeletePet(&self, pet_id: i64api_key: String) -> Box<Future<Item = (), Error = Error>> {
+    fn DeletePet(&self, pet_id: i64, api_key: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
@@ -116,7 +116,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         )
     }
 
-    fn UpdatePetWithForm(&self, pet_id: i64name: Stringstatus: String) -> Box<Future<Item = (), Error = Error>> {
+    fn UpdatePetWithForm(&self, pet_id: i64, name: &str, status: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
@@ -126,7 +126,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         /// TODO form parameter status(status) Optional
     }
 
-    fn UploadFile(&self, pet_id: i64additional_metadata: Stringfile: File) -> Box<Future<Item = ApiResponse, Error = Error>> {
+    fn UploadFile(&self, pet_id: i64, additional_metadata: &str, file: File) -> Box<Future<Item = ApiResponse, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,

@@ -100,7 +100,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         )
     }
 
-    fn DeleteUser(&self, username: String) -> Box<Future<Item = (), Error = Error>> {
+    fn DeleteUser(&self, username: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
@@ -108,7 +108,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
     }
 
-    fn GetUserByName(&self, username: String) -> Box<Future<Item = User, Error = Error>> {
+    fn GetUserByName(&self, username: &str) -> Box<Future<Item = User, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
@@ -116,7 +116,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
     }
 
-    fn LoginUser(&self, username: Stringpassword: String) -> Box<Future<Item = String, Error = Error>> {
+    fn LoginUser(&self, username: &str, password: &str) -> Box<Future<Item = String, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
@@ -134,7 +134,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
     }
 
-    fn UpdateUser(&self, username: Stringbody: User) -> Box<Future<Item = (), Error = Error>> {
+    fn UpdateUser(&self, username: &str, body: User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Put,

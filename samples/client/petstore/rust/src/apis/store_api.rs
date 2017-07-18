@@ -39,7 +39,7 @@ pub trait StoreApi {
 
 
 impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
-    fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>> {
+    fn DeleteOrder(&self, order_id: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
