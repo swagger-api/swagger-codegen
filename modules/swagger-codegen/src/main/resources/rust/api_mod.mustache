@@ -26,10 +26,6 @@ use super::models;
 mod {{classFilename}};
 {{#operations}}
 {{#operation}}
-{{#summary}}
-///{{{summary}}}
-{{/summary}}
-pub use self::{{classFilename}}::{{{operationId}}};
 {{#-last}}
 
 pub use self::{{classFilename}}::{{classname}};

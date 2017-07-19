@@ -47,9 +47,9 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/pet", configuration.base_path).parse().unwrap());
+            format!("{}/pet", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -66,34 +66,34 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
-            format!("/pet/{petId}", configuration.base_path).parse().unwrap());
+            format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id, api_key=api_key));
 
-        /// TODO header parameter api_key(api_key) Optional
+        // TODO header parameter api_key(api_key) Optional
     }
 
-    fn FindPetsByStatus(&self, status: Vec<String>) -> Box<Future<Item = Vec<Pet>, Error = Error>> {
+    fn FindPetsByStatus(&self, status: Vec<String>) -> Box<Future<Item = Vec<super::Pet>, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/pet/findByStatus", configuration.base_path).parse().unwrap());
+            format!("{}/pet/findByStatus", configuration.base_path, status=status));
 
-        /// TODO query parameter status(status)
+        // TODO query parameter status(status)
     }
 
-    fn FindPetsByTags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<Pet>, Error = Error>> {
+    fn FindPetsByTags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<super::Pet>, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/pet/findByTags", configuration.base_path).parse().unwrap());
+            format!("{}/pet/findByTags", configuration.base_path, tags=tags));
 
-        /// TODO query parameter tags(tags)
+        // TODO query parameter tags(tags)
     }
 
-    fn GetPetById(&self, pet_id: i64) -> Box<Future<Item = Pet, Error = Error>> {
+    fn GetPetById(&self, pet_id: i64) -> Box<Future<Item = super::Pet, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/pet/{petId}", configuration.base_path).parse().unwrap());
+            format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id));
 
     }
 
@@ -101,9 +101,9 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Put,
-            format!("/pet", configuration.base_path).parse().unwrap());
+            format!("{}/pet", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -120,20 +120,20 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/pet/{petId}", configuration.base_path).parse().unwrap());
+            format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id, name=name, status=status));
 
-        /// TODO form parameter name(name) Optional
-        /// TODO form parameter status(status) Optional
+        // TODO form parameter name(name) Optional
+        // TODO form parameter status(status) Optional
     }
 
-    fn UploadFile(&self, pet_id: i64, additional_metadata: &str, file: File) -> Box<Future<Item = ApiResponse, Error = Error>> {
+    fn UploadFile(&self, pet_id: i64, additional_metadata: &str, file: File) -> Box<Future<Item = super::ApiResponse, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/pet/{petId}/uploadImage", configuration.base_path).parse().unwrap());
+            format!("{}/pet/{petId}/uploadImage", configuration.base_path, pet_id=pet_id, additional_metadata=additional_metadata, file=file));
 
-        /// TODO form parameter additionalMetadata(additional_metadata) Optional
-        /// TODO form parameter (file) file(file) Optional
+        // TODO form parameter additionalMetadata(additional_metadata) Optional
+        // TODO form parameter (file) file(file) Optional
     }
 
 }

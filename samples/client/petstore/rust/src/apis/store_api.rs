@@ -43,33 +43,33 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
-            format!("/store/order/{orderId}", configuration.base_path).parse().unwrap());
+            format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
 
     }
 
-    fn GetInventory(&self, ) -> Box<Future<Item = map[TODO]i32, Error = Error>> {
+    fn GetInventory(&self, ) -> Box<Future<Item = super::map[TODO]i32, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/store/inventory", configuration.base_path).parse().unwrap());
+            format!("{}/store/inventory", configuration.base_path));
 
     }
 
-    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>> {
+    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = super::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/store/order/{orderId}", configuration.base_path).parse().unwrap());
+            format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
 
     }
 
-    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = Order, Error = Error>> {
+    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = super::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/store/order", configuration.base_path).parse().unwrap());
+            format!("{}/store/order", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
