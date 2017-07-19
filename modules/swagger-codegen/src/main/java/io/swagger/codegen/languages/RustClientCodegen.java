@@ -272,7 +272,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String getTypeDeclaration(Property p) {
-        if(p instanceof ArrayProperty) {
+        if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
             return "Vec<" + getTypeDeclaration(inner) + ">";
@@ -280,10 +280,8 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-
-            return getSwaggerType(p) + "[TODO]" + getTypeDeclaration(inner);
+            return "::std::collections::HashMap<String, " + getTypeDeclaration(inner) + ">";
         }
-        //return super.getTypeDeclaration(p);
 
         // Not using the supertype invocation, because we want to UpperCamelize
         // the type.
@@ -292,11 +290,11 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             return typeMapping.get(swaggerType);
         }
 
-        if(typeMapping.containsValue(swaggerType)) {
+        if (typeMapping.containsValue(swaggerType)) {
             return swaggerType;
         }
 
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if (languageSpecificPrimitives.contains(swaggerType)) {
             return swaggerType;
         }
 
