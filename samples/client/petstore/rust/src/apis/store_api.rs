@@ -16,7 +16,7 @@ use serde_json;
 use futures;
 use futures::{Future, Stream};
 
-use super::{Error, configuration, models};
+use super::{Error, configuration};
 
 pub struct StoreApiImpl<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
@@ -31,10 +31,10 @@ impl<C: hyper::client::Connect> StoreApiImpl<C> {
 }
 
 pub trait StoreApi {
-    fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>>;
+    fn DeleteOrder(&self, order_id: &str) -> Box<Future<Item = (), Error = Error>>;
     fn GetInventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error>>;
-    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>>;
-    fn PlaceOrder(&self, body: super::Order) -> Box<Future<Item = Order, Error = Error>>;
+    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = ::models::order::Order, Error = Error>>;
+    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = ::models::order::Order, Error = Error>>;
 }
 
 
@@ -44,7 +44,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
 
         let method = hyper::Method::Delete;
 
-        let uri = format!("{}/store/order/{orderId}", configuration.base_path, "orderId"=order_id));
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, orderId=order_id);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -58,12 +58,12 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
         )
     }
 
-    fn GetInventory(&self, ) -> Box<Future<Item = super::::std::collections::HashMap<String, i32>, Error = Error>> {
+    fn GetInventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/store/inventory", configuration.base_path));
+        let uri = format!("{}/store/inventory", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -74,18 +74,18 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap&lt;String, i32&gt;, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, i32>, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             }).map_err(|e| Error::from(e))
         )
     }
 
-    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = super::Order, Error = Error>> {
+    fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = ::models::order::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/store/order/{orderId}", configuration.base_path, "orderId"=order_id));
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, orderId=order_id);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -96,18 +96,18 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
             .and_then(|body| {
-                let parsed: Result<Order, _> = serde_json::from_slice(&body);
+                let parsed: Result<::models::order::Order, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             }).map_err(|e| Error::from(e))
         )
     }
 
-    fn PlaceOrder(&self, body: super::Order) -> Box<Future<Item = super::Order, Error = Error>> {
+    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = ::models::order::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/store/order", configuration.base_path, "body"=body));
+        let uri = format!("{}/store/order", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -122,7 +122,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
             .and_then(|body| {
-                let parsed: Result<Order, _> = serde_json::from_slice(&body);
+                let parsed: Result<::models::order::Order, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             }).map_err(|e| Error::from(e))
         )

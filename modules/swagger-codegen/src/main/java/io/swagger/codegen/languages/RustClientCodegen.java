@@ -298,7 +298,9 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             return swaggerType;
         }
 
-        return toModelName(swaggerType);
+        // return fully-qualified model name
+        // ::models::{{classnameFile}}::{{classname}}
+        return "::models::" + toModelFilename(swaggerType) + "::" + toModelName(swaggerType);
     }
 
     @Override
@@ -338,6 +340,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             // http method verb conversion (e.g. PUT => Put)
             operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
             // update return type to conform to rust standard
+            /*
             if (operation.returnType != null) {
                 if ( operation.returnType.startsWith("Vec") && !languageSpecificPrimitives.contains(operation.returnBaseType)) {
                     // array of model
@@ -384,7 +387,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 					// add super:: to model, e.g. super::pet
                     p.dataType = "super::" + p.dataType;
                 }
-            }
+            }*/
         }
 
         return objs;

@@ -16,7 +16,7 @@ use serde_json;
 use futures;
 use futures::{Future, Stream};
 
-use super::{Error, configuration, models};
+use super::{Error, configuration};
 
 pub struct UserApiImpl<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
@@ -31,24 +31,24 @@ impl<C: hyper::client::Connect> UserApiImpl<C> {
 }
 
 pub trait UserApi {
-    fn CreateUser(&self, body: super::User) -> Box<Future<Item = (), Error = Error>>;
-    fn CreateUsersWithArrayInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>>;
-    fn CreateUsersWithListInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>>;
-    fn DeleteUser(&self, username: String) -> Box<Future<Item = (), Error = Error>>;
-    fn GetUserByName(&self, username: String) -> Box<Future<Item = User, Error = Error>>;
-    fn LoginUser(&self, username: String, password: String) -> Box<Future<Item = String, Error = Error>>;
+    fn CreateUser(&self, body: User) -> Box<Future<Item = (), Error = Error>>;
+    fn CreateUsersWithArrayInput(&self, body: Vec<::models::user::User>) -> Box<Future<Item = (), Error = Error>>;
+    fn CreateUsersWithListInput(&self, body: Vec<::models::user::User>) -> Box<Future<Item = (), Error = Error>>;
+    fn DeleteUser(&self, username: &str) -> Box<Future<Item = (), Error = Error>>;
+    fn GetUserByName(&self, username: &str) -> Box<Future<Item = ::models::user::User, Error = Error>>;
+    fn LoginUser(&self, username: &str, password: &str) -> Box<Future<Item = String, Error = Error>>;
     fn LogoutUser(&self, ) -> Box<Future<Item = (), Error = Error>>;
-    fn UpdateUser(&self, username: String, body: super::User) -> Box<Future<Item = (), Error = Error>>;
+    fn UpdateUser(&self, username: &str, body: User) -> Box<Future<Item = (), Error = Error>>;
 }
 
 
 impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
-    fn CreateUser(&self, body: super::User) -> Box<Future<Item = (), Error = Error>> {
+    fn CreateUser(&self, body: User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user", configuration.base_path, "body"=body));
+        let uri = format!("{}/user", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -66,12 +66,12 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         )
     }
 
-    fn CreateUsersWithArrayInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>> {
+    fn CreateUsersWithArrayInput(&self, body: Vec<::models::user::User>) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user/createWithArray", configuration.base_path, "body"=body));
+        let uri = format!("{}/user/createWithArray", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -89,12 +89,12 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         )
     }
 
-    fn CreateUsersWithListInput(&self, body: Vec<User>) -> Box<Future<Item = (), Error = Error>> {
+    fn CreateUsersWithListInput(&self, body: Vec<::models::user::User>) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user/createWithList", configuration.base_path, "body"=body));
+        let uri = format!("{}/user/createWithList", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -117,7 +117,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Delete;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username));
+        let uri = format!("{}/user/{username}", configuration.base_path, username=username);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -131,12 +131,12 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         )
     }
 
-    fn GetUserByName(&self, username: &str) -> Box<Future<Item = super::User, Error = Error>> {
+    fn GetUserByName(&self, username: &str) -> Box<Future<Item = ::models::user::User, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username));
+        let uri = format!("{}/user/{username}", configuration.base_path, username=username);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -147,7 +147,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
             .and_then(|body| {
-                let parsed: Result<User, _> = serde_json::from_slice(&body);
+                let parsed: Result<::models::user::User, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             }).map_err(|e| Error::from(e))
         )
@@ -162,7 +162,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
             .append_pair("username", username)
             .append_pair("password", password)
             .finish();
-        let uri = format!("{}/user/login{}", configuration.base_path, query, "username"=username, "password"=password));
+        let uri = format!("{}/user/login{}", configuration.base_path, query);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -184,7 +184,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/user/logout", configuration.base_path));
+        let uri = format!("{}/user/logout", configuration.base_path);
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -198,12 +198,12 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         )
     }
 
-    fn UpdateUser(&self, username: &str, body: super::User) -> Box<Future<Item = (), Error = Error>> {
+    fn UpdateUser(&self, username: &str, body: User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Put;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username, "body"=body));
+        let uri = format!("{}/user/{username}", configuration.base_path, username=username);
 
         let mut req = hyper::Request::new(method, uri);
 

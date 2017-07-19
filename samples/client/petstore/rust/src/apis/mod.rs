@@ -19,7 +19,7 @@ impl From<serde_json::Error> for Error {
     }
 }
 
-use super::models;
+use super::models::*;
 
 mod pet_api;
 
