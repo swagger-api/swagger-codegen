@@ -48,7 +48,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**::std::collections::HashMap<String, i32>**](map.md)
+**::std::collections::HashMap<String, i32>**
 
 ### Authorization
 
@@ -98,7 +98,7 @@ Place an order for a pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
+  **body** | [**super::Order**](Order.md)| order placed for purchasing the pet | 
 
 ### Return type
 
