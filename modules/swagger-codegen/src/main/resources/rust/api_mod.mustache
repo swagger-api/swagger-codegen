@@ -27,9 +27,8 @@ mod {{classFilename}};
 {{#operations}}
 {{#operation}}
 {{#-last}}
-
 pub use self::{{classFilename}}::{{classname}};
-
+pub use self::{{classFilename}}::{{classname}}Impl;
 {{/-last}}
 {{/operation}}
 {{/operations}}

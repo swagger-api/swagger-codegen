@@ -11,7 +11,7 @@ pub struct {{classname}} {
   {{#description}}
   /// {{{description}}}
   {{/description}}
-  #[serde(rename = "{{baseName}}")] {{name}}: {{^required}}Option<{{/required}}{{^isPrimitiveType}}{{^isContainer}}super::{{/isContainer}}{{/isPrimitiveType}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
+  #[serde(rename = "{{baseName}}")] {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
 {{/vars}}
 }
 
