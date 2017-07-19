@@ -77,7 +77,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
             {{/returnType}}
             {{#returnType}}
             .and_then(|body| {
-                let parsed: Result<{{returnType}}, _> = serde_json::from_slice(&body);
+                let parsed: Result<{{{returnType}}}, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             }).map_err(|e| Error::from(e))
             {{/returnType}}
