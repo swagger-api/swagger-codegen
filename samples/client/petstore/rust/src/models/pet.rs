@@ -13,10 +13,10 @@
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Pet {
   #[serde(rename = "id")] id: Option<i64>,
-  #[serde(rename = "category")] category: Option<super::Category>,
+  #[serde(rename = "category")] category: Option<super::::models::category::Category>,
   #[serde(rename = "name")] name: String,
   #[serde(rename = "photoUrls")] photo_urls: Vec<String>,
-  #[serde(rename = "tags")] tags: Option<Vec<Tag>>,
+  #[serde(rename = "tags")] tags: Option<Vec<::models::tag::Tag>>,
   /// pet status in the store
   #[serde(rename = "status")] status: Option<String>
 }
@@ -43,11 +43,11 @@ impl Pet {
     self
   }
 
-  pub fn set_category(&mut self, category: Category) {
+  pub fn set_category(&mut self, category: ::models::category::Category) {
     self.category = Some(category);
   }
 
-  pub fn with_category(mut self, category: Category) -> Pet {
+  pub fn with_category(mut self, category: ::models::category::Category) -> Pet {
     self.category = Some(category);
     self
   }
@@ -70,11 +70,11 @@ impl Pet {
     self
   }
 
-  pub fn set_tags(&mut self, tags: Vec<Tag>) {
+  pub fn set_tags(&mut self, tags: Vec<::models::tag::Tag>) {
     self.tags = Some(tags);
   }
 
-  pub fn with_tags(mut self, tags: Vec<Tag>) -> Pet {
+  pub fn with_tags(mut self, tags: Vec<::models::tag::Tag>) -> Pet {
     self.tags = Some(tags);
     self
   }

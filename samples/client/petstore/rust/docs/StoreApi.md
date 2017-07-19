@@ -62,7 +62,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetOrderById**
-> Order GetOrderById(order_id)
+> ::models::order::Order GetOrderById(order_id)
 Find purchase order by ID
 
 For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Order**](Order.md)
+[**::models::order::Order**](Order.md)
 
 ### Authorization
 
@@ -89,7 +89,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **PlaceOrder**
-> Order PlaceOrder(body)
+> ::models::order::Order PlaceOrder(body)
 Place an order for a pet
 
 
@@ -98,11 +98,11 @@ Place an order for a pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**super::Order**](Order.md)| order placed for purchasing the pet | 
+  **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
 
 ### Return type
 
-[**Order**](Order.md)
+[**::models::order::Order**](Order.md)
 
 ### Authorization
 

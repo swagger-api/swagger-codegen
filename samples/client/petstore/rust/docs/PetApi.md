@@ -25,7 +25,7 @@ Add a new pet to the store
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **body** | [**super::Pet**](Pet.md)| Pet object that needs to be added to the store | 
+  **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByStatus**
-> Vec<Pet> FindPetsByStatus(ctx, status)
+> Vec<::models::pet::Pet> FindPetsByStatus(ctx, status)
 Finds Pets by status
 
 Multiple status values can be provided with comma separated strings
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vec<Pet>**](Pet.md)
+[**Vec<::models::pet::Pet>**](Pet.md)
 
 ### Authorization
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByTags**
-> Vec<Pet> FindPetsByTags(ctx, tags)
+> Vec<::models::pet::Pet> FindPetsByTags(ctx, tags)
 Finds Pets by tags
 
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -122,7 +122,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vec<Pet>**](Pet.md)
+[**Vec<::models::pet::Pet>**](Pet.md)
 
 ### Authorization
 
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetPetById**
-> Pet GetPetById(ctx, pet_id)
+> ::models::pet::Pet GetPetById(ctx, pet_id)
 Find pet by ID
 
 Returns a single pet
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Pet**](Pet.md)
+[**::models::pet::Pet**](Pet.md)
 
 ### Authorization
 
@@ -174,7 +174,7 @@ Update an existing pet
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **body** | [**super::Pet**](Pet.md)| Pet object that needs to be added to the store | 
+  **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **UploadFile**
-> ApiResponse UploadFile(ctx, pet_id, optional)
+> ::models::api_response::ApiResponse UploadFile(ctx, pet_id, optional)
 uploads an image
 
 
@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**::models::api_response::ApiResponse**](ApiResponse.md)
 
 ### Authorization
 

@@ -33,7 +33,7 @@ pub trait {{classname}} {
 impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^vendorExtensions.x-returnTypeInMethod}}(){{/vendorExtensions.x-returnTypeInMethod}}{{#vendorExtensions.x-returnTypeInMethod}}{{{.}}}{{/vendorExtensions.x-returnTypeInMethod}}, Error = Error>> {
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::{{httpMethod}};
