@@ -198,7 +198,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             }
             additionalProperties.put("validatable", false);
             additionalProperties.put("net35", true);
-        } else if (NETSTANDARD.equals(this.targetFramework)){
+        } else if (NETSTANDARD.equals(this.targetFramework)) {
             setTargetFrameworkNuget("netstandard1.3");
             setSupportsAsync(Boolean.TRUE);
             setSupportsUWP(Boolean.FALSE);
@@ -303,7 +303,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("JsonSubTypes.mustache",
                 clientPackageDir, "JsonSubTypes.cs"));
 
-      if(Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
+        if (Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
 
