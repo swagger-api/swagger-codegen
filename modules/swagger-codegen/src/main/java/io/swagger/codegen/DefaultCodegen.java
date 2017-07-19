@@ -2138,7 +2138,6 @@ public class DefaultCodegen {
                         MapProperty ap = (MapProperty) responseProperty;
                         CodegenProperty innerProperty = fromProperty("response", ap.getAdditionalProperties());
                         op.returnBaseType = innerProperty.baseType;
-                        LOGGER.info("innerProperty.baseType = " + innerProperty.baseType);
                     } else {
                         if (cm.complexType != null) {
                             op.returnBaseType = cm.complexType;
