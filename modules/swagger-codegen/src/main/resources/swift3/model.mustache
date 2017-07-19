@@ -28,7 +28,7 @@ public enum {{classname}}: {{dataType}} {
 public typealias {{classname}} = {{dataType}}
 {{/vars.isEmpty}}
 {{^vars.isEmpty}}
-open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncodable{{/parent}} {
+open class {{classname}}: NSObject, NSCoding {{#parent}}{{{parent}}}{{/parent}}{{^parent}},JSONEncodable{{/parent}} {
 
 {{#vars}}
 {{#isEnum}}
@@ -53,13 +53,24 @@ open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncod
 
 {{/additionalPropertiesType}}
 {{^unwrapRequired}}
-    {{^parent}}public init() {}{{/parent}}{{/unwrapRequired}}
+    {{^parent}}public override init() {}{{/parent}}{{/unwrapRequired}}
 {{#unwrapRequired}}
     public init({{#allVars}}{{^-first}}, {{/-first}}{{name}}: {{#isEnum}}{{datatypeWithEnum}}{{/isEnum}}{{^isEnum}}{{datatype}}{{/isEnum}}{{^required}}?=nil{{/required}}{{/allVars}}) {
         {{#vars}}
         self.{{name}} = {{name}}
         {{/vars}}
     }{{/unwrapRequired}}
+
+    public required init?(coder aDecoder: NSCoder){
+        {{#vars}}
+        {{#isEnum}}
+        self.{{name}} = aDecoder.decodeObject(forKey: "{{name}}") as? {{{datatypeWithEnum}}}
+        {{/isEnum}}
+        {{^isEnum}}
+        self.{{name}} = aDecoder.decodeObject(forKey: "{{name}}") as? {{{datatype}}}
+        {{/isEnum}}
+        {{/vars}}
+    }
 {{#additionalPropertiesType}}
     public subscript(key: AnyHashable) -> {{{additionalPropertiesType}}}? {
         get {
@@ -95,6 +106,12 @@ open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncod
         {{/additionalPropertiesType}}
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        {{#vars}}
+        aCoder.encode({{name}}, forKey: "{{name}}")
+        {{/vars}}
     }
 }
 {{/vars.isEmpty}}
