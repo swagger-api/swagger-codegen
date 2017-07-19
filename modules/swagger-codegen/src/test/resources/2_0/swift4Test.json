@@ -88,18 +88,24 @@
     }
   },
   "definitions": {
+    "StringEnum": {
+      "type": "string",
+      "enum": [
+        "stringEnumValue1",
+        "stringEnumValue2",
+        "stringEnumValue3"
+      ]
+    },
     "AllPrimitives": {
       "type": "object",
       "properties": {
         "myInteger": {
-          "type": "integer",
-          "format": "int32"
+          "type": "integer"
         },
         "myIntegerArray": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "type": "integer"
           }
         },
         "myLong": {
@@ -155,17 +161,6 @@
             "format": "byte"
           }
         },
-        "myBinary": {
-          "type": "string",
-          "format": "binary"
-        },
-        "myBinaryArray": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "binary"
-          }
-        },
         "myBoolean": {
           "type": "boolean"
         },
@@ -206,17 +201,6 @@
             "type": "file"
           }
         },
-        "myPassword": {
-          "type": "string",
-          "format": "password"
-        },
-        "myPasswordArray": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "password"
-          }
-        },
         "myUUID": {
           "type": "string",
           "format": "uuid"
@@ -229,41 +213,13 @@
           }
         },
         "myStringEnum": {
-          "type": "string",
-          "enum": [
-            "stringEnumValue1",
-            "stringEnumValue2",
-            "stringEnumValue3"
-          ]
+          "$ref": "#/definitions/StringEnum"
         },
         "myStringEnumArray": {
           "type": "array",
           "items": {
-            "type": "string",
-            "enum": [
-              "stringEnumArrayValue1",
-              "stringEnumArrayValue2",
-              "stringEnumArrayValue3"
-            ]
+            "$ref": "#/definitions/StringEnum"
           }
-        },
-        "myIntegerEnum": {
-          "type": "integer",
-          "format": "int32",
-          "enum": [
-            111,
-            222,
-            333
-          ]
-        },
-        "myFloatEnum": {
-          "type": "number",
-          "format": "float",
-          "enum": [
-            1.11,
-            2.22,
-            3.33
-          ]
         }
       },
       "description": "Object which contains lots of different primitive Swagger types"
