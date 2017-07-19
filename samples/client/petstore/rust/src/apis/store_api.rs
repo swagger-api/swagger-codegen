@@ -32,7 +32,7 @@ impl<C: hyper::client::Connect> StoreApiImpl<C> {
 
 pub trait StoreApi {
     fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>>;
-    fn GetInventory(&self, ) -> Box<Future<Item = map[TODO]i32, Error = Error>>;
+    fn GetInventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error>>;
     fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>>;
     fn PlaceOrder(&self, body: Order) -> Box<Future<Item = Order, Error = Error>>;
 }
@@ -47,7 +47,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
 
     }
 
-    fn GetInventory(&self, ) -> Box<Future<Item = super::map[TODO]i32, Error = Error>> {
+    fn GetInventory(&self, ) -> Box<Future<Item = super::::std::collections::HashMap<String, i32>, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,

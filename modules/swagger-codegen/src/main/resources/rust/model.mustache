@@ -2,14 +2,14 @@
 {{#models}}
 {{#model}}
 {{#description}}
-// {{{classname}}} : {{{description}}}
+/// {{{classname}}} : {{{description}}}
 {{/description}}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct {{classname}} {
 {{#vars}}
   {{#description}}
-  // {{{description}}}
+  /// {{{description}}}
   {{/description}}
   #[serde(rename = "{{baseName}}")] {{name}}: {{^required}}Option<{{/required}}{{^isPrimitiveType}}{{^isContainer}}super::{{/isContainer}}{{/isPrimitiveType}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
 {{/vars}}
@@ -17,7 +17,7 @@ pub struct {{classname}} {
 
 impl {{classname}} {
   {{#description}}
-  // {{{description}}}
+  /// {{{description}}}
   {{/description}}
   pub fn new({{#requiredVars}}{{name}}: {{{datatype}}}{{^-last}}, {{/-last}}{{/requiredVars}}) -> {{classname}} {
     {{classname}} {
