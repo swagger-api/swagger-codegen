@@ -44,7 +44,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
         {{#hasQueryParams}}
         let query = ::url::form_urlencoded::Serializer::new(String::new())
             {{#queryParams}}
-            .append_pair("{{baseName}}", {{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}})
+            .append_pair("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string())
             {{/queryParams}}
             .finish();
         let uri_str = format!("{}{{{path}}}{}", configuration.base_path, query{{#pathParams}}, {{baseName}}={{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}}{{/pathParams}});
