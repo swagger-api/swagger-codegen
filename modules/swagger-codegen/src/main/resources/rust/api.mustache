@@ -39,7 +39,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
         let method = hyper::Method::{{httpMethod}};
 
         {{^hasQueryParams}}
-        let uri = format!("{}{{{path}}}", configuration.base_path{{#allParams}}, "{{baseName}}"={{paramName}}{{/allParams}}));
+        let uri = format!("{}{{{path}}}", configuration.base_path{{#pathParams}}, {{baseName}}={{paramName}}{{/pathParams}});
         {{/hasQueryParams}}
         {{#hasQueryParams}}
         let query = url::form_urlencoded::Serializer::new(String::new())
@@ -47,7 +47,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
             .append_pair("{{baseName}}", {{paramName}})
             {{/queryParams}}
             .finish();
-        let uri = format!("{}{{{path}}}{}", configuration.base_path, query{{#allParams}}, "{{baseName}}"={{paramName}}{{/allParams}}));
+        let uri = format!("{}{{{path}}}{}", configuration.base_path, query{{#pathParams}}, {{baseName}}={{paramName}}{{/pathParams}});
         {{/hasQueryParams}}
 
         let mut req = hyper::Request::new(method, uri);
