@@ -74,64 +74,81 @@ export class StoreService implements StoreServiceInterface {
     }
 
     /**
-     * Delete purchase order by ID
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+     * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
-    public deleteOrder(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
+    public deleteOrder(orderId: string, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.deleteOrderWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
 
     /**
-     * Returns pet inventories by status
      * Returns a map of status codes to quantities
+     * @summary Returns pet inventories by status
      */
-    public getInventory(extraHttpRequestParams?: any): Observable<{ [key: string]: number; }> {
+    public getInventory(extraHttpRequestParams?: any): Observable<undefined | { [key: string]: number; } | {}> {
         return this.getInventoryWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        
+                    default:
+                        return response.json() || {};
                 }
             });
     }
 
     /**
-     * Find purchase order by ID
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+     * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
-    public getOrderById(orderId: number, extraHttpRequestParams?: any): Observable<Order> {
+    public getOrderById(orderId: number, extraHttpRequestParams?: any): Observable<undefined | Order | {}> {
         return this.getOrderByIdWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.json();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
 
     /**
-     * Place an order for a pet
      * 
+     * @summary Place an order for a pet
      * @param body order placed for purchasing the pet
      */
-    public placeOrder(body: Order, extraHttpRequestParams?: any): Observable<Order> {
+    public placeOrder(body: Order, extraHttpRequestParams?: any): Observable<undefined | Order | {}> {
         return this.placeOrderWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.json();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -143,8 +160,7 @@ export class StoreService implements StoreServiceInterface {
      * @param orderId ID of the order that needs to be deleted
      */
     public deleteOrderWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order/${orderId}'
-                    .replace('${' + 'orderId' + '}', String(orderId));
+        const path = this.basePath + `/store/order/${orderId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -180,7 +196,7 @@ export class StoreService implements StoreServiceInterface {
      * Returns a map of status codes to quantities
      */
     public getInventoryWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/inventory';
+        const path = this.basePath + `/store/inventory`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -217,8 +233,7 @@ export class StoreService implements StoreServiceInterface {
      * @param orderId ID of pet that needs to be fetched
      */
     public getOrderByIdWithHttpInfo(orderId: number, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order/${orderId}'
-                    .replace('${' + 'orderId' + '}', String(orderId));
+        const path = this.basePath + `/store/order/${orderId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -255,7 +270,7 @@ export class StoreService implements StoreServiceInterface {
      * @param body order placed for purchasing the pet
      */
     public placeOrderWithHttpInfo(body: Order, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order';
+        const path = this.basePath + `/store/order`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845

@@ -47,13 +47,14 @@ export class StoreApi implements StoreApiInterface {
      * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
-    public deleteOrder(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
+    public deleteOrder(orderId: string, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.deleteOrderWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -62,13 +63,17 @@ export class StoreApi implements StoreApiInterface {
      * Returns a map of status codes to quantities
      * @summary Returns pet inventories by status
      */
-    public getInventory(extraHttpRequestParams?: any): Observable<{ [key: string]: number; }> {
+    public getInventory(extraHttpRequestParams?: any): Observable<undefined | { [key: string]: number; } | {}> {
         return this.getInventoryWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -78,13 +83,17 @@ export class StoreApi implements StoreApiInterface {
      * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
-    public getOrderById(orderId: number, extraHttpRequestParams?: any): Observable<models.Order> {
+    public getOrderById(orderId: string, extraHttpRequestParams?: any): Observable<undefined | models.Order | {}> {
         return this.getOrderByIdWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.json();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -94,13 +103,17 @@ export class StoreApi implements StoreApiInterface {
      * @summary Place an order for a pet
      * @param body order placed for purchasing the pet
      */
-    public placeOrder(body: models.Order, extraHttpRequestParams?: any): Observable<models.Order> {
+    public placeOrder(body?: models.Order, extraHttpRequestParams?: any): Observable<undefined | models.Order | {}> {
         return this.placeOrderWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.json();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -112,8 +125,7 @@ export class StoreApi implements StoreApiInterface {
      * @param orderId ID of the order that needs to be deleted
      */
     public deleteOrderWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order/${orderId}'
-                    .replace('${' + 'orderId' + '}', String(orderId));
+        const path = this.basePath + `/store/order/${orderId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -150,7 +162,7 @@ export class StoreApi implements StoreApiInterface {
      * Returns a map of status codes to quantities
      */
     public getInventoryWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/inventory';
+        const path = this.basePath + `/store/inventory`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -188,9 +200,8 @@ export class StoreApi implements StoreApiInterface {
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      * @param orderId ID of pet that needs to be fetched
      */
-    public getOrderByIdWithHttpInfo(orderId: number, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order/${orderId}'
-                    .replace('${' + 'orderId' + '}', String(orderId));
+    public getOrderByIdWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/store/order/${orderId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -227,8 +238,8 @@ export class StoreApi implements StoreApiInterface {
      * 
      * @param body order placed for purchasing the pet
      */
-    public placeOrderWithHttpInfo(body: models.Order, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/store/order';
+    public placeOrderWithHttpInfo(body?: models.Order, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/store/order`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845

@@ -47,13 +47,14 @@ export class UserApi implements UserApiInterface {
      * @summary Create user
      * @param body Created user object
      */
-    public createUser(body: models.User, extraHttpRequestParams?: any): Observable<{}> {
+    public createUser(body?: models.User, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.createUserWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -63,13 +64,14 @@ export class UserApi implements UserApiInterface {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithArrayInput(body: Array<models.User>, extraHttpRequestParams?: any): Observable<{}> {
+    public createUsersWithArrayInput(body?: Array<models.User>, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.createUsersWithArrayInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -79,13 +81,14 @@ export class UserApi implements UserApiInterface {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithListInput(body: Array<models.User>, extraHttpRequestParams?: any): Observable<{}> {
+    public createUsersWithListInput(body?: Array<models.User>, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.createUsersWithListInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -95,13 +98,14 @@ export class UserApi implements UserApiInterface {
      * @summary Delete user
      * @param username The name that needs to be deleted
      */
-    public deleteUser(username: string, extraHttpRequestParams?: any): Observable<{}> {
+    public deleteUser(username: string, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.deleteUserWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -111,13 +115,17 @@ export class UserApi implements UserApiInterface {
      * @summary Get user by user name
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
-    public getUserByName(username: string, extraHttpRequestParams?: any): Observable<models.User> {
+    public getUserByName(username: string, extraHttpRequestParams?: any): Observable<undefined | models.User | {}> {
         return this.getUserByNameWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.json();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -128,13 +136,17 @@ export class UserApi implements UserApiInterface {
      * @param username The user name for login
      * @param password The password for login in clear text
      */
-    public loginUser(username: string, password: string, extraHttpRequestParams?: any): Observable<string> {
+    public loginUser(username?: string, password?: string, extraHttpRequestParams?: any): Observable<undefined | string | {}> {
         return this.loginUserWithHttpInfo(username, password, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    case 200:
+                        // successful operation
+                        return response.text();
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -143,13 +155,14 @@ export class UserApi implements UserApiInterface {
      * 
      * @summary Logs out current logged in user session
      */
-    public logoutUser(extraHttpRequestParams?: any): Observable<{}> {
+    public logoutUser(extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.logoutUserWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -160,13 +173,14 @@ export class UserApi implements UserApiInterface {
      * @param username name that need to be deleted
      * @param body Updated user object
      */
-    public updateUser(username: string, body: models.User, extraHttpRequestParams?: any): Observable<{}> {
+    public updateUser(username: string, body?: models.User, extraHttpRequestParams?: any): Observable<undefined | {}> {
         return this.updateUserWithHttpInfo(username, body, extraHttpRequestParams)
             .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
+                switch (response.status) {
+                    case 204:
+                        return undefined;
+                    default:
+                        return response.json() || {};
                 }
             });
     }
@@ -177,8 +191,8 @@ export class UserApi implements UserApiInterface {
      * This can only be done by the logged in user.
      * @param body Created user object
      */
-    public createUserWithHttpInfo(body: models.User, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user';
+    public createUserWithHttpInfo(body?: models.User, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/user`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -218,8 +232,8 @@ export class UserApi implements UserApiInterface {
      * 
      * @param body List of user object
      */
-    public createUsersWithArrayInputWithHttpInfo(body: Array<models.User>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/createWithArray';
+    public createUsersWithArrayInputWithHttpInfo(body?: Array<models.User>, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/user/createWithArray`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -259,8 +273,8 @@ export class UserApi implements UserApiInterface {
      * 
      * @param body List of user object
      */
-    public createUsersWithListInputWithHttpInfo(body: Array<models.User>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/createWithList';
+    public createUsersWithListInputWithHttpInfo(body?: Array<models.User>, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/user/createWithList`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -301,8 +315,7 @@ export class UserApi implements UserApiInterface {
      * @param username The name that needs to be deleted
      */
     public deleteUserWithHttpInfo(username: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/${username}'
-                    .replace('${' + 'username' + '}', String(username));
+        const path = this.basePath + `/user/${username}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -340,8 +353,7 @@ export class UserApi implements UserApiInterface {
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/${username}'
-                    .replace('${' + 'username' + '}', String(username));
+        const path = this.basePath + `/user/${username}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -379,8 +391,8 @@ export class UserApi implements UserApiInterface {
      * @param username The user name for login
      * @param password The password for login in clear text
      */
-    public loginUserWithHttpInfo(username: string, password: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/login';
+    public loginUserWithHttpInfo(username?: string, password?: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/user/login`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -429,7 +441,7 @@ export class UserApi implements UserApiInterface {
      * 
      */
     public logoutUserWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/logout';
+        const path = this.basePath + `/user/logout`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -463,9 +475,8 @@ export class UserApi implements UserApiInterface {
      * @param username name that need to be deleted
      * @param body Updated user object
      */
-    public updateUserWithHttpInfo(username: string, body: models.User, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/user/${username}'
-                    .replace('${' + 'username' + '}', String(username));
+    public updateUserWithHttpInfo(username: string, body?: models.User, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/user/${username}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
