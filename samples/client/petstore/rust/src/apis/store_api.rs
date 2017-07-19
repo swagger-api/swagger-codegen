@@ -44,7 +44,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
 
         let method = hyper::Method::Delete;
 
-        let uri = format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, "orderId"=order_id));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -85,7 +85,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, "orderId"=order_id));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -107,7 +107,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/store/order", configuration.base_path, body=body));
+        let uri = format!("{}/store/order", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 

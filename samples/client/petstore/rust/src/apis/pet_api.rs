@@ -48,7 +48,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/pet", configuration.base_path, body=body));
+        let uri = format!("{}/pet", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -71,12 +71,12 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Delete;
 
-        let uri = format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id, api_key=api_key));
+        let uri = format!("{}/pet/{petId}", configuration.base_path, "petId"=pet_id, "api_key"=api_key));
 
         let mut req = hyper::Request::new(method, uri);
 
         let mut headers = req.headers_mut();
-        headers.set_raw("api_key", "");
+        headers.set_raw("api_key", api_key);
 
 
         // send request
@@ -93,9 +93,9 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let method = hyper::Method::Get;
 
         let query = url::form_urlencoded::Serializer::new(String::new())
-            .append_pair("status", status) // only for query params
+            .append_pair("status", status)
             .finish();
-        let uri = format!("{}/pet/findByStatus{}", configuration.base_path, query, status=status));
+        let uri = format!("{}/pet/findByStatus{}", configuration.base_path, query, "status"=status));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -118,9 +118,9 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
         let method = hyper::Method::Get;
 
         let query = url::form_urlencoded::Serializer::new(String::new())
-            .append_pair("tags", tags) // only for query params
+            .append_pair("tags", tags)
             .finish();
-        let uri = format!("{}/pet/findByTags{}", configuration.base_path, query, tags=tags));
+        let uri = format!("{}/pet/findByTags{}", configuration.base_path, query, "tags"=tags));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -142,7 +142,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id));
+        let uri = format!("{}/pet/{petId}", configuration.base_path, "petId"=pet_id));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -164,7 +164,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Put;
 
-        let uri = format!("{}/pet", configuration.base_path, body=body));
+        let uri = format!("{}/pet", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -187,7 +187,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/pet/{petId}", configuration.base_path, pet_id=pet_id, name=name, status=status));
+        let uri = format!("{}/pet/{petId}", configuration.base_path, "petId"=pet_id, "name"=name, "status"=status));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -206,7 +206,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/pet/{petId}/uploadImage", configuration.base_path, pet_id=pet_id, additional_metadata=additional_metadata, file=file));
+        let uri = format!("{}/pet/{petId}/uploadImage", configuration.base_path, "petId"=pet_id, "additionalMetadata"=additional_metadata, "file"=file));
 
         let mut req = hyper::Request::new(method, uri);
 

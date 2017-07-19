@@ -48,7 +48,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user", configuration.base_path, body=body));
+        let uri = format!("{}/user", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -71,7 +71,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user/createWithArray", configuration.base_path, body=body));
+        let uri = format!("{}/user/createWithArray", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -94,7 +94,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Post;
 
-        let uri = format!("{}/user/createWithList", configuration.base_path, body=body));
+        let uri = format!("{}/user/createWithList", configuration.base_path, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -117,7 +117,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Delete;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, username=username));
+        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -136,7 +136,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Get;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, username=username));
+        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -159,9 +159,10 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let method = hyper::Method::Get;
 
         let query = url::form_urlencoded::Serializer::new(String::new())
-            .append_pair("username", username).append_pair("password", password) // only for query params
+            .append_pair("username", username)
+            .append_pair("password", password)
             .finish();
-        let uri = format!("{}/user/login{}", configuration.base_path, query, username=username, password=password));
+        let uri = format!("{}/user/login{}", configuration.base_path, query, "username"=username, "password"=password));
 
         let mut req = hyper::Request::new(method, uri);
 
@@ -202,7 +203,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
 
         let method = hyper::Method::Put;
 
-        let uri = format!("{}/user/{username}", configuration.base_path, username=username, body=body));
+        let uri = format!("{}/user/{username}", configuration.base_path, "username"=username, "body"=body));
 
         let mut req = hyper::Request::new(method, uri);
 
