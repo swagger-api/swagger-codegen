@@ -93,7 +93,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("date", "string");
         typeMapping.put("DateTime", "String");
         typeMapping.put("password", "String");
-        // TODO  what should 'file' mapped to
+        // TODO(farcaller): map file
         typeMapping.put("file", "File");
         typeMapping.put("binary", "Vec<u8>");
         typeMapping.put("ByteArray", "String");
@@ -300,7 +300,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // return fully-qualified model name
         // ::models::{{classnameFile}}::{{classname}}
-        return "::models::" + toModelFilename(swaggerType) + "::" + toModelName(swaggerType);
+        return "::models::" + toModelName(swaggerType);
     }
 
     @Override
