@@ -24,7 +24,7 @@ This can only be done by the logged in user.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**User**](User.md)| Created user object | 
+  **body** | [**super::User**](User.md)| Created user object | 
 
 ### Return type
 
@@ -212,7 +212,7 @@ This can only be done by the logged in user.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
   **username** | **String**| name that need to be deleted | 
-  **body** | [**User**](User.md)| Updated user object | 
+  **body** | [**super::User**](User.md)| Updated user object | 
 
 ### Return type
 

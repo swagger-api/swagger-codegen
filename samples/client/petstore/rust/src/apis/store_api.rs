@@ -34,51 +34,97 @@ pub trait StoreApi {
     fn DeleteOrder(&self, order_id: String) -> Box<Future<Item = (), Error = Error>>;
     fn GetInventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error>>;
     fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = Order, Error = Error>>;
-    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = Order, Error = Error>>;
+    fn PlaceOrder(&self, body: super::Order) -> Box<Future<Item = Order, Error = Error>>;
 }
 
 
 impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
     fn DeleteOrder(&self, order_id: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
-        let mut req = hyper::Request::new(
-            hyper::Method::Delete,
-            format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
 
+        let method = hyper::Method::Delete;
+
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
+
+        let mut req = hyper::Request::new(method, uri);
+
+
+
+        // send request
+        Box::new(
+            configuration.client.request(req).and_then(|res| { res.body().concat2() })
+            .map_err(|e| Error::from(e))
+            .and_then(|_| futures::future::ok(()))
+        )
     }
 
     fn GetInventory(&self, ) -> Box<Future<Item = super::::std::collections::HashMap<String, i32>, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
-        let mut req = hyper::Request::new(
-            hyper::Method::Get,
-            format!("{}/store/inventory", configuration.base_path));
 
+        let method = hyper::Method::Get;
+
+        let uri = format!("{}/store/inventory", configuration.base_path));
+
+        let mut req = hyper::Request::new(method, uri);
+
+
+
+        // send request
+        Box::new(
+            configuration.client.request(req).and_then(|res| { res.body().concat2() })
+            .map_err(|e| Error::from(e))
+            .and_then(|body| {
+                let parsed: Result<::std::collections::HashMap&lt;String, i32&gt;, _> = serde_json::from_slice(&body);
+                parsed.map_err(|e| Error::from(e))
+            }).map_err(|e| Error::from(e))
+        )
     }
 
     fn GetOrderById(&self, order_id: i64) -> Box<Future<Item = super::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
-        let mut req = hyper::Request::new(
-            hyper::Method::Get,
-            format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
 
+        let method = hyper::Method::Get;
+
+        let uri = format!("{}/store/order/{orderId}", configuration.base_path, order_id=order_id));
+
+        let mut req = hyper::Request::new(method, uri);
+
+
+
+        // send request
+        Box::new(
+            configuration.client.request(req).and_then(|res| { res.body().concat2() })
+            .map_err(|e| Error::from(e))
+            .and_then(|body| {
+                let parsed: Result<Order, _> = serde_json::from_slice(&body);
+                parsed.map_err(|e| Error::from(e))
+            }).map_err(|e| Error::from(e))
+        )
     }
 
-    fn PlaceOrder(&self, body: Order) -> Box<Future<Item = super::Order, Error = Error>> {
+    fn PlaceOrder(&self, body: super::Order) -> Box<Future<Item = super::Order, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
-        let mut req = hyper::Request::new(
-            hyper::Method::Post,
-            format!("{}/store/order", configuration.base_path, body=body));
 
-        // body params
+        let method = hyper::Method::Post;
+
+        let uri = format!("{}/store/order", configuration.base_path, body=body));
+
+        let mut req = hyper::Request::new(method, uri);
+
+
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
         req.set_body(serialized);
 
+        // send request
         Box::new(
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
-            .and_then(|_| futures::future::ok(()))
+            .and_then(|body| {
+                let parsed: Result<Order, _> = serde_json::from_slice(&body);
+                parsed.map_err(|e| Error::from(e))
+            }).map_err(|e| Error::from(e))
         )
     }
 

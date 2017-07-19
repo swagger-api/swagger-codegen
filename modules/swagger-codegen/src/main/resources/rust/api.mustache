@@ -35,67 +35,51 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
 {{#operation}}
     fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^vendorExtensions.x-returnTypeInMethod}}(){{/vendorExtensions.x-returnTypeInMethod}}{{#vendorExtensions.x-returnTypeInMethod}}{{{.}}}{{/vendorExtensions.x-returnTypeInMethod}}, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
-        let mut req = hyper::Request::new(
-            hyper::Method::{{httpMethod}},
-            format!("{}{{path}}", configuration.base_path{{#allParams}}, {{paramName}}={{paramName}}{{/allParams}}));
 
-        {{#hasQueryParams}}
-        {{#queryParams}}
-        {{#required}}
-        // TODO query parameter {{baseName}}({{paramName}})
-        {{/required}}
-        {{^required}}
-        // TODO query parameter {{baseName}}({{paramName}}) Optional
-        {{/required}}
-        {{/queryParams}}
+        let method = hyper::Method::{{httpMethod}};
+
+        {{^hasQueryParams}}
+        let uri = format!("{}{{path}}", configuration.base_path{{#allParams}}, {{baseName}}={{paramName}}{{/allParams}}));
         {{/hasQueryParams}}
+        {{#hasQueryParams}}
+        let query = url::form_urlencoded::Serializer::new(String::new())
+            {{#queryParams}}.append_pair("{{paramName}}", {{paramName}}){{/queryParams}} // only for query params
+            .finish();
+        let uri = format!("{}{{path}}{}", configuration.base_path, query{{#allParams}}, {{paramName}}={{paramName}}{{/allParams}}));
+        {{/hasQueryParams}}
+
+        let mut req = hyper::Request::new(method, uri);
+
         {{#hasHeaderParams}}
+        let mut headers = req.headers_mut();
         {{#headerParams}}
-        {{#required}}
-        // TODO header parameter {{baseName}}({{paramName}})
-        {{/required}}
-        {{^required}}
-        // TODO header parameter {{baseName}}({{paramName}}) Optional
-        {{/required}}
+        headers.set_raw("{{paramName}}", "{{paramValue}}");
         {{/headerParams}}
         {{/hasHeaderParams}}
-        {{#hasFormParams}}
-        {{#formParams}}
-        {{#isFile}}
-        {{^required}}
-        // TODO form parameter (file) {{baseName}}({{paramName}}) Optional
-        {{/required}}
-        {{/isFile}}
-        {{^isFile}}
-        {{#required}}
-        // TODO form parameter {{baseName}}({{paramName}})
-        {{/required}}
-        {{^required}}
-        // TODO form parameter {{baseName}}({{paramName}}) Optional
-        {{/required}}
-        {{/isFile}}
-        {{/formParams}}
-        {{/hasFormParams}}
+
         {{#hasBodyParam}}
         {{#bodyParams}}
-        // body params
-        {{#required}}
-        let serialized = serde_json::to_string({{{paramName}}}).unwrap();
+        let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
         req.set_body(serialized);
+        {{/bodyParams}}
+        {{/hasBodyParam}}
 
+        // send request
         Box::new(
             configuration.client.request(req).and_then(|res| { res.body().concat2() })
             .map_err(|e| Error::from(e))
+            {{^returnType}}
             .and_then(|_| futures::future::ok(()))
+            {{/returnType}}
+            {{#returnType}}
+            .and_then(|body| {
+                let parsed: Result<{{returnType}}, _> = serde_json::from_slice(&body);
+                parsed.map_err(|e| Error::from(e))
+            }).map_err(|e| Error::from(e))
+            {{/returnType}}
         )
-        {{/required}}
-        {{^required}}
-        // TODO optional body parameter
-        {{/required}}
-        {{/bodyParams}}
-        {{/hasBodyParam}}
     }
 
 {{/operation}}

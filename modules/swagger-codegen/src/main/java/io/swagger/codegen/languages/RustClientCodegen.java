@@ -74,7 +74,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 				"i8", "i16", "i32", "i64",
 				"u8", "u16", "u32", "u64",
 				"f32", "f64",
-				"char", "bool", "String", "Vec<u8>")
+				"char", "bool", "String", "Vec<u8>", "File")
             );
 
         instantiationTypes.clear();
@@ -339,17 +339,50 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
             // update return type to conform to rust standard
             if (operation.returnType != null) {
-                // array of model
                 if ( operation.returnType.startsWith("Vec") && !languageSpecificPrimitives.contains(operation.returnBaseType)) {
+                    // array of model
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if ( end > 0 ) {
                         operation.vendorExtensions.put("x-returnTypeInMethod", "Vec<super::" + rt.substring("Vec<".length(), end).trim() + ">");
-                        operation.returnContainer = "Vec";
+                        operation.returnContainer = "List";
+                    }
+                } else if (operation.returnType.startsWith("::std::collections::HashMap<String, ") && !languageSpecificPrimitives.contains(operation.returnBaseType)) {
+                    LOGGER.info("return base type:" + operation.returnBaseType);
+                    // map of model
+                    String rt = operation.returnType;
+                    int end = rt.lastIndexOf(">");
+                    if ( end > 0 ) {
+                        operation.vendorExtensions.put("x-returnTypeInMethod", "::std::collections::HashMap<String, super::" + rt.substring("::std::collections::HashMap<String, ".length(), end).trim() + ">");
+                        operation.returnContainer = "Map";
                     }
                 } else if (!languageSpecificPrimitives.contains(operation.returnType)) {
                     // add super:: to model, e.g. super::pet
                     operation.vendorExtensions.put("x-returnTypeInMethod", "super::" + operation.returnType);
+                } else {
+                    // primitive type or array/map of primitive type
+                    operation.vendorExtensions.put("x-returnTypeInMethod", operation.returnType);
+                }
+            }
+
+            for (CodegenParameter p : operation.allParams) {
+                if (p.isListContainer && !languageSpecificPrimitives.contains(p.dataType)) {
+                    // array of model
+                    String rt = p.dataType;
+                    int end = rt.lastIndexOf(">");
+                    if ( end > 0 ) {
+                        p.dataType = "Vec<" + rt.substring("Vec<".length(), end).trim() + ">";
+                    }
+                } else if (p.isMapContainer && !languageSpecificPrimitives.contains(p.dataType)) {
+                    // map of model
+                    String rt = p.dataType;
+                    int end = rt.lastIndexOf(">");
+                    if ( end > 0 ) {
+                        p.dataType = "::std::collections::HashMap<String, super::" + rt.substring("::std::collections::HashMap<String, ".length(), end).trim() + ">";
+                    }
+                } else if (!languageSpecificPrimitives.contains(p.dataType)) {
+					// add super:: to model, e.g. super::pet
+                    p.dataType = "super::" + p.dataType;
                 }
             }
         }
