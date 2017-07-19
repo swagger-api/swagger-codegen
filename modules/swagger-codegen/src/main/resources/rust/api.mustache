@@ -7,7 +7,7 @@ use serde_json;
 use futures;
 use futures::{Future, Stream};
 
-use super::{Error, configuration, models};
+use super::{Error, configuration};
 
 pub struct {{{classname}}}Impl<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
