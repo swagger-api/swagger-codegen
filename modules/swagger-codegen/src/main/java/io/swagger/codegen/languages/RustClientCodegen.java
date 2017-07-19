@@ -339,6 +339,21 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         for (CodegenOperation operation : operations) {
             // http method verb conversion (e.g. PUT => Put)
             operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            // update return type to conform to rust standard
+            if (operation.returnType != null) {
+                // array of model
+                if ( operation.returnType.startsWith("Vec") && !languageSpecificPrimitives.contains(operation.returnBaseType)) {
+                    String rt = operation.returnType;
+                    int end = rt.lastIndexOf(">");
+                    if ( end > 0 ) {
+                        operation.vendorExtensions.put("x-returnTypeInMethod", "Vec<super::" + rt.substring("Vec<".length(), end).trim() + ">");
+                        operation.returnContainer = "Vec";
+                    }
+                } else if (!languageSpecificPrimitives.contains(operation.returnType)) {
+                    // add super:: to model, e.g. super::pet
+                    operation.vendorExtensions.put("x-returnTypeInMethod", "super::" + operation.returnType);
+                }
+            }
         }
 
         return objs;

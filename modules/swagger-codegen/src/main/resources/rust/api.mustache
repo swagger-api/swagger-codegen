@@ -33,29 +33,29 @@ pub trait {{classname}} {
 impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{returnType}}}{{/returnType}}, Error = Error>> {
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^vendorExtensions.x-returnTypeInMethod}}(){{/vendorExtensions.x-returnTypeInMethod}}{{#vendorExtensions.x-returnTypeInMethod}}{{{.}}}{{/vendorExtensions.x-returnTypeInMethod}}, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::{{httpMethod}},
-            format!("{{path}}", configuration.base_path).parse().unwrap());
+            format!("{}{{path}}", configuration.base_path{{#allParams}}, {{paramName}}={{paramName}}{{/allParams}}));
 
         {{#hasQueryParams}}
         {{#queryParams}}
         {{#required}}
-        /// TODO query parameter {{baseName}}({{paramName}})
+        // TODO query parameter {{baseName}}({{paramName}})
         {{/required}}
         {{^required}}
-        /// TODO query parameter {{baseName}}({{paramName}}) Optional
+        // TODO query parameter {{baseName}}({{paramName}}) Optional
         {{/required}}
         {{/queryParams}}
         {{/hasQueryParams}}
         {{#hasHeaderParams}}
         {{#headerParams}}
         {{#required}}
-        /// TODO header parameter {{baseName}}({{paramName}})
+        // TODO header parameter {{baseName}}({{paramName}})
         {{/required}}
         {{^required}}
-        /// TODO header parameter {{baseName}}({{paramName}}) Optional
+        // TODO header parameter {{baseName}}({{paramName}}) Optional
         {{/required}}
         {{/headerParams}}
         {{/hasHeaderParams}}
@@ -63,22 +63,22 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
         {{#formParams}}
         {{#isFile}}
         {{^required}}
-        /// TODO form parameter (file) {{baseName}}({{paramName}}) Optional
+        // TODO form parameter (file) {{baseName}}({{paramName}}) Optional
         {{/required}}
         {{/isFile}}
         {{^isFile}}
         {{#required}}
-        /// TODO form parameter {{baseName}}({{paramName}})
+        // TODO form parameter {{baseName}}({{paramName}})
         {{/required}}
         {{^required}}
-        /// TODO form parameter {{baseName}}({{paramName}}) Optional
+        // TODO form parameter {{baseName}}({{paramName}}) Optional
         {{/required}}
         {{/isFile}}
         {{/formParams}}
         {{/hasFormParams}}
         {{#hasBodyParam}}
         {{#bodyParams}}
-        /// body params
+        // body params
         {{#required}}
         let serialized = serde_json::to_string({{{paramName}}}).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
@@ -92,7 +92,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
         )
         {{/required}}
         {{^required}}
-        /// TODO optional body parameter
+        // TODO optional body parameter
         {{/required}}
         {{/bodyParams}}
         {{/hasBodyParam}}

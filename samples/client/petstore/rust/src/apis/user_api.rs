@@ -47,9 +47,9 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/user", configuration.base_path).parse().unwrap());
+            format!("{}/user", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -66,9 +66,9 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/user/createWithArray", configuration.base_path).parse().unwrap());
+            format!("{}/user/createWithArray", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -85,9 +85,9 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Post,
-            format!("/user/createWithList", configuration.base_path).parse().unwrap());
+            format!("{}/user/createWithList", configuration.base_path, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
@@ -104,33 +104,33 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Delete,
-            format!("/user/{username}", configuration.base_path).parse().unwrap());
+            format!("{}/user/{username}", configuration.base_path, username=username));
 
     }
 
-    fn GetUserByName(&self, username: &str) -> Box<Future<Item = User, Error = Error>> {
+    fn GetUserByName(&self, username: &str) -> Box<Future<Item = super::User, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/user/{username}", configuration.base_path).parse().unwrap());
+            format!("{}/user/{username}", configuration.base_path, username=username));
 
     }
 
-    fn LoginUser(&self, username: &str, password: &str) -> Box<Future<Item = String, Error = Error>> {
+    fn LoginUser(&self, username: &str, password: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/user/login", configuration.base_path).parse().unwrap());
+            format!("{}/user/login", configuration.base_path, username=username, password=password));
 
-        /// TODO query parameter username(username)
-        /// TODO query parameter password(password)
+        // TODO query parameter username(username)
+        // TODO query parameter password(password)
     }
 
     fn LogoutUser(&self, ) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Get,
-            format!("/user/logout", configuration.base_path).parse().unwrap());
+            format!("{}/user/logout", configuration.base_path));
 
     }
 
@@ -138,9 +138,9 @@ impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
         let mut req = hyper::Request::new(
             hyper::Method::Put,
-            format!("/user/{username}", configuration.base_path).parse().unwrap());
+            format!("{}/user/{username}", configuration.base_path, username=username, body=body));
 
-        /// body params
+        // body params
         let serialized = serde_json::to_string(body).unwrap();
         req.headers_mut().set(hyper::header::ContentType::json());
         req.headers_mut().set(hyper::header::ContentLength(serialized.len() as u64));
