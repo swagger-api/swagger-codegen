@@ -17,4 +17,11 @@ open class GetAllModelsResult: Codable {
 
     public init() {}
 
+
+    private enum CodingKeys: String, CodingKey { 
+        case myPrimitiveArray = "myPrimitiveArray"
+        case myPrimitive = "myPrimitive"
+        case myVariableNameTest = "myVariableNameTest"
+    }
+
 }

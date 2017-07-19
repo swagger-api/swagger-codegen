@@ -18,4 +18,10 @@ open class VariableNameTest: Codable {
 
     public init() {}
 
+
+    private enum CodingKeys: String, CodingKey { 
+        case exampleName = "example_name"
+        case _for = "for"
+    }
+
 }

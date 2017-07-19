@@ -11,28 +11,8 @@ import Foundation
 /** Object which contains lots of different primitive Swagger types */
 open class AllPrimitives: Codable {
 
-    public enum MyStringEnum: String, Codable { 
-        case stringenumvalue1 = "stringEnumValue1"
-        case stringenumvalue2 = "stringEnumValue2"
-        case stringenumvalue3 = "stringEnumValue3"
-    }
-    public enum MyStringEnumArray: String, Codable { 
-        case stringenumarrayvalue1 = "stringEnumArrayValue1"
-        case stringenumarrayvalue2 = "stringEnumArrayValue2"
-        case stringenumarrayvalue3 = "stringEnumArrayValue3"
-    }
-    public enum MyIntegerEnum: Int32, Codable { 
-        case _111 = 111
-        case _222 = 222
-        case _333 = 333
-    }
-    public enum MyFloatEnum: Float, Codable { 
-        case _111 = 1.11
-        case _222 = 2.22
-        case _333 = 3.33
-    }
-    public var myInteger: Int32?
-    public var myIntegerArray: [Int32]?
+    public var myInteger: Int?
+    public var myIntegerArray: [Int]?
     public var myLong: Int64?
     public var myLongArray: [Int64]?
     public var myFloat: Float?
@@ -43,8 +23,6 @@ open class AllPrimitives: Codable {
     public var myStringArray: [String]?
     public var myBytes: Data?
     public var myBytesArray: [Data]?
-    public var myBinary: Data?
-    public var myBinaryArray: [Data]?
     public var myBoolean: Bool?
     public var myBooleanArray: [Bool]?
     public var myDate: Date?
@@ -53,15 +31,39 @@ open class AllPrimitives: Codable {
     public var myDateTimeArray: [Date]?
     public var myFile: URL?
     public var myFileArray: [URL]?
-    public var myPassword: String?
-    public var myPasswordArray: [String]?
     public var myUUID: UUID?
     public var myUUIDArray: [UUID]?
-    public var myStringEnum: MyStringEnum?
-    public var myStringEnumArray: [MyStringEnumArray]?
-    public var myIntegerEnum: MyIntegerEnum?
-    public var myFloatEnum: MyFloatEnum?
+    public var myStringEnum: StringEnum?
+    public var myStringEnumArray: [StringEnum]?
 
     public init() {}
+
+
+    private enum CodingKeys: String, CodingKey { 
+        case myInteger = "myInteger"
+        case myIntegerArray = "myIntegerArray"
+        case myLong = "myLong"
+        case myLongArray = "myLongArray"
+        case myFloat = "myFloat"
+        case myFloatArray = "myFloatArray"
+        case myDouble = "myDouble"
+        case myDoubleArray = "myDoubleArray"
+        case myString = "myString"
+        case myStringArray = "myStringArray"
+        case myBytes = "myBytes"
+        case myBytesArray = "myBytesArray"
+        case myBoolean = "myBoolean"
+        case myBooleanArray = "myBooleanArray"
+        case myDate = "myDate"
+        case myDateArray = "myDateArray"
+        case myDateTime = "myDateTime"
+        case myDateTimeArray = "myDateTimeArray"
+        case myFile = "myFile"
+        case myFileArray = "myFileArray"
+        case myUUID = "myUUID"
+        case myUUIDArray = "myUUIDArray"
+        case myStringEnum = "myStringEnum"
+        case myStringEnumArray = "myStringEnumArray"
+    }
 
 }

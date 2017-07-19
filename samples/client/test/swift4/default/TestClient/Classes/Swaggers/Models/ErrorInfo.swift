@@ -11,10 +11,17 @@ import Foundation
 /** Example Error object */
 open class ErrorInfo: Codable {
 
-    public var code: Int32?
+    public var code: Int?
     public var message: String?
     public var details: [String]?
 
     public init() {}
+
+
+    private enum CodingKeys: String, CodingKey { 
+        case code = "code"
+        case message = "message"
+        case details = "details"
+    }
 
 }

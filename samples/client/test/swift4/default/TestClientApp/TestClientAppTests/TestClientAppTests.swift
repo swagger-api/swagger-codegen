@@ -7,30 +7,36 @@
 //
 
 import XCTest
+import TestClient
 @testable import TestClientApp
 
 class TestClientAppTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+
+
+    func testWhenVariableNameIsDifferentFromPropertyName() {
+        // This tests to make sure that the swift4 language can handle when
+        // we have property names which map to variable names that are not the same.
+        // This can happen when we have things like snake_case property names,
+        // or when we have property names which may be Swift 4 reserved words.
+        let jsonData = """
+        {
+           "example_name": "Test example name",
+           "for": "Some reason"
         }
+        """.data(using: .utf8)!
+
+        let decodedResult = CodableHelper.decode(VariableNameTest.self, from: jsonData)
+
+        XCTAssertNil(decodedResult.error, "Got an error decoding VariableNameTest, error=\(String(describing: decodedResult.error))")
+
+        guard let variableNameTest = decodedResult.decodableObj else {
+            XCTFail("Did not get an VariableNameTest decoded object")
+            return
+        }
+
+        XCTAssertTrue(variableNameTest.exampleName == "Test example name", "Did not decode snake_case property correctly.")
+        XCTAssertTrue(variableNameTest._for == "Some reason", "Did not decode property name that is a reserved word correctly.")
     }
-    
+
+
 }
