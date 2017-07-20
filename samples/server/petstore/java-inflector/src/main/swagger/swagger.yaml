@@ -604,6 +604,30 @@ paths:
           description: "User not found"
       x-contentType: "application/json"
       x-accepts: "application/json"
+  /fake_classname_test:
+    patch:
+      tags:
+      - "fake_classname_tags 123#$%^"
+      summary: "To test class name in snake case"
+      operationId: "testClassname"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "client model"
+        required: true
+        schema:
+          $ref: "#/definitions/Client"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Client"
+      x-contentType: "application/json"
+      x-accepts: "application/json"
   /fake:
     get:
       tags:
@@ -964,6 +988,13 @@ definitions:
       complete:
         type: "boolean"
         default: false
+    example:
+      petId: 6
+      quantity: 1
+      id: 0
+      shipDate: "2000-01-23T04:56:07.000+00:00"
+      complete: false
+      status: "placed"
     xml:
       name: "Order"
   Category:
@@ -974,6 +1005,9 @@ definitions:
         format: "int64"
       name:
         type: "string"
+    example:
+      name: "aeiou"
+      id: 6
     xml:
       name: "Category"
   User:
@@ -999,6 +1033,15 @@ definitions:
         type: "integer"
         format: "int32"
         description: "User Status"
+    example:
+      firstName: "aeiou"
+      lastName: "aeiou"
+      password: "aeiou"
+      userStatus: 6
+      phone: "aeiou"
+      id: 0
+      email: "aeiou"
+      username: "aeiou"
     xml:
       name: "User"
   Tag:
@@ -1009,6 +1052,9 @@ definitions:
         format: "int64"
       name:
         type: "string"
+    example:
+      name: "aeiou"
+      id: 1
     xml:
       name: "Tag"
   Pet:
@@ -1047,6 +1093,18 @@ definitions:
         - "available"
         - "pending"
         - "sold"
+    example:
+      photoUrls:
+      - "aeiou"
+      name: "doggie"
+      id: 0
+      category:
+        name: "aeiou"
+        id: 6
+      tags:
+      - name: "aeiou"
+        id: 1
+      status: "available"
     xml:
       name: "Pet"
   ApiResponse:
@@ -1059,6 +1117,10 @@ definitions:
         type: "string"
       message:
         type: "string"
+    example:
+      code: 0
+      type: "aeiou"
+      message: "aeiou"
   $special[model.name]:
     properties:
       $special[property.name]:
@@ -1260,6 +1322,8 @@ definitions:
     properties:
       client:
         type: "string"
+    example:
+      client: "aeiou"
   ReadOnlyFirst:
     type: "object"
     properties:
@@ -1386,6 +1450,10 @@ definitions:
         $ref: "#/definitions/OuterString"
       my_boolean:
         $ref: "#/definitions/OuterBoolean"
+    example:
+      my_string: {}
+      my_number: {}
+      my_boolean: {}
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

@@ -45,9 +45,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
+    public static final String JAVA8_MODE = "java8";
+    public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
 
-    protected String dateLibrary = "joda";
+    protected String dateLibrary = "threetenbp";
+    protected boolean java8Mode = false;
+    protected boolean withXml = false;
     protected String invokerPackage = "io.swagger";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java";
@@ -89,8 +93,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
-                "localVarPath", "localVarQueryParams", "localVarHeaderParams", "localVarFormParams",
-                "localVarPostBody", "localVarAccepts", "localVarAccept", "localVarContentTypes",
+                "localVarPath", "localVarQueryParams", "localVarCollectionQueryParams",
+                "localVarHeaderParams", "localVarFormParams", "localVarPostBody",
+                "localVarAccepts", "localVarAccept", "localVarContentTypes",
                 "localVarContentType", "localVarAuthNames", "localReturnType",
                 "ApiClient", "ApiException", "ApiResponse", "Configuration", "StringUtil",
 
@@ -145,16 +150,24 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 .SERIALIZE_BIG_DECIMAL_AS_STRING_DESC));
         cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util. This option only works for Java API client"));
         cliOptions.add(new CliOption("hideGenerationTimestamp", "hides the timestamp when files were generated"));
+        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type. This option only works for Java API client (resttemplate)"));
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
-        dateOptions.put("java8", "Java 8 native");
+        dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
+        dateOptions.put("threetenbp", "Backport of JSR310 (preferred for jdk < 1.8)");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
-        dateOptions.put("joda", "Joda");
-        dateOptions.put("legacy", "Legacy java.util.Date");
+        dateOptions.put("joda", "Joda (for legacy app only)");
+        dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
         dateLibrary.setEnum(dateOptions);
-
         cliOptions.add(dateLibrary);
+
+        CliOption java8Mode = new CliOption(JAVA8_MODE, "Option. Use Java8 classes instead of third party equivalents");
+        Map<String, String> java8ModeOptions = new HashMap<String, String>();
+        java8ModeOptions.put("true", "Use Java 8 classes such as Base64");
+        java8ModeOptions.put("false", "Various third party libraries as needed");
+        java8Mode.setEnum(java8ModeOptions);
+        cliOptions.add(java8Mode);
 
     }
 
@@ -307,6 +320,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         additionalProperties.put(FULL_JAVA_UTIL, fullJavaUtil);
         additionalProperties.put("javaUtilPrefix", javaUtilPrefix);
 
+        if (additionalProperties.containsKey(WITH_XML)) {
+            this.setWithXml(Boolean.valueOf(additionalProperties.get(WITH_XML).toString()));
+        }
+        additionalProperties.put(WITH_XML, withXml);
+
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
@@ -358,20 +376,40 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(DATE_LIBRARY)) {
-            setDateLibrary(additionalProperties.get("dateLibrary").toString());
-            additionalProperties.put(dateLibrary, "true");
+        if(additionalProperties.containsKey(JAVA8_MODE)) {
+            setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
+            if ( java8Mode ) {
+                additionalProperties.put("java8", "true");
+            }
         }
 
-        if("joda".equals(dateLibrary)) {
+        if(additionalProperties.containsKey(WITH_XML)) {
+            setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
+            if ( withXml ) {
+                additionalProperties.put(WITH_XML, "true");
+            }
+        }
+
+        if (additionalProperties.containsKey(DATE_LIBRARY)) {
+            setDateLibrary(additionalProperties.get("dateLibrary").toString());
+        }
+
+        if ("threetenbp".equals(dateLibrary)) {
+            additionalProperties.put("threetenbp", "true");
+            additionalProperties.put("jsr310", "true");
+            typeMapping.put("date", "LocalDate");
+            typeMapping.put("DateTime", "OffsetDateTime");
+            importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
+            importMapping.put("OffsetDateTime", "org.threeten.bp.OffsetDateTime");
+        } else if ("joda".equals(dateLibrary)) {
             additionalProperties.put("joda", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
-
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
         } else if (dateLibrary.startsWith("java8")) {
             additionalProperties.put("java8", "true");
+            additionalProperties.put("jsr310", "true");
             typeMapping.put("date", "LocalDate");
             importMapping.put("LocalDate", "java.time.LocalDate");
             if ("java8-localdatetime".equals(dateLibrary)) {
@@ -731,7 +769,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             return super.toExampleValue(p);
         }
     }
-    
+
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
@@ -1122,8 +1160,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         this.fullJavaUtil = fullJavaUtil;
     }
 
+    public void setWithXml(boolean withXml) {
+        this.withXml = withXml;
+    }
+
     public void setDateLibrary(String library) {
         this.dateLibrary = library;
+    }
+
+    public void setJava8Mode(boolean enabled) {
+        this.java8Mode = enabled;
     }
 
     @Override

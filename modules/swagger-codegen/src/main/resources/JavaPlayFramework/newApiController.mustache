@@ -28,12 +28,12 @@ import swagger.SwaggerUtils.ApiAction;
 {{#operations}}
 public class {{classname}}Controller extends Controller {
 
-    private final {{classname}}ControllerImp imp;
+    {{^controllerOnly}}private final {{classname}}ControllerImp imp;{{/controllerOnly}}
     private final ObjectMapper mapper;
 
     @Inject
-    private {{classname}}Controller({{classname}}ControllerImp imp) {
-        this.imp = imp;
+    private {{classname}}Controller({{^controllerOnly}}{{classname}}ControllerImp imp{{/controllerOnly}}) {
+        {{^controllerOnly}}this.imp = imp;{{/controllerOnly}}
         mapper = new ObjectMapper();
     }
 
@@ -42,9 +42,6 @@ public class {{classname}}Controller extends Controller {
     {{#wrapCalls}}@ApiAction{{/wrapCalls}}
     public Result {{operationId}}({{#pathParams}}{{>pathParams}}{{#hasMore}},{{/hasMore}}{{/pathParams}}) {{^handleExceptions}}{{#bodyParams}}throws IOException{{/bodyParams}}{{/handleExceptions}}{{#handleExceptions}}throws Exception{{/handleExceptions}} {
         {{#bodyParams}}
-        {{#collectionFormat}}
-        //TODO: Support this later
-        {{/collectionFormat}}
         {{^collectionFormat}}
         JsonNode node{{paramName}} = request().body().asJson();
         {{{dataType}}} {{paramName}};
@@ -66,12 +63,12 @@ public class {{classname}}Controller extends Controller {
         {{/bodyParams}}
         {{#queryParams}}
         {{#collectionFormat}}
-        //TODO: Support this later
-        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", request().getQueryString("{{baseName}}"));
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().queryString().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
-        //for (Pair pair : {{paramName}}Pair) {
-        //    {{paramName}}.add({{>conversionBegin}}pair.getValue(){{>conversionEnd}});
-        //}
+        for (String curParam : {{paramName}}List) {
+            //noinspection UseBulkOperation
+            {{paramName}}.add({{>conversionBegin}}curParam{{>conversionEnd}});
+        }
         {{/collectionFormat}}
         {{^collectionFormat}}
         String value{{paramName}} = request().getQueryString("{{paramName}}");
@@ -96,15 +93,15 @@ public class {{classname}}Controller extends Controller {
         {{/notFile}}
         {{#notFile}}
         {{#collectionFormat}}
-        //TODO: Support this later
-        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0]);
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
-        //for (Pair pair : {{paramName}}Pair) {
-        //    {{paramName}}.add({{>conversionBegin}}pair.getValue(){{>conversionEnd}});
-        //}
+        for (String curParam : {{paramName}}List) {
+            //noinspection UseBulkOperation
+            {{paramName}}.add({{>conversionBegin}}curParam{{>conversionEnd}});
+        }
         {{/collectionFormat}}
         {{^collectionFormat}}
-        String value{{paramName}} = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0];
+        String value{{paramName}} = (request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0];
         {{{dataType}}} {{paramName}};
         {{^required}}
         if (value{{paramName}} != null) {
@@ -119,12 +116,12 @@ public class {{classname}}Controller extends Controller {
         {{/formParams}}
         {{#headerParams}}
         {{#collectionFormat}}
-        //TODO: Support this later
-        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", request().getHeader("{{baseName}}"));
-        //{{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
-        //for (Pair pair : {{paramName}}Pair) {
-        //    {{paramName}}.add({{>conversionBegin}}pair.getValue(){{>conversionEnd}});
-        //}
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().headers().get("{{baseName}}"));
+        {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
+        for (String curParam : {{paramName}}List) {
+            //noinspection UseBulkOperation
+            {{paramName}}.add({{>conversionBegin}}curParam{{>conversionEnd}});
+        }
         {{/collectionFormat}}
         {{^collectionFormat}}
         String value{{paramName}} = request().getHeader("{{baseName}}");
@@ -139,6 +136,7 @@ public class {{classname}}Controller extends Controller {
         }{{/required}}
         {{/collectionFormat}}
         {{/headerParams}}
+        {{^controllerOnly}}
         {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^isResponseFile}}{{^returnTypeIsPrimitive}}{{#useBeanValidation}}
         {{#isListContainer}}for ({{{returnType}}} curItem : obj) {
             curItem.validate();
@@ -148,7 +146,8 @@ public class {{classname}}Controller extends Controller {
         {{/isMapContainer}}{{^returnContainer}}obj.validate();{{/returnContainer}}{{/useBeanValidation}}{{/returnTypeIsPrimitive}}{{/isResponseFile}}{{/returnType}}
         {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
         return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
-        {{^returnType}}return ok();{{/returnType}}
+        {{^returnType}}return ok();{{/returnType}}{{/controllerOnly}}
+        {{#controllerOnly}}return ok();{{/controllerOnly}}
     }
 {{/operation}}
 }

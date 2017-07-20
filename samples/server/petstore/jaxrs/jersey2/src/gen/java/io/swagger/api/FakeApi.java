@@ -20,6 +20,7 @@ import java.io.InputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.servlet.ServletConfig;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -32,7 +33,28 @@ import javax.validation.constraints.*;
 @io.swagger.annotations.Api(description = "the fake API")
 
 public class FakeApi  {
-   private final FakeApiService delegate = FakeApiServiceFactory.getFakeApi();
+   private final FakeApiService delegate;
+
+   public FakeApi(@Context ServletConfig servletContext) {
+      FakeApiService delegate = null;
+
+      if (servletContext != null) {
+         String implClass = servletContext.getInitParameter("FakeApi.implementation");
+         if (implClass != null && !"".equals(implClass.trim())) {
+            try {
+               delegate = (FakeApiService) Class.forName(implClass).newInstance();
+            } catch (Exception e) {
+               throw new RuntimeException(e);
+            }
+         } 
+      }
+
+      if (delegate == null) {
+         delegate = FakeApiServiceFactory.getFakeApi();
+      }
+
+      this.delegate = delegate;
+   }
 
     @POST
     @Path("/outer/boolean")
@@ -143,5 +165,18 @@ public class FakeApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testEnumParameters(enumFormStringArray,enumFormString,enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,enumQueryDouble,securityContext);
+    }
+    @GET
+    @Path("/jsonFormData")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "test json serialization of form data", notes = "", response = void.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
+    public Response testJsonFormData(@ApiParam(value = "field1", required=true)  @FormParam("param")  String param
+,@ApiParam(value = "field2", required=true)  @FormParam("param2")  String param2
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.testJsonFormData(param,param2,securityContext);
     }
 }

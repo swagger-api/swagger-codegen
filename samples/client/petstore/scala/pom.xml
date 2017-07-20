@@ -209,20 +209,26 @@
       <artifactId>joda-convert</artifactId>
       <version>${joda-version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.wordnik.swagger</groupId>
+      <artifactId>swagger-async-httpclient_2.10</artifactId>
+      <version>${swagger-async-httpclient-version}</version>
+    </dependency>
   </dependencies>
   <properties>
     <scala-version>2.10.4</scala-version>
     <joda-version>1.2</joda-version>
     <joda-time-version>2.2</joda-time-version>
     <jersey-version>1.19</jersey-version>
-    <swagger-core-version>1.5.12</swagger-core-version>
+    <swagger-core-version>1.5.15</swagger-core-version>
     <jersey-async-version>1.0.5</jersey-async-version>
     <maven-plugin.version>1.0.0</maven-plugin.version>
-    <jackson-version>2.4.2</jackson-version>
+    <jackson-version>2.8.9</jackson-version>
 
     <junit-version>4.8.1</junit-version>
     <scala-maven-plugin-version>3.1.5</scala-maven-plugin-version>
     <scala-test-version>2.2.4</scala-test-version>
+    <swagger-async-httpclient-version>0.3.5</swagger-async-httpclient-version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
