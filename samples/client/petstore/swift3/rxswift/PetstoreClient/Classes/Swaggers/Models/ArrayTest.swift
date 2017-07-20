@@ -8,14 +8,20 @@
 import Foundation
 
 
-open class ArrayTest: JSONEncodable {
+open class ArrayTest: NSObject, NSCoding ,JSONEncodable {
 
     public var arrayOfString: [String]?
     public var arrayArrayOfInteger: [[Int64]]?
     public var arrayArrayOfModel: [[ReadOnlyFirst]]?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.arrayOfString = aDecoder.decodeObject(forKey: "arrayOfString") as? [String]
+        self.arrayArrayOfInteger = aDecoder.decodeObject(forKey: "arrayArrayOfInteger") as? [[Int64]]
+        self.arrayArrayOfModel = aDecoder.decodeObject(forKey: "arrayArrayOfModel") as? [[ReadOnlyFirst]]
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -25,5 +31,11 @@ open class ArrayTest: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(arrayOfString, forKey: "arrayOfString")
+        aCoder.encode(arrayArrayOfInteger, forKey: "arrayArrayOfInteger")
+        aCoder.encode(arrayArrayOfModel, forKey: "arrayArrayOfModel")
     }
 }

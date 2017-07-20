@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class Capitalization: JSONEncodable {
+open class Capitalization: NSObject, NSCoding ,JSONEncodable {
 
     public var smallCamel: String?
     public var capitalCamel: String?
@@ -18,8 +18,17 @@ open class Capitalization: JSONEncodable {
     /** Name of the pet  */
     public var ATT_NAME: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.smallCamel = aDecoder.decodeObject(forKey: "smallCamel") as? String
+        self.capitalCamel = aDecoder.decodeObject(forKey: "capitalCamel") as? String
+        self.smallSnake = aDecoder.decodeObject(forKey: "smallSnake") as? String
+        self.capitalSnake = aDecoder.decodeObject(forKey: "capitalSnake") as? String
+        self.sCAETHFlowPoints = aDecoder.decodeObject(forKey: "sCAETHFlowPoints") as? String
+        self.ATT_NAME = aDecoder.decodeObject(forKey: "ATT_NAME") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -32,5 +41,14 @@ open class Capitalization: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(smallCamel, forKey: "smallCamel")
+        aCoder.encode(capitalCamel, forKey: "capitalCamel")
+        aCoder.encode(smallSnake, forKey: "smallSnake")
+        aCoder.encode(capitalSnake, forKey: "capitalSnake")
+        aCoder.encode(sCAETHFlowPoints, forKey: "sCAETHFlowPoints")
+        aCoder.encode(ATT_NAME, forKey: "ATT_NAME")
     }
 }

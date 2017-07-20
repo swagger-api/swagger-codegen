@@ -9,13 +9,18 @@ import Foundation
 
 
 /** Model for testing model name starting with number */
-open class Model200Response: JSONEncodable {
+open class Model200Response: NSObject, NSCoding ,JSONEncodable {
 
     public var name: Int32?
     public var _class: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.name = aDecoder.decodeObject(forKey: "name") as? Int32
+        self._class = aDecoder.decodeObject(forKey: "_class") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -24,5 +29,10 @@ open class Model200Response: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(_class, forKey: "_class")
     }
 }

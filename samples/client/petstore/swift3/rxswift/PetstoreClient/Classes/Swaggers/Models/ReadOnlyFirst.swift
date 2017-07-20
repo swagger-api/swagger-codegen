@@ -8,13 +8,18 @@
 import Foundation
 
 
-open class ReadOnlyFirst: JSONEncodable {
+open class ReadOnlyFirst: NSObject, NSCoding ,JSONEncodable {
 
     public var bar: String?
     public var baz: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.bar = aDecoder.decodeObject(forKey: "bar") as? String
+        self.baz = aDecoder.decodeObject(forKey: "baz") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -23,5 +28,10 @@ open class ReadOnlyFirst: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(bar, forKey: "bar")
+        aCoder.encode(baz, forKey: "baz")
     }
 }

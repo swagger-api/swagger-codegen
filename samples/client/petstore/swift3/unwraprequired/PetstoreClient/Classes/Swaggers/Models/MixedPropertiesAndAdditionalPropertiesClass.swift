@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
+open class MixedPropertiesAndAdditionalPropertiesClass: NSObject, NSCoding ,JSONEncodable {
 
     public var uuid: UUID?
     public var dateTime: Date?
@@ -20,6 +20,12 @@ open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
         self.dateTime = dateTime
         self.map = map
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.uuid = aDecoder.decodeObject(forKey: "uuid") as? UUID
+        self.dateTime = aDecoder.decodeObject(forKey: "dateTime") as? Date
+        self.map = aDecoder.decodeObject(forKey: "map") as? [String:Animal]
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -29,5 +35,11 @@ open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(uuid, forKey: "uuid")
+        aCoder.encode(dateTime, forKey: "dateTime")
+        aCoder.encode(map, forKey: "map")
     }
 }

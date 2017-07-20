@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class ApiResponse: JSONEncodable {
+open class ApiResponse: NSObject, NSCoding ,JSONEncodable {
 
     public var code: Int32?
     public var type: String?
@@ -20,6 +20,12 @@ open class ApiResponse: JSONEncodable {
         self.type = type
         self.message = message
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.code = aDecoder.decodeObject(forKey: "code") as? Int32
+        self.type = aDecoder.decodeObject(forKey: "type") as? String
+        self.message = aDecoder.decodeObject(forKey: "message") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -29,5 +35,11 @@ open class ApiResponse: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(code, forKey: "code")
+        aCoder.encode(type, forKey: "type")
+        aCoder.encode(message, forKey: "message")
     }
 }

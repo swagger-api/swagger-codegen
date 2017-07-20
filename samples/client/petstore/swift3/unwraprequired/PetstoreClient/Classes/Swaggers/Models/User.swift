@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class User: JSONEncodable {
+open class User: NSObject, NSCoding ,JSONEncodable {
 
     public var id: Int64?
     public var username: String?
@@ -31,6 +31,17 @@ open class User: JSONEncodable {
         self.phone = phone
         self.userStatus = userStatus
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.id = aDecoder.decodeObject(forKey: "id") as? Int64
+        self.username = aDecoder.decodeObject(forKey: "username") as? String
+        self.firstName = aDecoder.decodeObject(forKey: "firstName") as? String
+        self.lastName = aDecoder.decodeObject(forKey: "lastName") as? String
+        self.email = aDecoder.decodeObject(forKey: "email") as? String
+        self.password = aDecoder.decodeObject(forKey: "password") as? String
+        self.phone = aDecoder.decodeObject(forKey: "phone") as? String
+        self.userStatus = aDecoder.decodeObject(forKey: "userStatus") as? Int32
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -45,5 +56,16 @@ open class User: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(username, forKey: "username")
+        aCoder.encode(firstName, forKey: "firstName")
+        aCoder.encode(lastName, forKey: "lastName")
+        aCoder.encode(email, forKey: "email")
+        aCoder.encode(password, forKey: "password")
+        aCoder.encode(phone, forKey: "phone")
+        aCoder.encode(userStatus, forKey: "userStatus")
     }
 }

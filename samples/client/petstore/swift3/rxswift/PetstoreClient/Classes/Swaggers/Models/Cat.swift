@@ -8,12 +8,16 @@
 import Foundation
 
 
-open class Cat: Animal {
+open class Cat: NSObject, NSCoding Animal {
 
     public var declawed: Bool?
 
     
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.declawed = aDecoder.decodeObject(forKey: "declawed") as? Bool
+    }
     // MARK: JSONEncodable
     override open func encodeToJSON() -> Any {
         var nillableDictionary = super.encodeToJSON() as? [String:Any?] ?? [String:Any?]()
@@ -21,5 +25,9 @@ open class Cat: Animal {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(declawed, forKey: "declawed")
     }
 }

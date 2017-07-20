@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class EnumTest: JSONEncodable {
+open class EnumTest: NSObject, NSCoding ,JSONEncodable {
 
     public enum EnumString: String { 
         case upper = "UPPER"
@@ -28,8 +28,15 @@ open class EnumTest: JSONEncodable {
     public var enumNumber: EnumNumber?
     public var outerEnum: OuterEnum?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.enumString = aDecoder.decodeObject(forKey: "enumString") as? EnumString
+        self.enumInteger = aDecoder.decodeObject(forKey: "enumInteger") as? EnumInteger
+        self.enumNumber = aDecoder.decodeObject(forKey: "enumNumber") as? EnumNumber
+        self.outerEnum = aDecoder.decodeObject(forKey: "outerEnum") as? OuterEnum
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -40,5 +47,12 @@ open class EnumTest: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(enumString, forKey: "enumString")
+        aCoder.encode(enumInteger, forKey: "enumInteger")
+        aCoder.encode(enumNumber, forKey: "enumNumber")
+        aCoder.encode(outerEnum, forKey: "outerEnum")
     }
 }

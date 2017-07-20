@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class Pet: JSONEncodable {
+open class Pet: NSObject, NSCoding ,JSONEncodable {
 
     public enum Status: String { 
         case available = "available"
@@ -32,6 +32,15 @@ open class Pet: JSONEncodable {
         self.tags = tags
         self.status = status
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.id = aDecoder.decodeObject(forKey: "id") as? Int64
+        self.category = aDecoder.decodeObject(forKey: "category") as? Category
+        self.name = aDecoder.decodeObject(forKey: "name") as? String
+        self.photoUrls = aDecoder.decodeObject(forKey: "photoUrls") as? [String]
+        self.tags = aDecoder.decodeObject(forKey: "tags") as? [Tag]
+        self.status = aDecoder.decodeObject(forKey: "status") as? Status
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -44,5 +53,14 @@ open class Pet: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(category, forKey: "category")
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(photoUrls, forKey: "photoUrls")
+        aCoder.encode(tags, forKey: "tags")
+        aCoder.encode(status, forKey: "status")
     }
 }

@@ -8,13 +8,17 @@
 import Foundation
 
 
-open class NumberOnly: JSONEncodable {
+open class NumberOnly: NSObject, NSCoding ,JSONEncodable {
 
     public var justNumber: Double?
 
 
     public init(justNumber: Double?=nil) {
         self.justNumber = justNumber
+    }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.justNumber = aDecoder.decodeObject(forKey: "justNumber") as? Double
     }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
@@ -23,5 +27,9 @@ open class NumberOnly: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(justNumber, forKey: "justNumber")
     }
 }

@@ -9,12 +9,16 @@ import Foundation
 
 
 /** Model for testing reserved words */
-open class Return: JSONEncodable {
+open class Return: NSObject, NSCoding ,JSONEncodable {
 
     public var _return: Int32?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self._return = aDecoder.decodeObject(forKey: "_return") as? Int32
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -22,5 +26,9 @@ open class Return: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(_return, forKey: "_return")
     }
 }
