@@ -47,6 +47,7 @@ import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
+import io.swagger.models.refs.GenericRef;
 import io.swagger.util.Json;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -72,6 +73,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.lang.reflect.*;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -1149,6 +1151,8 @@ public class DefaultCodegen {
             datatype = "number";
         } else if ( p instanceof UUIDProperty) {
             datatype = "UUID";
+        } else if (p instanceof StringProperty) {
+            datatype = "string";
         } else if (p instanceof RefProperty) {
             try {
                 RefProperty r = (RefProperty) p;
@@ -1771,7 +1775,19 @@ public class DefaultCodegen {
             property.datatypeWithEnum = property.datatype;
         }
 
-        property.baseType = getSwaggerType(p);
+        if(p instanceof  RefProperty) {
+            try {
+                Field field = p.getClass().getDeclaredField("genericRef");
+                field.setAccessible(true);
+                GenericRef value = (GenericRef) field.get(p);
+                Field field2 = value.getClass().getDeclaredField("simpleRef");
+                field2.setAccessible(true);
+                String value2 = (String) field2.get(value);
+            }catch (Exception e) {
+                System.out.println("Ex:"+e);
+            }
+        }
+        property.baseType=getSwaggerType(p);
 
           if (p instanceof ArrayProperty) {
             property.isContainer = true;

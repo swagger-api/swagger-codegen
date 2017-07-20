@@ -115,9 +115,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         "Object")
         );
 
-        instantiationTypes.put("array", "List");
-        instantiationTypes.put("list", "List");
-        instantiationTypes.put("map", "Dictionary");
+        instantiationTypes.put("array", "System.Collections.Generic.List");
+        instantiationTypes.put("list", "System.Collections.Generic.List");
+        instantiationTypes.put("map", "System.Collections.Generic.Dictionary");
 
         // Nullable types here assume C# 2 support is not part of base
         typeMapping = new HashMap<String, String>();
@@ -133,9 +133,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         typeMapping.put("datetime", "DateTime?");
         typeMapping.put("date", "DateTime?");
         typeMapping.put("file", "System.IO.Stream");
-        typeMapping.put("array", "List");
-        typeMapping.put("list", "List");
-        typeMapping.put("map", "Dictionary");
+        typeMapping.put("array", "System.Collections.Generic.List");
+        typeMapping.put("list", "System.Collections.Generic.List");
+        typeMapping.put("map", "System.Collections.Generic.Dictionary");
         typeMapping.put("object", "Object");
         typeMapping.put("uuid", "Guid?");
     }
@@ -549,17 +549,40 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String getSwaggerType(Property p) {
+        String res=getSwaggerType_int(p);
+        if(res.contains("ModelClient"));
+        return  res;
+    }
+
+    public String getSwaggerType_int(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type;
+        if(swaggerType.contains("Client"))
+            System.out.println("found Client");
+        String fullTypeName=null;
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
-            type = typeMapping.get(swaggerType.toLowerCase());
-            if (languageSpecificPrimitives.contains(type)) {
-                return type;
+            fullTypeName = typeMapping.get(swaggerType.toLowerCase());
+            if (languageSpecificPrimitives.contains(fullTypeName)) {
+                if(fullTypeName.contains("Client"))
+                    System.out.println("found client");
+                return fullTypeName;
             }
         } else {
-            type = swaggerType;
+            if(reservedWords.contains(swaggerType.toLowerCase()))
+                swaggerType=modelPackage()+swaggerType;
+            if((packageName!=null)&&(! packageName.equals(""))) {
+                fullTypeName = packageName;
+                if(!apiPackage.equals(""))
+                    fullTypeName+="."+modelPackage();
+            }else {
+                if(!apiPackage().equals(""))
+                    fullTypeName=modelPackage();
+                else
+                    fullTypeName="";
+            }
+            if(!fullTypeName.equals(""))
+                fullTypeName= fullTypeName+"."+swaggerType;
         }
-        return toModelName(type);
+        return fullTypeName;
     }
 
     @Override

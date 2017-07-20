@@ -25,6 +25,7 @@ packages/
 .packages
 .vagrant/
 .vscode/
+dev/
 
 .settings
 

@@ -394,6 +394,19 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
                 for (CodegenOperation operation : ops) {
+                    for(CodegenParameter par : operation.allParams) {
+                        System.out.print("PostProcessOperations: " + par.dataType);
+                        if(!par.isContainer) {
+                            if (par.baseType != null) {
+                                if (modelPackage != null && !modelPackage.equals(""))
+                                    par.dataType=modelPackage + "." + par.dataType;
+                                if (packageName != null && !packageName.equals(""))
+                                    par.dataType=packageName + "." + par.dataType;
+                                par.dataType=par.dataType;
+                            }
+                        }
+                        System.out.println(" -> " + par.dataType);
+                    }
                     if (operation.returnType != null) {
                         operation.returnContainer = operation.returnType;
                         if (this.returnICollection && (
