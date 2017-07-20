@@ -35,7 +35,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="MapProperty">MapProperty.</param>
         /// <param name="MapOfMapProperty">MapOfMapProperty.</param>
-        public AdditionalPropertiesClass(Dictionary<string, string> MapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> MapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
+        public AdditionalPropertiesClass(System.Collections.Generic.Dictionary<string, string> MapProperty = default(System.Collections.Generic.Dictionary<string, string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>> MapOfMapProperty = default(System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>>))
         {
             this.MapProperty = MapProperty;
             this.MapOfMapProperty = MapOfMapProperty;
@@ -45,13 +45,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets MapProperty
         /// </summary>
         [DataMember(Name="map_property", EmitDefaultValue=false)]
-        public Dictionary<string, string> MapProperty { get; set; }
+        public System.Collections.Generic.Dictionary<string, string> MapProperty { get; set; }
 
         /// <summary>
         /// Gets or Sets MapOfMapProperty
         /// </summary>
         [DataMember(Name="map_of_map_property", EmitDefaultValue=false)]
-        public Dictionary<string, Dictionary<string, string>> MapOfMapProperty { get; set; }
+        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>> MapOfMapProperty { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

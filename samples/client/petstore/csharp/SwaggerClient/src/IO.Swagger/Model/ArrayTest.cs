@@ -36,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="ArrayOfString">ArrayOfString.</param>
         /// <param name="ArrayArrayOfInteger">ArrayArrayOfInteger.</param>
         /// <param name="ArrayArrayOfModel">ArrayArrayOfModel.</param>
-        public ArrayTest(List<string> ArrayOfString = default(List<string>), List<List<long?>> ArrayArrayOfInteger = default(List<List<long?>>), List<List<ReadOnlyFirst>> ArrayArrayOfModel = default(List<List<ReadOnlyFirst>>))
+        public ArrayTest(System.Collections.Generic.List<string> ArrayOfString = default(System.Collections.Generic.List<string>), System.Collections.Generic.List<System.Collections.Generic.List<long?>> ArrayArrayOfInteger = default(System.Collections.Generic.List<System.Collections.Generic.List<long?>>), System.Collections.Generic.List<System.Collections.Generic.List<IO.Swagger.Model.ReadOnlyFirst>> ArrayArrayOfModel = default(System.Collections.Generic.List<System.Collections.Generic.List<IO.Swagger.Model.ReadOnlyFirst>>))
         {
             this.ArrayOfString = ArrayOfString;
             this.ArrayArrayOfInteger = ArrayArrayOfInteger;
@@ -47,19 +47,19 @@ namespace IO.Swagger.Model
         /// Gets or Sets ArrayOfString
         /// </summary>
         [DataMember(Name="array_of_string", EmitDefaultValue=false)]
-        public List<string> ArrayOfString { get; set; }
+        public System.Collections.Generic.List<string> ArrayOfString { get; set; }
 
         /// <summary>
         /// Gets or Sets ArrayArrayOfInteger
         /// </summary>
         [DataMember(Name="array_array_of_integer", EmitDefaultValue=false)]
-        public List<List<long?>> ArrayArrayOfInteger { get; set; }
+        public System.Collections.Generic.List<System.Collections.Generic.List<long?>> ArrayArrayOfInteger { get; set; }
 
         /// <summary>
         /// Gets or Sets ArrayArrayOfModel
         /// </summary>
         [DataMember(Name="array_array_of_model", EmitDefaultValue=false)]
-        public List<List<ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
+        public System.Collections.Generic.List<System.Collections.Generic.List<IO.Swagger.Model.ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

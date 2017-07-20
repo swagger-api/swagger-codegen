@@ -191,7 +191,39 @@ namespace IO.Swagger.Client
             // ReSharper restore UnusedParameter.Local
             )
         {
+            setApiClientUsingDefault(apiClient);
 
+            Username = username;
+            Password = password;
+            AccessToken = accessToken;
+            UserAgent = userAgent;
+
+            if (defaultHeader != null)
+                DefaultHeader = defaultHeader;
+            if (apiKey != null)
+                ApiKey = apiKey;
+            if (apiKeyPrefix != null)
+                ApiKeyPrefix = apiKeyPrefix;
+
+            TempFolderPath = tempFolderPath;
+            DateTimeFormat = dateTimeFormat;
+            Timeout = timeout;
+        }
+
+        /// <summary>
+        /// Gets the default base path of the rest API.
+        ///</summary>
+        private	static String _defaultBasePath = "http://petstore.swagger.io:80/v2";
+
+        public static  String defaultBasePath{
+            get{
+                return _defaultBasePath;
+            }
+            set{
+                _defaultBasePath=value;
+                if(Default!=null)
+                    Default.setApiClientUsingDefault();
+            }
         }
 
         /// <summary>
@@ -202,7 +234,7 @@ namespace IO.Swagger.Client
         // ReSharper disable once UnusedParameter.Local
         public Configuration(ApiClient apiClient)
         {
-
+            setApiClientUsingDefault(apiClient);
         }
 
         #endregion Constructors
@@ -272,7 +304,25 @@ namespace IO.Swagger.Client
         public virtual string Password { get; set; }
 
         /// <summary>
-        /// Gets the API key with prefix.
+        /// Gets or sets the access token for OAuth2 authentication.
+        /// </summary>
+        /// <value>The access token.</value>
+        public String AccessToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the API key based on the authentication name.
+        /// </summary>
+        /// <value>The API key.</value>
+        public Dictionary<String, String> ApiKey = new Dictionary<String, String>();
+
+        /// <summary>
+        /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
+        /// </summary>
+        /// <value>The prefix of the API key.</value>
+        public Dictionary<String, String> ApiKeyPrefix = new Dictionary<String, String>();
+
+        /// <summary>
+        /// Get the API key with prefix.
         /// </summary>
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
         /// <returns>API key with prefix.</returns>

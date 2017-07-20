@@ -80,13 +80,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets ArrayEnum
         /// </summary>
         [DataMember(Name="array_enum", EmitDefaultValue=false)]
-        public List<ArrayEnumEnum> ArrayEnum { get; set; }
+        public System.Collections.Generic.List<ArrayEnumEnum> ArrayEnum { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArrays" /> class.
         /// </summary>
         /// <param name="JustSymbol">JustSymbol.</param>
         /// <param name="ArrayEnum">ArrayEnum.</param>
-        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>))
+        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), System.Collections.Generic.List<ArrayEnumEnum> ArrayEnum = default(System.Collections.Generic.List<ArrayEnumEnum>))
         {
             this.JustSymbol = JustSymbol;
             this.ArrayEnum = ArrayEnum;

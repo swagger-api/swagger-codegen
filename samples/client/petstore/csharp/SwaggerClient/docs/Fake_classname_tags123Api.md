@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="testclassname"></a>
 # **TestClassname**
-> ModelClient TestClassname (ModelClient body)
+> IO.Swagger.Model.ModelClient TestClassname (IO.Swagger.Model.ModelClient body)
 
 To test class name in snake case
 
@@ -28,12 +28,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new Fake_classname_tags123Api();
-            var body = new ModelClient(); // ModelClient | client model
+            var body = new IO.Swagger.Model.ModelClient(); // IO.Swagger.Model.ModelClient | client model
 
             try
             {
                 // To test class name in snake case
-                ModelClient result = apiInstance.TestClassname(body);
+                IO.Swagger.Model.ModelClient result = apiInstance.TestClassname(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -49,11 +49,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ModelClient**](ModelClient.md)| client model | 
+ **body** | [**IO.Swagger.Model.ModelClient**](IO.Swagger.Model.ModelClient.md)| client model | 
 
 ### Return type
 
-[**ModelClient**](ModelClient.md)
+[**IO.Swagger.Model.ModelClient**](IO.Swagger.Model.ModelClient.md)
 
 ### Authorization
 

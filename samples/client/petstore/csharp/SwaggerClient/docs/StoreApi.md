@@ -72,7 +72,7 @@ No authorization required
 
 <a name="getinventory"></a>
 # **GetInventory**
-> Dictionary<string, int?> GetInventory ()
+> System.Collections.Generic.Dictionary<string, int?> GetInventory ()
 
 Returns pet inventories by status
 
@@ -102,7 +102,7 @@ namespace Example
             try
             {
                 // Returns pet inventories by status
-                Dictionary&lt;string, int?&gt; result = apiInstance.GetInventory();
+                System.Collections.Generic.Dictionary&lt;string, int?&gt; result = apiInstance.GetInventory();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -119,7 +119,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Dictionary<string, int?>**
+[**System.Collections.Generic.Dictionary<string, int?>**](System.Collections.Generic.Dictionary.md)
 
 ### Authorization
 
@@ -134,7 +134,7 @@ This endpoint does not need any parameter.
 
 <a name="getorderbyid"></a>
 # **GetOrderById**
-> Order GetOrderById (long? orderId)
+> IO.Swagger.Model.Order GetOrderById (long? orderId)
 
 Find purchase order by ID
 
@@ -160,7 +160,7 @@ namespace Example
             try
             {
                 // Find purchase order by ID
-                Order result = apiInstance.GetOrderById(orderId);
+                IO.Swagger.Model.Order result = apiInstance.GetOrderById(orderId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -180,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Order**](Order.md)
+[**IO.Swagger.Model.Order**](IO.Swagger.Model.Order.md)
 
 ### Authorization
 
@@ -195,7 +195,7 @@ No authorization required
 
 <a name="placeorder"></a>
 # **PlaceOrder**
-> Order PlaceOrder (Order body)
+> IO.Swagger.Model.Order PlaceOrder (IO.Swagger.Model.Order body)
 
 Place an order for a pet
 
@@ -216,12 +216,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new StoreApi();
-            var body = new Order(); // Order | order placed for purchasing the pet
+            var body = new IO.Swagger.Model.Order(); // IO.Swagger.Model.Order | order placed for purchasing the pet
 
             try
             {
                 // Place an order for a pet
-                Order result = apiInstance.PlaceOrder(body);
+                IO.Swagger.Model.Order result = apiInstance.PlaceOrder(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -237,11 +237,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
+ **body** | [**IO.Swagger.Model.Order**](IO.Swagger.Model.Order.md)| order placed for purchasing the pet | 
 
 ### Return type
 
-[**Order**](Order.md)
+[**IO.Swagger.Model.Order**](IO.Swagger.Model.Order.md)
 
 ### Authorization
 
