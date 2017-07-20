@@ -27,12 +27,12 @@ import swagger.SwaggerUtils.ApiAction;
 {{#operations}}
 public class {{classname}}Controller extends Controller {
 
-    private final {{classname}}ControllerImp imp;
+    private final {{classname}}ControllerInterface api;
     private final ObjectMapper mapper;
 
     @Inject
-    private {{classname}}Controller({{classname}}ControllerImp imp) {
-        this.imp = imp;
+    private {{classname}}Controller({{classname}}ControllerInterface api) {
+        this.api = api;
         mapper = new ObjectMapper();
     }
 
@@ -129,7 +129,7 @@ public class {{classname}}Controller extends Controller {
         }{{/required}}
         {{/collectionFormat}}
         {{/headerParams}}
-        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
         return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
         {{^returnType}}return ok();{{/returnType}}

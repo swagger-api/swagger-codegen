@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 {{/useBeanValidation}}
 
 {{#operations}}
-public interface {{classname}}ControllerImpInterface {
+public interface {{classname}}ControllerInterface {
 {{#operation}}
     {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
 
