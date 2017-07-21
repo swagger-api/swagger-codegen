@@ -14,12 +14,13 @@ class APIHelper {
                 destination[key] = value
             }
         }
- 
+
         if destination.isEmpty {
             return nil
         }
+        return destination
     }
-    
+
     static func rejectNilHeaders(_ source: [String:Any?]) -> [String:String] {
         var destination = [String:String]()
         for (key, nillableValue) in source {
@@ -27,7 +28,7 @@ class APIHelper {
                 destination[key] = "\(value)"
             }
         }
-        return result
+        return destination
     }
 
     static func convertBoolToString(_ source: [String: Any]?) -> [String:Any]? {
@@ -47,7 +48,7 @@ class APIHelper {
         }
         return destination
     }
-    
+
     static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
         let returnValues = values
             .filter { $0.1 != nil }
