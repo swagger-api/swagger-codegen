@@ -8,23 +8,24 @@ import Foundation
 
 class APIHelper {
     static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
-        let result = source.reduce([String:Any]()) { (dict, tuple:(key: String, value: Any?)) -> [String:Any] in
-            guard let value = tuple.value else { return dict }
-            var dict = dict
-            dict.updateValue(value, forKey: tuple.key)
-            return dict
+        var destination = [String:Any]()
+        for (key, nillableValue) in source {
+            if let value: Any = nillableValue {
+                destination[key] = value
+            }
         }
-        
-        if result.isEmpty { return nil }
-        return result
+ 
+        if destination.isEmpty {
+            return nil
+        }
     }
     
     static func rejectNilHeaders(_ source: [String:Any?]) -> [String:String] {
-        let result = source.reduce([String:String]()) { (dict, tuple:(key: String, value: Any?)) -> [String:String] in
-            guard let value = tuple.value else { return dict }
-            var dict = dict
-            dict.updateValue("\(value)", forKey: tuple.key)
-            return dict
+        var destination = [String:String]()
+        for (key, nillableValue) in source {
+            if let value: Any = nillableValue {
+                destination[key] = "\(value)"
+            }
         }
         return result
     }
