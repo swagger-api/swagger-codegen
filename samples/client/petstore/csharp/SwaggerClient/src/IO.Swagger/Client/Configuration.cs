@@ -248,6 +248,9 @@ namespace IO.Swagger.Client
         /// </summary>
         public virtual ApiClient ApiClient
         {
+            set{
+                _apiClient=value;
+            }
             get
             {
                 if (_apiClient == null) _apiClient = CreateApiClient();
@@ -270,6 +273,28 @@ namespace IO.Swagger.Client
             }
         }
 
+         /// <summary>
+         /// Set the ApiClient using Default or ApiClient instance.
+         /// </summary>
+         /// <param name="apiClient">An instance of ApiClient.</param>
+         /// <returns></returns>
+         public void setApiClientUsingDefault (ApiClient apiClient = null)
+         {
+              if(apiClient == null){
+                  if(Default!=null ){
+                      if(Default.ApiClient == null || !Default.ApiClient.RestClient.BaseUrl.ToString().Equals(defaultBasePath)){
+                          Default.ApiClient = new ApiClient(defaultBasePath);
+                      }
+                      ApiClient = Default.ApiClient;
+                  }else{
+                      ApiClient = new ApiClient(defaultBasePath);
+                  }
+              }else{
+                  if (Default != null && Default.ApiClient == null)
+                      Default.ApiClient = apiClient;
+                  ApiClient = apiClient;
+             }
+         }
         /// <summary>
         /// Gets or sets the default header.
         /// </summary>
@@ -302,24 +327,6 @@ namespace IO.Swagger.Client
         /// </summary>
         /// <value>The password.</value>
         public virtual string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the access token for OAuth2 authentication.
-        /// </summary>
-        /// <value>The access token.</value>
-        public String AccessToken { get; set; }
-
-        /// <summary>
-        /// Gets or sets the API key based on the authentication name.
-        /// </summary>
-        /// <value>The API key.</value>
-        public Dictionary<String, String> ApiKey = new Dictionary<String, String>();
-
-        /// <summary>
-        /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
-        /// </summary>
-        /// <value>The prefix of the API key.</value>
-        public Dictionary<String, String> ApiKeyPrefix = new Dictionary<String, String>();
 
         /// <summary>
         /// Get the API key with prefix.
