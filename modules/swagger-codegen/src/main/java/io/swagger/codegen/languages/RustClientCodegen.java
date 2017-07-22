@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(RustClientCodegen.class);
+    public static final String PACKAGE_NAME = "pacakgeName";
+    public static final String PACKAGE_VERSION = "packageVersion";
 
     protected String packageName = "swagger";
     protected String packageVersion = "1.0.0";
