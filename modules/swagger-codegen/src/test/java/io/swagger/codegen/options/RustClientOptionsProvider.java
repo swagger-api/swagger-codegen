@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 
 public class RustClientOptionsProvider implements OptionsProvider {
-    public static final String PACKAGE_NAME_VALUE = "swagger_client_rust";
+    public static final String PACKAGE_NAME_VALUE = "swagger_test";
     public static final String PACKAGE_VERSION_VALUE = "2.1.2";
 
 
