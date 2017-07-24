@@ -75,7 +75,7 @@ import java.util.regex.Pattern;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
-    
+
     protected String inputSpec;
     protected String outputFolder = "";
     protected Set<String> defaultIncludes = new HashSet<String>();
@@ -228,7 +228,7 @@ public class DefaultCodegen {
 
     /**
      * post process enum defined in model's properties
-     * 
+     *
      * @param objs Map of models
      * @return maps of models with better enum support
      */
@@ -275,7 +275,7 @@ public class DefaultCodegen {
 
     /**
      * Returns the common prefix of variables for enum naming
-     * 
+     *
      * @param vars List of variable names
      * @return the common prefix for naming
      */
@@ -290,10 +290,10 @@ public class DefaultCodegen {
             return "";
         }
     }
-    
+
     /**
      * Return the enum default value in the language specified format
-     * 
+     *
      * @param value enum variable name
      * @param datatype data type
      * @return the default value for the enum
@@ -305,7 +305,7 @@ public class DefaultCodegen {
     /**
      * Return the enum value in the language specified format
      * e.g. status becomes "status"
-     * 
+     *
      * @param value enum variable name
      * @param datatype data type
      * @return the sanitized value for enum
@@ -317,10 +317,10 @@ public class DefaultCodegen {
             return "\"" + escapeText(value) + "\"";
         }
     }
-    
+
     /**
      * Return the sanitized variable name for enum
-     * 
+     *
      * @param value enum variable name
      * @param datatype data type
      * @return the sanitized variable name for enum
@@ -369,7 +369,7 @@ public class DefaultCodegen {
     @SuppressWarnings("unused")
     public void processSwagger(Swagger swagger) {
     }
-    
+
     // override with any special handling of the JMustache compiler
     @SuppressWarnings("unused")
     public Compiler processCompiler(Compiler compiler) {
@@ -414,7 +414,7 @@ public class DefaultCodegen {
     }
 
     /**
-     * Escape single and/or double quote to avoid code injection 
+     * Escape single and/or double quote to avoid code injection
      * @param input String to be cleaned up
      * @return string with quotation mark removed or escaped
      */
@@ -491,7 +491,7 @@ public class DefaultCodegen {
     public Map<String, String> modelDocTemplateFiles() {
         return modelDocTemplateFiles;
     }
-    
+
     public Map<String, String> reservedWordsMappings() {
         return reservedWordsMappings;
     }
@@ -607,7 +607,7 @@ public class DefaultCodegen {
      * @return properly-escaped pattern
      */
     public String toRegularExpression(String pattern) {
-        return escapeText(addRegularExpressionDelimiter(pattern));
+        return addRegularExpressionDelimiter(escapeText(pattern));
     }
 
     /**
@@ -621,8 +621,8 @@ public class DefaultCodegen {
     }
 
     /**
-     * Return the file name of the Api Documentation 
-     * 
+     * Return the file name of the Api Documentation
+     *
      * @param name the file name of the Api
      * @return the file name of the Api
      */
@@ -672,14 +672,14 @@ public class DefaultCodegen {
 
     /**
      * Return the capitalized file name of the model documentation
-     * 
+     *
      * @param name the model name
      * @return the file name of the model
      */
     public String toModelDocFilename(String name) {
         return initialCaps(name);
     }
-    
+
     /**
      * Return the operation ID (method name)
      *
@@ -844,9 +844,9 @@ public class DefaultCodegen {
         importMapping.put("LocalDate", "org.joda.time.*");
         importMapping.put("LocalTime", "org.joda.time.*");
 
-        // we've used the .swagger-codegen-ignore approach as 
+        // we've used the .swagger-codegen-ignore approach as
         // suppportingFiles can be cleared by code generator that extends
-        // the default codegen, leaving the commented code below for 
+        // the default codegen, leaving the commented code below for
         // future reference
         //supportingFiles.add(new GlobalSupportingFile("LICENSE", "LICENSE"));
 
@@ -1000,7 +1000,7 @@ public class DefaultCodegen {
     }
 
     /**
-     * Return the example value of the parameter. 
+     * Return the example value of the parameter.
      *
      * @param p Swagger property object
      */
@@ -1123,8 +1123,6 @@ public class DefaultCodegen {
         String datatype = null;
         if (p instanceof StringProperty && "number".equals(p.getFormat())) {
             datatype = "BigDecimal";
-        } else if (p instanceof StringProperty) {
-            datatype = "string";
         } else if (p instanceof ByteArrayProperty) {
             datatype = "ByteArray";
         } else if (p instanceof BinaryProperty) {
@@ -1163,6 +1161,8 @@ public class DefaultCodegen {
                 datatype = "Object";
                 LOGGER.error(e.getMessage(), e);
             }
+        } else if (p instanceof StringProperty) {
+            datatype = "string";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -1292,7 +1292,14 @@ public class DefaultCodegen {
         m.vendorExtensions = model.getVendorExtensions();
 
         if (model instanceof ModelImpl) {
-            m.discriminator = ((ModelImpl) model).getDiscriminator();
+          ModelImpl modelImpl = (ModelImpl) model;
+            m.discriminator = modelImpl.getDiscriminator();
+
+            if (modelImpl.getXml() != null) {
+              m.xmlPrefix = modelImpl.getXml().getPrefix();
+              m.xmlNamespace = modelImpl.getXml().getNamespace();
+              m.xmlName = modelImpl.getXml().getName();
+            }
         }
 
         if (model instanceof ArrayModel) {
@@ -1316,8 +1323,14 @@ public class DefaultCodegen {
                 int modelImplCnt = 0; // only one inline object allowed in a ComposedModel
                 for (Model innerModel: ((ComposedModel)model).getAllOf()) {
                     if (innerModel instanceof ModelImpl) {
+                      ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
-                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                            m.discriminator = modelImpl.getDiscriminator();
+                        }
+                        if (modelImpl.getXml() != null) {
+                          m.xmlPrefix = modelImpl.getXml().getPrefix();
+                          m.xmlNamespace = modelImpl.getXml().getNamespace();
+                          m.xmlName = modelImpl.getXml().getName();
                         }
                         if (modelImplCnt++ > 1) {
                             LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
@@ -1516,6 +1529,14 @@ public class DefaultCodegen {
         property.jsonSchema = Json.pretty(p);
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
+        }
+        if (p.getXml() != null) {
+          if (p.getXml().getAttribute() != null) {
+            property.isXmlAttribute = p.getXml().getAttribute();
+          }
+          property.xmlPrefix = p.getXml().getPrefix();
+          property.xmlName = p.getXml().getName();
+          property.xmlNamespace = p.getXml().getNamespace();
         }
         property.vendorExtensions = p.getVendorExtensions();
 
@@ -2001,7 +2022,6 @@ public class DefaultCodegen {
         op.summary = escapeText(operation.getSummary());
         op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
-        op.tags = operation.getTags();
         op.hasConsumes = false;
         op.hasProduces = false;
 
@@ -2410,7 +2430,12 @@ public class DefaultCodegen {
                 p.baseType = pr.datatype;
                 p.isContainer = true;
                 p.isListContainer = true;
-                imports.add(pr.baseType);
+
+                // recursively add import
+                while (pr != null) {
+                    imports.add(pr.baseType);
+                    pr = pr.items;
+                }
             } else if ("object".equals(type)) { // for map parameter
                 Property inner = qp.getItems();
                 if (inner == null) {
@@ -2424,7 +2449,11 @@ public class DefaultCodegen {
                 p.baseType = pr.datatype;
                 p.isContainer = true;
                 p.isMapContainer = true;
-                imports.add(pr.baseType);
+                // recursively add import
+                while (pr != null) {
+                    imports.add(pr.baseType);
+                    pr = pr.items;
+                }
             } else {
                 Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
                 String format = qp.getFormat();
@@ -2545,6 +2574,16 @@ public class DefaultCodegen {
                     imports.add(cp.complexType);
                 }
                 imports.add(cp.baseType);
+
+                // recursively add import
+                CodegenProperty innerCp = cp;
+                while(innerCp != null) {
+                    if(innerCp.complexType != null) {
+                        imports.add(innerCp.complexType);
+                    }
+                    innerCp = innerCp.items;
+                }
+
                 p.items = cp;
                 p.dataType = cp.datatype;
                 p.baseType = cp.complexType;
@@ -2563,8 +2602,8 @@ public class DefaultCodegen {
                         name = typeMapping.get(name);
                         p.baseType = name;
                     } else {
-                        p.baseType = name;
                         name = toModelName(name);
+                        p.baseType = name;
                         if (defaultIncludes.contains(name)) {
                             imports.add(name);
                         }
@@ -3009,7 +3048,7 @@ public class DefaultCodegen {
         final int totalCount = propertyList.size();
         for (int i = 0; i < totalCount; i++) {
             Map.Entry<String, Property> entry = propertyList.get(i);
-            
+
             final String key = entry.getKey();
             final Property prop = entry.getValue();
 
@@ -3230,7 +3269,7 @@ public class DefaultCodegen {
     /**
      * Set library template (sub-template).
      *
-     * @param library Library template 
+     * @param library Library template
      */
     public void setLibrary(String library) {
         if (library != null && !supportedLibraries.containsKey(library))
@@ -3250,7 +3289,7 @@ public class DefaultCodegen {
     /**
      * Set Git user ID.
      *
-     * @param gitUserId Git user ID 
+     * @param gitUserId Git user ID
      */
     public void setGitUserId(String gitUserId) {
         this.gitUserId = gitUserId;
@@ -3268,7 +3307,7 @@ public class DefaultCodegen {
     /**
      * Set Git repo ID.
      *
-     * @param gitRepoId Git repo ID 
+     * @param gitRepoId Git repo ID
      */
     public void setGitRepoId(String gitRepoId) {
         this.gitRepoId = gitRepoId;
@@ -3311,7 +3350,7 @@ public class DefaultCodegen {
     }
 
     /**
-     * HTTP user agent 
+     * HTTP user agent
      *
      * @return HTTP user agent
      */
@@ -3492,7 +3531,7 @@ public class DefaultCodegen {
 
     /**
      * Update codegen property's enum by adding "enumVars" (with name and value)
-     * 
+     *
      * @param var list of CodegenProperty
      */
     public void updateCodegenPropertyEnum(CodegenProperty var) {
@@ -3556,9 +3595,14 @@ public class DefaultCodegen {
      * @return the pattern with delimiter
      */
     public String addRegularExpressionDelimiter(String pattern) {
-        if (pattern != null && !pattern.matches("^/.*")) {
-            return "/" + pattern + "/";
+        if (StringUtils.isEmpty(pattern)) {
+            return pattern;
         }
+
+        if (!pattern.matches("^/.*")) {
+            return "/" + pattern.replaceAll("/", "\\\\/") + "/";
+        }
+
         return pattern;
     }
 
@@ -3566,7 +3610,7 @@ public class DefaultCodegen {
      * reads propertyKey from additionalProperties, converts it to a boolean and
      * writes it back to additionalProperties to be usable as a boolean in
      * mustache files.
-     * 
+     *
      * @param propertyKey
      * @return property value as boolean
      */
@@ -3609,7 +3653,7 @@ public class DefaultCodegen {
 
         return booleanValue;
     }
-    
+
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
     }

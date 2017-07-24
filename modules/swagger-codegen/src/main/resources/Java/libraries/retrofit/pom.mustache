@@ -203,6 +203,16 @@
       <version>${jodatime-version}</version>
   </dependency>
 
+    {{#parcelableModel}}
+    <!-- Needed for Parcelable support-->
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+      <version>4.1.1.4</version>
+      <scope>provided</scope>
+    </dependency>
+    {{/parcelableModel}}
+
     <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -212,10 +222,10 @@
     </dependency>
   </dependencies>
   <properties>
-    <swagger-core-version>1.5.12</swagger-core-version>
+    <swagger-core-version>1.5.15</swagger-core-version>
     <retrofit-version>1.9.0</retrofit-version>
     <okhttp-version>2.7.5</okhttp-version>
-    <jodatime-version>2.9.3</jodatime-version>
+    <jodatime-version>2.9.9</jodatime-version>
     <oltu-version>1.0.1</oltu-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
