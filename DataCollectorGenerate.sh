@@ -49,9 +49,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-android-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Android API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l android $ID_FLAGS --artifact-id splyt-android-client -o sdk/android
@@ -60,13 +58,9 @@ cd sdk/android
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Android API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -81,9 +75,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-cpprest-client.git
 git pull origin master
-git rm -r *
-git commit -m "Splyt CppRest API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l cpprest -DmodelPackage="io.knetik.client.model",apiPackage="io.knetik.client.api" $ID_FLAGS --artifact-id splyt-cpprest-client -o sdk/cpprest
@@ -92,13 +84,9 @@ cd sdk/cpprest
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 #sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "Splyt CppRest API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -112,9 +100,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-java-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Java API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -DinvokerPackage="io.knetik.client",modelPackage="io.knetik.model",apiPackage="io.knetik.api" -l java $ID_FLAGS --artifact-id splyt-java-client --library jersey2 -o sdk/java
@@ -122,13 +108,9 @@ cd sdk/java
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Java API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -143,9 +125,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-objc-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Objective C API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l objc -DpodName="DataCollectorClient",classPrefix="DCC",gitRepoUrl="https://github.com/splytanalytics/splyt-objc-client" $ID_FLAGS --artifact-id splyt-objc-client -o sdk/objc
@@ -154,13 +134,9 @@ cd sdk/objc
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Objective C API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -189,8 +165,7 @@ cd ../..
 #git add .
 #git commit -m "Splyt QT5cpp API update"
 #git push -u origin master
-#git remote rm origin
-#cd ../..
+##cd ../..
 
 
 
@@ -204,9 +179,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-swift-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Swift API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l swift -DprojectName="DataCollector" $ID_FLAGS --artifact-id splyt-swift-client -o sdk/swift
@@ -214,13 +187,9 @@ cd sdk/swift
 
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Swift API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -235,9 +204,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:splytanalytics/splyt-swift3-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Swift3 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l swift3 -DprojectName="DataCollector" $ID_FLAGS --artifact-id splyt-swift3-client -o sdk/swift3
@@ -245,11 +212,7 @@ cd sdk/swift3
 
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Swift3 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
