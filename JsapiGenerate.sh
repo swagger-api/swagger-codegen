@@ -47,9 +47,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-android-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Android API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -DinvokerPackage="com.knetikcloud.client",modelPackage="com.knetikcloud.model",apiPackage="com.knetikcloud.api" -l android $ID_FLAGS --artifact-id knetikcloud-android-client -o sdk/android
@@ -57,13 +55,9 @@ cd sdk/android
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Android API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #ASPNet5
@@ -76,21 +70,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-aspnet5-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI ASPNet5 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l aspnet5 $ID_FLAGS --artifact-id knetikcloud-aspnet5-client -o sdk/aspnet5
 cd sdk/aspnet5
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI ASPNet5 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -105,21 +93,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-bash-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Bash API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l bash $ID_FLAGS --artifact-id knetikcloud-bash-client -o sdk/bash
 cd sdk/bash
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Bash API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -134,21 +116,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-clojure-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Clojure API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l clojure $ID_FLAGS --artifact-id knetikcloud-clojure-client -o sdk/clojure
 cd sdk/clojure
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Clojure API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -162,21 +138,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-cpprest-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Cpprest API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l cpprest -DmodelPackage="com.knetikcloud.client.model",apiPackage="com.knetikcloud.client.api" $ID_FLAGS --artifact-id knetikcloud-cpprest-client -o sdk/cpprest
 cd sdk/cpprest
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Cpprest API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #CSharp 2.0
@@ -189,9 +159,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-csharp-net20-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI C# 2.0 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l CsharpDotNet2 -DpackageName="com.knetikcloud" $ID_FLAGS --artifact-id knetikcloud-csharp-net20-client -o sdk/csharp-net20
@@ -199,13 +167,9 @@ cd sdk/csharp-net20
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI C# 2.0 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -219,9 +183,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-csharp-net35-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI C# 3.5 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l csharp -DpackageName="com.knetikcloud",targetFramework="v3.5" $ID_FLAGS --artifact-id knetikcloud-csharp-net35-client -o sdk/csharp-net35
@@ -229,13 +191,9 @@ cd sdk/csharp-net35
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI C# 3.5 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -249,9 +207,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-csharp-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI C# 4.0+ API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l csharp -DpackageName="com.knetikcloud" $ID_FLAGS --artifact-id knetikcloud-csharp-client -o sdk/csharp
@@ -259,13 +215,9 @@ cd sdk/csharp
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI C# 4.0+ API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -279,9 +231,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-dart-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Dart API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l dart $ID_FLAGS --artifact-id knetikcloud-dart-client -o sdk/dart
@@ -289,13 +239,9 @@ cd sdk/dart
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Dart API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -309,21 +255,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-elixir-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Elixir API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l elixir $ID_FLAGS --artifact-id knetikcloud-elixir-client -o sdk/elixir
 cd sdk/elixir
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Elixir API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Flash
@@ -336,21 +276,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-flash-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Flash API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l flash $ID_FLAGS --artifact-id knetikcloud-flash-client -o sdk/flash
 cd sdk/flash
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Flash API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Go
@@ -363,21 +297,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-go-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Go API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l go $ID_FLAGS --artifact-id knetikcloud-go-client -o sdk/go
 cd sdk/go
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Go API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Groovy
@@ -390,9 +318,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-groovy-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Groovy API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l groovy $ID_FLAGS --artifact-id knetikcloud-groovy-client -o sdk/groovy
@@ -400,13 +326,9 @@ cd sdk/groovy
 
 #sed -i -e 's~'"$POM_ORIGINAL"'~'"$POM_REPLACEMENT"'~g' pom.xml
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Groovy API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Java
@@ -419,9 +341,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-java-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Java API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -DinvokerPackage="com.knetikcloud.client",modelPackage="com.knetikcloud.model",apiPackage="com.knetikcloud.api" -l java $ID_FLAGS --artifact-id knetikcloud-java-client --library jersey2 -o sdk/java
@@ -429,13 +349,9 @@ cd sdk/java
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Java API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Javascript
@@ -448,9 +364,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-javascript-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Javascript API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l javascript $ID_FLAGS --artifact-id knetikcloud-javascript-client -o sdk/javascript
@@ -458,13 +372,9 @@ cd sdk/javascript
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Javascript API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Objective C
@@ -477,9 +387,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-objc-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Objective C API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l objc -DpodName="JSAPI",classPrefix="JSAPI",gitRepoUrl="https://github.com/knetikmedia/knetikcloud-objc-client" $ID_FLAGS --artifact-id knetikcloud-objc-client -o sdk/objc
@@ -487,13 +395,9 @@ cd sdk/objc
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Objective C API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Perl
@@ -506,9 +410,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-perl-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Perl API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l perl -DmoduleName="KnetikCloud" $ID_FLAGS --artifact-id knetikcloud-perl-client -o sdk/perl
@@ -516,13 +418,9 @@ cd sdk/perl
 
 sed -i -e 's~'"$README_ORIGINAL_PERL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Perl API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #PHP
@@ -535,9 +433,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-php-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI PHP API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l php -DcomposerVendorName="knetikmedia",composerProjectName="knetikcloud-php-client",invokerPackage="KnetikCloud",packagePath="KnetikCloudClient" $ID_FLAGS --artifact-id knetikcloud-php-client -o sdk/php
@@ -547,13 +443,9 @@ cd KnetikCloudClient
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 cd ..
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI PHP API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Python
@@ -566,9 +458,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-python-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Python API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l python -DpackageName="knetik_cloud" $ID_FLAGS --artifact-id knetikcloud-python-client -o sdk/python
@@ -576,13 +466,9 @@ cd sdk/python
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Python API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 
@@ -611,8 +497,7 @@ cd ../..
 #git add .
 #git commit -m "JSAPI QT5cpp API update"
 #git push -u origin master
-#git remote rm origin
-#cd ../..
+##cd ../..
 
 
 
@@ -626,9 +511,7 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-ruby-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Ruby API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l ruby -DgemName="knetikcloud_client",moduleName="KnetikCloudClient",gemHomepage="http://knetikcloud.com" $ID_FLAGS --artifact-id knetikcloud-ruby-client -o sdk/ruby
@@ -636,13 +519,9 @@ cd sdk/ruby
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Ruby API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Scala
@@ -655,21 +534,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-scala-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Scala API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l scala -DmodelPackage="com.knetikcloud.client.model",apiPackage="com.knetikcloud.client.model" $ID_FLAGS --artifact-id knetikcloud-scala-client -o sdk/scala
 cd sdk/scala
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Scala API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Spring
@@ -682,21 +555,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-spring-server.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Spring API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l spring -DmodelPackage="com.knetikcloud.model",apiPackage="com.knetikcloud.api" $ID_FLAGS --artifact-id knetikcloud-spring-server -o sdk/spring
 cd sdk/spring
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Spring API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Swift
@@ -709,21 +576,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-swift-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Swift API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l swift -DprojectName="JSAPI" $ID_FLAGS --artifact-id knetikcloud-swift-client -o sdk/swift
 cd sdk/swift
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Swift API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Swift3
@@ -736,21 +597,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-swift3-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Swift3 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l swift3 -DprojectName="JSAPI" $ID_FLAGS --artifact-id knetikcloud-swift3-client -o sdk/swift3
 cd sdk/swift3
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Swift3 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Tizen
@@ -763,21 +618,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-tizen-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Tizen API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l tizen $ID_FLAGS --artifact-id knetikcloud-tizen-client -o sdk/tizen
 cd sdk/tizen
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Tizen API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Typescript-Angular
@@ -790,21 +639,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-typescript-angular-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Typescript-Angular API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l typescript-angular $ID_FLAGS --artifact-id knetikcloud-typescript-angular-client -o sdk/typescript-angular
 cd sdk/typescript-angular
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Typescript-Angular API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Typescript-Angular2
@@ -817,21 +660,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-typescript-angular2-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Typescript-Angular2 API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l typescript-angular2 $ID_FLAGS --artifact-id knetikcloud-typescript-angular2-client -o sdk/typescript-angular2
 cd sdk/typescript-angular2
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Typescript-Angular2 API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Typescript-Fetch
@@ -844,21 +681,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-typescript-fetch-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Typescript-Fetch API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l typescript-fetch $ID_FLAGS --artifact-id knetikcloud-typescript-fetch-client -o sdk/typescript-fetch
 cd sdk/typescript-fetch
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Typescript-Fetch API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #Typescript-Node
@@ -871,21 +702,15 @@ git config user.name "$GIT_USERNAME"
 git config user.email "$GIT_EMAIL"
 git remote add origin git@github.com:knetikmedia/knetikcloud-typescript-node-client.git
 git pull origin master
-git rm -r *
-git commit -m "JSAPI Typescript-Node API clear"
-git push -u origin master
+rm -r *
 
 cd ../..
 java -jar $BASE_JAR generate -i $JSON_FILE -l typescript-node $ID_FLAGS --artifact-id knetikcloud-typescript-node-client -o sdk/typescript-node
 cd sdk/typescript-node
 
-git init
-git config user.name "$GIT_USERNAME"
-git config user.email "$GIT_EMAIL"
-git add .
+git add -A
 git commit -m "JSAPI Typescript-Node API update"
 git push -u origin master
-git remote rm origin
 cd ../..
 
 #RESPONSE="$(curl http://jsapi3-integration.knetik.com/activities)"
