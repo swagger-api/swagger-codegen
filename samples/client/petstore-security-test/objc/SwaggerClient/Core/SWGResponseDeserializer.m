@@ -1,6 +1,6 @@
+#import "SWGDefaultConfiguration.h"
 #import "SWGResponseDeserializer.h"
 #import <JSONModel/JSONModel.h>
-#import <ISO8601/ISO8601.h>
 
 NSString *const SWGDeserializationErrorDomainKey = @"SWGDeserializationErrorDomainKey";
 
@@ -219,7 +219,7 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
 }
 
 - (id) deserializeDateValue:(id) data error:(NSError**)error {
-    NSDate *date =[NSDate dateWithISO8601String:data];
+    NSDate *date = [[SWGDefaultConfiguration sharedConfig].dateFormatter dateFromString:data];
     if(!date && [data length] > 0 && error) {
         *error = [self typeMismatchErrorWithExpectedType:NSStringFromClass([NSDate class]) data:data];
     }

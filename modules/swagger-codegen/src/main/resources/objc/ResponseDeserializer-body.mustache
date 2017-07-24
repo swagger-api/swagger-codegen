@@ -1,6 +1,6 @@
+#import "{{classPrefix}}DefaultConfiguration.h"
 #import "{{classPrefix}}ResponseDeserializer.h"
 #import <JSONModel/JSONModel.h>
-#import <ISO8601/ISO8601.h>
 
 NSString *const {{classPrefix}}DeserializationErrorDomainKey = @"{{classPrefix}}DeserializationErrorDomainKey";
 
@@ -219,7 +219,7 @@ NSInteger const {{classPrefix}}UnknownResponseObjectErrorCode = 143528;
 }
 
 - (id) deserializeDateValue:(id) data error:(NSError**)error {
-    NSDate *date =[NSDate dateWithISO8601String:data];
+    NSDate *date = [[{{classPrefix}}DefaultConfiguration sharedConfig].dateFormatter dateFromString:data];
     if(!date && [data length] > 0 && error) {
         *error = [self typeMismatchErrorWithExpectedType:NSStringFromClass([NSDate class]) data:data];
     }

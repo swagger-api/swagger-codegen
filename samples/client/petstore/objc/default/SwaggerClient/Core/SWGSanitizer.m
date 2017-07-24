@@ -1,7 +1,7 @@
 #import "SWGSanitizer.h"
 #import "SWGObject.h"
 #import "SWGQueryParamCollection.h"
-#import <ISO8601/ISO8601.h>
+#import "SWGDefaultConfiguration.h"
 
 NSString * const kSWGApplicationJSONType = @"application/json";
 
@@ -125,8 +125,8 @@ NSString * SWGPercentEscapedStringFromString(NSString *string) {
     }
 }
 
-- (NSString *)dateParameterToString:(id)param {
-    return [param ISO8601String];
+- (NSString *) dateParameterToString:(id)param {
+    return [[SWGDefaultConfiguration sharedConfig].dateFormatter stringFromDate:param];
 }
 
 #pragma mark - Utility Methods
