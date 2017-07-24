@@ -123,6 +123,13 @@ public class SpringCodegen extends AbstractJavaCodegen
             }
         }
 
+        // set invokerPackage as basePackage
+        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+            this.setBasePackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+            additionalProperties.put(BASE_PACKAGE, basePackage);
+            LOGGER.info("Set base package to invoker package (" + basePackage + ")");
+        }
+
         super.processOpts();
 
         // clear model and api doc template as this codegen
@@ -141,13 +148,6 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         if (additionalProperties.containsKey(BASE_PACKAGE)) {
             this.setBasePackage((String) additionalProperties.get(BASE_PACKAGE));
-        }
-
-        // set invokerPackage as basePackage
-        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
-            this.setBasePackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
-            additionalProperties.put(BASE_PACKAGE, basePackage);
-            LOGGER.info("Set base package to invoker package (" + basePackage + ")");
         }
 
         if (additionalProperties.containsKey(INTERFACE_ONLY)) {
