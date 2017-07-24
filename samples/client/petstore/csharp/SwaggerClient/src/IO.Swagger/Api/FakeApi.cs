@@ -563,7 +563,7 @@ namespace IO.Swagger.Api
             ApiResponse<OuterBoolean> localVarResponse = FakeOuterBooleanSerializeWithHttpInfo(body);
             log.Trace("return FakeOuterBooleanSerialize response data");
             return localVarResponse.Data;
-        }
+                    }
 
         /// <summary>
         ///  Test serialization of outer boolean types
@@ -1834,7 +1834,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void TestJsonFormData (string param, string param2)
         {
-             TestJsonFormDataWithHttpInfo(param, param2);
+            log.Trace("TestJsonFormData called");
+
+            TestJsonFormDataWithHttpInfo(param, param2);
         }
 
         /// <summary>
@@ -1846,6 +1848,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> TestJsonFormDataWithHttpInfo (string param, string param2)
         {
+            log.Trace("TestJsonFormDataWithHttpInfo called");
             // verify the required parameter 'param' is set
             if (param == null)
                 throw new ApiException(400, "Missing required parameter 'param' when calling FakeApi->TestJsonFormData");
@@ -1877,20 +1880,28 @@ namespace IO.Swagger.Api
             if (param != null) localVarFormParams.Add("param", Configuration.ApiClient.ParameterToString(param)); // form parameter
             if (param2 != null) localVarFormParams.Add("param2", Configuration.ApiClient.ParameterToString(param2)); // form parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("TestJsonFormData", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -1905,7 +1916,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2)
         {
-             await TestJsonFormDataAsyncWithHttpInfo(param, param2);
+            log.Trace("TestJsonFormDataAsync called");
+            await TestJsonFormDataAsyncWithHttpInfo(param, param2);
 
         }
 
@@ -1918,6 +1930,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2)
         {
+            log.Trace("TestJsonFormDataWithHttpInfo called");
             // verify the required parameter 'param' is set
             if (param == null)
                 throw new ApiException(400, "Missing required parameter 'param' when calling FakeApi->TestJsonFormData");
@@ -1949,20 +1962,28 @@ namespace IO.Swagger.Api
             if (param != null) localVarFormParams.Add("param", Configuration.ApiClient.ParameterToString(param)); // form parameter
             if (param2 != null) localVarFormParams.Add("param2", Configuration.ApiClient.ParameterToString(param2)); // form parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("TestJsonFormData", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);

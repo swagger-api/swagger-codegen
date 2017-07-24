@@ -76,6 +76,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public partial class Fake_classname_tags123Api : IFake_classname_tags123Api
     {
+        private static IO.Swagger.Client.Logger log = new IO.Swagger.Client.Logger("Fake_classname_tags123Api");
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
@@ -84,6 +85,8 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public Fake_classname_tags123Api(String basePath)
         {
+            log.Trace("Fake_classname_tags123Api ctor with base path");
+            log.Debug(string.Format("Base API path: {0}", basePath));
             this.Configuration = new Configuration { BasePath = basePath };
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
@@ -97,6 +100,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public Fake_classname_tags123Api(Configuration configuration = null)
         {
+            log.Trace("Fake_classname_tags123Api ctor with configuration object");
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = Configuration.Default;
             else
@@ -139,6 +143,7 @@ namespace IO.Swagger.Api
             {
                 if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
                 {
+                    log.Error("Multicast delegate for ExceptionFactory is unsupported.");
                     throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
                 }
                 return _exceptionFactory;
@@ -176,9 +181,11 @@ namespace IO.Swagger.Api
         /// <returns>ModelClient</returns>
         public ModelClient TestClassname (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = TestClassnameWithHttpInfo(body);
-             return localVarResponse.Data;
-        }
+            log.Trace("TestClassname called");
+            ApiResponse<ModelClient> localVarResponse = TestClassnameWithHttpInfo(body);
+            log.Trace("return TestClassname response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// To test class name in snake case 
@@ -188,6 +195,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of ModelClient</returns>
         public ApiResponse< ModelClient > TestClassnameWithHttpInfo (ModelClient body)
         {
+            log.Trace("TestClassnameWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling Fake_classname_tags123Api->TestClassname");
@@ -223,20 +231,28 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("TestClassname", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type ModelClient");
             return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
@@ -250,8 +266,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(body);
-             return localVarResponse.Data;
+            log.Trace("TestClassnameAsync called");
+            ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(body);
+            log.Trace("return TestClassnameAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -263,6 +281,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body)
         {
+            log.Trace("TestClassnameWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling Fake_classname_tags123Api->TestClassname");
@@ -298,20 +317,28 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("TestClassname", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type ModelClient");
             return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));

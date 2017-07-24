@@ -195,7 +195,7 @@ namespace {{packageName}}.Client
                 }
                 else if (postBody.GetType() == typeof(byte[]))
                 {
-                    log.Debug("Request with bytes body. Length: "+(postBody as bytes[]).Length);
+                    log.Debug("Request with bytes body. Length: "+(postBody as byte[]).Length);
                     {{#netStandard}}
                     request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = contentType });
                     {{/netStandard}}
