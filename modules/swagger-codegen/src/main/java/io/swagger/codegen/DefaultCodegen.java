@@ -2145,7 +2145,15 @@ public class DefaultCodegen {
                     op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
                     op.defaultResponse = toDefaultValue(responseProperty);
                     op.returnType = cm.datatype;
-                    op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
+                    if (responseProperty instanceof RefProperty) {
+                        RefProperty rp = (RefProperty) responseProperty;
+                        if (definitions != null && definitions.containsKey(rp.getSimpleRef())) {
+                            op.returnTypePackageName = modelPackage;
+                            op.hasReference = true;
+                        }
+                    } else {
+                        op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
+                    }
 
                     // lookup discriminator
                     if (definitions != null) {

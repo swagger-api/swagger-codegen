@@ -117,7 +117,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>ModelClient</returns>
-        ModelClient TestClientModel (ModelClient body);
+        Model.ModelClient TestClientModel (ModelClient body);
 
         /// <summary>
         /// To test \&quot;client\&quot; model
@@ -127,8 +127,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ModelClient</returns>
-        ApiResponse<ModelClient> TestClientModelWithHttpInfo (ModelClient body);
+        /// <returns>ApiResponse of Model.ModelClient</returns>
+        ApiResponse<Model.ModelClient> TestClientModelWithHttpInfo (ModelClient body);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -329,7 +329,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body);
+        System.Threading.Tasks.Task<Model.ModelClient> TestClientModelAsync (ModelClient body);
 
         /// <summary>
         /// To test \&quot;client\&quot; model
@@ -339,8 +339,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ModelClient)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body);
+        /// <returns>Task of ApiResponse (Model.ModelClient)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Model.ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -386,7 +386,7 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse </returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
         /// <summary>
         /// To test enum parameters
@@ -421,7 +421,7 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse </returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null);
         /// <summary>
         /// test json serialization of form data
@@ -1107,10 +1107,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ModelClient</returns>
-        public ModelClient TestClientModel (ModelClient body)
+        /// <returns>Model.ModelClient</returns>
+        public Model.ModelClient TestClientModel (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = TestClientModelWithHttpInfo(body);
+             ApiResponse<Model.ModelClient> localVarResponse = TestClientModelWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -1119,8 +1119,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ModelClient</returns>
-        public ApiResponse< ModelClient > TestClientModelWithHttpInfo (ModelClient body)
+        /// <returns>ApiResponse of Model.ModelClient</returns>
+        public ApiResponse<Model. ModelClient > TestClientModelWithHttpInfo (ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1171,9 +1171,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ModelClient>(localVarStatusCode,
+            return new ApiResponse<Model.ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
+                (Model.ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Model.ModelClient)));
         }
 
         /// <summary>
@@ -1181,10 +1181,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ModelClient</returns>
-        public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body)
+        /// <returns>Task of Model.ModelClient</returns>
+        public async System.Threading.Tasks.Task<Model.ModelClient> TestClientModelAsync (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body);
+             ApiResponse<Model.ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -1194,8 +1194,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ModelClient)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body)
+        /// <returns>Task of ApiResponse (Model.ModelClient)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Model.ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1246,9 +1246,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ModelClient>(localVarStatusCode,
+            return new ApiResponse<Model.ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
+                (Model.ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Model.ModelClient)));
         }
 
         /// <summary>
@@ -1417,7 +1417,7 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse </returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
             // verify the required parameter 'number' is set
@@ -1612,7 +1612,7 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse </returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
 
