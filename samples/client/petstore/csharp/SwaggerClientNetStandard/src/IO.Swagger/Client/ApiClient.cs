@@ -20,6 +20,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RestSharp.Portable;
 using RestSharp.Portable.HttpClient;
+using RestSharp.Portable.Authenticators;
 
 namespace IO.Swagger.Client
 {
