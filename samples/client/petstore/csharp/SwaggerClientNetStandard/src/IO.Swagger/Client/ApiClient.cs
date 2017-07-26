@@ -20,6 +20,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RestSharp.Portable;
 using RestSharp.Portable.HttpClient;
+using RestSharp.Portable.Authenticators;
 
 namespace IO.Swagger.Client
 {
@@ -135,6 +136,11 @@ namespace IO.Swagger.Client
             // add form parameter, if any
             foreach(var param in formParams)
                 request.AddParameter(param.Key, param.Value);
+             // Basic Auth
+            if (!String.IsNullOrEmpty(Configuration.Username) || !(String.IsNullOrEmpty(Configuration.Password)))
+            {
+                RestClient.Authenticator = new HttpBasicAuthenticator(Configuration.Username, Configuration.Password);
+            }
 
             // add file parameter, if any
             foreach(var param in fileParams)
