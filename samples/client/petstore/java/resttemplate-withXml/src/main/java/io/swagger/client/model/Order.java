@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.OffsetDateTime;
+import org.joda.time.DateTime;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import javax.xml.bind.annotation.*;
@@ -49,7 +49,7 @@ public class Order {
   @JsonProperty("shipDate")
   @JacksonXmlProperty(localName = "shipDate")
   @XmlElement(name = "shipDate")
-  private OffsetDateTime shipDate = null;
+  private DateTime shipDate = null;
 
   /**
    * Order Status
@@ -152,7 +152,7 @@ public class Order {
     this.quantity = quantity;
   }
 
-  public Order shipDate(OffsetDateTime shipDate) {
+  public Order shipDate(DateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
@@ -162,11 +162,11 @@ public class Order {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
-  public OffsetDateTime getShipDate() {
+  public DateTime getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(OffsetDateTime shipDate) {
+  public void setShipDate(DateTime shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -198,7 +198,7 @@ public class Order {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-  public Boolean isComplete() {
+  public Boolean getComplete() {
     return complete;
   }
 

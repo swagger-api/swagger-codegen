@@ -21,8 +21,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.UUID;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import javax.xml.bind.annotation.*;
@@ -87,7 +87,7 @@ public class FormatTest {
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
   @XmlElement(name = "dateTime")
-  private OffsetDateTime dateTime = null;
+  private DateTime dateTime = null;
 
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
@@ -289,7 +289,7 @@ public class FormatTest {
     this.date = date;
   }
 
-  public FormatTest dateTime(OffsetDateTime dateTime) {
+  public FormatTest dateTime(DateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -299,11 +299,11 @@ public class FormatTest {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-  public OffsetDateTime getDateTime() {
+  public DateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(OffsetDateTime dateTime) {
+  public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
 
