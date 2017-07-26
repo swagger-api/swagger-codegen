@@ -21,10 +21,142 @@ let defaultBasePath = 'http://petstore.swagger.io/v2';
 // ===============================================
 
 /* tslint:disable:no-unused-variable */
+let primitives = [
+                    "string",
+                    "boolean",
+                    "double",
+                    "integer",
+                    "long",
+                    "float",
+                    "number",
+                    "any"
+                 ];
+
+class ObjectSerializer {
+
+    public static findCorrectType(data: any, expectedType: string) {
+        if (data == undefined) {
+            return expectedType;
+        } else if (primitives.indexOf(expectedType.toLowerCase()) !== -1) {
+            return expectedType;
+        } else if (expectedType === "Date") {
+            return expectedType;
+        } else {
+            if (enumsMap[expectedType]) {
+                return expectedType;
+            }
+
+            if (!typeMap[expectedType]) {
+                return expectedType; // w/e we don't know the type
+            }
+
+            // Check the discriminator
+            let discriminatorProperty = typeMap[expectedType].discriminator;
+            if (discriminatorProperty == null) {
+                return expectedType; // the type does not have a discriminator. use it.
+            } else {
+                if (data[discriminatorProperty]) {
+                    return data[discriminatorProperty]; // use the type given in the discriminator
+                } else {
+                    return expectedType; // discriminator was not present (or an empty string)
+                }
+            }
+        }
+    }
+
+    public static serialize(data: any, type: string) {
+        if (data == undefined) {
+            return data;
+        } else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+            return data;
+        } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+            let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+            subType = subType.substring(0, subType.length - 1); // Type> => Type
+            let transformedData = [];
+            for (let index in data) {
+                let date = data[index];
+                transformedData.push(ObjectSerializer.serialize(date, subType));
+            }
+            return transformedData;
+        } else if (type === "Date") {
+            return data.toString();
+        } else {
+            if (enumsMap[type]) {
+                return data;
+            }
+            if (!typeMap[type]) { // in case we dont know the type
+                return data;
+            }
+
+            // get the map for the correct type.
+            let attributeTypes = typeMap[type].getAttributeTypeMap();
+            let instance = {};
+            for (let index in attributeTypes) {
+                let attributeType = attributeTypes[index];
+                instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
+            }
+            return instance;
+        }
+    }
+
+    public static deserialize(data: any, type: string) {
+        // polymorphism may change the actual type.
+        type = ObjectSerializer.findCorrectType(data, type);
+        if (data == undefined) {
+            return data;
+        } else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+            return data;
+        } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+            let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+            subType = subType.substring(0, subType.length - 1); // Type> => Type
+            let transformedData = [];
+            for (let index in data) {
+                let date = data[index];
+                transformedData.push(ObjectSerializer.deserialize(date, subType));
+            }
+            return transformedData;
+        } else if (type === "Date") {
+            return new Date(data);
+        } else {
+            if (enumsMap[type]) {// is Enum
+                return data;
+            }
+
+            if (!typeMap[type]) { // dont know the type
+                return data;
+            }
+            let instance = new typeMap[type]();
+            let attributeTypes = typeMap[type].getAttributeTypeMap();
+            for (let index in attributeTypes) {
+                let attributeType = attributeTypes[index];
+                instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
+            }
+            return instance;
+        }
+    }
+}
 
 export class Category {
     'id': number;
     'name': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Category.attributeTypeMap;
+    }
 }
 
 export class Order {
@@ -37,6 +169,44 @@ export class Order {
     */
     'status': Order.StatusEnum;
     'complete': boolean;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "petId",
+            "baseName": "petId",
+            "type": "number"
+        },
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "shipDate",
+            "baseName": "shipDate",
+            "type": "Date"
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "Order.StatusEnum"
+        },
+        {
+            "name": "complete",
+            "baseName": "complete",
+            "type": "boolean"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Order.attributeTypeMap;
+    }
 }
 
 export namespace Order {
@@ -56,6 +226,44 @@ export class Pet {
     * pet status in the store
     */
     'status': Pet.StatusEnum;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "category",
+            "baseName": "category",
+            "type": "Category"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "photoUrls",
+            "baseName": "photoUrls",
+            "type": "Array<string>"
+        },
+        {
+            "name": "tags",
+            "baseName": "tags",
+            "type": "Array<Tag>"
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "Pet.StatusEnum"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Pet.attributeTypeMap;
+    }
 }
 
 export namespace Pet {
@@ -68,6 +276,24 @@ export namespace Pet {
 export class Tag {
     'id': number;
     'name': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Tag.attributeTypeMap;
+    }
 }
 
 export class User {
@@ -82,8 +308,69 @@ export class User {
     * User Status
     */
     'userStatus': number;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "username",
+            "baseName": "username",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "password",
+            "baseName": "password",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "baseName": "phone",
+            "type": "string"
+        },
+        {
+            "name": "userStatus",
+            "baseName": "userStatus",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return User.attributeTypeMap;
+    }
 }
 
+
+let enumsMap = {
+    "Order.StatusEnum": Order.StatusEnum,
+    "Pet.StatusEnum": Pet.StatusEnum,
+}
+
+let typeMap = {
+    "Category": Category,
+    "Order": Order,
+    "Pet": Pet,
+    "Tag": Tag,
+    "User": User,
+}
 
 export interface Authentication {
     /**
@@ -175,6 +462,10 @@ export class PetApi {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: PetApiApiKeys, value: string) {
         this.authentications[PetApiApiKeys[key]].apiKey = value;
     }
@@ -183,8 +474,8 @@ export class PetApi {
         this.authentications.petstore_auth.accessToken = token;
     }
     /**
-     * Add a new pet to the store
      * 
+     * @summary Add a new pet to the store
      * @param body Pet object that needs to be added to the store
      */
     public addPet (body?: Pet) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -192,6 +483,7 @@ export class PetApi {
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
+
 
 
         let useFormData = false;
@@ -203,7 +495,7 @@ export class PetApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "Pet")
         };
 
         this.authentications.petstore_auth.applyToRequest(requestOptions);
@@ -232,8 +524,8 @@ export class PetApi {
         });
     }
     /**
-     * Deletes a pet
      * 
+     * @summary Deletes a pet
      * @param petId Pet id to delete
      * @param apiKey 
      */
@@ -250,7 +542,7 @@ export class PetApi {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
 
-        headerParams['api_key'] = apiKey;
+        headerParams['api_key'] = ObjectSerializer.serialize(apiKey, "string");
 
         let useFormData = false;
 
@@ -289,8 +581,8 @@ export class PetApi {
         });
     }
     /**
-     * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
+     * @summary Finds Pets by status
      * @param status Status values that need to be considered for filter
      */
     public findPetsByStatus (status?: Array<string>) : Promise<{ response: http.ClientResponse; body: Array<Pet>;  }> {
@@ -301,8 +593,9 @@ export class PetApi {
 
 
         if (status !== undefined) {
-            queryParameters['status'] = status;
+            queryParameters['status'] = ObjectSerializer.serialize(status, "Array<string>");
         }
+
 
         let useFormData = false;
 
@@ -331,6 +624,7 @@ export class PetApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "Array<Pet>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -341,8 +635,8 @@ export class PetApi {
         });
     }
     /**
-     * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     * @summary Finds Pets by tags
      * @param tags Tags to filter by
      */
     public findPetsByTags (tags?: Array<string>) : Promise<{ response: http.ClientResponse; body: Array<Pet>;  }> {
@@ -353,8 +647,9 @@ export class PetApi {
 
 
         if (tags !== undefined) {
-            queryParameters['tags'] = tags;
+            queryParameters['tags'] = ObjectSerializer.serialize(tags, "Array<string>");
         }
+
 
         let useFormData = false;
 
@@ -383,6 +678,7 @@ export class PetApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "Array<Pet>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -393,8 +689,8 @@ export class PetApi {
         });
     }
     /**
-     * Find pet by ID
-     * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+     * Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
+     * @summary Find pet by ID
      * @param petId ID of pet that needs to be fetched
      */
     public getPetById (petId: number) : Promise<{ response: http.ClientResponse; body: Pet;  }> {
@@ -409,6 +705,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
+
 
         let useFormData = false;
 
@@ -439,6 +736,7 @@ export class PetApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "Pet");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -449,8 +747,8 @@ export class PetApi {
         });
     }
     /**
-     * Update an existing pet
      * 
+     * @summary Update an existing pet
      * @param body Pet object that needs to be added to the store
      */
     public updatePet (body?: Pet) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -458,6 +756,7 @@ export class PetApi {
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
+
 
 
         let useFormData = false;
@@ -469,7 +768,7 @@ export class PetApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "Pet")
         };
 
         this.authentications.petstore_auth.applyToRequest(requestOptions);
@@ -498,8 +797,8 @@ export class PetApi {
         });
     }
     /**
-     * Updates a pet in the store with form data
      * 
+     * @summary Updates a pet in the store with form data
      * @param petId ID of pet that needs to be updated
      * @param name Updated name of the pet
      * @param status Updated status of the pet
@@ -517,14 +816,15 @@ export class PetApi {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
 
+
         let useFormData = false;
 
         if (name !== undefined) {
-            formParams['name'] = name;
+            formParams['name'] = ObjectSerializer.serialize(name, "string");
         }
 
         if (status !== undefined) {
-            formParams['status'] = status;
+            formParams['status'] = ObjectSerializer.serialize(status, "string");
         }
 
         let requestOptions: request.Options = {
@@ -562,8 +862,8 @@ export class PetApi {
         });
     }
     /**
-     * uploads an image
      * 
+     * @summary uploads an image
      * @param petId ID of pet to update
      * @param additionalMetadata Additional data to pass to server
      * @param file file to upload
@@ -581,10 +881,11 @@ export class PetApi {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
 
+
         let useFormData = false;
 
         if (additionalMetadata !== undefined) {
-            formParams['additionalMetadata'] = additionalMetadata;
+            formParams['additionalMetadata'] = ObjectSerializer.serialize(additionalMetadata, "string");
         }
 
         if (file !== undefined) {
@@ -667,6 +968,10 @@ export class StoreApi {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: StoreApiApiKeys, value: string) {
         this.authentications[StoreApiApiKeys[key]].apiKey = value;
     }
@@ -675,8 +980,8 @@ export class StoreApi {
         this.authentications.petstore_auth.accessToken = token;
     }
     /**
-     * Delete purchase order by ID
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+     * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
     public deleteOrder (orderId: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -691,6 +996,7 @@ export class StoreApi {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
+
 
         let useFormData = false;
 
@@ -727,14 +1033,15 @@ export class StoreApi {
         });
     }
     /**
-     * Returns pet inventories by status
      * Returns a map of status codes to quantities
+     * @summary Returns pet inventories by status
      */
     public getInventory () : Promise<{ response: http.ClientResponse; body: { [key: string]: number; };  }> {
         const localVarPath = this.basePath + '/store/inventory';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
+
 
 
         let useFormData = false;
@@ -764,6 +1071,7 @@ export class StoreApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "{ [key: string]: number; }");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -774,8 +1082,8 @@ export class StoreApi {
         });
     }
     /**
-     * Find purchase order by ID
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+     * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
     public getOrderById (orderId: string) : Promise<{ response: http.ClientResponse; body: Order;  }> {
@@ -790,6 +1098,7 @@ export class StoreApi {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
+
 
         let useFormData = false;
 
@@ -816,6 +1125,7 @@ export class StoreApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "Order");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -826,8 +1136,8 @@ export class StoreApi {
         });
     }
     /**
-     * Place an order for a pet
      * 
+     * @summary Place an order for a pet
      * @param body order placed for purchasing the pet
      */
     public placeOrder (body?: Order) : Promise<{ response: http.ClientResponse; body: Order;  }> {
@@ -835,6 +1145,7 @@ export class StoreApi {
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
+
 
 
         let useFormData = false;
@@ -846,7 +1157,7 @@ export class StoreApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "Order")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -863,6 +1174,7 @@ export class StoreApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "Order");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -913,6 +1225,10 @@ export class UserApi {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: UserApiApiKeys, value: string) {
         this.authentications[UserApiApiKeys[key]].apiKey = value;
     }
@@ -921,8 +1237,8 @@ export class UserApi {
         this.authentications.petstore_auth.accessToken = token;
     }
     /**
-     * Create user
      * This can only be done by the logged in user.
+     * @summary Create user
      * @param body Created user object
      */
     public createUser (body?: User) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -932,6 +1248,7 @@ export class UserApi {
         let formParams: any = {};
 
 
+
         let useFormData = false;
 
         let requestOptions: request.Options = {
@@ -941,7 +1258,7 @@ export class UserApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "User")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -968,8 +1285,8 @@ export class UserApi {
         });
     }
     /**
-     * Creates list of users with given input array
      * 
+     * @summary Creates list of users with given input array
      * @param body List of user object
      */
     public createUsersWithArrayInput (body?: Array<User>) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -979,6 +1296,7 @@ export class UserApi {
         let formParams: any = {};
 
 
+
         let useFormData = false;
 
         let requestOptions: request.Options = {
@@ -988,7 +1306,7 @@ export class UserApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "Array<User>")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1015,8 +1333,8 @@ export class UserApi {
         });
     }
     /**
-     * Creates list of users with given input array
      * 
+     * @summary Creates list of users with given input array
      * @param body List of user object
      */
     public createUsersWithListInput (body?: Array<User>) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -1026,6 +1344,7 @@ export class UserApi {
         let formParams: any = {};
 
 
+
         let useFormData = false;
 
         let requestOptions: request.Options = {
@@ -1035,7 +1354,7 @@ export class UserApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "Array<User>")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1062,8 +1381,8 @@ export class UserApi {
         });
     }
     /**
-     * Delete user
      * This can only be done by the logged in user.
+     * @summary Delete user
      * @param username The name that needs to be deleted
      */
     public deleteUser (username: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
@@ -1078,6 +1397,7 @@ export class UserApi {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
+
 
         let useFormData = false;
 
@@ -1114,8 +1434,8 @@ export class UserApi {
         });
     }
     /**
-     * Get user by user name
      * 
+     * @summary Get user by user name
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     public getUserByName (username: string) : Promise<{ response: http.ClientResponse; body: User;  }> {
@@ -1130,6 +1450,7 @@ export class UserApi {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
+
 
         let useFormData = false;
 
@@ -1156,6 +1477,7 @@ export class UserApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "User");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1166,8 +1488,8 @@ export class UserApi {
         });
     }
     /**
-     * Logs user into the system
      * 
+     * @summary Logs user into the system
      * @param username The user name for login
      * @param password The password for login in clear text
      */
@@ -1179,12 +1501,13 @@ export class UserApi {
 
 
         if (username !== undefined) {
-            queryParameters['username'] = username;
+            queryParameters['username'] = ObjectSerializer.serialize(username, "string");
         }
 
         if (password !== undefined) {
-            queryParameters['password'] = password;
+            queryParameters['password'] = ObjectSerializer.serialize(password, "string");
         }
+
 
         let useFormData = false;
 
@@ -1211,6 +1534,7 @@ export class UserApi {
                 if (error) {
                     reject(error);
                 } else {
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1221,14 +1545,15 @@ export class UserApi {
         });
     }
     /**
-     * Logs out current logged in user session
      * 
+     * @summary Logs out current logged in user session
      */
     public logoutUser () : Promise<{ response: http.ClientResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/user/logout';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
+
 
 
         let useFormData = false;
@@ -1266,8 +1591,8 @@ export class UserApi {
         });
     }
     /**
-     * Updated user
      * This can only be done by the logged in user.
+     * @summary Updated user
      * @param username name that need to be deleted
      * @param body Updated user object
      */
@@ -1284,6 +1609,7 @@ export class UserApi {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
 
+
         let useFormData = false;
 
         let requestOptions: request.Options = {
@@ -1293,7 +1619,7 @@ export class UserApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: body,
+            body: ObjectSerializer.serialize(body, "User")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
