@@ -32,6 +32,7 @@ io.swagger.codegen.languages.JavaJerseyServerCodegen
 io.swagger.codegen.languages.JavaJerseyServerCodegen
 io.swagger.codegen.languages.JavaMSF4JServerCodegen
 io.swagger.codegen.languages.JavaPlayFrameworkCodegen
+io.swagger.codegen.languages.BaikalCodegen
 io.swagger.codegen.languages.JavaResteasyEapServerCodegen
 io.swagger.codegen.languages.JavaResteasyServerCodegen
 io.swagger.codegen.languages.JavascriptClientCodegen
