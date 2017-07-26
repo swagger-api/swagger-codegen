@@ -5,7 +5,7 @@
 /* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal no-trailing-whitespace */
 
 import { Injectable, Inject } from '@angular/core';
-import { Headers, Http, Request, RequestOptionsArgs, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -31,12 +31,10 @@ export class {{classname}} {
 
   private logger: Logger;
 
-  constructor(
-      private http: Http,
-      private apiHelperService: ApiHelperService,
-      private logService: LogService) {
-     this.logger = logService.getLogger('{{classname}}');
-   }
+  constructor(private apiHelperService: ApiHelperService,
+              private logService: LogService) {
+    this.logger = logService.getLogger('{{classname}}');
+  }
 
 {{#operation}}
   /**
@@ -45,12 +43,9 @@ export class {{classname}} {
    {{#allParams}}* @param {{paramName}} {{description}}
    {{/allParams}}*/
   public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<ApiResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> | ApiError> {
-    const path =
-      '{{basePathWithoutHost}}' +
+    const path = '{{basePathWithoutHost}}' +
       '{{path}}'{{#pathParams}}
       .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
-
-    const apiUrl = this.apiHelperService.getApiRoot() + path;
 
     let search = new URLSearchParams();
     let headers = new Headers(this.defaultHeaders);
@@ -75,19 +70,14 @@ export class {{classname}} {
 
     let requestOptions: RequestOptionsArgs = {
       method: '{{httpMethod}}',
-      url: apiUrl,
 {{#bodyParam}}      body: {{paramName}},{{/bodyParam}}
       search: search,
       // Don't include headers as they'll override global defaults
       // headers: headers
     };
 
-    this.logger.debug('Executing {{httpMethod}} request to ' + apiUrl);
-    return this
-      .apiHelperService
-      .createResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
-        this.http.request(apiUrl, requestOptions).toPromise()
-      );
+    this.logger.debug('Executing {{httpMethod}} request to ' + path);
+    return this.apiHelperService.createResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(path, requestOptions);
   }
 
 {{/operation}}
