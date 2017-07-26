@@ -326,22 +326,22 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -366,24 +366,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
             if (apiKey !== undefined && apiKey !== null) {
-                headers['api_key'] = String(apiKey);
+                headerOptions['api_key'] = String(apiKey);
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -405,24 +405,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet/findByStatus`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
             if (status) {
-                query['status'] = status.join(',');
+                queryParameter['status'] = status.join(',');
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -444,24 +444,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet/findByTags`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
             if (tags) {
-                query['tags'] = tags.join(',');
+                queryParameter['tags'] = tags.join(',');
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -484,16 +484,16 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication api_key required
             if (config && config.apiKey && config.apiKey.api_key) {
-                headers["api_key"] = config.apiKey.api_key;
+                headerOptions["api_key"] = config.apiKey.api_key;
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -515,22 +515,22 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'PUT' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -556,17 +556,17 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
             const formParams = new url.URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
             if (name !== undefined) {
@@ -577,10 +577,10 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 formParams.set('status', <any>status);
             }
 
-            headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = formParams.toString();
 
             return {
@@ -606,17 +606,17 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
             const formParams = new url.URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("petstore_auth")
+					? config.accessToken("petstore_auth")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
 
             if (additionalMetadata !== undefined) {
@@ -627,10 +627,10 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 formParams.set('file', <any>file);
             }
 
-            headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = formParams.toString();
 
             return {
@@ -1022,11 +1022,11 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"orderId"}}`, String(orderId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1043,16 +1043,16 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
             const path = `/store/inventory`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             // authentication api_key required
             if (config && config.apiKey && config.apiKey.api_key) {
-                headers["api_key"] = config.apiKey.api_key;
+                headerOptions["api_key"] = config.apiKey.api_key;
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1075,11 +1075,11 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"orderId"}}`, String(orderId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1101,13 +1101,13 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
             const path = `/store/order`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1320,13 +1320,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1349,13 +1349,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/createWithArray`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1378,13 +1378,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/createWithList`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1408,11 +1408,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1435,11 +1435,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1466,19 +1466,19 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/login`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
             if (username !== undefined) {
-                query['username'] = username as any;
+                queryParameter['username'] = username as any;
             }
 
             if (password !== undefined) {
-                query['password'] = password as any;
+                queryParameter['password'] = password as any;
             }
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1495,11 +1495,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/logout`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1527,13 +1527,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'PUT' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
 
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {

@@ -94,8 +94,8 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
                 .replace(`{${"{{baseName}}"}}`, String({{paramName}})){{/pathParams}};
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: '{{httpMethod}}' }, options);
-            const headers = {} as any;
-            const query = {} as any;
+            const headerOptions = {} as any;
+            const queryParameter = {} as any;
     {{#hasFormParams}}
             const formParams = new url.URLSearchParams();
     {{/hasFormParams}}
@@ -105,28 +105,28 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
             {{#isApiKey}}
             {{#isKeyInHeader}}
             if (config && config.apiKey && config.apiKey.{{keyParamName}}) {
-                headers["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
+                headerOptions["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
             }
             {{/isKeyInHeader}}
             {{#isKeyInQuery}}
-            if (config & config.apiKey && config.apiKey.{{keyParamName}}) {
-                query["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
+            if (config && config.apiKey && config.apiKey.{{keyParamName}}) {
+                queryParameter["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
             {{#isBasic}}
             // http basic authentication required
             if (config && (config.username || config.password)) {
-                headers["Authorization"] = "Basic " + btoa(config.username + ":" + config.password);
+                headerOptions["Authorization"] = "Basic " + btoa(config.username + ":" + config.password);
             }
             {{/isBasic}}
             {{#isOAuth}}
             // oauth required
             if (config && config.accessToken) {
 				const accessToken = typeof config.accessToken === 'function'
-					? tconfig.accessToken("{{name}}")
+					? config.accessToken("{{name}}")
 					: config.accessToken;
-                headers["Authorization"] = "Bearer " + config.accessToken;
+                headerOptions["Authorization"] = "Bearer " + config.accessToken;
             }
             {{/isOAuth}}
 
@@ -135,24 +135,24 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
             {{#isListContainer}}
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
-                query['{{baseName}}'] = {{paramName}} as any;
+                queryParameter['{{baseName}}'] = {{paramName}} as any;
             {{/isCollectionFormatMulti}}
             {{^isCollectionFormatMulti}}
-                query['{{baseName}}'] = {{paramName}}.join(',');
+                queryParameter['{{baseName}}'] = {{paramName}}.join(',');
             {{/isCollectionFormatMulti}}
             }
             {{/isListContainer}}
             {{^isListContainer}}
             if ({{paramName}} !== undefined) {
                 {{#isDateTime}}
-                query['{{baseName}}'] = ({{paramName}} as any).toISOString();
+                queryParameter['{{baseName}}'] = ({{paramName}} as any).toISOString();
                 {{/isDateTime}}
                 {{^isDateTime}}
                 {{#isDate}}
-                query['{{baseName}}'] = ({{paramName}} as any).toISOString();
+                queryParameter['{{baseName}}'] = ({{paramName}} as any).toISOString();
                 {{/isDate}}
                 {{^isDate}}
-                query['{{baseName}}'] = {{paramName}} as any;
+                queryParameter['{{baseName}}'] = {{paramName}} as any;
                 {{/isDate}}
                 {{/isDateTime}}
             }
@@ -162,12 +162,12 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
     {{#headerParams}}
             {{#isListContainer}}
             if ({{paramName}}) {
-                headers['{{baseName}}'] = {{paramName}}.join(',');
+                headerOptions['{{baseName}}'] = {{paramName}}.join(',');
             }
             {{/isListContainer}}
             {{^isListContainer}}
             if ({{paramName}} !== undefined && {{paramName}} !== null) {
-                headers['{{baseName}}'] = String({{paramName}});
+                headerOptions['{{baseName}}'] = String({{paramName}});
             }
             {{/isListContainer}}
 
@@ -193,15 +193,15 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
 
     {{/formParams}}
     {{#hasFormParams}}
-            headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
 
     {{/hasFormParams}}
     {{#bodyParam}}
-            headers['Content-Type'] = 'application/json';
+            headerOptions['Content-Type'] = 'application/json';
 
     {{/bodyParam}}
-            urlObj.query = Object.assign({}, urlObj.query, query, options.query);
-            requestOptions.headers = Object.assign({}, headers, options.headers);
+            urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
     {{#hasFormParams}}
             requestOptions.body = formParams.toString();
     {{/hasFormParams}}

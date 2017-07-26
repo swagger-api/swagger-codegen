@@ -4,7 +4,8 @@ import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.properties.*;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,12 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
     }
 
     @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+        codegenModel.additionalPropertiesType = getTypeDeclaration(swaggerModel.getAdditionalProperties());
+        addImport(codegenModel, codegenModel.additionalPropertiesType);
+    }
+
+    @Override
     public void processOpts() {
         super.processOpts();
         supportingFiles.add(new SupportingFile("index.mustache", "", "index.ts"));
@@ -49,6 +56,24 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
 
         if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
+        }
+    }
+
+    @Override
+    public String getTypeDeclaration(Property p) {
+        Property inner;
+        if(p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty)p;
+            inner = mp1.getItems();
+            return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
+        } else if(p instanceof MapProperty) {
+            MapProperty mp = (MapProperty)p;
+            inner = mp.getAdditionalProperties();
+            return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
+        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
+            return "any";
+        } else {
+            return super.getTypeDeclaration(p);
         }
     }
 
