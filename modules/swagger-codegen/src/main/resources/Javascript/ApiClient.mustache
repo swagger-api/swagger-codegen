@@ -518,7 +518,8 @@
           return data;
         } else if (typeof type === 'function') {
           // for model type like: User
-          return type.constructFromObject(data);
+          var finalType = exports.determineInheritance(type, data);
+          return finalType.constructFromObject(data);
         } else if (Array.isArray(type)) {
           // for array type like: ['String']
           var itemType = type[0];
@@ -568,6 +569,27 @@
           obj[k] = exports.convertToType(data[k], itemType);
       }
     }
+  };
+  
+{{#emitJSDoc}}  /**
+   * Determines the type to use based on a parent type and REST data for polymorphic resolution.
+   * @param parent {function} The parent type.
+   * @param data {Object|Array} The REST data.
+   * @returns The type to deserialize to. Will match the parent if a child cannot be found.
+   */
+{{/emitJSDoc}}  exports.determineInheritance = function(parent, data) {
+    if (parent.discriminatorField == null)
+      return parent;
+    if (parent.children == null)
+      return parent;
+    var field = parent.discriminatorField;
+    var value = data[field];
+    if (value == null)
+      return parent;
+    var child = parent.children[value];
+    if (child == null)
+      return parent;
+    return child;
   };
 
 {{#emitJSDoc}}  /**
