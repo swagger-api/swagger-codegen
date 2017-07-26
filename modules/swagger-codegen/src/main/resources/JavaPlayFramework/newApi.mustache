@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
-
+{{#isResponseFile}}
+import java.io.FileInputStream;
+{{/isResponseFile}}
 {{#useBeanValidation}}
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
