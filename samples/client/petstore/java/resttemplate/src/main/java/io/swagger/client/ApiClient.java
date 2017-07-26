@@ -412,7 +412,7 @@ public class ApiClient {
     */
     public boolean isJsonMime(String mediaType) {
         // "* / *" is default to JSON
-        if ("* / *".equals(mediaType)) {
+        if ("*/*".equals(mediaType)) {
             return true;
         }
 
