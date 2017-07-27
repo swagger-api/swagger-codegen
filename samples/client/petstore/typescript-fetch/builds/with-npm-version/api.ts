@@ -10,12 +10,20 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+ 
 
-import * as url                                 	    from "url";
-import * as isomorphicFetch                     	    from "isomorphic-fetch";
-import { Configuration }                                from "./configuration";
+import * as url from "url";
+import * as isomorphicFetch from "isomorphic-fetch";
+import { Configuration } from "./configuration";
 
 const BASE_PATH = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
+
+const COLLECTION_FORMATS = {
+    csv: ",",
+    ssv: " ",
+    tsv: "\t",
+    pipes: "|",
+};
 
 /**
  *
@@ -42,12 +50,12 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    public config: Configuration = new Configuration();
+    protected configuration: Configuration;
 
-    constructor(config?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
-        if (config) {
-            this.config = config;
-            this.basePath = config.basePath || this.basePath;
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = configuration.basePath || this.basePath;
         }
     }
 };
@@ -306,10 +314,13 @@ export interface User {
      */
     userStatus?: number;
 }
+
+
 /**
  * PetApi - fetch parameter creator
+ * @export
  */
-export const PetApiFetchParamCreator = function (config?: Configuration) {
+export const PetApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -326,22 +337,22 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -366,24 +377,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
             if (apiKey !== undefined && apiKey !== null) {
-                headerOptions['api_key'] = String(apiKey);
+                headerParameter['api_key'] = String(apiKey);
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -405,24 +416,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet/findByStatus`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
             if (status) {
-                queryParameter['status'] = status.join(',');
+                queryParameter['status'] = status.join(COLLECTION_FORMATS["csv"]);
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -444,24 +455,24 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet/findByTags`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
             if (tags) {
-                queryParameter['tags'] = tags.join(',');
+                queryParameter['tags'] = tags.join(COLLECTION_FORMATS["csv"]);
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -484,16 +495,19 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication api_key required
-            if (config && config.apiKey && config.apiKey.api_key) {
-                headerOptions["api_key"] = config.apiKey.api_key;
+            if (configuration && configuration.apiKey) {
+                const apiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("api_key")
+					: configuration.apiKey;
+                headerParameter["api_key"] = apiKeyValue;
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -515,22 +529,22 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
             const path = `/pet`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'PUT' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -556,31 +570,31 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
             const formParams = new url.URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
             if (name !== undefined) {
-                formParams.set('name', <any>name);
+                formParams.set('name', name as any);
             }
 
             if (status !== undefined) {
-                formParams.set('status', <any>status);
+                formParams.set('status', status as any);
             }
 
-            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerParameter['Content-Type'] = 'application/x-www-form-urlencoded';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = formParams.toString();
 
             return {
@@ -606,31 +620,31 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"petId"}}`, String(petId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
             const formParams = new url.URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("petstore_auth")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
 
             if (additionalMetadata !== undefined) {
-                formParams.set('additionalMetadata', <any>additionalMetadata);
+                formParams.set('additionalMetadata', additionalMetadata as any);
             }
 
             if (file !== undefined) {
-                formParams.set('file', <any>file);
+                formParams.set('file', file as any);
             }
 
-            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerParameter['Content-Type'] = 'application/x-www-form-urlencoded';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = formParams.toString();
 
             return {
@@ -643,8 +657,9 @@ export const PetApiFetchParamCreator = function (config?: Configuration) {
 
 /**
  * PetApi - functional programming interface
+ * @export
  */
-export const PetApiFp = function(config?: Configuration) {
+export const PetApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -654,7 +669,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = PetApiFetchParamCreator(config).addPet(body, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -674,7 +689,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = PetApiFetchParamCreator(config).deletePet(petId, apiKey, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -693,7 +708,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         findPetsByStatus(status: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-            const fetchArgs = PetApiFetchParamCreator(config).findPetsByStatus(status, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -712,7 +727,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         findPetsByTags(tags: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-            const fetchArgs = PetApiFetchParamCreator(config).findPetsByTags(tags, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).findPetsByTags(tags, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -731,7 +746,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         getPetById(petId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Pet> {
-            const fetchArgs = PetApiFetchParamCreator(config).getPetById(petId, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).getPetById(petId, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -750,7 +765,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = PetApiFetchParamCreator(config).updatePet(body, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -771,7 +786,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = PetApiFetchParamCreator(config).updatePetWithForm(petId, name, status, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -792,7 +807,7 @@ export const PetApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApiResponse> {
-            const fetchArgs = PetApiFetchParamCreator(config).uploadFile(petId, additionalMetadata, file, options);
+            const fetchArgs = PetApiFetchParamCreator(configuration).uploadFile(petId, additionalMetadata, file, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -808,8 +823,9 @@ export const PetApiFp = function(config?: Configuration) {
 
 /**
  * PetApi - factory interface
+ * @export
  */
-export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const PetApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -819,7 +835,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         addPet(body: Pet, options?: any) {
-            return PetApiFp(config).addPet(body, options)(fetch, basePath);
+            return PetApiFp(configuration).addPet(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -830,7 +846,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         deletePet(petId: number, apiKey?: string, options?: any) {
-            return PetApiFp(config).deletePet(petId, apiKey, options)(fetch, basePath);
+            return PetApiFp(configuration).deletePet(petId, apiKey, options)(fetch, basePath);
         },
         /**
          * Multiple status values can be provided with comma separated strings
@@ -840,7 +856,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         findPetsByStatus(status: Array<string>, options?: any) {
-            return PetApiFp(config).findPetsByStatus(status, options)(fetch, basePath);
+            return PetApiFp(configuration).findPetsByStatus(status, options)(fetch, basePath);
         },
         /**
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -850,7 +866,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         findPetsByTags(tags: Array<string>, options?: any) {
-            return PetApiFp(config).findPetsByTags(tags, options)(fetch, basePath);
+            return PetApiFp(configuration).findPetsByTags(tags, options)(fetch, basePath);
         },
         /**
          * Returns a single pet
@@ -860,7 +876,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         getPetById(petId: number, options?: any) {
-            return PetApiFp(config).getPetById(petId, options)(fetch, basePath);
+            return PetApiFp(configuration).getPetById(petId, options)(fetch, basePath);
         },
         /**
          * 
@@ -870,7 +886,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         updatePet(body: Pet, options?: any) {
-            return PetApiFp(config).updatePet(body, options)(fetch, basePath);
+            return PetApiFp(configuration).updatePet(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -882,7 +898,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any) {
-            return PetApiFp(config).updatePetWithForm(petId, name, status, options)(fetch, basePath);
+            return PetApiFp(configuration).updatePetWithForm(petId, name, status, options)(fetch, basePath);
         },
         /**
          * 
@@ -894,7 +910,7 @@ export const PetApiFactory = function (config?: Configuration, fetch?: FetchAPI,
          * @throws {RequiredError}
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any) {
-            return PetApiFp(config).uploadFile(petId, additionalMetadata, file, options)(fetch, basePath);
+            return PetApiFp(configuration).uploadFile(petId, additionalMetadata, file, options)(fetch, basePath);
         },
     };
 };
@@ -915,8 +931,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public addPet(body: Pet, options?: any) {
-        return PetApiFp(this.config).addPet(body, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).addPet(body, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Deletes a pet
@@ -927,8 +944,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public deletePet(petId: number, apiKey?: string, options?: any) {
-        return PetApiFp(this.config).deletePet(petId, apiKey, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).deletePet(petId, apiKey, options)(this.fetch, this.basePath);
     }
+
     /**
      * Multiple status values can be provided with comma separated strings
      * @summary Finds Pets by status
@@ -938,8 +956,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public findPetsByStatus(status: Array<string>, options?: any) {
-        return PetApiFp(this.config).findPetsByStatus(status, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).findPetsByStatus(status, options)(this.fetch, this.basePath);
     }
+
     /**
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @summary Finds Pets by tags
@@ -949,8 +968,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public findPetsByTags(tags: Array<string>, options?: any) {
-        return PetApiFp(this.config).findPetsByTags(tags, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).findPetsByTags(tags, options)(this.fetch, this.basePath);
     }
+
     /**
      * Returns a single pet
      * @summary Find pet by ID
@@ -960,8 +980,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public getPetById(petId: number, options?: any) {
-        return PetApiFp(this.config).getPetById(petId, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).getPetById(petId, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Update an existing pet
@@ -971,8 +992,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public updatePet(body: Pet, options?: any) {
-        return PetApiFp(this.config).updatePet(body, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).updatePet(body, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Updates a pet in the store with form data
@@ -984,8 +1006,9 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public updatePetWithForm(petId: number, name?: string, status?: string, options?: any) {
-        return PetApiFp(this.config).updatePetWithForm(petId, name, status, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).updatePetWithForm(petId, name, status, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary uploads an image
@@ -997,14 +1020,16 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any) {
-        return PetApiFp(this.config).uploadFile(petId, additionalMetadata, file, options)(this.fetch, this.basePath);
+        return PetApiFp(this.configuration).uploadFile(petId, additionalMetadata, file, options)(this.fetch, this.basePath);
     }
+
 }
 
 /**
  * StoreApi - fetch parameter creator
+ * @export
  */
-export const StoreApiFetchParamCreator = function (config?: Configuration) {
+export const StoreApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1022,11 +1047,11 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"orderId"}}`, String(orderId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1043,16 +1068,19 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
             const path = `/store/inventory`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             // authentication api_key required
-            if (config && config.apiKey && config.apiKey.api_key) {
-                headerOptions["api_key"] = config.apiKey.api_key;
+            if (configuration && configuration.apiKey) {
+                const apiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("api_key")
+					: configuration.apiKey;
+                headerParameter["api_key"] = apiKeyValue;
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1075,11 +1103,11 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"orderId"}}`, String(orderId));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1101,13 +1129,13 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
             const path = `/store/order`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1120,8 +1148,9 @@ export const StoreApiFetchParamCreator = function (config?: Configuration) {
 
 /**
  * StoreApi - functional programming interface
+ * @export
  */
-export const StoreApiFp = function(config?: Configuration) {
+export const StoreApiFp = function(configuration?: Configuration) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1131,7 +1160,7 @@ export const StoreApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = StoreApiFetchParamCreator(config).deleteOrder(orderId, options);
+            const fetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1149,7 +1178,7 @@ export const StoreApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         getInventory(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
-            const fetchArgs = StoreApiFetchParamCreator(config).getInventory(options);
+            const fetchArgs = StoreApiFetchParamCreator(configuration).getInventory(options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1168,7 +1197,7 @@ export const StoreApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         getOrderById(orderId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
-            const fetchArgs = StoreApiFetchParamCreator(config).getOrderById(orderId, options);
+            const fetchArgs = StoreApiFetchParamCreator(configuration).getOrderById(orderId, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1187,7 +1216,7 @@ export const StoreApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         placeOrder(body: Order, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
-            const fetchArgs = StoreApiFetchParamCreator(config).placeOrder(body, options);
+            const fetchArgs = StoreApiFetchParamCreator(configuration).placeOrder(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1203,8 +1232,9 @@ export const StoreApiFp = function(config?: Configuration) {
 
 /**
  * StoreApi - factory interface
+ * @export
  */
-export const StoreApiFactory = function (config?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const StoreApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1214,7 +1244,7 @@ export const StoreApiFactory = function (config?: Configuration, fetch?: FetchAP
          * @throws {RequiredError}
          */
         deleteOrder(orderId: string, options?: any) {
-            return StoreApiFp(config).deleteOrder(orderId, options)(fetch, basePath);
+            return StoreApiFp(configuration).deleteOrder(orderId, options)(fetch, basePath);
         },
         /**
          * Returns a map of status codes to quantities
@@ -1223,7 +1253,7 @@ export const StoreApiFactory = function (config?: Configuration, fetch?: FetchAP
          * @throws {RequiredError}
          */
         getInventory(options?: any) {
-            return StoreApiFp(config).getInventory(options)(fetch, basePath);
+            return StoreApiFp(configuration).getInventory(options)(fetch, basePath);
         },
         /**
          * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
@@ -1233,7 +1263,7 @@ export const StoreApiFactory = function (config?: Configuration, fetch?: FetchAP
          * @throws {RequiredError}
          */
         getOrderById(orderId: number, options?: any) {
-            return StoreApiFp(config).getOrderById(orderId, options)(fetch, basePath);
+            return StoreApiFp(configuration).getOrderById(orderId, options)(fetch, basePath);
         },
         /**
          * 
@@ -1243,7 +1273,7 @@ export const StoreApiFactory = function (config?: Configuration, fetch?: FetchAP
          * @throws {RequiredError}
          */
         placeOrder(body: Order, options?: any) {
-            return StoreApiFp(config).placeOrder(body, options)(fetch, basePath);
+            return StoreApiFp(configuration).placeOrder(body, options)(fetch, basePath);
         },
     };
 };
@@ -1264,8 +1294,9 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public deleteOrder(orderId: string, options?: any) {
-        return StoreApiFp(this.config).deleteOrder(orderId, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.configuration).deleteOrder(orderId, options)(this.fetch, this.basePath);
     }
+
     /**
      * Returns a map of status codes to quantities
      * @summary Returns pet inventories by status
@@ -1274,8 +1305,9 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public getInventory(options?: any) {
-        return StoreApiFp(this.config).getInventory(options)(this.fetch, this.basePath);
+        return StoreApiFp(this.configuration).getInventory(options)(this.fetch, this.basePath);
     }
+
     /**
      * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      * @summary Find purchase order by ID
@@ -1285,8 +1317,9 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public getOrderById(orderId: number, options?: any) {
-        return StoreApiFp(this.config).getOrderById(orderId, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.configuration).getOrderById(orderId, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Place an order for a pet
@@ -1296,14 +1329,16 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public placeOrder(body: Order, options?: any) {
-        return StoreApiFp(this.config).placeOrder(body, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.configuration).placeOrder(body, options)(this.fetch, this.basePath);
     }
+
 }
 
 /**
  * UserApi - fetch parameter creator
+ * @export
  */
-export const UserApiFetchParamCreator = function (config?: Configuration) {
+export const UserApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1320,13 +1355,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1349,13 +1384,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/createWithArray`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1378,13 +1413,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/createWithList`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'POST' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1408,11 +1443,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'DELETE' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1435,11 +1470,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1466,19 +1501,19 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/login`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             if (username !== undefined) {
-                queryParameter['username'] = username as any;
+                queryParameter['username'] = username;
             }
 
             if (password !== undefined) {
-                queryParameter['password'] = password as any;
+                queryParameter['password'] = password;
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1495,11 +1530,11 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
             const path = `/user/logout`;
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'GET' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
                 url: url.format(urlObj),
@@ -1527,13 +1562,13 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
                 .replace(`{${"username"}}`, String(username));
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: 'PUT' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
 
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
             return {
@@ -1546,8 +1581,9 @@ export const UserApiFetchParamCreator = function (config?: Configuration) {
 
 /**
  * UserApi - functional programming interface
+ * @export
  */
-export const UserApiFp = function(config?: Configuration) {
+export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1557,7 +1593,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).createUser(body, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1576,7 +1612,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).createUsersWithArrayInput(body, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1595,7 +1631,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).createUsersWithListInput(body, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1614,7 +1650,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).deleteUser(username, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1633,7 +1669,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         getUserByName(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
-            const fetchArgs = UserApiFetchParamCreator(config).getUserByName(username, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).getUserByName(username, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1653,7 +1689,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         loginUser(username: string, password: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
-            const fetchArgs = UserApiFetchParamCreator(config).loginUser(username, password, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).loginUser(username, password, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1671,7 +1707,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).logoutUser(options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1691,7 +1727,7 @@ export const UserApiFp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const fetchArgs = UserApiFetchParamCreator(config).updateUser(username, body, options);
+            const fetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1707,8 +1743,9 @@ export const UserApiFp = function(config?: Configuration) {
 
 /**
  * UserApi - factory interface
+ * @export
  */
-export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const UserApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1718,7 +1755,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         createUser(body: User, options?: any) {
-            return UserApiFp(config).createUser(body, options)(fetch, basePath);
+            return UserApiFp(configuration).createUser(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -1728,7 +1765,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         createUsersWithArrayInput(body: Array<User>, options?: any) {
-            return UserApiFp(config).createUsersWithArrayInput(body, options)(fetch, basePath);
+            return UserApiFp(configuration).createUsersWithArrayInput(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -1738,7 +1775,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         createUsersWithListInput(body: Array<User>, options?: any) {
-            return UserApiFp(config).createUsersWithListInput(body, options)(fetch, basePath);
+            return UserApiFp(configuration).createUsersWithListInput(body, options)(fetch, basePath);
         },
         /**
          * This can only be done by the logged in user.
@@ -1748,7 +1785,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         deleteUser(username: string, options?: any) {
-            return UserApiFp(config).deleteUser(username, options)(fetch, basePath);
+            return UserApiFp(configuration).deleteUser(username, options)(fetch, basePath);
         },
         /**
          * 
@@ -1758,7 +1795,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         getUserByName(username: string, options?: any) {
-            return UserApiFp(config).getUserByName(username, options)(fetch, basePath);
+            return UserApiFp(configuration).getUserByName(username, options)(fetch, basePath);
         },
         /**
          * 
@@ -1769,7 +1806,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         loginUser(username: string, password: string, options?: any) {
-            return UserApiFp(config).loginUser(username, password, options)(fetch, basePath);
+            return UserApiFp(configuration).loginUser(username, password, options)(fetch, basePath);
         },
         /**
          * 
@@ -1778,7 +1815,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         logoutUser(options?: any) {
-            return UserApiFp(config).logoutUser(options)(fetch, basePath);
+            return UserApiFp(configuration).logoutUser(options)(fetch, basePath);
         },
         /**
          * This can only be done by the logged in user.
@@ -1789,7 +1826,7 @@ export const UserApiFactory = function (config?: Configuration, fetch?: FetchAPI
          * @throws {RequiredError}
          */
         updateUser(username: string, body: User, options?: any) {
-            return UserApiFp(config).updateUser(username, body, options)(fetch, basePath);
+            return UserApiFp(configuration).updateUser(username, body, options)(fetch, basePath);
         },
     };
 };
@@ -1810,8 +1847,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUser(body: User, options?: any) {
-        return UserApiFp(this.config).createUser(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).createUser(body, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Creates list of users with given input array
@@ -1821,8 +1859,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUsersWithArrayInput(body: Array<User>, options?: any) {
-        return UserApiFp(this.config).createUsersWithArrayInput(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).createUsersWithArrayInput(body, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Creates list of users with given input array
@@ -1832,8 +1871,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUsersWithListInput(body: Array<User>, options?: any) {
-        return UserApiFp(this.config).createUsersWithListInput(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).createUsersWithListInput(body, options)(this.fetch, this.basePath);
     }
+
     /**
      * This can only be done by the logged in user.
      * @summary Delete user
@@ -1843,8 +1883,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public deleteUser(username: string, options?: any) {
-        return UserApiFp(this.config).deleteUser(username, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).deleteUser(username, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Get user by user name
@@ -1854,8 +1895,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public getUserByName(username: string, options?: any) {
-        return UserApiFp(this.config).getUserByName(username, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).getUserByName(username, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Logs user into the system
@@ -1866,8 +1908,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public loginUser(username: string, password: string, options?: any) {
-        return UserApiFp(this.config).loginUser(username, password, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).loginUser(username, password, options)(this.fetch, this.basePath);
     }
+
     /**
      * 
      * @summary Logs out current logged in user session
@@ -1876,8 +1919,9 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public logoutUser(options?: any) {
-        return UserApiFp(this.config).logoutUser(options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).logoutUser(options)(this.fetch, this.basePath);
     }
+
     /**
      * This can only be done by the logged in user.
      * @summary Updated user
@@ -1888,7 +1932,8 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public updateUser(username: string, body: User, options?: any) {
-        return UserApiFp(this.config).updateUser(username, body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.configuration).updateUser(username, body, options)(this.fetch, this.basePath);
     }
+
 }
 

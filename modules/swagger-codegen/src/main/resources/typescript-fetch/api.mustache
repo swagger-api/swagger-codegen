@@ -1,11 +1,18 @@
 // tslint:disable
 {{>licenseInfo}}
 
-import * as url                                 	    from "url";
-import * as isomorphicFetch                     	    from "isomorphic-fetch";
-import { Configuration }                                from "./configuration";
+import * as url from "url";
+import * as isomorphicFetch from "isomorphic-fetch";
+import { Configuration } from "./configuration";
 
 const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
+
+const COLLECTION_FORMATS = {
+    csv: ",",
+    ssv: " ",
+    tsv: "\t",
+    pipes: "|",
+};
 
 /**
  *
@@ -32,12 +39,12 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    public config: Configuration = new Configuration();
+    protected configuration: Configuration;
 
-    constructor(config?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
-        if (config) {
-            this.config = config;
-            this.basePath = config.basePath || this.basePath;
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = configuration.basePath || this.basePath;
         }
     }
 };
@@ -54,20 +61,17 @@ export class RequiredError extends Error {
         super(msg);
     }
 }
+
 {{#models}}
-{{#model}}
-{{#isEnum}}{{>modelEnum}}{{/isEnum}}
-{{^isEnum}}{{>modelGeneric}}{{/isEnum}}
-{{/model}}
+{{#model}}{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{>modelGeneric}}{{/isEnum}}{{/model}}
 {{/models}}
-{{#apiInfo}}
-{{#apis}}
-{{#operations}}
+{{#apiInfo}}{{#apis}}{{#operations}}
 /**
  * {{classname}} - fetch parameter creator{{#description}}
  * {{&description}}{{/description}}
+ * @export
  */
-export const {{classname}}FetchParamCreator = function (config?: Configuration) {
+export const {{classname}}FetchParamCreator = function (configuration?: Configuration) {
     return {
     {{#operation}}
         /**
@@ -94,7 +98,7 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
                 .replace(`{${"{{baseName}}"}}`, String({{paramName}})){{/pathParams}};
             const urlObj = url.parse(path, true);
             const requestOptions = Object.assign({ method: '{{httpMethod}}' }, options);
-            const headerOptions = {} as any;
+            const headerParameter = {} as any;
             const queryParameter = {} as any;
     {{#hasFormParams}}
             const formParams = new url.URLSearchParams();
@@ -104,29 +108,35 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
             // authentication {{name}} required
             {{#isApiKey}}
             {{#isKeyInHeader}}
-            if (config && config.apiKey && config.apiKey.{{keyParamName}}) {
-                headerOptions["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
+            if (configuration && configuration.apiKey) {
+                const apiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("{{keyParamName}}")
+					: configuration.apiKey;
+                headerParameter["{{keyParamName}}"] = apiKeyValue;
             }
             {{/isKeyInHeader}}
             {{#isKeyInQuery}}
-            if (config && config.apiKey && config.apiKey.{{keyParamName}}) {
-                queryParameter["{{keyParamName}}"] = config.apiKey.{{keyParamName}};
+            if (configuration && configuration.apiKey) {
+                const apiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("{{keyParamName}}")
+					: configuration.apiKey;
+                queryParameter["{{keyParamName}}"] = apiKeyValue;
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
             {{#isBasic}}
             // http basic authentication required
-            if (config && (config.username || config.password)) {
-                headerOptions["Authorization"] = "Basic " + btoa(config.username + ":" + config.password);
+            if (configuration && (configuration.username || configuration.password)) {
+                headerParameter["Authorization"] = "Basic " + btoa(configuration.username + ":" + configuration.password);
             }
             {{/isBasic}}
             {{#isOAuth}}
             // oauth required
-            if (config && config.accessToken) {
-				const accessToken = typeof config.accessToken === 'function'
-					? config.accessToken("{{name}}")
-					: config.accessToken;
-                headerOptions["Authorization"] = "Bearer " + config.accessToken;
+            if (configuration && configuration.accessToken) {
+				const accessTokenValue = typeof configuration.accessToken === 'function'
+					? configuration.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
+					: configuration.accessToken;
+                headerParameter["Authorization"] = "Bearer " + accessTokenValue;
             }
             {{/isOAuth}}
 
@@ -135,10 +145,10 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
             {{#isListContainer}}
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
-                queryParameter['{{baseName}}'] = {{paramName}} as any;
+                queryParameter['{{baseName}}'] = {{paramName}};
             {{/isCollectionFormatMulti}}
             {{^isCollectionFormatMulti}}
-                queryParameter['{{baseName}}'] = {{paramName}}.join(',');
+                queryParameter['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS["{{collectionFormat}}"]);
             {{/isCollectionFormatMulti}}
             }
             {{/isListContainer}}
@@ -152,7 +162,7 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
                 queryParameter['{{baseName}}'] = ({{paramName}} as any).toISOString();
                 {{/isDate}}
                 {{^isDate}}
-                queryParameter['{{baseName}}'] = {{paramName}} as any;
+                queryParameter['{{baseName}}'] = {{paramName}};
                 {{/isDate}}
                 {{/isDateTime}}
             }
@@ -162,12 +172,12 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
     {{#headerParams}}
             {{#isListContainer}}
             if ({{paramName}}) {
-                headerOptions['{{baseName}}'] = {{paramName}}.join(',');
+                headerParameter['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS["{{collectionFormat}}"]));
             }
             {{/isListContainer}}
             {{^isListContainer}}
             if ({{paramName}} !== undefined && {{paramName}} !== null) {
-                headerOptions['{{baseName}}'] = String({{paramName}});
+                headerParameter['{{baseName}}'] = String({{paramName}});
             }
             {{/isListContainer}}
 
@@ -177,31 +187,31 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
                 {{paramName}}.forEach((element) => {
-                    formParams.append('{{baseName}}', <any>element);
+                    formParams.append('{{baseName}}', element as any);
                 })
             {{/isCollectionFormatMulti}}
             {{^isCollectionFormatMulti}}
-                    formParams.set('{{baseName}}', {{paramName}}.join(','));
+                    formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS["{{collectionFormat}}"]));
             {{/isCollectionFormatMulti}}
             }
             {{/isListContainer}}
             {{^isListContainer}}
             if ({{paramName}} !== undefined) {
-                formParams.set('{{baseName}}', <any>{{paramName}});
+                formParams.set('{{baseName}}', {{paramName}} as any);
             }
             {{/isListContainer}}
 
     {{/formParams}}
     {{#hasFormParams}}
-            headerOptions['Content-Type'] = 'application/x-www-form-urlencoded';
+            headerParameter['Content-Type'] = 'application/x-www-form-urlencoded';
 
     {{/hasFormParams}}
     {{#bodyParam}}
-            headerOptions['Content-Type'] = 'application/json';
+            headerParameter['Content-Type'] = 'application/json';
 
     {{/bodyParam}}
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
-            requestOptions.headers = Object.assign({}, headerOptions, options.headers);
+            requestOptions.headers = Object.assign({}, headerParameter, options.headers);
     {{#hasFormParams}}
             requestOptions.body = formParams.toString();
     {{/hasFormParams}}
@@ -221,8 +231,9 @@ export const {{classname}}FetchParamCreator = function (config?: Configuration) 
 /**
  * {{classname}} - functional programming interface{{#description}}
  * {{{description}}}{{/description}}
+ * @export
  */
-export const {{classname}}Fp = function(config?: Configuration) {
+export const {{classname}}Fp = function(configuration?: Configuration) {
     return {
     {{#operation}}
         /**
@@ -237,7 +248,7 @@ export const {{classname}}Fp = function(config?: Configuration) {
          * @throws {RequiredError}
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}> {
-            const fetchArgs = {{classname}}FetchParamCreator(config).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
+            const fetchArgs = {{classname}}FetchParamCreator(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -255,10 +266,11 @@ export const {{classname}}Fp = function(config?: Configuration) {
 /**
  * {{classname}} - factory interface{{#description}}
  * {{&description}}{{/description}}
+ * @export
  */
-export const {{classname}}Factory = function (config?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const {{classname}}Factory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
-{{#operation}}
+    {{#operation}}
         /**
          * {{&notes}}
          {{#summary}}
@@ -271,9 +283,9 @@ export const {{classname}}Factory = function (config?: Configuration, fetch?: Fe
          * @throws {RequiredError}
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
-            return {{classname}}Fp(config).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(fetch, basePath);
+            return {{classname}}Fp(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(fetch, basePath);
         },
-{{/operation}}
+    {{/operation}}
     };
 };
 
@@ -285,7 +297,7 @@ export const {{classname}}Factory = function (config?: Configuration, fetch?: Fe
  * @extends {BaseAPI}
  */
 export class {{classname}} extends BaseAPI {
-{{#operation}}
+    {{#operation}}
     /**
      * {{&notes}}
      {{#summary}}
@@ -299,11 +311,9 @@ export class {{classname}} extends BaseAPI {
      * @memberof {{classname}}
      */
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
-        return {{classname}}Fp(this.config).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(this.fetch, this.basePath);
+        return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(this.fetch, this.basePath);
     }
-{{/operation}}
-}
 
-{{/operations}}
-{{/apis}}
-{{/apiInfo}}
+    {{/operation}}
+}
+{{/operations}}{{/apis}}{{/apiInfo}}

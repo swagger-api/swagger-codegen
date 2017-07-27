@@ -25,11 +25,11 @@ npm install
 npm run build
 ```
 
-### publishing
+### Publishing
 
 First build the package than run ```npm publish```
 
-### consuming
+### Consuming
 
 navigate to the folder of your consuming project and run one of next commando's.
 
