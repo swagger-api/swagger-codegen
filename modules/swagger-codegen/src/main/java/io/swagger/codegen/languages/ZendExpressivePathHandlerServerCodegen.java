@@ -117,8 +117,8 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
     }
 
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        objs = super.postProcessOperations(objs);
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
+        objs = super.postProcessOperations(objs, allModels);
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
         String interfaceToImplement;

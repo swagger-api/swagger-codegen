@@ -340,7 +340,7 @@ public class DefaultCodegen {
 
     // override with any special post-processing
     @SuppressWarnings("static-method")
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
         return objs;
     }
 

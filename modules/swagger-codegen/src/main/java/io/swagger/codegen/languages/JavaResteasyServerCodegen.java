@@ -131,7 +131,7 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
     }
 
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
 
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
