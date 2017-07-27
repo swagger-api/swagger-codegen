@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.models.ExternalDocs;
+import io.swagger.models.Tag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ public class CodegenOperation {
             isListContainer, isMultipart, hasMore = true,
             isResponseBinary = false, isResponseFile = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
-            isRestful;
+            isRestful, isDeprecated;
     public String path, operationId, returnType, httpMethod, returnBaseType,
             returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
@@ -28,14 +29,14 @@ public class CodegenOperation {
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
-    public List<String> tags;
+    public List<Tag> tags;
     public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
     public Set<String> imports = new HashSet<String>();
     public List<Map<String, String>> examples;
     public ExternalDocs externalDocs;
     public Map<String, Object> vendorExtensions;
     public String nickname; // legacy support
-    public String operationIdLowerCase; // for mardown documentation
+    public String operationIdLowerCase; // for markdown documentation
     public String operationIdCamelCase; // for class names
     public String operationIdSnakeCase;
 
@@ -220,6 +221,8 @@ public class CodegenOperation {
             return false;
         if (isResponseFile != that.isResponseFile)
             return false;
+        if (isDeprecated != that.isDeprecated)
+            return false;
         if (path != null ? !path.equals(that.path) : that.path != null)
             return false;
         if (operationId != null ? !operationId.equals(that.operationId) : that.operationId != null)
@@ -304,6 +307,7 @@ public class CodegenOperation {
         result = 31 * result + (isResponseBinary ? 13:31);
         result = 31 * result + (isResponseFile ? 13:31);
         result = 31 * result + (hasReference ? 13:31);
+        result = 31 * result + (isDeprecated ? 13:31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (returnType != null ? returnType.hashCode() : 0);

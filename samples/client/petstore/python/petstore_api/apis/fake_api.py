@@ -20,7 +20,6 @@ import re
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..configuration import Configuration
 from ..api_client import ApiClient
 
 
@@ -32,34 +31,26 @@ class FakeApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
-        if api_client:
-            self.api_client = api_client
-        else:
-            if not config.api_client:
-                config.api_client = ApiClient()
-            self.api_client = config.api_client
+        if api_client is None:
+            api_client = ApiClient()
+        self.api_client = api_client
 
     def fake_outer_boolean_serialize(self, **kwargs):
         """
         Test serialization of outer boolean types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_boolean_serialize(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_boolean_serialize(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.fake_outer_boolean_serialize_with_http_info(**kwargs)
         else:
             (data) = self.fake_outer_boolean_serialize_with_http_info(**kwargs)
@@ -69,15 +60,11 @@ class FakeApi(object):
         """
         Test serialization of outer boolean types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_boolean_serialize_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_boolean_serialize_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
@@ -85,7 +72,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -127,7 +114,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type='OuterBoolean',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -137,22 +124,18 @@ class FakeApi(object):
         """
         Test serialization of object with outer number type
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_composite_serialize(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_composite_serialize(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.fake_outer_composite_serialize_with_http_info(**kwargs)
         else:
             (data) = self.fake_outer_composite_serialize_with_http_info(**kwargs)
@@ -162,15 +145,11 @@ class FakeApi(object):
         """
         Test serialization of object with outer number type
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_composite_serialize_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_composite_serialize_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
@@ -178,7 +157,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -220,7 +199,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type='OuterComposite',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -230,22 +209,18 @@ class FakeApi(object):
         """
         Test serialization of outer number types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_number_serialize(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_number_serialize(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.fake_outer_number_serialize_with_http_info(**kwargs)
         else:
             (data) = self.fake_outer_number_serialize_with_http_info(**kwargs)
@@ -255,15 +230,11 @@ class FakeApi(object):
         """
         Test serialization of outer number types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_number_serialize_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_number_serialize_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
@@ -271,7 +242,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -313,7 +284,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type='OuterNumber',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -323,22 +294,18 @@ class FakeApi(object):
         """
         Test serialization of outer string types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_string_serialize(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_string_serialize(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.fake_outer_string_serialize_with_http_info(**kwargs)
         else:
             (data) = self.fake_outer_string_serialize_with_http_info(**kwargs)
@@ -348,15 +315,11 @@ class FakeApi(object):
         """
         Test serialization of outer string types
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.fake_outer_string_serialize_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.fake_outer_string_serialize_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
@@ -364,7 +327,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -406,7 +369,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type='OuterString',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -417,22 +380,18 @@ class FakeApi(object):
         To test \"client\" model
         To test \"client\" model
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_client_model(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_client_model(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.test_client_model_with_http_info(body, **kwargs)
         else:
             (data) = self.test_client_model_with_http_info(body, **kwargs)
@@ -443,15 +402,11 @@ class FakeApi(object):
         To test \"client\" model
         To test \"client\" model
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_client_model_with_http_info(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_client_model_with_http_info(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
@@ -459,7 +414,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -512,7 +467,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type='Client',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -523,15 +478,11 @@ class FakeApi(object):
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -551,7 +502,7 @@ class FakeApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)
         else:
             (data) = self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)
@@ -562,15 +513,11 @@ class FakeApi(object):
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -591,7 +538,7 @@ class FakeApi(object):
         """
 
         all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', 'float', 'string', 'binary', 'date', 'date_time', 'password', 'param_callback']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -705,7 +652,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -716,15 +663,11 @@ class FakeApi(object):
         To test enum parameters
         To test enum parameters
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_enum_parameters(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_enum_parameters(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -738,7 +681,7 @@ class FakeApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.test_enum_parameters_with_http_info(**kwargs)
         else:
             (data) = self.test_enum_parameters_with_http_info(**kwargs)
@@ -749,15 +692,11 @@ class FakeApi(object):
         To test enum parameters
         To test enum parameters
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.test_enum_parameters_with_http_info(callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_enum_parameters_with_http_info(async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -772,7 +711,7 @@ class FakeApi(object):
         """
 
         all_params = ['enum_form_string_array', 'enum_form_string', 'enum_header_string_array', 'enum_header_string', 'enum_query_string_array', 'enum_query_string', 'enum_query_integer', 'enum_query_double']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -839,7 +778,108 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
+                                        _return_http_data_only=params.get('_return_http_data_only'),
+                                        _preload_content=params.get('_preload_content', True),
+                                        _request_timeout=params.get('_request_timeout'),
+                                        collection_formats=collection_formats)
+
+    def test_json_form_data(self, param, param2, **kwargs):
+        """
+        test json serialization of form data
+        
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_json_form_data(param, param2, async=True)
+        >>> result = thread.get()
+
+        :param async bool
+        :param str param: field1 (required)
+        :param str param2: field2 (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async'):
+            return self.test_json_form_data_with_http_info(param, param2, **kwargs)
+        else:
+            (data) = self.test_json_form_data_with_http_info(param, param2, **kwargs)
+            return data
+
+    def test_json_form_data_with_http_info(self, param, param2, **kwargs):
+        """
+        test json serialization of form data
+        
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_json_form_data_with_http_info(param, param2, async=True)
+        >>> result = thread.get()
+
+        :param async bool
+        :param str param: field1 (required)
+        :param str param2: field2 (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['param', 'param2']
+        all_params.append('async')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method test_json_form_data" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'param' is set
+        if ('param' not in params) or (params['param'] is None):
+            raise ValueError("Missing the required parameter `param` when calling `test_json_form_data`")
+        # verify the required parameter 'param2' is set
+        if ('param2' not in params) or (params['param2'] is None):
+            raise ValueError("Missing the required parameter `param2` when calling `test_json_form_data`")
+
+
+        collection_formats = {}
+
+        path_params = {}
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+        if 'param' in params:
+            form_params.append(('param', params['param']))
+        if 'param2' in params:
+            form_params.append(('param2', params['param2']))
+
+        body_params = None
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type(['application/json'])
+
+        # Authentication setting
+        auth_settings = []
+
+        return self.api_client.call_api('/fake/jsonFormData', 'GET',
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type=None,
+                                        auth_settings=auth_settings,
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
