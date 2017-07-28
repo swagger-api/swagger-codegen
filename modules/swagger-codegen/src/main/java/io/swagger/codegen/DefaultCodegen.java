@@ -1669,7 +1669,7 @@ public class DefaultCodegen {
             property.isFile = true;
         }
         if (p instanceof UUIDProperty) {
-            property.isString = true;
+            property.isUuid = true;
         }
         if (p instanceof ByteArrayProperty) {
             property.isByteArray = true;
@@ -2346,6 +2346,8 @@ public class DefaultCodegen {
                 r.isDate = true;
             } else if (Boolean.TRUE.equals(cm.isDateTime)) {
                 r.isDateTime = true;
+            } else if (Boolean.TRUE.equals(cm.isUuid)) {
+                r.isUuid = true;
             } else {
                 LOGGER.debug("Property type is not primitive: " + cm.datatype);
             }
@@ -2671,6 +2673,8 @@ public class DefaultCodegen {
             p.example = "2013-10-20";
         } else if (Boolean.TRUE.equals(p.isDateTime)) {
             p.example = "2013-10-20T19:20:30+01:00";
+        } else if (Boolean.TRUE.equals(p.isUuid)) {
+            p.example = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         } else if (Boolean.TRUE.equals(p.isFile)) {
             p.example = "/path/to/file.txt";
         }
@@ -3519,6 +3523,8 @@ public class DefaultCodegen {
             parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isFile)) {
             parameter.isFile = true;
+        } else if (Boolean.TRUE.equals(property.isUuid)) {
+            parameter.isUuid = true;
             // file is *not* a primitive type
             //parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isDate)) {
