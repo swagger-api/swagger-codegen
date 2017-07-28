@@ -1,0 +1,23 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import play.mvc.Http;
+import java.util.concurrent.CompletionStage;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+{{/useBeanValidation}}
+
+{{#operations}}
+public interface {{classname}}ControllerImpInterface {
+{{#operation}}
+    {{^returnType}}void{{/returnType}}{{#returnType}}CompletionStage<{{>returnTypesNoVoid}}>{{/returnType}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
+
+{{/operation}}
+}
+{{/operations}}
