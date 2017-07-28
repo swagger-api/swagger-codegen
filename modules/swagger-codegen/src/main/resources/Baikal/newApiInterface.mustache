@@ -4,6 +4,7 @@ package {{package}};
 {{/imports}}
 
 import play.mvc.Http;
+import java.util.concurrent.CompletionStage;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import javax.validation.constraints.*;
 {{#operations}}
 public interface {{classname}}ControllerImpInterface {
 {{#operation}}
-    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
+    {{^returnType}}void{{/returnType}}{{#returnType}}CompletionStage<{{>returnTypesNoVoid}}>{{/returnType}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
 
 {{/operation}}
 }
