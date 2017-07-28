@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.3.0-SNAPSHOT</version>
+    <version>2.3.0-SNAPSHOT+baikal2</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -63,6 +63,11 @@
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-1</version>
+            </extension>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
@@ -903,6 +908,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </repository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>sonatype-snapshots</id>
