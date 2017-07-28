@@ -1,7 +1,7 @@
 if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
-curl -k "http://newapi.nightly.capillary.in/version.json" -o config.json
+curl -k "http://newapi.staging.capillary.in/version.json" -o config.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
@@ -25,7 +25,7 @@ then rm -rf intouch_api/csharp_client/c#
 elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i http://newapi.nightly.capillary.in/swagger.json  \
+  -i http://newapi.staging.capillary.in/swagger.json  \
   -l php \
   -o intouch_api/php_client/php
   tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
