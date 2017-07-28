@@ -6,15 +6,20 @@ import io.swagger.codegen.SupportingFile;
 // TODO: Move this to another project
 public class BaikalCodegen extends JavaPlayFrameworkCodegen {
 
-  @Override
-    public String getName() {
-        return "baikal";
-    }
+  public BaikalCodegen() {
+    super();
+    embeddedTemplateDir = templateDir = "Baikal";
+  }
 
-    @Override
-    public void processOpts() {
-      super.processOpts();
-      apiTemplateFiles.remove("newApi.mustache");
-      supportingFiles.remove(new SupportingFile("module.mustache", "app", "Module.java"));
-    }
+  @Override
+  public String getName() {
+      return "baikal";
+  }
+
+  @Override
+  public void processOpts() {
+    super.processOpts();
+    apiTemplateFiles.remove("newApi.mustache");
+    supportingFiles.remove(new SupportingFile("module.mustache", "app", "Module.java"));
+  }
 }
