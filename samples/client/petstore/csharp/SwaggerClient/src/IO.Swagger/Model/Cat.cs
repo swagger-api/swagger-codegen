@@ -93,7 +93,7 @@ namespace IO.Swagger.Model
             if (input == null)
                 return false;
 
-            return base.Equals(other) && 
+            return base.Equals(input) && 
                 (
                     this.Declawed == input.Declawed ||
                     (this.Declawed != null &&

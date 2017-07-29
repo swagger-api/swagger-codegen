@@ -156,17 +156,17 @@ this.{{name}} = {{name}};
             if (input == null)
                 return false;
 
-            return {{#vars}}{{#parent}}base.Equals(other) && {{/parent}}{{#isNotContainer}}
+            return {{#vars}}{{#parent}}base.Equals(input) && {{/parent}}{{#isNotContainer}}
                 (
                     this.{{name}} == input.{{name}} ||
                     (this.{{name}} != null &&
                     this.{{name}}.Equals(input.{{name}}))
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
                 (
-                    this.{{name}} == other.{{name}} ||
+                    this.{{name}} == input.{{name}} ||
                     this.{{name}} != null &&
-                    this.{{name}}.SequenceEqual(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(other){{/parent}}{{^parent}}false{{/parent}}{{/vars}};
+                    this.{{name}}.SequenceEqual(input.{{name}})
+                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(input){{/parent}}{{^parent}}false{{/parent}}{{/vars}};
         }
 
         /// <summary>
