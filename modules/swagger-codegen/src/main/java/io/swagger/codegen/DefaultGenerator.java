@@ -161,7 +161,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
             config.additionalProperties().put("appVersion", "1.0.0");
         }
-        
+
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none if provided
             config.additionalProperties().put("appDescription",
@@ -433,6 +433,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     sortParamsByRequiredFlag = Boolean.valueOf(this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
                 }
                 operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
+
+                List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
+                if (authMethods != null && !authMethods.isEmpty()) {
+                    operation.put("_authMethods", authMethods);
+                    operation.put("_hasAuthMethods", true);
+                }
 
                 processMimeTypes(swagger.getConsumes(), operation, "consumes");
                 processMimeTypes(swagger.getProduces(), operation, "produces");
