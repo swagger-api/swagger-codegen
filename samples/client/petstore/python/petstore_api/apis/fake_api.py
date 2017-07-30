@@ -103,7 +103,7 @@ class FakeApi(object):
         if 'body' in params:
             body_params = params['body']
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake/outer/boolean', 'POST',
                                         path_params,
@@ -188,7 +188,7 @@ class FakeApi(object):
         if 'body' in params:
             body_params = params['body']
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake/outer/composite', 'POST',
                                         path_params,
@@ -273,7 +273,7 @@ class FakeApi(object):
         if 'body' in params:
             body_params = params['body']
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake/outer/number', 'POST',
                                         path_params,
@@ -358,7 +358,7 @@ class FakeApi(object):
         if 'body' in params:
             body_params = params['body']
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake/outer/string', 'POST',
                                         path_params,
@@ -456,7 +456,7 @@ class FakeApi(object):
             select_header_content_type(['application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake', 'PATCH',
                                         path_params,
@@ -641,7 +641,7 @@ class FakeApi(object):
             select_header_content_type(['application/xml; charset=utf-8', 'application/json; charset=utf-8'])
 
         # Authentication setting
-        auth_settings = ['http_basic_test']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake', 'POST',
                                         path_params,
@@ -767,7 +767,7 @@ class FakeApi(object):
             select_header_content_type(['*/*'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake', 'GET',
                                         path_params,
@@ -868,7 +868,7 @@ class FakeApi(object):
             select_header_content_type(['application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/fake/jsonFormData', 'GET',
                                         path_params,

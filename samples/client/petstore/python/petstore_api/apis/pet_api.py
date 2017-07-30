@@ -116,7 +116,7 @@ class PetApi(object):
             select_header_content_type(['application/json', 'application/xml'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet', 'POST',
                                         path_params,
@@ -214,7 +214,7 @@ class PetApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/{petId}', 'DELETE',
                                         path_params,
@@ -309,7 +309,7 @@ class PetApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/findByStatus', 'GET',
                                         path_params,
@@ -404,7 +404,7 @@ class PetApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/findByTags', 'GET',
                                         path_params,
@@ -498,7 +498,7 @@ class PetApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = ['api_key']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/{petId}', 'GET',
                                         path_params,
@@ -596,7 +596,7 @@ class PetApi(object):
             select_header_content_type(['application/json', 'application/xml'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet', 'PUT',
                                         path_params,
@@ -702,7 +702,7 @@ class PetApi(object):
             select_header_content_type(['application/x-www-form-urlencoded'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/{petId}', 'POST',
                                         path_params,
@@ -808,7 +808,7 @@ class PetApi(object):
             select_header_content_type(['multipart/form-data'])
 
         # Authentication setting
-        auth_settings = ['petstore_auth']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/pet/{petId}/uploadImage', 'POST',
                                         path_params,
