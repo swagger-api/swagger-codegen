@@ -609,6 +609,9 @@ class ApiClient(object):
         :return: model object.
         """
 
+        if not klass.swagger_types and not hasattr(klass, 'get_real_child_model'):
+            return data
+
         kwargs = {}
         for attr, attr_type in iteritems(klass.swagger_types):
             if data is not None \
@@ -618,7 +621,7 @@ class ApiClient(object):
                 kwargs[attr] = self.__deserialize(value, attr_type)
 
         instance = klass(**kwargs)
-        
+
         if hasattr(instance, 'get_real_child_model'):
             klass_name = instance.get_real_child_model(data)
             if klass_name:
