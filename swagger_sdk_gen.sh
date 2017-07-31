@@ -9,22 +9,6 @@ elif [ "$Environment" = "Staging" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
     version="http://newapi.staging.capillary.in/version.json"
-elif [ "$Environment" = "APAC2" ]
-  then
-    url="http://apac2.newapi.capillarytech.com/swagger.json"
-    version="http://apac2.newapi.capillarytech.com/version.json"
-elif [ "$Environment" = "INDIA" ]
-  then
-    url="http://newapi.capillary.co.in/swagger.json"
-    version="http://newapi.capillary.co.in/version.json"
-elif [ "$Environment" = "CHINA" ]
-  then 
-     url="http://newapi.capillarytech.cn.com/swagger.json"
-     version="http://newapi.capillarytech.cn.com/version.json"
-elif [ "$Environment" = "EU" ]
-  then
-  url="http://newapi.eu.capillarytech.com/swagger.json"
-  version="http://newapi.eu.capillarytech.com/version.json"
 else " No Environment is selected"
 fi
 curl -k $version -o config.json
