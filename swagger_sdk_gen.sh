@@ -1,15 +1,15 @@
 if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
-if [ "$Version" = "Nightly" ]
+if [ "$Environment" = "Nightly" ]
   then
     url="http://newapi.nightly.capillary.in/swagger.json"
     version="http://newapi.nightly.capillary.in/version.json"
-elif [ "$Version" = "Staging" ]
+elif [ "$Environment" = "Staging" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
     version="http://newapi.staging.capillary.in/version.json"
-else " No Version is selected"
+else " No Environment is selected"
 fi
 curl -k $version -o config.json
 echo "GENERATING SDK"
