@@ -188,12 +188,12 @@
     <dependency>
         <groupId>io.vertx</groupId>
         <artifactId>vertx-rx-java</artifactId>
-        <version>${vertx.version}</version>
+        <version>${vertx-version}</version>
     </dependency>
     <dependency>
         <groupId>io.vertx</groupId>
         <artifactId>vertx-web-client</artifactId>
-        <version>${vertx.version}</version>
+        <version>${vertx-version}</version>
     </dependency>
 
       <!-- JSON processing: jackson -->
@@ -230,11 +230,17 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-unit</artifactId>
+        <version>${vertx-version}</version>
+        <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <vertx.version>3.4.2</vertx.version>
+    <vertx-version>3.4.2</vertx-version>
     <swagger-core-version>1.5.16</swagger-core-version>
     <jackson-version>2.6.4</jackson-version>
     <junit-version>4.12</junit-version>

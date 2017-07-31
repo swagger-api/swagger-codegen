@@ -10,13 +10,26 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.swagger.client.model.User;
+
+import io.swagger.client.Configuration;
+
 import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.Vertx;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.ext.unit.junit.RunTestOnContext;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.Async;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,139 +39,151 @@ import java.util.Map;
 /**
  * API tests for UserApi
  */
+@RunWith(VertxUnitRunner.class)
 @Ignore
 public class UserApiTest {
 
-    private final UserApi api = new UserApi();
+    private UserApi api;
 
+    @Rule
+    public RunTestOnContext rule = new RunTestOnContext();
+
+    @BeforeClass
+    public void setupApiClient() {
+        JsonObject config = new JsonObject();
+        Vertx vertx = rule.vertx();
+        Configuration.setupDefaultApiClient(vertx, config);
+
+        api = new UserApiImpl();
+    }
     
     /**
      * Create user
-     *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void createUserTest() throws ApiException {
+    public void createUserTest(TestContext context) {
+        Async async = context.async();
         User body = null;
-        api.createUser(body);
-
-        // TODO: test validations
+        api.createUser(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Creates list of users with given input array
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void createUsersWithArrayInputTest() throws ApiException {
+    public void createUsersWithArrayInputTest(TestContext context) {
+        Async async = context.async();
         List<User> body = null;
-        api.createUsersWithArrayInput(body);
-
-        // TODO: test validations
+        api.createUsersWithArrayInput(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Creates list of users with given input array
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void createUsersWithListInputTest() throws ApiException {
+    public void createUsersWithListInputTest(TestContext context) {
+        Async async = context.async();
         List<User> body = null;
-        api.createUsersWithListInput(body);
-
-        // TODO: test validations
+        api.createUsersWithListInput(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Delete user
-     *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void deleteUserTest() throws ApiException {
+    public void deleteUserTest(TestContext context) {
+        Async async = context.async();
         String username = null;
-        api.deleteUser(username);
-
-        // TODO: test validations
+        api.deleteUser(username, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Get user by user name
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void getUserByNameTest() throws ApiException {
+    public void getUserByNameTest(TestContext context) {
+        Async async = context.async();
         String username = null;
-        User response = api.getUserByName(username);
-
-        // TODO: test validations
+        api.getUserByName(username, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Logs user into the system
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void loginUserTest() throws ApiException {
+    public void loginUserTest(TestContext context) {
+        Async async = context.async();
         String username = null;
         String password = null;
-        String response = api.loginUser(username, password);
-
-        // TODO: test validations
+        api.loginUser(username, password, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Logs out current logged in user session
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void logoutUserTest() throws ApiException {
-        api.logoutUser();
-
-        // TODO: test validations
+    public void logoutUserTest(TestContext context) {
+        Async async = context.async();
+        api.logoutUser(result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Updated user
-     *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void updateUserTest() throws ApiException {
+    public void updateUserTest(TestContext context) {
+        Async async = context.async();
         String username = null;
         User body = null;
-        api.updateUser(username, body);
-
-        // TODO: test validations
+        api.updateUser(username, body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
 }

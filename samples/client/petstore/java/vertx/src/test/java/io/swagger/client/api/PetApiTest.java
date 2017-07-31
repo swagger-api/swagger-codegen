@@ -10,15 +10,28 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.vertx.core.file.AsyncFile;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+
+import io.swagger.client.Configuration;
+
 import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.Vertx;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.ext.unit.junit.RunTestOnContext;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.Async;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,143 +41,155 @@ import java.util.Map;
 /**
  * API tests for PetApi
  */
+@RunWith(VertxUnitRunner.class)
 @Ignore
 public class PetApiTest {
 
-    private final PetApi api = new PetApi();
+    private PetApi api;
 
+    @Rule
+    public RunTestOnContext rule = new RunTestOnContext();
+
+    @BeforeClass
+    public void setupApiClient() {
+        JsonObject config = new JsonObject();
+        Vertx vertx = rule.vertx();
+        Configuration.setupDefaultApiClient(vertx, config);
+
+        api = new PetApiImpl();
+    }
     
     /**
      * Add a new pet to the store
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void addPetTest() throws ApiException {
+    public void addPetTest(TestContext context) {
+        Async async = context.async();
         Pet body = null;
-        api.addPet(body);
-
-        // TODO: test validations
+        api.addPet(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Deletes a pet
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void deletePetTest() throws ApiException {
+    public void deletePetTest(TestContext context) {
+        Async async = context.async();
         Long petId = null;
         String apiKey = null;
-        api.deletePet(petId, apiKey);
-
-        // TODO: test validations
+        api.deletePet(petId, apiKey, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Finds Pets by status
-     *
      * Multiple status values can be provided with comma separated strings
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void findPetsByStatusTest() throws ApiException {
+    public void findPetsByStatusTest(TestContext context) {
+        Async async = context.async();
         List<String> status = null;
-        List<Pet> response = api.findPetsByStatus(status);
-
-        // TODO: test validations
+        api.findPetsByStatus(status, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Finds Pets by tags
-     *
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void findPetsByTagsTest() throws ApiException {
+    public void findPetsByTagsTest(TestContext context) {
+        Async async = context.async();
         List<String> tags = null;
-        List<Pet> response = api.findPetsByTags(tags);
-
-        // TODO: test validations
+        api.findPetsByTags(tags, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Find pet by ID
-     *
      * Returns a single pet
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void getPetByIdTest() throws ApiException {
+    public void getPetByIdTest(TestContext context) {
+        Async async = context.async();
         Long petId = null;
-        Pet response = api.getPetById(petId);
-
-        // TODO: test validations
+        api.getPetById(petId, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Update an existing pet
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void updatePetTest() throws ApiException {
+    public void updatePetTest(TestContext context) {
+        Async async = context.async();
         Pet body = null;
-        api.updatePet(body);
-
-        // TODO: test validations
+        api.updatePet(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Updates a pet in the store with form data
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void updatePetWithFormTest() throws ApiException {
+    public void updatePetWithFormTest(TestContext context) {
+        Async async = context.async();
         Long petId = null;
         String name = null;
         String status = null;
-        api.updatePetWithForm(petId, name, status);
-
-        // TODO: test validations
+        api.updatePetWithForm(petId, name, status, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * uploads an image
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void uploadFileTest() throws ApiException {
+    public void uploadFileTest(TestContext context) {
+        Async async = context.async();
         Long petId = null;
         String additionalMetadata = null;
         AsyncFile file = null;
-        ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
-
-        // TODO: test validations
+        api.uploadFile(petId, additionalMetadata, file, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
 }

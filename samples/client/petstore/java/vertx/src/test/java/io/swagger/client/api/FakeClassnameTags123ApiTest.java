@@ -10,13 +10,26 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.swagger.client.model.Client;
+
+import io.swagger.client.Configuration;
+
 import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.Vertx;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.ext.unit.junit.RunTestOnContext;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.Async;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,26 +39,38 @@ import java.util.Map;
 /**
  * API tests for FakeClassnameTags123Api
  */
+@RunWith(VertxUnitRunner.class)
 @Ignore
 public class FakeClassnameTags123ApiTest {
 
-    private final FakeClassnameTags123Api api = new FakeClassnameTags123Api();
+    private FakeClassnameTags123Api api;
 
+    @Rule
+    public RunTestOnContext rule = new RunTestOnContext();
+
+    @BeforeClass
+    public void setupApiClient() {
+        JsonObject config = new JsonObject();
+        Vertx vertx = rule.vertx();
+        Configuration.setupDefaultApiClient(vertx, config);
+
+        api = new FakeClassnameTags123ApiImpl();
+    }
     
     /**
      * To test class name in snake case
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void testClassnameTest() throws ApiException {
+    public void testClassnameTest(TestContext context) {
+        Async async = context.async();
         Client body = null;
-        Client response = api.testClassname(body);
-
-        // TODO: test validations
+        api.testClassname(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
 }

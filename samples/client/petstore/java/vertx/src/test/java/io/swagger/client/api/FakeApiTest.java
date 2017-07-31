@@ -10,17 +10,30 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+
+import io.swagger.client.Configuration;
+
 import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.Vertx;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.ext.unit.junit.RunTestOnContext;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.Async;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,102 +43,113 @@ import java.util.Map;
 /**
  * API tests for FakeApi
  */
+@RunWith(VertxUnitRunner.class)
 @Ignore
 public class FakeApiTest {
 
-    private final FakeApi api = new FakeApi();
+    private FakeApi api;
 
+    @Rule
+    public RunTestOnContext rule = new RunTestOnContext();
+
+    @BeforeClass
+    public void setupApiClient() {
+        JsonObject config = new JsonObject();
+        Vertx vertx = rule.vertx();
+        Configuration.setupDefaultApiClient(vertx, config);
+
+        api = new FakeApiImpl();
+    }
     
     /**
      * 
-     *
      * Test serialization of outer boolean types
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void fakeOuterBooleanSerializeTest() throws ApiException {
+    public void fakeOuterBooleanSerializeTest(TestContext context) {
+        Async async = context.async();
         Boolean body = null;
-        Boolean response = api.fakeOuterBooleanSerialize(body);
-
-        // TODO: test validations
+        api.fakeOuterBooleanSerialize(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * 
-     *
      * Test serialization of object with outer number type
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void fakeOuterCompositeSerializeTest() throws ApiException {
+    public void fakeOuterCompositeSerializeTest(TestContext context) {
+        Async async = context.async();
         OuterComposite body = null;
-        OuterComposite response = api.fakeOuterCompositeSerialize(body);
-
-        // TODO: test validations
+        api.fakeOuterCompositeSerialize(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * 
-     *
      * Test serialization of outer number types
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void fakeOuterNumberSerializeTest() throws ApiException {
+    public void fakeOuterNumberSerializeTest(TestContext context) {
+        Async async = context.async();
         BigDecimal body = null;
-        BigDecimal response = api.fakeOuterNumberSerialize(body);
-
-        // TODO: test validations
+        api.fakeOuterNumberSerialize(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * 
-     *
      * Test serialization of outer string types
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void fakeOuterStringSerializeTest() throws ApiException {
+    public void fakeOuterStringSerializeTest(TestContext context) {
+        Async async = context.async();
         String body = null;
-        String response = api.fakeOuterStringSerialize(body);
-
-        // TODO: test validations
+        api.fakeOuterStringSerialize(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * To test \&quot;client\&quot; model
-     *
      * To test \&quot;client\&quot; model
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void testClientModelTest() throws ApiException {
+    public void testClientModelTest(TestContext context) {
+        Async async = context.async();
         Client body = null;
-        Client response = api.testClientModel(body);
-
-        // TODO: test validations
+        api.testClientModel(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-     *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void testEndpointParametersTest() throws ApiException {
+    public void testEndpointParametersTest(TestContext context) {
+        Async async = context.async();
         BigDecimal number = null;
         Double _double = null;
         String patternWithoutDelimiter = null;
@@ -140,21 +164,21 @@ public class FakeApiTest {
         OffsetDateTime dateTime = null;
         String password = null;
         String paramCallback = null;
-        api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-
-        // TODO: test validations
+        api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * To test enum parameters
-     *
      * To test enum parameters
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void testEnumParametersTest() throws ApiException {
+    public void testEnumParametersTest(TestContext context) {
+        Async async = context.async();
         List<String> enumFormStringArray = null;
         String enumFormString = null;
         List<String> enumHeaderStringArray = null;
@@ -163,26 +187,27 @@ public class FakeApiTest {
         String enumQueryString = null;
         Integer enumQueryInteger = null;
         Double enumQueryDouble = null;
-        api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-
-        // TODO: test validations
+        api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * test json serialization of form data
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void testJsonFormDataTest() throws ApiException {
+    public void testJsonFormDataTest(TestContext context) {
+        Async async = context.async();
         String param = null;
         String param2 = null;
-        api.testJsonFormData(param, param2);
-
-        // TODO: test validations
+        api.testJsonFormData(param, param2, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
 }

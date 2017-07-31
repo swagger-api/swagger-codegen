@@ -10,13 +10,26 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.swagger.client.model.Order;
+
+import io.swagger.client.Configuration;
+
 import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.Vertx;
+import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.ext.unit.junit.RunTestOnContext;
+import io.vertx.ext.unit.TestContext;
+import io.vertx.ext.unit.Async;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,73 +39,85 @@ import java.util.Map;
 /**
  * API tests for StoreApi
  */
+@RunWith(VertxUnitRunner.class)
 @Ignore
 public class StoreApiTest {
 
-    private final StoreApi api = new StoreApi();
+    private StoreApi api;
 
+    @Rule
+    public RunTestOnContext rule = new RunTestOnContext();
+
+    @BeforeClass
+    public void setupApiClient() {
+        JsonObject config = new JsonObject();
+        Vertx vertx = rule.vertx();
+        Configuration.setupDefaultApiClient(vertx, config);
+
+        api = new StoreApiImpl();
+    }
     
     /**
      * Delete purchase order by ID
-     *
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void deleteOrderTest() throws ApiException {
+    public void deleteOrderTest(TestContext context) {
+        Async async = context.async();
         String orderId = null;
-        api.deleteOrder(orderId);
-
-        // TODO: test validations
+        api.deleteOrder(orderId, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Returns pet inventories by status
-     *
      * Returns a map of status codes to quantities
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void getInventoryTest() throws ApiException {
-        Map<String, Integer> response = api.getInventory();
-
-        // TODO: test validations
+    public void getInventoryTest(TestContext context) {
+        Async async = context.async();
+        api.getInventory(result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Find purchase order by ID
-     *
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void getOrderByIdTest() throws ApiException {
+    public void getOrderByIdTest(TestContext context) {
+        Async async = context.async();
         Long orderId = null;
-        Order response = api.getOrderById(orderId);
-
-        // TODO: test validations
+        api.getOrderById(orderId, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
     /**
      * Place an order for a pet
-     *
      * 
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @param context Vertx test context for doing assertions
      */
     @Test
-    public void placeOrderTest() throws ApiException {
+    public void placeOrderTest(TestContext context) {
+        Async async = context.async();
         Order body = null;
-        Order response = api.placeOrder(body);
-
-        // TODO: test validations
+        api.placeOrder(body, result -> {
+            // TODO: test validations
+            async.complete();
+        });
     }
     
 }
