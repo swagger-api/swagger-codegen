@@ -11,6 +11,8 @@ elif ["$Environment" = "Staging"]
     $version ="http://newapi.staging.capillary.in/version.json"
 elif ["$Environment" = "APAC2"]
   then
+  $url = "http://newapi.staging.capillary.in/swagger.json"
+    $version ="http://newapi.staging.capillary.in/version.json"
 elif ["$Environment" = "INDIA"]
   then
   $url ="http://newapi.capillary.co.in/swagger.json"
