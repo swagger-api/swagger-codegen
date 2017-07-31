@@ -99,7 +99,7 @@ public class LumenServerCodegen extends AbstractPhpCodegen
 
     // override with any special post-processing
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         @SuppressWarnings("unchecked")
         Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
         @SuppressWarnings("unchecked")

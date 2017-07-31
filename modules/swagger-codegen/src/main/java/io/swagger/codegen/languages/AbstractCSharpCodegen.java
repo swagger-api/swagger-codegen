@@ -312,8 +312,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     }
 
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
-        super.postProcessOperations(objs, allModels);
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        super.postProcessOperations(objs);
         if (objs != null) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {

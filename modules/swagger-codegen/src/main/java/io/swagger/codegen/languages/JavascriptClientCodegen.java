@@ -879,7 +879,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @SuppressWarnings("unchecked")
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         // Generate and store argument list string of each operation into
         // vendor-extension: x-codegen-argList.
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");

@@ -208,7 +208,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     }
 
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> operations, List<Object> allModels) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> operations) {
         Map<String, Object> objs = (Map<String, Object>) operations.get("operations");
 
         // Add filename information for api imports

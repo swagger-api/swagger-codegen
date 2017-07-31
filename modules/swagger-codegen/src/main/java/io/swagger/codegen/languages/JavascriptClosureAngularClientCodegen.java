@@ -255,7 +255,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     }
 
     @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         if (objs.get("imports") instanceof List) {
             List<Map<String, String>> imports = (ArrayList<Map<String, String>>)objs.get("imports");
             Collections.sort(imports, new Comparator<Map<String, String>>() {

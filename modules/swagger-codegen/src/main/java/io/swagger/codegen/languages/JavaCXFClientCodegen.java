@@ -147,8 +147,8 @@ private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodege
 
     @Override
     @SuppressWarnings("unchecked")
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs, List<Object> allModels) {
-        objs = super.postProcessOperations(objs, allModels);
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        objs = super.postProcessOperations(objs);
 
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
