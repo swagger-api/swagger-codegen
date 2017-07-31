@@ -1,11 +1,11 @@
 if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
-if [ "$Environment" = "Nightly" ]
+if [ "$Environment" = "snapshot" ]
   then
     url="http://newapi.nightly.capillary.in/swagger.json"
     version="http://newapi.nightly.capillary.in/version.json"
-elif [ "$Environment" = "Staging" ]
+elif [ "$Environment" = "release" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
     version="http://newapi.staging.capillary.in/version.json"
