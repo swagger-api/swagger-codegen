@@ -1,3 +1,4 @@
+.vscode
 *.iml
 out/
 *.ipr
@@ -73,6 +74,7 @@ samples/client/petstore/java/okhttp-gson/build/
 samples/client/petstore/java/feign/build/
 samples/client/petstore/java/retrofit/build/
 samples/client/petstore/java/retrofit2/build/
+samples/client/petstore/java/retrofit2/hello.txt
 samples/client/petstore/java/retrofit2rx/build/
 samples/client/petstore/java/default/build/
 samples/client/petstore/scala/build/
@@ -158,7 +160,11 @@ samples/client/petstore/typescript-fetch/**/dist/
 samples/client/petstore/typescript-fetch/**/typings
 samples/client/petstore/typescript-angular2/npm/npm-debug.log
 samples/client/petstore/typescript-node/npm/npm-debug.log
+samples/client/petstore/typescript-aurelia/**/dist/
 
 # aspnetcore
 samples/server/petstore/aspnetcore/.vs/
 effective.pom
+
+# kotlin
+samples/client/petstore/kotlin/src/main/kotlin/test/

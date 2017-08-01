@@ -125,15 +125,14 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
                     "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
                     "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
                     "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                    "required", "right", "set", "Type", "unowned", "weak")
+                    "required", "right", "set", "Type", "unowned", "weak", "Data")
         );
 
         typeMapping = new HashMap<>();
         typeMapping.put("array", "Array");
         typeMapping.put("List", "Array");
         typeMapping.put("map", "Dictionary");
-        typeMapping.put("date", "Date");
-        typeMapping.put("Date", "Date");
+        typeMapping.put("date", "ISOFullDate");
         typeMapping.put("DateTime", "Date");
         typeMapping.put("boolean", "Bool");
         typeMapping.put("string", "String");

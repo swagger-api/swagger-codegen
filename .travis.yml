@@ -36,7 +36,7 @@ before_install:
   - export SW=`pwd`
   - rvm list
   - rvm use 2.2.5
-  - gem environment 
+  - gem environment
   - gem install bundler -N --no-ri --no-rdoc
   - gem install cocoapods -v 1.2.1 -N --no-ri --no-rdoc
   - gem install xcpretty -N --no-ri --no-rdoc
@@ -106,6 +106,5 @@ after_success:
   # push a snapshot version to maven repo
   - if [ $SONATYPE_USERNAME ] && [ -z $TRAVIS_TAG ] && [ "$TRAVIS_BRANCH" = "master" ]; then
       mvn clean deploy --settings .travis/settings.xml;
-      echo "Finished mvn clean deploy";
+      echo "Finished mvn clean deploy for $TRAVIS_BRANCH";
     fi;
-

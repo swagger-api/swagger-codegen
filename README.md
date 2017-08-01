@@ -1,13 +1,13 @@
 # Swagger Code Generator
 
-- Master: [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+- Master (2.3.0): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
 [![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
-- 2.3.0:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/2.3.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
-[![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea/2.3.0.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
-[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=2.3.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
-[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen/tree/2.3.0.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
+- 3.0.0:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+[![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea/3.0.0.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
+[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen/tree/3.0.0.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
 
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project)
@@ -24,7 +24,7 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
@@ -43,7 +43,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
       - [OS X Users](#os-x-users)
     - [Building](#building)
     - [Docker](#docker)
-      - [Build and run](#build-and-run-using-docker)
+      - [Development in Docker](#development-in-docker)
       - [Run docker in Vagrant](#run-docker-in-vagrant)
       - [Public Docker image](#public-docker-image)
     - [Homebrew](#homebrew)
@@ -77,9 +77,10 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-2.3.0 (upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.3.0-SNAPSHOT/)| Jul/Aug 2017   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
-2.2.3 (upcoming patch release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.2.3-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Patch release without breaking changes
-[2.2.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.2) (**current stable**) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
+3.0.0 (upcoming major release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/3.0.0-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+2.3.0 (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.3.0-SNAPSHOT/)| Jul/Aug 2017   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
+[2.2.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.3) (**current stable**) | 2017-07-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.3](https://github.com/swagger-api/swagger-codegen/tree/v2.2.3)
+[2.2.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.2) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
 [2.2.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.1) | 2016-08-07   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.1](https://github.com/swagger-api/swagger-codegen/tree/v2.2.1)
 [2.1.6](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.1.6) | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
 2.0.17                     | 2014-08-22   | 1.1, 1.2             | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
@@ -89,14 +90,14 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 ### Prerequisites
 If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 7 runtime at a minimum):
 
-```
-wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar -O swagger-codegen-cli.jar
+```sh
+wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 ```
 
 On a mac, it's even easier with `brew`:
-```
+```sh
 brew install swagger-codegen
 ```
 
@@ -110,7 +111,7 @@ To build from source, you need the following installed and available in your $PA
 Don't forget to install Java 7 or 8. You probably have 1.6.
 
 Export JAVA_HOME in order to use the supported Java version:
-```
+```sh
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export PATH=${JAVA_HOME}/bin:$PATH
 ```
@@ -118,7 +119,7 @@ export PATH=${JAVA_HOME}/bin:$PATH
 ### Building
 
 After cloning the project, you can build it from source with this command:
-```
+```sh
 mvn clean package
 ```
 
@@ -127,7 +128,7 @@ mvn clean package
 To install, run `brew install swagger-codegen`
 
 Here is an example usage:
-```
+```sh
 swagger-codegen generate -i http://petstore.swagger.io/v2/swagger.json -l ruby -o /tmp/test/
 ```
 
@@ -140,7 +141,7 @@ in the docker container. It also maps `~/.m2/repository` to the appropriate cont
 
 To execute `mvn package`:
 
-```
+```sh
 git clone https://github.com/swagger-api/swagger-codegen
 cd swagger-codegen
 ./run-in-docker.sh mvn package
@@ -150,7 +151,7 @@ Build artifacts are now accessible in your working directory.
 
 Once built, `run-in-docker.sh` will act as an executable for swagger-codegen-cli. To generate code, you'll need to output to a directory under `/gen` (e.g. `/gen/out`). For example:
 
-```
+```sh
 ./run-in-docker.sh help # Executes 'help' command for swagger-codegen-cli
 ./run-in-docker.sh langs # Executes 'langs' command for swagger-codegen-cli
 ./run-in-docker.sh /gen/bin/go-petstore.sh  # Builds the Go client
@@ -160,7 +161,7 @@ Once built, `run-in-docker.sh` will act as an executable for swagger-codegen-cli
 
 #### Run Docker in Vagrant
 Prerequisite: install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
- ```
+ ```sh
 git clone http://github.com/swagger-api/swagger-codegen.git
 cd swagger-codegen
 vagrant up
@@ -181,7 +182,7 @@ The Swagger Generator image can act as a self-hosted web application and API for
 
 Example usage (note this assumes `jq` is installed for command line processing of JSON):
 
-```
+```sh
 # Start container and save the container id
 CID=$(docker run -d swaggerapi/swagger-generator)
 # allow for startup
@@ -208,7 +209,7 @@ To generate code with this image, you'll need to mount a local location as a vol
 
 Example:
 
-```
+```sh
 docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -i http://petstore.swagger.io/v2/swagger.json \
     -l go \
@@ -231,7 +232,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar)
+You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
@@ -242,7 +243,7 @@ To get a list of PHP specified options (which can be passed to the generator wit
 ### To generate a sample client library
 You can build a client against the swagger sample [petstore](http://petstore.swagger.io) API as follows:
 
-```
+```sh
 ./bin/java-petstore.sh
 ```
 
@@ -250,7 +251,7 @@ You can build a client against the swagger sample [petstore](http://petstore.swa
 
 This will run the generator with this command:
 
-```
+```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l java \
@@ -305,13 +306,13 @@ OPTIONS
 
 You can then compile and run the client, as well as unit tests against it:
 
-```
+```sh
 cd samples/client/petstore/java
 mvn package
 ```
 
 Other languages have petstore samples, too:
-```
+```sh
 ./bin/android-petstore.sh
 ./bin/java-petstore.sh
 ./bin/objc-petstore.sh
@@ -328,7 +329,7 @@ You can look at `modules/swagger-codegen/src/main/resources/${your-language}` fo
 ### Making your own codegen modules
 If you're starting a project with a new language and don't see what you need, swagger-codegen can help you create a project to generate your own libraries:
 
-```
+```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar meta \
   -o output/myLibrary -n myClientCodegen -p com.my.company.codegen
 ```
@@ -337,7 +338,7 @@ This will write, in the folder `output/myLibrary`, all the files you need to get
 
 You would then compile your library in the `output/myLibrary` folder with `mvn package` and execute the codegen like such:
 
-```
+```sh
 java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar:modules/swagger-codegen-cli/target/swagger-codegen-cli.jar io.swagger.codegen.SwaggerCodegen
 ```
 For Windows users, you will need to use `;` instead of `:` in the classpath, e.g.
@@ -347,7 +348,7 @@ java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar;modul
 
 Note the `myClientCodegen` is an option now, and you can use the usual arguments for generating your library:
 
-```
+```sh
 java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar:modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
   io.swagger.codegen.SwaggerCodegen generate -l myClientCodegen\
   -i http://petstore.swagger.io/v2/swagger.json \
@@ -376,7 +377,7 @@ You may not want to generate *all* models in your project.  Likewise you may wan
 
 The default is generate *everything* supported by the specific library.  Once you enable a feature, it will restrict the contents generated:
 
-```
+```sh
 # generate only models
 java -Dmodels {opts}
 
@@ -391,7 +392,7 @@ java -Dmodels -DsupportingFiles
 ```
 
 To control the specific files being generated, you can pass a CSV list of what you want:
-```
+```sh
 # generate the User and Pet models only
 -Dmodels=User,Pet
 
@@ -402,7 +403,7 @@ To control the specific files being generated, you can pass a CSV list of what y
 To control generation of docs and tests for api and models, pass false to the option. For api, these options are  `-DapiTests=false` and `-DapiDocs=false`. For models, `-DmodelTests=false` and `-DmodelDocs=false`.
 These options default to true and don't limit the generation of the feature options listed above (like `-Dapi`):
 
-```
+```sh
 # generate only models (with tests and documentation)
 java -Dmodels {opts}
 
@@ -429,7 +430,7 @@ The ignore file allows for better control over overwriting existing files than t
 
 Examples:
 
-```
+```sh
 # Swagger Codegen Ignore
 # Lines beginning with a # are comments
 
@@ -463,7 +464,7 @@ The `.swagger-codegen-ignore` file must exist in the root of the output director
 
 There are different aspects of customizing the code generator beyond just creating or modifying templates.  Each language has a supporting configuration file to handle different type mappings, etc:
 
-```
+```sh
 $ ls -1 modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/
 AbstractJavaJAXRSServerCodegen.java
 AbstractTypeScriptClientCodegen.java
@@ -474,7 +475,7 @@ TypeScriptNodeClientCodegen.java
 
 Each of these files creates reasonable defaults so you can get running quickly.  But if you want to configure package names, prefixes, model folders, etc. you can use a json config file to pass the values.
 
-```
+```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l java \
@@ -482,7 +483,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -c path/to/config.json
 ```
 and `config.json` contains the following as an example:
-```
+```json
 {
   "apiPackage" : "petstore"
 }
@@ -491,7 +492,7 @@ and `config.json` contains the following as an example:
 Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  
 **These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}`**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
 
-```
+```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
 ```
 
@@ -584,7 +585,7 @@ http://online.swagger.io/validator/debug?url=http://petstore.swagger.io/v2/swagg
 
 To do so, just use the `-l dynamic-html` flag when reading a spec file.  This creates HTML documentation that is available as a single-page application with AJAX.  To view the documentation:
 
-```
+```sh
 cd samples/dynamic-html/
 npm install
 node .
@@ -597,7 +598,7 @@ Which launches a node.js server so the AJAX calls have a place to go.
 
 To do so, just use the `-l html` flag when reading a spec file.  This creates a single, simple HTML file with embedded css so you can ship it as an email attachment, or load it from your filesystem:
 
-```
+```sh
 cd samples/html/
 open index.html
 ```
@@ -611,7 +612,7 @@ Please refer to https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-
 
 This will create the swagger-codegen library from source.
 
-```
+```sh
 mvn package
 ```
 
@@ -628,7 +629,7 @@ To push the auto-generated SDK to GitHub, we provide `git_push.sh` to streamline
  1) Create a new repository in GitHub (Ref: https://help.github.com/articles/creating-a-new-repository/)
 
  2) Generate the SDK
-```
+```sh
  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
  -i modules/swagger-codegen/src/test/resources/2_0/petstore.json -l perl \
  --git-user-id "wing328" \
@@ -637,7 +638,7 @@ To push the auto-generated SDK to GitHub, we provide `git_push.sh` to streamline
  -o /var/tmp/perl/petstore
 ```
  3) Push the SDK to GitHub
-```
+```sh
 cd /var/tmp/perl/petstore
 /bin/sh ./git_push.sh
 ```
@@ -647,13 +648,13 @@ cd /var/tmp/perl/petstore
 One can also generate API client or server using the online generators (https://generator.swagger.io)
 
 For example, to generate Ruby API client, simply send the following HTTP request using curl:
-```
+```sh
 curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"http://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/ruby
 ```
 Then you will receieve a JSON response with the URL to download the zipped code.
 
 To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/clients/{language}` with the following HTTP body:
-```
+```json
 {
   "options": {},
   "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
@@ -662,7 +663,7 @@ To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/client
 in which the `options` for a language can be obtained by submitting a `GET` request to `https://generator.swagger.io/api/gen/clients/{language}`:
 
 For example, `curl https://generator.swagger.io/api/gen/clients/python` returns
-```
+```json
 {
   "packageName":{
     "opt":"packageName",
@@ -685,7 +686,7 @@ For example, `curl https://generator.swagger.io/api/gen/clients/python` returns
 }
 ```
 To set package name to `pet_store`, the HTTP body of the request is as follows:
-```
+```json
 {
   "options": {
     "packageName": "pet_store"
@@ -694,12 +695,12 @@ To set package name to `pet_store`, the HTTP body of the request is as follows:
 }
 ```
 and here is the curl command:
-```
+```sh
 curl -H "Content-type: application/json" -X POST -d '{"options": {"packageName": "pet_store"},"swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/python
 ```
 
 Instead of using `swaggerUrl` with an URL to the OpenAPI/Swagger spec, one can include the spec in the JSON payload with `spec`, e.g.
-```
+```json
 {
   "options": {},
   "spec": {
@@ -802,6 +803,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [QuantiModo](https://quantimo.do/)
 - [QuickBlox](https://quickblox.com/)
 - [Rapid7](https://rapid7.com/)
+- [Red Hat](https://www.redhat.com/)
 - [Reload! A/S](https://reload.dk/)
 - [REstore](https://www.restore.eu)
 - [Revault Sàrl](http://revault.ch)
@@ -859,7 +861,9 @@ Presentations/Videos/Tutorials/Books
 - 2017/04/27 - [Swagger Codegen のPHP実装があまりにアレだったので、ライブラリ自作して公開してみた](http://qiita.com/imunew/items/2e9c472e0097e329f2cd) by [imunew](http://qiita.com/imunew)
 - 2017/05/17 - [Diseño de APIs con OpenAPI](https://www.slideshare.net/pjmolina/diseo-de-apis-con-openapi) by [Pedro J. Molina](https://github.com/pjmolina) @ [JSDayES 2017](http://2017.jsday.es/)
 - 2017/05/22 - [Presentation of the Vert.x-Swagger project](http://vertx.io/blog/presentation-of-the-vert-x-swagger-project/) by [@phiz71](http://github.com/phiz71)
+- 2017/05/22 - [Automatically generating your API from a swagger file using gradle](https://www.jcore.com/2017/05/22/automatically-generating-api-using-swagger-and-gradle/) by [Deniz Turan](https://www.jcore.com/author/deniz/)
 - 2017/06/21 - [Swagger Presentation - Warsaw Ruby Users Group](https://www.youtube.com/watch?v=uCnnDMFQB8U) by [@rafalpetryka](http://github.com/rafalpetryka)
+- 2017/7/31 - [How to Generate a Deployable REST CXF3 Application from a Swagger-Contract](https://www.youtube.com/watch?v=gM63rJlUHZQ) by [Johannes Fiala](https://github.com/jfiala) @ Voxxed Days Vienna
 
 # Swagger Codegen Core Team
 
@@ -935,6 +939,7 @@ Here is a list of template creators:
    * Java (okhttp-gson): @xhh
    * Java (RestTemplate): @nbruno
    * Java (RESTEasy): @gayathrigs
+   * Java (Vertx): @lopesmcc
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter @davidkiss
