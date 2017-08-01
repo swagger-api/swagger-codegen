@@ -24,6 +24,7 @@ then
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
   mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
+  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-sdk"
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
@@ -32,6 +33,7 @@ then rm -rf intouch_api/csharp_client/c#
   -DtargetFramework=v$Version \
   -o intouch_api/csharp_client/c#
   tar cvzf intouch_api/csharp_client/c#swagger_sdK_$BUILD_NUMBER.tar.gz -C ./intouch_api/csharp_client/c#/ .
+  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/csharp_client --deb-no-default-config-files  csharp="/usr/share/c#/capillary-libs/swagger-sdk"
 elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
@@ -47,6 +49,7 @@ then rm -rf intouch_api/nodejs_client
      npm install swagger-js-codegen
      cd swagger-js-codegen
      node ../nodejs_sdk_gen > ../intouch_api/nodejs_client/node_$BUILD_NUMBER
+     fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/nodejs_client --deb-no-default-config-files  nodejs="/usr/share/nodejs/capillary-libs/swagger-sdk"
 else " no client is selected"
 fi
 echo "SWAGGER SDK SUCCESSFULLY GENERATED"
