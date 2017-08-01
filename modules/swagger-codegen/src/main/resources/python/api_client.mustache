@@ -613,12 +613,13 @@ class ApiClient(object):
             return data
 
         kwargs = {}
-        for attr, attr_type in iteritems(klass.swagger_types):
-            if data is not None \
-               and klass.attribute_map[attr] in data \
-               and isinstance(data, (list, dict)):
-                value = data[klass.attribute_map[attr]]
-                kwargs[attr] = self.__deserialize(value, attr_type)
+        if klass.swagger_types is not None:
+            for attr, attr_type in iteritems(klass.swagger_types):
+                if data is not None \
+                   and klass.attribute_map[attr] in data \
+                   and isinstance(data, (list, dict)):
+                    value = data[klass.attribute_map[attr]]
+                    kwargs[attr] = self.__deserialize(value, attr_type)
 
         instance = klass(**kwargs)
 
