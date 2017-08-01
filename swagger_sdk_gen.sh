@@ -1,15 +1,15 @@
 if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
-if [ "$Environment" = "snapshot" ]
+if [ "$Branch" = "snapshot" ]
   then
     url="http://newapi.nightly.capillary.in/swagger.json"
     version="http://newapi.nightly.capillary.in/version.json"
-elif [ "$Environment" = "release" ]
+elif [ "$Branch" = "release" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
     version="http://newapi.staging.capillary.in/version.json"
-else " No Environment is selected"
+else " No Branch is selected"
 fi
 curl -k $version -o config.json
 echo "GENERATING SDK"
