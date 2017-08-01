@@ -77,7 +77,7 @@ namespace IO.Swagger.Model
         /// <param name="PhotoUrls">PhotoUrls (required).</param>
         /// <param name="Tags">Tags.</param>
         /// <param name="Status">pet status in the store.</param>
-        public Pet(long? Id = default(long?), Category Category = default(Category), string Name = default(string), List<string> PhotoUrls = default(List<string>), List<Tag> Tags = default(List<Tag>), StatusEnum? Status = default(StatusEnum?))
+        public Pet(long? Id = default(long?), IO.Swagger.Model.Category Category = default(IO.Swagger.Model.Category), string Name = default(string), System.Collections.Generic.List<string> PhotoUrls = default(System.Collections.Generic.List<string>), System.Collections.Generic.List<IO.Swagger.Model.Tag> Tags = default(System.Collections.Generic.List<IO.Swagger.Model.Tag>), StatusEnum? Status = default(StatusEnum?))
         {
             // to ensure "Name" is required (not null)
             if (Name == null)
@@ -113,7 +113,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Category
         /// </summary>
         [DataMember(Name="category", EmitDefaultValue=false)]
-        public Category Category { get; set; }
+        public IO.Swagger.Model.Category Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
@@ -125,13 +125,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets PhotoUrls
         /// </summary>
         [DataMember(Name="photoUrls", EmitDefaultValue=false)]
-        public List<string> PhotoUrls { get; set; }
+        public System.Collections.Generic.List<string> PhotoUrls { get; set; }
 
         /// <summary>
         /// Gets or Sets Tags
         /// </summary>
         [DataMember(Name="tags", EmitDefaultValue=false)]
-        public List<Tag> Tags { get; set; }
+        public System.Collections.Generic.List<IO.Swagger.Model.Tag> Tags { get; set; }
 
 
         /// <summary>

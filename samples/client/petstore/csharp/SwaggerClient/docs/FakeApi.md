@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="fakeouterbooleanserialize"></a>
 # **FakeOuterBooleanSerialize**
-> OuterBoolean FakeOuterBooleanSerialize (OuterBoolean body = null)
+> IO.Swagger.Model.OuterBoolean FakeOuterBooleanSerialize (IO.Swagger.Model.OuterBoolean body = null)
 
 
 
@@ -37,11 +37,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterBoolean(); // OuterBoolean | Input boolean as post body (optional) 
+            var body = new IO.Swagger.Model.OuterBoolean(); // IO.Swagger.Model.OuterBoolean | Input boolean as post body (optional) 
 
             try
             {
-                OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
+                IO.Swagger.Model.OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -57,11 +57,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional] 
+ **body** | [**IO.Swagger.Model.OuterBoolean**](IO.Swagger.Model.OuterBoolean.md)| Input boolean as post body | [optional] 
 
 ### Return type
 
-[**OuterBoolean**](OuterBoolean.md)
+[**IO.Swagger.Model.OuterBoolean**](IO.Swagger.Model.OuterBoolean.md)
 
 ### Authorization
 
@@ -76,7 +76,7 @@ No authorization required
 
 <a name="fakeoutercompositeserialize"></a>
 # **FakeOuterCompositeSerialize**
-> OuterComposite FakeOuterCompositeSerialize (OuterComposite body = null)
+> IO.Swagger.Model.OuterComposite FakeOuterCompositeSerialize (IO.Swagger.Model.OuterComposite body = null)
 
 
 
@@ -97,11 +97,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterComposite(); // OuterComposite | Input composite as post body (optional) 
+            var body = new IO.Swagger.Model.OuterComposite(); // IO.Swagger.Model.OuterComposite | Input composite as post body (optional) 
 
             try
             {
-                OuterComposite result = apiInstance.FakeOuterCompositeSerialize(body);
+                IO.Swagger.Model.OuterComposite result = apiInstance.FakeOuterCompositeSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -117,11 +117,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterComposite**](OuterComposite.md)| Input composite as post body | [optional] 
+ **body** | [**IO.Swagger.Model.OuterComposite**](IO.Swagger.Model.OuterComposite.md)| Input composite as post body | [optional] 
 
 ### Return type
 
-[**OuterComposite**](OuterComposite.md)
+[**IO.Swagger.Model.OuterComposite**](IO.Swagger.Model.OuterComposite.md)
 
 ### Authorization
 
@@ -136,7 +136,7 @@ No authorization required
 
 <a name="fakeouternumberserialize"></a>
 # **FakeOuterNumberSerialize**
-> OuterNumber FakeOuterNumberSerialize (OuterNumber body = null)
+> IO.Swagger.Model.OuterNumber FakeOuterNumberSerialize (IO.Swagger.Model.OuterNumber body = null)
 
 
 
@@ -157,11 +157,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterNumber(); // OuterNumber | Input number as post body (optional) 
+            var body = new IO.Swagger.Model.OuterNumber(); // IO.Swagger.Model.OuterNumber | Input number as post body (optional) 
 
             try
             {
-                OuterNumber result = apiInstance.FakeOuterNumberSerialize(body);
+                IO.Swagger.Model.OuterNumber result = apiInstance.FakeOuterNumberSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -177,11 +177,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional] 
+ **body** | [**IO.Swagger.Model.OuterNumber**](IO.Swagger.Model.OuterNumber.md)| Input number as post body | [optional] 
 
 ### Return type
 
-[**OuterNumber**](OuterNumber.md)
+[**IO.Swagger.Model.OuterNumber**](IO.Swagger.Model.OuterNumber.md)
 
 ### Authorization
 
@@ -196,7 +196,7 @@ No authorization required
 
 <a name="fakeouterstringserialize"></a>
 # **FakeOuterStringSerialize**
-> OuterString FakeOuterStringSerialize (OuterString body = null)
+> IO.Swagger.Model.OuterString FakeOuterStringSerialize (IO.Swagger.Model.OuterString body = null)
 
 
 
@@ -217,11 +217,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterString(); // OuterString | Input string as post body (optional) 
+            var body = new IO.Swagger.Model.OuterString(); // IO.Swagger.Model.OuterString | Input string as post body (optional) 
 
             try
             {
-                OuterString result = apiInstance.FakeOuterStringSerialize(body);
+                IO.Swagger.Model.OuterString result = apiInstance.FakeOuterStringSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -237,11 +237,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional] 
+ **body** | [**IO.Swagger.Model.OuterString**](IO.Swagger.Model.OuterString.md)| Input string as post body | [optional] 
 
 ### Return type
 
-[**OuterString**](OuterString.md)
+[**IO.Swagger.Model.OuterString**](IO.Swagger.Model.OuterString.md)
 
 ### Authorization
 
@@ -256,7 +256,7 @@ No authorization required
 
 <a name="testclientmodel"></a>
 # **TestClientModel**
-> ModelClient TestClientModel (ModelClient body)
+> IO.Swagger.Model.ModelClient TestClientModel (IO.Swagger.Model.ModelClient body)
 
 To test \"client\" model
 
@@ -277,12 +277,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new ModelClient(); // ModelClient | client model
+            var body = new IO.Swagger.Model.ModelClient(); // IO.Swagger.Model.ModelClient | client model
 
             try
             {
                 // To test \"client\" model
-                ModelClient result = apiInstance.TestClientModel(body);
+                IO.Swagger.Model.ModelClient result = apiInstance.TestClientModel(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -298,11 +298,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ModelClient**](ModelClient.md)| client model | 
+ **body** | [**IO.Swagger.Model.ModelClient**](IO.Swagger.Model.ModelClient.md)| client model | 
 
 ### Return type
 
-[**ModelClient**](ModelClient.md)
+[**IO.Swagger.Model.ModelClient**](IO.Swagger.Model.ModelClient.md)
 
 ### Authorization
 
@@ -407,7 +407,7 @@ void (empty response body)
 
 <a name="testenumparameters"></a>
 # **TestEnumParameters**
-> void TestEnumParameters (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
+> void TestEnumParameters (System.Collections.Generic.List<string> enumFormStringArray = null, string enumFormString = null, System.Collections.Generic.List<string> enumHeaderStringArray = null, string enumHeaderString = null, System.Collections.Generic.List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
 
 To test enum parameters
 
@@ -428,11 +428,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var enumFormStringArray = new List<string>(); // List<string> | Form parameter enum test (string array) (optional) 
+            var enumFormStringArray = new System.Collections.Generic.List<string>(); // System.Collections.Generic.List<string> | Form parameter enum test (string array) (optional) 
             var enumFormString = enumFormString_example;  // string | Form parameter enum test (string) (optional)  (default to -efg)
-            var enumHeaderStringArray = new List<string>(); // List<string> | Header parameter enum test (string array) (optional) 
+            var enumHeaderStringArray = new System.Collections.Generic.List<string>(); // System.Collections.Generic.List<string> | Header parameter enum test (string array) (optional) 
             var enumHeaderString = enumHeaderString_example;  // string | Header parameter enum test (string) (optional)  (default to -efg)
-            var enumQueryStringArray = new List<string>(); // List<string> | Query parameter enum test (string array) (optional) 
+            var enumQueryStringArray = new System.Collections.Generic.List<string>(); // System.Collections.Generic.List<string> | Query parameter enum test (string array) (optional) 
             var enumQueryString = enumQueryString_example;  // string | Query parameter enum test (string) (optional)  (default to -efg)
             var enumQueryInteger = 56;  // int? | Query parameter enum test (double) (optional) 
             var enumQueryDouble = 1.2;  // double? | Query parameter enum test (double) (optional) 
@@ -455,11 +455,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enumFormStringArray** | [**List&lt;string&gt;**](string.md)| Form parameter enum test (string array) | [optional] 
+ **enumFormStringArray** | [**System.Collections.Generic.List&lt;string&gt;**](string.md)| Form parameter enum test (string array) | [optional] 
  **enumFormString** | **string**| Form parameter enum test (string) | [optional] [default to -efg]
- **enumHeaderStringArray** | [**List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
+ **enumHeaderStringArray** | [**System.Collections.Generic.List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
- **enumQueryStringArray** | [**List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
+ **enumQueryStringArray** | [**System.Collections.Generic.List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
  **enumQueryInteger** | **int?**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **double?**| Query parameter enum test (double) | [optional] 

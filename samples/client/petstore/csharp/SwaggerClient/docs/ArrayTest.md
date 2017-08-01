@@ -3,9 +3,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ArrayOfString** | **List&lt;string&gt;** |  | [optional] 
-**ArrayArrayOfInteger** | **List&lt;List&lt;long?&gt;&gt;** |  | [optional] 
-**ArrayArrayOfModel** | **List&lt;List&lt;ReadOnlyFirst&gt;&gt;** |  | [optional] 
+**ArrayOfString** | **System.Collections.Generic.List&lt;string&gt;** |  | [optional] 
+**ArrayArrayOfInteger** | [**System.Collections.Generic.List&lt;System.Collections.Generic.List&lt;long?&gt;&gt;**](System.Collections.Generic.List.md) |  | [optional] 
+**ArrayArrayOfModel** | [**System.Collections.Generic.List&lt;System.Collections.Generic.List&lt;IO.Swagger.Model.ReadOnlyFirst&gt;&gt;**](System.Collections.Generic.List.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

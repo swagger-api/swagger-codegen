@@ -69,11 +69,11 @@ namespace Example
         {
 
             var apiInstance = new FakeApi();
-            var body = new OuterBoolean(); // OuterBoolean | Input boolean as post body (optional) 
+            var body = new IO.Swagger.Model.OuterBoolean(); // IO.Swagger.Model.OuterBoolean | Input boolean as post body (optional) 
 
             try
             {
-                OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
+                IO.Swagger.Model.OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)

@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="addpet"></a>
 # **AddPet**
-> void AddPet (Pet body)
+> void AddPet (IO.Swagger.Model.Pet body)
 
 Add a new pet to the store
 
@@ -40,7 +40,7 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var body = new Pet(); // Pet | Pet object that needs to be added to the store
+            var body = new IO.Swagger.Model.Pet(); // IO.Swagger.Model.Pet | Pet object that needs to be added to the store
 
             try
             {
@@ -60,7 +60,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
+ **body** | [**IO.Swagger.Model.Pet**](IO.Swagger.Model.Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -144,7 +144,7 @@ void (empty response body)
 
 <a name="findpetsbystatus"></a>
 # **FindPetsByStatus**
-> List<Pet> FindPetsByStatus (List<string> status)
+> System.Collections.Generic.List<IO.Swagger.Model.Pet> FindPetsByStatus (System.Collections.Generic.List<string> status)
 
 Finds Pets by status
 
@@ -168,12 +168,12 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var status = new List<string>(); // List<string> | Status values that need to be considered for filter
+            var status = new System.Collections.Generic.List<string>(); // System.Collections.Generic.List<string> | Status values that need to be considered for filter
 
             try
             {
                 // Finds Pets by status
-                List&lt;Pet&gt; result = apiInstance.FindPetsByStatus(status);
+                System.Collections.Generic.List&lt;IO.Swagger.Model.Pet&gt; result = apiInstance.FindPetsByStatus(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -189,11 +189,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**List&lt;string&gt;**](string.md)| Status values that need to be considered for filter | 
+ **status** | [**System.Collections.Generic.List&lt;string&gt;**](string.md)| Status values that need to be considered for filter | 
 
 ### Return type
 
-[**List<Pet>**](Pet.md)
+[**System.Collections.Generic.List<IO.Swagger.Model.Pet>**](IO.Swagger.Model.Pet.md)
 
 ### Authorization
 
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 
 <a name="findpetsbytags"></a>
 # **FindPetsByTags**
-> List<Pet> FindPetsByTags (List<string> tags)
+> System.Collections.Generic.List<IO.Swagger.Model.Pet> FindPetsByTags (System.Collections.Generic.List<string> tags)
 
 Finds Pets by tags
 
@@ -232,12 +232,12 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var tags = new List<string>(); // List<string> | Tags to filter by
+            var tags = new System.Collections.Generic.List<string>(); // System.Collections.Generic.List<string> | Tags to filter by
 
             try
             {
                 // Finds Pets by tags
-                List&lt;Pet&gt; result = apiInstance.FindPetsByTags(tags);
+                System.Collections.Generic.List&lt;IO.Swagger.Model.Pet&gt; result = apiInstance.FindPetsByTags(tags);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tags** | [**List&lt;string&gt;**](string.md)| Tags to filter by | 
+ **tags** | [**System.Collections.Generic.List&lt;string&gt;**](string.md)| Tags to filter by | 
 
 ### Return type
 
-[**List<Pet>**](Pet.md)
+[**System.Collections.Generic.List<IO.Swagger.Model.Pet>**](IO.Swagger.Model.Pet.md)
 
 ### Authorization
 
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 <a name="getpetbyid"></a>
 # **GetPetById**
-> Pet GetPetById (long? petId)
+> IO.Swagger.Model.Pet GetPetById (long? petId)
 
 Find pet by ID
 
@@ -303,7 +303,7 @@ namespace Example
             try
             {
                 // Find pet by ID
-                Pet result = apiInstance.GetPetById(petId);
+                IO.Swagger.Model.Pet result = apiInstance.GetPetById(petId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Pet**](Pet.md)
+[**IO.Swagger.Model.Pet**](IO.Swagger.Model.Pet.md)
 
 ### Authorization
 
@@ -338,7 +338,7 @@ Name | Type | Description  | Notes
 
 <a name="updatepet"></a>
 # **UpdatePet**
-> void UpdatePet (Pet body)
+> void UpdatePet (IO.Swagger.Model.Pet body)
 
 Update an existing pet
 
@@ -362,7 +362,7 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var body = new Pet(); // Pet | Pet object that needs to be added to the store
+            var body = new IO.Swagger.Model.Pet(); // IO.Swagger.Model.Pet | Pet object that needs to be added to the store
 
             try
             {
@@ -382,7 +382,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
+ **body** | [**IO.Swagger.Model.Pet**](IO.Swagger.Model.Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
 
@@ -468,7 +468,7 @@ void (empty response body)
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+> IO.Swagger.Model.ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
 
 uploads an image
 
@@ -499,7 +499,7 @@ namespace Example
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                IO.Swagger.Model.ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -521,7 +521,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**IO.Swagger.Model.ApiResponse**](IO.Swagger.Model.ApiResponse.md)
 
 ### Authorization
 

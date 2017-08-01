@@ -191,7 +191,39 @@ namespace IO.Swagger.Client
             // ReSharper restore UnusedParameter.Local
             )
         {
+            setApiClientUsingDefault(apiClient);
 
+            Username = username;
+            Password = password;
+            AccessToken = accessToken;
+            UserAgent = userAgent;
+
+            if (defaultHeader != null)
+                DefaultHeader = defaultHeader;
+            if (apiKey != null)
+                ApiKey = apiKey;
+            if (apiKeyPrefix != null)
+                ApiKeyPrefix = apiKeyPrefix;
+
+            TempFolderPath = tempFolderPath;
+            DateTimeFormat = dateTimeFormat;
+            Timeout = timeout;
+        }
+
+        /// <summary>
+        /// Gets the default base path of the rest API.
+        ///</summary>
+        private	static String _defaultBasePath = "http://petstore.swagger.io:80/v2";
+
+        public static  String defaultBasePath{
+            get{
+                return _defaultBasePath;
+            }
+            set{
+                _defaultBasePath=value;
+                if(Default!=null)
+                    Default.setApiClientUsingDefault();
+            }
         }
 
         /// <summary>
@@ -202,7 +234,7 @@ namespace IO.Swagger.Client
         // ReSharper disable once UnusedParameter.Local
         public Configuration(ApiClient apiClient)
         {
-
+            setApiClientUsingDefault(apiClient);
         }
 
         #endregion Constructors
@@ -216,6 +248,9 @@ namespace IO.Swagger.Client
         /// </summary>
         public virtual ApiClient ApiClient
         {
+            set{
+                _apiClient=value;
+            }
             get
             {
                 if (_apiClient == null) _apiClient = CreateApiClient();
@@ -238,6 +273,28 @@ namespace IO.Swagger.Client
             }
         }
 
+         /// <summary>
+         /// Set the ApiClient using Default or ApiClient instance.
+         /// </summary>
+         /// <param name="apiClient">An instance of ApiClient.</param>
+         /// <returns></returns>
+         public void setApiClientUsingDefault (ApiClient apiClient = null)
+         {
+              if(apiClient == null){
+                  if(Default!=null ){
+                      if(Default.ApiClient == null || !Default.ApiClient.RestClient.BaseUrl.ToString().Equals(defaultBasePath)){
+                          Default.ApiClient = new ApiClient(defaultBasePath);
+                      }
+                      ApiClient = Default.ApiClient;
+                  }else{
+                      ApiClient = new ApiClient(defaultBasePath);
+                  }
+              }else{
+                  if (Default != null && Default.ApiClient == null)
+                      Default.ApiClient = apiClient;
+                  ApiClient = apiClient;
+             }
+         }
         /// <summary>
         /// Gets or sets the default header.
         /// </summary>
@@ -272,7 +329,7 @@ namespace IO.Swagger.Client
         public virtual string Password { get; set; }
 
         /// <summary>
-        /// Gets the API key with prefix.
+        /// Get the API key with prefix.
         /// </summary>
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
         /// <returns>API key with prefix.</returns>

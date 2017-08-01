@@ -36,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="Uuid">Uuid.</param>
         /// <param name="DateTime">DateTime.</param>
         /// <param name="Map">Map.</param>
-        public MixedPropertiesAndAdditionalPropertiesClass(Guid? Uuid = default(Guid?), DateTime? DateTime = default(DateTime?), Dictionary<string, Animal> Map = default(Dictionary<string, Animal>))
+        public MixedPropertiesAndAdditionalPropertiesClass(Guid? Uuid = default(Guid?), DateTime? DateTime = default(DateTime?), System.Collections.Generic.Dictionary<string, IO.Swagger.Model.Animal> Map = default(System.Collections.Generic.Dictionary<string, IO.Swagger.Model.Animal>))
         {
             this.Uuid = Uuid;
             this.DateTime = DateTime;
@@ -59,7 +59,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Map
         /// </summary>
         [DataMember(Name="map", EmitDefaultValue=false)]
-        public Dictionary<string, Animal> Map { get; set; }
+        public System.Collections.Generic.Dictionary<string, IO.Swagger.Model.Animal> Map { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

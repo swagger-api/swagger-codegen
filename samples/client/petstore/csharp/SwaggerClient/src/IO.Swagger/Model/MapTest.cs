@@ -55,13 +55,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets MapOfEnumString
         /// </summary>
         [DataMember(Name="map_of_enum_string", EmitDefaultValue=false)]
-        public Dictionary<string, InnerEnum> MapOfEnumString { get; set; }
+        public System.Collections.Generic.Dictionary<string, InnerEnum> MapOfEnumString { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
         /// <param name="MapMapOfString">MapMapOfString.</param>
         /// <param name="MapOfEnumString">MapOfEnumString.</param>
-        public MapTest(Dictionary<string, Dictionary<string, string>> MapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> MapOfEnumString = default(Dictionary<string, InnerEnum>))
+        public MapTest(System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>> MapMapOfString = default(System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>>), System.Collections.Generic.Dictionary<string, InnerEnum> MapOfEnumString = default(System.Collections.Generic.Dictionary<string, InnerEnum>))
         {
             this.MapMapOfString = MapMapOfString;
             this.MapOfEnumString = MapOfEnumString;
@@ -71,7 +71,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets MapMapOfString
         /// </summary>
         [DataMember(Name="map_map_of_string", EmitDefaultValue=false)]
-        public Dictionary<string, Dictionary<string, string>> MapMapOfString { get; set; }
+        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, string>> MapMapOfString { get; set; }
 
 
         /// <summary>

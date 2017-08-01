@@ -34,7 +34,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="ArrayOfArrayOfNumberOnly" /> class.
         /// </summary>
         /// <param name="ArrayArrayNumber">ArrayArrayNumber.</param>
-        public ArrayOfArrayOfNumberOnly(List<List<decimal?>> ArrayArrayNumber = default(List<List<decimal?>>))
+        public ArrayOfArrayOfNumberOnly(System.Collections.Generic.List<System.Collections.Generic.List<decimal?>> ArrayArrayNumber = default(System.Collections.Generic.List<System.Collections.Generic.List<decimal?>>))
         {
             this.ArrayArrayNumber = ArrayArrayNumber;
         }
@@ -43,7 +43,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets ArrayArrayNumber
         /// </summary>
         [DataMember(Name="ArrayArrayNumber", EmitDefaultValue=false)]
-        public List<List<decimal?>> ArrayArrayNumber { get; set; }
+        public System.Collections.Generic.List<System.Collections.Generic.List<decimal?>> ArrayArrayNumber { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
