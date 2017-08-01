@@ -21,8 +21,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PACKAGE_URL = "packageUrl";
+    public static final String DEFAULT_LIBRARY = "urllib3";
 
     protected String packageName; // e.g. petstore_api
     protected String packageVersion;
@@ -123,6 +126,13 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
+
+        supportedLibraries.put("urllib3", "urllib3-based client");
+        supportedLibraries.put("asyncio", "Asyncio-based client (python 3.5+)");
+        CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        libraryOption.setDefault(DEFAULT_LIBRARY);
+        cliOptions.add(libraryOption);
+        setLibrary(DEFAULT_LIBRARY);
     }
 
     @Override
