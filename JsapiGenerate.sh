@@ -367,7 +367,7 @@ git pull origin master
 rm -r *
 
 cd ../..
-java -jar $BASE_JAR generate -i $JSON_FILE -l javascript $ID_FLAGS --artifact-id knetikcloud-javascript-client -o sdk/javascript
+java -jar $BASE_JAR generate -i $JSON_FILE -l javascript -DmoduleName="KnetikCloud" $ID_FLAGS --artifact-id knetikcloud-javascript-client -o sdk/javascript
 cd sdk/javascript
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
