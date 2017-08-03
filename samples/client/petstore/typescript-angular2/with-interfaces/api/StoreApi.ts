@@ -43,8 +43,8 @@ export class StoreApi implements StoreApiInterface {
     }
 
     /**
-     * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
     public deleteOrder(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
@@ -59,8 +59,8 @@ export class StoreApi implements StoreApiInterface {
     }
 
     /**
-     * Returns pet inventories by status
      * Returns a map of status codes to quantities
+     * @summary Returns pet inventories by status
      */
     public getInventory(extraHttpRequestParams?: any): Observable<{ [key: string]: number; }> {
         return this.getInventoryWithHttpInfo(extraHttpRequestParams)
@@ -74,8 +74,8 @@ export class StoreApi implements StoreApiInterface {
     }
 
     /**
-     * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
     public getOrderById(orderId: number, extraHttpRequestParams?: any): Observable<models.Order> {
@@ -90,8 +90,8 @@ export class StoreApi implements StoreApiInterface {
     }
 
     /**
-     * Place an order for a pet
      * 
+     * @summary Place an order for a pet
      * @param body order placed for purchasing the pet
      */
     public placeOrder(body: models.Order, extraHttpRequestParams?: any): Observable<models.Order> {
@@ -127,8 +127,8 @@ export class StoreApi implements StoreApiInterface {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
-            'application/json'
+            'application/json',
+            'application/xml'
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -160,7 +160,8 @@ export class StoreApi implements StoreApiInterface {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/json'
+            'application/json',
+            'application/xml'
         ];
 
         // authentication (api_key) required
@@ -203,8 +204,8 @@ export class StoreApi implements StoreApiInterface {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
-            'application/json'
+            'application/json',
+            'application/xml'
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -241,8 +242,8 @@ export class StoreApi implements StoreApiInterface {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
-            'application/json'
+            'application/json',
+            'application/xml'
         ];
 
         headers.set('Content-Type', 'application/json');

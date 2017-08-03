@@ -1,25 +1,54 @@
 package io.swagger.codegen;
 
-import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
-import io.swagger.codegen.utils.ImplementationVersion;
-import io.swagger.codegen.languages.AbstractJavaCodegen;
-import io.swagger.models.*;
-import io.swagger.models.auth.OAuth2Definition;
-import io.swagger.models.auth.SecuritySchemeDefinition;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.util.Json;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 
-import org.apache.commons.lang3.StringUtils;
+import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.languages.AbstractJavaCodegen;
+import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.models.ComposedModel;
+import io.swagger.models.Contact;
+import io.swagger.models.Info;
+import io.swagger.models.License;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.RefModel;
+import io.swagger.models.SecurityRequirement;
+import io.swagger.models.Swagger;
+import io.swagger.models.Tag;
+import io.swagger.models.auth.OAuth2Definition;
+import io.swagger.models.auth.SecuritySchemeDefinition;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.util.Json;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -134,6 +163,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.preprocessSwagger(swagger);
         config.additionalProperties().put("generatorVersion", ImplementationVersion.read());
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
+        config.additionalProperties().put("generatedYear", String.valueOf(DateTime.now().getYear()));
         config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
         if (swagger.getVendorExtensions() != null) {
@@ -381,7 +411,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     }
 
-    private void generateApis(List<File> files, List<Object> allOperations) {
+    private void generateApis(List<File> files, List<Object> allOperations, List<Object> allModels) {
         if (!generateApis) {
             return;
         }
@@ -409,7 +439,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         return ObjectUtils.compare(one.operationId, another.operationId);
                     }
                 });
-                Map<String, Object> operation = processOperations(config, tag, ops);
+                Map<String, Object> operation = processOperations(config, tag, ops, allModels);
 
                 operation.put("basePath", basePath);
                 operation.put("basePathWithoutHost", basePathWithoutHost);
@@ -697,7 +727,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         generateModels(files, allModels);
         // apis
         List<Object> allOperations = new ArrayList<Object>();
-        generateApis(files, allOperations);
+        generateApis(files, allOperations, allModels);
 
         // supporting files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
@@ -776,11 +806,37 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (System.getProperty("debugOperations") != null) {
             LOGGER.info("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation + "\n");
         }
-        List<String> tags = operation.getTags();
-        if (tags == null) {
-            tags = new ArrayList<String>();
-            tags.add("default");
+        List<Tag> tags = new ArrayList<Tag>();
+
+        List<String> tagNames = operation.getTags();
+        List<Tag> swaggerTags = swagger.getTags();
+        if (tagNames != null) {
+            if (swaggerTags == null) {
+                for (String tagName : tagNames) {
+                    tags.add(new Tag().name(tagName));
+                }
+            } else {
+                for (String tagName : tagNames) {
+                    boolean foundTag = false;
+                    for (Tag tag : swaggerTags) {
+                        if (tag.getName().equals(tagName)) {
+                            tags.add(tag);
+                            foundTag = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundTag) {
+                        tags.add(new Tag().name(tagName));
+                    }
+                }
+            }
         }
+
+        if (tags.isEmpty()) {
+            tags.add(new Tag().name("default"));
+        }
+
         /*
          build up a set of parameter "ids" defined at the operation level
          per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
@@ -803,12 +859,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
 
-        for (String tag : tags) {
+        for (Tag tag : tags) {
             try {
                 CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, swagger.getDefinitions(), swagger);
-                codegenOperation.tags = new ArrayList<String>();
-                codegenOperation.tags.add(config.sanitizeTag(tag));
-                config.addOperationToGroup(config.sanitizeTag(tag), resourcePath, operation, codegenOperation, operations);
+                codegenOperation.tags = new ArrayList<Tag>(tags);
+                config.addOperationToGroup(config.sanitizeTag(tag.getName()), resourcePath, operation, codegenOperation, operations);
 
                 List<Map<String, List<String>>> securities = operation.getSecurity();
                 if (securities == null && swagger.getSecurity() != null) {
@@ -869,7 +924,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
 
-    private Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops) {
+    private Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops, List<Object> allModels) {
         Map<String, Object> operations = new HashMap<String, Object>();
         Map<String, Object> objs = new HashMap<String, Object>();
         objs.put("classname", config.toApiName(tag));
@@ -917,6 +972,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             operations.put("hasImport", true);
         }
         config.postProcessOperations(operations);
+        config.postProcessOperationsWithModels(operations, allModels);
         if (objs.size() > 0) {
             List<CodegenOperation> os = (List<CodegenOperation>) objs.get("operation");
 

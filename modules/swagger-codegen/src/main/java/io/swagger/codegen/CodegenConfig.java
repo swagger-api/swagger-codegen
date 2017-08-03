@@ -1,26 +1,26 @@
 package io.swagger.codegen;
 
-import io.swagger.models.Model;
-import io.swagger.models.Operation;
-import io.swagger.models.Swagger;
-import io.swagger.models.auth.SecuritySchemeDefinition;
-import io.swagger.models.properties.Property;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.samskivert.mustache.Mustache.Compiler;
 
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
+import io.swagger.models.auth.SecuritySchemeDefinition;
+import io.swagger.models.properties.Property;
+
 public interface CodegenConfig {
     CodegenType getTag();
-    
+
     String getName();
 
     String getHelp();
 
     Map<String, Object> additionalProperties();
-    
+
     Map<String, Object> vendorExtensions();
 
     String testPackage();
@@ -92,7 +92,7 @@ public interface CodegenConfig {
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);
 
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger);
-    
+
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions);
 
     List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes);
@@ -118,7 +118,7 @@ public interface CodegenConfig {
     Map<String, String> modelDocTemplateFiles();
 
     Set<String> languageSpecificPrimitives();
-    
+
     Map<String, String> reservedWordsMappings();
 
     void preprocessSwagger(Swagger swagger);
@@ -136,11 +136,11 @@ public interface CodegenConfig {
     String toApiTestFilename(String name);
 
     String toModelTestFilename(String name);
-    
+
     String toApiDocFilename(String name);
 
     String toModelDocFilename(String name);
-    
+
     String toModelImport(String name);
 
     String toApiImport(String name);
@@ -148,10 +148,12 @@ public interface CodegenConfig {
     void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
 
     Map<String, Object> postProcessAllModels(Map<String, Object> objs);
-    
+
     Map<String, Object> postProcessModels(Map<String, Object> objs);
 
     Map<String, Object> postProcessOperations(Map<String, Object> objs);
+
+    Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels);
 
     Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs);
 
@@ -207,4 +209,11 @@ public interface CodegenConfig {
     void setIgnoreFilePathOverride(String ignoreFileOverride);
 
     String getIgnoreFilePathOverride();
+
+    String toBooleanGetter(String name);
+
+    String toSetter(String name);
+
+    String toGetter(String name);
+
 }
