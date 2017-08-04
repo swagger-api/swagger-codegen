@@ -1,10 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -103,4 +99,15 @@ public class AsyncScalaClientCodegen extends AbstractScalaCodegen implements Cod
         // remove " to avoid code injection
         return input.replace("\"", "");
     }
+
+    @Override
+    public String toModelName(final String name) {
+        return formatIdentifier(stripPackageName(name), true);
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        return formatIdentifier(stripPackageName(property.baseName), true);
+    }
+
 }
