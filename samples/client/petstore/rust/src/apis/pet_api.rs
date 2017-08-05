@@ -18,13 +18,13 @@ use futures::{Future, Stream};
 
 use super::{Error, configuration};
 
-pub struct PetApiImpl<C: hyper::client::Connect> {
+pub struct PetApiClient<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
-impl<C: hyper::client::Connect> PetApiImpl<C> {
-    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> PetApiImpl<C> {
-        PetApiImpl {
+impl<C: hyper::client::Connect> PetApiClient<C> {
+    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> PetApiClient<C> {
+        PetApiClient {
             configuration: configuration,
         }
     }
@@ -42,7 +42,7 @@ pub trait PetApi {
 }
 
 
-impl<C: hyper::client::Connect>PetApi for PetApiImpl<C> {
+impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
     fn AddPet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 

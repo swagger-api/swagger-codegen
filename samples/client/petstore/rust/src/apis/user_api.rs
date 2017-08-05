@@ -18,13 +18,13 @@ use futures::{Future, Stream};
 
 use super::{Error, configuration};
 
-pub struct UserApiImpl<C: hyper::client::Connect> {
+pub struct UserApiClient<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
-impl<C: hyper::client::Connect> UserApiImpl<C> {
-    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> UserApiImpl<C> {
-        UserApiImpl {
+impl<C: hyper::client::Connect> UserApiClient<C> {
+    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> UserApiClient<C> {
+        UserApiClient {
             configuration: configuration,
         }
     }
@@ -42,7 +42,7 @@ pub trait UserApi {
 }
 
 
-impl<C: hyper::client::Connect>UserApi for UserApiImpl<C> {
+impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
     fn CreateUser(&self, body: ::models::User) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 

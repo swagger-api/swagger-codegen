@@ -18,13 +18,13 @@ use futures::{Future, Stream};
 
 use super::{Error, configuration};
 
-pub struct StoreApiImpl<C: hyper::client::Connect> {
+pub struct StoreApiClient<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
-impl<C: hyper::client::Connect> StoreApiImpl<C> {
-    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> StoreApiImpl<C> {
-        StoreApiImpl {
+impl<C: hyper::client::Connect> StoreApiClient<C> {
+    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> StoreApiClient<C> {
+        StoreApiClient {
             configuration: configuration,
         }
     }
@@ -38,7 +38,7 @@ pub trait StoreApi {
 }
 
 
-impl<C: hyper::client::Connect>StoreApi for StoreApiImpl<C> {
+impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
     fn DeleteOrder(&self, order_id: &str) -> Box<Future<Item = (), Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 

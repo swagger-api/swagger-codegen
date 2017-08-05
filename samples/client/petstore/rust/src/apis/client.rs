@@ -13,12 +13,12 @@ pub struct APIClient<C: hyper::client::Connect> {
 impl<C: hyper::client::Connect> APIClient<C> {
   pub fn new(configuration: Configuration<C>) -> APIClient<C> {
     let rc = Rc::new(configuration);
-    
+
     APIClient {
       configuration: rc.clone(),
-      pet_api: Box::new(::apis::PetApiImpl::new(rc.clone())),
-      store_api: Box::new(::apis::StoreApiImpl::new(rc.clone())),
-      user_api: Box::new(::apis::UserApiImpl::new(rc.clone())),
+      pet_api: Box::new(::apis::PetApiClient::new(rc.clone())),
+      store_api: Box::new(::apis::StoreApiClient::new(rc.clone())),
+      user_api: Box::new(::apis::UserApiClient::new(rc.clone())),
     }
   }
 
