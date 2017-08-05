@@ -194,13 +194,10 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
-        supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
         supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
 
-        supportingFiles.add(new SupportingFile("api_client.mustache", swaggerFolder, "api_client.py"));
-        supportingFiles.add(new SupportingFile("rest.mustache", swaggerFolder, "rest.py"));
         supportingFiles.add(new SupportingFile("configuration.mustache", swaggerFolder, "configuration.py"));
         supportingFiles.add(new SupportingFile("__init__package.mustache", swaggerFolder, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__model.mustache", modelPackage, "__init__.py"));
@@ -212,6 +209,16 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
+
+        if ("asyncio".equals(getLibrary())) {
+            supportingFiles.add(new SupportingFile("asyncio/rest.mustache", swaggerFolder, "rest.py"));
+            supportingFiles.add(new SupportingFile("asyncio/setup.mustache", "", "setup.py"));
+            supportingFiles.add(new SupportingFile("asyncio/api_client.mustache", swaggerFolder, "api_client.py"));
+        } else {
+            supportingFiles.add(new SupportingFile("rest.mustache", swaggerFolder, "rest.py"));
+            supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
+            supportingFiles.add(new SupportingFile("api_client.mustache", swaggerFolder, "api_client.py"));
+        }
     }
 
     private static String dropDots(String str) {
