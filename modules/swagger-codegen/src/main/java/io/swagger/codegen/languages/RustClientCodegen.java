@@ -51,17 +51,17 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         setReservedWordsLowerCase(
             Arrays.asList(
-				"abstract", "alignof", "as", "become", "box",
-				"break", "const", "continue", "crate", "do",
-				"else", "enum", "extern", "false", "final",
-				"fn", "for", "if", "impl", "in",
-				"let", "loop", "macro", "match", "mod",
-				"move", "mut", "offsetof", "override", "priv",
-				"proc", "pub", "pure", "ref", "return",
-				"Self", "self", "sizeof", "static", "struct",
-				"super", "trait", "true", "type", "typeof",
-				"unsafe", "unsized", "use", "virtual", "where",
-				"while", "yield"
+                "abstract", "alignof", "as", "become", "box",
+                "break", "const", "continue", "crate", "do",
+                "else", "enum", "extern", "false", "final",
+                "fn", "for", "if", "impl", "in",
+                "let", "loop", "macro", "match", "mod",
+                "move", "mut", "offsetof", "override", "priv",
+                "proc", "pub", "pure", "ref", "return",
+                "Self", "self", "sizeof", "static", "struct",
+                "super", "trait", "true", "type", "typeof",
+                "unsafe", "unsized", "use", "virtual", "where",
+                "while", "yield"
             )
         );
 
@@ -73,10 +73,10 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         languageSpecificPrimitives = new HashSet<String>(
             Arrays.asList(
-				"i8", "i16", "i32", "i64",
-				"u8", "u16", "u32", "u64",
-				"f32", "f64",
-				"char", "bool", "String", "Vec<u8>", "File")
+                "i8", "i16", "i32", "i64",
+                "u8", "u16", "u32", "u64",
+                "f32", "f64",
+                "char", "bool", "String", "Vec<u8>", "File")
             );
 
         instantiationTypes.clear();
@@ -386,7 +386,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
                         p.dataType = "::std::collections::HashMap<String, super::" + rt.substring("::std::collections::HashMap<String, ".length(), end).trim() + ">";
                     }
                 } else if (!languageSpecificPrimitives.contains(p.dataType)) {
-					// add super:: to model, e.g. super::pet
+                    // add super:: to model, e.g. super::pet
                     p.dataType = "super::" + p.dataType;
                 }
             }*/
