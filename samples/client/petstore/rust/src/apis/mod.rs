@@ -22,17 +22,14 @@ impl From<serde_json::Error> for Error {
 use super::models::*;
 
 mod pet_api;
-
 pub use self::pet_api::PetApi;
-
+pub use self::pet_api::PetApiImpl;
 mod store_api;
-
 pub use self::store_api::StoreApi;
-
+pub use self::store_api::StoreApiImpl;
 mod user_api;
-
 pub use self::user_api::UserApi;
-
+pub use self::user_api::UserApiImpl;
 
 pub mod configuration;
 pub mod client;

@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByStatus**
-> Vec<::models::pet::Pet> FindPetsByStatus(ctx, status)
+> Vec<::models::Pet> FindPetsByStatus(ctx, status)
 Finds Pets by status
 
 Multiple status values can be provided with comma separated strings
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vec<::models::pet::Pet>**](Pet.md)
+[**Vec<::models::Pet>**](Pet.md)
 
 ### Authorization
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **FindPetsByTags**
-> Vec<::models::pet::Pet> FindPetsByTags(ctx, tags)
+> Vec<::models::Pet> FindPetsByTags(ctx, tags)
 Finds Pets by tags
 
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -122,7 +122,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vec<::models::pet::Pet>**](Pet.md)
+[**Vec<::models::Pet>**](Pet.md)
 
 ### Authorization
 
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetPetById**
-> ::models::pet::Pet GetPetById(ctx, pet_id)
+> ::models::Pet GetPetById(ctx, pet_id)
 Find pet by ID
 
 Returns a single pet
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**::models::pet::Pet**](Pet.md)
+[**::models::Pet**](Pet.md)
 
 ### Authorization
 
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **UploadFile**
-> ::models::api_response::ApiResponse UploadFile(ctx, pet_id, optional)
+> ::models::ApiResponse UploadFile(ctx, pet_id, optional)
 uploads an image
 
 
@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**::models::api_response::ApiResponse**](ApiResponse.md)
+[**::models::ApiResponse**](ApiResponse.md)
 
 ### Authorization
 
