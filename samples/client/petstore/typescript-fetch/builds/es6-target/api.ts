@@ -10,7 +10,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
- 
+
 
 import * as url from "url";
 import * as isomorphicFetch from "isomorphic-fetch";
@@ -18,7 +18,11 @@ import { Configuration } from "./configuration";
 
 const BASE_PATH = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
 
-const COLLECTION_FORMATS = {
+/**
+ *
+ * @export
+ */
+export const COLLECTION_FORMATS = {
     csv: ",",
     ssv: " ",
     tsv: "\t",

@@ -7,8 +7,12 @@ let config: Configuration;
 before(function () {
     config = new Configuration();
     config.accessToken = "foobar";
-    config.apiKey = {
-        api_key: "foobar"
+    config.apiKey = (securityName: string) => {
+        // for multiple apiKey security
+        if (securityName === "api_key") {
+            return "foobar";
+        }
+        return;
     };
     config.username = "foo";
     config.password = "bar";

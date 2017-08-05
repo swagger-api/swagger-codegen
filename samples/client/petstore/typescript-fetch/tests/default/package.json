@@ -1,11 +1,13 @@
 {
   "private": true,
   "dependencies": {
-    "chai": "^4.1.0"
+    "@swagger/typescript-fetch-petstore": "file:../../builds/with-npm-version",
+    "chai": "^4.1.0",
+    "ts-node": "^3.3.0"
   },
   "scripts": {
     "prepublish": "./scripts/prepublish.sh",
-    "test": "mocha",
+    "test": "mocha test/*.ts --compilers ts:ts-node/register --timeout 10000",
     "build": "tsc",
     "webpack": "webpack",
     "browserify": "browserify test -p [ tsify ] > ./dist/test.browserify-bundle.js"
