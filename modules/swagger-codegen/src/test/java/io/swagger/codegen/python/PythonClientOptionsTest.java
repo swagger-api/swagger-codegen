@@ -34,6 +34,8 @@ public class PythonClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setPackageUrl(PythonClientOptionsProvider.PACKAGE_URL_VALUE);
             times = 1;
+            clientCodegen.setLibrary(PythonClientCodegen.DEFAULT_LIBRARY);
+            times = 1;
         }};
     }
 }
