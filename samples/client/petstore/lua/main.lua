@@ -1,14 +1,12 @@
--- https://github.com/swagger-api/swagger-codegen/issues/4794#issuecomment-320245838
+local petstore_client = require "petstore_client"
+local petstore_client_pet = require "petstore_client.pet"
 
-local http_request = require "http.request"
+local my_pet_http_api = petstore_client.new("petstore.swagger.io", "/v2", {"http"})
 
-local base = "http://petstore.swagger.io:80/v2"
+local my_pet = assert(my_pet_http_api:getPetById(4))
+for k,v in pairs(my_pet) do
+	print(k,v)
+end
 
-local petId = 4
-
-local req = http_request.new_from_uri(string.format("%s/pet/%d", base, petId))
-req.headers:upsert("accept", "application/json")
-local headers, stream = req:go()
-headers:dump()
-print()
-print(stream:get_body_as_string())
+local my_new_pet = petstore_client_pet.new("Mr. Barks")
+assert(my_pet_http_api:addPet(my_new_pet))
