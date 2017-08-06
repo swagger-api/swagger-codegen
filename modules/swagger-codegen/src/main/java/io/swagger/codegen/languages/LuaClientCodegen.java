@@ -56,7 +56,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 "end", "false", "for", "function", "if",
                 "in", "local", "nil", "not", "or",
                 "repeat", "return", "then", "true", "until", "while"
-
+            )
         );
 
         defaultIncludes = new HashSet<String>(
@@ -147,7 +147,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.lua"));
+        //supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.lua"));
         //supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.lua"));
         //supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.lua"));
         //supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
@@ -213,9 +213,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String name) {
-        // camelize the model name
-        // phone_number => PhoneNumber
-        return camelize(toModelFilename(name));
+        return toModelFilename(name);
     }
 
     @Override
@@ -302,16 +300,20 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String toApiName(String name) {
+        return underscore(super.toApiName(name));
+    }
+
+    @Override
     public String getTypeDeclaration(Property p) {
         if(p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "[]" + getTypeDeclaration(inner);
+            return "{}";
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-
-            return getSwaggerType(p) + "[string]" + getTypeDeclaration(inner);
+            return "{}";
         }
 
         // Not using the supertype invocation, because we want to UpperCamelize

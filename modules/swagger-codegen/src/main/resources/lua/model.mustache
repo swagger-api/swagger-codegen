@@ -1,24 +1,28 @@
+{{#models}}
+{{#model}}
 {{>partial_header}}
-package {{packageName}}
-{{#models}}{{#imports}}
-import ({{/imports}}{{#imports}}
-	"{{import}}"{{/imports}}{{#imports}}
-)
-{{/imports}}{{#model}}{{#isEnum}}{{#description}}// {{{classname}}} : {{{description}}}{{/description}}
-type {{{name}}} {{^format}}{{dataType}}{{/format}}{{#format}}{{{format}}}{{/format}}
+-- {{classname}} class
+local {{classname}} = {}
+local {{classname}}_mt = {
+  __name = "{{classname}}";
+  __index = {{classname}};
+}
 
-// List of {{{name}}}
-const (
-	{{#allowableValues}}
-	{{#enumVars}}
-	{{name}} {{{classname}}} = "{{{value}}}"
-	{{/enumVars}}
-	{{/allowableValues}}
-){{/isEnum}}{{^isEnum}}{{#description}}
-// {{{description}}}{{/description}}
-type {{classname}} struct {
-{{#vars}}{{#description}}
-	// {{{description}}}{{/description}}
-	{{name}} {{^isEnum}}{{^isPrimitiveType}}{{^isContainer}}{{^isDateTime}}*{{/isDateTime}}{{/isContainer}}{{/isPrimitiveType}}{{/isEnum}}{{{datatype}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
-{{/vars}}
-}{{/isEnum}}{{/model}}{{/models}}
+local function cast_{{classname}}(t)
+  return setmetatable(t, {{classname}}_mt)
+end
+
+local function new_{{classname}}({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}})
+  return cast_pet({
+    {{#vars}}
+    {{name}} = {{name}};
+    {{/vars}}
+  })
+end
+
+return {
+  cast = cast_{{classname}};
+  new = new_{{classname}};
+}
+{{/model}}
+{{/models}}
