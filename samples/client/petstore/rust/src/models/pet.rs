@@ -43,6 +43,10 @@ impl Pet {
     self
   }
 
+  pub fn id(&self) -> &i64 {
+    &self.id
+  }
+
   pub fn set_category(&mut self, category: ::models::Category) {
     self.category = Some(category);
   }
@@ -50,6 +54,10 @@ impl Pet {
   pub fn with_category(mut self, category: ::models::Category) -> Pet {
     self.category = Some(category);
     self
+  }
+
+  pub fn category(&self) -> &::models::Category {
+    &self.category
   }
 
   pub fn set_name(&mut self, name: String) {
@@ -61,6 +69,10 @@ impl Pet {
     self
   }
 
+  pub fn name(&self) -> &String {
+    &self.name
+  }
+
   pub fn set_photo_urls(&mut self, photo_urls: Vec<String>) {
     self.photo_urls = photo_urls;
   }
@@ -68,6 +80,10 @@ impl Pet {
   pub fn with_photo_urls(mut self, photo_urls: Vec<String>) -> Pet {
     self.photo_urls = photo_urls;
     self
+  }
+
+  pub fn photo_urls(&self) -> &Vec&lt;String&gt; {
+    &self.photo_urls
   }
 
   pub fn set_tags(&mut self, tags: Vec<::models::Tag>) {
@@ -79,6 +95,10 @@ impl Pet {
     self
   }
 
+  pub fn tags(&self) -> &Vec&lt;::models::Tag&gt; {
+    &self.tags
+  }
+
   pub fn set_status(&mut self, status: String) {
     self.status = Some(status);
   }
@@ -86,6 +106,10 @@ impl Pet {
   pub fn with_status(mut self, status: String) -> Pet {
     self.status = Some(status);
     self
+  }
+
+  pub fn status(&self) -> &String {
+    &self.status
   }
 
 }

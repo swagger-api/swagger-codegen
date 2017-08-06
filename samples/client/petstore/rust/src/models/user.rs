@@ -47,6 +47,10 @@ impl User {
     self
   }
 
+  pub fn id(&self) -> &i64 {
+    &self.id
+  }
+
   pub fn set_username(&mut self, username: String) {
     self.username = Some(username);
   }
@@ -54,6 +58,10 @@ impl User {
   pub fn with_username(mut self, username: String) -> User {
     self.username = Some(username);
     self
+  }
+
+  pub fn username(&self) -> &String {
+    &self.username
   }
 
   pub fn set_first_name(&mut self, first_name: String) {
@@ -65,6 +73,10 @@ impl User {
     self
   }
 
+  pub fn first_name(&self) -> &String {
+    &self.first_name
+  }
+
   pub fn set_last_name(&mut self, last_name: String) {
     self.last_name = Some(last_name);
   }
@@ -72,6 +84,10 @@ impl User {
   pub fn with_last_name(mut self, last_name: String) -> User {
     self.last_name = Some(last_name);
     self
+  }
+
+  pub fn last_name(&self) -> &String {
+    &self.last_name
   }
 
   pub fn set_email(&mut self, email: String) {
@@ -83,6 +99,10 @@ impl User {
     self
   }
 
+  pub fn email(&self) -> &String {
+    &self.email
+  }
+
   pub fn set_password(&mut self, password: String) {
     self.password = Some(password);
   }
@@ -90,6 +110,10 @@ impl User {
   pub fn with_password(mut self, password: String) -> User {
     self.password = Some(password);
     self
+  }
+
+  pub fn password(&self) -> &String {
+    &self.password
   }
 
   pub fn set_phone(&mut self, phone: String) {
@@ -101,6 +125,10 @@ impl User {
     self
   }
 
+  pub fn phone(&self) -> &String {
+    &self.phone
+  }
+
   pub fn set_user_status(&mut self, user_status: i32) {
     self.user_status = Some(user_status);
   }
@@ -108,6 +136,10 @@ impl User {
   pub fn with_user_status(mut self, user_status: i32) -> User {
     self.user_status = Some(user_status);
     self
+  }
+
+  pub fn user_status(&self) -> &i32 {
+    &self.user_status
   }
 
 }

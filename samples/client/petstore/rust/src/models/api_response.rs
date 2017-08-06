@@ -36,6 +36,10 @@ impl ApiResponse {
     self
   }
 
+  pub fn code(&self) -> &i32 {
+    &self.code
+  }
+
   pub fn set__type(&mut self, _type: String) {
     self._type = Some(_type);
   }
@@ -45,6 +49,10 @@ impl ApiResponse {
     self
   }
 
+  pub fn _type(&self) -> &String {
+    &self._type
+  }
+
   pub fn set_message(&mut self, message: String) {
     self.message = Some(message);
   }
@@ -52,6 +60,10 @@ impl ApiResponse {
   pub fn with_message(mut self, message: String) -> ApiResponse {
     self.message = Some(message);
     self
+  }
+
+  pub fn message(&self) -> &String {
+    &self.message
   }
 
 }

@@ -34,6 +34,10 @@ impl Category {
     self
   }
 
+  pub fn id(&self) -> &i64 {
+    &self.id
+  }
+
   pub fn set_name(&mut self, name: String) {
     self.name = Some(name);
   }
@@ -41,6 +45,10 @@ impl Category {
   pub fn with_name(mut self, name: String) -> Category {
     self.name = Some(name);
     self
+  }
+
+  pub fn name(&self) -> &String {
+    &self.name
   }
 
 }

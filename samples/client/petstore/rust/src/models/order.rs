@@ -43,6 +43,10 @@ impl Order {
     self
   }
 
+  pub fn id(&self) -> &i64 {
+    &self.id
+  }
+
   pub fn set_pet_id(&mut self, pet_id: i64) {
     self.pet_id = Some(pet_id);
   }
@@ -50,6 +54,10 @@ impl Order {
   pub fn with_pet_id(mut self, pet_id: i64) -> Order {
     self.pet_id = Some(pet_id);
     self
+  }
+
+  pub fn pet_id(&self) -> &i64 {
+    &self.pet_id
   }
 
   pub fn set_quantity(&mut self, quantity: i32) {
@@ -61,6 +69,10 @@ impl Order {
     self
   }
 
+  pub fn quantity(&self) -> &i32 {
+    &self.quantity
+  }
+
   pub fn set_ship_date(&mut self, ship_date: String) {
     self.ship_date = Some(ship_date);
   }
@@ -68,6 +80,10 @@ impl Order {
   pub fn with_ship_date(mut self, ship_date: String) -> Order {
     self.ship_date = Some(ship_date);
     self
+  }
+
+  pub fn ship_date(&self) -> &String {
+    &self.ship_date
   }
 
   pub fn set_status(&mut self, status: String) {
@@ -79,6 +95,10 @@ impl Order {
     self
   }
 
+  pub fn status(&self) -> &String {
+    &self.status
+  }
+
   pub fn set_complete(&mut self, complete: bool) {
     self.complete = Some(complete);
   }
@@ -86,6 +106,10 @@ impl Order {
   pub fn with_complete(mut self, complete: bool) -> Order {
     self.complete = Some(complete);
     self
+  }
+
+  pub fn complete(&self) -> &bool {
+    &self.complete
   }
 
 }
