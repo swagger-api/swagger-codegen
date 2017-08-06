@@ -21,7 +21,7 @@ pub struct APIClient<C: hyper::client::Connect> {
 impl<C: hyper::client::Connect> APIClient<C> {
   pub fn new(configuration: Configuration<C>) -> APIClient<C> {
     let rc = Rc::new(configuration);
-    
+
     APIClient {
       configuration: rc.clone(),
 {{#apiInfo}}
@@ -29,7 +29,7 @@ impl<C: hyper::client::Connect> APIClient<C> {
 {{#operations}}
 {{#operation}}
       {{#-last}}
-      {{classFilename}}: Box::new(::apis::{{classname}}Impl::new(rc.clone())),
+      {{classFilename}}: Box::new(::apis::{{classname}}Client::new(rc.clone())),
       {{/-last}}
 {{/operation}}
 {{/operations}}

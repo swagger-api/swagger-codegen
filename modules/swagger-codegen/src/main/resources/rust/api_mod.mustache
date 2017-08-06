@@ -27,8 +27,7 @@ mod {{classFilename}};
 {{#operations}}
 {{#operation}}
 {{#-last}}
-pub use self::{{classFilename}}::{{classname}};
-pub use self::{{classFilename}}::{{classname}}Impl;
+pub use self::{{classFilename}}::{ {{classname}}, {{classname}}Client };
 {{/-last}}
 {{/operation}}
 {{/operations}}

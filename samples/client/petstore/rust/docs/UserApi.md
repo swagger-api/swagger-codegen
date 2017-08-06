@@ -51,7 +51,7 @@ Creates list of users with given input array
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**Vec&lt;::models::user::User&gt;**](User.md)| List of user object | 
+  **body** | [**Vec&lt;::models::User&gt;**](User.md)| List of user object | 
 
 ### Return type
 
@@ -78,7 +78,7 @@ Creates list of users with given input array
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-  **body** | [**Vec&lt;::models::user::User&gt;**](User.md)| List of user object | 
+  **body** | [**Vec&lt;::models::User&gt;**](User.md)| List of user object | 
 
 ### Return type
 
@@ -123,7 +123,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetUserByName**
-> ::models::user::User GetUserByName(username)
+> ::models::User GetUserByName(username)
 Get user by user name
 
 
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**::models::user::User**](User.md)
+[**::models::User**](User.md)
 
 ### Authorization
 

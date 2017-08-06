@@ -9,13 +9,13 @@ use futures::{Future, Stream};
 
 use super::{Error, configuration};
 
-pub struct {{{classname}}}Impl<C: hyper::client::Connect> {
+pub struct {{{classname}}}Client<C: hyper::client::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
-impl<C: hyper::client::Connect> {{{classname}}}Impl<C> {
-    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> {{{classname}}}Impl<C> {
-        {{{classname}}}Impl {
+impl<C: hyper::client::Connect> {{{classname}}}Client<C> {
+    pub fn new(configuration: Rc<configuration::Configuration<C>>) -> {{{classname}}}Client<C> {
+        {{{classname}}}Client {
             configuration: configuration,
         }
     }
@@ -30,7 +30,7 @@ pub trait {{classname}} {
 }
 
 
-impl<C: hyper::client::Connect>{{classname}} for {{classname}}Impl<C> {
+impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
 {{#operations}}
 {{#operation}}
     fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error>> {
