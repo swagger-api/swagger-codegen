@@ -66,7 +66,7 @@ function user_api:create_user(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -107,7 +107,7 @@ function user_api:create_users_with_array_input(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -148,7 +148,7 @@ function user_api:create_users_with_list_input(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -189,7 +189,7 @@ function user_api:delete_user(username)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -230,7 +230,7 @@ function user_api:get_user_by_name(username)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -284,7 +284,7 @@ function user_api:login_user(username, password)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -336,7 +336,7 @@ function user_api:logout_user()
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -377,7 +377,7 @@ function user_api:update_user(username, body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()

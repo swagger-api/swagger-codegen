@@ -67,7 +67,7 @@ function pet_api:add_pet(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -110,7 +110,7 @@ function pet_api:delete_pet(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -153,7 +153,7 @@ function pet_api:find_pets_by_status(status)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -207,7 +207,7 @@ function pet_api:find_pets_by_tags(tags)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -261,7 +261,7 @@ function pet_api:get_pet_by_id(pet_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -314,7 +314,7 @@ function pet_api:update_pet(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -360,7 +360,7 @@ function pet_api:update_pet_with_form(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -406,7 +406,7 @@ function pet_api:upload_file(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then

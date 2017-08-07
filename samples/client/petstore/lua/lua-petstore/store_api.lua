@@ -66,7 +66,7 @@ function store_api:delete_order(order_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         return nil, headers
     else
         local body, err, errno2 = stream:get_body_as_string()
@@ -109,7 +109,7 @@ function store_api:get_inventory()
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -161,7 +161,7 @@ function store_api:get_order_by_id(order_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
@@ -213,7 +213,7 @@ function store_api:place_order(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+    if http_status:sub(1,1) == "2" then
         local body, err, errno2 = stream:get_body_as_string()
         // exception when getting the HTTP body
         if not body then
