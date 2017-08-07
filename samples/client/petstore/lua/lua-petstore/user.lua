@@ -20,15 +20,15 @@ local function cast_user(t)
 end
 
 local function new_user(id, username, first_name, last_name, email, password, phone, user_status)
-  return cast_pet({
-    id = id;
-    username = username;
-    first_name = first_name;
-    last_name = last_name;
-    email = email;
-    password = password;
-    phone = phone;
-    user_status = user_status;
+  return cast_user({
+    ["id"] = id;
+    ["username"] = username;
+    ["firstName"] = first_name;
+    ["lastName"] = last_name;
+    ["email"] = email;
+    ["password"] = password;
+    ["phone"] = phone;
+    ["userStatus"] = user_status;
   })
 end
 

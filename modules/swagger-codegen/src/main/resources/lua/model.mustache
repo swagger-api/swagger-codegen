@@ -13,9 +13,9 @@ local function cast_{{classname}}(t)
 end
 
 local function new_{{classname}}({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}})
-  return cast_pet({
+  return cast_{{classname}}({
     {{#vars}}
-    {{name}} = {{name}};
+    ["{{baseName}}"] = {{name}};
     {{/vars}}
   })
 end

@@ -21,12 +21,12 @@ end
 
 local function new_pet(id, category, name, photo_urls, tags, status)
   return cast_pet({
-    id = id;
-    category = category;
-    name = name;
-    photo_urls = photo_urls;
-    tags = tags;
-    status = status;
+    ["id"] = id;
+    ["category"] = category;
+    ["name"] = name;
+    ["photoUrls"] = photo_urls;
+    ["tags"] = tags;
+    ["status"] = status;
   })
 end
 

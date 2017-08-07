@@ -20,9 +20,9 @@ local function cast_tag(t)
 end
 
 local function new_tag(id, name)
-  return cast_pet({
-    id = id;
-    name = name;
+  return cast_tag({
+    ["id"] = id;
+    ["name"] = name;
   })
 end
 

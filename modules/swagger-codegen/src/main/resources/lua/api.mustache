@@ -7,10 +7,10 @@ local http_util = require "http.util"
 local dkjson = require "dkjson"
 
 // model import
-local {{{packagName}}}_{{classname}} = require "{{{pacakgeName}}}.{{classname}}"
+local {{{packageName}}}_{{classname}} = require "{{{packageName}}}.{{classname}}"
 
 local {{{packageName}}}= {}
-local {{{pacakgeName}}}_mt = {
+local {{{packageName}}}_mt = {
   __name = "{{{packageNameHyphen}}}";
   __index = {{{packageName}}};
 }
@@ -24,10 +24,10 @@ local function new_{{classname}}(host, basePath, schemes)
   // TODO: default basePath to {{{basePath}}}
   return setmetatable({
     host = host;
-    basePath = basePath;
+    basePath = basePath or "{{{basePath}}}";
     schemes = schemes_map;
     default_scheme = default_scheme;
-  }, {{{pacakgeName}}}_mt)
+  }, {{{packageName}}}_mt)
 end
 
 {{#operation}}
@@ -35,11 +35,11 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s/{{{path}}}", self.basePath, petId);
+        path = string.format("%s{{{vendorExtensions.x-codegen-path}}}", self.basePath{{#pathParams}} ,{{paramName}}{{/pathParams}});
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "{{httpMethod}}")
+    req.headers:upsert(":method", "{{httpMethod}}")
 
     // TODO: create a function to select proper accept
     local var_accept = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
@@ -54,13 +54,12 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     {{/headerParams}}
 
     {{#formParams}}
-    // TODO form params {{paramName}} ({{baseName}})
     {{#-first}}
-	req:set_body(http_util.dict_to_query({
+    req:set_body(http_util.dict_to_query({
     {{/-first}}
         ["{{baseName}}"] = {{paramName}};
     {{#-last}}
-	}))
+    }))
     {{/-last}}
     {{/formParams}}
 
@@ -102,7 +101,7 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
         if result == nil then
             return nil, err3
         end
-        return {{{packagName}}}_{{classname}}.cast(result)
+        return {{{packageName}}}_{{classname}}.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"

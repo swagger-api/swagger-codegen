@@ -15,10 +15,10 @@ local http_util = require "http.util"
 local dkjson = require "dkjson"
 
 // model import
-local _user_api = require ".user_api"
+local petstore_user_api = require "petstore.user_api"
 
 local petstore= {}
-local _mt = {
+local petstore_mt = {
   __name = "";
   __index = petstore;
 }
@@ -32,21 +32,21 @@ local function new_user_api(host, basePath, schemes)
   // TODO: default basePath to http://petstore.swagger.io/v2
   return setmetatable({
     host = host;
-    basePath = basePath;
+    basePath = basePath or "http://petstore.swagger.io/v2";
     schemes = schemes_map;
     default_scheme = default_scheme;
-  }, _mt)
+  }, petstore_mt)
 end
 
 function user_api:create_user(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user", self.basePath, petId);
+        path = string.format("%s/user", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -76,7 +76,7 @@ function user_api:create_user(body)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -87,11 +87,11 @@ function user_api:create_users_with_array_input(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/createWithArray", self.basePath, petId);
+        path = string.format("%s/user/createWithArray", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -121,7 +121,7 @@ function user_api:create_users_with_array_input(body)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -132,11 +132,11 @@ function user_api:create_users_with_list_input(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/createWithList", self.basePath, petId);
+        path = string.format("%s/user/createWithList", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -166,7 +166,7 @@ function user_api:create_users_with_list_input(body)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -177,11 +177,11 @@ function user_api:delete_user(username)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/{username}", self.basePath, petId);
+        path = string.format("%s/user/%s", self.basePath ,username);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Delete")
+    req.headers:upsert(":method", "DELETE")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -211,7 +211,7 @@ function user_api:delete_user(username)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -222,11 +222,11 @@ function user_api:get_user_by_name(username)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/{username}", self.basePath, petId);
+        path = string.format("%s/user/%s", self.basePath ,username);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -256,7 +256,7 @@ function user_api:get_user_by_name(username)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -267,11 +267,11 @@ function user_api:login_user(username, password)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/login", self.basePath, petId);
+        path = string.format("%s/user/login", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -303,7 +303,7 @@ function user_api:login_user(username, password)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -314,11 +314,11 @@ function user_api:logout_user()
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/logout", self.basePath, petId);
+        path = string.format("%s/user/logout", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -348,7 +348,7 @@ function user_api:logout_user()
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -359,11 +359,11 @@ function user_api:update_user(username, body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//user/{username}", self.basePath, petId);
+        path = string.format("%s/user/%s", self.basePath ,username);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Put")
+    req.headers:upsert(":method", "PUT")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -393,7 +393,7 @@ function user_api:update_user(username, body)
         if result == nil then
             return nil, err3
         end
-        return _user_api.cast(result)
+        return petstore_user_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"

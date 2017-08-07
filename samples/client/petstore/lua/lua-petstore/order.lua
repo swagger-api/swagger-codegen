@@ -20,13 +20,13 @@ local function cast_order(t)
 end
 
 local function new_order(id, pet_id, quantity, ship_date, status, complete)
-  return cast_pet({
-    id = id;
-    pet_id = pet_id;
-    quantity = quantity;
-    ship_date = ship_date;
-    status = status;
-    complete = complete;
+  return cast_order({
+    ["id"] = id;
+    ["petId"] = pet_id;
+    ["quantity"] = quantity;
+    ["shipDate"] = ship_date;
+    ["status"] = status;
+    ["complete"] = complete;
   })
 end
 

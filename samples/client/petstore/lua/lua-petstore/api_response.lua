@@ -20,10 +20,10 @@ local function cast_api_response(t)
 end
 
 local function new_api_response(code, type, message)
-  return cast_pet({
-    code = code;
-    type = type;
-    message = message;
+  return cast_api_response({
+    ["code"] = code;
+    ["type"] = type;
+    ["message"] = message;
   })
 end
 

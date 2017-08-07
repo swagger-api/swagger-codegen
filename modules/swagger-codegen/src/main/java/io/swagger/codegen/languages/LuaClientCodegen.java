@@ -367,54 +367,28 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
         @SuppressWarnings("unchecked")
         List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
-        for (CodegenOperation operation : operations) {
-            // http method verb conversion (e.g. PUT => Put)
-            operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
-        }
+        for (CodegenOperation op: operations) {
 
-        // remove model imports to avoid error
-        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
-        if (imports == null)
-            return objs;
+            String[] items = op.path.split("/", -1);
+            String luaPath = "";
+            int pathParamIndex = 0;
 
-        Iterator<Map<String, String>> iterator = imports.iterator();
-        while (iterator.hasNext()) {
-            String _import = iterator.next().get("import");
-            if (_import.startsWith(apiPackage()))
-                iterator.remove();
-        }
-
-        // if their is a return type, import encoding/json
-        for (CodegenOperation operation : operations) {
-            if(operation.returnBaseType != null ) {
-                imports.add(createMapping("import", "encoding/json"));
-                break; //just need to import once
+            for (int i = 0; i < items.length; ++i) {
+                if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
+                    // find the datatype of the parameter
+                    //final CodegenParameter cp = op.pathParams.get(pathParamIndex);
+                    // TODO: Handle non-primitives…
+                    //luaPath = luaPath + cp.dataType.toLowerCase();
+                    luaPath = luaPath + "/%s";
+                    pathParamIndex++;
+                } else if (items[i].length() != 0) {
+                    luaPath = luaPath + "/" + items[i];
+                } else {
+                    //luaPath = luaPath + "/";
+                }
             }
+            op.vendorExtensions.put("x-codegen-path", luaPath);
         }
-
-        // this will only import "fmt" if there are items in pathParams
-        for (CodegenOperation operation : operations) {
-            if(operation.pathParams != null && operation.pathParams.size() > 0) {
-                imports.add(createMapping("import", "fmt"));
-                break; //just need to import once
-            }
-        }
-
-        // recursively add import for mapping one type to multiple imports
-        List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
-        if (recursiveImports == null)
-            return objs;
-
-        ListIterator<Map<String, String>> listIterator = imports.listIterator();
-        while (listIterator.hasNext()) {
-            String _import = listIterator.next().get("import");
-            // if the import package happens to be found in the importMapping (key)
-            // add the corresponding import package to the list
-            if (importMapping.containsKey(_import)) {
-                listIterator.add(createMapping("import", importMapping.get(_import)));
-            }
-        }
-
         return objs;
     }
 

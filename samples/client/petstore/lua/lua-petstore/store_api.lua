@@ -15,10 +15,10 @@ local http_util = require "http.util"
 local dkjson = require "dkjson"
 
 // model import
-local _store_api = require ".store_api"
+local petstore_store_api = require "petstore.store_api"
 
 local petstore= {}
-local _mt = {
+local petstore_mt = {
   __name = "";
   __index = petstore;
 }
@@ -32,21 +32,21 @@ local function new_store_api(host, basePath, schemes)
   // TODO: default basePath to http://petstore.swagger.io/v2
   return setmetatable({
     host = host;
-    basePath = basePath;
+    basePath = basePath or "http://petstore.swagger.io/v2";
     schemes = schemes_map;
     default_scheme = default_scheme;
-  }, _mt)
+  }, petstore_mt)
 end
 
 function store_api:delete_order(order_id)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//store/order/{orderId}", self.basePath, petId);
+        path = string.format("%s/store/order/%s", self.basePath ,order_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Delete")
+    req.headers:upsert(":method", "DELETE")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -76,7 +76,7 @@ function store_api:delete_order(order_id)
         if result == nil then
             return nil, err3
         end
-        return _store_api.cast(result)
+        return petstore_store_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -87,11 +87,11 @@ function store_api:get_inventory()
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//store/inventory", self.basePath, petId);
+        path = string.format("%s/store/inventory", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -123,7 +123,7 @@ function store_api:get_inventory()
         if result == nil then
             return nil, err3
         end
-        return _store_api.cast(result)
+        return petstore_store_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -134,11 +134,11 @@ function store_api:get_order_by_id(order_id)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//store/order/{orderId}", self.basePath, petId);
+        path = string.format("%s/store/order/%s", self.basePath ,order_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -168,7 +168,7 @@ function store_api:get_order_by_id(order_id)
         if result == nil then
             return nil, err3
         end
-        return _store_api.cast(result)
+        return petstore_store_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -179,11 +179,11 @@ function store_api:place_order(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//store/order", self.basePath, petId);
+        path = string.format("%s/store/order", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -213,7 +213,7 @@ function store_api:place_order(body)
         if result == nil then
             return nil, err3
         end
-        return _store_api.cast(result)
+        return petstore_store_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"

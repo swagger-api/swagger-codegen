@@ -15,10 +15,10 @@ local http_util = require "http.util"
 local dkjson = require "dkjson"
 
 // model import
-local _pet_api = require ".pet_api"
+local petstore_pet_api = require "petstore.pet_api"
 
 local petstore= {}
-local _mt = {
+local petstore_mt = {
   __name = "";
   __index = petstore;
 }
@@ -32,21 +32,21 @@ local function new_pet_api(host, basePath, schemes)
   // TODO: default basePath to http://petstore.swagger.io/v2
   return setmetatable({
     host = host;
-    basePath = basePath;
+    basePath = basePath or "http://petstore.swagger.io/v2";
     schemes = schemes_map;
     default_scheme = default_scheme;
-  }, _mt)
+  }, petstore_mt)
 end
 
 function pet_api:add_pet(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet", self.basePath, petId);
+        path = string.format("%s/pet", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = { "application/json", "application/xml" }
@@ -77,7 +77,7 @@ function pet_api:add_pet(body)
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -88,11 +88,11 @@ function pet_api:delete_pet(pet_id, )
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/{petId}", self.basePath, petId);
+        path = string.format("%s/pet/%s", self.basePath ,pet_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Delete")
+    req.headers:upsert(":method", "DELETE")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -124,7 +124,7 @@ function pet_api:delete_pet(pet_id, )
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -135,11 +135,11 @@ function pet_api:find_pets_by_status(status)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/findByStatus", self.basePath, petId);
+        path = string.format("%s/pet/findByStatus", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -171,7 +171,7 @@ function pet_api:find_pets_by_status(status)
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -182,11 +182,11 @@ function pet_api:find_pets_by_tags(tags)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/findByTags", self.basePath, petId);
+        path = string.format("%s/pet/findByTags", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -218,7 +218,7 @@ function pet_api:find_pets_by_tags(tags)
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -229,11 +229,11 @@ function pet_api:get_pet_by_id(pet_id)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/{petId}", self.basePath, petId);
+        path = string.format("%s/pet/%s", self.basePath ,pet_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Get")
+    req.headers:upsert(":method", "GET")
 
     // TODO: create a function to select proper accept
     local var_accept = {  }
@@ -265,7 +265,7 @@ function pet_api:get_pet_by_id(pet_id)
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -276,11 +276,11 @@ function pet_api:update_pet(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet", self.basePath, petId);
+        path = string.format("%s/pet", self.basePath);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Put")
+    req.headers:upsert(":method", "PUT")
 
     // TODO: create a function to select proper accept
     local var_accept = { "application/json", "application/xml" }
@@ -311,7 +311,7 @@ function pet_api:update_pet(body)
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -322,11 +322,11 @@ function pet_api:update_pet_with_form(pet_id, )
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/{petId}", self.basePath, petId);
+        path = string.format("%s/pet/%s", self.basePath ,pet_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = { "application/x-www-form-urlencoded" }
@@ -338,11 +338,11 @@ function pet_api:update_pet_with_form(pet_id, )
 
 
     // TODO form params name (name)
-	req:set_body(http_util.dict_to_query({
+    req:set_body(http_util.dict_to_query({
         ["name"] = name;
     // TODO form params status (status)
         ["status"] = status;
-	}))
+    }))
 
 
     // TODO oauth
@@ -363,7 +363,7 @@ function pet_api:update_pet_with_form(pet_id, )
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"
@@ -374,11 +374,11 @@ function pet_api:upload_file(pet_id, )
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s//pet/{petId}/uploadImage", self.basePath, petId);
+        path = string.format("%s/pet/%s/uploadImage", self.basePath ,pet_id);
     })
 
     // set HTTP verb
-	req.headers:upsert(":method", "Post")
+    req.headers:upsert(":method", "POST")
 
     // TODO: create a function to select proper accept
     local var_accept = { "multipart/form-data" }
@@ -390,11 +390,11 @@ function pet_api:upload_file(pet_id, )
 
 
     // TODO form params additional_metadata (additionalMetadata)
-	req:set_body(http_util.dict_to_query({
+    req:set_body(http_util.dict_to_query({
         ["additionalMetadata"] = additional_metadata;
     // TODO form params file (file)
         ["file"] = file;
-	}))
+    }))
 
 
     // TODO oauth
@@ -415,7 +415,7 @@ function pet_api:upload_file(pet_id, )
         if result == nil then
             return nil, err3
         end
-        return _pet_api.cast(result)
+        return petstore_pet_api.cast(result)
     else
         stream:shutdown()
         return nil, "Unexpected response status code"

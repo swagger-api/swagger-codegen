@@ -21,26 +21,26 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*pet_api* | [**add_pet**](docs/pet_api.md#add_pet) | **Post** /pet | Add a new pet to the store
-*pet_api* | [**delete_pet**](docs/pet_api.md#delete_pet) | **Delete** /pet/{petId} | Deletes a pet
-*pet_api* | [**find_pets_by_status**](docs/pet_api.md#find_pets_by_status) | **Get** /pet/findByStatus | Finds Pets by status
-*pet_api* | [**find_pets_by_tags**](docs/pet_api.md#find_pets_by_tags) | **Get** /pet/findByTags | Finds Pets by tags
-*pet_api* | [**get_pet_by_id**](docs/pet_api.md#get_pet_by_id) | **Get** /pet/{petId} | Find pet by ID
-*pet_api* | [**update_pet**](docs/pet_api.md#update_pet) | **Put** /pet | Update an existing pet
-*pet_api* | [**update_pet_with_form**](docs/pet_api.md#update_pet_with_form) | **Post** /pet/{petId} | Updates a pet in the store with form data
-*pet_api* | [**upload_file**](docs/pet_api.md#upload_file) | **Post** /pet/{petId}/uploadImage | uploads an image
-*store_api* | [**delete_order**](docs/store_api.md#delete_order) | **Delete** /store/order/{orderId} | Delete purchase order by ID
-*store_api* | [**get_inventory**](docs/store_api.md#get_inventory) | **Get** /store/inventory | Returns pet inventories by status
-*store_api* | [**get_order_by_id**](docs/store_api.md#get_order_by_id) | **Get** /store/order/{orderId} | Find purchase order by ID
-*store_api* | [**place_order**](docs/store_api.md#place_order) | **Post** /store/order | Place an order for a pet
-*user_api* | [**create_user**](docs/user_api.md#create_user) | **Post** /user | Create user
-*user_api* | [**create_users_with_array_input**](docs/user_api.md#create_users_with_array_input) | **Post** /user/createWithArray | Creates list of users with given input array
-*user_api* | [**create_users_with_list_input**](docs/user_api.md#create_users_with_list_input) | **Post** /user/createWithList | Creates list of users with given input array
-*user_api* | [**delete_user**](docs/user_api.md#delete_user) | **Delete** /user/{username} | Delete user
-*user_api* | [**get_user_by_name**](docs/user_api.md#get_user_by_name) | **Get** /user/{username} | Get user by user name
-*user_api* | [**login_user**](docs/user_api.md#login_user) | **Get** /user/login | Logs user into the system
-*user_api* | [**logout_user**](docs/user_api.md#logout_user) | **Get** /user/logout | Logs out current logged in user session
-*user_api* | [**update_user**](docs/user_api.md#update_user) | **Put** /user/{username} | Updated user
+*pet_api* | [**add_pet**](docs/pet_api.md#add_pet) | **POST** /pet | Add a new pet to the store
+*pet_api* | [**delete_pet**](docs/pet_api.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
+*pet_api* | [**find_pets_by_status**](docs/pet_api.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
+*pet_api* | [**find_pets_by_tags**](docs/pet_api.md#find_pets_by_tags) | **GET** /pet/findByTags | Finds Pets by tags
+*pet_api* | [**get_pet_by_id**](docs/pet_api.md#get_pet_by_id) | **GET** /pet/{petId} | Find pet by ID
+*pet_api* | [**update_pet**](docs/pet_api.md#update_pet) | **PUT** /pet | Update an existing pet
+*pet_api* | [**update_pet_with_form**](docs/pet_api.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
+*pet_api* | [**upload_file**](docs/pet_api.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
+*store_api* | [**delete_order**](docs/store_api.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+*store_api* | [**get_inventory**](docs/store_api.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
+*store_api* | [**get_order_by_id**](docs/store_api.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
+*store_api* | [**place_order**](docs/store_api.md#place_order) | **POST** /store/order | Place an order for a pet
+*user_api* | [**create_user**](docs/user_api.md#create_user) | **POST** /user | Create user
+*user_api* | [**create_users_with_array_input**](docs/user_api.md#create_users_with_array_input) | **POST** /user/createWithArray | Creates list of users with given input array
+*user_api* | [**create_users_with_list_input**](docs/user_api.md#create_users_with_list_input) | **POST** /user/createWithList | Creates list of users with given input array
+*user_api* | [**delete_user**](docs/user_api.md#delete_user) | **DELETE** /user/{username} | Delete user
+*user_api* | [**get_user_by_name**](docs/user_api.md#get_user_by_name) | **GET** /user/{username} | Get user by user name
+*user_api* | [**login_user**](docs/user_api.md#login_user) | **GET** /user/login | Logs user into the system
+*user_api* | [**logout_user**](docs/user_api.md#logout_user) | **GET** /user/logout | Logs out current logged in user session
+*user_api* | [**update_user**](docs/user_api.md#update_user) | **PUT** /user/{username} | Updated user
 
 
 ## Documentation For Models

@@ -20,9 +20,9 @@ local function cast_category(t)
 end
 
 local function new_category(id, name)
-  return cast_pet({
-    id = id;
-    name = name;
+  return cast_category({
+    ["id"] = id;
+    ["name"] = name;
   })
 end
 
