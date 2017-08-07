@@ -67,20 +67,16 @@ function pet_api:add_pet(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+        return nil, headers
+    else
         local body, err, errno2 = stream:get_body_as_string()
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
-        local result, _, err3 = dkjson.decode(body)
-        if result == nil then
-            return nil, err3
-        end
-        return petstore_pet_api.cast(result)
-    else
-        stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -114,20 +110,16 @@ function pet_api:delete_pet(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+        return nil, headers
+    else
         local body, err, errno2 = stream:get_body_as_string()
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
-        local result, _, err3 = dkjson.decode(body)
-        if result == nil then
-            return nil, err3
-        end
-        return petstore_pet_api.cast(result)
-    else
-        stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -161,20 +153,27 @@ function pet_api:find_pets_by_status(status)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_pet_api.cast(result)
+        return petstore_{}.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -208,20 +207,27 @@ function pet_api:find_pets_by_tags(tags)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_pet_api.cast(result)
+        return petstore_{}.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -255,20 +261,27 @@ function pet_api:get_pet_by_id(pet_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_pet_api.cast(result)
+        return petstore_pet.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -301,20 +314,16 @@ function pet_api:update_pet(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+        return nil, headers
+    else
         local body, err, errno2 = stream:get_body_as_string()
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
-        local result, _, err3 = dkjson.decode(body)
-        if result == nil then
-            return nil, err3
-        end
-        return petstore_pet_api.cast(result)
-    else
-        stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -337,10 +346,8 @@ function pet_api:update_pet_with_form(pet_id, )
     req.headers:upsert("content-type", "application/xml")
 
 
-    // TODO form params name (name)
     req:set_body(http_util.dict_to_query({
         ["name"] = name;
-    // TODO form params status (status)
         ["status"] = status;
     }))
 
@@ -353,20 +360,16 @@ function pet_api:update_pet_with_form(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+        return nil, headers
+    else
         local body, err, errno2 = stream:get_body_as_string()
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
-        local result, _, err3 = dkjson.decode(body)
-        if result == nil then
-            return nil, err3
-        end
-        return petstore_pet_api.cast(result)
-    else
-        stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -389,10 +392,8 @@ function pet_api:upload_file(pet_id, )
     req.headers:upsert("content-type", "application/json")
 
 
-    // TODO form params additional_metadata (additionalMetadata)
     req:set_body(http_util.dict_to_query({
         ["additionalMetadata"] = additional_metadata;
-    // TODO form params file (file)
         ["file"] = file;
     }))
 
@@ -405,20 +406,27 @@ function pet_api:upload_file(pet_id, )
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_pet_api.cast(result)
+        return petstore_api_response.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 

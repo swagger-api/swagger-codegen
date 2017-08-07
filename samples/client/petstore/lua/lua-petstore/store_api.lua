@@ -66,20 +66,16 @@ function store_api:delete_order(order_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
+        return nil, headers
+    else
         local body, err, errno2 = stream:get_body_as_string()
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
-        local result, _, err3 = dkjson.decode(body)
-        if result == nil then
-            return nil, err3
-        end
-        return petstore_store_api.cast(result)
-    else
-        stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -113,20 +109,27 @@ function store_api:get_inventory()
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_store_api.cast(result)
+        return petstore_{}.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -158,20 +161,27 @@ function store_api:get_order_by_id(order_id)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_store_api.cast(result)
+        return petstore_order.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
@@ -203,20 +213,27 @@ function store_api:place_order(body)
         return nil, stream, errno
     end
     local http_status = headers:get(":status")
-    if http_status == "200" then
+    if tonumber(http_status) >= 200 or tonumber(http_status) <= 299 then
         local body, err, errno2 = stream:get_body_as_string()
+        // exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
+        // exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
-        return petstore_store_api.cast(result)
+        return petstore_order.cast(result), headers
     else
+        local body, err, errno2 = stream:get_body_as_string()
+        if not body then
+            return nil, err, errno2
+        end
         stream:shutdown()
-        return nil, "Unexpected response status code"
+        // return the error message (http body)
+        return nil, http_status, body
     end
 end
 
