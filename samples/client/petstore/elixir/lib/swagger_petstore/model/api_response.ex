@@ -2,19 +2,16 @@
 # https://github.com/swagger-api/swagger-codegen.git
 # Do not edit the class manually.
 
-defmodule SwaggerPetstore.Model.Order do
+defmodule SwaggerPetstore.Model.ApiResponse do
   @moduledoc """
   
   """
 
   @derive [Poison.Encoder, Poison.Decoder]
   defstruct [
-    :"id",
-    :"petId",
-    :"quantity",
-    :"shipDate",
-    :"status",
-    :"complete"
+    :"code",
+    :"type",
+    :"message"
   ]
 end
 

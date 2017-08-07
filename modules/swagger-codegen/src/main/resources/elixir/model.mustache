@@ -1,6 +1,28 @@
-defmodule {{#modulized}}{{appName}}{{/modulized}}.Model.{{classname}} do
+{{>licenseInfo}}
+{{#models}}{{#model}}defmodule {{moduleName}}.Model.{{classname}} do
   @moduledoc """
-  Documentation for {{#modulized}}{{appName}}{{/modulized}}.Model.{{classname}}.
+  {{description}}
   """
 
+  @derive [Poison.Encoder{{^hasComplexVars}}, Poison.Decoder{{/hasComplexVars}}]
+  defstruct [
+    {{#vars}}:"{{baseName}}"{{#hasMore}},
+    {{/hasMore}}{{/vars}}
+  ]
 end
+{{#hasComplexVars}}
+
+defimpl Poison.Decoder, for: {{moduleName}}.Model.{{classname}} do
+  import {{moduleName}}.Deserializer
+  def decode(value, options) do
+    value
+    {{#vars}}
+    {{^isPrimitiveType}}
+    {{#datatype}}|> deserialize(:"{{baseName}}", {{#isListContainer}}:list, {{moduleName}}.Model.{{items.datatype}}{{/isListContainer}}{{#isMapContainer}}:map, {{moduleName}}.Model.{{items.datatype}}{{/isMapContainer}}{{#isDate}}:date, nil{{/isDate}}{{#isDateTime}}:date, nil{{/isDateTime}}{{^isDate}}{{^isDateTime}}{{^isMapContainer}}{{^isListContainer}}:struct, {{moduleName}}.Model.{{datatype}}{{/isListContainer}}{{/isMapContainer}}{{/isDateTime}}{{/isDate}}, options)
+    {{/datatype}}
+    {{/isPrimitiveType}}
+    {{/vars}}
+  end
+end
+{{/hasComplexVars}}
+{{/model}}{{/models}}
