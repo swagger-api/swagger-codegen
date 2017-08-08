@@ -32,7 +32,7 @@ README_REPLACEMENT+="{\"access_token\":\"25a0659c-6f4a-40bd-950e-0ba4af7acf0f\",
 README_REPLACEMENT+="\`\`\` \n\n"
 README_REPLACEMENT+="Use the provided access_token in sub-sequent requests to authenticate (see code below). Make sure you refresh your token before it expires to avoid having to re-authenticate."
 
-ID_FLAGS="--group-id com.knetikcloud --artifact-version $VERSION_NUMBER"
+ID_FLAGS="--group-id com.knetikcloud --artifact-version $VERSION_NUMBER -DprojectVersion=$VERSION_NUMBER"
 
 mkdir -p sdk
 chmod 777 sdk
@@ -367,7 +367,7 @@ git pull origin master
 rm -r *
 
 cd ../..
-java -jar $BASE_JAR generate -i $JSON_FILE -l javascript $ID_FLAGS --artifact-id knetikcloud-javascript-client -o sdk/javascript
+java -jar $BASE_JAR generate -i $JSON_FILE -l javascript -c javascript.config.json $ID_FLAGS --artifact-id knetikcloud-javascript-client -o sdk/javascript
 cd sdk/javascript
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
