@@ -48,10 +48,29 @@
 {{/vars}}    }
     return obj;
   }
-{{#useInheritance}}{{#parentModel}}
+{{#useInheritance}}
+
+  exports.registerChild = function(child, discriminatorValue) {
+	  child.discriminatorField = exports.discriminatorField;
+	  child.discriminatorValue = discriminatorValue;
+	  child.parent = exports;
+	  if(exports.children == null)
+		  exports.children = {};
+	  exports.children[discriminatorValue] = child;
+	  if(exports.parent != null)
+		  exports.parent.registerChild(child, discriminatorValue);
+  }
+  
+  var discriminatorValue = '{{^vendorExtensions.x-discriminator-value}}{{name}}{{/vendorExtensions.x-discriminator-value}}{{#vendorExtensions.x-discriminator-value}}{{{vendorExtensions.x-discriminator-value}}}{{/vendorExtensions.x-discriminator-value}}';
+{{#parentModel}}
+  {{classname}}.registerChild(exports, discriminatorValue);
+  
   exports.prototype = Object.create({{classname}}.prototype);
   exports.prototype.constructor = exports;
-{{/parentModel}}{{/useInheritance}}
+{{/parentModel}}
+
+{{#discriminator}}exports.discriminatorField = '{{discriminator}}';{{/discriminator}}
+{{/useInheritance}}
 {{#vars}}
 {{#emitJSDoc}}
   /**{{#description}}

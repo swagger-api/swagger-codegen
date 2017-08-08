@@ -166,5 +166,13 @@ samples/client/petstore/typescript-aurelia/**/dist/
 samples/server/petstore/aspnetcore/.vs/
 effective.pom
 
+# knetik specific
+/sdk/
+/1
+/generate.sh
+/generate.sh~
+/out.txt
+/tmp.out
+
 # kotlin
 samples/client/petstore/kotlin/src/main/kotlin/test/

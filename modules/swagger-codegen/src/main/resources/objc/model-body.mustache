@@ -43,7 +43,19 @@
  * This method is used by `JSONModel`.
  */
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ {{#vars}}@"{{name}}": @"{{baseName}}"{{#hasMore}}, {{/hasMore}}{{/vars}} }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:[self modalDictionary]];
+}
+
++ (NSDictionary *)modalDictionary {
+{{#parent}}
+  NSMutableDictionary * mutableDictionary = [[NSMutableDictionary alloc] initWithDictionary:[super modalDictionary] copyItems:NO];
+    
+  [mutableDictionary addEntriesFromDictionary:@{ {{#vars}}@"{{name}}": @"{{baseName}}"{{#hasMore}}, {{/hasMore}}{{/vars}} }];
+    
+  return mutableDictionary;
+{{/parent}}{{^parent}}
+  return @{ {{#vars}}@"{{name}}": @"{{baseName}}"{{#hasMore}}, {{/hasMore}}{{/vars}} };
+{{/parent}}
 }
 
 /**
@@ -54,7 +66,11 @@
 + (BOOL)propertyIsOptional:(NSString *)propertyName {
 
   NSArray *optionalProperties = @[{{#vars}}{{^required}}@"{{name}}"{{#hasMore}}, {{/hasMore}}{{/required}}{{/vars}}];
+{{#parent}}
+  return [super propertyIsOptional:propertyName] | [optionalProperties containsObject:propertyName];
+{{/parent}}{{^parent}}
   return [optionalProperties containsObject:propertyName];
+{{/parent}}
 }
 
 {{/model}}
