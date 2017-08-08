@@ -27,18 +27,42 @@ public class PetApiControllerImp  {
     
     public List<Pet> findPetsByStatus( @NotNull List<String> status) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/xml")) {
+            return mapper.readValue("", List.class);
+        }
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", List.class);
+        }
         return new ArrayList<Pet>();
     }
 
     
     public List<Pet> findPetsByTags( @NotNull List<String> tags) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/xml")) {
+            return mapper.readValue("", List.class);
+        }
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", List.class);
+        }
         return new ArrayList<Pet>();
     }
 
     
     public Pet getPetById(Long petId) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/xml")) {
+            return mapper.readValue("", Pet.class);
+        }
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", Pet.class);
+        }
         return new Pet();
     }
 
@@ -57,6 +81,10 @@ public class PetApiControllerImp  {
     
     public ModelApiResponse uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", ModelApiResponse.class);
+        }
         return new ModelApiResponse();
     }
 

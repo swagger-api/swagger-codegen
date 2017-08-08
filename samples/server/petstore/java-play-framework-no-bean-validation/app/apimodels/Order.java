@@ -153,7 +153,7 @@ public class Order   {
    * Get complete
    * @return complete
   **/
-    public Boolean getComplete() {
+    public Boolean isComplete() {
     return complete;
   }
 
@@ -209,5 +209,6 @@ public class Order   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
 }
 

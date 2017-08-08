@@ -834,7 +834,9 @@
                 <module>samples/client/petstore/jaxrs-cxf-client</module>
                 <module>samples/client/petstore/java/resttemplate</module>
                 <module>samples/client/petstore/java/resttemplate-withXml</module>
+                <module>samples/client/petstore/java/vertx</module>
                 <module>samples/client/petstore/ruby</module>
+                <module>samples/client/petstore/kotlin/</module>
                 <!-- comment out bash as it's failing after switching to CircleCI
                   <module>samples/client/petstore/bash</module> -->
                 <!-- servers -->

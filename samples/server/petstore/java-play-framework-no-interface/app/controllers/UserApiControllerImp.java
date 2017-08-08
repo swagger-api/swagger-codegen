@@ -38,12 +38,28 @@ public class UserApiControllerImp  {
     
     public User getUserByName(String username) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/xml")) {
+            return mapper.readValue("", User.class);
+        }
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", User.class);
+        }
         return new User();
     }
 
     
     public String loginUser( @NotNull String username,  @NotNull String password) throws Exception {
         //Do your magic!!!
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/xml")) {
+            return mapper.readValue("", String.class);
+        }
+        String accept = request().getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            return mapper.readValue("", String.class);
+        }
         return new String();
     }
 

@@ -24,7 +24,7 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Rust**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
@@ -43,7 +43,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
       - [OS X Users](#os-x-users)
     - [Building](#building)
     - [Docker](#docker)
-      - [Build and run](#build-and-run-using-docker)
+      - [Development in Docker](#development-in-docker)
       - [Run docker in Vagrant](#run-docker-in-vagrant)
       - [Public Docker image](#public-docker-image)
     - [Homebrew](#homebrew)
@@ -753,6 +753,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Fastly](https://www.fastly.com/)
 - [Flat](https://flat.io)
 - [Finder](http://en.finder.pl/)
+- [Fitwell](https://fitwell.co/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
@@ -803,6 +804,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [QuantiModo](https://quantimo.do/)
 - [QuickBlox](https://quickblox.com/)
 - [Rapid7](https://rapid7.com/)
+- [Red Hat](https://www.redhat.com/)
 - [Reload! A/S](https://reload.dk/)
 - [REstore](https://www.restore.eu)
 - [Revault Sàrl](http://revault.ch)
@@ -860,7 +862,12 @@ Presentations/Videos/Tutorials/Books
 - 2017/04/27 - [Swagger Codegen のPHP実装があまりにアレだったので、ライブラリ自作して公開してみた](http://qiita.com/imunew/items/2e9c472e0097e329f2cd) by [imunew](http://qiita.com/imunew)
 - 2017/05/17 - [Diseño de APIs con OpenAPI](https://www.slideshare.net/pjmolina/diseo-de-apis-con-openapi) by [Pedro J. Molina](https://github.com/pjmolina) @ [JSDayES 2017](http://2017.jsday.es/)
 - 2017/05/22 - [Presentation of the Vert.x-Swagger project](http://vertx.io/blog/presentation-of-the-vert-x-swagger-project/) by [@phiz71](http://github.com/phiz71)
+- 2017/05/22 - [Automatically generating your API from a swagger file using gradle](https://www.jcore.com/2017/05/22/automatically-generating-api-using-swagger-and-gradle/) by [Deniz Turan](https://www.jcore.com/author/deniz/)
 - 2017/06/21 - [Swagger Presentation - Warsaw Ruby Users Group](https://www.youtube.com/watch?v=uCnnDMFQB8U) by [@rafalpetryka](http://github.com/rafalpetryka)
+- 2017/06/29 - [Making SDKs: the bespoke, the hopeful and the generated](https://devrel.net/developer-experience/making-sdks-bespoke-hopeful-generated) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square)) at DevXcon 2017
+- 2017/07/29 - [How Square makes its SDKs](https://medium.com/square-corner-blog/how-square-makes-its-sdks-6a0fd7ea4b2d) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square))
+- 2017/07/31 - [How to Generate a Deployable REST CXF3 Application from a Swagger-Contract](https://www.youtube.com/watch?v=gM63rJlUHZQ) by [Johannes Fiala](https://github.com/jfiala) @ Voxxed Days Vienna
+
 
 # Swagger Codegen Core Team
 
@@ -936,6 +943,7 @@ Here is a list of template creators:
    * Java (okhttp-gson): @xhh
    * Java (RestTemplate): @nbruno
    * Java (RESTEasy): @gayathrigs
+   * Java (Vertx): @lopesmcc
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter @davidkiss
@@ -943,6 +951,7 @@ Here is a list of template creators:
    * Perl: @wing328
    * PHP (Guzzle): @baartosz
    * PowerShell: @beatcracker
+   * Rust: @farcaller
    * Swift: @tkqubo
    * Swift 3: @hexelon
    * Swift 4: @ehyche
