@@ -20,38 +20,18 @@ public class StoreApiControllerImp  {
     
     public Map<String, Integer> getInventory() throws Exception {
         //Do your magic!!!
-        String accept = request().getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            return mapper.readValue("", Map.class);
-        }
         return new HashMap<String, Integer>();
     }
 
     
     public Order getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
         //Do your magic!!!
-        String accept = request().getHeader("Accept");
-        if (accept != null && accept.contains("application/xml")) {
-            return mapper.readValue("", Order.class);
-        }
-        String accept = request().getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            return mapper.readValue("", Order.class);
-        }
         return new Order();
     }
 
     
     public Order placeOrder(Order body) throws Exception {
         //Do your magic!!!
-        String accept = request().getHeader("Accept");
-        if (accept != null && accept.contains("application/xml")) {
-            return mapper.readValue("", Order.class);
-        }
-        String accept = request().getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            return mapper.readValue("", Order.class);
-        }
         return new Order();
     }
 
