@@ -96,7 +96,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String modelDocPath = "docs/";
     protected String apiTestPath = "api/";
     protected String modelTestPath = "model/";
-    protected boolean useES6 = false; // default is ES5
+    protected boolean useES6 = true; // default is ES6
 
     public JavascriptClientCodegen() {
         super();
@@ -217,6 +217,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     public void processOpts() {
+        if (additionalProperties.containsKey(USE_ES6)) {
+            setUseES6(convertPropertyToBooleanAndWriteBack(USE_ES6));
+        } else {
+            setUseES6(true); // default to ES6
+        }
         super.processOpts();
 
         // default HIDE_GENERATION_TIMESTAMP to true
@@ -265,11 +270,6 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
         if (additionalProperties.containsKey(EMIT_JS_DOC)) {
             setEmitJSDoc(convertPropertyToBooleanAndWriteBack(EMIT_JS_DOC));
-        }
-        if (additionalProperties.containsKey(USE_ES6)) {
-            setUseES6(convertPropertyToBooleanAndWriteBack(USE_ES6));
-        } else {
-            setUseES6(false);
         }
     }
 
