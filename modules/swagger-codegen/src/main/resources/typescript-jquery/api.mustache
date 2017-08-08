@@ -103,6 +103,7 @@ export class {{classname}} {
 {{#formParams}}
 {{#isFile}}
         reqHasFile = true;
+        formParams = {{paramName}};
 {{/isFile}}
         {{#isListContainer}}
         if ({{paramName}}) {

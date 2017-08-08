@@ -517,6 +517,7 @@ export class PetApi {
         }
 
         reqHasFile = true;
+        formParams = file;
         if (file !== null && file !== undefined) {
             formParams.append('file', <any>file);
         }
