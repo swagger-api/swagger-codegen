@@ -433,11 +433,9 @@ export class PetApi {
         if (name !== null && name !== undefined) {
             formParams.append('name', <any>name);
         }
-
         if (status !== null && status !== undefined) {
             formParams.append('status', <any>status);
         }
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
@@ -515,13 +513,8 @@ export class PetApi {
         if (additionalMetadata !== null && additionalMetadata !== undefined) {
             formParams.append('additionalMetadata', <any>additionalMetadata);
         }
-
         reqHasFile = true;
         formParams = file;
-        if (file !== null && file !== undefined) {
-            formParams.append('file', <any>file);
-        }
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'multipart/form-data'
