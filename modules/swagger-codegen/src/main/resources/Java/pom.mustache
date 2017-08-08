@@ -223,6 +223,23 @@
       <artifactId>jackson-jaxrs-json-provider</artifactId>
       <version>${jackson-version}</version>
     </dependency>
+    {{#withXml}}
+
+    <!-- XML processing: Jackson -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+
+    {{/withXml}}
+    {{#joda}}
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-joda</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    {{/joda}}
     {{#java8}}
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -230,33 +247,27 @@
       <version>${jackson-version}</version>
     </dependency>
     {{/java8}}
-    {{^java8}}
+    {{#threetenbp}}
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-joda</artifactId>
+      <groupId>com.github.joschi.jackson</groupId>
+      <artifactId>jackson-datatype-threetenbp</artifactId>
       <version>${jackson-version}</version>
     </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>${jodatime-version}</version>
-    </dependency>
-    {{/java8}}
-
+    {{/threetenbp}}
+    {{^java8}}
     <!-- Base64 encoding that works in both JVM and Android -->
     <dependency>
       <groupId>com.brsanthu</groupId>
       <artifactId>migbase64</artifactId>
       <version>2.2</version>
     </dependency>
-
+    {{/java8}}
     {{#supportJava6}}
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>${commons_lang3_version}</version>
     </dependency>
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -272,6 +283,15 @@
         <scope>provided</scope>
     </dependency>
 {{/useBeanValidation}}
+    {{#parcelableModel}}
+    <!-- Needed for Parcelable support-->
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+      <version>4.1.1.4</version>
+      <scope>provided</scope>
+    </dependency>
+    {{/parcelableModel}}
     <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -282,16 +302,13 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <swagger-annotations-version>1.5.8</swagger-annotations-version>
-    <jersey-version>1.19.1</jersey-version>
-    <jackson-version>2.7.5</jackson-version>
-    {{^java8}}
-    <jodatime-version>2.9.4</jodatime-version>
-    {{/java8}}
+    <swagger-annotations-version>1.5.15</swagger-annotations-version>
+    <jersey-version>1.19.4</jersey-version>
     {{#supportJava6}}
     <commons_io_version>2.5</commons_io_version>
-    <commons_lang3_version>3.5</commons_lang3_version>
+    <commons_lang3_version>3.6</commons_lang3_version>
     {{/supportJava6}}
+    <jackson-version>{{^threetenbp}}2.7.5{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}</jackson-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
   </properties>

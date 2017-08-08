@@ -96,7 +96,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String modelDocPath = "docs/";
     protected String apiTestPath = "api/";
     protected String modelTestPath = "model/";
-    protected boolean useES6;
+    protected boolean useES6 = true; // default is ES6
 
     public JavascriptClientCodegen() {
         super();
@@ -105,7 +105,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         modelTestTemplateFiles.put("model_test.mustache", ".js");
         apiTemplateFiles.put("api.mustache", ".js");
         apiTestTemplateFiles.put("api_test.mustache", ".js");
-        embeddedTemplateDir = templateDir = "Javascript";
+        // subfolder Javascript/es6
+        embeddedTemplateDir = templateDir = "Javascript" + File.separator + "es6";
         apiPackage = "api";
         modelPackage = "model";
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
@@ -196,7 +197,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(USE_ES6,
                 "use JavaScript ES6 (ECMAScript 6)")
-                .defaultValue(Boolean.TRUE.toString()));
+                .defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
@@ -216,6 +217,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     public void processOpts() {
+        if (additionalProperties.containsKey(USE_ES6)) {
+            setUseES6(convertPropertyToBooleanAndWriteBack(USE_ES6));
+        } else {
+            setUseES6(true); // default to ES6
+        }
         super.processOpts();
 
         // default HIDE_GENERATION_TIMESTAMP to true
@@ -264,9 +270,6 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
         if (additionalProperties.containsKey(EMIT_JS_DOC)) {
             setEmitJSDoc(convertPropertyToBooleanAndWriteBack(EMIT_JS_DOC));
-        }
-        if (additionalProperties.containsKey(USE_ES6)) {
-            setUseES6(convertPropertyToBooleanAndWriteBack(USE_ES6));
         }
     }
 
@@ -430,9 +433,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public void setUseES6(boolean useES6) {
         this.useES6 = useES6;
         if (useES6) {
-            embeddedTemplateDir = templateDir = "Javascript-es6";
+            embeddedTemplateDir = templateDir = "Javascript/es6";
+            LOGGER.info("Using JS ES6 templates");
         } else {
             embeddedTemplateDir = templateDir = "Javascript";
+            LOGGER.info("Using JS ES5 templates");
         }
     }
 

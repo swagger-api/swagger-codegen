@@ -14,10 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.DateTime;
+import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * Order
@@ -34,19 +39,17 @@ public class Order {
   private Integer quantity = null;
 
   @SerializedName("shipDate")
-  private DateTime shipDate = null;
+  private OffsetDateTime shipDate = null;
 
   /**
    * Order Status
    */
+  @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
-    @SerializedName("placed")
     PLACED("placed"),
     
-    @SerializedName("approved")
     APPROVED("approved"),
     
-    @SerializedName("delivered")
     DELIVERED("delivered");
 
     private String value;
@@ -62,6 +65,28 @@ public class Order {
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return StatusEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -125,7 +150,7 @@ public class Order {
     this.quantity = quantity;
   }
 
-  public Order shipDate(DateTime shipDate) {
+  public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
@@ -135,11 +160,11 @@ public class Order {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
-  public DateTime getShipDate() {
+  public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(DateTime shipDate) {
+  public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -171,7 +196,7 @@ public class Order {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 
@@ -228,6 +253,6 @@ public class Order {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

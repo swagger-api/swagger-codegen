@@ -13,8 +13,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.MultiPart;
@@ -51,21 +52,21 @@ import io.swagger.client.auth.OAuth;
 
 
 public class ApiClient {
-  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private String basePath = "http://petstore.swagger.io:80/v2";
-  private boolean debugging = false;
-  private int connectionTimeout = 0;
+  protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
+  protected String basePath = "http://petstore.swagger.io:80/v2";
+  protected boolean debugging = false;
+  protected int connectionTimeout = 0;
 
-  private Client httpClient;
-  private JSON json;
-  private String tempFolderPath = null;
+  protected Client httpClient;
+  protected JSON json;
+  protected String tempFolderPath = null;
 
-  private Map<String, Authentication> authentications;
+  protected Map<String, Authentication> authentications;
 
-  private int statusCode;
-  private Map<String, List<String>> responseHeaders;
+  protected int statusCode;
+  protected Map<String, List<String>> responseHeaders;
 
-  private DateFormat dateFormat;
+  protected DateFormat dateFormat;
 
   public ApiClient() {
     json = new JSON();
@@ -79,6 +80,7 @@ public class ApiClient {
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();
     authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+    authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
     authentications.put("http_basic_test", new HttpBasicAuth());
     authentications.put("petstore_auth", new OAuth());
     // Prevent the authentications from being modified.
@@ -433,12 +435,13 @@ public class ApiClient {
    *   application/json; charset=UTF8
    *   APPLICATION/JSON
    *   application/vnd.company+json
+   * "* / *" is also default to JSON
    * @param mime MIME
    * @return True if the MIME type is JSON
    */
   public boolean isJsonMime(String mime) {
     String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-    return mime != null && mime.matches(jsonMime);
+    return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
   }
 
   /**
@@ -623,7 +626,7 @@ public class ApiClient {
    *
    * @param <T> Type
    * @param path The sub-path of the HTTP URL
-   * @param method The request method, one of "GET", "POST", "PUT", and "DELETE"
+   * @param method The request method, one of "GET", "POST", "PUT", "HEAD" and "DELETE"
    * @param queryParams The query parameters
    * @param body The request body object
    * @param headerParams The header parameters
@@ -671,48 +674,58 @@ public class ApiClient {
 
     Entity<?> entity = serialize(body, formParams, contentType);
 
-    Response response;
+    Response response = null;
 
-    if ("GET".equals(method)) {
-      response = invocationBuilder.get();
-    } else if ("POST".equals(method)) {
-      response = invocationBuilder.post(entity);
-    } else if ("PUT".equals(method)) {
-      response = invocationBuilder.put(entity);
-    } else if ("DELETE".equals(method)) {
-      response = invocationBuilder.delete();
-    } else if ("PATCH".equals(method)) {
-      response = invocationBuilder.header("X-HTTP-Method-Override", "PATCH").post(entity);
-    } else {
-      throw new ApiException(500, "unknown method type " + method);
-    }
-
-    statusCode = response.getStatusInfo().getStatusCode();
-    responseHeaders = buildResponseHeaders(response);
-
-    if (response.getStatus() == Status.NO_CONTENT.getStatusCode()) {
-      return null;
-    } else if (response.getStatusInfo().getFamily() == Status.Family.SUCCESSFUL) {
-      if (returnType == null)
-        return null;
-      else
-        return deserialize(response, returnType);
-    } else {
-      String message = "error";
-      String respBody = null;
-      if (response.hasEntity()) {
-        try {
-          respBody = String.valueOf(response.readEntity(String.class));
-          message = respBody;
-        } catch (RuntimeException e) {
-          // e.printStackTrace();
-        }
+    try {
+      if ("GET".equals(method)) {
+        response = invocationBuilder.get();
+      } else if ("POST".equals(method)) {
+        response = invocationBuilder.post(entity);
+      } else if ("PUT".equals(method)) {
+        response = invocationBuilder.put(entity);
+      } else if ("DELETE".equals(method)) {
+        response = invocationBuilder.delete();
+      } else if ("PATCH".equals(method)) {
+        response = invocationBuilder.method("PATCH", entity);
+      } else if ("HEAD".equals(method)) {
+        response = invocationBuilder.head();
+      } else {
+        throw new ApiException(500, "unknown method type " + method);
       }
-      throw new ApiException(
-        response.getStatus(),
-        message,
-        buildResponseHeaders(response),
-        respBody);
+
+      statusCode = response.getStatusInfo().getStatusCode();
+      responseHeaders = buildResponseHeaders(response);
+
+      if (response.getStatus() == Status.NO_CONTENT.getStatusCode()) {
+        return null;
+      } else if (response.getStatusInfo().getFamily() == Status.Family.SUCCESSFUL) {
+        if (returnType == null)
+          return null;
+        else
+          return deserialize(response, returnType);
+      } else {
+        String message = "error";
+        String respBody = null;
+        if (response.hasEntity()) {
+          try {
+            respBody = String.valueOf(response.readEntity(String.class));
+            message = respBody;
+          } catch (RuntimeException e) {
+            // e.printStackTrace();
+          }
+        }
+        throw new ApiException(
+          response.getStatus(),
+          message,
+          buildResponseHeaders(response),
+          respBody);
+      }
+    } finally {
+      try {
+        response.close();
+      } catch (Exception e) {
+        // it's not critical, since the response object is local in method invokeAPI; that's fine, just continue
+      }
     }
   }
 
@@ -721,18 +734,27 @@ public class ApiClient {
    * @param debugging Debug setting
    * @return Client
    */
-  private Client buildHttpClient(boolean debugging) {
+  protected Client buildHttpClient(boolean debugging) {
     final ClientConfig clientConfig = new ClientConfig();
     clientConfig.register(MultiPartFeature.class);
     clientConfig.register(json);
     clientConfig.register(JacksonFeature.class);
+    clientConfig.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
     if (debugging) {
-      clientConfig.register(LoggingFilter.class);
+      clientConfig.register(new LoggingFeature(java.util.logging.Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), java.util.logging.Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, 1024*50 /* Log payloads up to 50K */));
+      clientConfig.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY, LoggingFeature.Verbosity.PAYLOAD_ANY);
+      // Set logger to ALL
+      java.util.logging.Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME).setLevel(java.util.logging.Level.ALL);
     }
+    performAdditionalClientConfiguration(clientConfig);
     return ClientBuilder.newClient(clientConfig);
   }
 
-  private Map<String, List<String>> buildResponseHeaders(Response response) {
+  protected void performAdditionalClientConfiguration(ClientConfig clientConfig) {
+    // No-op extension point
+  }
+
+  protected Map<String, List<String>> buildResponseHeaders(Response response) {
     Map<String, List<String>> responseHeaders = new HashMap<String, List<String>>();
     for (Entry<String, List<Object>> entry: response.getHeaders().entrySet()) {
       List<Object> values = entry.getValue();
@@ -750,7 +772,7 @@ public class ApiClient {
    *
    * @param authNames The authentications to apply
    */
-  private void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
+  protected void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
     for (String authName : authNames) {
       Authentication auth = authentications.get(authName);
       if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
