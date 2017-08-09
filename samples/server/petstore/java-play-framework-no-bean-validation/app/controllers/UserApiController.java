@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -39,9 +40,7 @@ public class UserApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), User.class);
 
         imp.createUser(body);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -52,9 +51,7 @@ public class UserApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
 
         imp.createUsersWithArrayInput(body);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -65,17 +62,13 @@ public class UserApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
 
         imp.createUsersWithListInput(body);
-        
         return ok();
-        
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
         imp.deleteUser(username);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -83,8 +76,6 @@ public class UserApiController extends Controller {
         User obj = imp.getUserByName(username);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -102,16 +93,12 @@ public class UserApiController extends Controller {
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
         imp.logoutUser();
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -122,8 +109,6 @@ public class UserApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), User.class);
 
         imp.updateUser(username, body);
-        
         return ok();
-        
     }
 }

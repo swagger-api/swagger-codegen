@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -39,7 +40,6 @@ public class PetApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), Pet.class);
         body.validate();
 
-
         return ok();
     }
 
@@ -53,7 +53,6 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
-
         return ok();
     }
 
@@ -65,7 +64,6 @@ public class PetApiController extends Controller {
             //noinspection UseBulkOperation
             status.add(curParam);
         }
-
         return ok();
     }
 
@@ -77,13 +75,11 @@ public class PetApiController extends Controller {
             //noinspection UseBulkOperation
             tags.add(curParam);
         }
-
         return ok();
     }
 
     @ApiAction
     public Result getPetById(Long petId) throws Exception {
-
         return ok();
     }
 
@@ -94,7 +90,6 @@ public class PetApiController extends Controller {
 
         body = mapper.readValue(nodebody.toString(), Pet.class);
         body.validate();
-
 
         return ok();
     }
@@ -117,7 +112,6 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
-
         return ok();
     }
 
@@ -132,7 +126,6 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-        
         return ok();
     }
 }

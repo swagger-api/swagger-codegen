@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -43,7 +44,5 @@ public class FakeClassnameTags123ApiController extends Controller {
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

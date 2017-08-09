@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -40,9 +41,7 @@ public class PetApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), Pet.class);
 
         imp.addPet(body);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -56,9 +55,7 @@ public class PetApiController extends Controller {
             apiKey = null;
         }
         imp.deletePet(petId, apiKey);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -72,8 +69,6 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByStatus(status);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -87,8 +82,6 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByTags(tags);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -96,8 +89,6 @@ public class PetApiController extends Controller {
         Pet obj = imp.getPetById(petId);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -108,9 +99,7 @@ public class PetApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), Pet.class);
 
         imp.updatePet(body);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -132,9 +121,7 @@ public class PetApiController extends Controller {
             status = null;
         }
         imp.updatePetWithForm(petId, name, status);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -148,10 +135,8 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-                ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
+        ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

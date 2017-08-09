@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -49,8 +50,6 @@ public class FakeApiController extends Controller {
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -68,8 +67,6 @@ public class FakeApiController extends Controller {
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -87,8 +84,6 @@ public class FakeApiController extends Controller {
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -105,8 +100,6 @@ public class FakeApiController extends Controller {
         String obj = imp.fakeOuterStringSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -121,8 +114,6 @@ public class FakeApiController extends Controller {
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -228,9 +219,7 @@ public class FakeApiController extends Controller {
             paramCallback = null;
         }
         imp.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -294,9 +283,7 @@ public class FakeApiController extends Controller {
             enumHeaderString = "-efg";
         }
         imp.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-        
         return ok();
-        
     }
 
     @ApiAction
@@ -312,8 +299,6 @@ public class FakeApiController extends Controller {
         param2 = valueparam2;
 
         imp.testJsonFormData(param, param2);
-        
         return ok();
-        
     }
 }

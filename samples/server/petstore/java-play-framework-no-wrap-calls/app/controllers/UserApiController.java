@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -40,9 +41,7 @@ public class UserApiController extends Controller {
         body.validate();
 
         imp.createUser(body);
-        
         return ok();
-        
     }
 
     
@@ -56,9 +55,7 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithArrayInput(body);
-        
         return ok();
-        
     }
 
     
@@ -72,17 +69,13 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithListInput(body);
-        
         return ok();
-        
     }
 
     
     public Result deleteUser(String username) throws Exception {
         imp.deleteUser(username);
-        
         return ok();
-        
     }
 
     
@@ -91,8 +84,6 @@ public class UserApiController extends Controller {
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -110,16 +101,12 @@ public class UserApiController extends Controller {
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
     public Result logoutUser() throws Exception {
         imp.logoutUser();
-        
         return ok();
-        
     }
 
     
@@ -131,8 +118,6 @@ public class UserApiController extends Controller {
         body.validate();
 
         imp.updateUser(username, body);
-        
         return ok();
-        
     }
 }

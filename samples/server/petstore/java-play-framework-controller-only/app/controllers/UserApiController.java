@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -38,7 +39,6 @@ public class UserApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), User.class);
         body.validate();
 
-
         return ok();
     }
 
@@ -51,7 +51,6 @@ public class UserApiController extends Controller {
         for (User curItem : body) {
             curItem.validate();
         }
-
 
         return ok();
     }
@@ -66,19 +65,16 @@ public class UserApiController extends Controller {
             curItem.validate();
         }
 
-
         return ok();
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
-
         return ok();
     }
 
     @ApiAction
     public Result getUserByName(String username) throws Exception {
-
         return ok();
     }
 
@@ -94,13 +90,11 @@ public class UserApiController extends Controller {
 
         password = valuepassword;
 
-
         return ok();
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
-
         return ok();
     }
 
@@ -111,7 +105,6 @@ public class UserApiController extends Controller {
 
         body = mapper.readValue(nodebody.toString(), User.class);
         body.validate();
-
 
         return ok();
     }
