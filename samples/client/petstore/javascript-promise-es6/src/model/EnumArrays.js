@@ -91,13 +91,13 @@ export default class EnumArrays {
          * value: ">="
          * @const
          */
-        "GREATER_THAN_OR_EQUAL_TO": ">=",
+        "": ">=",
     
         /**
          * value: "$"
          * @const
          */
-        "DOLLAR": "$"    
+        "value": "$"    
     };
 
     /**

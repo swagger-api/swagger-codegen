@@ -33,14 +33,14 @@ export default class EnumClass {
          * value: "-efg"
          * @const
          */
-        -efg = "-efg";
+        _efg = "-efg";
 
     
         /**
          * value: "(xyz)"
          * @const
          */
-        (xyz) = "(xyz)";
+        _xyz = "(xyz)";
 
     
 

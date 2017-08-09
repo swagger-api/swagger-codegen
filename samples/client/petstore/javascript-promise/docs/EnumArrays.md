@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 ## Enum: JustSymbolEnum
 
 
-* `GREATER_THAN_OR_EQUAL_TO` (value: `">="`)
+* `` (value: `">="`)
 
-* `DOLLAR` (value: `"$"`)
+* `value` (value: `"$"`)
 
 
 

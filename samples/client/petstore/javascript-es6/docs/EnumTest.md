@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 
 * `1` (value: `1`)
 
-* `-1` (value: `-1`)
+* `_1` (value: `-1`)
 
 
 
@@ -37,9 +37,9 @@ Name | Type | Description | Notes
 ## Enum: EnumNumberEnum
 
 
-* `1.1` (value: `1.1`)
+* `1_1` (value: `1.1`)
 
-* `-1.2` (value: `-1.2`)
+* `_1_2` (value: `-1.2`)
 
 
 

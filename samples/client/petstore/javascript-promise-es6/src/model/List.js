@@ -57,7 +57,7 @@ export default class List {
             
 
             if (data.hasOwnProperty('123-list')) {
-                obj['123-list'] = ApiClient.convertToType(data['123-list'], 'String');
+                obj['123-list'] = ApiClient.convertToType(data['var123-list'], 'String');
             }
         }
         return obj;
