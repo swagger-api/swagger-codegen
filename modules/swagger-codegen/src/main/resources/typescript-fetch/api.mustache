@@ -215,6 +215,8 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
 
     {{/bodyParam}}
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
     {{#hasFormParams}}
             requestOptions.body = formParams.toString();

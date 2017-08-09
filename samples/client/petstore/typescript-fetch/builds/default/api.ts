@@ -356,6 +356,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -398,6 +400,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -437,6 +441,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -476,6 +482,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -511,6 +519,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -548,6 +558,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -598,6 +610,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             headerParameter['Content-Type'] = 'application/x-www-form-urlencoded';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = formParams.toString();
 
@@ -648,6 +662,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             headerParameter['Content-Type'] = 'application/x-www-form-urlencoded';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = formParams.toString();
 
@@ -1055,6 +1071,8 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1084,6 +1102,8 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1111,6 +1131,8 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1139,6 +1161,8 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -1365,6 +1389,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -1394,6 +1420,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -1423,6 +1451,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
@@ -1451,6 +1481,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1478,6 +1510,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1517,6 +1551,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             }
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1538,6 +1574,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const queryParameter = {} as any;
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
 
             return {
@@ -1572,6 +1610,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             headerParameter['Content-Type'] = 'application/json';
 
             urlObj.query = Object.assign({}, urlObj.query, queryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete urlObj.search;
             requestOptions.headers = Object.assign({}, headerParameter, options.headers);
             requestOptions.body = JSON.stringify(body || {});
 
