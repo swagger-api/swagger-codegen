@@ -15,23 +15,25 @@ import javax.validation.constraints.*;
 {{#operations}}
 public class {{classname}}ControllerImp {{#useInterfaces}}implements {{classname}}ControllerImpInterface{{/useInterfaces}} {
 
+    {{#examples}}
     private final ObjectMapper mapper;
 
     @Inject
     private {{classname}}ControllerImp() {
         mapper = new ObjectMapper();
     }
+    {{/examples}}
 
 {{#operation}}
     {{#useInterfaces}}@Override{{/useInterfaces}}
     public {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}} {
         //Do your magic!!!
-        {{#examples}}
-        String accept = request().getHeader("Accept");
+        {{!examples}}
+        /*String accept = request().getHeader("Accept"); }}
         if (accept != null && accept.contains("{{{contentType}}}")) {
             return mapper.readValue("{{#lamdaRemoveLineBreak}}{{#lamdaEscapeDoubleQuote}}{{{example}}}{{/lamdaEscapeDoubleQuote}}{{/lamdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class);
-        }
-        {{/examples}}
+        }*/
+        {{!examples}}
         {{#returnType}}{{#isResponseFile}}return new FileInputStream("replace this");{{/isResponseFile}}{{^isResponseFile}}return new {{>returnTypesNoVoidNoAbstract}}();{{/isResponseFile}}{{/returnType}}
     }
 
