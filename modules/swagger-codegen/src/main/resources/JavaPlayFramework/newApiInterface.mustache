@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 
 {{#operations}}
 @SuppressWarnings("RedundantThrows")
-interface {{classname}}ControllerImpInterface {
+public interface {{classname}}ControllerImpInterface {
 {{#operation}}
     {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
 

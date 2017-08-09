@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import java.io.IOException;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -53,7 +52,7 @@ public class PetApiController extends Controller {
         String valueapiKey = request().getHeader("api_key");
         String apiKey;
         if (valueapiKey != null) {
-            apiKey = (String)valueapiKey;
+            apiKey = valueapiKey;
         
         } else {
             apiKey = null;
@@ -129,7 +128,7 @@ public class PetApiController extends Controller {
         String valuename = (request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
         String name;
         if (valuename != null) {
-            name = (String)valuename;
+            name = valuename;
         
         } else {
             name = null;
@@ -137,7 +136,7 @@ public class PetApiController extends Controller {
         String valuestatus = (request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
         String status;
         if (valuestatus != null) {
-            status = (String)valuestatus;
+            status = valuestatus;
         
         } else {
             status = null;
@@ -153,7 +152,7 @@ public class PetApiController extends Controller {
         String valueadditionalMetadata = (request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
         String additionalMetadata;
         if (valueadditionalMetadata != null) {
-            additionalMetadata = (String)valueadditionalMetadata;
+            additionalMetadata = valueadditionalMetadata;
         
         } else {
             additionalMetadata = null;

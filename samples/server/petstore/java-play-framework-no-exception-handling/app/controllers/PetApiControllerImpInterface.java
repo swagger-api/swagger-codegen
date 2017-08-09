@@ -12,7 +12,7 @@ import java.util.HashMap;
 import javax.validation.constraints.*;
 
 @SuppressWarnings("RedundantThrows")
-interface PetApiControllerImpInterface {
+public interface PetApiControllerImpInterface {
     void addPet(Pet body) ;
 
     void deletePet(Long petId, String apiKey) ;

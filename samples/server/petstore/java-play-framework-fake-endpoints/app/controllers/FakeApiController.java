@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import java.io.IOException;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -173,7 +172,7 @@ public class FakeApiController extends Controller {
         String valuestring = (request().body().asMultipartFormData().asFormUrlEncoded().get("string"))[0];
         String string;
         if (valuestring != null) {
-            string = (String)valuestring;
+            string = valuestring;
         
         } else {
             string = null;
@@ -181,12 +180,12 @@ public class FakeApiController extends Controller {
         String valuepatternWithoutDelimiter = (request().body().asMultipartFormData().asFormUrlEncoded().get("pattern_without_delimiter"))[0];
         String patternWithoutDelimiter;
 
-        patternWithoutDelimiter = (String)valuepatternWithoutDelimiter;
+        patternWithoutDelimiter = valuepatternWithoutDelimiter;
 
         String value_byte = (request().body().asMultipartFormData().asFormUrlEncoded().get("byte"))[0];
         byte[] _byte;
 
-        _byte = (String)value_byte;
+        _byte = value_byte;
 
         String valuebinary = (request().body().asMultipartFormData().asFormUrlEncoded().get("binary"))[0];
         byte[] binary;
@@ -215,7 +214,7 @@ public class FakeApiController extends Controller {
         String valuepassword = (request().body().asMultipartFormData().asFormUrlEncoded().get("password"))[0];
         String password;
         if (valuepassword != null) {
-            password = (String)valuepassword;
+            password = valuepassword;
         
         } else {
             password = null;
@@ -223,7 +222,7 @@ public class FakeApiController extends Controller {
         String valueparamCallback = (request().body().asMultipartFormData().asFormUrlEncoded().get("callback"))[0];
         String paramCallback;
         if (valueparamCallback != null) {
-            paramCallback = (String)valueparamCallback;
+            paramCallback = valueparamCallback;
         
         } else {
             paramCallback = null;
@@ -245,7 +244,7 @@ public class FakeApiController extends Controller {
         String valueenumQueryString = request().getQueryString("enumQueryString");
         String enumQueryString;
         if (valueenumQueryString != null) {
-            enumQueryString = (String)valueenumQueryString;
+            enumQueryString = valueenumQueryString;
         
         } else {
             enumQueryString = "-efg";
@@ -267,7 +266,7 @@ public class FakeApiController extends Controller {
         String valueenumFormString = (request().body().asMultipartFormData().asFormUrlEncoded().get("enum_form_string"))[0];
         String enumFormString;
         if (valueenumFormString != null) {
-            enumFormString = (String)valueenumFormString;
+            enumFormString = valueenumFormString;
         
         } else {
             enumFormString = "-efg";
@@ -289,7 +288,7 @@ public class FakeApiController extends Controller {
         String valueenumHeaderString = request().getHeader("enum_header_string");
         String enumHeaderString;
         if (valueenumHeaderString != null) {
-            enumHeaderString = (String)valueenumHeaderString;
+            enumHeaderString = valueenumHeaderString;
         
         } else {
             enumHeaderString = "-efg";
@@ -305,12 +304,12 @@ public class FakeApiController extends Controller {
         String valueparam = (request().body().asMultipartFormData().asFormUrlEncoded().get("param"))[0];
         String param;
 
-        param = (String)valueparam;
+        param = valueparam;
 
         String valueparam2 = (request().body().asMultipartFormData().asFormUrlEncoded().get("param2"))[0];
         String param2;
 
-        param2 = (String)valueparam2;
+        param2 = valueparam2;
 
         imp.testJsonFormData(param, param2);
         

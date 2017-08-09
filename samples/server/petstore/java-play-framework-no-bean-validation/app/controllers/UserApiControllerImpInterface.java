@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 
 @SuppressWarnings("RedundantThrows")
-interface UserApiControllerImpInterface {
+public interface UserApiControllerImpInterface {
     void createUser(User body) throws Exception;
 
     void createUsersWithArrayInput(List<User> body) throws Exception;

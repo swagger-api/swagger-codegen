@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 
 @SuppressWarnings("RedundantThrows")
-interface StoreApiControllerImpInterface {
+public interface StoreApiControllerImpInterface {
     void deleteOrder(String orderId) throws Exception;
 
     Map<String, Integer> getInventory() throws Exception;

@@ -3,7 +3,6 @@ package apimodels;
 import com.fasterxml.jackson.annotation.*;
 import java.util.Set;
 import javax.validation.*;
-import javax.validation.constraints.*;
 import java.util.Objects;
 /**
  * Describes the result of uploading an image resource

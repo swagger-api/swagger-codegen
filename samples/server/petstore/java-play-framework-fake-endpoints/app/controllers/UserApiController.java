@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import java.io.IOException;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -102,12 +101,12 @@ public class UserApiController extends Controller {
         String valueusername = request().getQueryString("username");
         String username;
 
-        username = (String)valueusername;
+        username = valueusername;
 
         String valuepassword = request().getQueryString("password");
         String password;
 
-        password = (String)valuepassword;
+        password = valuepassword;
 
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
