@@ -22,12 +22,10 @@ import swagger.SwaggerUtils.ApiAction;
 
 public class StoreApiController extends Controller {
 
-    
     private final ObjectMapper mapper;
 
     @Inject
     private StoreApiController() {
-        
         mapper = new ObjectMapper();
     }
 
