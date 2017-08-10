@@ -16,7 +16,7 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local petstore_pet_api = require "petstore.pet_api"
+local petstore_pet_api = require "petstore.api.pet_api"
 
 local petstore= {}
 local petstore_mt = {
@@ -55,12 +55,12 @@ function pet_api:add_pet(body)
     req.headers:upsert(":method", "POST")
 
     -- TODO: create a function to select proper accept
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_content_type = { "application/json", "application/xml" }
     req.headers:upsert("accept", "application/json")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -94,14 +94,14 @@ function pet_api:delete_pet(pet_id, api_key)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/%s",
-            self.basePath ,pet_id);
+            self.basePath, pet_id);
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "DELETE")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -134,14 +134,14 @@ function pet_api:find_pets_by_status(status)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/findByStatus?status=%s",
-            self.basePath ,http_util.encodeURIComponent(status));
+            self.basePath, http_util.encodeURIComponent(status));
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "GET")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -184,14 +184,14 @@ function pet_api:find_pets_by_tags(tags)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/findByTags?tags=%s",
-            self.basePath ,http_util.encodeURIComponent(tags));
+            self.basePath, http_util.encodeURIComponent(tags));
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "GET")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -234,14 +234,14 @@ function pet_api:get_pet_by_id(pet_id, size, format)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/%s?size=%s&format=%s",
-            self.basePath ,pet_id ,http_util.encodeURIComponent(size) ,http_util.encodeURIComponent(format));
+            self.basePath, pet_id, http_util.encodeURIComponent(size), http_util.encodeURIComponent(format));
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "GET")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -291,12 +291,12 @@ function pet_api:update_pet(body)
     req.headers:upsert(":method", "PUT")
 
     -- TODO: create a function to select proper accept
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_content_type = { "application/json", "application/xml" }
     req.headers:upsert("accept", "application/json")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -330,19 +330,19 @@ function pet_api:update_pet_with_form(pet_id, name, status)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/%s",
-            self.basePath ,pet_id);
+            self.basePath, pet_id);
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "POST")
 
     -- TODO: create a function to select proper accept
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_content_type = { "application/x-www-form-urlencoded" }
     req.headers:upsert("accept", "application/x-www-form-urlencoded")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -378,19 +378,19 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/pet/%s/uploadImage",
-            self.basePath ,pet_id);
+            self.basePath, pet_id);
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "POST")
 
     -- TODO: create a function to select proper accept
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_content_type = { "multipart/form-data" }
     req.headers:upsert("accept", "multipart/form-data")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/json" }
     req.headers:upsert("content-type", "application/json")
 

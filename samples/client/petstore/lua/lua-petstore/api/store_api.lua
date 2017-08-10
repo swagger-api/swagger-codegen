@@ -16,7 +16,7 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local petstore_store_api = require "petstore.store_api"
+local petstore_store_api = require "petstore.api.store_api"
 
 local petstore= {}
 local petstore_mt = {
@@ -48,14 +48,14 @@ function store_api:delete_order(order_id)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/store/order/%s",
-            self.basePath ,order_id);
+            self.basePath, order_id);
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "DELETE")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -92,7 +92,7 @@ function store_api:get_inventory()
     req.headers:upsert(":method", "GET")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/json" }
     req.headers:upsert("content-type", "application/json")
 
@@ -135,14 +135,14 @@ function store_api:get_order_by_id(order_id)
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s/store/order/%s",
-            self.basePath ,order_id);
+            self.basePath, order_id);
     })
 
     -- set HTTP verb
     req.headers:upsert(":method", "GET")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
@@ -190,7 +190,7 @@ function store_api:place_order(body)
     req.headers:upsert(":method", "POST")
 
     -- TODO: create a function to select proper content-type
-    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    -- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
     --local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
