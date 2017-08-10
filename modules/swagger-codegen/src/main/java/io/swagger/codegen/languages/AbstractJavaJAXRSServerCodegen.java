@@ -16,7 +16,6 @@ import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -139,7 +138,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         if ( operations != null ) {
             @SuppressWarnings("unchecked")
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
-            for ( CodegenOperation operation : ops ) {
+            for ( final CodegenOperation operation : ops ) {
                 boolean isMultipartPost = false;
                 List<Map<String, String>> consumes = operation.consumes;
                 if(consumes != null) {
@@ -161,23 +160,50 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 
                 List<CodegenResponse> responses = operation.responses;
                 if ( responses != null ) {
-                    for ( CodegenResponse resp : responses ) {
+                    for ( final CodegenResponse resp : responses ) {
                         if ( "0".equals(resp.code) ) {
                             resp.code = "200";
                         }
 
+                        final String responseReturnType = resp.dataType;
                          // set vendorExtensions.x-java-is-response-void to true as dataType is set to "void"
-                        if (resp.dataType == null) {
+                        if (responseReturnType == null) {
                             resp.vendorExtensions.put("x-java-is-response-void", true);
                         }
-
+                        
+                        String rt = responseReturnType;
+                        if (rt == null || rt.trim().isEmpty()) {
+                            resp.dataType = "Void";
+                            resp.baseType = "Void";
+                        } else if (rt.startsWith("List")) {
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.dataType = rt.substring("List<".length(), end).trim();
+                                resp.baseType = rt.substring("List<".length(), end).trim();
+                                resp.containerType = "List";
+                            }
+                        } else if (rt.startsWith("Map")) {
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.dataType = rt.substring("Map<".length(), end).split(",")[1].trim();
+                                resp.baseType = rt.substring("Map<".length(), end).split(",")[1].trim();
+                                resp.containerType = "Map";
+                            }
+                        } else if (rt.startsWith("Set")) {
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.dataType = rt.substring("Set<".length(), end).trim();
+                                resp.baseType = rt.substring("Set<".length(), end).trim();
+                                resp.containerType = "Set";
+                            }
+                        }
                     }
                 }
 
                 if ( operation.returnType == null ) {
                     operation.returnType = "void";
-                    // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
-                    operation.vendorExtensions.put("x-java-is-response-void", true);
+                     // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
+                     operation.vendorExtensions.put("x-java-is-response-void", true);
                 } else if ( operation.returnType.startsWith("List") ) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
@@ -191,7 +217,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                     if ( end > 0 ) {
                         operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
                         operation.returnContainer = "Map";
-                    }
+                 }
                 } else if ( operation.returnType.startsWith("Set") ) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
@@ -242,5 +268,11 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         this.useBeanValidation = useBeanValidation;
     }
 
-
+    /**
+     * Interface to set the data types for different Codegen objects.
+     */
+    private interface DataTypeAssigner {
+        void setReturnType(String returnType);
+        void setReturnContainer(String returnContainer);
+    }
 }

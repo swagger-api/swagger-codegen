@@ -18,25 +18,25 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 
 public class UserApiServiceImpl implements UserApi {
-    public Void createUser(User body) {
+    public void createUser(User body) {
         // TODO: Implement...
         
         
     }
     
-    public Void createUsersWithArrayInput(List<User> body) {
+    public void createUsersWithArrayInput(List<User> body) {
         // TODO: Implement...
         
         
     }
     
-    public Void createUsersWithListInput(List<User> body) {
+    public void createUsersWithListInput(List<User> body) {
         // TODO: Implement...
         
         
     }
     
-    public Void deleteUser(String username) {
+    public void deleteUser(String username) {
         // TODO: Implement...
         
         
@@ -54,13 +54,13 @@ public class UserApiServiceImpl implements UserApi {
         return null;
     }
     
-    public Void logoutUser() {
+    public void logoutUser() {
         // TODO: Implement...
         
         
     }
     
-    public Void updateUser(String username, User body) {
+    public void updateUser(String username, User body) {
         // TODO: Implement...
         
         

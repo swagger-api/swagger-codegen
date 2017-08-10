@@ -39,7 +39,7 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Add a new pet to the store", notes = "", response = Void.class, authorizations = {
+    @ApiOperation(value = "Add a new pet to the store", notes = "", response = void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")
@@ -55,7 +55,7 @@ public class PetApi  {
     @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, authorizations = {
+    @ApiOperation(value = "Deletes a pet", notes = "", response = void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")
@@ -79,7 +79,7 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class, responseContainer = "List") })
+        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
     public Response findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold")  @QueryParam("status") List<String> status) {
         return delegate.findPetsByStatus(status, securityContext);
     }
@@ -96,7 +96,7 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class, responseContainer = "List") })
+        @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
     public Response findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by",required=true)  @QueryParam("tags") List<String> tags) {
         return delegate.findPetsByTags(tags, securityContext);
     }
@@ -110,8 +110,8 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Pet.class),
-        @ApiResponse(code = 404, message = "Pet not found", response = Pet.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     public Response getPetById(@ApiParam(value = "ID of pet to return",required=true) @PathParam("petId") Long petId) {
         return delegate.getPetById(petId, securityContext);
     }
@@ -120,7 +120,7 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, authorizations = {
+    @ApiOperation(value = "Update an existing pet", notes = "", response = void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")
@@ -138,7 +138,7 @@ public class PetApi  {
     @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = Void.class, authorizations = {
+    @ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")

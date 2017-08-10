@@ -82,7 +82,7 @@ public class FakeApi  {
     
     @Consumes({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
     @Produces({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
-    @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = Void.class, authorizations = {
+    @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = void.class, authorizations = {
         @Authorization(value = "http_basic_test")
     }, tags={ "fake",  })
     @ApiResponses(value = { 
@@ -96,7 +96,7 @@ public class FakeApi  {
     
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = Void.class, tags={ "fake",  })
+    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = void.class, tags={ "fake",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @ApiResponse(code = 404, message = "Not found", response = Void.class) })
@@ -108,7 +108,7 @@ public class FakeApi  {
     @Path("/jsonFormData")
     @Consumes({ "application/json" })
     
-    @ApiOperation(value = "test json serialization of form data", notes = "", response = Void.class, tags={ "fake" })
+    @ApiOperation(value = "test json serialization of form data", notes = "", response = void.class, tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
     public Response testJsonFormData(@FormParam(value = "param")  String param,@FormParam(value = "param2")  String param2) {

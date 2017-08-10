@@ -18,7 +18,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 
 public class StoreApiServiceImpl implements StoreApi {
-    public Void deleteOrder(String orderId) {
+    public void deleteOrder(String orderId) {
         // TODO: Implement...
         
         

@@ -31,7 +31,7 @@ public interface StoreApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Order not found") })
-    public Void deleteOrder(@PathParam("order_id") String orderId);
+    public void deleteOrder(@PathParam("order_id") String orderId);
 
     @GET
     @Path("/store/inventory")

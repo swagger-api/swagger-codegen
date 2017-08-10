@@ -51,19 +51,19 @@ public class FakeApiServiceImpl implements FakeApi {
         return null;
     }
     
-    public Void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, Date dateTime, String password, String paramCallback) {
+    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, Date dateTime, String password, String paramCallback) {
         // TODO: Implement...
         
         
     }
     
-    public Void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) {
+    public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) {
         // TODO: Implement...
         
         
     }
     
-    public Void testJsonFormData(String param, String param2) {
+    public void testJsonFormData(String param, String param2) {
         // TODO: Implement...
         
         
