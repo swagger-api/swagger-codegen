@@ -11,26 +11,26 @@
 -- order class
 local order = {}
 local order_mt = {
-  __name = "order";
-  __index = order;
+	__name = "order";
+	__index = order;
 }
 
 local function cast_order(t)
-  return setmetatable(t, order_mt)
+	return setmetatable(t, order_mt)
 end
 
 local function new_order(id, pet_id, quantity, ship_date, status, complete)
-  return cast_order({
-    ["id"] = id;
-    ["petId"] = pet_id;
-    ["quantity"] = quantity;
-    ["shipDate"] = ship_date;
-    ["status"] = status;
-    ["complete"] = complete;
-  })
+	return cast_order({
+		["id"] = id;
+		["petId"] = pet_id;
+		["quantity"] = quantity;
+		["shipDate"] = ship_date;
+		["status"] = status;
+		["complete"] = complete;
+	})
 end
 
 return {
-  cast = cast_order;
-  new = new_order;
+	cast = cast_order;
+	new = new_order;
 }

@@ -11,26 +11,26 @@
 -- pet class
 local pet = {}
 local pet_mt = {
-  __name = "pet";
-  __index = pet;
+	__name = "pet";
+	__index = pet;
 }
 
 local function cast_pet(t)
-  return setmetatable(t, pet_mt)
+	return setmetatable(t, pet_mt)
 end
 
 local function new_pet(id, category, name, photo_urls, tags, status)
-  return cast_pet({
-    ["id"] = id;
-    ["category"] = category;
-    ["name"] = name;
-    ["photoUrls"] = photo_urls;
-    ["tags"] = tags;
-    ["status"] = status;
-  })
+	return cast_pet({
+		["id"] = id;
+		["category"] = category;
+		["name"] = name;
+		["photoUrls"] = photo_urls;
+		["tags"] = tags;
+		["status"] = status;
+	})
 end
 
 return {
-  cast = cast_pet;
-  new = new_pet;
+	cast = cast_pet;
+	new = new_pet;
 }

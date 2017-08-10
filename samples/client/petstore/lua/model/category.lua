@@ -11,22 +11,22 @@
 -- category class
 local category = {}
 local category_mt = {
-  __name = "category";
-  __index = category;
+	__name = "category";
+	__index = category;
 }
 
 local function cast_category(t)
-  return setmetatable(t, category_mt)
+	return setmetatable(t, category_mt)
 end
 
 local function new_category(id, name)
-  return cast_category({
-    ["id"] = id;
-    ["name"] = name;
-  })
+	return cast_category({
+		["id"] = id;
+		["name"] = name;
+	})
 end
 
 return {
-  cast = cast_category;
-  new = new_category;
+	cast = cast_category;
+	new = new_category;
 }

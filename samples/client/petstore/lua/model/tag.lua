@@ -11,22 +11,22 @@
 -- tag class
 local tag = {}
 local tag_mt = {
-  __name = "tag";
-  __index = tag;
+	__name = "tag";
+	__index = tag;
 }
 
 local function cast_tag(t)
-  return setmetatable(t, tag_mt)
+	return setmetatable(t, tag_mt)
 end
 
 local function new_tag(id, name)
-  return cast_tag({
-    ["id"] = id;
-    ["name"] = name;
-  })
+	return cast_tag({
+		["id"] = id;
+		["name"] = name;
+	})
 end
 
 return {
-  cast = cast_tag;
-  new = new_tag;
+	cast = cast_tag;
+	new = new_tag;
 }

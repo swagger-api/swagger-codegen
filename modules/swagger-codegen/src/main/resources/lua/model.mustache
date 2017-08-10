@@ -4,25 +4,25 @@
 -- {{classname}} class
 local {{classname}} = {}
 local {{classname}}_mt = {
-  __name = "{{classname}}";
-  __index = {{classname}};
+	__name = "{{classname}}";
+	__index = {{classname}};
 }
 
 local function cast_{{classname}}(t)
-  return setmetatable(t, {{classname}}_mt)
+	return setmetatable(t, {{classname}}_mt)
 end
 
 local function new_{{classname}}({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}})
-  return cast_{{classname}}({
-    {{#vars}}
-    ["{{baseName}}"] = {{name}};
-    {{/vars}}
-  })
+	return cast_{{classname}}({
+		{{#vars}}
+		["{{baseName}}"] = {{name}};
+		{{/vars}}
+	})
 end
 
 return {
-  cast = cast_{{classname}};
-  new = new_{{classname}};
+	cast = cast_{{classname}};
+	new = new_{{classname}};
 }
 {{/model}}
 {{/models}}
