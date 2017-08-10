@@ -120,7 +120,7 @@ function {{classname}}:{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, 
 		{{^returnTypeIsPrimitive}}
 		{{#isListContainer}}
 		for _, ob in ipairs(result) do
-			{{{packageName}}}_{{returnType}}.cast(ob)
+			cast_{{returnType}}(ob)
 		end
 		return result, headers
 		{{/isListContainer}}

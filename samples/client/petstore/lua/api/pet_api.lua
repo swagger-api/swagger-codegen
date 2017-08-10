@@ -161,7 +161,7 @@ function pet_api:find_pets_by_status(status)
 			return nil, err3
 		end
 		for _, ob in ipairs(result) do
-			petstore_pet.cast(ob)
+			cast_pet(ob)
 		end
 		return result, headers
 	else
@@ -212,7 +212,7 @@ function pet_api:find_pets_by_tags(tags)
 			return nil, err3
 		end
 		for _, ob in ipairs(result) do
-			petstore_pet.cast(ob)
+			cast_pet(ob)
 		end
 		return result, headers
 	else
