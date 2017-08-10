@@ -12,7 +12,7 @@ local {{{packageName}}}_{{classname}} = require "{{{packageName}}}.api.{{classna
 
 local {{{packageName}}}= {}
 local {{{packageName}}}_mt = {
-  __name = "{{{packageNameHyphen}}}";
+  __name = "{{{classname}}}";
   __index = {{{packageName}}};
 }
 
@@ -22,7 +22,6 @@ local function new_{{classname}}(host, basePath, schemes)
     schemes_map[v] = v
   end
   local default_scheme = schemes_map.https or schemes_map.http
-  -- TODO: default basePath to {{{basePath}}}
   return setmetatable({
     host = host;
     basePath = basePath or "{{{basePath}}}";

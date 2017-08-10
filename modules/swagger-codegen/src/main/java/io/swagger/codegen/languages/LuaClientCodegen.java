@@ -444,7 +444,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
+        return input.replace("]]", "] ]");
     }
 
     public Map<String, String> createMapping(String key, String value){
