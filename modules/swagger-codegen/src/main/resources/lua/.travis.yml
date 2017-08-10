@@ -1,8 +1,6 @@
-language: go
+language: lua
 
 install:
-  - go get -d -v .
 
 script:
-  - go build -v ./
 
