@@ -12,6 +12,7 @@
 
 local http_request = require "http.request"
 local http_util = require "http.util"
+local url_encode = require "http.util".encodeURIComponent
 local dkjson = require "dkjson"
 
 // model import
@@ -35,28 +36,39 @@ local function new_store_api(host, basePath, schemes)
     basePath = basePath or "http://petstore.swagger.io/v2";
     schemes = schemes_map;
     default_scheme = default_scheme;
+    http_username = '';
+    http_password = '';
+    api_key = {}
+    access_token = '';
   }, petstore_mt)
+end
+
+// for base64 encoding
+local function base64_encode(s)
+   local byte, rep = string.byte, string.rep
+   local pad = 2 - ((#s-1) % 3)
+   s = (s..rep('\0', pad)):gsub("...", function(cs)
+      local a, b, c = byte(cs, 1, 3)
+      return bs[a>>2] .. bs[(a&3)<<4|b>>4] .. bs[(b&15)<<2|c>>6] .. bs[c&63]
+   end)
+   return s:sub(1, #s-pad) .. rep('=', pad)
 end
 
 function store_api:delete_order(order_id)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s/store/order/%s", self.basePath ,order_id);
+        path = string.format("%s/store/order/%s",
+            self.basePath ,order_id);
     })
 
     // set HTTP verb
     req.headers:upsert(":method", "DELETE")
 
-    // TODO: create a function to select proper accept
-    local var_accept = {  }
-    req.headers:upsert("accept", )
-
     // TODO: create a function to select proper content-type
-    local var_accept = { "application/xml", "application/json" }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
-
-
 
 
 
@@ -83,25 +95,21 @@ function store_api:get_inventory()
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s/store/inventory", self.basePath);
+        path = string.format("%s/store/inventory",
+            self.basePath);
     })
 
     // set HTTP verb
     req.headers:upsert(":method", "GET")
 
-    // TODO: create a function to select proper accept
-    local var_accept = {  }
-    req.headers:upsert("accept", )
-
     // TODO: create a function to select proper content-type
-    local var_accept = { "application/json" }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_accept = { "application/json" }
     req.headers:upsert("content-type", "application/json")
 
 
-
-
-    //TODO 'api_key'
     // api key in headers 'api_key'
+    req.headers.upsert("api_key", api_key['api_key'])
 
     // make the HTTP call
     local headers, stream, errno = req:go()
@@ -137,21 +145,17 @@ function store_api:get_order_by_id(order_id)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s/store/order/%s", self.basePath ,order_id);
+        path = string.format("%s/store/order/%s",
+            self.basePath ,order_id);
     })
 
     // set HTTP verb
     req.headers:upsert(":method", "GET")
 
-    // TODO: create a function to select proper accept
-    local var_accept = {  }
-    req.headers:upsert("accept", )
-
     // TODO: create a function to select proper content-type
-    local var_accept = { "application/xml", "application/json" }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
-
-
 
 
 
@@ -189,22 +193,20 @@ function store_api:place_order(body)
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s/store/order", self.basePath);
+        path = string.format("%s/store/order",
+            self.basePath);
     })
 
     // set HTTP verb
     req.headers:upsert(":method", "POST")
 
-    // TODO: create a function to select proper accept
-    local var_accept = {  }
-    req.headers:upsert("accept", )
-
     // TODO: create a function to select proper content-type
-    local var_accept = { "application/xml", "application/json" }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_accept = { "application/xml", "application/json" }
     req.headers:upsert("content-type", "application/xml")
 
 
-
+	req:set_body(dkjson.encode(body))
 
 
     // make the HTTP call

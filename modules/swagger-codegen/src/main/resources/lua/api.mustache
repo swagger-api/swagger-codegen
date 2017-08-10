@@ -4,6 +4,7 @@
 {{#operations}}
 local http_request = require "http.request"
 local http_util = require "http.util"
+local url_encode = require "http.util".encodeURIComponent
 local dkjson = require "dkjson"
 
 // model import
@@ -27,7 +28,22 @@ local function new_{{classname}}(host, basePath, schemes)
     basePath = basePath or "{{{basePath}}}";
     schemes = schemes_map;
     default_scheme = default_scheme;
+    http_username = '';
+    http_password = '';
+    api_key = {}
+    access_token = '';
   }, {{{packageName}}}_mt)
+end
+
+// for base64 encoding
+local function base64_encode(s)
+   local byte, rep = string.byte, string.rep
+   local pad = 2 - ((#s-1) % 3)
+   s = (s..rep('\0', pad)):gsub("...", function(cs)
+      local a, b, c = byte(cs, 1, 3)
+      return bs[a>>2] .. bs[(a&3)<<4|b>>4] .. bs[(b&15)<<2|c>>6] .. bs[c&63]
+   end)
+   return s:sub(1, #s-pad) .. rep('=', pad)
 end
 
 {{#operation}}
@@ -35,20 +51,27 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
-        path = string.format("%s{{{vendorExtensions.x-codegen-path}}}", self.basePath{{#pathParams}} ,{{paramName}}{{/pathParams}});
+        path = string.format("%s{{{vendorExtensions.x-codegen-path}}}{{#queryParams}}{{#-first}}?{{/-first}}{{{baseName}}}=%s{{^-last}}&{{/-last}}{{/queryParams}}",
+            self.basePath{{#pathParams}} ,{{paramName}}{{/pathParams}}{{#queryParams}} ,url_encode({{paramName}}){{/queryParams}});
     })
 
     // set HTTP verb
     req.headers:upsert(":method", "{{httpMethod}}")
 
+    {{#hasConsumes}}
     // TODO: create a function to select proper accept
-    local var_accept = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_content_type = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
     req.headers:upsert("accept", {{#consumes}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/consumes}})
 
+    {{/hasConsumes}}
+    {{#hasProduces}}
     // TODO: create a function to select proper content-type
-    local var_accept = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }
+    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    //local var_accept = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }
     req.headers:upsert("content-type", {{#produces}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/produces}})
 
+    {{/hasProduces}}
     {{#headerParams}}
     req.headers:upsert("{{baseName}}", {{paramName}})
     {{/headerParams}}
@@ -62,26 +85,27 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     }))
     {{/-last}}
     {{/formParams}}
+    {{#bodyParams}}
+	req:set_body(dkjson.encode({{paramName}}))
 
-    {{#queryParams}}
-    // TODO query params {{paramName}} ({{baseName}})
-    {{/queryParams}}
-
+    {{/bodyParams}}
     {{#authMethods}}
     {{#isApiKey}}
-    //TODO '{{keyParamName}}'
     {{#isKeyInHeader}}
     // api key in headers '{{keyParamName}}'
+    req.headers.upsert("{{{name}}}", api_key['{{{keyParamName}}}'])
     {{/isKeyInHeader}}
     {{#isKeyInQuery}}
-    /// api key in query '{{keyParamName}}'
+    /// TODO: api key in query '{{keyParamName}}'
     {{/isKeyInQuery}}
     {{/isApiKey}}
     {{#isBasic}}
-    // TODO HTTP basic auth
+    // HTTP basic auth
+    req.headers.upsert("Authorization", base64_encode(self.http_username .. " " .. self.http_password))
     {{/isBasic}}
     {{#isOAuth}}
-    // TODO oauth
+    // oAuth
+    req.headers.upsert("Authorization", "Bearer " .. self.access_token)
     {{/isOAuth}}
     {{/authMethods}}
 

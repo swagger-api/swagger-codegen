@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_pet_by_id**
-> pet get_pet_by_id(ctx, pet_id)
+> pet get_pet_by_id(ctx, pet_id, optional)
 Find pet by ID
 
 Returns a single pet
@@ -147,6 +147,16 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context containing the authentication | nil if no authentication
   **pet_id** | **number**| ID of pet to return | 
+ **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a map[string]interface{}.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pet_id** | **number**| ID of pet to return | 
+ **size** | **number**| size | 
+ **format** | **string**| format | 
 
 ### Return type
 
