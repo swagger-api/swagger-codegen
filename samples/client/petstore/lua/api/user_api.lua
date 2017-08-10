@@ -52,12 +52,10 @@ function user_api:create_user(body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 	req:set_body(dkjson.encode(body))
 
@@ -91,12 +89,10 @@ function user_api:create_users_with_array_input(body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 	req:set_body(dkjson.encode(body))
 
@@ -130,12 +126,10 @@ function user_api:create_users_with_list_input(body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 	req:set_body(dkjson.encode(body))
 
@@ -169,12 +163,10 @@ function user_api:delete_user(username)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -206,12 +198,10 @@ function user_api:get_user_by_name(username)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -254,12 +244,10 @@ function user_api:login_user(username, password)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -302,12 +290,10 @@ function user_api:logout_user()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -339,12 +325,10 @@ function user_api:update_user(username, body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "PUT")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 	req:set_body(dkjson.encode(body))
 

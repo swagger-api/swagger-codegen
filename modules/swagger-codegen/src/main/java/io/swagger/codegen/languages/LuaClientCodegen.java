@@ -315,11 +315,11 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if(p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "{}";
+            return getTypeDeclaration(inner);
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "{}";
+            return getTypeDeclaration(inner);
         }
 
         // Not using the supertype invocation, because we want to UpperCamelize

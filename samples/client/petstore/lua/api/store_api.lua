@@ -52,12 +52,10 @@ function store_api:delete_order(order_id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "DELETE")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -89,12 +87,10 @@ function store_api:get_inventory()
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/json" }
 	req.headers:upsert("content-type", "application/json")
-
 
 	-- api key in headers 'api_key'
 	req.headers:upsert("api_key", api_key['api_key'])
@@ -117,7 +113,7 @@ function store_api:get_inventory()
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_{}.cast(result), headers
+		return result, headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -139,12 +135,10 @@ function store_api:get_order_by_id(order_id)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 
 	-- make the HTTP call
@@ -187,12 +181,10 @@ function store_api:place_order(body)
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "POST")
-
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
-
 
 	req:set_body(dkjson.encode(body))
 
