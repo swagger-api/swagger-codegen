@@ -68,7 +68,7 @@ function pet_api:add_pet(body)
     req:set_body(dkjson.encode(body))
 
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -108,7 +108,7 @@ function pet_api:delete_pet(pet_id, api_key)
     req.headers:upsert("api_key", api_key)
 
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -147,7 +147,7 @@ function pet_api:find_pets_by_status(status)
 
 
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -197,7 +197,7 @@ function pet_api:find_pets_by_tags(tags)
 
 
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -304,7 +304,7 @@ function pet_api:update_pet(body)
     req:set_body(dkjson.encode(body))
 
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -352,7 +352,7 @@ function pet_api:update_pet_with_form(pet_id, name, status)
         ["status"] = status;
     }))
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()
@@ -400,7 +400,7 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
         ["file"] = file;
     }))
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
 
     -- make the HTTP call
     local headers, stream, errno = req:go()

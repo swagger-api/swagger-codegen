@@ -90,11 +90,11 @@ function {{classname}}:{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, 
     {{/isApiKey}}
     {{#isBasic}}
     -- HTTP basic auth
-    req.readers:upsert("Authorization", "Basic " .. basexx.to_base64(self.http_username .. " " .. self.http_password))
+    req.readers:upsert("authorization", "Basic " .. basexx.to_base64(self.http_username .. " " .. self.http_password))
     {{/isBasic}}
     {{#isOAuth}}
     -- oAuth
-    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
+    req.headers:upsert("authorization", "Bearer " .. self.access_token)
     {{/isOAuth}}
     {{/authMethods}}
 
