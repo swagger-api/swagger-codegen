@@ -175,11 +175,11 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator;
+        return outputFolder + File.separator + "api" + File.separator;
     }
 
     public String modelFileFolder() {
-        return outputFolder + File.separator;
+        return outputFolder + File.separator + "model" + File.separator;
     }
 
     @Override

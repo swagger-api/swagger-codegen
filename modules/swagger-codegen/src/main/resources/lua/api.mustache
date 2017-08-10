@@ -1,13 +1,13 @@
 {{>partial_header}}
-//package {{packageName}}
+--package {{packageName}}
 
 {{#operations}}
 local http_request = require "http.request"
 local http_util = require "http.util"
-local url_encode = require "http.util".encodeURIComponent
 local dkjson = require "dkjson"
+local basexx = require "basexx"
 
-// model import
+-- model import
 local {{{packageName}}}_{{classname}} = require "{{{packageName}}}.{{classname}}"
 
 local {{{packageName}}}= {}
@@ -22,53 +22,42 @@ local function new_{{classname}}(host, basePath, schemes)
     schemes_map[v] = v
   end
   local default_scheme = schemes_map.https or schemes_map.http
-  // TODO: default basePath to {{{basePath}}}
+  -- TODO: default basePath to {{{basePath}}}
   return setmetatable({
     host = host;
     basePath = basePath or "{{{basePath}}}";
     schemes = schemes_map;
     default_scheme = default_scheme;
-    http_username = '';
-    http_password = '';
+    http_username = nil;
+    http_password = nil;
     api_key = {}
-    access_token = '';
+    access_token = nil;
   }, {{{packageName}}}_mt)
 end
 
-// for base64 encoding
-local function base64_encode(s)
-   local byte, rep = string.byte, string.rep
-   local pad = 2 - ((#s-1) % 3)
-   s = (s..rep('\0', pad)):gsub("...", function(cs)
-      local a, b, c = byte(cs, 1, 3)
-      return bs[a>>2] .. bs[(a&3)<<4|b>>4] .. bs[(b&15)<<2|c>>6] .. bs[c&63]
-   end)
-   return s:sub(1, #s-pad) .. rep('=', pad)
-end
-
 {{#operation}}
-function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}})
+function {{classname}}:{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     local req = http_request.new_from_uri({
         scheme = self.default_scheme;
         host = self.host;
         path = string.format("%s{{{vendorExtensions.x-codegen-path}}}{{#queryParams}}{{#-first}}?{{/-first}}{{{baseName}}}=%s{{^-last}}&{{/-last}}{{/queryParams}}",
-            self.basePath{{#pathParams}} ,{{paramName}}{{/pathParams}}{{#queryParams}} ,url_encode({{paramName}}){{/queryParams}});
+            self.basePath{{#pathParams}} ,{{paramName}}{{/pathParams}}{{#queryParams}} ,http_util.encodeURIComponent({{paramName}}){{/queryParams}});
     })
 
-    // set HTTP verb
+    -- set HTTP verb
     req.headers:upsert(":method", "{{httpMethod}}")
 
     {{#hasConsumes}}
-    // TODO: create a function to select proper accept
-    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-    //local var_content_type = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
+    -- TODO: create a function to select proper accept
+    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    --local var_content_type = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
     req.headers:upsert("accept", {{#consumes}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/consumes}})
 
     {{/hasConsumes}}
     {{#hasProduces}}
-    // TODO: create a function to select proper content-type
-    // ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-    //local var_accept = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }
+    -- TODO: create a function to select proper content-type
+    -- ref: https:--github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
+    --local var_accept = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }
     req.headers:upsert("content-type", {{#produces}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/produces}})
 
     {{/hasProduces}}
@@ -86,30 +75,30 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     {{/-last}}
     {{/formParams}}
     {{#bodyParams}}
-	req:set_body(dkjson.encode({{paramName}}))
+    req:set_body(dkjson.encode({{paramName}}))
 
     {{/bodyParams}}
     {{#authMethods}}
     {{#isApiKey}}
     {{#isKeyInHeader}}
-    // api key in headers '{{keyParamName}}'
-    req.headers.upsert("{{{name}}}", api_key['{{{keyParamName}}}'])
+    -- api key in headers '{{keyParamName}}'
+    req.headers:upsert("{{{name}}}", api_key['{{{keyParamName}}}'])
     {{/isKeyInHeader}}
     {{#isKeyInQuery}}
-    /// TODO: api key in query '{{keyParamName}}'
+    -- TODO: api key in query '{{keyParamName}}'
     {{/isKeyInQuery}}
     {{/isApiKey}}
     {{#isBasic}}
-    // HTTP basic auth
-    req.headers.upsert("Authorization", base64_encode(self.http_username .. " " .. self.http_password))
+    -- HTTP basic auth
+    req.readers:upsert("Authorization", "Basic " .. basexx.to_base64(self.http_username .. " " .. self.http_password))
     {{/isBasic}}
     {{#isOAuth}}
-    // oAuth
-    req.headers.upsert("Authorization", "Bearer " .. self.access_token)
+    -- oAuth
+    req.headers:upsert("Authorization", "Bearer " .. self.access_token)
     {{/isOAuth}}
     {{/authMethods}}
 
-    // make the HTTP call
+    -- make the HTTP call
     local headers, stream, errno = req:go()
     if not headers then
         return nil, stream, errno
@@ -118,13 +107,13 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
     if http_status:sub(1,1) == "2" then
         {{#returnType}}
         local body, err, errno2 = stream:get_body_as_string()
-        // exception when getting the HTTP body
+        -- exception when getting the HTTP body
         if not body then
             return nil, err, errno2
         end
         stream:shutdown()
         local result, _, err3 = dkjson.decode(body)
-        // exception when decoding the HTTP body
+        -- exception when decoding the HTTP body
         if result == nil then
             return nil, err3
         end
@@ -144,7 +133,7 @@ function {{classname}}:{{operationId}}({{#allParams}}{{#required}}{{paramName}}{
             return nil, err, errno2
         end
         stream:shutdown()
-        // return the error message (http body)
+        -- return the error message (http body)
         return nil, http_status, body
     end
 end
