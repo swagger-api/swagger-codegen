@@ -262,7 +262,7 @@ function pet_api:get_pet_by_id(pet_id)
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_pet.cast(result), headers
+		return cast_pet(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -409,7 +409,7 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_api_response.cast(result), headers
+		return cast_api_response(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then

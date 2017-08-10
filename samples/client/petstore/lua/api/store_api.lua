@@ -159,7 +159,7 @@ function store_api:get_order_by_id(order_id)
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_order.cast(result), headers
+		return cast_order(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -207,7 +207,7 @@ function store_api:place_order(body)
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_order.cast(result), headers
+		return cast_order(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then

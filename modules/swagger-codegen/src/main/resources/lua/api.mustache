@@ -129,7 +129,7 @@ function {{classname}}:{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, 
 		{{/isMapContainer}}
 		{{^isMapContainer}}
 		{{^isListContainer}}
-		return {{{packageName}}}_{{returnType}}.cast(result), headers
+		return cast_{{returnType}}(result), headers
 		{{/isListContainer}}
 		{{/isMapContainer}}
 		{{/returnTypeIsPrimitive}}

@@ -222,7 +222,7 @@ function user_api:get_user_by_name(username)
 		if result == nil then
 			return nil, err3
 		end
-		return petstore_user.cast(result), headers
+		return cast_user(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
