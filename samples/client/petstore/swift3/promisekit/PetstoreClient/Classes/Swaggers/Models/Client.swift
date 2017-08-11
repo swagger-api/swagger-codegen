@@ -8,12 +8,16 @@
 import Foundation
 
 
-open class Client: JSONEncodable {
+open class Client: NSObject, NSCoding ,JSONEncodable {
 
     public var client: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.client = aDecoder.decodeObject(forKey: "client") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -21,5 +25,9 @@ open class Client: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(client, forKey: "client")
     }
 }

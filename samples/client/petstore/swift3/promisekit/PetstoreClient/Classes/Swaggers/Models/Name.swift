@@ -9,15 +9,22 @@ import Foundation
 
 
 /** Model for testing model name same as property name */
-open class Name: JSONEncodable {
+open class Name: NSObject, NSCoding ,JSONEncodable {
 
     public var name: Int32?
     public var snakeCase: Int32?
     public var property: String?
     public var _123Number: Int32?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.name = aDecoder.decodeObject(forKey: "name") as? Int32
+        self.snakeCase = aDecoder.decodeObject(forKey: "snakeCase") as? Int32
+        self.property = aDecoder.decodeObject(forKey: "property") as? String
+        self._123Number = aDecoder.decodeObject(forKey: "_123Number") as? Int32
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -28,5 +35,12 @@ open class Name: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(snakeCase, forKey: "snakeCase")
+        aCoder.encode(property, forKey: "property")
+        aCoder.encode(_123Number, forKey: "_123Number")
     }
 }

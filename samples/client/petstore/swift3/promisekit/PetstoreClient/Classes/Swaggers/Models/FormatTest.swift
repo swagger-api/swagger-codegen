@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class FormatTest: JSONEncodable {
+open class FormatTest: NSObject, NSCoding ,JSONEncodable {
 
     public var integer: Int32?
     public var int32: Int32?
@@ -24,8 +24,24 @@ open class FormatTest: JSONEncodable {
     public var uuid: UUID?
     public var password: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.integer = aDecoder.decodeObject(forKey: "integer") as? Int32
+        self.int32 = aDecoder.decodeObject(forKey: "int32") as? Int32
+        self.int64 = aDecoder.decodeObject(forKey: "int64") as? Int64
+        self.number = aDecoder.decodeObject(forKey: "number") as? Double
+        self.float = aDecoder.decodeObject(forKey: "float") as? Float
+        self.double = aDecoder.decodeObject(forKey: "double") as? Double
+        self.string = aDecoder.decodeObject(forKey: "string") as? String
+        self.byte = aDecoder.decodeObject(forKey: "byte") as? Data
+        self.binary = aDecoder.decodeObject(forKey: "binary") as? Data
+        self.date = aDecoder.decodeObject(forKey: "date") as? ISOFullDate
+        self.dateTime = aDecoder.decodeObject(forKey: "dateTime") as? Date
+        self.uuid = aDecoder.decodeObject(forKey: "uuid") as? UUID
+        self.password = aDecoder.decodeObject(forKey: "password") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -45,5 +61,21 @@ open class FormatTest: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(integer, forKey: "integer")
+        aCoder.encode(int32, forKey: "int32")
+        aCoder.encode(int64, forKey: "int64")
+        aCoder.encode(number, forKey: "number")
+        aCoder.encode(float, forKey: "float")
+        aCoder.encode(double, forKey: "double")
+        aCoder.encode(string, forKey: "string")
+        aCoder.encode(byte, forKey: "byte")
+        aCoder.encode(binary, forKey: "binary")
+        aCoder.encode(date, forKey: "date")
+        aCoder.encode(dateTime, forKey: "dateTime")
+        aCoder.encode(uuid, forKey: "uuid")
+        aCoder.encode(password, forKey: "password")
     }
 }

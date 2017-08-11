@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class OuterComposite: JSONEncodable {
+open class OuterComposite: NSObject, NSCoding ,JSONEncodable {
 
     public var myNumber: OuterNumber?
     public var myString: OuterString?
@@ -20,6 +20,12 @@ open class OuterComposite: JSONEncodable {
         self.myString = myString
         self.myBoolean = myBoolean
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.myNumber = aDecoder.decodeObject(forKey: "myNumber") as? OuterNumber
+        self.myString = aDecoder.decodeObject(forKey: "myString") as? OuterString
+        self.myBoolean = aDecoder.decodeObject(forKey: "myBoolean") as? OuterBoolean
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -29,5 +35,11 @@ open class OuterComposite: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(myNumber, forKey: "myNumber")
+        aCoder.encode(myString, forKey: "myString")
+        aCoder.encode(myBoolean, forKey: "myBoolean")
     }
 }

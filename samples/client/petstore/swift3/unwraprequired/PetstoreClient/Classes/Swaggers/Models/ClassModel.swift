@@ -9,13 +9,17 @@ import Foundation
 
 
 /** Model for testing model with \&quot;_class\&quot; property */
-open class ClassModel: JSONEncodable {
+open class ClassModel: NSObject, NSCoding ,JSONEncodable {
 
     public var _class: String?
 
 
     public init(_class: String?=nil) {
         self._class = _class
+    }
+
+    public required init?(coder aDecoder: NSCoder){
+        self._class = aDecoder.decodeObject(forKey: "_class") as? String
     }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
@@ -24,5 +28,9 @@ open class ClassModel: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(_class, forKey: "_class")
     }
 }

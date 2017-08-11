@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class Animal: JSONEncodable {
+open class Animal: NSObject, NSCoding ,JSONEncodable {
 
     public var className: String
     public var color: String?
@@ -18,6 +18,11 @@ open class Animal: JSONEncodable {
         self.className = className
         self.color = color
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.className = aDecoder.decodeObject(forKey: "className") as? String
+        self.color = aDecoder.decodeObject(forKey: "color") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -26,5 +31,10 @@ open class Animal: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(className, forKey: "className")
+        aCoder.encode(color, forKey: "color")
     }
 }

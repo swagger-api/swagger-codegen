@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class EnumArrays: JSONEncodable {
+open class EnumArrays: NSObject, NSCoding ,JSONEncodable {
 
     public enum JustSymbol: String { 
         case greaterThanOrEqualTo = ">="
@@ -26,6 +26,11 @@ open class EnumArrays: JSONEncodable {
         self.justSymbol = justSymbol
         self.arrayEnum = arrayEnum
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.justSymbol = aDecoder.decodeObject(forKey: "justSymbol") as? JustSymbol
+        self.arrayEnum = aDecoder.decodeObject(forKey: "arrayEnum") as? [ArrayEnum]
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -34,5 +39,10 @@ open class EnumArrays: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(justSymbol, forKey: "justSymbol")
+        aCoder.encode(arrayEnum, forKey: "arrayEnum")
     }
 }

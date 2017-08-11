@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class MapTest: JSONEncodable {
+open class MapTest: NSObject, NSCoding ,JSONEncodable {
 
     public enum MapOfEnumString: String { 
         case upper = "UPPER"
@@ -22,6 +22,11 @@ open class MapTest: JSONEncodable {
         self.mapMapOfString = mapMapOfString
         self.mapOfEnumString = mapOfEnumString
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.mapMapOfString = aDecoder.decodeObject(forKey: "mapMapOfString") as? [String:[String:String]]
+        self.mapOfEnumString = aDecoder.decodeObject(forKey: "mapOfEnumString") as? [String:String]
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -29,5 +34,10 @@ open class MapTest: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(mapMapOfString, forKey: "mapMapOfString")
+        aCoder.encode(mapOfEnumString, forKey: "mapOfEnumString")
     }
 }

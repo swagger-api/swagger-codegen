@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class Order: JSONEncodable {
+open class Order: NSObject, NSCoding ,JSONEncodable {
 
     public enum Status: String { 
         case placed = "placed"
@@ -23,8 +23,17 @@ open class Order: JSONEncodable {
     public var status: Status?
     public var complete: Bool?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.id = aDecoder.decodeObject(forKey: "id") as? Int64
+        self.petId = aDecoder.decodeObject(forKey: "petId") as? Int64
+        self.quantity = aDecoder.decodeObject(forKey: "quantity") as? Int32
+        self.shipDate = aDecoder.decodeObject(forKey: "shipDate") as? Date
+        self.status = aDecoder.decodeObject(forKey: "status") as? Status
+        self.complete = aDecoder.decodeObject(forKey: "complete") as? Bool
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -37,5 +46,14 @@ open class Order: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(petId, forKey: "petId")
+        aCoder.encode(quantity, forKey: "quantity")
+        aCoder.encode(shipDate, forKey: "shipDate")
+        aCoder.encode(status, forKey: "status")
+        aCoder.encode(complete, forKey: "complete")
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 
-open class Tag: JSONEncodable {
+open class Tag: NSObject, NSCoding ,JSONEncodable {
 
     public var id: Int64?
     public var name: String?
@@ -18,6 +18,11 @@ open class Tag: JSONEncodable {
         self.id = id
         self.name = name
     }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.id = aDecoder.decodeObject(forKey: "id") as? Int64
+        self.name = aDecoder.decodeObject(forKey: "name") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -26,5 +31,10 @@ open class Tag: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(name, forKey: "name")
     }
 }

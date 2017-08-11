@@ -8,12 +8,16 @@
 import Foundation
 
 
-open class SpecialModelName: JSONEncodable {
+open class SpecialModelName: NSObject, NSCoding ,JSONEncodable {
 
     public var specialPropertyName: Int64?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.specialPropertyName = aDecoder.decodeObject(forKey: "specialPropertyName") as? Int64
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -21,5 +25,9 @@ open class SpecialModelName: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(specialPropertyName, forKey: "specialPropertyName")
     }
 }

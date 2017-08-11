@@ -8,12 +8,16 @@
 import Foundation
 
 
-open class List: JSONEncodable {
+open class List: NSObject, NSCoding ,JSONEncodable {
 
     public var _123List: String?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self._123List = aDecoder.decodeObject(forKey: "_123List") as? String
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -21,5 +25,9 @@ open class List: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(_123List, forKey: "_123List")
     }
 }

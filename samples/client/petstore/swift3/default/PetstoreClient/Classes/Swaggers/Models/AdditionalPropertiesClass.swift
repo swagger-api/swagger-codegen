@@ -8,13 +8,18 @@
 import Foundation
 
 
-open class AdditionalPropertiesClass: JSONEncodable {
+open class AdditionalPropertiesClass: NSObject, NSCoding ,JSONEncodable {
 
     public var mapProperty: [String:String]?
     public var mapOfMapProperty: [String:[String:String]]?
 
-    public init() {}
+    public override init() {}
 
+
+    public required init?(coder aDecoder: NSCoder){
+        self.mapProperty = aDecoder.decodeObject(forKey: "mapProperty") as? [String:String]
+        self.mapOfMapProperty = aDecoder.decodeObject(forKey: "mapOfMapProperty") as? [String:[String:String]]
+    }
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
@@ -23,5 +28,10 @@ open class AdditionalPropertiesClass: JSONEncodable {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(mapProperty, forKey: "mapProperty")
+        aCoder.encode(mapOfMapProperty, forKey: "mapOfMapProperty")
     }
 }

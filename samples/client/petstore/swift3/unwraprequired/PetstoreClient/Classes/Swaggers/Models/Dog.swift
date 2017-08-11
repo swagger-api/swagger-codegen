@@ -8,13 +8,17 @@
 import Foundation
 
 
-open class Dog: Animal {
+open class Dog: NSObject, NSCoding Animal {
 
     public var breed: String?
 
 
     public init(className: String, color: String?=nil, breed: String?=nil) {
         self.breed = breed
+    }
+
+    public required init?(coder aDecoder: NSCoder){
+        self.breed = aDecoder.decodeObject(forKey: "breed") as? String
     }
     // MARK: JSONEncodable
     override open func encodeToJSON() -> Any {
@@ -23,5 +27,9 @@ open class Dog: Animal {
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(breed, forKey: "breed")
     }
 }
