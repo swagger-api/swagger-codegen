@@ -20,6 +20,7 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
+import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractScalaCodegen extends DefaultCodegen {
 
@@ -182,6 +183,25 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    protected String formatIdentifier(String name, boolean capitalized) {
+        String identifier = camelize(sanitizeName(name), true);
+        if (capitalized) {
+            identifier = StringUtils.capitalize(identifier);
+        }
+        if (identifier.matches("[a-zA-Z_$][\\w_$]+") && !isReservedWord(identifier)) {
+            return identifier;
+        }
+        return escapeReservedWord(identifier);
+    }
+
+    protected String stripPackageName(String input) {
+        if(StringUtils.isEmpty(input) || input.lastIndexOf(".") < 0)
+            return input;
+
+        int lastIndexOfDot = input.lastIndexOf(".");
+        return input.substring(lastIndexOfDot + 1);
     }
 
 }
