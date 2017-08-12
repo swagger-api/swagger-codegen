@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.*;
+import retrofit2.Response;
 
 public interface StoreApi {
   /**
@@ -25,7 +27,7 @@ public interface StoreApi {
    * @return Call&lt;Void&gt;
    */
   @DELETE("store/order/{order_id}")
-  Call<Void> deleteOrder(
+  CompletionStage<Response<Void>> deleteOrder(
     @retrofit2.http.Path("order_id") String orderId
   );
 
@@ -35,7 +37,7 @@ public interface StoreApi {
    * @return Call&lt;Map&lt;String, Integer&gt;&gt;
    */
   @GET("store/inventory")
-  Call<Map<String, Integer>> getInventory();
+  CompletionStage<Response<Map<String, Integer>>> getInventory();
     
 
   /**
@@ -45,7 +47,7 @@ public interface StoreApi {
    * @return Call&lt;Order&gt;
    */
   @GET("store/order/{order_id}")
-  Call<Order> getOrderById(
+  CompletionStage<Response<Order>> getOrderById(
     @retrofit2.http.Path("order_id") Long orderId
   );
 
@@ -56,7 +58,7 @@ public interface StoreApi {
    * @return Call&lt;Order&gt;
    */
   @POST("store/order")
-  Call<Order> placeOrder(
+  CompletionStage<Response<Order>> placeOrder(
     @retrofit2.http.Body Order body
   );
 

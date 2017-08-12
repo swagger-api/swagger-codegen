@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.*;
+import retrofit2.Response;
 
 public interface FakeApi {
   /**
@@ -29,7 +31,7 @@ public interface FakeApi {
    * @return Call&lt;Boolean&gt;
    */
   @POST("fake/outer/boolean")
-  Call<Boolean> fakeOuterBooleanSerialize(
+  CompletionStage<Response<Boolean>> fakeOuterBooleanSerialize(
     @retrofit2.http.Body Boolean body
   );
 
@@ -40,7 +42,7 @@ public interface FakeApi {
    * @return Call&lt;OuterComposite&gt;
    */
   @POST("fake/outer/composite")
-  Call<OuterComposite> fakeOuterCompositeSerialize(
+  CompletionStage<Response<OuterComposite>> fakeOuterCompositeSerialize(
     @retrofit2.http.Body OuterComposite body
   );
 
@@ -51,7 +53,7 @@ public interface FakeApi {
    * @return Call&lt;BigDecimal&gt;
    */
   @POST("fake/outer/number")
-  Call<BigDecimal> fakeOuterNumberSerialize(
+  CompletionStage<Response<BigDecimal>> fakeOuterNumberSerialize(
     @retrofit2.http.Body BigDecimal body
   );
 
@@ -62,7 +64,7 @@ public interface FakeApi {
    * @return Call&lt;String&gt;
    */
   @POST("fake/outer/string")
-  Call<String> fakeOuterStringSerialize(
+  CompletionStage<Response<String>> fakeOuterStringSerialize(
     @retrofit2.http.Body String body
   );
 
@@ -76,7 +78,7 @@ public interface FakeApi {
     "Content-Type:application/json"
   })
   @PATCH("fake")
-  Call<Client> testClientModel(
+  CompletionStage<Response<Client>> testClientModel(
     @retrofit2.http.Body Client body
   );
 
@@ -101,7 +103,7 @@ public interface FakeApi {
    */
   @retrofit2.http.FormUrlEncoded
   @POST("fake")
-  Call<Void> testEndpointParameters(
+  CompletionStage<Response<Void>> testEndpointParameters(
     @retrofit2.http.Field("number") BigDecimal number, @retrofit2.http.Field("double") Double _double, @retrofit2.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit2.http.Field("byte") byte[] _byte, @retrofit2.http.Field("integer") Integer integer, @retrofit2.http.Field("int32") Integer int32, @retrofit2.http.Field("int64") Long int64, @retrofit2.http.Field("float") Float _float, @retrofit2.http.Field("string") String string, @retrofit2.http.Field("binary") byte[] binary, @retrofit2.http.Field("date") LocalDate date, @retrofit2.http.Field("dateTime") DateTime dateTime, @retrofit2.http.Field("password") String password, @retrofit2.http.Field("callback") String paramCallback
   );
 
@@ -120,7 +122,7 @@ public interface FakeApi {
    */
   @retrofit2.http.FormUrlEncoded
   @GET("fake")
-  Call<Void> testEnumParameters(
+  CompletionStage<Response<Void>> testEnumParameters(
     @retrofit2.http.Field("enum_form_string_array") List<String> enumFormStringArray, @retrofit2.http.Field("enum_form_string") String enumFormString, @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit2.http.Header("enum_header_string") String enumHeaderString, @retrofit2.http.Query("enum_query_string_array") CSVParams enumQueryStringArray, @retrofit2.http.Query("enum_query_string") String enumQueryString, @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger, @retrofit2.http.Field("enum_query_double") Double enumQueryDouble
   );
 

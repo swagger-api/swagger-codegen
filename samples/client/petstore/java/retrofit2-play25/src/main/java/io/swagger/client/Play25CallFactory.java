@@ -101,14 +101,6 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
             final Call call = this;
             final CompletionStage<WSResponse> promise = executeAsync();
 
-            promise.thenAcceptAsync(wsResponse -> {
-                    try {
-                        responseCallback.onResponse(call, PlayWSCall.this.toWSResponse(wsResponse));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }, play.libs.concurrent.HttpExecution.defaultContext());
-                    
             promise.whenCompleteAsync((v, t) -> {
                 if (t != null) {
                     if (t instanceof IOException) {
@@ -116,9 +108,14 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
                     } else {
                         responseCallback.onFailure(call, new IOException(t));
                     }
+                } else {
+                    try {
+                        responseCallback.onResponse(call, PlayWSCall.this.toWSResponse(v));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }, play.libs.concurrent.HttpExecution.defaultContext());
-
         }
 
         CompletionStage<WSResponse> executeAsync() {
@@ -148,7 +145,11 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
             Buffer buffer = new Buffer();
             request.body().writeTo(buffer);
             wsRequest.setBody(buffer.inputStream());
-            wsRequest.setContentType(request.body().contentType().toString());
+            
+            MediaType mediaType = request.body().contentType();
+            if (mediaType != null) {
+                wsRequest.setContentType(mediaType.toString());
+            }
         }
 
         private Response toWSResponse(final WSResponse r) {

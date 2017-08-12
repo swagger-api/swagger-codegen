@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.*;
+import retrofit2.Response;
 
 public interface UserApi {
   /**
@@ -25,7 +27,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @POST("user")
-  Call<Void> createUser(
+  CompletionStage<Response<Void>> createUser(
     @retrofit2.http.Body User body
   );
 
@@ -36,7 +38,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @POST("user/createWithArray")
-  Call<Void> createUsersWithArrayInput(
+  CompletionStage<Response<Void>> createUsersWithArrayInput(
     @retrofit2.http.Body List<User> body
   );
 
@@ -47,7 +49,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @POST("user/createWithList")
-  Call<Void> createUsersWithListInput(
+  CompletionStage<Response<Void>> createUsersWithListInput(
     @retrofit2.http.Body List<User> body
   );
 
@@ -58,7 +60,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @DELETE("user/{username}")
-  Call<Void> deleteUser(
+  CompletionStage<Response<Void>> deleteUser(
     @retrofit2.http.Path("username") String username
   );
 
@@ -69,7 +71,7 @@ public interface UserApi {
    * @return Call&lt;User&gt;
    */
   @GET("user/{username}")
-  Call<User> getUserByName(
+  CompletionStage<Response<User>> getUserByName(
     @retrofit2.http.Path("username") String username
   );
 
@@ -81,7 +83,7 @@ public interface UserApi {
    * @return Call&lt;String&gt;
    */
   @GET("user/login")
-  Call<String> loginUser(
+  CompletionStage<Response<String>> loginUser(
     @retrofit2.http.Query("username") String username, @retrofit2.http.Query("password") String password
   );
 
@@ -91,7 +93,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @GET("user/logout")
-  Call<Void> logoutUser();
+  CompletionStage<Response<Void>> logoutUser();
     
 
   /**
@@ -102,7 +104,7 @@ public interface UserApi {
    * @return Call&lt;Void&gt;
    */
   @PUT("user/{username}")
-  Call<Void> updateUser(
+  CompletionStage<Response<Void>> updateUser(
     @retrofit2.http.Path("username") String username, @retrofit2.http.Body User body
   );
 
