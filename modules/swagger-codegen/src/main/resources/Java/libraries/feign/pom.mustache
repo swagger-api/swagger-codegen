@@ -212,11 +212,37 @@
       <artifactId>jackson-databind</artifactId>
       <version>${jackson-version}</version>
     </dependency>
+    {{#withXml}}
+
+    <!-- XML Support -->
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-{{^java8}}joda{{/java8}}{{#java8}}jsr310{{/java8}}</artifactId>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
       <version>${jackson-version}</version>
     </dependency>
+
+    {{/withXml}}
+    {{#joda}}
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-joda</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    {{/joda}}
+    {{#java8}}
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    {{/java8}}
+    {{#threetenbp}}
+    <dependency>
+      <groupId>com.github.joschi.jackson</groupId>
+      <artifactId>jackson-datatype-threetenbp</artifactId>
+      <version>${jackson-threetenbp-version}</version>
+    </dependency>
+    {{/threetenbp}}
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
       <artifactId>org.apache.oltu.oauth2.client</artifactId>
@@ -247,10 +273,13 @@
     <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <swagger-core-version>1.5.12</swagger-core-version>
+    <swagger-core-version>1.5.15</swagger-core-version>
     <feign-version>9.4.0</feign-version>
     <feign-form-version>2.1.0</feign-form-version>
-    <jackson-version>2.8.7</jackson-version>
+    <jackson-version>2.8.9</jackson-version>
+    {{#threetenbp}}
+    <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
+    {{/threetenbp}}
     <junit-version>4.12</junit-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <oltu-version>1.0.1</oltu-version>

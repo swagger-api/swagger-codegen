@@ -23,6 +23,30 @@ Then install it via:
 npm install swagger_petstore --save
 ```
 
+##### Local development
+
+To use the library locally without publishing to a remote npm registry, first install the dependencies by changing 
+into the directory containing `package.json` (and this README). Let's call this `JAVASCRIPT_CLIENT_DIR`. Then run:
+
+```shell
+npm install
+```
+
+Next, [link](https://docs.npmjs.com/cli/link) it globally in npm with the following, also from `JAVASCRIPT_CLIENT_DIR`:
+
+```shell
+npm link
+```
+
+Finally, switch to the directory you want to use your swagger_petstore from, and run:
+
+```shell
+npm link /path/to/<JAVASCRIPT_CLIENT_DIR>
+```
+
+You should now be able to `require('swagger_petstore')` in javascript files from the directory you ran the last 
+command above from.
+
 #### git
 #
 If the library is hosted at a git repository, e.g.
@@ -37,13 +61,32 @@ then install it via:
 
 The library also works in the browser environment via npm and [browserify](http://browserify.org/). After following
 the above steps with Node.js and installing browserify with `npm install -g browserify`,
-perform the following (assuming *main.js* is your entry file):
+perform the following (assuming *main.js* is your entry file, that's to say your javascript file where you actually 
+use this library):
 
 ```shell
 browserify main.js > bundle.js
 ```
 
 Then include *bundle.js* in the HTML pages.
+
+### Webpack Configuration
+
+Using Webpack you may encounter the following error: "Module not found: Error:
+Cannot resolve module", most certainly you should disable AMD loader. Add/merge
+the following section to your webpack config:
+
+```javascript
+module: {
+  rules: [
+    {
+      parser: {
+        amd: false
+      }
+    }
+  ]
+}
+```
 
 ## Getting Started
 
@@ -82,6 +125,8 @@ Class | Method | HTTP request | Description
 *SwaggerPetstore.FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *SwaggerPetstore.FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *SwaggerPetstore.FakeApi* | [**testEnumParameters**](docs/FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
+*SwaggerPetstore.FakeApi* | [**testJsonFormData**](docs/FakeApi.md#testJsonFormData) | **GET** /fake/jsonFormData | test json serialization of form data
+*SwaggerPetstore.Fake_classname_tags123Api* | [**testClassname**](docs/Fake_classname_tags123Api.md#testClassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *SwaggerPetstore.PetApi* | [**addPet**](docs/PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 *SwaggerPetstore.PetApi* | [**deletePet**](docs/PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
 *SwaggerPetstore.PetApi* | [**findPetsByStatus**](docs/PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
@@ -152,6 +197,12 @@ Class | Method | HTTP request | Description
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
+
+### api_key_query
+
+- **Type**: API key
+- **API key parameter name**: api_key_query
+- **Location**: URL query string
 
 ### http_basic_test
 

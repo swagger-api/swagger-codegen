@@ -29,7 +29,7 @@ SWGUserApi::SWGUserApi(QString host, QString basePath) {
 }
 
 void
-SWGUserApi::createUser(SWGUser body) {
+SWGUserApi::createUser(User body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user");
 
@@ -43,6 +43,10 @@ SWGUserApi::createUser(SWGUser body) {
     input.request_body.append(output);
     
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -72,7 +76,7 @@ SWGUserApi::createUserCallback(HttpRequestWorker * worker) {
 }
 
 void
-SWGUserApi::createUsersWithArrayInput(QList<SWGUser*>* body) {
+SWGUserApi::createUsersWithArrayInput(QList<User*>* body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/createWithArray");
 
@@ -91,6 +95,10 @@ SWGUserApi::createUsersWithArrayInput(QList<SWGUser*>* body) {
     input.request_body.append(bytes);
 
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -120,7 +128,7 @@ SWGUserApi::createUsersWithArrayInputCallback(HttpRequestWorker * worker) {
 }
 
 void
-SWGUserApi::createUsersWithListInput(QList<SWGUser*>* body) {
+SWGUserApi::createUsersWithListInput(QList<User*>* body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/createWithList");
 
@@ -139,6 +147,10 @@ SWGUserApi::createUsersWithListInput(QList<SWGUser*>* body) {
     input.request_body.append(bytes);
 
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -183,6 +195,10 @@ SWGUserApi::deleteUser(QString* username) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -226,6 +242,10 @@ SWGUserApi::getUserByName(QString* username) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -249,7 +269,7 @@ SWGUserApi::getUserByNameCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    SWGUser* output = static_cast<SWGUser*>(create(json, QString("SWGUser")));
+    User* output = static_cast<User*>(create(json, QString("User")));
     worker->deleteLater();
 
     emit getUserByNameSignal(output);
@@ -285,6 +305,10 @@ SWGUserApi::loginUser(QString* username, QString* password) {
 
 
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -330,6 +354,10 @@ SWGUserApi::logoutUser() {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -358,7 +386,7 @@ SWGUserApi::logoutUserCallback(HttpRequestWorker * worker) {
 }
 
 void
-SWGUserApi::updateUser(QString* username, SWGUser body) {
+SWGUserApi::updateUser(QString* username, User body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/{username}");
 
@@ -374,6 +402,10 @@ SWGUserApi::updateUser(QString* username, SWGUser body) {
     input.request_body.append(output);
     
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
