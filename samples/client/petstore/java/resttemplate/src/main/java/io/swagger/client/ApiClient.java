@@ -24,6 +24,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.threeten.bp.*;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,6 +111,7 @@ public class ApiClient {
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
         authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+        authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
         authentications.put("http_basic_test", new HttpBasicAuth());
         authentications.put("petstore_auth", new OAuth());
         // Prevent the authentications from being modified.
@@ -303,6 +309,12 @@ public class ApiClient {
      */
     public ApiClient setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
+        for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
+            if(converter instanceof AbstractJackson2HttpMessageConverter){
+                ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
+                mapper.setDateFormat(dateFormat);
+            }
+        }
         return this;
     }
     
@@ -400,6 +412,11 @@ public class ApiClient {
     * @return boolean true if the MediaType represents JSON, false otherwise
     */
     public boolean isJsonMime(String mediaType) {
+        // "* / *" is default to JSON
+        if ("*/*".equals(mediaType)) {
+            return true;
+        }
+
         try {
             return isJsonMime(MediaType.parseMediaType(mediaType));
         } catch (InvalidMediaTypeException e) {
@@ -551,6 +568,16 @@ public class ApiClient {
      */
     protected RestTemplate buildRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
+        for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
+            if(converter instanceof AbstractJackson2HttpMessageConverter){
+                ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
+                ThreeTenModule module = new ThreeTenModule();
+                module.addDeserializer(Instant.class, CustomInstantDeserializer.INSTANT);
+                module.addDeserializer(OffsetDateTime.class, CustomInstantDeserializer.OFFSET_DATE_TIME);
+                module.addDeserializer(ZonedDateTime.class, CustomInstantDeserializer.ZONED_DATE_TIME);
+                mapper.registerModule(module);
+            }
+        }
         // This allows us to read the response more than once - Necessary for debugging.
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         return restTemplate;

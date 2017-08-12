@@ -29,7 +29,7 @@ SWGPetApi::SWGPetApi(QString host, QString basePath) {
 }
 
 void
-SWGPetApi::addPet(SWGPet body) {
+SWGPetApi::addPet(Pet body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/pet");
 
@@ -43,6 +43,10 @@ SWGPetApi::addPet(SWGPet body) {
     input.request_body.append(output);
     
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -86,7 +90,13 @@ SWGPetApi::deletePet(qint64 pet_id, QString* api_key) {
 
 
 
-    // TODO: add header support
+    if (api_key != nullptr) {
+        input.headers.insert("api_key", "api_key");
+    }
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -171,6 +181,10 @@ SWGPetApi::findPetsByStatus(QList<QString*>* status) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -192,14 +206,14 @@ SWGPetApi::findPetsByStatusCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    QList<SWGPet*>* output = new QList<SWGPet*>();
+    QList<Pet*>* output = new QList<Pet*>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
 
     foreach(QJsonValue obj, jsonArray) {
-        SWGPet* o = new SWGPet();
+        Pet* o = new Pet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
@@ -268,6 +282,10 @@ SWGPetApi::findPetsByTags(QList<QString*>* tags) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -289,14 +307,14 @@ SWGPetApi::findPetsByTagsCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    QList<SWGPet*>* output = new QList<SWGPet*>();
+    QList<Pet*>* output = new QList<Pet*>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
 
     foreach(QJsonValue obj, jsonArray) {
-        SWGPet* o = new SWGPet();
+        Pet* o = new Pet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
@@ -325,6 +343,10 @@ SWGPetApi::getPetById(qint64 pet_id) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -348,7 +370,7 @@ SWGPetApi::getPetByIdCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
+    Pet* output = static_cast<Pet*>(create(json, QString("Pet")));
     worker->deleteLater();
 
     emit getPetByIdSignal(output);
@@ -356,7 +378,7 @@ SWGPetApi::getPetByIdCallback(HttpRequestWorker * worker) {
 }
 
 void
-SWGPetApi::updatePet(SWGPet body) {
+SWGPetApi::updatePet(Pet body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/pet");
 
@@ -370,6 +392,10 @@ SWGPetApi::updatePet(SWGPet body) {
     input.request_body.append(output);
     
 
+
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
 
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
@@ -420,6 +446,10 @@ SWGPetApi::updatePetWithForm(qint64 pet_id, QString* name, QString* status) {
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -469,6 +499,10 @@ SWGPetApi::uploadFile(qint64 pet_id, QString* additional_metadata, SWGHttpReques
 
 
 
+    foreach(QString key, this->defaultHeaders.keys()) {
+        input.headers.insert(key, this->defaultHeaders.value(key));
+    }
+
     connect(worker,
             &HttpRequestWorker::on_execution_finished,
             this,
@@ -492,7 +526,7 @@ SWGPetApi::uploadFileCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
+    ApiResponse* output = static_cast<ApiResponse*>(create(json, QString("ApiResponse")));
     worker->deleteLater();
 
     emit uploadFileSignal(output);

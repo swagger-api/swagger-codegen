@@ -10,6 +10,8 @@ import io.swagger.util.Json;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
 
@@ -49,7 +51,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         additionalProperties.put(CONFIG_PACKAGE, configPackage);
         additionalProperties.put(BASE_PACKAGE, basePackage);
-
+        additionalProperties.put("java8", true);
         additionalProperties.put("jackson", "true");
 
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
@@ -104,39 +106,33 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         if (additionalProperties.containsKey(CONTROLLER_ONLY)) {
             this.setControllerOnly(convertPropertyToBoolean(CONTROLLER_ONLY));
-        } else {
-            writePropertyBack(CONTROLLER_ONLY, controllerOnly);
         }
+        writePropertyBack(CONTROLLER_ONLY, controllerOnly);
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
-        } else {
-            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
+        writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
 
         if (additionalProperties.containsKey(USE_INTERFACES)) {
             this.setUseInterfaces(convertPropertyToBoolean(USE_INTERFACES));
-        } else {
-            writePropertyBack(USE_INTERFACES, useInterfaces);
         }
+        writePropertyBack(USE_INTERFACES, useInterfaces);
 
         if (additionalProperties.containsKey(HANDLE_EXCEPTIONS)) {
             this.setHandleExceptions(convertPropertyToBoolean(HANDLE_EXCEPTIONS));
-        } else {
-            writePropertyBack(HANDLE_EXCEPTIONS, handleExceptions);
         }
+        writePropertyBack(HANDLE_EXCEPTIONS, handleExceptions);
 
         if (additionalProperties.containsKey(WRAP_CALLS)) {
             this.setWrapCalls(convertPropertyToBoolean(WRAP_CALLS));
-        } else {
-            writePropertyBack(WRAP_CALLS, wrapCalls);
         }
+        writePropertyBack(WRAP_CALLS, wrapCalls);
 
         if (additionalProperties.containsKey(USE_SWAGGER_UI)) {
             this.setUseSwaggerUI(convertPropertyToBoolean(USE_SWAGGER_UI));
-        } else {
-            writePropertyBack(USE_SWAGGER_UI, useSwaggerUI);
         }
+        writePropertyBack(USE_SWAGGER_UI, useSwaggerUI);
 
         //We don't use annotation anymore
         importMapping.remove("ApiModelProperty");
@@ -157,6 +153,9 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         supportingFiles.add(new SupportingFile("routes.mustache", "conf", "routes"));
 
         //App/Utils folder
+        if (!this.controllerOnly && this.useInterfaces) {
+            supportingFiles.add(new SupportingFile("module.mustache", "app", "Module.java"));
+        }
         supportingFiles.add(new SupportingFile("swaggerUtils.mustache", "app/swagger", "SwaggerUtils.java"));
         if (this.handleExceptions) {
             supportingFiles.add(new SupportingFile("errorHandler.mustache", "app/swagger", "ErrorHandler.java"));
@@ -177,9 +176,9 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         apiTemplateFiles.put("newApiController.mustache", "Controller.java");
         if (!this.controllerOnly) {
             apiTemplateFiles.put("newApi.mustache", "ControllerImp.java");
-        }
-        if (this.useInterfaces) {
-            apiTemplateFiles.put("newApiInterface.mustache", "ControllerImpInterface.java");
+            if (this.useInterfaces) {
+                apiTemplateFiles.put("newApiInterface.mustache", "ControllerImpInterface.java");
+            }
         }
 
         additionalProperties.put("javaVersion", "1.8");
@@ -264,8 +263,12 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                     }
                 }
 
-                if (operation.path.contains("{")) {
-                    operation.path = operation.path.replace("{", ":").replace("}", "");
+                Pattern pathVariableMatcher = Pattern.compile("\\{([^}]+)}");
+                Matcher match = pathVariableMatcher.matcher(operation.path);
+                while (match.find()) {
+                    String completeMatch = match.group();
+                    String replacement = ":" + camelize(match.group(1), true);
+                    operation.path = operation.path.replace(completeMatch, replacement);
                 }
 
                 if (operation.returnType != null) {
@@ -274,6 +277,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                         int end = rt.lastIndexOf(">");
                         if (end > 0) {
                             operation.returnType = rt.substring("List<".length(), end).trim();
+                            operation.returnTypeIsPrimitive = languageSpecificPrimitives().contains(operation.returnType) || operation.returnType == null;
                             operation.returnContainer = "List";
                         }
                     } else if (operation.returnType.startsWith("Map")) {
@@ -281,6 +285,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                         int end = rt.lastIndexOf(">");
                         if (end > 0) {
                             operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
+                            operation.returnTypeIsPrimitive = languageSpecificPrimitives().contains(operation.returnType) || operation.returnType == null;
                             operation.returnContainer = "Map";
                         }
                     } else if (operation.returnType.startsWith("Set")) {
@@ -288,6 +293,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                         int end = rt.lastIndexOf(">");
                         if (end > 0) {
                             operation.returnType = rt.substring("Set<".length(), end).trim();
+                            operation.returnTypeIsPrimitive = languageSpecificPrimitives().contains(operation.returnType) || operation.returnType == null;
                             operation.returnContainer = "Set";
                         }
                     }

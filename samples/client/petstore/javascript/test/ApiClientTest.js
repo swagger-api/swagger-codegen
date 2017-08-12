@@ -14,7 +14,8 @@ describe('ApiClient', function() {
       expect(apiClient.authentications).to.eql({
         petstore_auth: {type: 'oauth2'},
         http_basic_test: {type: 'basic'},
-        api_key: {type: 'apiKey', 'in': 'header', name: 'api_key'}
+        api_key: {type: 'apiKey', 'in': 'header', name: 'api_key'},
+        api_key_query: {type: 'apiKey', 'in': 'query', name: 'api_key_query'},
       /* commented out the following as these fake security def (testing purpose)
        * has been removed from the spec, we'll add it back after updating the
        * petstore server
@@ -377,6 +378,7 @@ function makeDumbRequest(apiClient, opts) {
   var httpMethod = opts.httpMethod || 'GET';
   var pathParams = opts.pathParams || {};
   var queryParams = opts.queryParams || {};
+  var collectionQueryParams = opts.collectionQueryParams || {};
   var headerParams = opts.headerParams || {};
   var formParams = opts.formParams || {};
   var bodyParam = opts.bodyParam;
@@ -384,7 +386,7 @@ function makeDumbRequest(apiClient, opts) {
   var contentTypes = opts.contentTypes || [];
   var accepts = opts.accepts || [];
   var callback = opts.callback;
-  return apiClient.callApi(path, httpMethod, pathParams, queryParams,
+  return apiClient.callApi(path, httpMethod, pathParams, queryParams, collectionQueryParams,
     headerParams, formParams, bodyParam, authNames, contentTypes, accepts,
     callback
   );
