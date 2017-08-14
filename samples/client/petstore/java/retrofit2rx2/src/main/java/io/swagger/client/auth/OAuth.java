@@ -112,7 +112,7 @@ public class OAuth implements Interceptor {
             Response response = chain.proceed(rb.build());
 
             // 401/403 most likely indicates that access token has expired. Unless it happens two times in a row.
-            if ( response != null && (response.code() == HTTP_UNAUTHORIZED | response.code() == HTTP_FORBIDDEN) && updateTokenAndRetryOnAuthorizationFailure ) {
+            if ( response != null && (response.code() == HTTP_UNAUTHORIZED || response.code() == HTTP_FORBIDDEN) && updateTokenAndRetryOnAuthorizationFailure ) {
                 if (updateAccessToken(requestAccessToken)) {
                     return retryingIntercept( chain, false );
                 }
