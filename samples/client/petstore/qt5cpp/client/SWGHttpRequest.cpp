@@ -262,6 +262,9 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
     // prepare connection
 
     QNetworkRequest request = QNetworkRequest(QUrl(input->url_str));
+    if (HttpRequestWorker::sslDefaultConfiguration != nullptr) {
+        request.setSslConfiguration(*HttpRequestWorker::sslDefaultConfiguration);
+    }
     request.setRawHeader("User-Agent", "Swagger-Client");
     foreach(QString key, input->headers.keys()) {
         request.setRawHeader(key.toStdString().c_str(), input->headers.value(key).toStdString().c_str());
@@ -320,5 +323,7 @@ void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
 
     emit on_execution_finished(this);
 }
+QSslConfiguration* HttpRequestWorker::sslDefaultConfiguration;
+
 
 }

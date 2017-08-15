@@ -115,6 +115,7 @@ SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
     }
 
 
+    QMap<QString, qint32>* output;  // TODO add primitive output support
     QMap<QString, qint32>* output = new QMap<QString, qint32>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
@@ -123,7 +124,7 @@ SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
 
     foreach(QString key, obj.keys()) {
         qint32* val;
-        setValue(&val, obj[key], "QMap", "");
+        setValue(&val, obj[key], "qint32", "");
         output->insert(key, *val);
     }
     worker->deleteLater();
