@@ -611,7 +611,17 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
             example = "new Date(\"" + escapeText(example) + "\")";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
-            example = "new " + moduleName + "." + type + "()";
+            //example = "new " + moduleName + "." + type + "()";
+
+            /* API-2772
+             * Since models have been removed from the SDK, the examples shouldn't reference them. This will
+             * display something like
+             *  var body = {}; // Object | User
+             * instead of 
+             *  var body = new platformClient.UpdateUser(); // UpdateUser | User
+             */
+            example = "{}";
+            p.dataType = "Object";
         }
 
         if (example == null) {
