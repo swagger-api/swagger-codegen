@@ -75,6 +75,7 @@ SWGStoreApi::deleteOrderCallback(HttpRequestWorker * worker) {
         emit deleteOrderSignal();
     } else {
         emit deleteOrderSignalE(error_type, error_str);
+        emit deleteOrderSignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -136,6 +137,7 @@ SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
         emit getInventorySignal(output);
     } else {
         emit getInventorySignalE(output, error_type, error_str);
+        emit getInventorySignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -182,18 +184,19 @@ SWGStoreApi::getOrderByIdCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    Order* output = static_cast<Order*>(create(json, QString("Order")));
+    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
         emit getOrderByIdSignal(output);
     } else {
         emit getOrderByIdSignalE(output, error_type, error_str);
+        emit getOrderByIdSignalEFull(worker, error_type, error_str);
     }
 }
 
 void
-SWGStoreApi::placeOrder(Order body) {
+SWGStoreApi::placeOrder(SWGOrder body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/store/order");
 
@@ -235,13 +238,14 @@ SWGStoreApi::placeOrderCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    Order* output = static_cast<Order*>(create(json, QString("Order")));
+    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
         emit placeOrderSignal(output);
     } else {
         emit placeOrderSignalE(output, error_type, error_str);
+        emit placeOrderSignalEFull(worker, error_type, error_str);
     }
 }
 

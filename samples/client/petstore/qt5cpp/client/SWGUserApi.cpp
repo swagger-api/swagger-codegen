@@ -29,7 +29,7 @@ SWGUserApi::SWGUserApi(QString host, QString basePath) {
 }
 
 void
-SWGUserApi::createUser(User body) {
+SWGUserApi::createUser(SWGUser body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user");
 
@@ -75,11 +75,12 @@ SWGUserApi::createUserCallback(HttpRequestWorker * worker) {
         emit createUserSignal();
     } else {
         emit createUserSignalE(error_type, error_str);
+        emit createUserSignalEFull(worker, error_type, error_str);
     }
 }
 
 void
-SWGUserApi::createUsersWithArrayInput(QList<User*>* body) {
+SWGUserApi::createUsersWithArrayInput(QList<SWGUser*>* body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/createWithArray");
 
@@ -130,11 +131,12 @@ SWGUserApi::createUsersWithArrayInputCallback(HttpRequestWorker * worker) {
         emit createUsersWithArrayInputSignal();
     } else {
         emit createUsersWithArrayInputSignalE(error_type, error_str);
+        emit createUsersWithArrayInputSignalEFull(worker, error_type, error_str);
     }
 }
 
 void
-SWGUserApi::createUsersWithListInput(QList<User*>* body) {
+SWGUserApi::createUsersWithListInput(QList<SWGUser*>* body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/createWithList");
 
@@ -185,6 +187,7 @@ SWGUserApi::createUsersWithListInputCallback(HttpRequestWorker * worker) {
         emit createUsersWithListInputSignal();
     } else {
         emit createUsersWithListInputSignalE(error_type, error_str);
+        emit createUsersWithListInputSignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -235,6 +238,7 @@ SWGUserApi::deleteUserCallback(HttpRequestWorker * worker) {
         emit deleteUserSignal();
     } else {
         emit deleteUserSignalE(error_type, error_str);
+        emit deleteUserSignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -281,13 +285,14 @@ SWGUserApi::getUserByNameCallback(HttpRequestWorker * worker) {
 
 
     QString json(worker->response);
-    User* output = static_cast<User*>(create(json, QString("User")));
+    SWGUser* output = static_cast<SWGUser*>(create(json, QString("SWGUser")));
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
         emit getUserByNameSignal(output);
     } else {
         emit getUserByNameSignalE(output, error_type, error_str);
+        emit getUserByNameSignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -355,6 +360,7 @@ SWGUserApi::loginUserCallback(HttpRequestWorker * worker) {
         emit loginUserSignal(output);
     } else {
         emit loginUserSignalE(output, error_type, error_str);
+        emit loginUserSignalEFull(worker, error_type, error_str);
     }
 }
 
@@ -403,11 +409,12 @@ SWGUserApi::logoutUserCallback(HttpRequestWorker * worker) {
         emit logoutUserSignal();
     } else {
         emit logoutUserSignalE(error_type, error_str);
+        emit logoutUserSignalEFull(worker, error_type, error_str);
     }
 }
 
 void
-SWGUserApi::updateUser(QString* username, User body) {
+SWGUserApi::updateUser(QString* username, SWGUser body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/user/{username}");
 
@@ -455,6 +462,7 @@ SWGUserApi::updateUserCallback(HttpRequestWorker * worker) {
         emit updateUserSignal();
     } else {
         emit updateUserSignalE(error_type, error_str);
+        emit updateUserSignalEFull(worker, error_type, error_str);
     }
 }
 

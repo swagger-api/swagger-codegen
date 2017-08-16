@@ -312,12 +312,8 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
 
 void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
     error_type = reply->error();
-    if (error_type == QNetworkReply::NoError) {
-        response = reply->readAll();
-    }
-    else {
-        error_str = reply->errorString();
-    }
+    response = reply->readAll();
+    error_str = reply->errorString();
 
     reply->deleteLater();
 
