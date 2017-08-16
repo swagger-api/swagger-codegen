@@ -755,8 +755,17 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
     }
 
     private String getModelledType(String dataType) {
-        return "module:" + (StringUtils.isEmpty(invokerPackage) ? "" : (invokerPackage + "/"))
-                + (StringUtils.isEmpty(modelPackage) ? "" : (modelPackage + "/")) + dataType;
+        //return "module:" + (StringUtils.isEmpty(invokerPackage) ? "" : (invokerPackage + "/"))
+        //        + (StringUtils.isEmpty(modelPackage) ? "" : (modelPackage + "/")) + dataType;
+
+        /* API-2772
+         * Since models have been removed from the SDK, the jsdocs shouldn't reference them. This will
+         * display something like
+         *  @param {Object} body User
+         * instead of
+         *  @param {module:purecloud-platform-client-v2/model/Object} body User
+         */
+        return "Object";
     }
 
     private String getJSDocTypeWithBraces(CodegenModel cm, CodegenProperty cp) {
