@@ -190,6 +190,7 @@ void
         emit {{nickname}}Signal({{#returnType}}output{{/returnType}});
     } else {
         emit {{nickname}}SignalE({{#returnType}}output, {{/returnType}}error_type, error_str);
+        emit {{nickname}}SignalEFull(worker, error_type, error_str);
     }
 }
 

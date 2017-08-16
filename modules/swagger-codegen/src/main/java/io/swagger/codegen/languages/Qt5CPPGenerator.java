@@ -42,6 +42,11 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         // set the output folder here
         outputFolder = "generated-code/qt5cpp";
 
+        // set modelNamePrefix as default for QT5CPP
+        if (modelNamePrefix == "") {
+            modelNamePrefix = PREFIX;
+        }
+
         /*
          * Models.  You can write model files using the modelTemplateFiles map.
          * if you want to create one template for file, you can do so here.
