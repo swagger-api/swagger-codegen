@@ -51,7 +51,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public JavascriptClientCodegen() {
         super();
         outputFolder = "generated-code/js";
-        modelTemplateFiles.put("model.mustache", ".js");
+        // modelTemplateFiles.put("model.mustache", ".js");
         apiTemplateFiles.put("api.mustache", ".js");
         templateDir = "Javascript";
         apiPackage = "api";
