@@ -538,4 +538,35 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return packageName;
     }
 
+    @Override
+    protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
+        String operationId = operation.getOperationId();
+        if (StringUtils.isBlank(operationId)) {
+            String tmpPath = path;
+            tmpPath = tmpPath.replaceAll("\\{", "");
+            tmpPath = tmpPath.replaceAll("\\}", "");
+            // override to format path parameters nicely (e.g. /{user_id}/ => UserId)
+            tmpPath = tmpPath.replaceAll("_", "/");
+            String[] parts = (tmpPath + "/" + httpMethod).split("/");
+            StringBuilder builder = new StringBuilder();
+            if ("/".equals(tmpPath)) {
+                // must be root tmpPath
+                builder.append("root");
+            }
+            for (int i = 0; i < parts.length; i++) {
+                String part = parts[i];
+                if (part.length() > 0) {
+                    if (builder.toString().length() == 0) {
+                        part = Character.toLowerCase(part.charAt(0)) + part.substring(1);
+                    } else {
+                        part = initialCaps(part);
+                    }
+                    builder.append(part);
+                }
+            }
+            operationId = builder.toString();
+            LOGGER.info("generated operationId " + operationId + "\tfor Path: " + httpMethod + " " + path);
+        }
+        return operationId;
+    }
 }
