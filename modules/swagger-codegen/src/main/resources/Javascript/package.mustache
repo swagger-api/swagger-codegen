@@ -1,20 +1,11 @@
 {
-  "name": "{{{projectName}}}",
+  "name": "Crunchbase API",
   "version": "{{{projectVersion}}}",
-  "description": "{{{projectDescription}}}",{{#projectLicenseName}}
+  "description": "Javascript client for the Crunchbase API.",
   "license": "{{{projectLicenseName}}}",{{/projectLicenseName}}
   "main": "{{sourceFolder}}/index.js",
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --recursive"
-  },
+  "author": "sherwood@crunchbase.com",
   "dependencies": {
-    "jquery": "~2.1.4"
-  },
-  "devDependencies": {
-    "mocha": "~2.3.4",
-    "expect.js": "~0.3.1",
-    "mockrequire": "~0.0.5",
-    "domino": "~1.0.20",
-    "xmlhttprequest": "~1.8.0"
+    "node-fetch": "1.7.2"
   }
 }
