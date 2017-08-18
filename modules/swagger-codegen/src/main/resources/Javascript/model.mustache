@@ -1,22 +1,15 @@
-// require files in Node.js environment
-{{#imports}}
-var {{import}};{{/imports}}
-if (typeof module === 'object' && module.exports) {
-  {{#imports}}
-  {{import}} = require('./{{import}}.js');{{/imports}}
-}
+//
+// DO NOT MODIFY - GENERATED FILE
+//
 
+{{#imports}}
+import { {{import}} } from ('./{{import}}.js');
+{{/imports}}
+
+// todo: enums
 {{#models}}{{#model}}
 {{#vars}}{{#isEnum}}{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
 {{>enumClass}}{{/items}}*/{{/items.isEnum}}{{/vars}}
-
-//export module
-if ( typeof define === "function" && define.amd ) {
-  define('{{classname}}', ['jquery'{{#vars}}{{^isPrimitiveType}}{{^-last}}, {{/-last}}'{{datatypeWithEnum}}'{{/isPrimitiveType}}{{/vars}}],
-    function(${{#vars}}{{^isPrimitiveType}}{{^-last}}, {{/-last}}{{datatypeWithEnum}}{{/isPrimitiveType}}{{/vars}}) {
-      return {{classname}};
-   });
-}
 
 {{#description}}/**
  * {{description}}

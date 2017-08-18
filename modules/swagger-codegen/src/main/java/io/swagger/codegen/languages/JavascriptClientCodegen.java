@@ -51,11 +51,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public JavascriptClientCodegen() {
         super();
         outputFolder = "generated-code/js";
-        // modelTemplateFiles.put("model.mustache", ".js");
-        apiTemplateFiles.put("api.mustache", ".js");
+        modelTemplateFiles.put("model.mustache", ".js");
+        // apiTemplateFiles.put("api.mustache", ".js");
         templateDir = "Javascript";
-        apiPackage = "api";
-        modelPackage = "model";
+        // apiPackage = "api";
+        modelPackage = "models";
 
         // reference: http://www.w3schools.com/js/js_reserved.asp
         reservedWords = new HashSet<String>(
@@ -205,6 +205,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
         supportingFiles.add(new SupportingFile("index.mustache", sourceFolder, "index.js"));
+        supportingFiles.add(new SupportingFile("api.mustache", sourceFolder, "api.js"));
     }
 
     @Override

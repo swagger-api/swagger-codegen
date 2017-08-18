@@ -1,85 +1,9 @@
 //
 // DO NOT MODIFY - GENERATED FILE
 //
-import fetch from 'node-fetch';
 
-export default class CrunchbaseApi {
-  constructor(basePath) {
-    // trim trailing slash, if necessary
-    if (basePath.substring(basePath.length - 1, basePath.length) == '/') {
-      basePath = basePath.substring(0, basePath.length - 1);
-    }
-    this.basePath = basePath;
-    this.session = {}
-  }
+export CrunchbaseApi from './api.js'
 
-  {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-
-  /*
-   * {{summary}}
-   * {{notes}}
-{{#allParams}}   * @param {{=<% %>=}}{<% dataType %>} <%={{ }}=%> {{paramName}} {{description}}
-{{/allParams}}   * @param {function} callback the callback function
-   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
-   */
-  {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
-    const requestBody = {{#bodyParam}}{{^isBinary}}JSON.stringify({{paramName}}){{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-
-    {{#allParams}}{{#required}}
-    // verify the required parameter '{{paramName}}' is set
-    if ({{paramName}} == null) {
-      throw new Error("Missing the required parameter '{{paramName}}' when calling {{nickname}}");
-    }
-    {{/required}}{{/allParams}}
-
-    // get fully qualified and encoded path
-    let path = this.basePath + replaceAll(
-      replaceAll("{{{path}}}", "\\{format\\}","json"){{#pathParams}},
-        "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()){{/pathParams}}
-    );
-
-    // add query parameters to path
-    const requestParams = {};
-    {{#queryParams}}requestParams.{{baseName}} = {{paramName}};{{/queryParams}}
-    path += createQueryString(requestParams);
-
-    // todo: also add session headers
-    const requestHeaders =  {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    {{#headerParams}}
-    if ({{paramName}} != null) requestHeaders.put("{{baseName}}", {{paramName}});
-    {{/headerParams}}
-
-    return fetch(path, {
-      method: "{{httpMethod}}",
-      body: requestBody,
-      headers: requestHeaders
-    });
-  }
-  {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
-}
-
-function replaceAll(haystack, needle, replace) {
-  let result = haystack;
-  if (needle != null && replace != null) {
-    result = haystack.replace(new RegExp(needle, 'g'), replace);
-  }
-  return result;
-}
-
-function createQueryString(queryParams) {
-  let queryString ='';
-  let i = 0;
-  for (let queryParamName in queryParams) {
-    if (i == 0) {
-      queryString += '?' ;
-    } else {
-      queryString += '&' ;
-    }
-    queryString +=  queryParamName + '=' + encodeURIComponent(queryParams[queryParamName]);
-    i++;
-  }
-  return queryString;
-}
+{{#models}}
+export { {{importPath}} } from './models/{{importPath}}';
+{{/models}}
