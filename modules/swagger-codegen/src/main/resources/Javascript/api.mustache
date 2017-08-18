@@ -2,7 +2,8 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
-import fetch from 'node-fetch';
+import request from 'request-promise';
+const Cookie = require('tough-cookie').Cookie;
 
 export default class CrunchbaseApi {
   constructor(basePath) {
@@ -11,7 +12,7 @@ export default class CrunchbaseApi {
       basePath = basePath.substring(0, basePath.length - 1);
     }
     this.basePath = basePath;
-    this.session = {}
+    this.session = null;
   }
 
   {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
@@ -24,7 +25,7 @@ export default class CrunchbaseApi {
    * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
   {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
-    const requestBody = {{#bodyParam}}{{^isBinary}}JSON.stringify({{paramName}}){{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    const requestBody = {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
@@ -41,26 +42,135 @@ export default class CrunchbaseApi {
 
     // add query parameters to path
     const requestParams = {};
-    {{#queryParams}}requestParams.{{baseName}} = {{paramName}};{{/queryParams}}
+    
+    {{#queryParams}}
+    requestParams.{{baseName}} = {{paramName}};
+    {{/queryParams}}
     path += createQueryString(requestParams);
 
-    // todo: also add session headers
-    const requestHeaders =  {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
+    const requestHeaders = {};
+
+    // default headers
+    requestHeaders["Content-Type"] = "application/json";
+    requestHeaders["Accept"] = "application/json";
+  
     {{#headerParams}}
-    if ({{paramName}} != null) requestHeaders.put("{{baseName}}", {{paramName}});
+    if ({{paramName}} != null) requestHeaders["{{baseName}}"] = {{paramName}};
     {{/headerParams}}
 
-    return fetch(path, {
+    const options = {
+      // request-promise config
+      json: true,
+      resolveWithFullResponse: true,
+      simple: false,
+      // the request itself
+      uri: path,
       method: "{{httpMethod}}",
-      body: requestBody,
-      headers: requestHeaders
+      headers: requestHeaders,
+      body: requestBody
+    }
+
+    // if session exists, add authorization
+    if (this.session && this.session.cookies) options.jar = this.session.cookies;
+
+    // todo: look at es7 await
+    return new Promise((resolve, reject) => {
+      request(options)
+      .then(res => {
+        // todo: don't hardcode sessions endpoint
+        if ("{{path}}" === "/cb/sessions") this.updateSession(res, "{{httpMethod}}");
+        resolve(res);
+        return;
+      })
+      .catch(err => {
+        // todo: how do I handle errors?
+        console.error(err);
+        reject(err);
+        return;
+      });
     });
   }
   {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
+  // SESSION UTILITIES
+
+  /*
+   * Routes /cb/sessions response to appropriate handler
+   * based on HTTP method.
+   */
+  updateSession(res, method) {
+    switch(method) {
+      case "POST":
+        this.handlePostCbSessions(res);
+        break;
+      case "GET":
+        this.handleGetCbSessions(res);
+        break;
+      case "DELETE":
+        this.session = null;
+        break;
+      default:
+        return;
+    }
+  }
+
+  /*
+   * Sets CrunchbaseApi session from POST /cb/sessions response.
+   */
+  handlePostCbSessions(res) {
+    const cookies = res.headers['set-cookie'].map(Cookie.parse);
+    const jar = request.jar();
+    cookies.forEach(cookie => {
+      jar.setCookie(cookie, this.basePath);
+    });
+    this.session = {
+      cookies: jar,
+      user: res.body.user
+    }
+  }
+
+  handleGetCbSessions(res) {
+    // todo: how does this endpoint work?
+  }
+
+  isLoggedIn() {
+    return (this.session && this.session.user);
+  }
+
+  isPro() {
+    if (this.session && this.session.user && this.session.user.entitlements &&
+    this.session.user.entitlements.acl && this.session.user.entitlements.acl.pro) {
+      return this.session.user.entitlements.acl.pro;
+    } else {
+      return false;
+    }
+  }
+
+  isAdmin() {
+    if (this.session && this.session.user && this.session.user.entitlements &&
+    this.session.user.entitlements.acl && this.session.user.entitlements.acl.admin) {
+      return this.session.user.entitlements.acl.admin;
+    } else {
+      return false;
+    }
+  }
+
+  isFree() {
+    return !(this.isPro() || this.isAdmin());
+  }
+
+  isAnonymous() {
+    return !this.session;
+  }
+
+  clearSession() {
+    this.session = null;
+  }
+
+  // todo: login()
 }
+
+// GENERAL UTILITIES
 
 function replaceAll(haystack, needle, replace) {
   let result = haystack;
