@@ -547,7 +547,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             tmpPath = tmpPath.replaceAll("\\}", "");
             // override to format path parameters nicely (e.g. /{user_id}/ => UserId)
             tmpPath = tmpPath.replaceAll("_", "/");
-            String[] parts = (tmpPath + "/" + httpMethod).split("/");
+            String[] parts = (httpMethod + "/" + tmpPath).split("/");
             StringBuilder builder = new StringBuilder();
             if ("/".equals(tmpPath)) {
                 // must be root tmpPath
