@@ -34,7 +34,8 @@ export default class CrunchbaseApi {
 
     // get fully qualified and encoded path
     let path = this.basePath + replaceAll(
-      replaceAll("{{{path}}}", "\\{format\\}","json"){{#pathParams}}, "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()){{/pathParams}}
+      replaceAll("{{{path}}}", "\\{format\\}","json"){{#pathParams}},
+        "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()){{/pathParams}}
     );
 
     // add query parameters to path
@@ -43,7 +44,10 @@ export default class CrunchbaseApi {
     path += createQueryString(requestParams);
 
     // todo: also add session headers
-    const requestHeaders =  {};
+    const requestHeaders =  {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
     {{#headerParams}}
     if ({{paramName}} != null) requestHeaders.put("{{baseName}}", {{paramName}});
     {{/headerParams}}
