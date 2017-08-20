@@ -45,17 +45,13 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String projectDescription;
     protected String projectVersion;
 
-    protected String sourceFolder = "";
+    protected String sourceFolder = "src";
     protected String localVariablePrefix = "";
 
     public JavascriptClientCodegen() {
         super();
         outputFolder = "generated-code/js";
-        // modelTemplateFiles.put("model.mustache", ".js");
-        // apiTemplateFiles.put("api.mustache", ".js");
         templateDir = "Javascript";
-        // apiPackage = "api";
-        // modelPackage = "models";
 
         // reference: http://www.w3schools.com/js/js_reserved.asp
         reservedWords = new HashSet<String>(
@@ -203,8 +199,14 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put(CodegenConstants.LOCAL_VARIABLE_PREFIX, localVariablePrefix);
         additionalProperties.put(CodegenConstants.SOURCE_FOLDER, sourceFolder);
 
-        supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
+        // source code
         supportingFiles.add(new SupportingFile("index.mustache", sourceFolder, "index.js"));
+        // node modules
+        supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
+        // bundler
+        supportingFiles.add(new SupportingFile("rollup.config.mustache", "", "rollup.config.js"));
+        // es6 transpiler
+        supportingFiles.add(new SupportingFile("babelrc.mustache", "", ".babelrc"));
     }
 
     @Override

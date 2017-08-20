@@ -5,9 +5,18 @@
   "license": "{{{projectLicenseName}}}",
   "main": "{{sourceFolder}}/index.js",
   "author": "sherwood@crunchbase.com",
+  "scripts": {
+    "build": "./node_modules/rollup/bin/rollup -c"
+  },
   "dependencies": {
+    "babel-core": "6.26.0",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-preset-latest": "6.24.1",
     "request": "2.81.0",
     "tough-cookie": "2.3.2",
-    "request-promise": "4.2.1"
+    "request-promise": "4.2.1",
+    "rollup": "0.47.6",
+    "rollup-plugin-babel": "3.0.2",
+    "rollup-plugin-node-resolve": "3.0.0"
   }
 }

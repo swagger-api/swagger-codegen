@@ -2,8 +2,9 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
-import request from 'request-promise';
-import { Cookie } from 'tough-cookie';
+// es6 import does not work with es5 exports
+const request = require('request-promise');
+const Cookie = require('tough-cookie').Cookie;
 
 export default class CrunchbaseApi {
   constructor(basePath) {
