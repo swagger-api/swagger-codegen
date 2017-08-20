@@ -45,7 +45,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String projectDescription;
     protected String projectVersion;
 
-    protected String sourceFolder = "src";
+    protected String sourceFolder = "";
     protected String localVariablePrefix = "";
 
     public JavascriptClientCodegen() {
@@ -205,8 +205,6 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
         // bundler
         supportingFiles.add(new SupportingFile("rollup.config.mustache", "", "rollup.config.js"));
-        // es6 transpiler
-        supportingFiles.add(new SupportingFile("babelrc.mustache", "", ".babelrc"));
     }
 
     @Override
