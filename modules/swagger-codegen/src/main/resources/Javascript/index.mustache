@@ -22,43 +22,34 @@ export default class CrunchbaseApi {
    * {{summary}}
    * {{notes}}
 {{#allParams}}   * @param {{=<% %>=}}{<% dataType %>} <%={{ }}=%> {{paramName}} {{description}}
-{{/allParams}}   * @param {function} callback the callback function
-   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+{{/allParams}}   * @return Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>
    */
   {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
-    const requestBody = {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-
     {{#allParams}}{{#required}}
-    // verify the required parameter '{{paramName}}' is set
+    // verify required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
-      throw new Error("Missing the required parameter '{{paramName}}' when calling {{nickname}}");
+      throw new Error("Missing required parameter '{{paramName}}' when calling {{nickname}}");
     }
     {{/required}}{{/allParams}}
-
     // get fully qualified and encoded path
     let path = this.basePath + replaceAll(
       replaceAll("{{{path}}}", "\\{format\\}","json"){{#pathParams}},
         "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()){{/pathParams}}
     );
 
-    // add query parameters to path
-    const requestParams = {};
-    
-    {{#queryParams}}
-    requestParams.{{baseName}} = {{paramName}};
+    // add query string values to path
+    const queryString = {};
+    {{#queryParams}}queryString.{{baseName}} = {{paramName}};
     {{/queryParams}}
-    path += createQueryString(requestParams);
+    path += createQueryString(queryString);
 
-    const requestHeaders = {};
+    const headers = {};
 
     // default headers
-    requestHeaders["Content-Type"] = "application/json";
-    requestHeaders["Accept"] = "application/json";
-  
-    {{#headerParams}}
-    if ({{paramName}} != null) requestHeaders["{{baseName}}"] = {{paramName}};
+    headers["Content-Type"] = "application/json";
+    headers["Accept"] = "application/json";
+    {{#headerParams}}if ({{paramName}} != null) headers["{{baseName}}"] = {{paramName}};
     {{/headerParams}}
-
     const options = {
       // request-promise config
       json: true,
@@ -67,8 +58,8 @@ export default class CrunchbaseApi {
       // the request itself
       uri: path,
       method: "{{httpMethod}}",
-      headers: requestHeaders,
-      body: requestBody
+      headers: headers,
+      body: {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}
     }
 
     // if session exists, add authorization
@@ -119,6 +110,9 @@ export default class CrunchbaseApi {
    * Sets CrunchbaseApi session from POST /cb/sessions response.
    */
   handlePostCbSessions(res) {
+    if !(res && res.headers && res.headers[set-cookie]) {
+      throw new Error("Set-Cookie header is missing.");
+    }
     const cookies = res.headers['set-cookie'].map(Cookie.parse);
     const jar = request.jar();
     cookies.forEach(cookie => {
@@ -164,11 +158,22 @@ export default class CrunchbaseApi {
     return !this.session;
   }
 
-  clearSession() {
-    this.session = null;
+  /* 
+   * Alias for postCbSessions.
+   */
+  login(email, password) {
+    return this.postCbSessions({
+      email: email,
+      password: password
+    });
   }
 
-  // todo: login()
+  /* 
+   * Alias for deleteCbSessions.
+   */
+  logout() {
+    return this.deleteCbSessions();
+  }
 }
 
 // GENERAL UTILITIES
