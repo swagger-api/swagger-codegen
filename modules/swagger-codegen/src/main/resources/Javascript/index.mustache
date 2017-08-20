@@ -2,11 +2,10 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
-// es6 import does not work with es5 exports
 const request = require('request-promise');
 const Cookie = require('tough-cookie').Cookie;
 
-export default class CrunchbaseApi {
+class CrunchbaseApi {
   constructor(basePath) {
     // trim trailing slash, if necessary
     if (basePath.substring(basePath.length - 1, basePath.length) == '/') {
@@ -28,7 +27,7 @@ export default class CrunchbaseApi {
     {{#allParams}}{{#required}}
     // verify required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
-      throw new Error("Missing required parameter '{{paramName}}' when calling {{nickname}}");
+      throw new CrunchbaseApiError("Missing required parameter '{{paramName}}' when calling {{nickname}}");
     }
     {{/required}}{{/allParams}}
     // get fully qualified and encoded path
@@ -56,7 +55,7 @@ export default class CrunchbaseApi {
       resolveWithFullResponse: true,
       simple: false,
       // todo: test timeout
-      timeout: 10000
+      timeout: 10000,
       // the request itself
       uri: path,
       method: "{{httpMethod}}",
@@ -112,8 +111,8 @@ export default class CrunchbaseApi {
    * Sets CrunchbaseApi session from POST /cb/sessions response.
    */
   handlePostCbSessions(res) {
-    if !(res && res.headers && res.headers[set-cookie]) {
-      throw new Error("Set-Cookie header is missing.");
+    if (!(res && res.headers && res.headers['set-cookie'])) {
+      throw new CrunchbaseApiError("Failed to set api session. Set-Cookie header is missing from respose: " + res);
     }
     const cookies = res.headers['set-cookie'].map(Cookie.parse);
     const jar = request.jar();
@@ -202,3 +201,14 @@ function createQueryString(queryParams) {
   }
   return queryString;
 }
+
+class CrunchbaseApiError extends Error {
+  constructor (message, status) {
+    super(message);
+    Error.captureStackTrace(this, this.constructor);
+    this.name = this.constructor.name;
+  }
+}
+
+module.exports = CrunchbaseApi;
+
