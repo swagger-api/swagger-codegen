@@ -433,13 +433,13 @@ impl Api for Client {
 
         // Header parameters
 
-
+        
         let param_enum_header_string_array: Option<Vec<String>> = None;
         header! { (RequestEnumHeaderString, "enum_header_string") => [String] }
 
         param_enum_header_string.map(|header| custom_headers.set(RequestEnumHeaderString(header)));
 
-
+        
 
         let request = request.headers(custom_headers);
 
@@ -582,7 +582,7 @@ impl Api for Client {
 
         param_api_key.map(|header| custom_headers.set(RequestApiKey(header)));
 
-
+        
 
         let request = request.headers(custom_headers);
 
@@ -807,7 +807,7 @@ impl Api for Client {
         // Form data body
         let mut multipart = Multipart::new();
 
-        if let Ok(Some(param_file)) = param_file.wait() {
+        if let Ok(Some(param_file)) = param_file.wait() { 
             match convert_stream_to_string(param_file) {
                 Ok(param_file) => {
                     // Add file to multipart form.
