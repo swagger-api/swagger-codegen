@@ -465,8 +465,9 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
                 }
             }
 
-            if (param.required) {
+            if ((param.required) || (param.isContainer)) {
                 if (example != null) {
+                    // Empty arrays are preferred over Options
                     param.vendorExtensions.put("example", example);
                 } else {
                     // If we don't have an example that we can provide, we need to disable the client example, as it won't build.

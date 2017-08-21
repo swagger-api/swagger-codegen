@@ -137,7 +137,7 @@ fn main() {
         Some("TestEnumParameters") => {
             // Using a non-default `Context` is not required; this is just an example!
             let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.test_enum_parameters(Some(&Vec::new()), Some("enum_form_string_example".to_string()), Some(&Vec::new()), Some("enum_header_string_example".to_string()), Some(&Vec::new()), Some("enum_query_string_example".to_string()), Some(56), Some(1.2), &context).wait();
+            let result = client.test_enum_parameters(&Vec::new(), Some("enum_form_string_example".to_string()), &Vec::new(), Some("enum_header_string_example".to_string()), &Vec::new(), Some("enum_query_string_example".to_string()), Some(56), Some(1.2), &context).wait();
             println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
          },
 
