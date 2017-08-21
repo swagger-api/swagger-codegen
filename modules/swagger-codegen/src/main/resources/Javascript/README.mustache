@@ -22,15 +22,19 @@ Instantiate a new `CrunchbaseApi`. The constructor takes a base URL parameter, w
 const api = new CrunchbaseApi('https://uat.crunchbase.com');
 ```
 
+### Making a Request
+
 Use `CrunchbaseApi` methods to hit any endpoint. The method names include the HTTP verb, full path, and any path parameters. For example:
 
 ```
 api.getDataEntitiesCollectionIdEntityId('organizations', 'apple');
 ```
 
-See Requests for a complete list of request methods.
+See [API Endpoints](#api-endpoints) for a complete list of request methods.
 
-The requests are asynchronous, of course. With few exceptions, `CrunchbaseApi` methods return Promises that resolve with `http.IncomingMessage` objects. To see what methods and properties are available for parsing the response, refer to [this documentation](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
+### Getting the Response
+
+With the exception of utility methods, `CrunchbaseApi` methods return Promises that resolve with `http.IncomingMessage` objects. 
 
 ```
 api
@@ -39,6 +43,10 @@ api
     console.log(response.statusCode);
 });
 ```
+
+To see what methods and properties are available for parsing the response, refer to [this documentation](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
+
+### Sessions and Authorization
 
 Some requests may require authorization headers. The API client will keep track of user session for you, and add these headers when available. Start by logging in:
 
@@ -59,7 +67,7 @@ api.isLoggedIn(); // => true
 api.isPro(); // => true
 ```
 
-See Utilities for a complete list of utility methods.
+See [Utilities](#utilities) for a complete list.
 
 Now, you can make authorized requests:
 
@@ -79,24 +87,28 @@ api.postDataEntities({
 });
 ```
 
-## Requests
+## API Endpoints
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+#### {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
 
-{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
-
-{{summary}}
-{{notes}}
-
-#### Parameters
+{{#hasParams}}
+Param | Type | Description
+---- | ---- | ----
+{{/hasParams}}
 {{#allParams}}
-{{=<% %>=}}{<% dataType %>} <%={{ }}=%> {{paramName}} {{description}}
+{{paramName}} | {{=<% %>=}}<% dataType %><%={{ }}=%> | {{description}}
 {{/allParams}}
 
-#### Returns 
-Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>
-
-```
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 ## Utilities
+
+#### login(email, password)
+
+Param | Type | Description
+---- | ---- | ----
+email | String |
+password | String |
+
+#### logout()
