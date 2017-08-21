@@ -251,8 +251,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterBoolean>>().unwrap_or(None);
 
@@ -293,8 +291,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 context.auth_data = req.extensions.remove::<AuthData>();
                 context.authorization = req.extensions.remove::<Authorization>();
-
-
 
 
 
@@ -341,8 +337,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterNumber>>().unwrap_or(None);
 
@@ -386,8 +380,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterString>>().unwrap_or(None);
 
@@ -428,8 +420,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 context.auth_data = req.extensions.remove::<AuthData>();
                 context.authorization = req.extensions.remove::<Authorization>();
-
-
 
 
 
@@ -483,8 +473,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         "Unauthenticated".to_string()
                     ))
                 })?;
-
-
 
 
 
@@ -555,23 +543,21 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 // Header parameters
                 header! { (RequestEnumHeaderStringArray, "enum_header_string_array") => (String)* }
-                let param_enum_header_string_array = req.headers.get::<RequestEnumHeaderStringArray>().map(|header| header.0.clone());
+                let param_enum_header_string_array = req.headers.get::<RequestEnumHeaderStringArray>().map(|header| header.0.clone()).unwrap_or_else(|| Vec::new());
                 header! { (RequestEnumHeaderString, "enum_header_string") => [String] }
                 let param_enum_header_string = req.headers.get::<RequestEnumHeaderString>().map(|header| header.0.clone());
-
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_enum_query_string_array = query_params.get("enum_query_string_array")
-                    .map(|list| list.iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>());
+                    .map(|list| list.iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>()).unwrap_or_else(|| Vec::new());
                 let param_enum_query_string = query_params.get("enum_query_string")
                     .and_then(|list| list.first()).and_then(|x| x.parse::<String>().ok());
                 let param_enum_query_integer = query_params.get("enum_query_integer")
                     .and_then(|list| list.first()).and_then(|x| x.parse::<i32>().ok());
 
-
                 // Form parameters
-                let param_enum_form_string_array = None;
+                let param_enum_form_string_array = Vec::new();
                 let param_enum_form_string = Some("enum_form_string_example".to_string());
                 let param_enum_query_double = Some(1.2);
 
@@ -624,8 +610,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Form parameters
                 let param_param = "param_example".to_string();
                 let param_param2 = "param2_example".to_string();
@@ -673,8 +657,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         "Unauthenticated".to_string()
                     ))
                 })?;
-
-
 
 
 
@@ -747,8 +729,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         )));
                     }
                 }
-
-
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
@@ -832,8 +812,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_api_key = req.headers.get::<RequestApiKey>().map(|header| header.0.clone());
 
 
-
-
                 match api.delete_pet(param_pet_id, param_api_key, context).wait() {
                     Ok(rsp) => match rsp {
                         DeletePetResponse::InvalidPetValue => {
@@ -900,12 +878,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_status = query_params.get("status").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter status".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
-
 
 
                 match api.find_pets_by_status(param_status.as_ref(), context).wait() {
@@ -982,12 +958,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_tags = query_params.get("tags").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter tags".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
-
 
 
                 match api.find_pets_by_tags(param_tags.as_ref(), context).wait() {
@@ -1050,8 +1024,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
-
-
 
 
                 match api.get_pet_by_id(param_pet_id, context).wait() {
@@ -1134,8 +1106,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         )));
                     }
                 }
-
-
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
@@ -1230,8 +1200,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
-
-
                 // Form parameters
                 let param_name = Some("name_example".to_string());
                 let param_status = Some("status_example".to_string());
@@ -1306,8 +1274,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
-
-
 
                 // Form parameters
 
@@ -1394,8 +1360,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
 
 
-
-
                 match api.delete_order(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
                         DeleteOrderResponse::InvalidIDSupplied => {
@@ -1453,8 +1417,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 match api.get_inventory(context).wait() {
                     Ok(rsp) => match rsp {
                         GetInventoryResponse::SuccessfulOperation(body) => {
@@ -1500,8 +1462,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_order_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("order_id").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter order_id".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
-
-
 
 
                 match api.get_order_by_id(param_order_id, context).wait() {
@@ -1561,8 +1521,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Order>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1617,8 +1575,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1665,8 +1621,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<Vec<models::User>>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1710,8 +1664,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 context.auth_data = req.extensions.remove::<AuthData>();
                 context.authorization = req.extensions.remove::<Authorization>();
-
-
 
 
 
@@ -1767,8 +1719,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
-
-
                 match api.delete_user(param_username, context).wait() {
                     Ok(rsp) => match rsp {
                         DeleteUserResponse::InvalidUsernameSupplied => {
@@ -1822,8 +1772,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
-
-
 
 
                 match api.get_user_by_name(param_username, context).wait() {
@@ -1883,7 +1831,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_username = query_params.get("username").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter username".to_string())))?
@@ -1892,7 +1839,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_password = query_params.get("password").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter password".to_string())))?
                     .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter password was empty".to_string())))?
                     .parse::<String>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter password - doesn't match schema: {}", e))))?;
-
 
 
                 match api.login_user(param_username, param_password, context).wait() {
@@ -1949,8 +1895,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 match api.logout_user(context).wait() {
                     Ok(rsp) => match rsp {
                         LogoutUserResponse::SuccessfulOperation => {
@@ -1996,8 +1940,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
-
-
 
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;

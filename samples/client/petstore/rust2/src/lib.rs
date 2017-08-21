@@ -16,7 +16,8 @@ extern crate hyper;
 
 extern crate swagger;
 
-use futures::Stream;
+use futures::BoxFuture;
+use futures::stream::BoxStream;
 use std::io::Error;
 
 #[allow(unused_imports)]
@@ -194,106 +195,98 @@ pub enum UpdateUserResponse {
 pub trait Api {
 
 
-    fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
+    fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> BoxFuture<FakeOuterBooleanSerializeResponse, ApiError>;
 
 
-    fn fake_outer_composite_serialize(&self, body: Option<models::OuterComposite>, context: &Context) -> Box<Future<Item=FakeOuterCompositeSerializeResponse, Error=ApiError> + Send>;
+    fn fake_outer_composite_serialize(&self, body: Option<models::OuterComposite>, context: &Context) -> BoxFuture<FakeOuterCompositeSerializeResponse, ApiError>;
 
 
-    fn fake_outer_number_serialize(&self, body: Option<models::OuterNumber>, context: &Context) -> Box<Future<Item=FakeOuterNumberSerializeResponse, Error=ApiError> + Send>;
+    fn fake_outer_number_serialize(&self, body: Option<models::OuterNumber>, context: &Context) -> BoxFuture<FakeOuterNumberSerializeResponse, ApiError>;
 
 
-    fn fake_outer_string_serialize(&self, body: Option<models::OuterString>, context: &Context) -> Box<Future<Item=FakeOuterStringSerializeResponse, Error=ApiError> + Send>;
+    fn fake_outer_string_serialize(&self, body: Option<models::OuterString>, context: &Context) -> BoxFuture<FakeOuterStringSerializeResponse, ApiError>;
 
     /// To test \"client\" model
-    fn test_client_model(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestClientModelResponse, Error=ApiError> + Send>;
+    fn test_client_model(&self, body: models::Client, context: &Context) -> BoxFuture<TestClientModelResponse, ApiError>;
 
     /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-    fn test_endpoint_parameters(&self, number: f64, double: f64, pattern_without_delimiter: String, byte: swagger::ByteArray, integer: Option<i32>, int32: Option<i32>, int64: Option<i64>, float: Option<f32>, string: Option<String>, binary: Option<swagger::ByteArray>, date: Option<chrono::DateTime<chrono::Utc>>, date_time: Option<chrono::DateTime<chrono::Utc>>, password: Option<String>, callback: Option<String>, context: &Context) -> Box<Future<Item=TestEndpointParametersResponse, Error=ApiError> + Send>;
+    fn test_endpoint_parameters(&self, number: f64, double: f64, pattern_without_delimiter: String, byte: swagger::ByteArray, integer: Option<i32>, int32: Option<i32>, int64: Option<i64>, float: Option<f32>, string: Option<String>, binary: Option<swagger::ByteArray>, date: Option<chrono::DateTime<chrono::Utc>>, date_time: Option<chrono::DateTime<chrono::Utc>>, password: Option<String>, callback: Option<String>, context: &Context) -> BoxFuture<TestEndpointParametersResponse, ApiError>;
 
     /// To test enum parameters
-    fn test_enum_parameters(&self, enum_form_string_array: Option<&Vec<String>>, enum_form_string: Option<String>, enum_header_string_array: Option<&Vec<String>>, enum_header_string: Option<String>, enum_query_string_array: Option<&Vec<String>>, enum_query_string: Option<String>, enum_query_integer: Option<i32>, enum_query_double: Option<f64>, context: &Context) -> Box<Future<Item=TestEnumParametersResponse, Error=ApiError> + Send>;
+    fn test_enum_parameters(&self, enum_form_string_array: &Vec<String>, enum_form_string: Option<String>, enum_header_string_array: &Vec<String>, enum_header_string: Option<String>, enum_query_string_array: &Vec<String>, enum_query_string: Option<String>, enum_query_integer: Option<i32>, enum_query_double: Option<f64>, context: &Context) -> BoxFuture<TestEnumParametersResponse, ApiError>;
 
     /// test json serialization of form data
-    fn test_json_form_data(&self, param: String, param2: String, context: &Context) -> Box<Future<Item=TestJsonFormDataResponse, Error=ApiError> + Send>;
+    fn test_json_form_data(&self, param: String, param2: String, context: &Context) -> BoxFuture<TestJsonFormDataResponse, ApiError>;
 
     /// To test class name in snake case
-    fn test_classname(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestClassnameResponse, Error=ApiError> + Send>;
+    fn test_classname(&self, body: models::Client, context: &Context) -> BoxFuture<TestClassnameResponse, ApiError>;
 
     /// Add a new pet to the store
-    fn add_pet(&self, body: models::Pet, context: &Context) -> Box<Future<Item=AddPetResponse, Error=ApiError> + Send>;
+    fn add_pet(&self, body: models::Pet, context: &Context) -> BoxFuture<AddPetResponse, ApiError>;
 
     /// Deletes a pet
-    fn delete_pet(&self, pet_id: i64, api_key: Option<String>, context: &Context) -> Box<Future<Item=DeletePetResponse, Error=ApiError> + Send>;
+    fn delete_pet(&self, pet_id: i64, api_key: Option<String>, context: &Context) -> BoxFuture<DeletePetResponse, ApiError>;
 
     /// Finds Pets by status
-    fn find_pets_by_status(&self, status: &Vec<String>, context: &Context) -> Box<Future<Item=FindPetsByStatusResponse, Error=ApiError> + Send>;
+    fn find_pets_by_status(&self, status: &Vec<String>, context: &Context) -> BoxFuture<FindPetsByStatusResponse, ApiError>;
 
     /// Finds Pets by tags
-    fn find_pets_by_tags(&self, tags: &Vec<String>, context: &Context) -> Box<Future<Item=FindPetsByTagsResponse, Error=ApiError> + Send>;
+    fn find_pets_by_tags(&self, tags: &Vec<String>, context: &Context) -> BoxFuture<FindPetsByTagsResponse, ApiError>;
 
     /// Find pet by ID
-    fn get_pet_by_id(&self, pet_id: i64, context: &Context) -> Box<Future<Item=GetPetByIdResponse, Error=ApiError> + Send>;
+    fn get_pet_by_id(&self, pet_id: i64, context: &Context) -> BoxFuture<GetPetByIdResponse, ApiError>;
 
     /// Update an existing pet
-    fn update_pet(&self, body: models::Pet, context: &Context) -> Box<Future<Item=UpdatePetResponse, Error=ApiError> + Send>;
+    fn update_pet(&self, body: models::Pet, context: &Context) -> BoxFuture<UpdatePetResponse, ApiError>;
 
     /// Updates a pet in the store with form data
-    fn update_pet_with_form(&self, pet_id: i64, name: Option<String>, status: Option<String>, context: &Context) -> Box<Future<Item=UpdatePetWithFormResponse, Error=ApiError> + Send>;
+    fn update_pet_with_form(&self, pet_id: i64, name: Option<String>, status: Option<String>, context: &Context) -> BoxFuture<UpdatePetWithFormResponse, ApiError>;
 
     /// uploads an image
-    fn upload_file(&self, pet_id: i64, additional_metadata: Option<String>, file: Box<Future<Item=Option<Box<Stream<Item=Vec<u8>, Error=Error> + Send>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send>;
+    fn upload_file(&self, pet_id: i64, additional_metadata: Option<String>, file: BoxFuture<Option<BoxStream<Vec<u8>, Error>>, Error>, context: &Context) -> BoxFuture<UploadFileResponse, ApiError>;
 
     /// Delete purchase order by ID
-    fn delete_order(&self, order_id: String, context: &Context) -> Box<Future<Item=DeleteOrderResponse, Error=ApiError> + Send>;
+    fn delete_order(&self, order_id: String, context: &Context) -> BoxFuture<DeleteOrderResponse, ApiError>;
 
     /// Returns pet inventories by status
-    fn get_inventory(&self, context: &Context) -> Box<Future<Item=GetInventoryResponse, Error=ApiError> + Send>;
+    fn get_inventory(&self, context: &Context) -> BoxFuture<GetInventoryResponse, ApiError>;
 
     /// Find purchase order by ID
-    fn get_order_by_id(&self, order_id: i64, context: &Context) -> Box<Future<Item=GetOrderByIdResponse, Error=ApiError> + Send>;
+    fn get_order_by_id(&self, order_id: i64, context: &Context) -> BoxFuture<GetOrderByIdResponse, ApiError>;
 
     /// Place an order for a pet
-    fn place_order(&self, body: models::Order, context: &Context) -> Box<Future<Item=PlaceOrderResponse, Error=ApiError> + Send>;
+    fn place_order(&self, body: models::Order, context: &Context) -> BoxFuture<PlaceOrderResponse, ApiError>;
 
     /// Create user
-    fn create_user(&self, body: models::User, context: &Context) -> Box<Future<Item=CreateUserResponse, Error=ApiError> + Send>;
+    fn create_user(&self, body: models::User, context: &Context) -> BoxFuture<CreateUserResponse, ApiError>;
 
     /// Creates list of users with given input array
-    fn create_users_with_array_input(&self, body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithArrayInputResponse, Error=ApiError> + Send>;
+    fn create_users_with_array_input(&self, body: &Vec<models::User>, context: &Context) -> BoxFuture<CreateUsersWithArrayInputResponse, ApiError>;
 
     /// Creates list of users with given input array
-    fn create_users_with_list_input(&self, body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithListInputResponse, Error=ApiError> + Send>;
+    fn create_users_with_list_input(&self, body: &Vec<models::User>, context: &Context) -> BoxFuture<CreateUsersWithListInputResponse, ApiError>;
 
     /// Delete user
-    fn delete_user(&self, username: String, context: &Context) -> Box<Future<Item=DeleteUserResponse, Error=ApiError> + Send>;
+    fn delete_user(&self, username: String, context: &Context) -> BoxFuture<DeleteUserResponse, ApiError>;
 
     /// Get user by user name
-    fn get_user_by_name(&self, username: String, context: &Context) -> Box<Future<Item=GetUserByNameResponse, Error=ApiError> + Send>;
+    fn get_user_by_name(&self, username: String, context: &Context) -> BoxFuture<GetUserByNameResponse, ApiError>;
 
     /// Logs user into the system
-    fn login_user(&self, username: String, password: String, context: &Context) -> Box<Future<Item=LoginUserResponse, Error=ApiError> + Send>;
+    fn login_user(&self, username: String, password: String, context: &Context) -> BoxFuture<LoginUserResponse, ApiError>;
 
     /// Logs out current logged in user session
-    fn logout_user(&self, context: &Context) -> Box<Future<Item=LogoutUserResponse, Error=ApiError> + Send>;
+    fn logout_user(&self, context: &Context) -> BoxFuture<LogoutUserResponse, ApiError>;
 
     /// Updated user
-    fn update_user(&self, username: String, body: models::User, context: &Context) -> Box<Future<Item=UpdateUserResponse, Error=ApiError> + Send>;
+    fn update_user(&self, username: String, body: models::User, context: &Context) -> BoxFuture<UpdateUserResponse, ApiError>;
 
 }
 
 #[cfg(feature = "client")]
 pub mod client;
 
-// Re-export Client as a top-level name
-#[cfg(feature = "client")]
-pub use self::client::Client;
-
 #[cfg(feature = "server")]
 pub mod server;
-
-// Re-export router() as a top-level name
-#[cfg(feature = "server")]
-pub use self::server::router;
 
 pub mod models;

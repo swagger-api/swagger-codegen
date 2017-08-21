@@ -16,7 +16,8 @@ extern crate hyper;
 
 extern crate swagger;
 
-use futures::Stream;
+use futures::BoxFuture;
+use futures::stream::BoxStream;
 use std::io::Error;
 
 #[allow(unused_imports)]
@@ -40,22 +41,14 @@ pub enum {{operationId}}Response {
 pub trait Api {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{#summary}}    /// {{{summary}}}{{/summary}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send>;
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isContainer}}Option<{{/isContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isContainer}}>{{/isContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError>;
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 }
 
 #[cfg(feature = "client")]
 pub mod client;
 
-// Re-export Client as a top-level name
-#[cfg(feature = "client")]
-pub use self::client::Client;
-
 #[cfg(feature = "server")]
 pub mod server;
-
-// Re-export router() as a top-level name
-#[cfg(feature = "server")]
-pub use self::server::router;
 
 pub mod models;

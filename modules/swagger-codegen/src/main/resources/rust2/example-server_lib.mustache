@@ -2,8 +2,8 @@
 extern crate chrono;
 extern crate swagger;
 
-use futures::{self, Future};
-{{#apiHasFile}}use futures::Stream;{{/apiHasFile}}
+use futures::{self, Future, BoxFuture};
+{{#apiHasFile}}use futures::stream::BoxStream;{{/apiHasFile}}
 
 #[allow(unused_imports)]
 use std::collections::HashMap;
@@ -21,11 +21,11 @@ pub struct Server;
 impl Api for Server {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{#summary}}    /// {{{summary}}}{{/summary}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send> {
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isContainer}}Option<{{/isContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isContainer}}>{{/isContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
         let context = context.clone();
-        println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{^isFile}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/isFile}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, context.x_span_id.unwrap_or(String::from("<none>")).clone());{{#allParams}}{{#isFile}}
+        println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, context.x_span_id.unwrap_or(String::from("<none>")).clone());{{#allParams}}{{#isFile}}
         let _ = {{paramName}}; //Suppresses unused param warning{{/isFile}}{{/allParams}}
-        Box::new(futures::failed("Generic failure".into()))
+        futures::failed("Generic failure".into()).boxed()
     }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 }

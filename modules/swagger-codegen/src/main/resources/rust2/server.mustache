@@ -9,6 +9,7 @@ extern crate chrono;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 
 use futures::Future;
+use futures::future::BoxFuture;
 use futures::future;
 use futures::{stream, Stream};
 use hyper;
@@ -138,23 +139,17 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{/pathParams}}
 {{#headerParams}}{{#-first}}
                 // Header parameters
-{{/-first}}{{^isContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => [{{{dataType}}}] }
-{{/isContainer}}{{#isContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => ({{{baseType}}})* }
-{{/isContainer}}{{#required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone();
-{{/required}}{{^required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().map(|header| header.0.clone());
-{{/required}}{{/headerParams}}
+{{/-first}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isContainer}}({{{baseType}}})*{{/isContainer}}{{^isContainer}}[{{{dataType}}}]{{/isContainer}} }
+                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().{{#required}}ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone({{/required}}{{^required}}map(|header| header.0.clone(){{/required}}){{#isContainer}}.unwrap_or_else(|| Vec::new()){{/isContainer}};
+{{/headerParams}}
 {{#queryParams}}{{#-first}}
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-{{/-first}}{{#required}}                let param_{{paramName}} = query_params.get("{{baseName}}").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter {{baseName}}".to_string())))?
-{{#isListContainer}}                    .iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>();
-{{/isListContainer}}{{^isListContainer}}                    .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter {{baseName}} was empty".to_string())))?
-                    .parse::<{{{dataType}}}>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter {{baseName}} - doesn't match schema: {}", e))))?;
-{{/isListContainer}}
-{{/required}}{{^required}}                let param_{{paramName}} = query_params.get("{{baseName}}")
-{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>());
-{{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok());
-{{/isListContainer}}{{/required}}{{/queryParams}}
+{{/-first}}                let param_{{paramName}} = query_params.get("{{baseName}}"){{#required}}.ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter {{baseName}}".to_string())))?
+{{#isListContainer}}                    .iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>(){{/isListContainer}}{{^isListContainer}}                    .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter {{baseName}} was empty".to_string())))?
+                    .parse::<{{{dataType}}}>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter {{baseName}} - doesn't match schema: {}", e))))?{{/isListContainer}}{{/required}}{{^required}}
+{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>()){{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok()){{/isListContainer}}{{#isContainer}}.unwrap_or_else(|| Vec::new()){{/isContainer}}{{/required}};
+{{/queryParams}}
 {{#bodyParams}}{{#-first}}
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
 {{/-first}}{{#required}}                let body = req.get::<bodyparser::Struct<{{{dataType}}}>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter {{baseName}} - doesn't match schema: {}", e))))?;
@@ -192,14 +187,14 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Some(body) => {
                         Ok({let bytes = body.as_bytes();
                            {{^required}}Some({{/required}}
-                                Box::new(stream::once(Ok(bytes.to_vec()))) as Box<Stream<Item=Vec<u8>, Error=Error> + Send>
+                                stream::once(Ok(bytes.to_vec())).boxed()
                             {{^required}}){{/required}}}
                         )
                     }
                     None => {Err(Response::with((status::BadRequest, format!("Body part not found!"))))}
                 }?;
 {{/isFile}}
-                let param_{{paramName}} = {{#isFile}}{{^required}}Box::new(future::ok({{/required}}param_{{paramName}}{{^required}})){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isContainer}}None;{{/isContainer}}{{/isFile}}
+                let param_{{paramName}} = {{#isFile}}{{^required}}future::ok({{/required}}param_{{paramName}}{{^required}}).boxed(){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isContainer}}Vec::new();{{/isContainer}}{{/isFile}}
     {{/isFormParam}}
 {{/allParams}}
 
