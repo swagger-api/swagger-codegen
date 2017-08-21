@@ -200,11 +200,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put(CodegenConstants.SOURCE_FOLDER, sourceFolder);
 
         // source code
-        supportingFiles.add(new SupportingFile("index.mustache", sourceFolder, "index.js"));
+        supportingFiles.add(new SupportingFile("api.mustache", sourceFolder, "api.js"));
         // node modules
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
-        // bundler
-        supportingFiles.add(new SupportingFile("rollup.config.mustache", "", "rollup.config.js"));
+        // docs
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
 
     @Override
