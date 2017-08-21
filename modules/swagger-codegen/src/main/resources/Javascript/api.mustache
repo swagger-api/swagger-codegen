@@ -88,8 +88,6 @@ class CrunchbaseApi {
   }
   {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
-  // SESSION UTILITIES
-
   /*
    * Routes /cb/sessions response to appropriate handler
    * based on HTTP method.
@@ -132,36 +130,6 @@ class CrunchbaseApi {
     // todo: how does this endpoint work?
   }
 
-  isLoggedIn() {
-    return (this.session && this.session.user);
-  }
-
-  isPro() {
-    if (this.session && this.session.user && this.session.user.entitlements &&
-    this.session.user.entitlements.acl && this.session.user.entitlements.acl.pro) {
-      return this.session.user.entitlements.acl.pro;
-    } else {
-      return false;
-    }
-  }
-
-  isAdmin() {
-    if (this.session && this.session.user && this.session.user.entitlements &&
-    this.session.user.entitlements.acl && this.session.user.entitlements.acl.admin) {
-      return this.session.user.entitlements.acl.admin;
-    } else {
-      return false;
-    }
-  }
-
-  isFree() {
-    return !(this.isPro() || this.isAdmin());
-  }
-
-  isAnonymous() {
-    return !this.session;
-  }
-
   /* 
    * Alias for postCbSessions.
    */
@@ -179,8 +147,6 @@ class CrunchbaseApi {
     return this.deleteCbSessions();
   }
 }
-
-// GENERAL UTILITIES
 
 function replaceAll(haystack, needle, replace) {
   let result = haystack;
