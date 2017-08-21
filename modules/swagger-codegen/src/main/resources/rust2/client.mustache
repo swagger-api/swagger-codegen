@@ -150,7 +150,7 @@ impl Api for Client {
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isContainer}}Option<{{/isContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isContainer}}>{{/isContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
 {{#queryParams}}{{#-first}}
         // Query parameters
-{{/-first}}        let query_{{paramName}} = {{^required}}{{#isContainer}}if param_enum_query_string_array.is_empty() {
+{{/-first}}        let query_{{paramName}} = {{^required}}{{#isContainer}}if param_{{paramName}}.is_empty() {
             String::new()
         } else {
             {{/isContainer}}{{^isContainer}}param_{{paramName}}.map_or_else(String::new, |query| {{/isContainer}}{{/required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}={{#required}}param_{{paramName}}{{/required}}{{^required}}{{#isContainer}}param_{{paramName}}{{/isContainer}}{{^isContainer}}query{{/isContainer}}{{/required}}{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}}){{^required}}{{^isContainer}}){{/isContainer}}{{#isContainer}}
