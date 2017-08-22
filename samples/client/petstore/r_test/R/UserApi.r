@@ -24,7 +24,7 @@ UserApi <- R6::R6Class(
     create_user = function(body){
       resp <- httr::POST(paste0(self$url),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
@@ -39,7 +39,7 @@ UserApi <- R6::R6Class(
     create_users_with_array_input = function(body){
       resp <- httr::POST(paste0(self$url),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
@@ -54,7 +54,7 @@ UserApi <- R6::R6Class(
     create_users_with_list_input = function(body){
       resp <- httr::POST(paste0(self$url),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
@@ -86,7 +86,7 @@ UserApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- User$fromJSON(parsed)
         Response$new(result, resp)
@@ -105,7 +105,7 @@ UserApi <- R6::R6Class(
       # TODO add support for query parameters "password"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- Character$fromJSON(parsed)
         Response$new(result, resp)
@@ -133,7 +133,7 @@ UserApi <- R6::R6Class(
     update_user = function(username, body){
       resp <- httr::PUT(paste0(self$url, username),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {

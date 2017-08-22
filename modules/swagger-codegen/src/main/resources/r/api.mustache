@@ -27,7 +27,7 @@
             )
           {{/hasFormParams}}
           {{#bodyParams}}
-          ,body = {{paramName}}$toJson()
+          ,body = {{paramName}}$toJSON()
           {{/bodyParams}}
           )
       {{#queryParams}}
@@ -36,7 +36,7 @@
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- {{returnType}}$fromJSON(parsed)
         Response$new(result, resp)

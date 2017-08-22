@@ -48,7 +48,7 @@ Pet <- R6::R6Class(
         self$status <- status
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf(
         '{
            "id": %d,
@@ -59,10 +59,10 @@ Pet <- R6::R6Class(
            "status": "%s"
         }',
         self$id,
-        self$category$toJson(),
+        self$category$toJSON(),
         self$name,
         lapply(self$photo_urls, function(x) paste(paste0('"', x, '"'), sep=",")),
-        lapply(self$tags, function(x) paste(x$toJson(), sep=",")),
+        lapply(self$tags, function(x) paste(x$toJSON(), sep=",")),
         self$status
       )
     }
@@ -88,7 +88,7 @@ Element  <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
     }
   )

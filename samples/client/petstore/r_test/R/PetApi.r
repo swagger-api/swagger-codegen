@@ -24,7 +24,7 @@ PetApi <- R6::R6Class(
     add_pet = function(body){
       resp <- httr::POST(paste0(self$url),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/json", "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
@@ -57,7 +57,7 @@ PetApi <- R6::R6Class(
       # TODO add support for query parameters "status"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- Pet$fromJSON(parsed)
         Response$new(result, resp)
@@ -75,7 +75,7 @@ PetApi <- R6::R6Class(
       # TODO add support for query parameters "tags"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- Pet$fromJSON(parsed)
         Response$new(result, resp)
@@ -92,7 +92,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- Pet$fromJSON(parsed)
         Response$new(result, resp)
@@ -106,7 +106,7 @@ PetApi <- R6::R6Class(
     update_pet = function(body){
       resp <- httr::PUT(paste0(self$url),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/json", "content-type" = "application/xml")
-          ,body = body$toJson()
+          ,body = body$toJSON()
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
@@ -122,7 +122,7 @@ PetApi <- R6::R6Class(
       resp <- httr::POST(paste0(self$url, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/x-www-form-urlencoded", "content-type" = "application/xml")
           ,body = list(
-              "name" = name, 
+              "name" = name,
               "status" = status
             )
           )
@@ -140,13 +140,13 @@ PetApi <- R6::R6Class(
       resp <- httr::POST(paste0(self$url, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "multipart/form-data", "content-type" = "application/json")
           ,body = list(
-              "additionalMetadata" = additional_metadata, 
-              "file" = file
+              "additionalMetadata" = additional_metadata,
+              "file" = file #TODO support file upload
             )
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- ApiResponse$fromJSON(parsed)
         Response$new(result, resp)

@@ -25,7 +25,7 @@ Category <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf(
         '{
            "id": %d,
@@ -57,7 +57,7 @@ Element  <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
     }
   )

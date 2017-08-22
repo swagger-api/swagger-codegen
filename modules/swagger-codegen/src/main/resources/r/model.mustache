@@ -55,7 +55,7 @@
       }
       {{/vars}}
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf(
         '{
            {{#vars}}
@@ -68,11 +68,11 @@
         lapply(self${{name}}, function(x) paste(paste0('"', x, '"'), sep=",")){{#hasMore}},{{/hasMore}}
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
-        lapply(self${{name}}, function(x) paste(x$toJson(), sep=",")){{#hasMore}},{{/hasMore}}
+        lapply(self${{name}}, function(x) paste(x$toJSON(), sep=",")){{#hasMore}},{{/hasMore}}
         {{/isPrimitiveType}}
         {{/isListContainer}}
         {{^isListContainer}}
-        self${{name}}{{^isPrimitiveType}}$toJson(){{/isPrimitiveType}}{{#hasMore}},{{/hasMore}}
+        self${{name}}{{^isPrimitiveType}}$toJSON(){{/isPrimitiveType}}{{#hasMore}},{{/hasMore}}
         {{/isListContainer}}
         {{/vars}}
       )
@@ -99,7 +99,7 @@ Element  <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
     }
   )

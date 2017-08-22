@@ -30,7 +30,7 @@ ApiResponse <- R6::R6Class(
         self$message <- message
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf(
         '{
            "code": "%s",
@@ -64,7 +64,7 @@ Element  <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
     }
   )

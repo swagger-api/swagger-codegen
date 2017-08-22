@@ -46,7 +46,7 @@ Order <- R6::R6Class(
         self$complete <- complete
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf(
         '{
            "id": %d,
@@ -59,7 +59,7 @@ Order <- R6::R6Class(
         self$id,
         self$pet_id,
         self$quantity,
-        self$ship_date$toJson(),
+        self$ship_date$toJSON(),
         self$status,
         self$complete
       )
@@ -86,7 +86,7 @@ Element  <- R6::R6Class(
         self$name <- name
       }
     },
-    toJson = function() { 
+    toJSON = function() {
        sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
     }
   )
