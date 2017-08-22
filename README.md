@@ -953,6 +953,7 @@ Here is a list of template creators:
    * PHP (Guzzle): @baartosz
    * PowerShell: @beatcracker
    * Rust: @farcaller
+   * Rust2: @metaswitch
    * Swift: @tkqubo
    * Swift 3: @hexelon
    * Swift 4: @ehyche
@@ -982,6 +983,7 @@ Here is a list of template creators:
    * PHP Symfony: @ksm2
    * PHP Zend Expressive (with Path Handler): @Articus
    * Ruby on Rails 5: @zlx
+   * Rust2: @metaswitch
    * Scala Finch: @jimschubert
  * Documentation
    * HTML Doc 2: @jhitchcock

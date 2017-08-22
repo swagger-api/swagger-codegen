@@ -1,0 +1,31 @@
+#![allow(missing_docs, unused_extern_crates)]
+extern crate chrono;
+extern crate swagger;
+
+use futures::{self, Future, BoxFuture};
+{{#apiHasFile}}use futures::stream::BoxStream;{{/apiHasFile}}
+
+#[allow(unused_imports)]
+use std::collections::HashMap;
+{{#apiHasFile}}use std::io::Error;{{/apiHasFile}}
+
+use {{externCrateName}}::{Api, ApiError, Context{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
+                      {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+};
+#[allow(unused_imports)]
+use {{externCrateName}}::models;
+
+#[derive(Copy, Clone)]
+pub struct Server;
+
+impl Api for Server {
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+{{#summary}}    /// {{{summary}}}{{/summary}}
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
+        let context = context.clone();
+        println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, context.x_span_id.unwrap_or(String::from("<none>")).clone());{{#allParams}}{{#isFile}}
+        let _ = {{paramName}}; //Suppresses unused param warning{{/isFile}}{{/allParams}}
+        futures::failed("Generic failure".into()).boxed()
+    }
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+}

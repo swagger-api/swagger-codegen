@@ -1,0 +1,29 @@
+[package]
+name = "petstore_api"
+version = "1.0.0"
+authors = ["apiteam@swagger.io"]
+
+[features]
+default = ["client", "server"]
+client = ["serde_json", "hyper", "hyper-openssl", "uuid", "multipart"]
+server = ["serde_json", "hyper", "iron", "router", "bodyparser", "urlencoded", "uuid", "multipart"]
+
+[dependencies]
+bodyparser = {version = "0.7", optional = true}
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.1"
+hyper = {version = "0.10", optional = true}
+hyper-openssl = {version = "0.2", optional = true }
+iron = {version = "0.5", optional = true}
+lazy_static = "0.2"
+multipart = {version = "0.13", optional = true}
+router = {version = "0.5", optional = true}
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = {version = "1.0", optional = true}
+swagger = "0.3"
+urlencoded = {version = "0.5", optional = true}
+uuid = {version = "0.5", optional = true, features = ["serde", "v4"]}
+
+[dev-dependencies]
+clap = "2.25"
