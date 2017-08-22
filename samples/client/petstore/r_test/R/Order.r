@@ -34,6 +34,8 @@ Order <- R6::R6Class(
       }
       if (!missing(ship_date)) {
         stopifnot(is.character(ship_date), length(ship_date) == 1)
+        stopifnot(is.list(tags), length(tags) != 0)
+        lapply(ship_date, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
         self$ship_date <- ship_date
       }
       if (!missing(status)) {
@@ -50,14 +52,14 @@ Order <- R6::R6Class(
            "id": %d,
            "petId": %d,
            "quantity": "%s",
-           "shipDate": "%s",
+           "shipDate": %s,
            "status": "%s",
            "complete": "%s"
         }',
         self$id,
         self$pet_id,
         self$quantity,
-        self$ship_date,
+        self$ship_date$toJson(),
         self$status,
         self$complete
       )

@@ -17,20 +17,40 @@
 
     {{#operation}}
     {{operationId}} = function({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){
-      resp <- httr::{{httpMethod}}(paste0(self$url{{#pathParams}}, {{paramName}}{{/pathParams}}), httr::add_headers("User-Agent" = self$userAgent{{#hasConsumes}}, "accept" = "{{#consumes}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/consumes}}"){{/hasConsumes}}{{#hasProduces}}, "content-type" = "{{#produces}}{{#-first}}"{{{mediaType}}}"{{/-first}}{{/produces}}"{{/hasProduces}})
+      resp <- httr::{{httpMethod}}(paste0(self$url{{#pathParams}}, {{paramName}}{{/pathParams}}),
+          httr::add_headers("User-Agent" = self$userAgent{{#hasConsumes}}, "accept" = "{{#consumes}}{{#-first}}{{{mediaType}}}{{/-first}}{{/consumes}}"{{/hasConsumes}}{{#hasProduces}}, "content-type" = "{{#produces}}{{#-first}}{{{mediaType}}}{{/-first}}{{/produces}}"{{/hasProduces}}{{#headerParams}}, "{{baseName}}" = {{paramName}}{{/headerParams}})
+          {{#hasFormParams}}
+          ,body = list(
+            {{#formParams}}
+              "{{baseName}}" = {{paramName}}{{#hasMore}},{{/hasMore}}{{#isFile}} #TODO support file upload{{/isFile}}
+            {{/formParams}}
+            )
+          {{/hasFormParams}}
+          {{#bodyParams}}
+          ,body = {{paramName}}$toJson()
+          {{/bodyParams}}
+          )
+      {{#queryParams}}
+      # TODO add support for query parameters "{{baseName}}"
+      {{/queryParams}}
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
+        parsed <- jsonlite::fromJson(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE)
         result <- {{returnType}}$fromJSON(parsed)
         Response$new(result, resp)
         {{/returnType}}
-      } else {
-        Response$new("Unexpected response status code", resp)
+        {{^returnType}}
+        # void response, no need to return anything
+        {{/returnType}}
+      } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
+        Response$new("API client error", resp)
+      } else if (httr::status_code(resp) >= 500 && httr::status_code(resp) <= 599){
+        Response$new("API server error", resp)
       }
 
-    }
+    }{{#hasMore}},{{/hasMore}}
     {{/operation}}
   )
 ) 

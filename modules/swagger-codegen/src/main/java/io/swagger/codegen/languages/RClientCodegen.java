@@ -47,15 +47,10 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         setReservedWordsLowerCase(
             Arrays.asList(
-                // data type
-                "nil", "string", "boolean", "number", "userdata", "thread",
-                "table",
-
-                // reserved words: http://www.r.org/manual/5.1/manual.html#2.1
-                "and", "break", "do", "else", "elseif",
-                "end", "false", "for", "function", "if",
-                "in", "local", "nil", "not", "or",
-                "repeat", "return", "then", "true", "until", "while"
+                // reserved words: https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html
+                "if", "else", "repeat", "while", "function", "for", "in",
+                "next", "break", "TRUE", "FALSE", "NULL", "Inf", "NaN",
+                "NA", "NA_integer_", "NA_real_", "NA_complex_", "NA_character_"
             )
         );
 
@@ -67,39 +62,31 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         languageSpecificPrimitives = new HashSet<String>(
             Arrays.asList(
-                "nil",
-                "string",
-                "boolean",
-                "number")
+                "Integer",
+                "Numeric",
+                "Character")
             );
 
         instantiationTypes.clear();
-        /*instantiationTypes.put("array", "RArray");
-        instantiationTypes.put("map", "RMap");*/
 
         typeMapping.clear();
-        typeMapping.put("integer", "number");
-        typeMapping.put("long", "number");
-        typeMapping.put("number", "number");
-        typeMapping.put("float", "number");
-        typeMapping.put("double", "number");
-        typeMapping.put("boolean", "boolean");
-        typeMapping.put("string", "string");
-        typeMapping.put("UUID", "string");
-        typeMapping.put("date", "string");
-        typeMapping.put("DateTime", "string");
-        typeMapping.put("password", "string");
+        typeMapping.put("integer", "Integer");
+        typeMapping.put("long", "Integer");
+        typeMapping.put("number", "Numeric");
+        typeMapping.put("float", "Numeric");
+        typeMapping.put("double", "Numeric");
+        typeMapping.put("boolean", "Character");
+        typeMapping.put("string", "Character");
+        typeMapping.put("UUID", "Character");
+        typeMapping.put("date", "Date");
+        typeMapping.put("DateTime", "Date");
+        typeMapping.put("password", "Character");
         typeMapping.put("file", "TODO_FILE_MAPPING");
         // map binary to string as a workaround
         // the correct solution is to use []byte
-        typeMapping.put("binary", "string");
-        typeMapping.put("ByteArray", "string");
+        typeMapping.put("binary", "Character");
+        typeMapping.put("ByteArray", "Character");
         typeMapping.put("object", "TODO_OBJECT_MAPPING");
-
-        importMapping = new HashMap<String, String>();
-        importMapping.put("time.Time", "time");
-        importMapping.put("*os.File", "os");
-        importMapping.put("os", "io/ioutil");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "R package name (convention: lowercase).")
@@ -150,13 +137,12 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelPackage = packageName;
         apiPackage = packageName;
 
-        //supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        //supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.r"));
-        //supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.r"));
-        //supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.r"));
-        //supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
+        supportingFiles.add(new SupportingFile("description.mustache", "", "DESCRIPTION"));
+        supportingFiles.add(new SupportingFile("Rbuildignore.mustache", "", ".Rbuildignore"));
+        supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
     }
 
     @Override
@@ -181,11 +167,11 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + "api" + File.separator;
+        return outputFolder + File.separator + "R" + File.separator;
     }
 
     public String modelFileFolder() {
-        return outputFolder + File.separator + "model" + File.separator;
+        return outputFolder + File.separator + "R" + File.separator;
     }
 
     @Override
@@ -219,7 +205,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String name) {
-        return camelize(toModelFilename(name));
+        return toModelFilename(name);
     }
 
     @Override
@@ -236,17 +222,17 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + ("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + ("model_" + name));
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
-        return underscore(name);
+        return camelize(name);
     }
 
     @Override
@@ -255,34 +241,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // e.g. PetApi.r => pet_api.r
-        return underscore(name) + "_api";
-    }
-
-    /**
-     * Overrides postProcessParameter to add a vendor extension "x-exportParamName".
-     * This is useful when paramName starts with a lowercase letter, but we need that
-     * param to be exportable (starts with an Uppercase letter).
-     *
-     * @param parameter CodegenParameter object to be processed.
-     */
-    @Override
-    public void postProcessParameter(CodegenParameter parameter){
-
-        //// Give the base class a chance to process
-        //super.postProcessParameter(parameter);
-
-        //char firstChar = parameter.paramName.charAt(0);
-
-        //if (Character.isUpperCase(firstChar)) {
-        //    // First char is already uppercase, just use paramName.
-        //    parameter.vendorExtensions.put("x-exportParamName", parameter.paramName);
-
-        //}
-
-        //// It's a lowercase first char, let's convert it to uppercase
-        //StringBuilder sb = new StringBuilder(parameter.paramName);
-        //sb.setCharAt(0, Character.toUpperCase(firstChar));
-        //parameter.vendorExtensions.put("x-exportParamName", sb.toString());
+        return camelize(name + "_api");
     }
 
     @Override
@@ -307,7 +266,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toApiName(String name) {
-        return underscore(super.toApiName(name));
+        return camelize(super.toApiName(name));
     }
 
     @Override
