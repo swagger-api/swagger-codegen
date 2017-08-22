@@ -14,9 +14,7 @@ class CrunchbaseApi {
     this.basePath = basePath;
     this.session = null;
   }
-
   {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-
   /*
    * {{summary}}
    * {{notes}}
@@ -24,27 +22,18 @@ class CrunchbaseApi {
 {{/allParams}}   * @return Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>
    */
   {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
-    {{#allParams}}{{#required}}
-    // verify required parameter '{{paramName}}' is set
-    if ({{paramName}} == null) {
+    {{#allParams}}{{#required}}if ({{paramName}} == null) 
       throw new CrunchbaseApiError("Missing required parameter '{{paramName}}' when calling {{nickname}}");
-    }
     {{/required}}{{/allParams}}
     // get fully qualified and encoded path
     let path = this.basePath + replaceAll("{{{path}}}", "\\{format\\}", "json");
     {{#pathParams}}
     path = replaceAll(path, "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()));
     {{/pathParams}}
-
-    // todo: get rid of this
-    console.log(path);
-
     // add query string values to path
-    const queryString = {};
-    {{#queryParams}}
-    queryString.{{baseName}} = {{paramName}};
-    {{/queryParams}}
-    path += createQueryString(queryString);
+    const queryParams = {};
+    {{#queryParams}}queryParams.{{baseName}} = {{paramName}};
+    {{/queryParams}}path += createQueryString(queryParams);
 
     const headers = {};
 
@@ -53,19 +42,7 @@ class CrunchbaseApi {
     headers["Accept"] = "application/json";
     {{#headerParams}}if ({{paramName}} != null) headers["{{baseName}}"] = {{paramName}};
     {{/headerParams}}
-    const options = {
-      // request-promise config
-      json: true,
-      resolveWithFullResponse: true,
-      simple: false,
-      // todo: test timeout
-      timeout: 10000,
-      // the request itself
-      uri: path,
-      method: "{{httpMethod}}",
-      headers: headers,
-      body: {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}
-    }
+    const options = getRequestOptions(headers, {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, "{{httpMethod}}", path);
 
     // if session exists, add authorization
     if (this.session && this.session.cookies) options.jar = this.session.cookies;
@@ -73,14 +50,11 @@ class CrunchbaseApi {
     return new Promise((resolve, reject) => {
       request(options)
       .then(res => {
-        // todo: don't hardcode sessions endpoint
         if ("{{path}}" === "/cb/sessions") this.updateSession(res, "{{httpMethod}}");
         resolve(res);
         return;
       })
       .catch(err => {
-        // todo: how do I handle errors?
-        console.error(err);
         reject(err);
         return;
       });
@@ -95,13 +69,10 @@ class CrunchbaseApi {
   updateSession(res, method) {
     switch(method) {
       case "POST":
-        this.handlePostCbSessions(res);
-        break;
-      case "GET":
-        this.handleGetCbSessions(res);
+        this.setSession(res);
         break;
       case "DELETE":
-        this.session = null;
+        this.clearSession();
         break;
       default:
         return;
@@ -111,23 +82,41 @@ class CrunchbaseApi {
   /*
    * Sets CrunchbaseApi session from POST /cb/sessions response.
    */
-  handlePostCbSessions(res) {
-    if (!(res && res.headers && res.headers['set-cookie'])) {
-      throw new CrunchbaseApiError("Failed to set api session. Set-Cookie header is missing from respose: " + res);
-    }
+  setSession(res) {
+    this.session = {
+      cookies: getCookies(res),
+      user: getUser(res)
+    };
+  }
+
+  /*
+   * Sets CrunchbaseApi session from POST /cb/sessions response.
+   */
+  clearSession() {
+    this.session = null;
+  }
+
+  /*
+   * Gets user from a POST /cb/sessions response.
+   */
+  function getUser(res) {
+    if (!(res && res.body && res.body.user))
+        throw new CrunchbaseApiError("Could not update session due to malformed response body.");
+    return res.body.user;
+  }
+
+  /*
+   * Gets cookies from a POST /cb/sessions response.
+   */
+  function getCookies(res) {
+    if (!(res && res.headers && res.headers['set-cookie']))
+      throw new CrunchbaseApiError("Could not update session due to missing set-cookie header.");
     const cookies = res.headers['set-cookie'].map(Cookie.parse);
     const jar = request.jar();
     cookies.forEach(cookie => {
       jar.setCookie(cookie, this.basePath);
     });
-    this.session = {
-      cookies: jar,
-      user: res.body.user
-    }
-  }
-
-  handleGetCbSessions(res) {
-    // todo: how does this endpoint work?
+    return jar;
   }
 
   /* 
@@ -171,8 +160,24 @@ function createQueryString(queryParams) {
   return queryString;
 }
 
+function getRequestOptions(headers, body, method, path) {
+  return {
+    // request-promise config
+    json: true,
+    resolveWithFullResponse: true,
+    simple: false,
+    // todo: test timeout
+    timeout: 10000,
+    // the request itself
+    uri: path,
+    method: method,
+    headers: headers,
+    body: body
+  };
+}
+
 class CrunchbaseApiError extends Error {
-  constructor (message, status) {
+  constructor(message, status) {
     super(message);
     Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
@@ -180,4 +185,3 @@ class CrunchbaseApiError extends Error {
 }
 
 module.exports = CrunchbaseApi;
-
