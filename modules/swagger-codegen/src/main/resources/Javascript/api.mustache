@@ -1,125 +1,187 @@
-// require files in Node.js environment
-var ${{#imports}}, {{import}}{{/imports}};
-if (typeof module === 'object' && module.exports) {
-  $ = require('jquery');{{#imports}}
-  {{import}} = require('../model/{{import}}.js');{{/imports}}
-}
+//
+// DO NOT MODIFY - GENERATED FILE
+//
 
-// export module for AMD
-if ( typeof define === "function" && define.amd ) {     
-	define(['jquery'{{#imports}}, '{{import}}'{{/imports}}], function(${{#imports}}, {{import}}{{/imports}}) {
-        return {{classname}};
-	 });
-}
+const request = require('request-promise');
+const Cookie = require('tough-cookie').Cookie;
 
-var {{classname}} = function {{classname}}() {
-	var self = this;
-  {{#operations}}
-  {{#operation}}
-  /**
+class CrunchbaseApi {
+  constructor(basePath) {
+    // trim trailing slash, if necessary
+    if (basePath.substring(basePath.length - 1, basePath.length) == '/') {
+      basePath = basePath.substring(0, basePath.length - 1);
+    }
+    this.basePath = basePath;
+    this.session = null;
+  }
+  {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+  /*
    * {{summary}}
    * {{notes}}
 {{#allParams}}   * @param {{=<% %>=}}{<% dataType %>} <%={{ }}=%> {{paramName}} {{description}}
-{{/allParams}}   * @param {function} callback the callback function
-   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+{{/allParams}}   * @return Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>
    */
-  self.{{nickname}} = function({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#hasParams}}, {{/hasParams}}callback) {
-    var {{localVariablePrefix}}postBody = {{#bodyParam}}{{^isBinary}}JSON.stringify({{paramName}}){{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-    var {{localVariablePrefix}}postBinaryBody = {{#bodyParam}}{{#isBinary}}{{paramName}}{{/isBinary}}{{^isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-    {{#allParams}}{{#required}}
-     // verify the required parameter '{{paramName}}' is set
-     if ({{paramName}} == null) {
-        //throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{nickname}}");
-        var errorRequiredMsg = "Missing the required parameter '{{paramName}}' when calling {{nickname}}";
-        throw errorRequiredMsg;
-     }
-     {{/required}}{{/allParams}}
-    // create path and map variables
-    var basePath = '{{basePath}}';
-    // if basePath ends with a /, remove it as path starts with a leading /
-    if (basePath.substring(basePath.length-1, basePath.length)=='/') {
-    	basePath = basePath.substring(0, basePath.length-1);
-    }
-    
-    var {{localVariablePrefix}}path = basePath + replaceAll(replaceAll("{{{path}}}", "\\{format\\}","json"){{#pathParams}}
-, "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()){{/pathParams}});
+  {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    {{#allParams}}{{#required}}if ({{paramName}} == null) 
+      throw new CrunchbaseApiError("Missing required parameter '{{paramName}}' when calling {{nickname}}");
+    {{/required}}{{/allParams}}
+    // get fully qualified and encoded path
+    let path = this.basePath + replaceAll("{{{path}}}", "\\{format\\}", "json");
+    {{#pathParams}}
+    path = replaceAll(path, "\\{" + "{{baseName}}" + "\\}", encodeURIComponent({{{paramName}}}.toString()));
+    {{/pathParams}}
+    // add query string values to path
+    const queryParams = {};
+    {{#queryParams}}queryParams.{{baseName}} = {{paramName}};
+    {{/queryParams}}path += createQueryString(queryParams);
 
-    var queryParams = {};
-    var headerParams =  {};
-    var formParams =  {};
+    const headers = {};
 
-    {{#queryParams}}
-    queryParams.{{baseName}} = {{paramName}};
-    {{/queryParams}}
-    {{#headerParams}}if ({{paramName}} != null)
-    {{localVariablePrefix}}headerParams.put("{{baseName}}", {{paramName}});
+    // default headers
+    headers["Content-Type"] = "application/json";
+    headers["Accept"] = "application/json";
+    {{#headerParams}}if ({{paramName}} != null) headers["{{baseName}}"] = {{paramName}};
     {{/headerParams}}
-    {{#formParams}}if ({{paramName}} != null)
-      {{localVariablePrefix}}formParams.put("{{baseName}}", {{paramName}});
-    {{/formParams}}
+    const options = getRequestOptions(headers, {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, "{{httpMethod}}", path);
 
-    path += createQueryString(queryParams);
+    // if session exists, add authorization
+    if (this.session && this.session.cookies) options.jar = this.session.cookies;
 
-    var options = {type: "{{httpMethod}}", async: true, contentType: "application/json", dataType: "json", data: postBody};
-    var request = $.ajax(path, options);
-
-    request.fail(function(jqXHR, textStatus, errorThrown){
-      if (callback) {
-        var error = errorThrown || textStatus || jqXHR.statusText || 'error';
-        callback(null, textStatus, jqXHR, error);
-      }
+    return new Promise((resolve, reject) => {
+      request(options)
+      .then(res => {
+        if ("{{path}}" === "/cb/sessions") this.updateSession(res, "{{httpMethod}}");
+        resolve(res);
+        return;
+      })
+      .catch(err => {
+        reject(err);
+        return;
+      });
     });
-		
-    request.done(function(response, textStatus, jqXHR){
-      {{#returnType}}
-      /**
-        * @returns {{{returnType}}}
-        */
-      {{#returnTypeIsPrimitive}}var myResponse = response;{{/returnTypeIsPrimitive}}
-      {{^returnTypeIsPrimitive}}var myResponse = new {{{returnType}}}();
-      myResponse.constructFromObject(response);{{/returnTypeIsPrimitive}}
-      if (callback) {
-        callback(myResponse, textStatus, jqXHR);
-      }
-      {{/returnType}}{{^returnType}}
-      if (callback) {
-        callback(response, textStatus, jqXHR);
-      }
-      {{/returnType}}
-    });
- 
-    return request;
   }
-  {{/operation}}
-  {{/operations}}
+  {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
- 	function replaceAll (haystack, needle, replace) {
-		var result= haystack;
-		if (needle !=null && replace!=null) {
-			result= haystack.replace(new RegExp(needle, 'g'), replace);
-		}
-		return result;
-	}
+  /*
+   * Routes /cb/sessions response to appropriate handler
+   * based on HTTP method.
+   */
+  updateSession(res, method) {
+    switch(method) {
+      case "POST":
+        this.setSession(res);
+        break;
+      case "DELETE":
+        this.clearSession();
+        break;
+      default:
+        return;
+    }
+  }
 
- 	function createQueryString (queryParams) {
-		var queryString ='';
-		var i = 0;
-		for (var queryParamName in queryParams) {
-			if (i==0) {
-				queryString += '?' ;
-			} else {
-				queryString += '&' ;
-			}
-			
-			queryString +=  queryParamName + '=' + encodeURIComponent(queryParams[queryParamName]);
-			i++;
-		}
-		
-		return queryString;
-	}
+  /*
+   * Sets CrunchbaseApi session from POST /cb/sessions response.
+   */
+  setSession(res) {
+    this.session = {
+      cookies: getCookies(res),
+      user: getUser(res)
+    };
+  }
+
+  /*
+   * Sets CrunchbaseApi session from POST /cb/sessions response.
+   */
+  clearSession() {
+    this.session = null;
+  }
+
+  /*
+   * Gets user from a POST /cb/sessions response.
+   */
+  function getUser(res) {
+    if (!(res && res.body && res.body.user))
+        throw new CrunchbaseApiError("Could not update session due to malformed response body.");
+    return res.body.user;
+  }
+
+  /*
+   * Gets cookies from a POST /cb/sessions response.
+   */
+  function getCookies(res) {
+    if (!(res && res.headers && res.headers['set-cookie']))
+      throw new CrunchbaseApiError("Could not update session due to missing set-cookie header.");
+    const cookies = res.headers['set-cookie'].map(Cookie.parse);
+    const jar = request.jar();
+    cookies.forEach(cookie => {
+      jar.setCookie(cookie, this.basePath);
+    });
+    return jar;
+  }
+
+  /* 
+   * Alias for postCbSessions.
+   */
+  login(email, password) {
+    return this.postCbSessions({
+      email: email,
+      password: password
+    });
+  }
+
+  /* 
+   * Alias for deleteCbSessions.
+   */
+  logout() {
+    return this.deleteCbSessions();
+  }
 }
 
-// export module for Node.js
-if (typeof module === 'object' && module.exports) {
-  module.exports = {{classname}};
+function replaceAll(haystack, needle, replace) {
+  let result = haystack;
+  if (needle != null && replace != null) {
+    result = haystack.replace(new RegExp(needle, 'g'), replace);
+  }
+  return result;
 }
+
+function createQueryString(queryParams) {
+  let queryString ='';
+  let i = 0;
+  for (let queryParamName in queryParams) {
+    if (i == 0) {
+      queryString += '?' ;
+    } else {
+      queryString += '&' ;
+    }
+    queryString +=  queryParamName + '=' + encodeURIComponent(queryParams[queryParamName]);
+    i++;
+  }
+  return queryString;
+}
+
+function getRequestOptions(headers, body, method, path) {
+  return {
+    // request-promise config
+    json: true,
+    resolveWithFullResponse: true,
+    simple: false,
+    // todo: test timeout
+    timeout: 10000,
+    // the request itself
+    uri: path,
+    method: method,
+    headers: headers,
+    body: body
+  };
+}
+
+class CrunchbaseApiError extends Error {
+  constructor(message, status) {
+    super(message);
+    Error.captureStackTrace(this, this.constructor);
+    this.name = this.constructor.name;
+  }
+}
+
+module.exports = CrunchbaseApi;

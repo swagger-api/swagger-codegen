@@ -45,17 +45,13 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String projectDescription;
     protected String projectVersion;
 
-    protected String sourceFolder = "src";
+    protected String sourceFolder = "";
     protected String localVariablePrefix = "";
 
     public JavascriptClientCodegen() {
         super();
         outputFolder = "generated-code/js";
-        modelTemplateFiles.put("model.mustache", ".js");
-        apiTemplateFiles.put("api.mustache", ".js");
         templateDir = "Javascript";
-        apiPackage = "api";
-        modelPackage = "model";
 
         // reference: http://www.w3schools.com/js/js_reserved.asp
         reservedWords = new HashSet<String>(
@@ -203,8 +199,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put(CodegenConstants.LOCAL_VARIABLE_PREFIX, localVariablePrefix);
         additionalProperties.put(CodegenConstants.SOURCE_FOLDER, sourceFolder);
 
+        // source code
+        supportingFiles.add(new SupportingFile("api.mustache", sourceFolder, "api.js"));
+        // node modules
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
-        supportingFiles.add(new SupportingFile("index.mustache", sourceFolder, "index.js"));
+        // docs
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
 
     @Override
@@ -538,4 +538,35 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return packageName;
     }
 
+    @Override
+    protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
+        String operationId = operation.getOperationId();
+        if (StringUtils.isBlank(operationId)) {
+            String tmpPath = path;
+            tmpPath = tmpPath.replaceAll("\\{", "");
+            tmpPath = tmpPath.replaceAll("\\}", "");
+            // override to format path parameters nicely (e.g. /{user_id}/ => UserId)
+            tmpPath = tmpPath.replaceAll("_", "/");
+            String[] parts = (httpMethod + "/" + tmpPath).split("/");
+            StringBuilder builder = new StringBuilder();
+            if ("/".equals(tmpPath)) {
+                // must be root tmpPath
+                builder.append("root");
+            }
+            for (int i = 0; i < parts.length; i++) {
+                String part = parts[i];
+                if (part.length() > 0) {
+                    if (builder.toString().length() == 0) {
+                        part = Character.toLowerCase(part.charAt(0)) + part.substring(1);
+                    } else {
+                        part = initialCaps(part);
+                    }
+                    builder.append(part);
+                }
+            }
+            operationId = builder.toString();
+            LOGGER.info("generated operationId " + operationId + "\tfor Path: " + httpMethod + " " + path);
+        }
+        return operationId;
+    }
 }
