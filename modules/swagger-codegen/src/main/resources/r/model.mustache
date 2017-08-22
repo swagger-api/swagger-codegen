@@ -1,28 +1,124 @@
 {{#models}}
 {{#model}}
 {{>partial_header}}
--- {{classname}} class
-local {{classname}} = {}
-local {{classname}}_mt = {
-	__name = "{{classname}}";
-	__index = {{classname}};
-}
 
-local function cast_{{classname}}(t)
-	return setmetatable(t, {{classname}}_mt)
-end
 
-local function new_{{classname}}({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}})
-	return cast_{{classname}}({
-		{{#vars}}
-		["{{baseName}}"] = {{name}};
-		{{/vars}}
-	})
-end
+#' {{classname}} Class
+#' @export
+{{classname}} <- R6::R6Class(
+  '{{classname}}',
+  public = list(
+    {{#vars}}
+    {{{name}}} = NULL,
+    {{/vars}}
+    initialize = function({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}}){
+      {{#vars}}
+      if (!missing({{name}})) {
+        {{^isListContainer}}
+        {{#isInteger}}
+        stopifnot(is.numeric({{name}}), length({{name}}) == 1)
+        {{/isInteger}}
+        {{#isLong}}
+        stopifnot(is.numeric({{name}}), length({{name}}) == 1)
+        {{/isLong}}
+        {{#isFloat}}
+        stopifnot(is.numeric({{name}}), length({{name}}) == 1)
+        {{/isFloat}}
+        {{#isDouble}}
+        stopifnot(is.numeric({{name}}), length({{name}}) == 1)
+        {{/isDouble}}
+        {{#isString}}
+        stopifnot(is.character({{name}}), length({{name}}) == 1)
+        {{/isString}}
+        {{#isDate}}
+        stopifnot(is.character({{name}}), length({{name}}) == 1)
+        {{/isDate}}
+        {{#isDateTime}}
+        stopifnot(is.character({{name}}), length({{name}}) == 1)
+        {{/isDateTime}}
+        {{^isPrimitiveType}}
+        stopifnot(is.list(tags), length(tags) != 0)
+        lapply({{name}}, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
+        {{/isPrimitiveType}}
+        {{/isListContainer}}
+        {{#isListContainer}}
+        {{#isPrimitiveType}}
+        stopifnot(is.list({{name}}), length({{name}}) != 0)
+        lapply({{name}}, function(x) stopifnot(is.character(x)))
+        {{/isPrimitiveType}}
+        {{^isPrimitiveType}}
+        stopifnot(is.list(tags), length(tags) != 0)
+        lapply({{name}}, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
+        {{/isPrimitiveType}}
+        {{/isListContainer}}
+        self${{name}} <- {{name}}
+      }
+      {{/vars}}
+    },
+    toJson = function() { 
+       sprintf(
+        '{
+           {{#vars}}
+           "{{baseName}}": {{#isListContainer}}[{{/isListContainer}}{{#isPrimitiveType}}{{#isNumeric}}%d{{/isNumeric}}{{^isNumeric}}"%s"{{/isNumeric}}{{/isPrimitiveType}}{{^isPrimitiveType}}%s{{/isPrimitiveType}}{{#isListContainer}}]{{/isListContainer}}{{#hasMore}},{{/hasMore}}
+           {{/vars}}
+        }',
+        {{#vars}}
+        {{#isListContainer}}
+        {{#isPrimitiveType}}
+        lapply(self${{name}}, function(x) paste(paste0('"', x, '"'), sep=",")){{#hasMore}},{{/hasMore}}
+        {{/isPrimitiveType}}
+        {{^isPrimitiveType}}
+        lapply(self${{name}}, function(x) paste(x$toJson(), sep=",")){{#hasMore}},{{/hasMore}}
+        {{/isPrimitiveType}}
+        {{/isListContainer}}
+        {{^isListContainer}}
+        self${{name}}{{^isPrimitiveType}}$toJson(){{/isPrimitiveType}}{{#hasMore}},{{/hasMore}}
+        {{/isListContainer}}
+        {{/vars}}
+      )
+    }
+  )
+)
 
-return {
-	cast = cast_{{classname}};
-	new = new_{{classname}};
-}
+#' Element Class
+#'
+#' Element Class
+#' @export
+Element  <- R6::R6Class(
+  'Element',
+  public = list(
+    id = NULL,
+    name = NULL,
+    initialize = function(id,name){
+      if (!missing(id)) {
+        stopifnot(is.numeric(id), length(id) == 1)
+        self$id <- id
+      }
+      if (!missing(name)) {
+        stopifnot(is.character(name), length(name) == 1)
+        self$name <- name
+      }
+    },
+    toJson = function() { 
+       sprintf('{"id":%d,"name":"%s"}', self$id, self$name)
+    }
+  )
+)
+
+#' Response Class
+#'
+#' Response Class
+#' @export
+Response  <- R6::R6Class(
+  'Response',
+  public = list(
+    content = NULL,
+    response = NULL,
+    initialize = function(content, response){
+      self$content <- content
+      self$response <- response
+    }
+  )
+)
 {{/model}}
 {{/models}}

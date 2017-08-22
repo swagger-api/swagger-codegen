@@ -219,7 +219,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String name) {
-        return toModelFilename(name);
+        return camelize(toModelFilename(name));
     }
 
     @Override
@@ -365,37 +365,6 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         return underscore(sanitizedOperationId);
-    }
-
-    @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        @SuppressWarnings("unchecked")
-        Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
-        @SuppressWarnings("unchecked")
-        List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
-        for (CodegenOperation op: operations) {
-
-            String[] items = op.path.split("/", -1);
-            String rPath = "";
-            int pathParamIndex = 0;
-
-            for (int i = 0; i < items.length; ++i) {
-                if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
-                    // find the datatype of the parameter
-                    //final CodegenParameter cp = op.pathParams.get(pathParamIndex);
-                    // TODO: Handle non-primitives…
-                    //rPath = rPath + cp.dataType.toLowerCase();
-                    rPath = rPath + "/%s";
-                    pathParamIndex++;
-                } else if (items[i].length() != 0) {
-                    rPath = rPath + "/" + items[i];
-                } else {
-                    //rPath = rPath + "/";
-                }
-            }
-            kp.vendorExtensions.put("x-codegen-path", rPath);
-        }
-        return objs;
     }
 
     @Override
