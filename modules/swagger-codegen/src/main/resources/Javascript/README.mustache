@@ -1,73 +1,52 @@
-# Javascript v4 API Client
-
-> A Javascript client for the Crunchbase v4 API.
+# Crunchbase API Client
 
 This code was auto-generated using a fork of the Swagger-Codegen project, available [here](https://github.com/crunchbase/swagger-codegen). It is based on the [v4 API spec](https://github.com/crunchbase/api-spec/tree/data_exchange). 
 
-## Overview
+## Getting Started
 
-Import the module:
+1. Import the module:
 
 ```
-// es6
-import CrunchbaseApi from './path/to/api.js';
-
-// es5
 var CrunchbaseApi = require('./path/to/api.js');
 ```
 
-Instantiate a new `CrunchbaseApi`. The constructor takes a base URL parameter, which is required.
+2. Instantiate a new `CrunchbaseApi`. The constructor takes a base URL parameter, which is required.
 
 ```
 const api = new CrunchbaseApi('https://uat.crunchbase.com');
 ```
 
-### Making a Request
-
-Use `CrunchbaseApi` methods to hit any endpoint. The method names include the HTTP verb, full path, and any path parameters. For example:
+3. Make a request. `CrunchbaseApi` has a method corresponding to every endpoint. For example:
 
 ```
+// GET /data/entities/{collection_id}/{entity_id}
 api.getDataEntitiesCollectionIdEntityId('organizations', 'apple');
 ```
 
-See [API Endpoints](#api-endpoints) for a complete list of request methods.
+See [Endpoints](#endpoints) for a complete list of request methods.
 
-### Getting the Response
-
-With the exception of utility methods, `CrunchbaseApi` methods return Promises that resolve with `http.IncomingMessage` objects. 
+4. Do stuff with the response: 
 
 ```
 api
 .getDataEntitiesCollectionIdEntityId('organizations', 'apple')
 .then(function(response) {
-    console.log(response.statusCode);
+  console.log(response.statusCode);
 });
 ```
 
-To see what methods and properties are available for parsing the response, refer to [this documentation](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
+`CrunchbaseApi` methods return Promises that resolve with `http.IncomingMessage` objects. To see what methods and properties are available for parsing the response, refer to [this documentation](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 
-### Sessions and Authorization
+### Authorization
 
 Some requests may require authorization headers. The API client will keep track of user session for you, and add these headers when available. Start by logging in:
 
 ```
 api.postCbSessions({
-    email: 'foo@bar.co',
-    password: 'foobar'
+  email: 'foo@bar.co',
+  password: 'foobar'
 });
-
-// alternatively
-api.login('foo@bar.co', 'foobar');
 ```
-
-POST and DELETE /cb/sessions will update the `CrunchbaseApi.session` property accordingly. You can check the current session state at any time:
-
-```
-api.isLoggedIn(); // => true
-api.isPro(); // => true
-```
-
-See [Utilities](#utilities) for a complete list.
 
 Now, you can make authorized requests:
 
@@ -81,13 +60,15 @@ api.postDataEntities({
       add: [ 'company' ]
     },
     properties: {
-      name: 'Fidget Spinners, Inc.'
+      name: 'Business Systems Co., Inc.'
     }
   }
 });
 ```
 
-## API Endpoints
+POST and DELETE requests to the /cb/sessions endpoint will update the `CrunchbaseApi.session` property accordingly.
+
+## Endpoints
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 #### {{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
@@ -101,14 +82,3 @@ Param | Type | Description
 {{/allParams}}
 
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
-
-## Utilities
-
-#### login(email, password)
-
-Param | Type | Description
----- | ---- | ----
-email | String |
-password | String |
-
-#### logout()

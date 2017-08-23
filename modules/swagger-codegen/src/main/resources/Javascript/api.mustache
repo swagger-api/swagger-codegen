@@ -118,23 +118,6 @@ class CrunchbaseApi {
     });
     return jar;
   }
-
-  /* 
-   * Alias for postCbSessions.
-   */
-  login(email, password) {
-    return this.postCbSessions({
-      email: email,
-      password: password
-    });
-  }
-
-  /* 
-   * Alias for deleteCbSessions.
-   */
-  logout() {
-    return this.deleteCbSessions();
-  }
 }
 
 function replaceAll(haystack, needle, replace) {
