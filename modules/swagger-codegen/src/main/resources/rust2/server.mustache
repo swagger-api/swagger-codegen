@@ -139,11 +139,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{#headerParams}}{{#-first}}
                 // Header parameters
 {{/-first}}{{^isContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => [{{{dataType}}}] }
-{{#required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone();
+{{/isContainer}}{{#isContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => ({{{baseType}}})* }
+{{/isContainer}}{{#required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone();
 {{/required}}{{^required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().map(|header| header.0.clone());
-{{/required}}{{/isContainer}}
-    {{#isContainer}}let param_{{paramName}}: Option<{{{dataType}}}> = None;{{/isContainer}}
-{{/headerParams}}
+{{/required}}{{/headerParams}}
 {{#queryParams}}{{#-first}}
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
