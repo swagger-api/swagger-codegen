@@ -356,7 +356,7 @@ paths:
         description: "file to upload"
         required: false
         type: "file"
-        formatString: "<file>"
+        formatString: "{:?}"
         example: "future::ok(Some(stream::once(Ok(b\"hello\".to_vec())).boxed())).boxed()"
       responses:
         200:
