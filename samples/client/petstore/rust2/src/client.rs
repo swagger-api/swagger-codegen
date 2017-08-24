@@ -832,7 +832,7 @@ impl Api for Client {
         // Form data body
         let mut multipart = Multipart::new();
 
-        if let Ok(Some(param_file)) = param_file.wait() {
+        if let Ok(Some(param_file)) = param_file.wait() { 
             match convert_stream_to_string(param_file) {
                 Ok(param_file) => {
                     // Add file to multipart form.
