@@ -147,7 +147,7 @@ impl Client {
 
 impl Api for Client {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isContainer}}Option<{{/isContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isContainer}}>{{/isContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isListContainer}}Option<{{/isListContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isListContainer}}>{{/isListContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
 {{#queryParams}}{{#-first}}
         // Query parameters
 {{/-first}}        let query_{{paramName}} = {{^required}}{{#isContainer}}if param_{{paramName}}.is_empty() {

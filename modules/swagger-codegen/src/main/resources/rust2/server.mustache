@@ -139,17 +139,23 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{/pathParams}}
 {{#headerParams}}{{#-first}}
                 // Header parameters
-{{/-first}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isContainer}}({{{baseType}}})*{{/isContainer}}{{^isContainer}}[{{{dataType}}}]{{/isContainer}} }
-                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().{{#required}}ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone({{/required}}{{^required}}map(|header| header.0.clone(){{/required}}){{#isContainer}}.unwrap_or_else(|| Vec::new()){{/isContainer}};
-{{/headerParams}}
+{{/-first}}{{^isMapContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isListContainer}}({{{baseType}}})*{{/isListContainer}}{{^isListContainer}}[{{{dataType}}}]{{/isListContainer}} }
+{{#required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone(){{!
+}}{{/required}}{{^required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().map(|header| header.0.clone()){{!
+}}{{/required}}{{#isListContainer}}.unwrap_or_else(|| Vec::new()){{/isListContainer}};
+{{/isMapContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
+{{/isMapContainer}}{{/headerParams}}
 {{#queryParams}}{{#-first}}
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-{{/-first}}                let param_{{paramName}} = query_params.get("{{baseName}}"){{#required}}.ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter {{baseName}}".to_string())))?
-{{#isListContainer}}                    .iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>(){{/isListContainer}}{{^isListContainer}}                    .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter {{baseName}} was empty".to_string())))?
-                    .parse::<{{{dataType}}}>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter {{baseName}} - doesn't match schema: {}", e))))?{{/isListContainer}}{{/required}}{{^required}}
-{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>()){{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok()){{/isListContainer}}{{#isContainer}}.unwrap_or_else(|| Vec::new()){{/isContainer}}{{/required}};
-{{/queryParams}}
+{{/-first}}                let param_{{paramName}} = query_params.get("{{baseName}}")
+{{#required}}                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter {{baseName}}".to_string())))?
+{{#isListContainer}}                    .iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>();
+{{/isListContainer}}{{^isListContainer}}                    .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter {{baseName}} was empty".to_string())))?
+                    .parse::<{{{dataType}}}>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter {{baseName}} - doesn't match schema: {}", e))))?;
+{{/isListContainer}}{{/required}}{{^required}}{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>()).unwrap_or_else(|| Vec::new());
+{{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok());
+{{/isListContainer}}{{/required}}{{/queryParams}}
 {{#bodyParams}}{{#-first}}
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
 {{/-first}}{{#required}}                let body = req.get::<bodyparser::Struct<{{{dataType}}}>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter {{baseName}} - doesn't match schema: {}", e))))?;

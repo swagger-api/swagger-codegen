@@ -21,7 +21,7 @@ pub struct Server;
 impl Api for Server {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{#summary}}    /// {{{summary}}}{{/summary}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isContainer}}Option<{{/isContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isContainer}}>{{/isContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isListContainer}}Option<{{/isListContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isListContainer}}>{{/isListContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
         let context = context.clone();
         println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, context.x_span_id.unwrap_or(String::from("<none>")).clone());{{#allParams}}{{#isFile}}
         let _ = {{paramName}}; //Suppresses unused param warning{{/isFile}}{{/allParams}}

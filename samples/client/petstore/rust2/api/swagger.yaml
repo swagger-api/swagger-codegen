@@ -127,11 +127,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
         formatString: "{:?}"
         example: "&Vec::new()"
@@ -356,10 +356,8 @@ paths:
         description: "file to upload"
         required: false
         type: "file"
-        formatString: "{:?}"
-        example: "Box::new(future::ok(Some(Box::new(stream::once(Ok(b\"hello\".to_vec())))\
-          \ as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_>\
-          \ + Send>"
+        formatString: "<file>"
+        example: "future::ok(Some(stream::once(Ok(b\"hello\".to_vec())).boxed())).boxed()"
       responses:
         200:
           description: "successful operation"
@@ -825,10 +823,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "&Vec::new()"
       - name: "enum_form_string"
@@ -850,10 +848,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "&Vec::new()"
       - name: "enum_header_string"
@@ -875,10 +873,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "&Vec::new()"
       - name: "enum_query_string"

@@ -70,130 +70,130 @@ mod response_mimetypes {
 
     // The macro is called per-operation to beat the recursion limit
     /// Create Mime objects for the response content types for FakeOuterBooleanSerialize
-    lazy_static! { 
+    lazy_static! {
     }
     /// Create Mime objects for the response content types for FakeOuterCompositeSerialize
-    lazy_static! { 
+    lazy_static! {
     }
     /// Create Mime objects for the response content types for FakeOuterNumberSerialize
-    lazy_static! { 
+    lazy_static! {
     }
     /// Create Mime objects for the response content types for FakeOuterStringSerialize
-    lazy_static! { 
+    lazy_static! {
     }
     /// Create Mime objects for the response content types for TestClientModel
-    lazy_static! { 
+    lazy_static! {
         pub static ref TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for TestEndpointParameters
-    lazy_static! { 
+    lazy_static! {
         pub static ref TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml; ("charset")=("utf-8"));
         pub static ref TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND: Mime = mime!(Application/Xml; ("charset")=("utf-8"));
     }
     /// Create Mime objects for the response content types for TestEnumParameters
-    lazy_static! { 
+    lazy_static! {
         pub static ref TEST_ENUM_PARAMETERS_INVALID_REQUEST: Mime = mime!(Star/Star);
         pub static ref TEST_ENUM_PARAMETERS_NOT_FOUND: Mime = mime!(Star/Star);
     }
     /// Create Mime objects for the response content types for TestJsonFormData
-    lazy_static! { 
+    lazy_static! {
     }
     /// Create Mime objects for the response content types for TestClassname
-    lazy_static! { 
+    lazy_static! {
         pub static ref TEST_CLASSNAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for AddPet
-    lazy_static! { 
+    lazy_static! {
         pub static ref ADD_PET_INVALID_INPUT: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for DeletePet
-    lazy_static! { 
+    lazy_static! {
         pub static ref DELETE_PET_INVALID_PET_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for FindPetsByStatus
-    lazy_static! { 
+    lazy_static! {
         pub static ref FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for FindPetsByTags
-    lazy_static! { 
+    lazy_static! {
         pub static ref FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref FIND_PETS_BY_TAGS_INVALID_TAG_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetPetById
-    lazy_static! { 
+    lazy_static! {
         pub static ref GET_PET_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_PET_BY_ID_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_PET_BY_ID_PET_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdatePet
-    lazy_static! { 
+    lazy_static! {
         pub static ref UPDATE_PET_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref UPDATE_PET_PET_NOT_FOUND: Mime = mime!(Application/Xml);
         pub static ref UPDATE_PET_VALIDATION_EXCEPTION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdatePetWithForm
-    lazy_static! { 
+    lazy_static! {
         pub static ref UPDATE_PET_WITH_FORM_INVALID_INPUT: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UploadFile
-    lazy_static! { 
+    lazy_static! {
         pub static ref UPLOAD_FILE_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for DeleteOrder
-    lazy_static! { 
+    lazy_static! {
         pub static ref DELETE_ORDER_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref DELETE_ORDER_ORDER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetInventory
-    lazy_static! { 
+    lazy_static! {
         pub static ref GET_INVENTORY_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for GetOrderById
-    lazy_static! { 
+    lazy_static! {
         pub static ref GET_ORDER_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_ORDER_BY_ID_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_ORDER_BY_ID_ORDER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for PlaceOrder
-    lazy_static! { 
+    lazy_static! {
         pub static ref PLACE_ORDER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref PLACE_ORDER_INVALID_ORDER: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUser
-    lazy_static! { 
+    lazy_static! {
         pub static ref CREATE_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUsersWithArrayInput
-    lazy_static! { 
+    lazy_static! {
         pub static ref CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUsersWithListInput
-    lazy_static! { 
+    lazy_static! {
         pub static ref CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for DeleteUser
-    lazy_static! { 
+    lazy_static! {
         pub static ref DELETE_USER_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref DELETE_USER_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetUserByName
-    lazy_static! { 
+    lazy_static! {
         pub static ref GET_USER_BY_NAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_USER_BY_NAME_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for LoginUser
-    lazy_static! { 
+    lazy_static! {
         pub static ref LOGIN_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref LOGIN_USER_INVALID_USERNAME: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for LogoutUser
-    lazy_static! { 
+    lazy_static! {
         pub static ref LOGOUT_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdateUser
-    lazy_static! { 
+    lazy_static! {
         pub static ref UPDATE_USER_INVALID_USER_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref UPDATE_USER_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
@@ -251,6 +251,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterBoolean>>().unwrap_or(None);
 
@@ -259,7 +261,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterBooleanSerializeResponse::OutputBoolean(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             Ok(response)
                         },
@@ -294,6 +296,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterComposite>>().unwrap_or(None);
 
@@ -302,7 +306,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterCompositeSerializeResponse::OutputComposite(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             Ok(response)
                         },
@@ -337,6 +341,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterNumber>>().unwrap_or(None);
 
@@ -345,7 +351,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterNumberSerializeResponse::OutputNumber(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             Ok(response)
                         },
@@ -380,6 +386,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let param_body = req.get::<bodyparser::Struct<models::OuterString>>().unwrap_or(None);
 
@@ -388,7 +396,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterStringSerializeResponse::OutputString(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             Ok(response)
                         },
@@ -423,6 +431,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Client>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -432,7 +442,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestClientModelResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -476,6 +486,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Form parameters
                 let param_number = 3.4;
                 let param_double = 1.2;
@@ -496,7 +508,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestEndpointParametersResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -504,7 +516,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         TestEndpointParametersResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -547,6 +559,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 header! { (RequestEnumHeaderString, "enum_header_string") => [String] }
                 let param_enum_header_string = req.headers.get::<RequestEnumHeaderString>().map(|header| header.0.clone());
 
+
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_enum_query_string_array = query_params.get("enum_query_string_array")
@@ -555,6 +568,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .and_then(|list| list.first()).and_then(|x| x.parse::<String>().ok());
                 let param_enum_query_integer = query_params.get("enum_query_integer")
                     .and_then(|list| list.first()).and_then(|x| x.parse::<i32>().ok());
+
 
                 // Form parameters
                 let param_enum_form_string_array = Vec::new();
@@ -565,7 +579,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestEnumParametersResponse::InvalidRequest => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_INVALID_REQUEST.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -573,7 +587,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         TestEnumParametersResponse::NotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -610,6 +624,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Form parameters
                 let param_param = "param_example".to_string();
                 let param_param2 = "param2_example".to_string();
@@ -618,7 +634,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestJsonFormDataResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(200)));
-    
+
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             Ok(response)
                         },
@@ -660,6 +676,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Client>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -669,7 +687,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestClassnameResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -731,6 +749,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Pet>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -740,7 +760,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         AddPetResponse::InvalidInput => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::ADD_PET_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -812,11 +832,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let param_api_key = req.headers.get::<RequestApiKey>().map(|header| header.0.clone());
 
 
+
+
                 match api.delete_pet(param_pet_id, param_api_key, context).wait() {
                     Ok(rsp) => match rsp {
                         DeletePetResponse::InvalidPetValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::DELETE_PET_INVALID_PET_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -878,17 +900,20 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_status = query_params.get("status").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter status".to_string())))?
+                let param_status = query_params.get("status")
+                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter status".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
+
 
 
                 match api.find_pets_by_status(param_status.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
                         FindPetsByStatusResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -896,7 +921,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         FindPetsByStatusResponse::InvalidStatusValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -958,17 +983,20 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_tags = query_params.get("tags").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter tags".to_string())))?
+                let param_tags = query_params.get("tags")
+                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter tags".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
+
 
 
                 match api.find_pets_by_tags(param_tags.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
                         FindPetsByTagsResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -976,7 +1004,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         FindPetsByTagsResponse::InvalidTagValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_INVALID_TAG_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1026,11 +1054,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
 
+
+
                 match api.get_pet_by_id(param_pet_id, context).wait() {
                     Ok(rsp) => match rsp {
                         GetPetByIdResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1038,7 +1068,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetPetByIdResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1046,7 +1076,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetPetByIdResponse::PetNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1108,6 +1138,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Pet>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1117,7 +1149,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         UpdatePetResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1125,7 +1157,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         UpdatePetResponse::PetNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1133,7 +1165,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         UpdatePetResponse::ValidationException => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_VALIDATION_EXCEPTION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1200,6 +1232,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
+
+
                 // Form parameters
                 let param_name = Some("name_example".to_string());
                 let param_status = Some("status_example".to_string());
@@ -1208,7 +1242,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         UpdatePetWithFormResponse::InvalidInput => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_WITH_FORM_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1275,6 +1309,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
+
+
                 // Form parameters
 
                 // Expecting a multipart form, extract and parse it now.
@@ -1317,7 +1353,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         UploadFileResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1360,11 +1396,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
 
 
+
+
                 match api.delete_order(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
                         DeleteOrderResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1372,7 +1410,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         DeleteOrderResponse::OrderNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1417,11 +1455,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 match api.get_inventory(context).wait() {
                     Ok(rsp) => match rsp {
                         GetInventoryResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1464,11 +1504,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
 
 
+
+
                 match api.get_order_by_id(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
                         GetOrderByIdResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1476,7 +1518,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetOrderByIdResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1484,7 +1526,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetOrderByIdResponse::OrderNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1521,6 +1563,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::Order>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1530,7 +1574,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         PlaceOrderResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1538,7 +1582,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         PlaceOrderResponse::InvalidOrder => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_INVALID_ORDER.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1575,6 +1619,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1584,7 +1630,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         CreateUserResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::CREATE_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1621,6 +1667,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<Vec<models::User>>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1630,7 +1678,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         CreateUsersWithArrayInputResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1667,6 +1715,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<Vec<models::User>>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1676,7 +1726,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         CreateUsersWithListInputResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1719,11 +1769,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
+
+
                 match api.delete_user(param_username, context).wait() {
                     Ok(rsp) => match rsp {
                         DeleteUserResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1731,7 +1783,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         DeleteUserResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1774,11 +1826,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
+
+
                 match api.get_user_by_name(param_username, context).wait() {
                     Ok(rsp) => match rsp {
                         GetUserByNameResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1786,7 +1840,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetUserByNameResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1794,7 +1848,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         GetUserByNameResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1831,14 +1885,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_username = query_params.get("username").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter username".to_string())))?
+                let param_username = query_params.get("username")
+                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter username".to_string())))?
                     .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter username was empty".to_string())))?
                     .parse::<String>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter username - doesn't match schema: {}", e))))?;
-                let param_password = query_params.get("password").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter password".to_string())))?
+                let param_password = query_params.get("password")
+                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter password".to_string())))?
                     .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter password was empty".to_string())))?
                     .parse::<String>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter password - doesn't match schema: {}", e))))?;
+
 
 
                 match api.login_user(param_username, param_password, context).wait() {
@@ -1849,7 +1907,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ResponseXRateLimit(x_rate_limit));
                             header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
                             response.headers.set(ResponseXExpiresAfter(x_expires_after));
-    
+
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1857,7 +1915,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         LoginUserResponse::InvalidUsername => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_INVALID_USERNAME.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1895,11 +1953,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+
+
                 match api.logout_user(context).wait() {
                     Ok(rsp) => match rsp {
                         LogoutUserResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::LOGOUT_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1941,6 +2001,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
+
+
                 // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
                 let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
                 let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
@@ -1950,7 +2012,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         UpdateUserResponse::InvalidUserSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_INVALID_USER_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1958,7 +2020,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                         },
                         UpdateUserResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-    
+
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
