@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
+public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig {
     public static final String CPP_NAMESPACE = "cppNamespace";
     public static final String CPP_NAMESPACE_DESC = "C++ namespace (convention: name::space::for::api).";
 
@@ -82,86 +82,6 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
 
         // CLI options
         addOption(CPP_NAMESPACE, CPP_NAMESPACE_DESC, this.cppNamespace);
-
-        /*
-         * Reserved words.  Override this with reserved words specific to your language
-         */
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "auto",
-                        "break",
-                        "case",
-                        "char",
-                        "const",
-                        "continue",
-                        "default",
-                        "do",
-                        "double",
-                        "else",
-                        "enum",
-                        "extern",
-                        "float",
-                        "for",
-                        "goto",
-                        "if",
-                        "int",
-                        "long",
-                        "register",
-                        "return",
-                        "short",
-                        "signed",
-                        "sizeof",
-                        "static",
-                        "struct",
-                        "switch",
-                        "typedef",
-                        "union",
-                        "unsigned",
-                        "void",
-                        "volatile",
-                        "while",
-                        "asm",
-                        "bool",
-                        "catch",
-                        "class",
-                        "const_cast",
-                        "delete",
-                        "dynamic_cast",
-                        "explicit",
-                        "false",
-                        "friend",
-                        "inline",
-                        "mutable",
-                        "namespace",
-                        "new",
-                        "operator",
-                        "private",
-                        "public",
-                        "protected",
-                        "reinterpret_cast",
-                        "static_cast",
-                        "template",
-                        "this",
-                        "throw",
-                        "true",
-                        "try",
-                        "typeid",
-                        "typename",
-                        "using",
-                        "virtual",
-                        "wchar_t",
-                        "and",
-                        "and_eq",
-                        "bitand",
-                        "bitor",
-                        "compl",
-                        "not",
-                        "not_eq",
-                        "or",
-                        "or_eq",
-                        "xor",
-                        "xor_eq")
-        );
 
         /*
          * Additional Properties.  These values can be passed to the templates and
