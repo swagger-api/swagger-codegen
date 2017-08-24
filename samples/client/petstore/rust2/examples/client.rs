@@ -1,4 +1,4 @@
-#![allow(missing_docs, unused_variables)]
+#![allow(missing_docs, unused_variables, trivial_casts)]
 
 extern crate petstore_api;
 #[allow(unused_extern_crates)]
@@ -44,7 +44,6 @@ use petstore_api::{Api,
                       LogoutUserResponse,
                       UpdateUserResponse
                      };
-use petstore_api::client::Client;
 use clap::{App, Arg};
 
 fn main() {
@@ -84,10 +83,10 @@ fn main() {
 
     let client = if matches.is_present("https") {
         // Using Simple HTTPS
-        Client::try_new_https("https://localhost:8080", "examples/ca.pem").expect("Failed to create HTTPS client")
+        petstore_api::Client::try_new_https("https://localhost:8080", "examples/ca.pem").expect("Failed to create HTTPS client")
     } else {
         // Using HTTP
-        Client::try_new_http("http://localhost:8080").expect("Failed to create HTTP client")
+        petstore_api::Client::try_new_http("http://localhost:8080").expect("Failed to create HTTP client")
     };
 
     match matches.value_of("operation") {
@@ -211,7 +210,7 @@ fn main() {
         Some("UploadFile") => {
             // Using a non-default `Context` is not required; this is just an example!
             let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), future::ok(Some(stream::once(Ok(b"hello".to_vec())).boxed())).boxed(), &context).wait();
+            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), Box::new(future::ok(Some(Box::new(stream::once(Ok(b"hello".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_> + Send>, &context).wait();
             println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
          },
 

@@ -1,4 +1,4 @@
-#![allow(missing_docs, unused_variables)]
+#![allow(missing_docs, unused_variables, trivial_casts)]
 
 extern crate {{externCrateName}};
 #[allow(unused_extern_crates)]
@@ -16,7 +16,6 @@ use {{externCrateName}}::{Api,
                       ApiError{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
                       {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
                      };
-use {{externCrateName}}::client::Client;
 use clap::{App, Arg};
 
 fn main() {
@@ -35,10 +34,10 @@ fn main() {
 
     let client = if matches.is_present("https") {
         // Using Simple HTTPS
-        Client::try_new_https("https://localhost:{{serverPort}}", "examples/ca.pem").expect("Failed to create HTTPS client")
+        {{externCrateName}}::Client::try_new_https("https://localhost:{{serverPort}}", "examples/ca.pem").expect("Failed to create HTTPS client")
     } else {
         // Using HTTP
-        Client::try_new_http("http://localhost:{{serverPort}}").expect("Failed to create HTTP client")
+        {{externCrateName}}::Client::try_new_http("http://localhost:{{serverPort}}").expect("Failed to create HTTP client")
     };
 
     match matches.value_of("operation") {

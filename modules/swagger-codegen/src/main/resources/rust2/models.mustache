@@ -62,12 +62,13 @@ impl ::std::ops::DerefMut for {{classname}} {
 pub struct {{classname}} {
 {{#vars}}{{#description}}    /// {{{description}}}
 {{/description}}{{#isEnum}}    // Note: inline enums are not fully supported by swagger-codegen
-{{/isEnum}}{{#required}}    pub {{name}}: {{#vendorExtensions}}{{#x-nullable}}swagger::Nullable<{{/x-nullable}}{{/vendorExtensions}}{{{datatype}}}{{#vendorExtensions}}{{#x-nullable}}>{{/x-nullable}}{{/vendorExtensions}},
+{{/isEnum}}    #[serde(rename = "{{baseName}}")]{{#required}}
+    pub {{name}}: {{#vendorExtensions}}{{#x-nullable}}swagger::Nullable<{{/x-nullable}}{{/vendorExtensions}}{{{datatype}}}{{#vendorExtensions}}{{#x-nullable}}>{{/x-nullable}}{{/vendorExtensions}},
 
 {{/required}}{{^required}}{{#vendorExtensions}}{{#x-nullable}}    #[serde(deserialize_with = "swagger::nullable_format::deserialize_optional_nullable")]
     #[serde(default = "swagger::nullable_format::default_optional_nullable")]
-{{/x-nullable}}{{/vendorExtensions}}    #[serde(skip_serializing_if="Option::is_none")]
-    #[serde(rename = "{{baseName}}")]
+{{/x-nullable}}{{/vendorExtensions}}
+    #[serde(skip_serializing_if="Option::is_none")]
     pub {{name}}: Option<{{#vendorExtensions}}{{#x-nullable}}swagger::Nullable<{{/x-nullable}}{{/vendorExtensions}}{{#isListContainer}}Vec<{{#items}}{{{datatype}}}{{/items}}>{{/isListContainer}}{{^isListContainer}}{{{datatype}}}{{/isListContainer}}{{#vendorExtensions}}{{#x-nullable}}>{{/x-nullable}}{{/vendorExtensions}}>,
 
 {{/required}}{{/vars}}

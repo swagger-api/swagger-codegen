@@ -9,7 +9,6 @@ extern crate chrono;
 extern crate multipart;
 
 use futures::Future;
-use futures::future::BoxFuture;
 use futures::future;
 use futures::{stream, Stream};
 use hyper;
@@ -1327,13 +1326,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Some(body) => {
                         Ok({let bytes = body.as_bytes();
                            Some(
-                                stream::once(Ok(bytes.to_vec())).boxed()
+                                Box::new(stream::once(Ok(bytes.to_vec()))) as Box<Stream<Item=Vec<u8>, Error=Error> + Send>
                             )}
                         )
                     }
                     None => {Err(Response::with((status::BadRequest, format!("Body part not found!"))))}
                 }?;
-                let param_file = future::ok(param_file).boxed();
+                let param_file = Box::new(future::ok(param_file));
 
                 match api.upload_file(param_pet_id, param_additional_metadata, param_file, context).wait() {
                     Ok(rsp) => match rsp {

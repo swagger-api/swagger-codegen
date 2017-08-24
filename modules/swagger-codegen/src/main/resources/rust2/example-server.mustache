@@ -40,7 +40,7 @@ fn main() {
         .get_matches();
 
     let server = server_lib::Server{};
-    let router = {{externCrateName}}::server::router(server);
+    let router = {{externCrateName}}::router(server);
 
     let mut chain = Chain::new(router);
     chain.link_before({{externCrateName}}::server::ExtractAuthData);

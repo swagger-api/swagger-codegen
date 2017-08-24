@@ -9,7 +9,6 @@ extern crate chrono;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 
 use futures::Future;
-use futures::future::BoxFuture;
 use futures::future;
 use futures::{stream, Stream};
 use hyper;
@@ -194,14 +193,14 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Some(body) => {
                         Ok({let bytes = body.as_bytes();
                            {{^required}}Some({{/required}}
-                                stream::once(Ok(bytes.to_vec())).boxed()
+                                Box::new(stream::once(Ok(bytes.to_vec()))) as Box<Stream<Item=Vec<u8>, Error=Error> + Send>
                             {{^required}}){{/required}}}
                         )
                     }
                     None => {Err(Response::with((status::BadRequest, format!("Body part not found!"))))}
                 }?;
 {{/isFile}}
-                let param_{{paramName}} = {{#isFile}}{{^required}}future::ok({{/required}}param_{{paramName}}{{^required}}).boxed(){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isContainer}}None;{{/isContainer}}{{/isFile}}
+                let param_{{paramName}} = {{#isFile}}{{^required}}Box::new(future::ok({{/required}}param_{{paramName}}{{^required}})){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isContainer}}None;{{/isContainer}}{{/isFile}}
     {{/isFormParam}}
 {{/allParams}}
 

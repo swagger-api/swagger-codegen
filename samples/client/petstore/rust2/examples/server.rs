@@ -40,7 +40,7 @@ fn main() {
         .get_matches();
 
     let server = server_lib::Server{};
-    let router = petstore_api::server::router(server);
+    let router = petstore_api::router(server);
 
     let mut chain = Chain::new(router);
     chain.link_before(petstore_api::server::ExtractAuthData);

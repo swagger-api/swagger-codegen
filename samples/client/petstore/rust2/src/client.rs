@@ -13,8 +13,7 @@ use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::Url;
 use self::hyper_openssl::openssl;
 use futures;
-use futures::{Future, BoxFuture, Stream};
-use futures::stream::BoxStream;
+use futures::{Future, Stream};
 use futures::{future, stream};
 use std::io::{Read, Error};
 use std::error;
@@ -82,7 +81,7 @@ fn into_base_path<T: IntoUrl>(input: T, correct_scheme: Option<&'static str>) ->
 }
 
 /// A client that implements the API by making HTTP calls out to a server.
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Client {
     base_path: String,
     hyper_client: Arc<hyper::client::Client>,
@@ -175,7 +174,7 @@ impl Client {
 
 impl Api for Client {
 
-    fn fake_outer_boolean_serialize(&self, param_body: Option<models::OuterBoolean>, context: &Context) -> BoxFuture<FakeOuterBooleanSerializeResponse, ApiError> {
+    fn fake_outer_boolean_serialize(&self, param_body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/outer/boolean?", self.base_path);
@@ -214,10 +213,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn fake_outer_composite_serialize(&self, param_body: Option<models::OuterComposite>, context: &Context) -> BoxFuture<FakeOuterCompositeSerializeResponse, ApiError> {
+    fn fake_outer_composite_serialize(&self, param_body: Option<models::OuterComposite>, context: &Context) -> Box<Future<Item=FakeOuterCompositeSerializeResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/outer/composite?", self.base_path);
@@ -256,10 +255,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn fake_outer_number_serialize(&self, param_body: Option<models::OuterNumber>, context: &Context) -> BoxFuture<FakeOuterNumberSerializeResponse, ApiError> {
+    fn fake_outer_number_serialize(&self, param_body: Option<models::OuterNumber>, context: &Context) -> Box<Future<Item=FakeOuterNumberSerializeResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/outer/number?", self.base_path);
@@ -298,10 +297,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn fake_outer_string_serialize(&self, param_body: Option<models::OuterString>, context: &Context) -> BoxFuture<FakeOuterStringSerializeResponse, ApiError> {
+    fn fake_outer_string_serialize(&self, param_body: Option<models::OuterString>, context: &Context) -> Box<Future<Item=FakeOuterStringSerializeResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/outer/string?", self.base_path);
@@ -340,10 +339,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn test_client_model(&self, param_body: models::Client, context: &Context) -> BoxFuture<TestClientModelResponse, ApiError> {
+    fn test_client_model(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestClientModelResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake?", self.base_path);
@@ -379,10 +378,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn test_endpoint_parameters(&self, param_number: f64, param_double: f64, param_pattern_without_delimiter: String, param_byte: swagger::ByteArray, param_integer: Option<i32>, param_int32: Option<i32>, param_int64: Option<i64>, param_float: Option<f32>, param_string: Option<String>, param_binary: Option<swagger::ByteArray>, param_date: Option<chrono::DateTime<chrono::Utc>>, param_date_time: Option<chrono::DateTime<chrono::Utc>>, param_password: Option<String>, param_callback: Option<String>, context: &Context) -> BoxFuture<TestEndpointParametersResponse, ApiError> {
+    fn test_endpoint_parameters(&self, param_number: f64, param_double: f64, param_pattern_without_delimiter: String, param_byte: swagger::ByteArray, param_integer: Option<i32>, param_int32: Option<i32>, param_int64: Option<i64>, param_float: Option<f32>, param_string: Option<String>, param_binary: Option<swagger::ByteArray>, param_date: Option<chrono::DateTime<chrono::Utc>>, param_date_time: Option<chrono::DateTime<chrono::Utc>>, param_password: Option<String>, param_callback: Option<String>, context: &Context) -> Box<Future<Item=TestEndpointParametersResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake?", self.base_path);
@@ -414,10 +413,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn test_enum_parameters(&self, param_enum_form_string_array: Option<&Vec<String>>, param_enum_form_string: Option<String>, param_enum_header_string_array: Option<&Vec<String>>, param_enum_header_string: Option<String>, param_enum_query_string_array: Option<&Vec<String>>, param_enum_query_string: Option<String>, param_enum_query_integer: Option<i32>, param_enum_query_double: Option<f64>, context: &Context) -> BoxFuture<TestEnumParametersResponse, ApiError> {
+    fn test_enum_parameters(&self, param_enum_form_string_array: Option<&Vec<String>>, param_enum_form_string: Option<String>, param_enum_header_string_array: Option<&Vec<String>>, param_enum_header_string: Option<String>, param_enum_query_string_array: Option<&Vec<String>>, param_enum_query_string: Option<String>, param_enum_query_integer: Option<i32>, param_enum_query_double: Option<f64>, context: &Context) -> Box<Future<Item=TestEnumParametersResponse, Error=ApiError> + Send> {
 
         // Query parameters
         let query_enum_query_string_array = param_enum_query_string_array.map_or_else(String::new, |query| format!("enum_query_string_array={enum_query_string_array}&", enum_query_string_array=query.join(",")));
@@ -464,10 +463,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn test_json_form_data(&self, param_param: String, param_param2: String, context: &Context) -> BoxFuture<TestJsonFormDataResponse, ApiError> {
+    fn test_json_form_data(&self, param_param: String, param_param2: String, context: &Context) -> Box<Future<Item=TestJsonFormDataResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/jsonFormData?", self.base_path);
@@ -494,10 +493,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn test_classname(&self, param_body: models::Client, context: &Context) -> BoxFuture<TestClassnameResponse, ApiError> {
+    fn test_classname(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestClassnameResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake_classname_test?", self.base_path);
@@ -533,10 +532,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn add_pet(&self, param_body: models::Pet, context: &Context) -> BoxFuture<AddPetResponse, ApiError> {
+    fn add_pet(&self, param_body: models::Pet, context: &Context) -> Box<Future<Item=AddPetResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet?", self.base_path);
@@ -568,10 +567,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn delete_pet(&self, param_pet_id: i64, param_api_key: Option<String>, context: &Context) -> BoxFuture<DeletePetResponse, ApiError> {
+    fn delete_pet(&self, param_pet_id: i64, param_api_key: Option<String>, context: &Context) -> Box<Future<Item=DeletePetResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
@@ -606,10 +605,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn find_pets_by_status(&self, param_status: &Vec<String>, context: &Context) -> BoxFuture<FindPetsByStatusResponse, ApiError> {
+    fn find_pets_by_status(&self, param_status: &Vec<String>, context: &Context) -> Box<Future<Item=FindPetsByStatusResponse, Error=ApiError> + Send> {
 
         // Query parameters
         let query_status = format!("status={status}&", status=param_status.join(","));
@@ -648,10 +647,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn find_pets_by_tags(&self, param_tags: &Vec<String>, context: &Context) -> BoxFuture<FindPetsByTagsResponse, ApiError> {
+    fn find_pets_by_tags(&self, param_tags: &Vec<String>, context: &Context) -> Box<Future<Item=FindPetsByTagsResponse, Error=ApiError> + Send> {
 
         // Query parameters
         let query_tags = format!("tags={tags}&", tags=param_tags.join(","));
@@ -690,10 +689,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn get_pet_by_id(&self, param_pet_id: i64, context: &Context) -> BoxFuture<GetPetByIdResponse, ApiError> {
+    fn get_pet_by_id(&self, param_pet_id: i64, context: &Context) -> Box<Future<Item=GetPetByIdResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
@@ -734,10 +733,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn update_pet(&self, param_body: models::Pet, context: &Context) -> BoxFuture<UpdatePetResponse, ApiError> {
+    fn update_pet(&self, param_body: models::Pet, context: &Context) -> Box<Future<Item=UpdatePetResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet?", self.base_path);
@@ -779,10 +778,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn update_pet_with_form(&self, param_pet_id: i64, param_name: Option<String>, param_status: Option<String>, context: &Context) -> BoxFuture<UpdatePetWithFormResponse, ApiError> {
+    fn update_pet_with_form(&self, param_pet_id: i64, param_name: Option<String>, param_status: Option<String>, context: &Context) -> Box<Future<Item=UpdatePetWithFormResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
@@ -809,10 +808,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn upload_file(&self, param_pet_id: i64, param_additional_metadata: Option<String>, param_file: BoxFuture<Option<BoxStream<Vec<u8>, Error>>, Error>, context: &Context) -> BoxFuture<UploadFileResponse, ApiError> {
+    fn upload_file(&self, param_pet_id: i64, param_additional_metadata: Option<String>, param_file: Box<Future<Item=Option<Box<Stream<Item=Vec<u8>, Error=Error> + Send>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet/{petId}/uploadImage?", self.base_path, petId=param_pet_id.to_string());
@@ -826,13 +825,13 @@ impl Api for Client {
                     // Add file to multipart form.
                     multipart.add_text("file", param_file);
                 },
-                Err(err) => return futures::done(Err(err)).boxed(),
+                Err(err) => return Box::new(futures::done(Err(err))),
             }
         }
 
         let mut fields = match multipart.prepare() {
             Ok(fields) => fields,
-            Err(err) => return futures::done(Err(ApiError(format!("Unable to build request: {}", err)))).boxed(),
+            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build request: {}", err))))),
         };
 
         let mut body_string = String::new();
@@ -867,7 +866,7 @@ impl Api for Client {
         }
 
         // Helper function to convert a Stream into a String. The String can then be used to build the HTTP body.
-        fn convert_stream_to_string(stream: BoxStream<Vec<u8>, Error>) -> Result<String, ApiError> {
+        fn convert_stream_to_string(stream: Box<Stream<Item=Vec<u8>, Error=Error> + Send>) -> Result<String, ApiError> {
 
             stream.fold(Vec::new(), |mut body, chunk| {
                 body.extend(chunk.iter());
@@ -879,10 +878,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn delete_order(&self, param_order_id: String, context: &Context) -> BoxFuture<DeleteOrderResponse, ApiError> {
+    fn delete_order(&self, param_order_id: String, context: &Context) -> Box<Future<Item=DeleteOrderResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
@@ -914,10 +913,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn get_inventory(&self, context: &Context) -> BoxFuture<GetInventoryResponse, ApiError> {
+    fn get_inventory(&self, context: &Context) -> Box<Future<Item=GetInventoryResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/store/inventory?", self.base_path);
@@ -948,10 +947,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn get_order_by_id(&self, param_order_id: i64, context: &Context) -> BoxFuture<GetOrderByIdResponse, ApiError> {
+    fn get_order_by_id(&self, param_order_id: i64, context: &Context) -> Box<Future<Item=GetOrderByIdResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
@@ -992,10 +991,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn place_order(&self, param_body: models::Order, context: &Context) -> BoxFuture<PlaceOrderResponse, ApiError> {
+    fn place_order(&self, param_body: models::Order, context: &Context) -> Box<Future<Item=PlaceOrderResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/store/order?", self.base_path);
@@ -1036,10 +1035,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn create_user(&self, param_body: models::User, context: &Context) -> BoxFuture<CreateUserResponse, ApiError> {
+    fn create_user(&self, param_body: models::User, context: &Context) -> Box<Future<Item=CreateUserResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user?", self.base_path);
@@ -1071,10 +1070,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn create_users_with_array_input(&self, param_body: &Vec<models::User>, context: &Context) -> BoxFuture<CreateUsersWithArrayInputResponse, ApiError> {
+    fn create_users_with_array_input(&self, param_body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithArrayInputResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/createWithArray?", self.base_path);
@@ -1106,10 +1105,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn create_users_with_list_input(&self, param_body: &Vec<models::User>, context: &Context) -> BoxFuture<CreateUsersWithListInputResponse, ApiError> {
+    fn create_users_with_list_input(&self, param_body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithListInputResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/createWithList?", self.base_path);
@@ -1141,10 +1140,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn delete_user(&self, param_username: String, context: &Context) -> BoxFuture<DeleteUserResponse, ApiError> {
+    fn delete_user(&self, param_username: String, context: &Context) -> Box<Future<Item=DeleteUserResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
@@ -1176,10 +1175,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn get_user_by_name(&self, param_username: String, context: &Context) -> BoxFuture<GetUserByNameResponse, ApiError> {
+    fn get_user_by_name(&self, param_username: String, context: &Context) -> Box<Future<Item=GetUserByNameResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
@@ -1220,10 +1219,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn login_user(&self, param_username: String, param_password: String, context: &Context) -> BoxFuture<LoginUserResponse, ApiError> {
+    fn login_user(&self, param_username: String, param_password: String, context: &Context) -> Box<Future<Item=LoginUserResponse, Error=ApiError> + Send> {
 
         // Query parameters
         let query_username = format!("username={username}&", username=param_username.to_string());
@@ -1267,10 +1266,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn logout_user(&self, context: &Context) -> BoxFuture<LogoutUserResponse, ApiError> {
+    fn logout_user(&self, context: &Context) -> Box<Future<Item=LogoutUserResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/logout?", self.base_path);
@@ -1297,10 +1296,10 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
-    fn update_user(&self, param_username: String, param_body: models::User, context: &Context) -> BoxFuture<UpdateUserResponse, ApiError> {
+    fn update_user(&self, param_username: String, param_body: models::User, context: &Context) -> Box<Future<Item=UpdateUserResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
@@ -1337,7 +1336,7 @@ impl Api for Client {
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 
 }

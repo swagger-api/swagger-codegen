@@ -126,8 +126,8 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("date", "chrono::DateTime<chrono::Utc>");
         typeMapping.put("DateTime", "chrono::DateTime<chrono::Utc>");
         typeMapping.put("password", "String");
-        typeMapping.put("File", "BoxStream<Vec<u8>, Error>");
-        typeMapping.put("file", "BoxStream<Vec<u8>, Error>");
+        typeMapping.put("File", "Box<Stream<Item=Vec<u8>, Error=Error> + Send>");
+        typeMapping.put("file", "Box<Stream<Item=Vec<u8>, Error=Error> + Send>");
         typeMapping.put("array", "Vec");
         typeMapping.put("map", "HashMap");
 
@@ -457,7 +457,7 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
                 param.vendorExtensions.put("formatString", "{:?}");
                 op.vendorExtensions.put("hasFile", true);
                 additionalProperties.put("apiHasFile", true);
-                example = "stream::once(Ok(b\"hello\".to_vec())).boxed()";
+                example = "Box::new(stream::once(Ok(b\"hello\".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>";
             } else {
                 param.vendorExtensions.put("formatString", "{:?}");
                 if (param.example != null) {
@@ -481,7 +481,7 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
                 param.vendorExtensions.put("formatString", "{:?}");
                 if (param.isFile) {
                     // Optional file types are wrapped in a future
-                    param.vendorExtensions.put("example", (example != null) ? "future::ok(Some(" + example + ")).boxed()" : "None");
+                    param.vendorExtensions.put("example", (example != null) ? "Box::new(future::ok(Some(" + example + "))) as Box<Future<Item=_, Error=_> + Send>" : "None");
                 } else {
                     param.vendorExtensions.put("example", (example != null) ? "Some(" + example + ")" : "None");
                 }
