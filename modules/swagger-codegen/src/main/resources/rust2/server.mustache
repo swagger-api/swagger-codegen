@@ -200,7 +200,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     None => {Err(Response::with((status::BadRequest, format!("Body part not found!"))))}
                 }?;
 {{/isFile}}
-                let param_{{paramName}} = {{#isFile}}{{^required}}future::ok({{/required}}param_{{paramName}}{{^required}}).boxed(){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isContainer}}Vec::new();{{/isContainer}}{{/isFile}}
+                let param_{{paramName}} = {{#isFile}}{{^required}}future::ok({{/required}}param_{{paramName}}{{^required}}).boxed(){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isListContainer}}Vec::new();{{/isListContainer}}{{#isMapContainer}}None;{{/isMapContainer}}{{/isFile}}
     {{/isFormParam}}
 {{/allParams}}
 

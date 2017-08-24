@@ -150,12 +150,15 @@ impl Api for Client {
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isListContainer}}Option<{{/isListContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isListContainer}}>{{/isListContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
 {{#queryParams}}{{#-first}}
         // Query parameters
-{{/-first}}        let query_{{paramName}} = {{^required}}{{#isContainer}}if param_{{paramName}}.is_empty() {
+{{/-first}}        let query_{{paramName}} = {{!
+}}{{#isListContainer}}{{^required}}if param_{{paramName}}.is_empty() {
             String::new()
         } else {
-            {{/isContainer}}{{^isContainer}}param_{{paramName}}.map_or_else(String::new, |query| {{/isContainer}}{{/required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}={{#required}}param_{{paramName}}{{/required}}{{^required}}{{#isContainer}}param_{{paramName}}{{/isContainer}}{{^isContainer}}query{{/isContainer}}{{/required}}{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}}){{^required}}{{^isContainer}}){{/isContainer}}{{#isContainer}}
-        }{{/isContainer}}{{/required}};
-{{/queryParams}}
+            {{/required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}.join(",")){{^required}}
+        }{{/required}};
+{{/isListContainer}}{{^isListContainer}}{{#required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}.to_string());
+{{/required}}{{^required}}param_{{paramName}}.map_or_else(String::new, |query| format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=query.to_string()));
+{{/required}}{{/isListContainer}}{{/queryParams}}
 
         let url = format!("{}{{basePathWithoutHost}}{{path}}?{{#queryParams}}{{=<% %>=}}{<% paramName %>}<%={{ }}=%>{{/queryParams}}", self.base_path{{#pathParams}}, {{baseName}}=param_{{paramName}}.to_string(){{/pathParams}}{{#queryParams}}, {{paramName}}=query_{{paramName}}{{/queryParams}});
 
@@ -203,14 +206,13 @@ impl Api for Client {
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 {{#headerParams}}{{#-first}}
         // Header parameters
-
-{{/-first}}        {{^isContainer}}header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => [{{{dataType}}}] }
-
-{{#required}}        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}}));
-{{/required}}{{^required}}        param_{{paramName}}.map(|header| custom_headers.set(Request{{vendorExtensions.typeName}}(header)));
-{{/required}}{{/isContainer}}
-        {{#isContainer}}let param_{{paramName}}: Option<{{{dataType}}}> = None;{{/isContainer}}
-{{/headerParams}}
+{{/-first}}{{^isContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => [{{{dataType}}}] }
+{{#required}}        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}})){{!
+}}{{/required}}{{^required}}        param_{{paramName}}.map(|header| custom_headers.set(Request{{vendorExtensions.typeName}}(header)));
+{{/required}}{{/isContainer}}{{#isListContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => ({{{baseType}}})* }
+        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}}.clone()));
+{{/isListContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
+{{/isMapContainer}}{{/headerParams}}
 
         let request = request.headers(custom_headers);{{#vendorExtensions}}{{#hasFile}}
         let request = request.header(ContentType(multipart_header))
