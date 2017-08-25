@@ -255,23 +255,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::OuterBoolean> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::OuterBoolean> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).unwrap_or(None);
 
                     param_body
                 } else {
                     None
-                };
+                };;
 
 
                 match api.fake_outer_boolean_serialize(param_body, context).wait() {
@@ -280,8 +281,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -317,23 +318,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::OuterComposite> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::OuterComposite> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).unwrap_or(None);
 
                     param_body
                 } else {
                     None
-                };
+                };;
 
 
                 match api.fake_outer_composite_serialize(param_body, context).wait() {
@@ -342,8 +344,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -379,23 +381,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::OuterNumber> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::OuterNumber> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).unwrap_or(None);
 
                     param_body
                 } else {
                     None
-                };
+                };;
 
 
                 match api.fake_outer_number_serialize(param_body, context).wait() {
@@ -404,8 +407,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -441,23 +444,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::OuterString> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::OuterString> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).unwrap_or(None);
 
                     param_body
                 } else {
                     None
-                };
+                };;
 
 
                 match api.fake_outer_string_serialize(param_body, context).wait() {
@@ -466,8 +470,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -503,23 +507,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::Client> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.test_client_model(param_body, context).wait() {
@@ -530,8 +536,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -765,23 +771,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::Client> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.test_classname(param_body, context).wait() {
@@ -792,8 +800,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -854,23 +862,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::Pet> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.add_pet(param_body, context).wait() {
@@ -881,8 +891,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::ADD_PET_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1259,23 +1269,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::Pet> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.update_pet(param_body, context).wait() {
@@ -1286,8 +1298,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1297,8 +1309,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1308,8 +1320,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_VALIDATION_EXCEPTION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1704,23 +1716,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::Order> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::Order> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.place_order(param_body, context).wait() {
@@ -1731,8 +1745,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1742,8 +1756,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_INVALID_ORDER.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1779,23 +1793,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::User> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_user(param_body, context).wait() {
@@ -1806,8 +1822,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1843,23 +1859,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_users_with_array_input(param_body.as_ref(), context).wait() {
@@ -1870,8 +1888,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -1907,23 +1925,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_users_with_list_input(param_body.as_ref(), context).wait() {
@@ -1934,8 +1954,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -2207,23 +2227,25 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
                 // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response).
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
 
-                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body) = param_body {
-                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+                let param_body = if let Some(param_body_raw) = param_body_raw {
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
-                    let param_body: Option<models::User> = serde_ignored::deserialize(jd, |path| {
-                            warn!("Unused element: {}", path);
+                    let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
                             unused_elements.push(path.to_string());
                         }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
 
                     param_body
                 } else {
                     None
-                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.update_user(param_username, param_body, context).wait() {
@@ -2234,8 +2256,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_INVALID_USER_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
@@ -2245,8 +2267,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
-                            if ! unused_elements.is_empty() {
-                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
                             }
                             Ok(response)
                         },
