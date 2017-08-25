@@ -1,4 +1,5 @@
 #![allow(unused_extern_crates)]
+extern crate serde_ignored;
 extern crate serde_json;
 extern crate iron;
 extern crate router;
@@ -15,7 +16,6 @@ use hyper;
 use hyper::header::{Headers, ContentType};
 use self::iron::prelude::*;
 use self::iron::{status, modifiers, BeforeMiddleware};
-use self::iron::url::percent_encoding::percent_decode;
 use self::router::Router;
 use self::urlencoded::UrlEncodedQuery;
 use multipart::server::{Multipart, SaveResult};
@@ -65,6 +65,8 @@ use {Api,
      };
 #[allow(unused_imports)]
 use models;
+
+header! { (Warning, "Warning") => [String] }
 
 mod response_mimetypes {
     use hyper::mime::*;
@@ -252,10 +254,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let param_body = req.get::<bodyparser::Struct<models::OuterBoolean>>().unwrap_or(None);
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::OuterBoolean> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).unwrap_or(None);
+
+                    param_body
+                } else {
+                    None
+                };
 
 
                 match api.fake_outer_boolean_serialize(param_body, context).wait() {
@@ -264,6 +280,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -297,10 +316,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let param_body = req.get::<bodyparser::Struct<models::OuterComposite>>().unwrap_or(None);
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::OuterComposite> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).unwrap_or(None);
+
+                    param_body
+                } else {
+                    None
+                };
 
 
                 match api.fake_outer_composite_serialize(param_body, context).wait() {
@@ -309,6 +342,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -342,10 +378,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let param_body = req.get::<bodyparser::Struct<models::OuterNumber>>().unwrap_or(None);
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::OuterNumber> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).unwrap_or(None);
+
+                    param_body
+                } else {
+                    None
+                };
 
 
                 match api.fake_outer_number_serialize(param_body, context).wait() {
@@ -354,6 +404,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -387,10 +440,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let param_body = req.get::<bodyparser::Struct<models::OuterString>>().unwrap_or(None);
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::OuterString> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).unwrap_or(None);
+
+                    param_body
+                } else {
+                    None
+                };
 
 
                 match api.fake_outer_string_serialize(param_body, context).wait() {
@@ -399,6 +466,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -432,11 +502,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::Client>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::Client> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.test_client_model(param_body, context).wait() {
@@ -447,6 +530,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -487,8 +573,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Form parameters
                 let param_number = 3.4;
                 let param_double = 1.2;
@@ -513,6 +597,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         TestEndpointParametersResponse::UserNotFound => {
@@ -521,6 +606,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -555,24 +641,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Header parameters
-                header! { (RequestEnumHeaderStringArray, "enum_header_string_array") => (String)* }
-                let param_enum_header_string_array = req.headers.get::<RequestEnumHeaderStringArray>().map(|header| header.0.clone()).unwrap_or_else(|| Vec::new());
+
+    let param_enum_header_string_array: Option<Vec<String>> = None;
                 header! { (RequestEnumHeaderString, "enum_header_string") => [String] }
                 let param_enum_header_string = req.headers.get::<RequestEnumHeaderString>().map(|header| header.0.clone());
 
+    
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
                 let param_enum_query_string_array = query_params.get("enum_query_string_array")
-                    .map(|list| list.iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>()).unwrap_or_else(|| Vec::new());
+                    .map(|list| list.iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>());
                 let param_enum_query_string = query_params.get("enum_query_string")
                     .and_then(|list| list.first()).and_then(|x| x.parse::<String>().ok());
                 let param_enum_query_integer = query_params.get("enum_query_integer")
                     .and_then(|list| list.first()).and_then(|x| x.parse::<i32>().ok());
 
-
                 // Form parameters
-                let param_enum_form_string_array = Vec::new();
+                let param_enum_form_string_array = None;
                 let param_enum_form_string = Some("enum_form_string_example".to_string());
                 let param_enum_query_double = Some(1.2);
 
@@ -584,6 +670,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_INVALID_REQUEST.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         TestEnumParametersResponse::NotFound => {
@@ -592,6 +679,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -625,8 +713,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 // Form parameters
                 let param_param = "param_example".to_string();
                 let param_param2 = "param2_example".to_string();
@@ -637,6 +723,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             let mut response = Response::with((status::Status::from_u16(200)));
     
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -677,11 +764,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::Client>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::Client> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.test_classname(param_body, context).wait() {
@@ -692,6 +792,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -750,11 +853,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::Pet>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::Pet> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.add_pet(param_body, context).wait() {
@@ -765,6 +881,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::ADD_PET_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -826,15 +945,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
-                    .to_string();
-                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
                 // Header parameters
                 header! { (RequestApiKey, "api_key") => [String] }
                 let param_api_key = req.headers.get::<RequestApiKey>().map(|header| header.0.clone());
 
-
+    
 
 
                 match api.delete_pet(param_pet_id, param_api_key, context).wait() {
@@ -845,6 +962,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::DELETE_PET_INVALID_PET_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -903,13 +1021,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_status = query_params.get("status")
-                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter status".to_string())))?
+                let param_status = query_params.get("status").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter status".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
-
 
 
                 match api.find_pets_by_status(param_status.as_ref(), context).wait() {
@@ -920,6 +1035,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         FindPetsByStatusResponse::InvalidStatusValue => {
@@ -928,6 +1044,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -986,13 +1103,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_tags = query_params.get("tags")
-                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter tags".to_string())))?
+                let param_tags = query_params.get("tags").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter tags".to_string())))?
                     .iter().flat_map(|x| x.parse::<String>()).collect::<Vec<_>>();
-
 
 
                 match api.find_pets_by_tags(param_tags.as_ref(), context).wait() {
@@ -1003,6 +1117,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         FindPetsByTagsResponse::InvalidTagValue => {
@@ -1011,6 +1126,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_INVALID_TAG_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1054,11 +1170,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
-                    .to_string();
-                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
-
-
 
 
                 match api.get_pet_by_id(param_pet_id, context).wait() {
@@ -1069,6 +1181,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetPetByIdResponse::InvalidIDSupplied => {
@@ -1077,6 +1190,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetPetByIdResponse::PetNotFound => {
@@ -1085,6 +1199,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1143,11 +1258,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 }
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::Pet>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::Pet> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.update_pet(param_body, context).wait() {
@@ -1158,6 +1286,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                         UpdatePetResponse::PetNotFound => {
@@ -1166,6 +1297,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                         UpdatePetResponse::ValidationException => {
@@ -1174,6 +1308,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_VALIDATION_EXCEPTION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -1235,11 +1372,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
-                    .to_string();
-                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
-
-
 
                 // Form parameters
                 let param_name = Some("name_example".to_string());
@@ -1253,6 +1386,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_WITH_FORM_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1314,11 +1448,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
-                    .to_string();
-                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
-
-
 
                 // Form parameters
 
@@ -1366,6 +1496,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1402,11 +1533,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_order_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("order_id").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter order_id".to_string())))?
-                    .to_string();
-                let param_order_id = (*percent_decode(param_order_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
-
-
 
 
                 match api.delete_order(param_order_id, context).wait() {
@@ -1417,6 +1544,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         DeleteOrderResponse::OrderNotFound => {
@@ -1425,6 +1553,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1466,8 +1595,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 match api.get_inventory(context).wait() {
                     Ok(rsp) => match rsp {
                         GetInventoryResponse::SuccessfulOperation(body) => {
@@ -1476,6 +1603,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1512,11 +1640,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_order_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("order_id").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter order_id".to_string())))?
-                    .to_string();
-                let param_order_id = (*percent_decode(param_order_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
-
-
 
 
                 match api.get_order_by_id(param_order_id, context).wait() {
@@ -1527,6 +1651,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetOrderByIdResponse::InvalidIDSupplied => {
@@ -1535,6 +1660,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetOrderByIdResponse::OrderNotFound => {
@@ -1543,6 +1669,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1576,11 +1703,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::Order>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::Order> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.place_order(param_body, context).wait() {
@@ -1591,6 +1731,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                         PlaceOrderResponse::InvalidOrder => {
@@ -1599,6 +1742,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_INVALID_ORDER.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -1632,11 +1778,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::User> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_user(param_body, context).wait() {
@@ -1647,6 +1806,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -1680,11 +1842,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<Vec<models::User>>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_users_with_array_input(param_body.as_ref(), context).wait() {
@@ -1695,6 +1870,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -1728,11 +1906,24 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<Vec<models::User>>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.create_users_with_list_input(param_body.as_ref(), context).wait() {
@@ -1743,6 +1934,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },
@@ -1779,11 +1973,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
-                    .to_string();
-                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
-
-
 
 
                 match api.delete_user(param_username, context).wait() {
@@ -1794,6 +1984,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         DeleteUserResponse::UserNotFound => {
@@ -1802,6 +1993,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1838,11 +2030,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
-                    .to_string();
-                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
-
-
 
 
                 match api.get_user_by_name(param_username, context).wait() {
@@ -1853,6 +2041,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetUserByNameResponse::InvalidUsernameSupplied => {
@@ -1861,6 +2050,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         GetUserByNameResponse::UserNotFound => {
@@ -1869,6 +2059,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1902,18 +2093,14 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = req.get::<UrlEncodedQuery>().unwrap_or_default();
-                let param_username = query_params.get("username")
-                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter username".to_string())))?
+                let param_username = query_params.get("username").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter username".to_string())))?
                     .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter username was empty".to_string())))?
                     .parse::<String>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter username - doesn't match schema: {}", e))))?;
-                let param_password = query_params.get("password")
-                    .ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter password".to_string())))?
+                let param_password = query_params.get("password").ok_or_else(|| Response::with((status::BadRequest, "Missing required query parameter password".to_string())))?
                     .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter password was empty".to_string())))?
                     .parse::<String>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter password - doesn't match schema: {}", e))))?;
-
 
 
                 match api.login_user(param_username, param_password, context).wait() {
@@ -1928,6 +2115,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                         LoginUserResponse::InvalidUsername => {
@@ -1936,6 +2124,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_INVALID_USERNAME.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -1970,8 +2159,6 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
 
-
-
                 match api.logout_user(context).wait() {
                     Ok(rsp) => match rsp {
                         LogoutUserResponse::SuccessfulOperation => {
@@ -1980,6 +2167,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::LOGOUT_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
                             Ok(response)
                         },
                     },
@@ -2016,15 +2204,26 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
-                    .to_string();
-                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
 
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
 
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-                let body = req.get::<bodyparser::Struct<models::User>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
-                let param_body = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+                let param_body = if let Some(param_body) = param_body {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_body);
+
+                    let param_body: Option<models::User> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                }.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
 
 
                 match api.update_user(param_username, param_body, context).wait() {
@@ -2035,6 +2234,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_INVALID_USER_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                         UpdateUserResponse::UserNotFound => {
@@ -2043,6 +2245,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }
                             Ok(response)
                         },
                     },

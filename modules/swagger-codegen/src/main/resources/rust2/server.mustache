@@ -1,4 +1,5 @@
 #![allow(unused_extern_crates)]
+extern crate serde_ignored;
 extern crate serde_json;
 extern crate iron;
 extern crate router;
@@ -38,6 +39,8 @@ use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
      };
 #[allow(unused_imports)]
 use models;
+
+header! { (Warning, "Warning") => [String] }
 
 mod response_mimetypes {
     use hyper::mime::*;
@@ -159,12 +162,29 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{/isListContainer}}{{/required}}{{^required}}{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>()).unwrap_or_else(|| Vec::new());
 {{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok());
 {{/isListContainer}}{{/required}}{{/queryParams}}
-{{#bodyParams}}{{#-first}}
-                // Body parameters (note that non-required body parameters will ignore garbage values, rather than causing a 400 response)
-{{/-first}}{{#required}}                let body = req.get::<bodyparser::Struct<{{{dataType}}}>>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter {{baseName}} - doesn't match schema: {}", e))))?;
-                let param_{{paramName}} = body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter {{baseName}}".to_string())))?;
-{{/required}}{{^required}}                let param_{{paramName}} = req.get::<bodyparser::Struct<{{{dataType}}}>>().unwrap_or(None);
-{{/required}}{{/bodyParams}}
+{{#bodyParams}}{{#-first}}                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response).
+{{/-first}}{{#required}}
+                let param_{{paramName}} = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter {{baseName}} - not valid UTF-8: {}", e))))?;
+{{/required}}{{^required}}
+                let param_{{paramName}} = req.get::<bodyparser::Raw>().unwrap_or(None);
+{{/required}}
+                let mut unused_elements = Vec::new();
+
+                let param_{{paramName}} = if let Some(param_{{paramName}}) = param_{{paramName}} {
+                    let jd = &mut serde_json::Deserializer::from_str(&param_{{paramName}});
+
+                    let param_{{paramName}}: Option<{{{dataType}}}> = serde_ignored::deserialize(jd, |path| {
+                            warn!("Unused element: {}", path);
+                            unused_elements.push(path.to_string());
+                        }){{#required}}.map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter {{paramName}} - doesn't match schema: {}", e))))?{{/required}}{{^required}}.unwrap_or(None){{/required}};
+
+                    param_{{paramName}}
+                } else {
+                    None
+                }{{#required}}.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?{{/required}};
+
+{{/bodyParams}}
 {{#formParams}}
     {{#-first}}
                 // Form parameters
@@ -236,6 +256,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{#isFile}}    {{/isFile}}                            response.headers.set(ContentType(response_mimetypes::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
 {{/-first}}{{/produces}}
 {{#isFile}}    {{/isFile}}                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+{{#bodyParams}}                            if ! unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Unknown fields: {:?}", unused_elements)));
+                            }{{/bodyParams}}
                             {{^isFile}}Ok(response){{/isFile}}{{#isFile}}    response
                             }){{/isFile}}
                         },

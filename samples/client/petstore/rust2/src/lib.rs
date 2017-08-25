@@ -8,6 +8,8 @@ extern crate chrono;
 extern crate multipart;
 #[macro_use]
 extern crate lazy_static;
+#[macro_use]
+extern crate log;
 
 // Logically this should be in the client and server modules, but rust doesn't allow `macro_use` from a module.
 #[cfg(any(feature = "client", feature = "server"))]
