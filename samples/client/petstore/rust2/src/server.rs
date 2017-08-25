@@ -15,6 +15,7 @@ use hyper;
 use hyper::header::{Headers, ContentType};
 use self::iron::prelude::*;
 use self::iron::{status, modifiers, BeforeMiddleware};
+use self::iron::url::percent_encoding::percent_decode;
 use self::router::Router;
 use self::urlencoded::UrlEncodedQuery;
 use multipart::server::{Multipart, SaveResult};
@@ -825,6 +826,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
+                    .to_string();
+                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
                 // Header parameters
@@ -1051,6 +1054,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
+                    .to_string();
+                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
 
@@ -1230,6 +1235,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
+                    .to_string();
+                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
 
@@ -1307,6 +1314,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_pet_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("petId").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter petId".to_string())))?
+                    .to_string();
+                let param_pet_id = (*percent_decode(param_pet_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter petId: {}", e))))?;
 
 
@@ -1393,6 +1402,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_order_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("order_id").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter order_id".to_string())))?
+                    .to_string();
+                let param_order_id = (*percent_decode(param_order_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
 
 
@@ -1501,6 +1512,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_order_id = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("order_id").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter order_id".to_string())))?
+                    .to_string();
+                let param_order_id = (*percent_decode(param_order_id.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter order_id: {}", e))))?;
 
 
@@ -1766,6 +1779,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
+                    .to_string();
+                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
@@ -1823,6 +1838,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
+                    .to_string();
+                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
@@ -1999,6 +2016,8 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
                 let param_username = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("username").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter username".to_string())))?
+                    .to_string();
+                let param_username = (*percent_decode(param_username.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter username: {}", e))))?;
 
 
