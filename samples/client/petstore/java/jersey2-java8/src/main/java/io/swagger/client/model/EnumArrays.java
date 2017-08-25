@@ -41,12 +41,12 @@ public class EnumArrays {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
 
     @Override
-    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -79,12 +79,12 @@ public class EnumArrays {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
 
     @Override
-    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -128,7 +128,7 @@ public class EnumArrays {
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     if (this.arrayEnum == null) {
-      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+      this.arrayEnum = new ArrayList<>();
     }
     this.arrayEnum.add(arrayEnumItem);
     return this;
@@ -188,6 +188,6 @@ public class EnumArrays {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

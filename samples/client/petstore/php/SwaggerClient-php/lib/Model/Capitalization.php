@@ -6,7 +6,7 @@
  *
  * @category Class
  * @package  Swagger\Client
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -62,9 +62,27 @@ class Capitalization implements ArrayAccess
         'att_name' => 'string'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'small_camel' => null,
+        'capital_camel' => null,
+        'small_snake' => null,
+        'capital_snake' => null,
+        'sca_eth_flow_points' => null,
+        'att_name' => null
+    ];
+
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
+    }
+
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
     }
 
     /**

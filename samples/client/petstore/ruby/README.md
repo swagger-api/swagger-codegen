@@ -82,6 +82,8 @@ Class | Method | HTTP request | Description
 *Petstore::FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \"client\" model
 *Petstore::FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *Petstore::FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
+*Petstore::FakeApi* | [**test_json_form_data**](docs/FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
+*Petstore::FakeClassnameTags123Api* | [**test_classname**](docs/FakeClassnameTags123Api.md#test_classname) | **PATCH** /fake_classname_test | To test class name in snake case
 *Petstore::PetApi* | [**add_pet**](docs/PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
 *Petstore::PetApi* | [**delete_pet**](docs/PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
 *Petstore::PetApi* | [**find_pets_by_status**](docs/PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
@@ -114,11 +116,9 @@ Class | Method | HTTP request | Description
  - [Petstore::ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [Petstore::ArrayTest](docs/ArrayTest.md)
  - [Petstore::Capitalization](docs/Capitalization.md)
- - [Petstore::Cat](docs/Cat.md)
  - [Petstore::Category](docs/Category.md)
  - [Petstore::ClassModel](docs/ClassModel.md)
  - [Petstore::Client](docs/Client.md)
- - [Petstore::Dog](docs/Dog.md)
  - [Petstore::EnumArrays](docs/EnumArrays.md)
  - [Petstore::EnumClass](docs/EnumClass.md)
  - [Petstore::EnumTest](docs/EnumTest.md)
@@ -142,6 +142,8 @@ Class | Method | HTTP request | Description
  - [Petstore::SpecialModelName](docs/SpecialModelName.md)
  - [Petstore::Tag](docs/Tag.md)
  - [Petstore::User](docs/User.md)
+ - [Petstore::Cat](docs/Cat.md)
+ - [Petstore::Dog](docs/Dog.md)
 
 
 ## Documentation for Authorization
@@ -152,6 +154,12 @@ Class | Method | HTTP request | Description
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
+
+### api_key_query
+
+- **Type**: API key
+- **API key parameter name**: api_key_query
+- **Location**: URL query string
 
 ### http_basic_test
 

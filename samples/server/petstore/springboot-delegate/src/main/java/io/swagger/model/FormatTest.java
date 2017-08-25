@@ -7,14 +7,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.UUID;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * FormatTest
  */
+@Validated
 
 public class FormatTest   {
   @JsonProperty("integer")
@@ -48,7 +50,7 @@ public class FormatTest   {
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @JsonProperty("uuid")
   private UUID uuid = null;
@@ -220,7 +222,7 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
   public byte[] getByte() {
     return _byte;
   }
@@ -271,7 +273,7 @@ public class FormatTest   {
     this.date = date;
   }
 
-  public FormatTest dateTime(DateTime dateTime) {
+  public FormatTest dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -284,11 +286,11 @@ public class FormatTest   {
 
   @Valid
 
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 

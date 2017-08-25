@@ -69,7 +69,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("file", "file");
         typeMapping.put("UUID", "str");
 
-        // from https://docs.python.org/release/2.5.4/ref/keywords.html
+        // from https://docs.python.org/3/reference/lexical_analysis.html#keywords
         setReservedWordsLowerCase(
                 Arrays.asList(
                     // @property
@@ -78,7 +78,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                     "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
                     "assert", "else", "if", "pass", "yield", "break", "except", "import",
                     "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                    "return", "def", "for", "lambda", "try", "self", "None"));
+                    "return", "def", "for", "lambda", "try", "self", "None", "True", "False", "nonlocal"));
 
         // set the output folder here
         outputFolder = "generated-code/connexion";
@@ -92,14 +92,6 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
          * will use the resource stream to attempt to read the templates.
          */
         embeddedTemplateDir = templateDir = "flaskConnexion";
-
-        // from https://docs.python.org/release/2.5.4/ref/keywords.html
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                        "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                        "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                        "return", "def", "for", "lambda", "try"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -141,6 +133,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 defaultValue("default_controller"));
         cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").
                 defaultValue("false"));
+        cliOptions.add(new CliOption("serverPort", "TCP port to listen to in app.run").
+                defaultValue("8080"));
     }
 
     @Override
@@ -431,6 +425,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toParamName(String name) {
+        // don't do name =removeNonNameElementToCamelCase(name); // this breaks connexion, which does not modify param names before sending them
+        if (reservedWords.contains(name)) {
+            return escapeReservedWord(name);
+        }
         // Param name is already sanitized in swagger spec processing
         return name;
     }

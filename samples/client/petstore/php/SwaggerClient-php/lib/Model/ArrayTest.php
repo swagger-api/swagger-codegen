@@ -6,7 +6,7 @@
  *
  * @category Class
  * @package  Swagger\Client
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -59,9 +59,24 @@ class ArrayTest implements ArrayAccess
         'array_array_of_model' => '\Swagger\Client\Model\ReadOnlyFirst[][]'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'array_of_string' => null,
+        'array_array_of_integer' => 'int64',
+        'array_array_of_model' => null
+    ];
+
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
+    }
+
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
     }
 
     /**

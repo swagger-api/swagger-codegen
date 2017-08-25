@@ -54,12 +54,12 @@ public class Order {
       this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
       return value;
     }
 
     @Override
-    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -181,7 +181,7 @@ public class Order {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 
@@ -238,6 +238,6 @@ public class Order {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

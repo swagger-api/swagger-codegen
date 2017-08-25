@@ -9,12 +9,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * FormatTest
  */
+@Validated
 
 public class FormatTest   {
   @JsonProperty("integer")
@@ -220,7 +222,7 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
   public byte[] getByte() {
     return _byte;
   }

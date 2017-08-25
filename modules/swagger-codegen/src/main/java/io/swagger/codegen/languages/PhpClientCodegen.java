@@ -300,12 +300,11 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // make test path available in mustache template
         additionalProperties.put("testBasePath", testBasePath);
 
-        supportingFiles.add(new SupportingFile("configuration.mustache", toPackagePath(invokerPackage, srcBasePath), "Configuration.php"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiClient.php"));
         supportingFiles.add(new SupportingFile("ApiException.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiException.php"));
+        supportingFiles.add(new SupportingFile("Configuration.mustache", toPackagePath(invokerPackage, srcBasePath), "Configuration.php"));
         supportingFiles.add(new SupportingFile("ObjectSerializer.mustache", toPackagePath(invokerPackage, srcBasePath), "ObjectSerializer.php"));
+        supportingFiles.add(new SupportingFile("HeaderSelector.mustache", toPackagePath(invokerPackage, srcBasePath), "HeaderSelector.php"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
-        supportingFiles.add(new SupportingFile("autoload.mustache", getPackagePath(), "autoload.php"));
         supportingFiles.add(new SupportingFile("README.mustache", getPackagePath(), "README.md"));
         supportingFiles.add(new SupportingFile("phpunit.xml.mustache", getPackagePath(), "phpunit.xml.dist"));
         supportingFiles.add(new SupportingFile(".travis.yml", getPackagePath(), ".travis.yml"));
@@ -616,19 +615,19 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                 example = "/path/to/file";
             }
             example = "\"" + escapeText(example) + "\"";
-        } else if ("Date".equalsIgnoreCase(type)) {
+        } else if ("\\Date".equalsIgnoreCase(type)) {
             if (example == null) {
                 example = "2013-10-20";
             }
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
-        } else if ("DateTime".equalsIgnoreCase(type)) {
+        } else if ("\\DateTime".equalsIgnoreCase(type)) {
             if (example == null) {
                 example = "2013-10-20T19:20:30+01:00";
             }
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
-            example = "new " + type + "()";
+            example = "new " + getTypeDeclaration(type) + "()";
         } else {
             LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
         }

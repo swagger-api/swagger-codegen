@@ -35,7 +35,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var body = new OuterBoolean(); // OuterBoolean | Input boolean as post body (optional) 
 
@@ -96,7 +95,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var body = new OuterComposite(); // OuterComposite | Input composite as post body (optional) 
 
@@ -157,7 +155,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var body = new OuterNumber(); // OuterNumber | Input number as post body (optional) 
 
@@ -218,7 +215,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var body = new OuterString(); // OuterString | Input string as post body (optional) 
 
@@ -279,7 +275,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var body = new ModelClient(); // ModelClient | client model
 
@@ -341,7 +336,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure HTTP basic authorization: http_basic_test
             Configuration.Default.Username = "YOUR_USERNAME";
             Configuration.Default.Password = "YOUR_PASSWORD";
@@ -350,7 +344,7 @@ namespace Example
             var number = 3.4;  // decimal? | None
             var _double = 1.2;  // double? | None
             var patternWithoutDelimiter = patternWithoutDelimiter_example;  // string | None
-            var _byte = B;  // byte[] | None
+            var _byte = _byte_example;  // byte[] | None
             var integer = 56;  // int? | None (optional) 
             var int32 = 56;  // int? | None (optional) 
             var int64 = 789;  // long? | None (optional) 
@@ -432,7 +426,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new FakeApi();
             var enumFormStringArray = new List<string>(); // List<string> | Form parameter enum test (string array) (optional) 
             var enumFormString = enumFormString_example;  // string | Form parameter enum test (string) (optional)  (default to -efg)

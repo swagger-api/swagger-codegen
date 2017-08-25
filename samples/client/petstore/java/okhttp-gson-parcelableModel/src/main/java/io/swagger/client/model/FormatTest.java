@@ -14,13 +14,18 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.UUID;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -60,7 +65,7 @@ public class FormatTest implements Parcelable {
   private LocalDate date = null;
 
   @SerializedName("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @SerializedName("uuid")
   private UUID uuid = null;
@@ -258,7 +263,7 @@ public class FormatTest implements Parcelable {
     this.date = date;
   }
 
-  public FormatTest dateTime(DateTime dateTime) {
+  public FormatTest dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -268,11 +273,11 @@ public class FormatTest implements Parcelable {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -375,7 +380,7 @@ public class FormatTest implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
   public void writeToParcel(Parcel out, int flags) {
      
     out.writeValue(integer);
@@ -421,11 +426,11 @@ public class FormatTest implements Parcelable {
     _byte = (byte[])in.readValue(null);
     binary = (byte[])in.readValue(null);
     date = (LocalDate)in.readValue(LocalDate.class.getClassLoader());
-    dateTime = (DateTime)in.readValue(DateTime.class.getClassLoader());
+    dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
     uuid = (UUID)in.readValue(UUID.class.getClassLoader());
     password = (String)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

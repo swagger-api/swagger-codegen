@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
+[**test_json_form_data**](FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
 
 
 # **fake_outer_boolean_serialize**
@@ -22,7 +23,7 @@ Test serialization of outer boolean types
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -69,7 +70,7 @@ Test serialization of object with outer number type
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -116,7 +117,7 @@ Test serialization of outer number types
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -163,7 +164,7 @@ Test serialization of outer string types
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -210,7 +211,7 @@ To test \"client\" model
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -258,22 +259,23 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
 from pprint import pprint
 
 # Configure HTTP basic authorization: http_basic_test
-petstore_api.configuration.username = 'YOUR_USERNAME'
-petstore_api.configuration.password = 'YOUR_PASSWORD'
+configuration = petstore_api.Configuration()
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # create an instance of the API class
-api_instance = petstore_api.FakeApi()
+api_instance = petstore_api.FakeApi(petstore_api.ApiClient(configuration))
 number = 3.4 # float | None
 double = 1.2 # float | None
 pattern_without_delimiter = 'pattern_without_delimiter_example' # str | None
-byte = 'B' # str | None
+byte = 'byte_example' # str | None
 integer = 56 # int | None (optional)
 int32 = 56 # int | None (optional)
 int64 = 789 # int | None (optional)
@@ -335,7 +337,7 @@ To test enum parameters
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -384,6 +386,55 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **test_json_form_data**
+> test_json_form_data(param, param2)
+
+test json serialization of form data
+
+
+
+### Example 
+```python
+from __future__ import print_function
+import time
+import petstore_api
+from petstore_api.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = petstore_api.FakeApi()
+param = 'param_example' # str | field1
+param2 = 'param2_example' # str | field2
+
+try: 
+    # test json serialization of form data
+    api_instance.test_json_form_data(param, param2)
+except ApiException as e:
+    print("Exception when calling FakeApi->test_json_form_data: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | **str**| field1 | 
+ **param2** | **str**| field2 | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

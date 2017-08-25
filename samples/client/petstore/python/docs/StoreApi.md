@@ -19,7 +19,7 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -66,19 +66,20 @@ Returns a map of status codes to quantities
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: api_key
-petstore_api.configuration.api_key['api_key'] = 'YOUR_API_KEY'
+configuration = petstore_api.Configuration()
+configuration.api_key['api_key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# petstore_api.configuration.api_key_prefix['api_key'] = 'Bearer'
+# configuration.api_key_prefix['api_key'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = petstore_api.StoreApi()
+api_instance = petstore_api.StoreApi(petstore_api.ApiClient(configuration))
 
 try: 
     # Returns pet inventories by status
@@ -115,7 +116,7 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -163,7 +164,7 @@ Place an order for a pet
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
