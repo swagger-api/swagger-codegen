@@ -93,6 +93,27 @@ class Decoders {
         }
     }
 
+    static func decode<T>(clazz: T.Type, source: AnyObject) -> Decoded<T> {
+        switch Decoders.decode(clazz: T.self, source: source, instance: nil) {
+    	    case let .success(value):
+                return .success(value)
+            case let .failure(error):
+                return .failure(error)
+        }
+    }
+
+    static open func decode<T: RawRepresentable>(clazz: T.Type, source: AnyObject) -> Decoded<T> {
+        if let value = source as? T.RawValue {
+            if let enumValue = T.init(rawValue: value) {
+                return .success(enumValue)
+            } else {
+                return .failure(.typeMismatch(expected: "A value from the enumeration \(T.self)", actual: "\(value)"))
+            }
+        } else {
+            return .failure(.typeMismatch(expected: "\(T.RawValue.self) matching a case from the enumeration \(T.self)", actual: String(describing: type(of: source))))
+        }
+    }
+
     static func decode<T, Key: Hashable>(clazz: [Key:T].Type, source: AnyObject) -> Decoded<[Key:T]> {
         if let sourceDictionary = source as? [Key: AnyObject] {
             var dictionary = [Key:T]()
@@ -195,7 +216,7 @@ class Decoders {
         }
     }
 
-    static func decodeOptional<T: RawRepresentable, U: AnyObject where T.RawValue == U>(clazz: T, source: AnyObject) -> Decoded<T?> {
+    static func decodeOptional<T: RawRepresentable, U: AnyObject>(clazz: T, source: AnyObject) -> Decoded<T?> where T.RawValue == U {
         if let value = source as? U {
             if let enumValue = T.init(rawValue: value) {
                 return .success(enumValue)
@@ -824,7 +845,7 @@ class Decoders {
         }
         // Decoder for OuterBoolean
         Decoders.addDecoder(clazz: OuterBoolean.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<OuterBoolean> in
-            if let source = source as? Bool {
+            if let source = source as? OuterBoolean {
                 return .success(source)
             } else {
                 return .failure(.typeMismatch(expected: "Typealias OuterBoolean", actual: "\(source)"))
@@ -864,7 +885,7 @@ class Decoders {
         }
         // Decoder for OuterNumber
         Decoders.addDecoder(clazz: OuterNumber.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<OuterNumber> in
-            if let source = source as? Double {
+            if let source = source as? OuterNumber {
                 return .success(source)
             } else {
                 return .failure(.typeMismatch(expected: "Typealias OuterNumber", actual: "\(source)"))
@@ -872,7 +893,7 @@ class Decoders {
         }
         // Decoder for OuterString
         Decoders.addDecoder(clazz: OuterString.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<OuterString> in
-            if let source = source as? String {
+            if let source = source as? OuterString {
                 return .success(source)
             } else {
                 return .failure(.typeMismatch(expected: "Typealias OuterString", actual: "\(source)"))
