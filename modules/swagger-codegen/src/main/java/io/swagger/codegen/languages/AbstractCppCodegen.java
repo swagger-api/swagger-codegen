@@ -91,7 +91,7 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
                         "xor",
                         "xor_eq")
         );
-	}
+    }
 
     @Override
     public String toVarName(String name) {
