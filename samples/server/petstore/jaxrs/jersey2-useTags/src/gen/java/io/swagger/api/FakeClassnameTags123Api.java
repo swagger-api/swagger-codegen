@@ -1,8 +1,8 @@
 package io.swagger.api;
 
 import io.swagger.model.*;
-import io.swagger.api.FakeClassnameTestApiService;
-import io.swagger.api.factories.FakeClassnameTestApiServiceFactory;
+import io.swagger.api.FakeClassnameTags123ApiService;
+import io.swagger.api.factories.FakeClassnameTags123ApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
@@ -25,22 +25,22 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/fake_classname_test")
+@Path("/FakeClassnameTags123")
 
 
-@io.swagger.annotations.Api(description = "the fake_classname_test API")
+@io.swagger.annotations.Api(description = "the FakeClassnameTags123 API")
 
-public class FakeClassnameTestApi  {
-   private final FakeClassnameTestApiService delegate;
+public class FakeClassnameTags123Api  {
+   private final FakeClassnameTags123ApiService delegate;
 
-   public FakeClassnameTestApi(@Context ServletConfig servletContext) {
-      FakeClassnameTestApiService delegate = null;
+   public FakeClassnameTags123Api(@Context ServletConfig servletContext) {
+      FakeClassnameTags123ApiService delegate = null;
 
       if (servletContext != null) {
-         String implClass = servletContext.getInitParameter("FakeClassnameTestApi.implementation");
+         String implClass = servletContext.getInitParameter("FakeClassnameTags123Api.implementation");
          if (implClass != null && !"".equals(implClass.trim())) {
             try {
-               delegate = (FakeClassnameTestApiService) Class.forName(implClass).newInstance();
+               delegate = (FakeClassnameTags123ApiService) Class.forName(implClass).newInstance();
             } catch (Exception e) {
                throw new RuntimeException(e);
             }
@@ -48,7 +48,7 @@ public class FakeClassnameTestApi  {
       }
 
       if (delegate == null) {
-         delegate = FakeClassnameTestApiServiceFactory.getFakeClassnameTestApi();
+         delegate = FakeClassnameTags123ApiServiceFactory.getFakeClassnameTags123Api();
       }
 
       this.delegate = delegate;
