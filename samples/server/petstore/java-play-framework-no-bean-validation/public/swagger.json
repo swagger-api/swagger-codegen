@@ -750,7 +750,7 @@
       "title" : "Pet catehgry",
       "description" : "A category for a pet",
       "example" : {
-        "name" : "aeiou",
+        "name" : "name",
         "id" : 6
       },
       "xml" : {
@@ -791,14 +791,14 @@
       "title" : "a User",
       "description" : "A User who is purchasing from the pet store",
       "example" : {
-        "firstName" : "aeiou",
-        "lastName" : "aeiou",
-        "password" : "aeiou",
+        "firstName" : "firstName",
+        "lastName" : "lastName",
+        "password" : "password",
         "userStatus" : 6,
-        "phone" : "aeiou",
+        "phone" : "phone",
         "id" : 0,
-        "email" : "aeiou",
-        "username" : "aeiou"
+        "email" : "email",
+        "username" : "username"
       },
       "xml" : {
         "name" : "User"
@@ -818,7 +818,7 @@
       "title" : "Pet Tag",
       "description" : "A tag for a pet",
       "example" : {
-        "name" : "aeiou",
+        "name" : "name",
         "id" : 1
       },
       "xml" : {
@@ -869,15 +869,18 @@
       "title" : "a Pet",
       "description" : "A pet for sale in the pet store",
       "example" : {
-        "photoUrls" : [ "aeiou" ],
+        "photoUrls" : [ "photoUrls", "photoUrls" ],
         "name" : "doggie",
         "id" : 0,
         "category" : {
-          "name" : "aeiou",
+          "name" : "name",
           "id" : 6
         },
         "tags" : [ {
-          "name" : "aeiou",
+          "name" : "name",
+          "id" : 1
+        }, {
+          "name" : "name",
           "id" : 1
         } ],
         "status" : "available"
@@ -904,8 +907,8 @@
       "description" : "Describes the result of uploading an image resource",
       "example" : {
         "code" : 0,
-        "type" : "aeiou",
-        "message" : "aeiou"
+        "type" : "type",
+        "message" : "message"
       }
     }
   },

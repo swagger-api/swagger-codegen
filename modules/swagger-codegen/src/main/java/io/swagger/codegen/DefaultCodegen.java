@@ -1,5 +1,30 @@
 package io.swagger.codegen;
 
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.samskivert.mustache.Mustache.Compiler;
@@ -48,30 +73,6 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -341,6 +342,12 @@ public class DefaultCodegen {
     // override with any special post-processing
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        return objs;
+    }
+
+    // override with any special post-processing
+    @SuppressWarnings("static-method")
+    public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
         return objs;
     }
 
@@ -1231,6 +1238,36 @@ public class DefaultCodegen {
     }
 
     /**
+     * Output the Getter name for boolean property, e.g. getActive
+     *
+     * @param name the name of the property
+     * @return getter name based on naming convention
+     */
+    public String toBooleanGetter(String name) {
+        return "get" + getterAndSetterCapitalize(name);
+    }
+
+    /**
+     * Output the Getter name, e.g. getSize
+     *
+     * @param name the name of the property
+     * @return getter name based on naming convention
+     */
+    public String toGetter(String name) {
+        return "get" + getterAndSetterCapitalize(name);
+    }
+
+    /**
+     * Output the Getter name, e.g. getSize
+     *
+     * @param name the name of the property
+     * @return setter name based on naming convention
+     */
+    public String toSetter(String name) {
+        return "set" + getterAndSetterCapitalize(name);
+    }
+
+    /**
      * Output the API (class) name (capitalized) ending with "Api"
      * Return DefaultApi if name is empty
      *
@@ -1518,8 +1555,8 @@ public class DefaultCodegen {
         property.description = escapeText(p.getDescription());
         property.unescapedDescription = p.getDescription();
         property.title = p.getTitle();
-        property.getter = "get" + getterAndSetterCapitalize(name);
-        property.setter = "set" + getterAndSetterCapitalize(name);
+        property.getter = toGetter(name);
+        property.setter = toSetter(name);
         String example = toExampleValue(p);
         if(!"null".equals(example)) {
             property.example = example;
@@ -1660,7 +1697,7 @@ public class DefaultCodegen {
         }
         if (p instanceof BooleanProperty) {
             property.isBoolean = true;
-            property.getter = "is" + getterAndSetterCapitalize(name);
+            property.getter = toBooleanGetter(name);
         }
         if (p instanceof BinaryProperty) {
             property.isBinary = true;
@@ -1779,13 +1816,19 @@ public class DefaultCodegen {
             property.isListContainer = true;
             property.containerType = "array";
             property.baseType = getSwaggerType(p);
+            if (p.getXml() != null) {
+              property.isXmlWrapped = p.getXml().getWrapped() == null ? false : p.getXml().getWrapped();
+              property.xmlPrefix= p.getXml().getPrefix();
+              property.xmlNamespace = p.getXml().getNamespace();
+              property.xmlName = p.getXml().getName();
+            }
             // handle inner property
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
             String itemName = (String) p.getVendorExtensions().get("x-item-name");
             if (itemName == null) {
-                itemName = property.name;
+              itemName = property.name;
             }
             CodegenProperty cp = fromProperty(itemName, ap.getItems());
             updatePropertyForArray(property, cp);
@@ -2138,6 +2181,10 @@ public class DefaultCodegen {
                         ArrayProperty ap = (ArrayProperty) responseProperty;
                         CodegenProperty innerProperty = fromProperty("response", ap.getItems());
                         op.returnBaseType = innerProperty.baseType;
+                    } else if (responseProperty instanceof MapProperty) {
+                        MapProperty ap = (MapProperty) responseProperty;
+                        CodegenProperty innerProperty = fromProperty("response", ap.getAdditionalProperties());
+                        op.returnBaseType = innerProperty.baseType;
                     } else {
                         if (cm.complexType != null) {
                             op.returnBaseType = cm.complexType;
@@ -2231,6 +2278,9 @@ public class DefaultCodegen {
                 } else if (param instanceof BodyParameter) {
                     bodyParam = p;
                     bodyParams.add(p.copy());
+                    if(definitions != null) {
+                        op.requestBodyExamples = new ExampleGenerator(definitions).generate(null, operation.getConsumes(), bodyParam.dataType);
+                    }
                 } else if (param instanceof FormParameter) {
                     formParams.add(p.copy());
                 }
@@ -2239,11 +2289,13 @@ public class DefaultCodegen {
                 }
             }
         }
+
         for (String i : imports) {
             if (needToImport(i)) {
                 op.imports.add(i);
             }
         }
+
         op.bodyParam = bodyParam;
         op.httpMethod = httpMethod.toUpperCase();
 
@@ -2258,6 +2310,7 @@ public class DefaultCodegen {
               }
           });
         }
+
         op.allParams = addHasMore(allParams);
         op.bodyParams = addHasMore(bodyParams);
         op.pathParams = addHasMore(pathParams);
@@ -2265,13 +2318,13 @@ public class DefaultCodegen {
         op.headerParams = addHasMore(headerParams);
         // op.cookieParams = cookieParams;
         op.formParams = addHasMore(formParams);
+        op.externalDocs = operation.getExternalDocs();
         // legacy support
         op.nickname = op.operationId;
 
         if (op.allParams.size() > 0) {
             op.hasParams = true;
         }
-        op.externalDocs = operation.getExternalDocs();
 
         // set Restful Flag
         op.isRestfulShow = op.isRestfulShow();
@@ -2650,7 +2703,7 @@ public class DefaultCodegen {
         // set the example value
         // if not specified in x-example, generate a default value
         if (p.vendorExtensions.containsKey("x-example")) {
-            p.example = Objects.toString(p.vendorExtensions.get("x-example"));
+            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
         } else if (Boolean.TRUE.equals(p.isString)) {
             p.example = p.paramName + "_example";
         } else if (Boolean.TRUE.equals(p.isBoolean)) {
@@ -3066,6 +3119,7 @@ public class DefaultCodegen {
                 final CodegenProperty cp = fromProperty(key, prop);
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
+                m.hasOptional = m.hasOptional || !cp.required;
                 if (cp.isEnum) {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
@@ -3621,7 +3675,7 @@ public class DefaultCodegen {
      * writes it back to additionalProperties to be usable as a boolean in
      * mustache files.
      *
-     * @param propertyKey
+     * @param propertyKey property key
      * @return property value as boolean
      */
     public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {

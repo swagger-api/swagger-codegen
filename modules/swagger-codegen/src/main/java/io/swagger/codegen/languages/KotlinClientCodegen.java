@@ -200,6 +200,10 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             this.setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
+            if (!additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE))
+                this.setModelPackage(packageName + ".models");
+            if (!additionalProperties.containsKey(CodegenConstants.API_PACKAGE))
+                this.setApiPackage(packageName + ".apis");
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
@@ -224,14 +228,6 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             LOGGER.warn(CodegenConstants.INVOKER_PACKAGE + " with " + this.getName() + " generator is ignored. Use " + CodegenConstants.PACKAGE_NAME + ".");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
-            LOGGER.warn(CodegenConstants.MODEL_PACKAGE + " with " + this.getName() + " generator is ignored. Setting this value independently of " + CodegenConstants.PACKAGE_NAME + " is not currently supported.");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
-            LOGGER.warn(CodegenConstants.API_PACKAGE + " with " + this.getName() + " generator is ignored. Setting this value independently of " + CodegenConstants.PACKAGE_NAME + " is not currently supported.");
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage());

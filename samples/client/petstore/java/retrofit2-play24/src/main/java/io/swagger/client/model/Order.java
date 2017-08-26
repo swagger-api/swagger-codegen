@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.OffsetDateTime;
+import java.time.OffsetDateTime;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -184,7 +184,7 @@ public class Order {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 
@@ -241,6 +241,6 @@ public class Order {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 
