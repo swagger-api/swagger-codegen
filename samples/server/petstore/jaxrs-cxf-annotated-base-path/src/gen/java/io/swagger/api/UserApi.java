@@ -30,7 +30,7 @@ public interface UserApi  {
     @ApiOperation(value = "Create user", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUser(@Valid User body);
+    public Void createUser(@Valid User body);
 
     @POST
     @Path("/user/createWithArray")
@@ -38,7 +38,7 @@ public interface UserApi  {
     @ApiOperation(value = "Creates list of users with given input array", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUsersWithArrayInput(@Valid List<User> body);
+    public Void createUsersWithArrayInput(@Valid List<User> body);
 
     @POST
     @Path("/user/createWithList")
@@ -46,7 +46,7 @@ public interface UserApi  {
     @ApiOperation(value = "Creates list of users with given input array", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUsersWithListInput(@Valid List<User> body);
+    public Void createUsersWithListInput(@Valid List<User> body);
 
     @DELETE
     @Path("/user/{username}")
@@ -55,7 +55,7 @@ public interface UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied"),
         @ApiResponse(code = 404, message = "User not found") })
-    public void deleteUser(@PathParam("username") String username);
+    public Void deleteUser(@PathParam("username") String username);
 
     @GET
     @Path("/user/{username}")
@@ -82,7 +82,7 @@ public interface UserApi  {
     @ApiOperation(value = "Logs out current logged in user session", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void logoutUser();
+    public Void logoutUser();
 
     @PUT
     @Path("/user/{username}")
@@ -91,6 +91,6 @@ public interface UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid user supplied"),
         @ApiResponse(code = 404, message = "User not found") })
-    public void updateUser(@PathParam("username") String username, @Valid User body);
+    public Void updateUser(@PathParam("username") String username, @Valid User body);
 }
 

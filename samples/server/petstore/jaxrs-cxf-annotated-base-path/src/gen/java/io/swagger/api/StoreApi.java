@@ -31,14 +31,14 @@ public interface StoreApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Order not found") })
-    public void deleteOrder(@PathParam("orderId") String orderId);
+    public Void deleteOrder(@PathParam("orderId") String orderId);
 
     @GET
     @Path("/store/inventory")
     @Produces({ "application/json" })
     @ApiOperation(value = "Returns pet inventories by status", tags={ "store",  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
+        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
     public Map<String, Integer> getInventory();
 
     @GET

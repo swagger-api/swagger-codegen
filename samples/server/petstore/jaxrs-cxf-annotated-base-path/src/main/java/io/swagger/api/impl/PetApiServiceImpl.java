@@ -19,13 +19,13 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 
 public class PetApiServiceImpl implements PetApi {
-    public void addPet(Pet body) {
+    public Void addPet(Pet body) {
         // TODO: Implement...
         
         
     }
     
-    public void deletePet(Long petId, String apiKey) {
+    public Void deletePet(Long petId, String apiKey) {
         // TODO: Implement...
         
         
@@ -49,13 +49,13 @@ public class PetApiServiceImpl implements PetApi {
         return null;
     }
     
-    public void updatePet(Pet body) {
+    public Void updatePet(Pet body) {
         // TODO: Implement...
         
         
     }
     
-    public void updatePetWithForm(Long petId, String name, String status) {
+    public Void updatePetWithForm(Long petId, String name, String status) {
         // TODO: Implement...
         
         

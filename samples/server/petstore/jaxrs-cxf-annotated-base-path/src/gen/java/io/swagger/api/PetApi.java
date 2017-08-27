@@ -32,7 +32,7 @@ public interface PetApi  {
     @ApiOperation(value = "Add a new pet to the store", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
-    public void addPet(@Valid Pet body);
+    public Void addPet(@Valid Pet body);
 
     @DELETE
     @Path("/pet/{petId}")
@@ -40,7 +40,7 @@ public interface PetApi  {
     @ApiOperation(value = "Deletes a pet", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value") })
-    public void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
+    public Void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
 
     @GET
     @Path("/pet/findByStatus")
@@ -79,7 +79,7 @@ public interface PetApi  {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Pet not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    public void updatePet(@Valid Pet body);
+    public Void updatePet(@Valid Pet body);
 
     @POST
     @Path("/pet/{petId}")
@@ -88,7 +88,7 @@ public interface PetApi  {
     @ApiOperation(value = "Updates a pet in the store with form data", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
-    public void updatePetWithForm(@PathParam("petId") Long petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
+    public Void updatePetWithForm(@PathParam("petId") Long petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
 
     @POST
     @Path("/pet/{petId}/uploadImage")

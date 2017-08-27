@@ -24,10 +24,10 @@ public class StoreApi  {
     @Path("/order/{order_id}")
     
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = void.class, tags={ "store",  })
+    @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class, tags={ "store",  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = void.class),
-        @ApiResponse(code = 404, message = "Order not found", response = void.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
     public Response deleteOrder(@PathParam("order_id") @ApiParam("ID of the order that needs to be deleted") String orderId) {
         return Response.ok().entity("magic!").build();
     }

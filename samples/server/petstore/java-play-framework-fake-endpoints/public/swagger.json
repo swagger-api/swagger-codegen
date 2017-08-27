@@ -1144,12 +1144,12 @@
         }
       },
       "example" : {
-        "petId" : 6,
-        "quantity" : 1,
         "id" : 0,
-        "shipDate" : "2000-01-23T04:56:07.000+00:00",
+        "petId" : 6,
         "complete" : false,
-        "status" : "placed"
+        "status" : "placed",
+        "quantity" : 1,
+        "shipDate" : "2000-01-23T04:56:07.000+00:00"
       },
       "xml" : {
         "name" : "Order"
@@ -1167,8 +1167,8 @@
         }
       },
       "example" : {
-        "name" : "name",
-        "id" : 6
+        "id" : 6,
+        "name" : "name"
       },
       "xml" : {
         "name" : "Category"
@@ -1207,14 +1207,14 @@
         }
       },
       "example" : {
-        "firstName" : "firstName",
-        "lastName" : "lastName",
-        "password" : "password",
-        "userStatus" : 6,
-        "phone" : "phone",
         "id" : 0,
+        "lastName" : "lastName",
+        "phone" : "phone",
+        "username" : "username",
         "email" : "email",
-        "username" : "username"
+        "userStatus" : 6,
+        "firstName" : "firstName",
+        "password" : "password"
       },
       "xml" : {
         "name" : "User"
@@ -1232,8 +1232,8 @@
         }
       },
       "example" : {
-        "name" : "name",
-        "id" : 1
+        "id" : 1,
+        "name" : "name"
       },
       "xml" : {
         "name" : "Tag"
@@ -1282,21 +1282,21 @@
         }
       },
       "example" : {
-        "photoUrls" : [ "photoUrls", "photoUrls" ],
-        "name" : "doggie",
+        "tags" : [ {
+          "id" : 1,
+          "name" : "name"
+        }, {
+          "id" : 1,
+          "name" : "name"
+        } ],
         "id" : 0,
         "category" : {
-          "name" : "name",
-          "id" : 6
+          "id" : 6,
+          "name" : "name"
         },
-        "tags" : [ {
-          "name" : "name",
-          "id" : 1
-        }, {
-          "name" : "name",
-          "id" : 1
-        } ],
-        "status" : "available"
+        "status" : "available",
+        "name" : "doggie",
+        "photoUrls" : [ "photoUrls", "photoUrls" ]
       },
       "xml" : {
         "name" : "Pet"
@@ -1317,9 +1317,9 @@
         }
       },
       "example" : {
+        "message" : "message",
         "code" : 0,
-        "type" : "type",
-        "message" : "message"
+        "type" : "type"
       }
     },
     "$special[model.name]" : {
@@ -1767,8 +1767,8 @@
         }
       },
       "example" : {
-        "my_string" : { },
         "my_number" : { },
+        "my_string" : { },
         "my_boolean" : { }
       }
     }
