@@ -10,19 +10,16 @@ PetApi <- R6::R6Class(
   'PetApi',
   public = list(
     userAgent = "Swagger-Codegen/1.0.0/r",
-    host = NULL,
-    basePath = NULL,
-    scheme = NULL,
-    url = NULL,
-    initialize = function(host, basePath, scheme){
-      self$host <- host
-      self$basePath <- basePath
-      self$scheme <- scheme
-      self$url <- sprintf("%s://%s/%s/pet/", scheme, host, basePath)
+    basePath = "http://petstore.swagger.io/v2",
+    initialize = function(basePath){
+      if (!missing(basePath)) {
+        stopifnot(is.character(basePath), length(basePath) == 1)
+        self$basePath <- basePath
+      }
     },
 
     add_pet = function(body){
-      resp <- httr::POST(paste0(self$url),
+      resp <- httr::POST(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/json", "content-type" = "application/xml")
           ,body = body$toJSON()
           )
@@ -37,7 +34,7 @@ PetApi <- R6::R6Class(
 
     },
     delete_pet = function(pet_id, api_key){
-      resp <- httr::DELETE(paste0(self$url, pet_id),
+      resp <- httr::DELETE(paste0(self$basePath, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml", "api_key" = api_key)
           )
 
@@ -51,15 +48,14 @@ PetApi <- R6::R6Class(
 
     },
     find_pets_by_status = function(status){
-      resp <- httr::GET(paste0(self$url),
+      resp <- httr::GET(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
+          ,query = list(
+            "status" = status
           )
-      # TODO add support for query parameters "status"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- Pet$fromJSON(parsed)
+        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -69,15 +65,14 @@ PetApi <- R6::R6Class(
 
     },
     find_pets_by_tags = function(tags){
-      resp <- httr::GET(paste0(self$url),
+      resp <- httr::GET(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
+          ,query = list(
+            "tags" = tags
           )
-      # TODO add support for query parameters "tags"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- Pet$fromJSON(parsed)
+        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -87,14 +82,12 @@ PetApi <- R6::R6Class(
 
     },
     get_pet_by_id = function(pet_id){
-      resp <- httr::GET(paste0(self$url, pet_id),
+      resp <- httr::GET(paste0(self$basePath, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- Pet$fromJSON(parsed)
+        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -104,7 +97,7 @@ PetApi <- R6::R6Class(
 
     },
     update_pet = function(body){
-      resp <- httr::PUT(paste0(self$url),
+      resp <- httr::PUT(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/json", "content-type" = "application/xml")
           ,body = body$toJSON()
           )
@@ -119,7 +112,7 @@ PetApi <- R6::R6Class(
 
     },
     update_pet_with_form = function(pet_id, name, status){
-      resp <- httr::POST(paste0(self$url, pet_id),
+      resp <- httr::POST(paste0(self$basePath, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "application/x-www-form-urlencoded", "content-type" = "application/xml")
           ,body = list(
               "name" = name,
@@ -137,7 +130,7 @@ PetApi <- R6::R6Class(
 
     },
     upload_file = function(pet_id, additional_metadata, file){
-      resp <- httr::POST(paste0(self$url, pet_id),
+      resp <- httr::POST(paste0(self$basePath, pet_id),
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "multipart/form-data", "content-type" = "application/json")
           ,body = list(
               "additionalMetadata" = additional_metadata,
@@ -146,9 +139,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- ApiResponse$fromJSON(parsed)
+        result <- ApiResponse$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)

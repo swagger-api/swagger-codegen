@@ -76,6 +76,17 @@ User <- R6::R6Class(
         self$phone,
         self$user_status
       )
+    },
+    fromJSON = function(UserJson) {
+      UserObject <- jsonlite::fromJSON(UserJson)
+      self$id <- UserObject$id
+      self$username <- UserObject$username
+      self$first_name <- UserObject$first_name
+      self$last_name <- UserObject$last_name
+      self$email <- UserObject$email
+      self$password <- UserObject$password
+      self$phone <- UserObject$phone
+      self$user_status <- UserObject$user_status
     }
   )
 )

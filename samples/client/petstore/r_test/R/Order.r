@@ -63,6 +63,15 @@ Order <- R6::R6Class(
         self$status,
         self$complete
       )
+    },
+    fromJSON = function(OrderJson) {
+      OrderObject <- jsonlite::fromJSON(OrderJson)
+      self$id <- OrderObject$id
+      self$pet_id <- OrderObject$pet_id
+      self$quantity <- OrderObject$quantity
+      self$ship_date <- Date$new()$fromJSON(OrderObject$ship_date)
+      self$status <- OrderObject$status
+      self$complete <- OrderObject$complete
     }
   )
 )

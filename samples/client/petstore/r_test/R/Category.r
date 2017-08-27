@@ -34,6 +34,11 @@ Category <- R6::R6Class(
         self$id,
         self$name
       )
+    },
+    fromJSON = function(CategoryJson) {
+      CategoryObject <- jsonlite::fromJSON(CategoryJson)
+      self$id <- CategoryObject$id
+      self$name <- CategoryObject$name
     }
   )
 )

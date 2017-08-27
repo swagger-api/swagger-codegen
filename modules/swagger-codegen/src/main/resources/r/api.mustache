@@ -4,20 +4,17 @@
   '{{classname}}',
   public = list(
     userAgent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/r{{/httpUserAgent}}",
-    host = NULL,
-    basePath = NULL,
-    scheme = NULL,
-    url = NULL,
-    initialize = function(host, basePath, scheme){
-      self$host <- host
-      self$basePath <- basePath
-      self$scheme <- scheme
-      self$url <- sprintf("%s://%s/%s/pet/", scheme, host, basePath)
+    basePath = "{{{basePath}}}",
+    initialize = function(basePath){
+      if (!missing(basePath)) {
+        stopifnot(is.character(basePath), length(basePath) == 1)
+        self$basePath <- basePath
+      }
     },
 
     {{#operation}}
     {{operationId}} = function({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){
-      resp <- httr::{{httpMethod}}(paste0(self$url{{#pathParams}}, {{paramName}}{{/pathParams}}),
+      resp <- httr::{{httpMethod}}(paste0(self$basePath{{#pathParams}}, {{paramName}}{{/pathParams}}),
           httr::add_headers("User-Agent" = self$userAgent{{#hasConsumes}}, "accept" = "{{#consumes}}{{#-first}}{{{mediaType}}}{{/-first}}{{/consumes}}"{{/hasConsumes}}{{#hasProduces}}, "content-type" = "{{#produces}}{{#-first}}{{{mediaType}}}{{/-first}}{{/produces}}"{{/hasProduces}}{{#headerParams}}, "{{baseName}}" = {{paramName}}{{/headerParams}})
           {{#hasFormParams}}
           ,body = list(
@@ -29,16 +26,17 @@
           {{#bodyParams}}
           ,body = {{paramName}}$toJSON()
           {{/bodyParams}}
+          {{#hasQueryParams}}
+          ,query = list(
+            {{#queryParams}}
+            "{{baseName}}" = {{paramName}}{{#hasMore}},{{/hasMore}}
+            {{/queryParams}}
+          {{/hasQueryParams}}
           )
-      {{#queryParams}}
-      # TODO add support for query parameters "{{baseName}}"
-      {{/queryParams}}
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- {{returnType}}$fromJSON(parsed)
+        result <- {{returnType}}$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
         {{/returnType}}
         {{^returnType}}

@@ -10,19 +10,16 @@ UserApi <- R6::R6Class(
   'UserApi',
   public = list(
     userAgent = "Swagger-Codegen/1.0.0/r",
-    host = NULL,
-    basePath = NULL,
-    scheme = NULL,
-    url = NULL,
-    initialize = function(host, basePath, scheme){
-      self$host <- host
-      self$basePath <- basePath
-      self$scheme <- scheme
-      self$url <- sprintf("%s://%s/%s/pet/", scheme, host, basePath)
+    basePath = "http://petstore.swagger.io/v2",
+    initialize = function(basePath){
+      if (!missing(basePath)) {
+        stopifnot(is.character(basePath), length(basePath) == 1)
+        self$basePath <- basePath
+      }
     },
 
     create_user = function(body){
-      resp <- httr::POST(paste0(self$url),
+      resp <- httr::POST(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           ,body = body$toJSON()
           )
@@ -37,7 +34,7 @@ UserApi <- R6::R6Class(
 
     },
     create_users_with_array_input = function(body){
-      resp <- httr::POST(paste0(self$url),
+      resp <- httr::POST(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           ,body = body$toJSON()
           )
@@ -52,7 +49,7 @@ UserApi <- R6::R6Class(
 
     },
     create_users_with_list_input = function(body){
-      resp <- httr::POST(paste0(self$url),
+      resp <- httr::POST(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           ,body = body$toJSON()
           )
@@ -67,7 +64,7 @@ UserApi <- R6::R6Class(
 
     },
     delete_user = function(username){
-      resp <- httr::DELETE(paste0(self$url, username),
+      resp <- httr::DELETE(paste0(self$basePath, username),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           )
 
@@ -81,14 +78,12 @@ UserApi <- R6::R6Class(
 
     },
     get_user_by_name = function(username){
-      resp <- httr::GET(paste0(self$url, username),
+      resp <- httr::GET(paste0(self$basePath, username),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- User$fromJSON(parsed)
+        result <- User$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -98,16 +93,15 @@ UserApi <- R6::R6Class(
 
     },
     login_user = function(username, password){
-      resp <- httr::GET(paste0(self$url),
+      resp <- httr::GET(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
+          ,query = list(
+            "username" = username,
+            "password" = password
           )
-      # TODO add support for query parameters "username"
-      # TODO add support for query parameters "password"
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        parsed <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
-                                 simplifyVector = FALSE)
-        result <- Character$fromJSON(parsed)
+        result <- Character$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -117,7 +111,7 @@ UserApi <- R6::R6Class(
 
     },
     logout_user = function(){
-      resp <- httr::GET(paste0(self$url),
+      resp <- httr::GET(paste0(self$basePath),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           )
 
@@ -131,7 +125,7 @@ UserApi <- R6::R6Class(
 
     },
     update_user = function(username, body){
-      resp <- httr::PUT(paste0(self$url, username),
+      resp <- httr::PUT(paste0(self$basePath, username),
           httr::add_headers("User-Agent" = self$userAgent, "content-type" = "application/xml")
           ,body = body$toJSON()
           )

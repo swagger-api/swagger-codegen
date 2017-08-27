@@ -41,6 +41,12 @@ ApiResponse <- R6::R6Class(
         self$type,
         self$message
       )
+    },
+    fromJSON = function(ApiResponseJson) {
+      ApiResponseObject <- jsonlite::fromJSON(ApiResponseJson)
+      self$code <- ApiResponseObject$code
+      self$type <- ApiResponseObject$type
+      self$message <- ApiResponseObject$message
     }
   )
 )

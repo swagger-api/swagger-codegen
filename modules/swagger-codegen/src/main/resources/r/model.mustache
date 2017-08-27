@@ -76,6 +76,22 @@
         {{/isListContainer}}
         {{/vars}}
       )
+    },
+    fromJSON = function({{classname}}Json) {
+      {{classname}}Object <- jsonlite::fromJSON({{classname}}Json)
+      {{#vars}}
+      {{#isPrimitiveType}}
+      self${{name}} <- {{classname}}Object${{name}}
+      {{/isPrimitiveType}}
+      {{^isPrimitiveType}}
+      {{#isListContainer}}
+      self${{name}} <- lapply({{classname}}Object${{name}}, function(x) {{datatype}}$new()$fromJSON(x)
+      {{/isListContainer}}
+      {{^isListContainer}}
+      self${{name}} <- {{datatype}}$new()$fromJSON({{classname}}Object${{name}})
+      {{/isListContainer}}
+      {{/isPrimitiveType}}
+      {{/vars}}
     }
   )
 )
