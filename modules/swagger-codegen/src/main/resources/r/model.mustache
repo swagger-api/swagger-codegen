@@ -85,10 +85,10 @@
       {{/isPrimitiveType}}
       {{^isPrimitiveType}}
       {{#isListContainer}}
-      self${{name}} <- lapply({{classname}}Object${{name}}, function(x) {{datatype}}$new()$fromJSON(x)
+      self${{name}} <- lapply({{classname}}Object${{name}}, function(x) {{datatype}}$new()$fromJSON(jsonlite::toJSON(x))
       {{/isListContainer}}
       {{^isListContainer}}
-      self${{name}} <- {{datatype}}$new()$fromJSON({{classname}}Object${{name}})
+      self${{name}} <- {{datatype}}$new()$fromJSON(jsonlite::toJSON({{classname}}Object${{name}}))
       {{/isListContainer}}
       {{/isPrimitiveType}}
       {{/vars}}

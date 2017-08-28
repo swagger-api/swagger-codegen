@@ -36,7 +36,7 @@
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 
-        result <- {{returnType}}$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- {{returnType}}$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
         {{/returnType}}
         {{^returnType}}

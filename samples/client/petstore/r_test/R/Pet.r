@@ -69,10 +69,10 @@ Pet <- R6::R6Class(
     fromJSON = function(PetJson) {
       PetObject <- jsonlite::fromJSON(PetJson)
       self$id <- PetObject$id
-      self$category <- Category$new()$fromJSON(PetObject$category)
+      self$category <- Category$new()$fromJSON(jsonlite::toJSON(PetObject$category))
       self$name <- PetObject$name
       self$photo_urls <- PetObject$photo_urls
-      self$tags <- lapply(PetObject$tags, function(x) Tag$new()$fromJSON(x)
+      self$tags <- lapply(PetObject$tags, function(x) Tag$new()$fromJSON(jsonlite::toJSON(x))
       self$status <- PetObject$status
     }
   )

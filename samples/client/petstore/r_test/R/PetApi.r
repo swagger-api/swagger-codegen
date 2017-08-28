@@ -55,7 +55,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Pet$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -72,7 +72,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Pet$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -87,7 +87,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Pet$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Pet$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -139,7 +139,7 @@ PetApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- ApiResponse$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- ApiResponse$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)

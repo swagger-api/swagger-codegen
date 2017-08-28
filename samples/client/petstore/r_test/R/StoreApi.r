@@ -38,7 +38,7 @@ StoreApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Integer$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Integer$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -53,7 +53,7 @@ StoreApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Order$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Order$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -69,7 +69,7 @@ StoreApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Order$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Order$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)

@@ -83,7 +83,7 @@ UserApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- User$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- User$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
@@ -101,7 +101,7 @@ UserApi <- R6::R6Class(
           )
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        result <- Character$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+        result <- Character$new()$fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
         Response$new(result, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499){
         Response$new("API client error", resp)
