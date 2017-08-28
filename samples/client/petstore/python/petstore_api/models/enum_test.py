@@ -44,11 +44,12 @@ class EnumTest(object):
         'outer_enum': 'outerEnum'
     }
 
-    def __init__(self, enum_string=None, enum_integer=None, enum_number=None, outer_enum=None):
+    def __init__(self, enum_string=None, enum_integer=None, enum_number=None, outer_enum=None, _validated=True):
         """
         EnumTest - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._enum_string = None
         self._enum_integer = None
         self._enum_number = None
@@ -82,6 +83,12 @@ class EnumTest(object):
         :param enum_string: The enum_string of this EnumTest.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._enum_string = enum_string
+            return
         allowed_values = ["UPPER", "lower", ""]
         if enum_string not in allowed_values:
             raise ValueError(
@@ -109,6 +116,12 @@ class EnumTest(object):
         :param enum_integer: The enum_integer of this EnumTest.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._enum_integer = enum_integer
+            return
         allowed_values = [1, -1]
         if enum_integer not in allowed_values:
             raise ValueError(
@@ -136,6 +149,12 @@ class EnumTest(object):
         :param enum_number: The enum_number of this EnumTest.
         :type: float
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._enum_number = enum_number
+            return
         allowed_values = [1.1, -1.2]
         if enum_number not in allowed_values:
             raise ValueError(
@@ -163,6 +182,12 @@ class EnumTest(object):
         :param outer_enum: The outer_enum of this EnumTest.
         :type: OuterEnum
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._outer_enum = outer_enum
+            return
 
         self._outer_enum = outer_enum
 

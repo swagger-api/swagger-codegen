@@ -38,11 +38,12 @@ class Dog(object):
         'breed': 'breed'
     }
 
-    def __init__(self, breed=None):
+    def __init__(self, breed=None, _validated=True):
         """
         Dog - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._breed = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class Dog(object):
         :param breed: The breed of this Dog.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._breed = breed
+            return
 
         self._breed = breed
 

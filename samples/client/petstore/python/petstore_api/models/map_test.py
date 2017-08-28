@@ -40,11 +40,12 @@ class MapTest(object):
         'map_of_enum_string': 'map_of_enum_string'
     }
 
-    def __init__(self, map_map_of_string=None, map_of_enum_string=None):
+    def __init__(self, map_map_of_string=None, map_of_enum_string=None, _validated=True):
         """
         MapTest - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._map_map_of_string = None
         self._map_of_enum_string = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class MapTest(object):
         :type: dict(str, dict(str, str))
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._map_map_of_string = map_map_of_string
+            return
+
         self._map_map_of_string = map_map_of_string
 
     @property
@@ -93,6 +100,12 @@ class MapTest(object):
         :param map_of_enum_string: The map_of_enum_string of this MapTest.
         :type: dict(str, str)
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._map_of_enum_string = map_of_enum_string
+            return
         allowed_values = ["UPPER", "lower"]
         if not set(map_of_enum_string.keys()).issubset(set(allowed_values)):
             raise ValueError(

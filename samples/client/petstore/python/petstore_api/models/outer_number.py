@@ -38,11 +38,12 @@ class OuterNumber(object):
         
     }
 
-    def __init__(self):
+    def __init__(self, _validated=True):
         """
         OuterNumber - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self.discriminator = None
 
 

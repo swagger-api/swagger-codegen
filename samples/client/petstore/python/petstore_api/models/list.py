@@ -38,11 +38,12 @@ class List(object):
         '_123_list': '123-list'
     }
 
-    def __init__(self, _123_list=None):
+    def __init__(self, _123_list=None, _validated=True):
         """
         List - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self.__123_list = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class List(object):
         :param _123_list: The _123_list of this List.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__123_list = _123_list
+            return
 
         self.__123_list = _123_list
 

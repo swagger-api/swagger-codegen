@@ -40,11 +40,12 @@ class HasOnlyReadOnly(object):
         'foo': 'foo'
     }
 
-    def __init__(self, bar=None, foo=None):
+    def __init__(self, bar=None, foo=None, _validated=True):
         """
         HasOnlyReadOnly - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._bar = None
         self._foo = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class HasOnlyReadOnly(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._bar = bar
+            return
+
         self._bar = bar
 
     @property
@@ -93,6 +100,12 @@ class HasOnlyReadOnly(object):
         :param foo: The foo of this HasOnlyReadOnly.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._foo = foo
+            return
 
         self._foo = foo
 

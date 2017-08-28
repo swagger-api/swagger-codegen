@@ -38,11 +38,12 @@ class ArrayOfNumberOnly(object):
         'array_number': 'ArrayNumber'
     }
 
-    def __init__(self, array_number=None):
+    def __init__(self, array_number=None, _validated=True):
         """
         ArrayOfNumberOnly - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._array_number = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class ArrayOfNumberOnly(object):
         :param array_number: The array_number of this ArrayOfNumberOnly.
         :type: list[float]
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._array_number = array_number
+            return
 
         self._array_number = array_number
 

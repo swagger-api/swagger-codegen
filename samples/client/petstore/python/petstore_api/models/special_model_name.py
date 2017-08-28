@@ -38,11 +38,12 @@ class SpecialModelName(object):
         'special_property_name': '$special[property.name]'
     }
 
-    def __init__(self, special_property_name=None):
+    def __init__(self, special_property_name=None, _validated=True):
         """
         SpecialModelName - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._special_property_name = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class SpecialModelName(object):
         :param special_property_name: The special_property_name of this SpecialModelName.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._special_property_name = special_property_name
+            return
 
         self._special_property_name = special_property_name
 

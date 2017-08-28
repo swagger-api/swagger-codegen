@@ -42,11 +42,12 @@ class ArrayTest(object):
         'array_array_of_model': 'array_array_of_model'
     }
 
-    def __init__(self, array_of_string=None, array_array_of_integer=None, array_array_of_model=None):
+    def __init__(self, array_of_string=None, array_array_of_integer=None, array_array_of_model=None, _validated=True):
         """
         ArrayTest - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._array_of_string = None
         self._array_array_of_integer = None
         self._array_array_of_model = None
@@ -78,6 +79,12 @@ class ArrayTest(object):
         :type: list[str]
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._array_of_string = array_of_string
+            return
+
         self._array_of_string = array_of_string
 
     @property
@@ -99,6 +106,12 @@ class ArrayTest(object):
         :type: list[list[int]]
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._array_array_of_integer = array_array_of_integer
+            return
+
         self._array_array_of_integer = array_array_of_integer
 
     @property
@@ -119,6 +132,12 @@ class ArrayTest(object):
         :param array_array_of_model: The array_array_of_model of this ArrayTest.
         :type: list[list[ReadOnlyFirst]]
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._array_array_of_model = array_array_of_model
+            return
 
         self._array_array_of_model = array_array_of_model
 

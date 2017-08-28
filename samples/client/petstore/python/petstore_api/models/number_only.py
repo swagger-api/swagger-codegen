@@ -38,11 +38,12 @@ class NumberOnly(object):
         'just_number': 'JustNumber'
     }
 
-    def __init__(self, just_number=None):
+    def __init__(self, just_number=None, _validated=True):
         """
         NumberOnly - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._just_number = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class NumberOnly(object):
         :param just_number: The just_number of this NumberOnly.
         :type: float
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._just_number = just_number
+            return
 
         self._just_number = just_number
 

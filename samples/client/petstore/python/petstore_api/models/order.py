@@ -48,11 +48,12 @@ class Order(object):
         'complete': 'complete'
     }
 
-    def __init__(self, id=None, pet_id=None, quantity=None, ship_date=None, status=None, complete=False):
+    def __init__(self, id=None, pet_id=None, quantity=None, ship_date=None, status=None, complete=False, _validated=True):
         """
         Order - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._id = None
         self._pet_id = None
         self._quantity = None
@@ -93,6 +94,12 @@ class Order(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._id = id
+            return
+
         self._id = id
 
     @property
@@ -113,6 +120,12 @@ class Order(object):
         :param pet_id: The pet_id of this Order.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._pet_id = pet_id
+            return
 
         self._pet_id = pet_id
 
@@ -135,6 +148,12 @@ class Order(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._quantity = quantity
+            return
+
         self._quantity = quantity
 
     @property
@@ -155,6 +174,12 @@ class Order(object):
         :param ship_date: The ship_date of this Order.
         :type: datetime
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._ship_date = ship_date
+            return
 
         self._ship_date = ship_date
 
@@ -178,6 +203,12 @@ class Order(object):
         :param status: The status of this Order.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._status = status
+            return
         allowed_values = ["placed", "approved", "delivered"]
         if status not in allowed_values:
             raise ValueError(
@@ -205,6 +236,12 @@ class Order(object):
         :param complete: The complete of this Order.
         :type: bool
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._complete = complete
+            return
 
         self._complete = complete
 

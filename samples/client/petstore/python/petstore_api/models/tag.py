@@ -40,11 +40,12 @@ class Tag(object):
         'name': 'name'
     }
 
-    def __init__(self, id=None, name=None):
+    def __init__(self, id=None, name=None, _validated=True):
         """
         Tag - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._id = None
         self._name = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class Tag(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._id = id
+            return
+
         self._id = id
 
     @property
@@ -93,6 +100,12 @@ class Tag(object):
         :param name: The name of this Tag.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._name = name
+            return
 
         self._name = name
 
