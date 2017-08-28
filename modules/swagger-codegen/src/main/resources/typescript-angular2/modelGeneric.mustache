@@ -26,3 +26,32 @@ export namespace {{classname}} {
     {{/isEnum}}
 {{/vars}}
 }{{/hasEnums}}
+
+export namespace {{classname}} {
+    {{#discriminator}}
+    export const discriminator = "{{discriminator}}";
+    {{/discriminator}}
+    {{^discriminator}}
+    export const discriminator = undefined;
+    {{/discriminator}}
+
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {{#vars}}
+        {
+            "name": "{{name}}",
+            "baseName": "{{baseName}}",
+            "type": "{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}"
+        }{{#hasMore}},
+        {{/hasMore}}
+        {{/vars}}
+    ];
+
+    export function getAttributeTypeMap() {
+        {{#parent}}
+        return {{{parent}}}.getAttributeTypeMap().concat({{classname}}.attributeTypeMap);
+        {{/parent}}
+        {{^parent}}
+        return {{classname}}.attributeTypeMap;
+        {{/parent}}
+    }
+}

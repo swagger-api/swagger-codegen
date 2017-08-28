@@ -21,3 +21,23 @@ export interface Tag {
     name?: string;
 
 }
+
+export namespace Tag {
+    export const discriminator = undefined;
+
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        }    ];
+
+    export function getAttributeTypeMap() {
+        return Tag.attributeTypeMap;
+    }
+}

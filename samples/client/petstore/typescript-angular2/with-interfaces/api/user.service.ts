@@ -25,6 +25,7 @@ import { User } from '../model/user';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { UserServiceInterface }                            from './UserServiceInterface';
+import { ObjectSerializer } from '../types';
 
 
 @Injectable()
@@ -84,7 +85,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -100,7 +101,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -116,7 +117,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -132,7 +133,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -148,7 +149,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "User") || {};
                 }
             });
     }
@@ -165,7 +166,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "string") || {};
                 }
             });
     }
@@ -180,7 +181,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -197,7 +198,7 @@ export class UserService implements UserServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -231,7 +232,7 @@ export class UserService implements UserServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "User")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -271,7 +272,7 @@ export class UserService implements UserServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array<User>")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -311,7 +312,7 @@ export class UserService implements UserServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Array<User>")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -515,7 +516,7 @@ export class UserService implements UserServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "User")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });

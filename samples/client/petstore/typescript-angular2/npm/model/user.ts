@@ -36,3 +36,53 @@ export interface User {
     userStatus?: number;
 
 }
+
+export namespace User {
+    export const discriminator = undefined;
+
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "username",
+            "baseName": "username",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "password",
+            "baseName": "password",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "baseName": "phone",
+            "type": "string"
+        },
+        {
+            "name": "userStatus",
+            "baseName": "userStatus",
+            "type": "number"
+        }    ];
+
+    export function getAttributeTypeMap() {
+        return User.attributeTypeMap;
+    }
+}

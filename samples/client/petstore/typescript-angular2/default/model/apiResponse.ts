@@ -23,3 +23,28 @@ export interface ApiResponse {
     message?: string;
 
 }
+
+export namespace ApiResponse {
+    export const discriminator = undefined;
+
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "code",
+            "baseName": "code",
+            "type": "number"
+        },
+        {
+            "name": "type",
+            "baseName": "type",
+            "type": "string"
+        },
+        {
+            "name": "message",
+            "baseName": "message",
+            "type": "string"
+        }    ];
+
+    export function getAttributeTypeMap() {
+        return ApiResponse.attributeTypeMap;
+    }
+}

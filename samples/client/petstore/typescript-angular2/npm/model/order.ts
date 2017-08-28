@@ -39,3 +39,43 @@ export namespace Order {
         Delivered = <any> 'delivered'
     }
 }
+
+export namespace Order {
+    export const discriminator = undefined;
+
+    export const attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "petId",
+            "baseName": "petId",
+            "type": "number"
+        },
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "shipDate",
+            "baseName": "shipDate",
+            "type": "Date"
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "Order.StatusEnum"
+        },
+        {
+            "name": "complete",
+            "baseName": "complete",
+            "type": "boolean"
+        }    ];
+
+    export function getAttributeTypeMap() {
+        return Order.attributeTypeMap;
+    }
+}

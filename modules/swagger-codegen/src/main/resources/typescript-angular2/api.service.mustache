@@ -18,6 +18,7 @@ import { Configuration }                                     from '../configurat
 {{#withInterfaces}}
 import { {{classname}}Interface }                            from './{{classname}}Interface';
 {{/withInterfaces}}
+import { ObjectSerializer } from '../types';
 
 {{#operations}}
 
@@ -97,7 +98,7 @@ export class {{classname}} {
                     return undefined;
                 } else {
 {{^isResponseFile}}
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "{{{returnType}}}") || {};
 {{/isResponseFile}}
 {{#isResponseFile}}
                     return response.blob();
@@ -256,7 +257,7 @@ export class {{classname}} {
             method: {{httpMethod}},
             headers: headers,
 {{#bodyParam}}
-            body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
+            body: {{paramName}} == null ? '' : JSON.stringify(ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
             body: formParams.toString(),
