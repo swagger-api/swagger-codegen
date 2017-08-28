@@ -48,11 +48,12 @@ class {{classname}}(object):
     }
 {{/discriminator}}
 
-    def __init__(self{{#vars}}, {{name}}={{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{/vars}}):
+    def __init__(self{{#vars}}, {{name}}={{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{/vars}}, _validated=True):
         """
         {{classname}} - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
 {{#vars}}
         self._{{name}} = None
 {{/vars}}
@@ -93,6 +94,12 @@ class {{classname}}(object):
         :param {{name}}: The {{name}} of this {{classname}}.
         :type: {{datatype}}
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._{{name}} = {{name}}
+            return
 {{#required}}
         if {{name}} is None:
             raise ValueError("Invalid value for `{{name}}`, must not be `None`")
