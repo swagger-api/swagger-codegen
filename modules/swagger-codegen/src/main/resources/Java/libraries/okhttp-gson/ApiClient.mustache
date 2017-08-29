@@ -1031,6 +1031,7 @@ public class ApiClient {
             if (response.body() != null) {
                 try {
                     respBody = response.body().string();
+                    System.out.println(">>>>> ERROR RESPONSE: \n" + respBody + "\n\n\n");
                 } catch (IOException e) {
                     throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
                 }
