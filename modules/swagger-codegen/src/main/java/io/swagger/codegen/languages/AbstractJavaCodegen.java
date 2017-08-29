@@ -1,20 +1,6 @@
 package io.swagger.codegen.languages;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Strings;
-
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -38,6 +24,18 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
@@ -455,14 +453,15 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof ArrayProperty) {
-            final ArrayProperty ap = (ArrayProperty) p;
-            final String pattern;
-            if (fullJavaUtil) {
-                pattern = "new java.util.ArrayList<%s>()";
-            } else {
-                pattern = "new ArrayList<%s>()";
-            }
-            return String.format(pattern, getTypeDeclaration(ap.getItems()));
+//            final ArrayProperty ap = (ArrayProperty) p;
+//            final String pattern;
+//            if (fullJavaUtil) {
+//                pattern = "new java.util.ArrayList<%s>()";
+//            } else {
+//                pattern = "new ArrayList<%s>()";
+//            }
+//            return String.format(pattern, getTypeDeclaration(ap.getItems()));
+            return "null";
         } else if (p instanceof MapProperty) {
             final MapProperty ap = (MapProperty) p;
             final String pattern;
