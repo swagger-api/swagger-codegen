@@ -19,6 +19,8 @@ import javax.validation.constraints.*;
 
 
 public class UserApi  {
+    
+
 
     @POST
     
@@ -30,6 +32,8 @@ public class UserApi  {
     public Response createUser(User body) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/createWithArray")
@@ -41,6 +45,8 @@ public class UserApi  {
     public Response createUsersWithArrayInput(List<User> body) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/createWithList")
@@ -52,6 +58,8 @@ public class UserApi  {
     public Response createUsersWithListInput(List<User> body) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @DELETE
     @Path("/{username}")
@@ -64,6 +72,8 @@ public class UserApi  {
     public Response deleteUser(@PathParam("username") @ApiParam("The name that needs to be deleted") String username) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/{username}")
@@ -77,6 +87,8 @@ public class UserApi  {
     public Response getUserByName(@PathParam("username") @ApiParam("The name that needs to be fetched. Use user1 for testing. ") String username) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/login")
@@ -86,9 +98,11 @@ public class UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class) })
-    public Response loginUser(@QueryParam("username") @NotNull  String username,@QueryParam("password") @NotNull  String password) {
+    public Response loginUser(@ApiParam(value = "The user name for login",required=true) @QueryParam("username") @NotNull  String username,@ApiParam(value = "The password for login in clear text",required=true) @QueryParam("password") @NotNull  String password) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/logout")
@@ -100,6 +114,8 @@ public class UserApi  {
     public Response logoutUser() {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @PUT
     @Path("/{username}")

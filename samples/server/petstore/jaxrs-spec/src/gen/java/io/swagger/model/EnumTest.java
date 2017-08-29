@@ -11,99 +11,111 @@ import java.util.Objects;
 public class EnumTest   {
   
 
-public enum EnumStringEnum {
+    public enum EnumStringEnum {
 
-    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));
+        UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));
 
 
-    private String value;
+        private String value;
 
-    EnumStringEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static EnumStringEnum fromValue(String v) {
-        for (EnumStringEnum b : EnumStringEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        EnumStringEnum (String v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static EnumStringEnum fromValue(String v) {
+            for (EnumStringEnum b : EnumStringEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static EnumStringEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private EnumStringEnum enumString = null;
 
-public enum EnumIntegerEnum {
+    public enum EnumIntegerEnum {
 
-    NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_1(Integer.valueOf(-1));
+        NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_1(Integer.valueOf(-1));
 
 
-    private Integer value;
+        private Integer value;
 
-    EnumIntegerEnum (Integer v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static EnumIntegerEnum fromValue(String v) {
-        for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        EnumIntegerEnum (Integer v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static EnumIntegerEnum fromValue(String v) {
+            for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static EnumIntegerEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private EnumIntegerEnum enumInteger = null;
 
-public enum EnumNumberEnum {
+    public enum EnumNumberEnum {
 
-    NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
+        NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
 
 
-    private Double value;
+        private Double value;
 
-    EnumNumberEnum (Double v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static EnumNumberEnum fromValue(String v) {
-        for (EnumNumberEnum b : EnumNumberEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        EnumNumberEnum (Double v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static EnumNumberEnum fromValue(String v) {
+            for (EnumNumberEnum b : EnumNumberEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static EnumNumberEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private EnumNumberEnum enumNumber = null;
   private OuterEnum outerEnum = null;

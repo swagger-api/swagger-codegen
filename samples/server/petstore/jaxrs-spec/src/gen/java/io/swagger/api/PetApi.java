@@ -20,6 +20,8 @@ import javax.validation.constraints.*;
 
 
 public class PetApi  {
+    
+
 
     @POST
     
@@ -36,6 +38,8 @@ public class PetApi  {
     public Response addPet(Pet body) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @DELETE
     @Path("/{petId}")
@@ -52,6 +56,42 @@ public class PetApi  {
     public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key") String apiKey) {
         return Response.ok().entity("magic!").build();
     }
+    
+    public enum StatusEnum {
+
+        AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
+
+
+        private String value;
+
+        StatusEnum (String v) {
+            value = v;
+        }
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static StatusEnum fromValue(String v) {
+            for (StatusEnum b : StatusEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static StatusEnum fromString(String v) {
+            return fromValue(v);
+        }
+    }
+
+
 
     @GET
     @Path("/findByStatus")
@@ -66,9 +106,11 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByStatus(@QueryParam("status") @NotNull  List<String> status) {
+    public Response findPetsByStatus(@ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold") @QueryParam("status") @NotNull  List<StatusEnum> status) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/findByTags")
@@ -83,9 +125,11 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByTags(@QueryParam("tags") @NotNull  List<String> tags) {
+    public Response findPetsByTags(@ApiParam(value = "Tags to filter by",required=true) @QueryParam("tags") @NotNull  List<String> tags) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/{petId}")
@@ -101,6 +145,8 @@ public class PetApi  {
     public Response getPetById(@PathParam("petId") @ApiParam("ID of pet to return") Long petId) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @PUT
     
@@ -119,6 +165,8 @@ public class PetApi  {
     public Response updatePet(Pet body) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/{petId}")
@@ -135,6 +183,8 @@ public class PetApi  {
     public Response updatePetWithForm(@PathParam("petId") @ApiParam("ID of pet that needs to be updated") Long petId,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status) {
         return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/{petId}/uploadImage")
