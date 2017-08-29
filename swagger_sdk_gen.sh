@@ -5,7 +5,7 @@ if [ "$Branch" = "snapshot" ]
   then
     url="http://newapi.nightly.capillary.in/swagger.json"
     version="http://newapi.nightly.capillary.in/version.json"
-elif [ "$Branch" = "release" ]
+elif [ "$Branch" = "staging" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
     version="http://newapi.staging.capillary.in/version.json"
