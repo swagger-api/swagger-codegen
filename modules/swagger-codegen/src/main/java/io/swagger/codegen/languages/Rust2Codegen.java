@@ -465,13 +465,14 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
                 }
             }
 
-            if (param.isListContainer) {
-                // Use the empty list here if no example exists (hence also no need to wrap optional parameters in an Option)
-                param.vendorExtensions.put("example", (example != null) ? example : "&Vec::new()");
-            } else if (param.required) {
+            if (param.required) {
                 if (example != null) {
                     param.vendorExtensions.put("example", example);
-                } else {
+                } else if (param.isListContainer) {
+                    // Use the empty list if we don't have an example
+                    param.vendorExtensions.put("example", "&Vec::new()");
+                }
+                else {
                     // If we don't have an example that we can provide, we need to disable the client example, as it won't build.
                     param.vendorExtensions.put("example", "???");
                     op.vendorExtensions.put("noClientExample", Boolean.TRUE);

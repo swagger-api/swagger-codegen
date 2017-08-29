@@ -13,8 +13,7 @@ use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::Url;
 use self::hyper_openssl::openssl;
 use futures;
-use futures::{Future, BoxFuture, Stream};
-use futures::stream::BoxStream;
+use futures::{Future, Stream};
 use futures::{future, stream};
 use std::io::{Read, Error};
 use std::error;
@@ -54,7 +53,7 @@ fn into_base_path<T: IntoUrl>(input: T, correct_scheme: Option<&'static str>) ->
 }
 
 /// A client that implements the API by making HTTP calls out to a server.
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Client {
     base_path: String,
     hyper_client: Arc<hyper::client::Client>,
@@ -147,18 +146,12 @@ impl Client {
 
 impl Api for Client {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}BoxFuture<{{/isFile}}{{^isListContainer}}Option<{{/isListContainer}}{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}{{^isListContainer}}>{{/isListContainer}}{{#isFile}}, Error>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> BoxFuture<{{operationId}}Response, ApiError> {
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send> {
 {{#queryParams}}{{#-first}}
         // Query parameters
-{{/-first}}        let query_{{paramName}} = {{!
-}}{{#isListContainer}}{{^required}}if param_{{paramName}}.is_empty() {
-            String::new()
-        } else {
-            {{/required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}.join(",")){{^required}}
-        }{{/required}};
-{{/isListContainer}}{{^isListContainer}}{{#required}}format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}.to_string());
-{{/required}}{{^required}}param_{{paramName}}.map_or_else(String::new, |query| format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=query.to_string()));
-{{/required}}{{/isListContainer}}{{/queryParams}}
+{{/-first}}{{#required}}        let query_{{paramName}} = format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}});
+{{/required}}{{^required}}        let query_{{paramName}} = param_{{paramName}}.map_or_else(String::new, |query| format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=query{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}}));
+{{/required}}{{/queryParams}}
 
         let url = format!("{}{{basePathWithoutHost}}{{path}}?{{#queryParams}}{{=<% %>=}}{<% paramName %>}<%={{ }}=%>{{/queryParams}}", self.base_path{{#pathParams}}, {{baseName}}=param_{{paramName}}.to_string(){{/pathParams}}{{#queryParams}}, {{paramName}}=query_{{paramName}}{{/queryParams}});
 
@@ -171,13 +164,13 @@ impl Api for Client {
                     // Add file to multipart form.
                     multipart.add_text("{{paramName}}", param_{{paramName}});
                 },
-{{^required}}    {{/required}}            Err(err) => return futures::done(Err(err)).boxed(),
+{{^required}}    {{/required}}            Err(err) => return Box::new(futures::done(Err(err))),
 {{^required}}    {{/required}}        }
         {{^required}}}{{/required}}{{/isFile}}{{/formParams}}{{#vendorExtensions}}{{#hasFile}}
 
         let mut fields = match multipart.prepare() {
             Ok(fields) => fields,
-            Err(err) => return futures::done(Err(ApiError(format!("Unable to build request: {}", err)))).boxed(),
+            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build request: {}", err))))),
         };
 
         let mut body_string = String::new();
@@ -206,12 +199,10 @@ impl Api for Client {
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 {{#headerParams}}{{#-first}}
         // Header parameters
-{{/-first}}{{^isContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => [{{{dataType}}}] }
-{{#required}}        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}})){{!
-}}{{/required}}{{^required}}        param_{{paramName}}.map(|header| custom_headers.set(Request{{vendorExtensions.typeName}}(header)));
-{{/required}}{{/isContainer}}{{#isListContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => ({{{baseType}}})* }
-        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}}.clone()));
-{{/isListContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
+{{/-first}}{{^isMapContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isListContainer}}({{{baseType}}})*{{/isListContainer}}{{^isListContainer}}[{{{dataType}}}]{{/isListContainer}} }
+{{#required}}        custom_headers.set(Request{{vendorExtensions.typeName}}(param_{{paramName}}{{#isListContainer}}.clone(){{/isListContainer}}));
+{{/required}}{{^required}}        param_{{paramName}}.map(|header| custom_headers.set(Request{{vendorExtensions.typeName}}(header{{#isListContainer}}.clone(){{/isListContainer}})));
+{{/required}}{{/isMapContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
 {{/isMapContainer}}{{/headerParams}}
 
         let request = request.headers(custom_headers);{{#vendorExtensions}}{{#hasFile}}
@@ -228,7 +219,7 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<{{{dataType}}}>(&buf)?;{{/isFile}}{{#isFile}}                    let mut buf = Vec::new();
                     response.read_to_end(&mut buf).map_err(|e| ApiError(format!("Received error reading response: {}", e)))?;
-                    let body = stream::once(Ok(buf)).boxed();{{/isFile}}
+                    let body = Box::new(stream::once(Ok(buf)));{{/isFile}}
 
 {{/dataType}}
 
@@ -246,7 +237,7 @@ impl Api for Client {
         }{{#vendorExtensions}}{{#hasFile}}
 
         // Helper function to convert a Stream into a String. The String can then be used to build the HTTP body.
-        fn convert_stream_to_string(stream: BoxStream<Vec<u8>, Error>) -> Result<String, ApiError> {
+        fn convert_stream_to_string(stream: Box<Stream<Item=Vec<u8>, Error=Error> + Send>) -> Result<String, ApiError> {
 
             stream.fold(Vec::new(), |mut body, chunk| {
                 body.extend(chunk.iter());
@@ -258,7 +249,7 @@ impl Api for Client {
         }{{/hasFile}}{{/vendorExtensions}}
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        futures::done(result).boxed()
+        Box::new(futures::done(result))
     }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 }

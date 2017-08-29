@@ -10,14 +10,12 @@ extern crate chrono;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 
 use futures::Future;
-use futures::future::BoxFuture;
 use futures::future;
 use futures::{stream, Stream};
 use hyper;
 use hyper::header::{Headers, ContentType};
 use self::iron::prelude::*;
 use self::iron::{status, modifiers, BeforeMiddleware};
-use self::iron::url::percent_encoding::percent_decode;
 use self::router::Router;
 use self::urlencoded::UrlEncodedQuery;
 {{#apiHasFile}}use multipart::server::{Multipart, SaveResult};{{/apiHasFile}}
@@ -139,17 +137,15 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // Path parameters
 {{/-first}}                let param_{{paramName}} = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
                     .find("{{baseName}}").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter {{baseName}}".to_string())))?
-                    .to_string();
-                let param_{{paramName}} = (*percent_decode(param_{{paramName}}.as_bytes()).decode_utf8_lossy())
                     .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter {{baseName}}: {}", e))))?;
 {{/pathParams}}
 {{#headerParams}}{{#-first}}
                 // Header parameters
 {{/-first}}{{^isMapContainer}}                header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isListContainer}}({{{baseType}}})*{{/isListContainer}}{{^isListContainer}}[{{{dataType}}}]{{/isListContainer}} }
 {{#required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().ok_or_else(|| Response::with((status::BadRequest, "Missing or invalid required header {{baseName}}".to_string())))?.0.clone(){{!
-}}{{/required}}{{^required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().map(|header| header.0.clone()){{!
-}}{{/required}}{{#isListContainer}}.unwrap_or_else(|| Vec::new()){{/isListContainer}};
-{{/isMapContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
+}}{{#isListContainer}}.unwrap_or_else(|| Vec::new()){{/isListContainer}};
+{{/required}}{{^required}}                let param_{{paramName}} = req.headers.get::<Request{{vendorExtensions.typeName}}>().map(|header| header.0.clone());
+{{/required}}{{/isMapContainer}}{{#isMapContainer}}                let param_{{paramName}}: Option<{{{dataType}}}> = None;
 {{/isMapContainer}}{{/headerParams}}
 {{#queryParams}}{{#-first}}
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
@@ -159,7 +155,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{#isListContainer}}                    .iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>();
 {{/isListContainer}}{{^isListContainer}}                    .first().ok_or_else(|| Response::with((status::BadRequest, "Required query parameter {{baseName}} was empty".to_string())))?
                     .parse::<{{{dataType}}}>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse query parameter {{baseName}} - doesn't match schema: {}", e))))?;
-{{/isListContainer}}{{/required}}{{^required}}{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>()).unwrap_or_else(|| Vec::new());
+{{/isListContainer}}{{/required}}{{^required}}{{#isListContainer}}                    .map(|list| list.iter().flat_map(|x| x.parse::<{{{baseType}}}>()).collect::<Vec<_>>());
 {{/isListContainer}}{{^isListContainer}}                    .and_then(|list| list.first()).and_then(|x| x.parse::<{{{dataType}}}>().ok());
 {{/isListContainer}}{{/required}}{{/queryParams}}
 {{#bodyParams}}{{#-first}}                // Body parameters (note that non-required body parameters will ignore garbage
@@ -218,14 +214,14 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Some(body) => {
                         Ok({let bytes = body.as_bytes();
                            {{^required}}Some({{/required}}
-                                stream::once(Ok(bytes.to_vec())).boxed()
+                                Box::new(stream::once(Ok(bytes.to_vec()))) as Box<Stream<Item=Vec<u8>, Error=Error> + Send>
                             {{^required}}){{/required}}}
                         )
                     }
                     None => {Err(Response::with((status::BadRequest, format!("Body part not found!"))))}
                 }?;
 {{/isFile}}
-                let param_{{paramName}} = {{#isFile}}{{^required}}future::ok({{/required}}param_{{paramName}}{{^required}}).boxed(){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isListContainer}}Vec::new();{{/isListContainer}}{{#isMapContainer}}None;{{/isMapContainer}}{{/isFile}}
+                let param_{{paramName}} = {{#isFile}}{{^required}}Box::new(future::ok({{/required}}param_{{paramName}}{{^required}})){{/required}};{{/isFile}}{{^isFile}}{{^isContainer}}{{#vendorExtensions}}{{{example}}};{{/vendorExtensions}}{{/isContainer}}{{#isListContainer}}{{#required}}Vec::new();{{/required}}{{^required}}None;{{/required}}{{/isListContainer}}{{#isMapContainer}}None;{{/isMapContainer}}{{/isFile}}
     {{/isFormParam}}
 {{/allParams}}
 
