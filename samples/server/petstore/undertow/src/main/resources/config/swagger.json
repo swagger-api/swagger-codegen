@@ -173,6 +173,7 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
+        "deprecated" : true,
         "x-contentType" : "application/json",
         "x-accepts" : "application/json"
       }
@@ -724,12 +725,12 @@
       "title" : "Pet Order",
       "description" : "An order for a pets from the pet store",
       "example" : {
-        "petId" : 6,
-        "quantity" : 1,
         "id" : 0,
-        "shipDate" : "2000-01-23T04:56:07.000+00:00",
+        "petId" : 6,
         "complete" : false,
-        "status" : "placed"
+        "status" : "placed",
+        "quantity" : 1,
+        "shipDate" : "2000-01-23T04:56:07.000+00:00"
       },
       "xml" : {
         "name" : "Order"
@@ -749,8 +750,8 @@
       "title" : "Pet catehgry",
       "description" : "A category for a pet",
       "example" : {
-        "name" : "aeiou",
-        "id" : 6
+        "id" : 6,
+        "name" : "name"
       },
       "xml" : {
         "name" : "Category"
@@ -790,14 +791,14 @@
       "title" : "a User",
       "description" : "A User who is purchasing from the pet store",
       "example" : {
-        "firstName" : "aeiou",
-        "lastName" : "aeiou",
-        "password" : "aeiou",
-        "userStatus" : 6,
-        "phone" : "aeiou",
         "id" : 0,
-        "email" : "aeiou",
-        "username" : "aeiou"
+        "lastName" : "lastName",
+        "phone" : "phone",
+        "username" : "username",
+        "email" : "email",
+        "userStatus" : 6,
+        "firstName" : "firstName",
+        "password" : "password"
       },
       "xml" : {
         "name" : "User"
@@ -817,8 +818,8 @@
       "title" : "Pet Tag",
       "description" : "A tag for a pet",
       "example" : {
-        "name" : "aeiou",
-        "id" : 1
+        "id" : 1,
+        "name" : "name"
       },
       "xml" : {
         "name" : "Tag"
@@ -868,18 +869,21 @@
       "title" : "a Pet",
       "description" : "A pet for sale in the pet store",
       "example" : {
-        "photoUrls" : [ "aeiou" ],
-        "name" : "doggie",
+        "tags" : [ {
+          "id" : 1,
+          "name" : "name"
+        }, {
+          "id" : 1,
+          "name" : "name"
+        } ],
         "id" : 0,
         "category" : {
-          "name" : "aeiou",
-          "id" : 6
+          "id" : 6,
+          "name" : "name"
         },
-        "tags" : [ {
-          "name" : "aeiou",
-          "id" : 1
-        } ],
-        "status" : "available"
+        "status" : "available",
+        "name" : "doggie",
+        "photoUrls" : [ "photoUrls", "photoUrls" ]
       },
       "xml" : {
         "name" : "Pet"
@@ -902,9 +906,9 @@
       "title" : "An uploaded response",
       "description" : "Describes the result of uploading an image resource",
       "example" : {
+        "message" : "message",
         "code" : 0,
-        "type" : "aeiou",
-        "message" : "aeiou"
+        "type" : "type"
       }
     }
   },

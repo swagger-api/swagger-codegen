@@ -163,6 +163,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      deprecated: true
       x-contentType: "application/json"
       x-accepts: "application/json"
   /pet/{petId}:
@@ -626,6 +627,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
+      security:
+      - api_key_query: []
       x-contentType: "application/json"
       x-accepts: "application/json"
   /fake:
@@ -948,6 +951,31 @@ paths:
             $ref: "#/definitions/OuterComposite"
       x-contentType: "application/json"
       x-accepts: "application/json"
+  /fake/jsonFormData:
+    get:
+      tags:
+      - "fake"
+      summary: "test json serialization of form data"
+      description: ""
+      operationId: "testJsonFormData"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "param"
+        in: "formData"
+        description: "field1"
+        required: true
+        type: "string"
+      - name: "param2"
+        in: "formData"
+        description: "field2"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+      x-contentType: "application/json"
+      x-accepts: "application/json"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -960,6 +988,10 @@ securityDefinitions:
     type: "apiKey"
     name: "api_key"
     in: "header"
+  api_key_query:
+    type: "apiKey"
+    name: "api_key_query"
+    in: "query"
   http_basic_test:
     type: "basic"
 definitions:
@@ -989,12 +1021,12 @@ definitions:
         type: "boolean"
         default: false
     example:
-      petId: 6
-      quantity: 1
       id: 0
-      shipDate: "2000-01-23T04:56:07.000+00:00"
+      petId: 6
       complete: false
       status: "placed"
+      quantity: 1
+      shipDate: "2000-01-23T04:56:07.000+00:00"
     xml:
       name: "Order"
   Category:
@@ -1006,8 +1038,8 @@ definitions:
       name:
         type: "string"
     example:
-      name: "aeiou"
       id: 6
+      name: "name"
     xml:
       name: "Category"
   User:
@@ -1034,14 +1066,14 @@ definitions:
         format: "int32"
         description: "User Status"
     example:
-      firstName: "aeiou"
-      lastName: "aeiou"
-      password: "aeiou"
-      userStatus: 6
-      phone: "aeiou"
       id: 0
-      email: "aeiou"
-      username: "aeiou"
+      lastName: "lastName"
+      phone: "phone"
+      username: "username"
+      email: "email"
+      userStatus: 6
+      firstName: "firstName"
+      password: "password"
     xml:
       name: "User"
   Tag:
@@ -1053,8 +1085,8 @@ definitions:
       name:
         type: "string"
     example:
-      name: "aeiou"
       id: 1
+      name: "name"
     xml:
       name: "Tag"
   Pet:
@@ -1094,17 +1126,20 @@ definitions:
         - "pending"
         - "sold"
     example:
-      photoUrls:
-      - "aeiou"
-      name: "doggie"
+      tags:
+      - id: 1
+        name: "name"
+      - id: 1
+        name: "name"
       id: 0
       category:
-        name: "aeiou"
         id: 6
-      tags:
-      - name: "aeiou"
-        id: 1
+        name: "name"
       status: "available"
+      name: "doggie"
+      photoUrls:
+      - "photoUrls"
+      - "photoUrls"
     xml:
       name: "Pet"
   ApiResponse:
@@ -1118,9 +1153,9 @@ definitions:
       message:
         type: "string"
     example:
+      message: "message"
       code: 0
-      type: "aeiou"
-      message: "aeiou"
+      type: "type"
   $special[model.name]:
     properties:
       $special[property.name]:
@@ -1239,6 +1274,7 @@ definitions:
       byte:
         type: "string"
         format: "byte"
+        pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
       binary:
         type: "string"
         format: "binary"
@@ -1323,7 +1359,7 @@ definitions:
       client:
         type: "string"
     example:
-      client: "aeiou"
+      client: "client"
   ReadOnlyFirst:
     type: "object"
     properties:
@@ -1451,8 +1487,8 @@ definitions:
       my_boolean:
         $ref: "#/definitions/OuterBoolean"
     example:
-      my_string: {}
       my_number: {}
+      my_string: {}
       my_boolean: {}
 externalDocs:
   description: "Find out more about Swagger"

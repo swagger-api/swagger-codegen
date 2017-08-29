@@ -27,10 +27,10 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/fake")
+@Path("/Fake")
 
 
-@io.swagger.annotations.Api(description = "the fake API")
+@io.swagger.annotations.Api(description = "the Fake API")
 
 public class FakeApi  {
    private final FakeApiService delegate;
@@ -57,7 +57,7 @@ public class FakeApi  {
    }
 
     @POST
-    @Path("/outer/boolean")
+    
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
@@ -69,7 +69,7 @@ public class FakeApi  {
         return delegate.fakeOuterBooleanSerialize(body,securityContext);
     }
     @POST
-    @Path("/outer/composite")
+    
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
@@ -81,7 +81,7 @@ public class FakeApi  {
         return delegate.fakeOuterCompositeSerialize(body,securityContext);
     }
     @POST
-    @Path("/outer/number")
+    
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
@@ -93,7 +93,7 @@ public class FakeApi  {
         return delegate.fakeOuterNumberSerialize(body,securityContext);
     }
     @POST
-    @Path("/outer/string")
+    
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
@@ -124,9 +124,9 @@ public class FakeApi  {
         @io.swagger.annotations.Authorization(value = "http_basic_test")
     }, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
+        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = void.class) })
+        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
     public Response testEndpointParameters(@ApiParam(value = "None", required=true)  @FormParam("number")  BigDecimal number
 ,@ApiParam(value = "None", required=true)  @FormParam("double")  Double _double
 ,@ApiParam(value = "None", required=true)  @FormParam("pattern_without_delimiter")  String patternWithoutDelimiter
@@ -151,9 +151,9 @@ public class FakeApi  {
     @Produces({ "*/*" })
     @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = void.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = void.class),
+        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Not found", response = void.class) })
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Not found", response = Void.class) })
     public Response testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $")  @FormParam("enum_form_string_array")  List<String> enumFormStringArray
 ,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg")  @DefaultValue("-efg") @FormParam("enum_form_string")  String enumFormString
 ,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $")@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
@@ -167,12 +167,12 @@ public class FakeApi  {
         return delegate.testEnumParameters(enumFormStringArray,enumFormString,enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,enumQueryDouble,securityContext);
     }
     @GET
-    @Path("/jsonFormData")
+    
     @Consumes({ "application/json" })
     
     @io.swagger.annotations.ApiOperation(value = "test json serialization of form data", notes = "", response = void.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
+        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
     public Response testJsonFormData(@ApiParam(value = "field1", required=true)  @FormParam("param")  String param
 ,@ApiParam(value = "field2", required=true)  @FormParam("param2")  String param2
 ,@Context SecurityContext securityContext)

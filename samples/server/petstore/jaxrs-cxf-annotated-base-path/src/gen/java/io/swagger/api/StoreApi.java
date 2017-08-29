@@ -38,7 +38,7 @@ public interface StoreApi  {
     @Produces({ "application/json" })
     @ApiOperation(value = "Returns pet inventories by status", tags={ "store",  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
+        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
     public Map<String, Integer> getInventory();
 
     @GET
