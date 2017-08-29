@@ -3,21 +3,46 @@ package io.swagger.codegen;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
-import io.swagger.models.*;
+import io.swagger.models.ComposedModel;
+import io.swagger.models.Contact;
+import io.swagger.models.Info;
+import io.swagger.models.License;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.SecurityRequirement;
+import io.swagger.models.Swagger;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.util.Json;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -840,7 +865,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             } else if (config.vendorExtensions().containsKey(paramCollapseThresholdKey)) {
                 paramCollapseThreshold = new Integer(config.vendorExtensions().get(paramCollapseThresholdKey).toString());
             }
-            if ("GET".equals(op.httpMethod) && op.allParams.size() >= paramCollapseThreshold) {
+            List<String> collapseHttpMethods = Arrays.asList("GET");
+            if (collapseHttpMethods.contains(op.httpMethod) && op.allParams.size() >= paramCollapseThreshold) {
                 String opInitial = op.operationId.substring(0,1);
                 op.collapsedParametersClassName = op.operationId.replaceFirst(opInitial, opInitial.toUpperCase()) + "Params";
 
