@@ -40,11 +40,12 @@ class AdditionalPropertiesClass(object):
         'map_of_map_property': 'map_of_map_property'
     }
 
-    def __init__(self, map_property=None, map_of_map_property=None):
+    def __init__(self, map_property=None, map_of_map_property=None, _validated=True):
         """
         AdditionalPropertiesClass - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._map_property = None
         self._map_of_map_property = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class AdditionalPropertiesClass(object):
         :type: dict(str, str)
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._map_property = map_property
+            return
+
         self._map_property = map_property
 
     @property
@@ -93,6 +100,12 @@ class AdditionalPropertiesClass(object):
         :param map_of_map_property: The map_of_map_property of this AdditionalPropertiesClass.
         :type: dict(str, dict(str, str))
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._map_of_map_property = map_of_map_property
+            return
 
         self._map_of_map_property = map_of_map_property
 

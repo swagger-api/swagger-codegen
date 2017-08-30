@@ -48,11 +48,12 @@ class Capitalization(object):
         'att_name': 'ATT_NAME'
     }
 
-    def __init__(self, small_camel=None, capital_camel=None, small_snake=None, capital_snake=None, sca_eth_flow_points=None, att_name=None):
+    def __init__(self, small_camel=None, capital_camel=None, small_snake=None, capital_snake=None, sca_eth_flow_points=None, att_name=None, _validated=True):
         """
         Capitalization - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._small_camel = None
         self._capital_camel = None
         self._small_snake = None
@@ -93,6 +94,12 @@ class Capitalization(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._small_camel = small_camel
+            return
+
         self._small_camel = small_camel
 
     @property
@@ -113,6 +120,12 @@ class Capitalization(object):
         :param capital_camel: The capital_camel of this Capitalization.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._capital_camel = capital_camel
+            return
 
         self._capital_camel = capital_camel
 
@@ -135,6 +148,12 @@ class Capitalization(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._small_snake = small_snake
+            return
+
         self._small_snake = small_snake
 
     @property
@@ -156,6 +175,12 @@ class Capitalization(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._capital_snake = capital_snake
+            return
+
         self._capital_snake = capital_snake
 
     @property
@@ -176,6 +201,12 @@ class Capitalization(object):
         :param sca_eth_flow_points: The sca_eth_flow_points of this Capitalization.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._sca_eth_flow_points = sca_eth_flow_points
+            return
 
         self._sca_eth_flow_points = sca_eth_flow_points
 
@@ -199,6 +230,12 @@ class Capitalization(object):
         :param att_name: The att_name of this Capitalization.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._att_name = att_name
+            return
 
         self._att_name = att_name
 

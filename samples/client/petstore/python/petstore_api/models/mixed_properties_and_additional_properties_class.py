@@ -42,11 +42,12 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         'map': 'map'
     }
 
-    def __init__(self, uuid=None, date_time=None, map=None):
+    def __init__(self, uuid=None, date_time=None, map=None, _validated=True):
         """
         MixedPropertiesAndAdditionalPropertiesClass - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._uuid = None
         self._date_time = None
         self._map = None
@@ -78,6 +79,12 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._uuid = uuid
+            return
+
         self._uuid = uuid
 
     @property
@@ -99,6 +106,12 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         :type: datetime
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._date_time = date_time
+            return
+
         self._date_time = date_time
 
     @property
@@ -119,6 +132,12 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         :param map: The map of this MixedPropertiesAndAdditionalPropertiesClass.
         :type: dict(str, Animal)
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._map = map
+            return
 
         self._map = map
 

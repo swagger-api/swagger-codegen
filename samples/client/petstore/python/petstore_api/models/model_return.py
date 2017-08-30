@@ -38,11 +38,12 @@ class ModelReturn(object):
         '_return': 'return'
     }
 
-    def __init__(self, _return=None):
+    def __init__(self, _return=None, _validated=True):
         """
         ModelReturn - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self.__return = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class ModelReturn(object):
         :param _return: The _return of this ModelReturn.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__return = _return
+            return
 
         self.__return = _return
 

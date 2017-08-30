@@ -62,11 +62,12 @@ class FormatTest(object):
         'password': 'password'
     }
 
-    def __init__(self, integer=None, int32=None, int64=None, number=None, float=None, double=None, string=None, byte=None, binary=None, date=None, date_time=None, uuid=None, password=None):
+    def __init__(self, integer=None, int32=None, int64=None, number=None, float=None, double=None, string=None, byte=None, binary=None, date=None, date_time=None, uuid=None, password=None, _validated=True):
         """
         FormatTest - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._integer = None
         self._int32 = None
         self._int64 = None
@@ -123,6 +124,12 @@ class FormatTest(object):
         :param integer: The integer of this FormatTest.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._integer = integer
+            return
         if integer is not None and integer > 100:
             raise ValueError("Invalid value for `integer`, must be a value less than or equal to `100`")
         if integer is not None and integer < 10:
@@ -148,6 +155,12 @@ class FormatTest(object):
         :param int32: The int32 of this FormatTest.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._int32 = int32
+            return
         if int32 is not None and int32 > 200:
             raise ValueError("Invalid value for `int32`, must be a value less than or equal to `200`")
         if int32 is not None and int32 < 20:
@@ -174,6 +187,12 @@ class FormatTest(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._int64 = int64
+            return
+
         self._int64 = int64
 
     @property
@@ -194,6 +213,12 @@ class FormatTest(object):
         :param number: The number of this FormatTest.
         :type: float
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._number = number
+            return
         if number is None:
             raise ValueError("Invalid value for `number`, must not be `None`")
         if number is not None and number > 543.2:
@@ -221,6 +246,12 @@ class FormatTest(object):
         :param float: The float of this FormatTest.
         :type: float
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._float = float
+            return
         if float is not None and float > 987.6:
             raise ValueError("Invalid value for `float`, must be a value less than or equal to `987.6`")
         if float is not None and float < 54.3:
@@ -246,6 +277,12 @@ class FormatTest(object):
         :param double: The double of this FormatTest.
         :type: float
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._double = double
+            return
         if double is not None and double > 123.4:
             raise ValueError("Invalid value for `double`, must be a value less than or equal to `123.4`")
         if double is not None and double < 67.8:
@@ -271,6 +308,12 @@ class FormatTest(object):
         :param string: The string of this FormatTest.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._string = string
+            return
         if string is not None and not re.search('[a-z]', string, flags=re.IGNORECASE):
             raise ValueError("Invalid value for `string`, must be a follow pattern or equal to `/[a-z]/i`")
 
@@ -294,6 +337,12 @@ class FormatTest(object):
         :param byte: The byte of this FormatTest.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._byte = byte
+            return
         if byte is None:
             raise ValueError("Invalid value for `byte`, must not be `None`")
         if byte is not None and not re.search('^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):
@@ -320,6 +369,12 @@ class FormatTest(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._binary = binary
+            return
+
         self._binary = binary
 
     @property
@@ -340,6 +395,12 @@ class FormatTest(object):
         :param date: The date of this FormatTest.
         :type: date
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._date = date
+            return
         if date is None:
             raise ValueError("Invalid value for `date`, must not be `None`")
 
@@ -364,6 +425,12 @@ class FormatTest(object):
         :type: datetime
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._date_time = date_time
+            return
+
         self._date_time = date_time
 
     @property
@@ -385,6 +452,12 @@ class FormatTest(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._uuid = uuid
+            return
+
         self._uuid = uuid
 
     @property
@@ -405,6 +478,12 @@ class FormatTest(object):
         :param password: The password of this FormatTest.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._password = password
+            return
         if password is None:
             raise ValueError("Invalid value for `password`, must not be `None`")
         if password is not None and len(password) > 64:

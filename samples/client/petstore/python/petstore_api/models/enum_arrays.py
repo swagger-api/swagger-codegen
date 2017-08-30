@@ -40,11 +40,12 @@ class EnumArrays(object):
         'array_enum': 'array_enum'
     }
 
-    def __init__(self, just_symbol=None, array_enum=None):
+    def __init__(self, just_symbol=None, array_enum=None, _validated=True):
         """
         EnumArrays - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._just_symbol = None
         self._array_enum = None
         self.discriminator = None
@@ -72,6 +73,12 @@ class EnumArrays(object):
         :param just_symbol: The just_symbol of this EnumArrays.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._just_symbol = just_symbol
+            return
         allowed_values = [">=", "$"]
         if just_symbol not in allowed_values:
             raise ValueError(
@@ -99,6 +106,12 @@ class EnumArrays(object):
         :param array_enum: The array_enum of this EnumArrays.
         :type: list[str]
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._array_enum = array_enum
+            return
         allowed_values = ["fish", "crab"]
         if not set(array_enum).issubset(set(allowed_values)):
             raise ValueError(

@@ -52,11 +52,12 @@ class User(object):
         'user_status': 'userStatus'
     }
 
-    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=None):
+    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=None, _validated=True):
         """
         User - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._id = None
         self._username = None
         self._first_name = None
@@ -103,6 +104,12 @@ class User(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._id = id
+            return
+
         self._id = id
 
     @property
@@ -123,6 +130,12 @@ class User(object):
         :param username: The username of this User.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._username = username
+            return
 
         self._username = username
 
@@ -145,6 +158,12 @@ class User(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._first_name = first_name
+            return
+
         self._first_name = first_name
 
     @property
@@ -165,6 +184,12 @@ class User(object):
         :param last_name: The last_name of this User.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._last_name = last_name
+            return
 
         self._last_name = last_name
 
@@ -187,6 +212,12 @@ class User(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._email = email
+            return
+
         self._email = email
 
     @property
@@ -208,6 +239,12 @@ class User(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._password = password
+            return
+
         self._password = password
 
     @property
@@ -228,6 +265,12 @@ class User(object):
         :param phone: The phone of this User.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._phone = phone
+            return
 
         self._phone = phone
 
@@ -251,6 +294,12 @@ class User(object):
         :param user_status: The user_status of this User.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._user_status = user_status
+            return
 
         self._user_status = user_status
 

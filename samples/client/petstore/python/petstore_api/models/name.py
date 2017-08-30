@@ -44,11 +44,12 @@ class Name(object):
         '_123_number': '123Number'
     }
 
-    def __init__(self, name=None, snake_case=None, _property=None, _123_number=None):
+    def __init__(self, name=None, snake_case=None, _property=None, _123_number=None, _validated=True):
         """
         Name - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._name = None
         self._snake_case = None
         self.__property = None
@@ -81,6 +82,12 @@ class Name(object):
         :param name: The name of this Name.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._name = name
+            return
         if name is None:
             raise ValueError("Invalid value for `name`, must not be `None`")
 
@@ -105,6 +112,12 @@ class Name(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._snake_case = snake_case
+            return
+
         self._snake_case = snake_case
 
     @property
@@ -126,6 +139,12 @@ class Name(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__property = _property
+            return
+
         self.__property = _property
 
     @property
@@ -146,6 +165,12 @@ class Name(object):
         :param _123_number: The _123_number of this Name.
         :type: int
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__123_number = _123_number
+            return
 
         self.__123_number = _123_number
 

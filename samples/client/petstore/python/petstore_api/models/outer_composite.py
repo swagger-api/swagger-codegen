@@ -42,11 +42,12 @@ class OuterComposite(object):
         'my_boolean': 'my_boolean'
     }
 
-    def __init__(self, my_number=None, my_string=None, my_boolean=None):
+    def __init__(self, my_number=None, my_string=None, my_boolean=None, _validated=True):
         """
         OuterComposite - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._my_number = None
         self._my_string = None
         self._my_boolean = None
@@ -78,6 +79,12 @@ class OuterComposite(object):
         :type: OuterNumber
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._my_number = my_number
+            return
+
         self._my_number = my_number
 
     @property
@@ -99,6 +106,12 @@ class OuterComposite(object):
         :type: OuterString
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._my_string = my_string
+            return
+
         self._my_string = my_string
 
     @property
@@ -119,6 +132,12 @@ class OuterComposite(object):
         :param my_boolean: The my_boolean of this OuterComposite.
         :type: OuterBoolean
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._my_boolean = my_boolean
+            return
 
         self._my_boolean = my_boolean
 

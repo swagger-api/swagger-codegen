@@ -42,11 +42,12 @@ class ApiResponse(object):
         'message': 'message'
     }
 
-    def __init__(self, code=None, type=None, message=None):
+    def __init__(self, code=None, type=None, message=None, _validated=True):
         """
         ApiResponse - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._code = None
         self._type = None
         self._message = None
@@ -78,6 +79,12 @@ class ApiResponse(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._code = code
+            return
+
         self._code = code
 
     @property
@@ -99,6 +106,12 @@ class ApiResponse(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._type = type
+            return
+
         self._type = type
 
     @property
@@ -119,6 +132,12 @@ class ApiResponse(object):
         :param message: The message of this ApiResponse.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._message = message
+            return
 
         self._message = message
 

@@ -38,11 +38,12 @@ class Cat(object):
         'declawed': 'declawed'
     }
 
-    def __init__(self, declawed=None):
+    def __init__(self, declawed=None, _validated=True):
         """
         Cat - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._declawed = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class Cat(object):
         :param declawed: The declawed of this Cat.
         :type: bool
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._declawed = declawed
+            return
 
         self._declawed = declawed
 

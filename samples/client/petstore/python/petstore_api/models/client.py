@@ -38,11 +38,12 @@ class Client(object):
         'client': 'client'
     }
 
-    def __init__(self, client=None):
+    def __init__(self, client=None, _validated=True):
         """
         Client - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._client = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class Client(object):
         :param client: The client of this Client.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._client = client
+            return
 
         self._client = client
 

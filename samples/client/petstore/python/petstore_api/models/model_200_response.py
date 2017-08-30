@@ -40,11 +40,12 @@ class Model200Response(object):
         '_class': 'class'
     }
 
-    def __init__(self, name=None, _class=None):
+    def __init__(self, name=None, _class=None, _validated=True):
         """
         Model200Response - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._name = None
         self.__class = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class Model200Response(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._name = name
+            return
+
         self._name = name
 
     @property
@@ -93,6 +100,12 @@ class Model200Response(object):
         :param _class: The _class of this Model200Response.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__class = _class
+            return
 
         self.__class = _class
 

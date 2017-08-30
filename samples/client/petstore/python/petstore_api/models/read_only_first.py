@@ -40,11 +40,12 @@ class ReadOnlyFirst(object):
         'baz': 'baz'
     }
 
-    def __init__(self, bar=None, baz=None):
+    def __init__(self, bar=None, baz=None, _validated=True):
         """
         ReadOnlyFirst - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._bar = None
         self._baz = None
         self.discriminator = None
@@ -73,6 +74,12 @@ class ReadOnlyFirst(object):
         :type: str
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._bar = bar
+            return
+
         self._bar = bar
 
     @property
@@ -93,6 +100,12 @@ class ReadOnlyFirst(object):
         :param baz: The baz of this ReadOnlyFirst.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._baz = baz
+            return
 
         self._baz = baz
 

@@ -48,11 +48,12 @@ class Pet(object):
         'status': 'status'
     }
 
-    def __init__(self, id=None, category=None, name=None, photo_urls=None, tags=None, status=None):
+    def __init__(self, id=None, category=None, name=None, photo_urls=None, tags=None, status=None, _validated=True):
         """
         Pet - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._id = None
         self._category = None
         self._name = None
@@ -91,6 +92,12 @@ class Pet(object):
         :type: int
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._id = id
+            return
+
         self._id = id
 
     @property
@@ -112,6 +119,12 @@ class Pet(object):
         :type: Category
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._category = category
+            return
+
         self._category = category
 
     @property
@@ -132,6 +145,12 @@ class Pet(object):
         :param name: The name of this Pet.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._name = name
+            return
         if name is None:
             raise ValueError("Invalid value for `name`, must not be `None`")
 
@@ -155,6 +174,12 @@ class Pet(object):
         :param photo_urls: The photo_urls of this Pet.
         :type: list[str]
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._photo_urls = photo_urls
+            return
         if photo_urls is None:
             raise ValueError("Invalid value for `photo_urls`, must not be `None`")
 
@@ -179,6 +204,12 @@ class Pet(object):
         :type: list[Tag]
         """
 
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._tags = tags
+            return
+
         self._tags = tags
 
     @property
@@ -201,6 +232,12 @@ class Pet(object):
         :param status: The status of this Pet.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._status = status
+            return
         allowed_values = ["available", "pending", "sold"]
         if status not in allowed_values:
             raise ValueError(

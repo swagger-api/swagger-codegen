@@ -45,11 +45,12 @@ class Animal(object):
         '': 'Cat'
     }
 
-    def __init__(self, class_name=None, color='red'):
+    def __init__(self, class_name=None, color='red', _validated=True):
         """
         Animal - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self._class_name = None
         self._color = None
         self.discriminator = 'className'
@@ -76,6 +77,12 @@ class Animal(object):
         :param class_name: The class_name of this Animal.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._class_name = class_name
+            return
         if class_name is None:
             raise ValueError("Invalid value for `class_name`, must not be `None`")
 
@@ -99,6 +106,12 @@ class Animal(object):
         :param color: The color of this Animal.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self._color = color
+            return
 
         self._color = color
 

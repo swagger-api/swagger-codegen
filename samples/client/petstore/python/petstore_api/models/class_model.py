@@ -38,11 +38,12 @@ class ClassModel(object):
         '_class': '_class'
     }
 
-    def __init__(self, _class=None):
+    def __init__(self, _class=None, _validated=True):
         """
         ClassModel - a model defined in Swagger
         """
 
+        self._is_model_validated = _validated
         self.__class = None
         self.discriminator = None
 
@@ -67,6 +68,12 @@ class ClassModel(object):
         :param _class: The _class of this ClassModel.
         :type: str
         """
+
+        if not self._is_model_validated:
+            # If this model was built without validation, then simply set the
+            # value here and quickly return, skipping all possible validation
+            self.__class = _class
+            return
 
         self.__class = _class
 
