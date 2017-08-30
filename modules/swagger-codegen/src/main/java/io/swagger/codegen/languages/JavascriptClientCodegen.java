@@ -492,7 +492,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         if (name.matches("^\\d.*")) {
             String varName = "var" + name; // e.g. 200data => var200Data (after camelize)
             LOGGER.warn(name + " (variable name starts with number) cannot be used as variable name. Renamed to " + varName);
-            return varName;
+            name = varName;
         }
 
         name = sanitizeName(name);  // FIXME parameter should not be assigned. Also declare it as "final"
@@ -509,7 +509,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
         // camelize (lower first character) the variable name
         // pet_id => petId
-        name = camelize(name, true);
+        //name = camelize(name, true);
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*")) {
@@ -639,7 +639,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             name = varName;
         }
 
-        this.sanitizeName(name);
+        name = this.sanitizeName(name);
         if (p instanceof RefProperty) {
             return " = " + type + ".constructFromObject(data['" + name + "']);";
         } else {

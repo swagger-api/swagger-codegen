@@ -101,7 +101,7 @@ export default class EnumArrays {
     };
 
     /**
-    * Allowed values for the <code>arrayEnum</code> property.
+    * Allowed values for the <code>array_enum</code> property.
     * @enum {String}
     * @readonly
     */

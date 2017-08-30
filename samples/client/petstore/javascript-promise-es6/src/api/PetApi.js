@@ -91,7 +91,7 @@ export default class PetApi {
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
     deletePetWithHttpInfo(petId, opts) {
@@ -110,7 +110,7 @@ export default class PetApi {
       let queryParams = {
       };
       let headerParams = {
-        'api_key': opts['apiKey']
+        'api_key': opts['api_key']
       };
       let formParams = {
       };
@@ -132,7 +132,7 @@ export default class PetApi {
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
     deletePet(petId, opts) {

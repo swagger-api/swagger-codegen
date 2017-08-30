@@ -74,7 +74,7 @@ export default class Model200Response {
     /**
     * @member {String} class
     */
-    class = undefined;
+    _class = undefined;
 
 
 

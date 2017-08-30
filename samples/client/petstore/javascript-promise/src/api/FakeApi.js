@@ -298,7 +298,7 @@
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * @param {Number} _number None
      * @param {Number} _double None
-     * @param {String} patternWithoutDelimiter None
+     * @param {String} pattern_without_delimiter None
      * @param {Blob} _byte None
      * @param {Object} opts Optional parameters
      * @param {Number} opts.integer None
@@ -313,7 +313,7 @@
      * @param {String} opts.callback None
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
-    this.testEndpointParametersWithHttpInfo = function(_number, _double, patternWithoutDelimiter, _byte, opts) {
+    this.testEndpointParametersWithHttpInfo = function(_number, _double, pattern_without_delimiter, _byte, opts) {
       opts = opts || {};
       var postBody = null;
 
@@ -327,9 +327,9 @@
         throw new Error("Missing the required parameter '_double' when calling testEndpointParameters");
       }
 
-      // verify the required parameter 'patternWithoutDelimiter' is set
-      if (patternWithoutDelimiter === undefined || patternWithoutDelimiter === null) {
-        throw new Error("Missing the required parameter 'patternWithoutDelimiter' when calling testEndpointParameters");
+      // verify the required parameter 'pattern_without_delimiter' is set
+      if (pattern_without_delimiter === undefined || pattern_without_delimiter === null) {
+        throw new Error("Missing the required parameter 'pattern_without_delimiter' when calling testEndpointParameters");
       }
 
       // verify the required parameter '_byte' is set
@@ -354,7 +354,7 @@
         'float': opts['_float'],
         'double': _double,
         'string': opts['_string'],
-        'pattern_without_delimiter': patternWithoutDelimiter,
+        'pattern_without_delimiter': pattern_without_delimiter,
         'byte': _byte,
         'binary': opts['binary'],
         'date': opts['_date'],
@@ -380,7 +380,7 @@
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * @param {Number} _number None
      * @param {Number} _double None
-     * @param {String} patternWithoutDelimiter None
+     * @param {String} pattern_without_delimiter None
      * @param {Blob} _byte None
      * @param {Object} opts Optional parameters
      * @param {Number} opts.integer None
@@ -395,8 +395,8 @@
      * @param {String} opts.callback None
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
-    this.testEndpointParameters = function(_number, _double, patternWithoutDelimiter, _byte, opts) {
-      return this.testEndpointParametersWithHttpInfo(_number, _double, patternWithoutDelimiter, _byte, opts)
+    this.testEndpointParameters = function(_number, _double, pattern_without_delimiter, _byte, opts) {
+      return this.testEndpointParametersWithHttpInfo(_number, _double, pattern_without_delimiter, _byte, opts)
         .then(function(response_and_data) {
           return response_and_data.data;
         });
@@ -407,14 +407,14 @@
      * To test enum parameters
      * To test enum parameters
      * @param {Object} opts Optional parameters
-     * @param {Array.<module:model/String>} opts.enumFormStringArray Form parameter enum test (string array)
-     * @param {module:model/String} opts.enumFormString Form parameter enum test (string) (default to -efg)
-     * @param {Array.<module:model/String>} opts.enumHeaderStringArray Header parameter enum test (string array)
-     * @param {module:model/String} opts.enumHeaderString Header parameter enum test (string) (default to -efg)
-     * @param {Array.<module:model/String>} opts.enumQueryStringArray Query parameter enum test (string array)
-     * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
-     * @param {module:model/Number} opts.enumQueryInteger Query parameter enum test (double)
-     * @param {module:model/Number} opts.enumQueryDouble Query parameter enum test (double)
+     * @param {Array.<module:model/String>} opts.enum_form_string_array Form parameter enum test (string array)
+     * @param {module:model/String} opts.enum_form_string Form parameter enum test (string) (default to -efg)
+     * @param {Array.<module:model/String>} opts.enum_header_string_array Header parameter enum test (string array)
+     * @param {module:model/String} opts.enum_header_string Header parameter enum test (string) (default to -efg)
+     * @param {Array.<module:model/String>} opts.enum_query_string_array Query parameter enum test (string array)
+     * @param {module:model/String} opts.enum_query_string Query parameter enum test (string) (default to -efg)
+     * @param {module:model/Number} opts.enum_query_integer Query parameter enum test (double)
+     * @param {module:model/Number} opts.enum_query_double Query parameter enum test (double)
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
     this.testEnumParametersWithHttpInfo = function(opts) {
@@ -425,23 +425,23 @@
       var pathParams = {
       };
       var queryParams = {
-        'enum_query_string': opts['enumQueryString'],
-        'enum_query_integer': opts['enumQueryInteger'],
+        'enum_query_string': opts['enum_query_string'],
+        'enum_query_integer': opts['enum_query_integer'],
       };
       var collectionQueryParams = {
         'enum_query_string_array': {
-          value: opts['enumQueryStringArray'],
+          value: opts['enum_query_string_array'],
           collectionFormat: 'csv'
         },
       };
       var headerParams = {
-        'enum_header_string_array': opts['enumHeaderStringArray'],
-        'enum_header_string': opts['enumHeaderString']
+        'enum_header_string_array': opts['enum_header_string_array'],
+        'enum_header_string': opts['enum_header_string']
       };
       var formParams = {
-        'enum_form_string_array': this.apiClient.buildCollectionParam(opts['enumFormStringArray'], 'csv'),
-        'enum_form_string': opts['enumFormString'],
-        'enum_query_double': opts['enumQueryDouble']
+        'enum_form_string_array': this.apiClient.buildCollectionParam(opts['enum_form_string_array'], 'csv'),
+        'enum_form_string': opts['enum_form_string'],
+        'enum_query_double': opts['enum_query_double']
       };
 
       var authNames = [];
@@ -460,14 +460,14 @@
      * To test enum parameters
      * To test enum parameters
      * @param {Object} opts Optional parameters
-     * @param {Array.<module:model/String>} opts.enumFormStringArray Form parameter enum test (string array)
-     * @param {module:model/String} opts.enumFormString Form parameter enum test (string) (default to -efg)
-     * @param {Array.<module:model/String>} opts.enumHeaderStringArray Header parameter enum test (string array)
-     * @param {module:model/String} opts.enumHeaderString Header parameter enum test (string) (default to -efg)
-     * @param {Array.<module:model/String>} opts.enumQueryStringArray Query parameter enum test (string array)
-     * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
-     * @param {module:model/Number} opts.enumQueryInteger Query parameter enum test (double)
-     * @param {module:model/Number} opts.enumQueryDouble Query parameter enum test (double)
+     * @param {Array.<module:model/String>} opts.enum_form_string_array Form parameter enum test (string array)
+     * @param {module:model/String} opts.enum_form_string Form parameter enum test (string) (default to -efg)
+     * @param {Array.<module:model/String>} opts.enum_header_string_array Header parameter enum test (string array)
+     * @param {module:model/String} opts.enum_header_string Header parameter enum test (string) (default to -efg)
+     * @param {Array.<module:model/String>} opts.enum_query_string_array Query parameter enum test (string array)
+     * @param {module:model/String} opts.enum_query_string Query parameter enum test (string) (default to -efg)
+     * @param {module:model/Number} opts.enum_query_integer Query parameter enum test (double)
+     * @param {module:model/Number} opts.enum_query_double Query parameter enum test (double)
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
     this.testEnumParameters = function(opts) {

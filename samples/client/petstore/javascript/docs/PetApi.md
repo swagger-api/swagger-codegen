@@ -87,7 +87,7 @@ var apiInstance = new SwaggerPetstore.PetApi();
 var petId = 789; // Number | Pet id to delete
 
 var opts = { 
-  'apiKey': "apiKey_example" // String | 
+  'api_key': "api_key_example" // String | 
 };
 
 var callback = function(error, data, response) {
@@ -105,7 +105,7 @@ apiInstance.deletePet(petId, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **Number**| Pet id to delete | 
- **apiKey** | **String**|  | [optional] 
+ **api_key** | **String**|  | [optional] 
 
 ### Return type
 

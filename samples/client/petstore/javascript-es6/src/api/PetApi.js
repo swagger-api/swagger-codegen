@@ -92,7 +92,7 @@ export default class PetApi {
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @param {module:api/PetApi~deletePetCallback} callback The callback function, accepting three arguments: error, data, response
      */
     deletePet(petId, opts, callback) {
@@ -111,7 +111,7 @@ export default class PetApi {
       let queryParams = {
       };
       let headerParams = {
-        'api_key': opts['apiKey']
+        'api_key': opts['api_key']
       };
       let formParams = {
       };

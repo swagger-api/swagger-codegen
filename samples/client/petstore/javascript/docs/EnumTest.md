@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**enumString** | **String** |  | [optional] 
-**enumInteger** | **Number** |  | [optional] 
-**enumNumber** | **Number** |  | [optional] 
+**enum_string** | **String** |  | [optional] 
+**enum_integer** | **Number** |  | [optional] 
+**enum_number** | **Number** |  | [optional] 
 **outerEnum** | [**OuterEnum**](OuterEnum.md) |  | [optional] 
 
 

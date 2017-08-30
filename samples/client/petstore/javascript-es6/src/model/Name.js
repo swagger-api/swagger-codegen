@@ -89,7 +89,7 @@ export default class Name {
     /**
     * @member {Number} 123Number
     */
-    123Number = undefined;
+    var123Number = undefined;
 
 
 

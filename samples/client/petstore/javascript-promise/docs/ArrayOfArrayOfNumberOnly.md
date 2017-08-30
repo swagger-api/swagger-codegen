@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**arrayArrayNumber** | **[[Number]]** |  | [optional] 
+**ArrayArrayNumber** | **[[Number]]** |  | [optional] 
 
 

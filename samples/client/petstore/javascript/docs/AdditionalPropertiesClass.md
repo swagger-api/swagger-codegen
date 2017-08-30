@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mapProperty** | **{String: String}** |  | [optional] 
-**mapOfMapProperty** | **{String: {String: String}}** |  | [optional] 
+**map_property** | **{String: String}** |  | [optional] 
+**map_of_map_property** | **{String: {String: String}}** |  | [optional] 
 
 
