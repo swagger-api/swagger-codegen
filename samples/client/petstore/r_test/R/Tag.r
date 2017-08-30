@@ -13,16 +13,16 @@
 Tag <- R6::R6Class(
   'Tag',
   public = list(
-    id = NULL,
-    name = NULL,
-    initialize = function(id, name){
-      if (!missing(id)) {
-        stopifnot(is.numeric(id), length(id) == 1)
-        self$id <- id
+    `id` = NULL,
+    `name` = NULL,
+    initialize = function(`id`, `name`){
+      if (!missing(`id`)) {
+        stopifnot(is.numeric(`id`), length(`id`) == 1)
+        self$`id` <- `id`
       }
-      if (!missing(name)) {
-        stopifnot(is.character(name), length(name) == 1)
-        self$name <- name
+      if (!missing(`name`)) {
+        stopifnot(is.character(`name`), length(`name`) == 1)
+        self$`name` <- `name`
       }
     },
     toJSON = function() {
@@ -31,14 +31,14 @@ Tag <- R6::R6Class(
            "id": %d,
            "name": "%s"
         }',
-        self$id,
-        self$name
+        self$`id`,
+        self$`name`
       )
     },
     fromJSON = function(TagJson) {
       TagObject <- jsonlite::fromJSON(TagJson)
-      self$id <- TagObject$id
-      self$name <- TagObject$name
+      self$`id` <- TagObject`$id`
+      self$`name` <- TagObject`$name`
     }
   )
 )

@@ -13,46 +13,46 @@
 User <- R6::R6Class(
   'User',
   public = list(
-    id = NULL,
-    username = NULL,
-    first_name = NULL,
-    last_name = NULL,
-    email = NULL,
-    password = NULL,
-    phone = NULL,
-    user_status = NULL,
-    initialize = function(id, username, first_name, last_name, email, password, phone, user_status){
-      if (!missing(id)) {
-        stopifnot(is.numeric(id), length(id) == 1)
-        self$id <- id
+    `id` = NULL,
+    `username` = NULL,
+    `firstName` = NULL,
+    `lastName` = NULL,
+    `email` = NULL,
+    `password` = NULL,
+    `phone` = NULL,
+    `userStatus` = NULL,
+    initialize = function(`id`, `username`, `firstName`, `lastName`, `email`, `password`, `phone`, `userStatus`){
+      if (!missing(`id`)) {
+        stopifnot(is.numeric(`id`), length(`id`) == 1)
+        self$`id` <- `id`
       }
-      if (!missing(username)) {
-        stopifnot(is.character(username), length(username) == 1)
-        self$username <- username
+      if (!missing(`username`)) {
+        stopifnot(is.character(`username`), length(`username`) == 1)
+        self$`username` <- `username`
       }
-      if (!missing(first_name)) {
-        stopifnot(is.character(first_name), length(first_name) == 1)
-        self$first_name <- first_name
+      if (!missing(`firstName`)) {
+        stopifnot(is.character(`firstName`), length(`firstName`) == 1)
+        self$`firstName` <- `firstName`
       }
-      if (!missing(last_name)) {
-        stopifnot(is.character(last_name), length(last_name) == 1)
-        self$last_name <- last_name
+      if (!missing(`lastName`)) {
+        stopifnot(is.character(`lastName`), length(`lastName`) == 1)
+        self$`lastName` <- `lastName`
       }
-      if (!missing(email)) {
-        stopifnot(is.character(email), length(email) == 1)
-        self$email <- email
+      if (!missing(`email`)) {
+        stopifnot(is.character(`email`), length(`email`) == 1)
+        self$`email` <- `email`
       }
-      if (!missing(password)) {
-        stopifnot(is.character(password), length(password) == 1)
-        self$password <- password
+      if (!missing(`password`)) {
+        stopifnot(is.character(`password`), length(`password`) == 1)
+        self$`password` <- `password`
       }
-      if (!missing(phone)) {
-        stopifnot(is.character(phone), length(phone) == 1)
-        self$phone <- phone
+      if (!missing(`phone`)) {
+        stopifnot(is.character(`phone`), length(`phone`) == 1)
+        self$`phone` <- `phone`
       }
-      if (!missing(user_status)) {
-        stopifnot(is.numeric(user_status), length(user_status) == 1)
-        self$user_status <- user_status
+      if (!missing(`userStatus`)) {
+        stopifnot(is.numeric(`userStatus`), length(`userStatus`) == 1)
+        self$`userStatus` <- `userStatus`
       }
     },
     toJSON = function() {
@@ -67,26 +67,26 @@ User <- R6::R6Class(
            "phone": "%s",
            "userStatus": "%s"
         }',
-        self$id,
-        self$username,
-        self$first_name,
-        self$last_name,
-        self$email,
-        self$password,
-        self$phone,
-        self$user_status
+        self$`id`,
+        self$`username`,
+        self$`firstName`,
+        self$`lastName`,
+        self$`email`,
+        self$`password`,
+        self$`phone`,
+        self$`userStatus`
       )
     },
     fromJSON = function(UserJson) {
       UserObject <- jsonlite::fromJSON(UserJson)
-      self$id <- UserObject$id
-      self$username <- UserObject$username
-      self$first_name <- UserObject$first_name
-      self$last_name <- UserObject$last_name
-      self$email <- UserObject$email
-      self$password <- UserObject$password
-      self$phone <- UserObject$phone
-      self$user_status <- UserObject$user_status
+      self$`id` <- UserObject`$id`
+      self$`username` <- UserObject`$username`
+      self$`firstName` <- UserObject`$firstName`
+      self$`lastName` <- UserObject`$lastName`
+      self$`email` <- UserObject`$email`
+      self$`password` <- UserObject`$password`
+      self$`phone` <- UserObject`$phone`
+      self$`userStatus` <- UserObject`$userStatus`
     }
   )
 )

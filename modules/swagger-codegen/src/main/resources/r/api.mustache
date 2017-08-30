@@ -19,7 +19,12 @@
           {{#hasFormParams}}
           ,body = list(
             {{#formParams}}
-              "{{baseName}}" = {{paramName}}{{#hasMore}},{{/hasMore}}{{#isFile}} #TODO support file upload{{/isFile}}
+              {{^isFile}}
+              "{{baseName}}" = {{paramName}}{{#hasMore}},{{/hasMore}}
+              {{/isFile}}
+              {{#isFile}}
+              "{{baseName}}" = upload_file({{paramName}}){{#hasMore}},{{/hasMore}}
+              {{/isFile}}
             {{/formParams}}
             )
           {{/hasFormParams}}

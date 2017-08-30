@@ -13,21 +13,21 @@
 ApiResponse <- R6::R6Class(
   'ApiResponse',
   public = list(
-    code = NULL,
-    type = NULL,
-    message = NULL,
-    initialize = function(code, type, message){
-      if (!missing(code)) {
-        stopifnot(is.numeric(code), length(code) == 1)
-        self$code <- code
+    `code` = NULL,
+    `type` = NULL,
+    `message` = NULL,
+    initialize = function(`code`, `type`, `message`){
+      if (!missing(`code`)) {
+        stopifnot(is.numeric(`code`), length(`code`) == 1)
+        self$`code` <- `code`
       }
-      if (!missing(type)) {
-        stopifnot(is.character(type), length(type) == 1)
-        self$type <- type
+      if (!missing(`type`)) {
+        stopifnot(is.character(`type`), length(`type`) == 1)
+        self$`type` <- `type`
       }
-      if (!missing(message)) {
-        stopifnot(is.character(message), length(message) == 1)
-        self$message <- message
+      if (!missing(`message`)) {
+        stopifnot(is.character(`message`), length(`message`) == 1)
+        self$`message` <- `message`
       }
     },
     toJSON = function() {
@@ -37,16 +37,16 @@ ApiResponse <- R6::R6Class(
            "type": "%s",
            "message": "%s"
         }',
-        self$code,
-        self$type,
-        self$message
+        self$`code`,
+        self$`type`,
+        self$`message`
       )
     },
     fromJSON = function(ApiResponseJson) {
       ApiResponseObject <- jsonlite::fromJSON(ApiResponseJson)
-      self$code <- ApiResponseObject$code
-      self$type <- ApiResponseObject$type
-      self$message <- ApiResponseObject$message
+      self$`code` <- ApiResponseObject`$code`
+      self$`type` <- ApiResponseObject`$type`
+      self$`message` <- ApiResponseObject`$message`
     }
   )
 )

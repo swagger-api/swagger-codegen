@@ -13,37 +13,35 @@
 Order <- R6::R6Class(
   'Order',
   public = list(
-    id = NULL,
-    pet_id = NULL,
-    quantity = NULL,
-    ship_date = NULL,
-    status = NULL,
-    complete = NULL,
-    initialize = function(id, pet_id, quantity, ship_date, status, complete){
-      if (!missing(id)) {
-        stopifnot(is.numeric(id), length(id) == 1)
-        self$id <- id
+    `id` = NULL,
+    `petId` = NULL,
+    `quantity` = NULL,
+    `shipDate` = NULL,
+    `status` = NULL,
+    `complete` = NULL,
+    initialize = function(`id`, `petId`, `quantity`, `shipDate`, `status`, `complete`){
+      if (!missing(`id`)) {
+        stopifnot(is.numeric(`id`), length(`id`) == 1)
+        self$`id` <- `id`
       }
-      if (!missing(pet_id)) {
-        stopifnot(is.numeric(pet_id), length(pet_id) == 1)
-        self$pet_id <- pet_id
+      if (!missing(`petId`)) {
+        stopifnot(is.numeric(`petId`), length(`petId`) == 1)
+        self$`petId` <- `petId`
       }
-      if (!missing(quantity)) {
-        stopifnot(is.numeric(quantity), length(quantity) == 1)
-        self$quantity <- quantity
+      if (!missing(`quantity`)) {
+        stopifnot(is.numeric(`quantity`), length(`quantity`) == 1)
+        self$`quantity` <- `quantity`
       }
-      if (!missing(ship_date)) {
-        stopifnot(is.character(ship_date), length(ship_date) == 1)
-        stopifnot(is.list(tags), length(tags) != 0)
-        lapply(ship_date, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
-        self$ship_date <- ship_date
+      if (!missing(`shipDate`)) {
+        stopifnot(is.character(`shipDate`), length(`shipDate`) == 1)
+        self$`shipDate` <- `shipDate`
       }
-      if (!missing(status)) {
-        stopifnot(is.character(status), length(status) == 1)
-        self$status <- status
+      if (!missing(`status`)) {
+        stopifnot(is.character(`status`), length(`status`) == 1)
+        self$`status` <- `status`
       }
-      if (!missing(complete)) {
-        self$complete <- complete
+      if (!missing(`complete`)) {
+        self$`complete` <- `complete`
       }
     },
     toJSON = function() {
@@ -52,26 +50,26 @@ Order <- R6::R6Class(
            "id": %d,
            "petId": %d,
            "quantity": "%s",
-           "shipDate": %s,
+           "shipDate": "%s",
            "status": "%s",
            "complete": "%s"
         }',
-        self$id,
-        self$pet_id,
-        self$quantity,
-        self$ship_date$toJSON(),
-        self$status,
-        self$complete
+        self$`id`,
+        self$`petId`,
+        self$`quantity`,
+        self$`shipDate`,
+        self$`status`,
+        self$`complete`
       )
     },
     fromJSON = function(OrderJson) {
       OrderObject <- jsonlite::fromJSON(OrderJson)
-      self$id <- OrderObject$id
-      self$pet_id <- OrderObject$pet_id
-      self$quantity <- OrderObject$quantity
-      self$ship_date <- Date$new()$fromJSON(jsonlite::toJSON(OrderObject$ship_date))
-      self$status <- OrderObject$status
-      self$complete <- OrderObject$complete
+      self$`id` <- OrderObject`$id`
+      self$`petId` <- OrderObject`$petId`
+      self$`quantity` <- OrderObject`$quantity`
+      self$`shipDate` <- OrderObject`$shipDate`
+      self$`status` <- OrderObject`$status`
+      self$`complete` <- OrderObject`$complete`
     }
   )
 )

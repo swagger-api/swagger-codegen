@@ -13,39 +13,39 @@
 Pet <- R6::R6Class(
   'Pet',
   public = list(
-    id = NULL,
-    category = NULL,
-    name = NULL,
-    photo_urls = NULL,
-    tags = NULL,
-    status = NULL,
-    initialize = function(id, category, name, photo_urls, tags, status){
-      if (!missing(id)) {
-        stopifnot(is.numeric(id), length(id) == 1)
-        self$id <- id
+    `id` = NULL,
+    `category` = NULL,
+    `name` = NULL,
+    `photoUrls` = NULL,
+    `tags` = NULL,
+    `status` = NULL,
+    initialize = function(`id`, `category`, `name`, `photoUrls`, `tags`, `status`){
+      if (!missing(`id`)) {
+        stopifnot(is.numeric(`id`), length(`id`) == 1)
+        self$`id` <- `id`
       }
-      if (!missing(category)) {
+      if (!missing(`category`)) {
         stopifnot(is.list(tags), length(tags) != 0)
-        lapply(category, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
-        self$category <- category
+        lapply(`category`, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
+        self$`category` <- `category`
       }
-      if (!missing(name)) {
-        stopifnot(is.character(name), length(name) == 1)
-        self$name <- name
+      if (!missing(`name`)) {
+        stopifnot(is.character(`name`), length(`name`) == 1)
+        self$`name` <- `name`
       }
-      if (!missing(photo_urls)) {
-        stopifnot(is.list(photo_urls), length(photo_urls) != 0)
-        lapply(photo_urls, function(x) stopifnot(is.character(x)))
-        self$photo_urls <- photo_urls
+      if (!missing(`photoUrls`)) {
+        stopifnot(is.list(`photoUrls`), length(`photoUrls`) != 0)
+        lapply(`photoUrls`, function(x) stopifnot(is.character(x)))
+        self$`photoUrls` <- `photoUrls`
       }
-      if (!missing(tags)) {
+      if (!missing(`tags`)) {
         stopifnot(is.list(tags), length(tags) != 0)
-        lapply(tags, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
-        self$tags <- tags
+        lapply(`tags`, function(x) stopifnot("Element" %in% class(x), !is.list(x)))
+        self$`tags` <- `tags`
       }
-      if (!missing(status)) {
-        stopifnot(is.character(status), length(status) == 1)
-        self$status <- status
+      if (!missing(`status`)) {
+        stopifnot(is.character(`status`), length(`status`) == 1)
+        self$`status` <- `status`
       }
     },
     toJSON = function() {
@@ -58,22 +58,22 @@ Pet <- R6::R6Class(
            "tags": [%s],
            "status": "%s"
         }',
-        self$id,
-        self$category$toJSON(),
-        self$name,
-        lapply(self$photo_urls, function(x) paste(paste0('"', x, '"'), sep=",")),
-        lapply(self$tags, function(x) paste(x$toJSON(), sep=",")),
-        self$status
+        self$`id`,
+        self$`category`$toJSON(),
+        self$`name`,
+        lapply(self$`photoUrls`, function(x) paste(paste0('"', x, '"'), sep=",")),
+        lapply(self$`tags`, function(x) paste(x$toJSON(), sep=",")),
+        self$`status`
       )
     },
     fromJSON = function(PetJson) {
       PetObject <- jsonlite::fromJSON(PetJson)
-      self$id <- PetObject$id
-      self$category <- Category$new()$fromJSON(jsonlite::toJSON(PetObject$category))
-      self$name <- PetObject$name
-      self$photo_urls <- PetObject$photo_urls
-      self$tags <- lapply(PetObject$tags, function(x) Tag$new()$fromJSON(jsonlite::toJSON(x))
-      self$status <- PetObject$status
+      self$`id` <- PetObject`$id`
+      self$`category` <- Category$new()$fromJSON(jsonlite::toJSON(PetObject${{baseName}))
+      self$`name` <- PetObject`$name`
+      self$`photoUrls` <- PetObject`$photoUrls`
+      self$`tags` <- lapply(PetObject$`tags`, function(x) Tag$new()$fromJSON(jsonlite::toJSON(x))
+      self$`status` <- PetObject`$status`
     }
   )
 )

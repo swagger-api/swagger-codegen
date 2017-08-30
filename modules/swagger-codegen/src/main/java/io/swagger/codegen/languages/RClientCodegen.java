@@ -78,8 +78,8 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("boolean", "Character");
         typeMapping.put("string", "Character");
         typeMapping.put("UUID", "Character");
-        typeMapping.put("date", "Date");
-        typeMapping.put("DateTime", "Date");
+        typeMapping.put("date", "Character");
+        typeMapping.put("DateTime", "Character");
         typeMapping.put("password", "Character");
         typeMapping.put("file", "TODO_FILE_MAPPING");
         // map binary to string as a workaround
