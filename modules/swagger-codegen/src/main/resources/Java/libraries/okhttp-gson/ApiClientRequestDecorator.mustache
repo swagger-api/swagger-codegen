@@ -1,0 +1,19 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}};
+
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+
+/**
+ * Decorates outgoing requests.
+ */
+public interface ApiClientRequestDecorator {
+    /**
+     * Decorates outgoing request.
+     *
+     * @param requestBuilder request builder to use for decoration
+     * @param requestBody    request body
+     */
+    void decorateRequest(Request.Builder requestBuilder, RequestBody requestBody);
+}

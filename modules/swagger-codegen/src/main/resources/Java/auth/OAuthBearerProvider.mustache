@@ -1,0 +1,14 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}}.auth;
+
+/**
+ * Bearer provider is capable of retrieving bearer code for OAuth authentication.
+ */
+public interface OAuthBearerProvider {
+    /**
+     * Provides access token and fills it in the provided OAuth object.
+     * @param oAuth OAuth object to fill the bearer code and its expiration into
+     */
+    void provideAccessToken(OAuth oAuth);
+}

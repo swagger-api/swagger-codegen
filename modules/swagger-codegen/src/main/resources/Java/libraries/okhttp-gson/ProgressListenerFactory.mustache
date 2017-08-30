@@ -1,0 +1,27 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}};
+
+/**
+ * Factory for ProgressListener(s), typically used in generated code.
+ */
+public class ProgressListenerFactory {
+    /**
+     * Generates listener instance calling back the provided callback.
+     *
+     * @param callback callback to call on response body update notification
+     * @return new instance if callback is not null
+     */
+    public static <T> ProgressResponseBody.ProgressListener newInstance(final ApiCallback<T> callback) {
+        if (callback != null) {
+            return new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+        } else {
+            return null;
+        }
+    }
+}

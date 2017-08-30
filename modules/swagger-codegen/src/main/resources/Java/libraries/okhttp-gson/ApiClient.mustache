@@ -73,6 +73,7 @@ public class ApiClient {
     private JSON json;
 
     private HttpLoggingInterceptor loggingInterceptor;
+    private Collection<ApiClientRequestDecorator> requestDecorators = new ArrayList<>();
 
     /*
      * Constructor for ApiClient
@@ -221,6 +222,18 @@ public class ApiClient {
         this.keyManagers = managers;
         applySslSettings();
         return this;
+    }
+
+    public Collection<ApiClientRequestDecorator> getRequestDecorators() {
+        return requestDecorators;
+    }
+
+    public void setRequestDecorators(Collection<ApiClientRequestDecorator> requestDecorators) {
+        this.requestDecorators = requestDecorators;
+    }
+
+    public void addRequestDecorator(ApiClientRequestDecorator requestDecorator) {
+        this.requestDecorators.add(requestDecorator);
     }
 
     public DateFormat getDateFormat() {
@@ -686,7 +699,7 @@ public class ApiClient {
         }
         if (isJsonMime(contentType)) {
             return json.deserialize(respBody, returnType);
-        } else if (returnType.equals(String.class)) {
+        } else if (returnType.equals(String.class) || returnType.equals(Object.class)) {
             // Expecting string, return the raw response body.
             return (T) respBody;
         } else {
@@ -935,6 +948,36 @@ public class ApiClient {
      * @param headerParams The header parameters
      * @param formParams The form parameters
      * @param authNames The authentications to apply
+     * @param accepts header accept content
+     * @param contentTypes content types
+     * @param progressRequestListener Progress request listener
+     * @return The HTTP request
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, String[] accepts, String[] contentTypes, ProgressResponseBody.ProgressListener progressListener, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (!headerParams.containsKey("Accept")) {
+            headerParams.put("Accept", selectHeaderAccept(accepts));
+        }
+        if (!headerParams.containsKey("Content-Type")) {
+            headerParams.put("Content-Type", selectHeaderAccept(contentTypes));
+        }
+        if (progressListener != null) {
+            getHttpClient().networkInterceptors().add(InterceptorFactory.newInstance(progressListener));
+        }
+        return buildCall(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
+    }
+
+    /**
+     * Build an HTTP request with the given options.
+     *
+     * @param path The sub-path of the HTTP URL
+     * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
+     * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
+     * @param body The request body object
+     * @param headerParams The header parameters
+     * @param formParams The form parameters
+     * @param authNames The authentications to apply
      * @param progressRequestListener Progress request listener
      * @return The HTTP request 
      * @throws ApiException If fail to serialize the request body object
@@ -972,15 +1015,15 @@ public class ApiClient {
         }
 
         Request request = null;
-
-        if(progressRequestListener != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, progressRequestListener);
-            request = reqBuilder.method(method, progressRequestBody).build();
-        } else {
-            request = reqBuilder.method(method, reqBody).build();
+        if (progressRequestListener != null && reqBody != null) {
+            reqBody = new ProgressRequestBody(reqBody, progressRequestListener);
         }
-
-        return request;
+        if (requestDecorators != null) {
+            for (ApiClientRequestDecorator requestDecorator : requestDecorators) {
+                requestDecorator.decorateRequest(reqBuilder, reqBody);
+            }
+        }
+        return reqBuilder.method(method, reqBody).build();
     }
 
     /**
