@@ -23,7 +23,7 @@
               "{{baseName}}" = {{paramName}}{{#hasMore}},{{/hasMore}}
               {{/isFile}}
               {{#isFile}}
-              "{{baseName}}" = upload_file({{paramName}}){{#hasMore}},{{/hasMore}}
+              "{{baseName}}" = httr::upload_file({{paramName}}){{#hasMore}},{{/hasMore}}
               {{/isFile}}
             {{/formParams}}
             )

@@ -134,7 +134,7 @@ PetApi <- R6::R6Class(
           httr::add_headers("User-Agent" = self$userAgent, "accept" = "multipart/form-data", "content-type" = "application/json")
           ,body = list(
               "additionalMetadata" = additional_metadata,
-              "file" = upload_file(file)
+              "file" = httr::upload_file(file)
             )
           )
 
