@@ -34,8 +34,8 @@ impl Category {
     self
   }
 
-  pub fn id(&self) -> &i64 {
-    &self.id
+  pub fn id(&self) -> Option<&i64> {
+    self.id.as_ref()
   }
 
   pub fn set_name(&mut self, name: String) {
@@ -47,8 +47,8 @@ impl Category {
     self
   }
 
-  pub fn name(&self) -> &String {
-    &self.name
+  pub fn name(&self) -> Option<&String> {
+    self.name.as_ref()
   }
 
 }

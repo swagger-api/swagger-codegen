@@ -43,8 +43,8 @@ impl Pet {
     self
   }
 
-  pub fn id(&self) -> &i64 {
-    &self.id
+  pub fn id(&self) -> Option<&i64> {
+    self.id.as_ref()
   }
 
   pub fn set_category(&mut self, category: ::models::Category) {
@@ -56,8 +56,8 @@ impl Pet {
     self
   }
 
-  pub fn category(&self) -> &::models::Category {
-    &self.category
+  pub fn category(&self) -> Option<&::models::Category> {
+    self.category.as_ref()
   }
 
   pub fn set_name(&mut self, name: String) {
@@ -82,7 +82,7 @@ impl Pet {
     self
   }
 
-  pub fn photo_urls(&self) -> &Vec&lt;String&gt; {
+  pub fn photo_urls(&self) -> &Vec<String> {
     &self.photo_urls
   }
 
@@ -95,8 +95,8 @@ impl Pet {
     self
   }
 
-  pub fn tags(&self) -> &Vec&lt;::models::Tag&gt; {
-    &self.tags
+  pub fn tags(&self) -> Option<&Vec<::models::Tag>> {
+    self.tags.as_ref()
   }
 
   pub fn set_status(&mut self, status: String) {
@@ -108,8 +108,8 @@ impl Pet {
     self
   }
 
-  pub fn status(&self) -> &String {
-    &self.status
+  pub fn status(&self) -> Option<&String> {
+    self.status.as_ref()
   }
 
 }

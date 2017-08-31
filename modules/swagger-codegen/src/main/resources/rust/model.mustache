@@ -37,8 +37,8 @@ impl {{classname}} {
     self
   }
 
-  pub fn {{name}}(&self) -> &{{datatype}} {
-    &self.{{name}}
+  pub fn {{name}}(&self) -> {{^required}}Option<{{/required}}&{{{datatype}}}{{^required}}>{{/required}} {
+    {{#required}}&{{/required}}self.{{name}}{{^required}}.as_ref(){{/required}}
   }
 
   {{/vars}}
