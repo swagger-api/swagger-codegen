@@ -18,13 +18,13 @@ fn main() {
         petstore_client::apis::configuration::Configuration::new(
             Client::configure().connector(HttpConnector::new(4, &handle)).build(&handle)));
 
-    let work = apicli.pet_api().AddPet(new_pet)
+    let work = apicli.pet_api().add_pet(new_pet)
     // petstore_client::apis::add_pet(api, &client, &new_pet)
     .and_then(|_| {
-        apicli.pet_api().UpdatePetWithForm(1337, "barko", "escaped")
+        apicli.pet_api().update_pet_with_form(1337, "barko", "escaped")
     })
     .and_then(|_| {
-        apicli.pet_api().GetPetById(1337)
+        apicli.pet_api().get_pet_by_id(1337)
     })
     .and_then(|pet| {
         println!("pet: {:?}", pet);
