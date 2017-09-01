@@ -941,7 +941,7 @@ Here is a list of template creators:
    * Go (rewritten in 2.3.0): @antihax
    * Java (Feign): @davidkiss
    * Java (Retrofit): @0legg
-   * Java (Retrofi2): @emilianobonassi
+   * Java (Retrofit2): @emilianobonassi
    * Java (Jersey2): @xhh
    * Java (okhttp-gson): @xhh
    * Java (RestTemplate): @nbruno
@@ -1024,7 +1024,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 |:-------------|:-------------|
 | ActionScript |      |
 | Apex  |     |
-| Bash  | @frol (2017/07) |
+| Bash  | @frol (2017/07) @bkryza (2017/08) |
 | C++      | @ravinikam (2017/07) @stkrwork (2017/07) |  
 | C#        | @mandrean (2017/08) |
 | Clojure   |  |
@@ -1045,7 +1045,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) |
 | R        |  |
 | Ruby      | @cliffano (2017/07)  |
-| Rust      | @frol (2017/07)
+| Rust      | @frol (2017/07) @farcaller (2017/08) | 
 | Scala     | @clasnake (2017/07) |
 | Swift     | @jgavris (2017/07) |
 | TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07)|

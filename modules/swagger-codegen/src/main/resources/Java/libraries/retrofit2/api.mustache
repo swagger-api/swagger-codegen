@@ -26,11 +26,6 @@ import java.util.List;
 import java.util.Map;
 {{/fullJavaUtil}}
 
-{{#usePlay24WS}}
-import play.libs.F;
-import retrofit2.Response;
-{{/usePlay24WS}}
-
 {{#operations}}
 public interface {{classname}} {
   {{#operation}}
@@ -61,7 +56,7 @@ public interface {{classname}} {
   {{/prioritizedContentTypes}}
   {{/formParams}}  
   @{{httpMethod}}("{{{path}}}")
-  {{^usePlay24WS}}{{^doNotUseRx}}Observable{{/doNotUseRx}}{{#doNotUseRx}}Call{{/doNotUseRx}}{{/usePlay24WS}}{{#usePlay24WS}}F.Promise<Response{{/usePlay24WS}}<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}{{/isResponseFile}}>{{#usePlay24WS}}>{{/usePlay24WS}} {{operationId}}({{^allParams}});{{/allParams}}
+  {{^doNotUseRx}}Observable{{/doNotUseRx}}{{#doNotUseRx}}Call{{/doNotUseRx}}<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}{{/isResponseFile}}> {{operationId}}({{^allParams}});{{/allParams}}
     {{#allParams}}{{>libraries/retrofit2/queryParams}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}}{{#hasMore}}, {{/hasMore}}{{^hasMore}}
   );{{/hasMore}}{{/allParams}}
 
