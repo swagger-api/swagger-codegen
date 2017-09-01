@@ -12,15 +12,23 @@
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct User {
-  #[serde(rename = "id")] id: Option<i64>,
-  #[serde(rename = "username")] username: Option<String>,
-  #[serde(rename = "firstName")] first_name: Option<String>,
-  #[serde(rename = "lastName")] last_name: Option<String>,
-  #[serde(rename = "email")] email: Option<String>,
-  #[serde(rename = "password")] password: Option<String>,
-  #[serde(rename = "phone")] phone: Option<String>,
+  #[serde(rename = "id")]
+  id: Option<i64>,
+  #[serde(rename = "username")]
+  username: Option<String>,
+  #[serde(rename = "firstName")]
+  first_name: Option<String>,
+  #[serde(rename = "lastName")]
+  last_name: Option<String>,
+  #[serde(rename = "email")]
+  email: Option<String>,
+  #[serde(rename = "password")]
+  password: Option<String>,
+  #[serde(rename = "phone")]
+  phone: Option<String>,
   /// User Status
-  #[serde(rename = "userStatus")] user_status: Option<i32>
+  #[serde(rename = "userStatus")]
+  user_status: Option<i32>
 }
 
 impl User {
@@ -51,6 +59,10 @@ impl User {
     self.id.as_ref()
   }
 
+  pub fn reset_id(&mut self) {
+    self.id = None;
+  }
+
   pub fn set_username(&mut self, username: String) {
     self.username = Some(username);
   }
@@ -62,6 +74,10 @@ impl User {
 
   pub fn username(&self) -> Option<&String> {
     self.username.as_ref()
+  }
+
+  pub fn reset_username(&mut self) {
+    self.username = None;
   }
 
   pub fn set_first_name(&mut self, first_name: String) {
@@ -77,6 +93,10 @@ impl User {
     self.first_name.as_ref()
   }
 
+  pub fn reset_first_name(&mut self) {
+    self.first_name = None;
+  }
+
   pub fn set_last_name(&mut self, last_name: String) {
     self.last_name = Some(last_name);
   }
@@ -88,6 +108,10 @@ impl User {
 
   pub fn last_name(&self) -> Option<&String> {
     self.last_name.as_ref()
+  }
+
+  pub fn reset_last_name(&mut self) {
+    self.last_name = None;
   }
 
   pub fn set_email(&mut self, email: String) {
@@ -103,6 +127,10 @@ impl User {
     self.email.as_ref()
   }
 
+  pub fn reset_email(&mut self) {
+    self.email = None;
+  }
+
   pub fn set_password(&mut self, password: String) {
     self.password = Some(password);
   }
@@ -114,6 +142,10 @@ impl User {
 
   pub fn password(&self) -> Option<&String> {
     self.password.as_ref()
+  }
+
+  pub fn reset_password(&mut self) {
+    self.password = None;
   }
 
   pub fn set_phone(&mut self, phone: String) {
@@ -129,6 +161,10 @@ impl User {
     self.phone.as_ref()
   }
 
+  pub fn reset_phone(&mut self) {
+    self.phone = None;
+  }
+
   pub fn set_user_status(&mut self, user_status: i32) {
     self.user_status = Some(user_status);
   }
@@ -140,6 +176,10 @@ impl User {
 
   pub fn user_status(&self) -> Option<&i32> {
     self.user_status.as_ref()
+  }
+
+  pub fn reset_user_status(&mut self) {
+    self.user_status = None;
   }
 
 }

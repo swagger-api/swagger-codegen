@@ -12,8 +12,10 @@
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Tag {
-  #[serde(rename = "id")] id: Option<i64>,
-  #[serde(rename = "name")] name: Option<String>
+  #[serde(rename = "id")]
+  id: Option<i64>,
+  #[serde(rename = "name")]
+  name: Option<String>
 }
 
 impl Tag {
@@ -38,6 +40,10 @@ impl Tag {
     self.id.as_ref()
   }
 
+  pub fn reset_id(&mut self) {
+    self.id = None;
+  }
+
   pub fn set_name(&mut self, name: String) {
     self.name = Some(name);
   }
@@ -49,6 +55,10 @@ impl Tag {
 
   pub fn name(&self) -> Option<&String> {
     self.name.as_ref()
+  }
+
+  pub fn reset_name(&mut self) {
+    self.name = None;
   }
 
 }

@@ -11,7 +11,8 @@ pub struct {{classname}} {
   {{#description}}
   /// {{{description}}}
   {{/description}}
-  #[serde(rename = "{{baseName}}")] {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
+  #[serde(rename = "{{baseName}}")]
+  {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
 {{/vars}}
 }
 
@@ -40,6 +41,12 @@ impl {{classname}} {
   pub fn {{name}}(&self) -> {{^required}}Option<{{/required}}&{{{datatype}}}{{^required}}>{{/required}} {
     {{#required}}&{{/required}}self.{{name}}{{^required}}.as_ref(){{/required}}
   }
+
+  {{^required}}
+  pub fn reset_{{name}}(&mut self) {
+    self.{{name}} = None;
+  }
+  {{/required}}
 
   {{/vars}}
 }

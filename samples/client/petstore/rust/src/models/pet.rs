@@ -12,13 +12,19 @@
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Pet {
-  #[serde(rename = "id")] id: Option<i64>,
-  #[serde(rename = "category")] category: Option<::models::Category>,
-  #[serde(rename = "name")] name: String,
-  #[serde(rename = "photoUrls")] photo_urls: Vec<String>,
-  #[serde(rename = "tags")] tags: Option<Vec<::models::Tag>>,
+  #[serde(rename = "id")]
+  id: Option<i64>,
+  #[serde(rename = "category")]
+  category: Option<::models::Category>,
+  #[serde(rename = "name")]
+  name: String,
+  #[serde(rename = "photoUrls")]
+  photo_urls: Vec<String>,
+  #[serde(rename = "tags")]
+  tags: Option<Vec<::models::Tag>>,
   /// pet status in the store
-  #[serde(rename = "status")] status: Option<String>
+  #[serde(rename = "status")]
+  status: Option<String>
 }
 
 impl Pet {
@@ -47,6 +53,10 @@ impl Pet {
     self.id.as_ref()
   }
 
+  pub fn reset_id(&mut self) {
+    self.id = None;
+  }
+
   pub fn set_category(&mut self, category: ::models::Category) {
     self.category = Some(category);
   }
@@ -58,6 +68,10 @@ impl Pet {
 
   pub fn category(&self) -> Option<&::models::Category> {
     self.category.as_ref()
+  }
+
+  pub fn reset_category(&mut self) {
+    self.category = None;
   }
 
   pub fn set_name(&mut self, name: String) {
@@ -73,6 +87,7 @@ impl Pet {
     &self.name
   }
 
+
   pub fn set_photo_urls(&mut self, photo_urls: Vec<String>) {
     self.photo_urls = photo_urls;
   }
@@ -85,6 +100,7 @@ impl Pet {
   pub fn photo_urls(&self) -> &Vec<String> {
     &self.photo_urls
   }
+
 
   pub fn set_tags(&mut self, tags: Vec<::models::Tag>) {
     self.tags = Some(tags);
@@ -99,6 +115,10 @@ impl Pet {
     self.tags.as_ref()
   }
 
+  pub fn reset_tags(&mut self) {
+    self.tags = None;
+  }
+
   pub fn set_status(&mut self, status: String) {
     self.status = Some(status);
   }
@@ -110,6 +130,10 @@ impl Pet {
 
   pub fn status(&self) -> Option<&String> {
     self.status.as_ref()
+  }
+
+  pub fn reset_status(&mut self) {
+    self.status = None;
   }
 
 }
