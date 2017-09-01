@@ -2278,6 +2278,9 @@ public class DefaultCodegen {
                 } else if (param instanceof BodyParameter) {
                     bodyParam = p;
                     bodyParams.add(p.copy());
+                    if(definitions != null) {
+                        op.requestBodyExamples = new ExampleGenerator(definitions).generate(null, operation.getConsumes(), bodyParam.dataType);
+                    }
                 } else if (param instanceof FormParameter) {
                     formParams.add(p.copy());
                 }
@@ -2286,11 +2289,13 @@ public class DefaultCodegen {
                 }
             }
         }
+
         for (String i : imports) {
             if (needToImport(i)) {
                 op.imports.add(i);
             }
         }
+
         op.bodyParam = bodyParam;
         op.httpMethod = httpMethod.toUpperCase();
 
@@ -2305,6 +2310,7 @@ public class DefaultCodegen {
               }
           });
         }
+
         op.allParams = addHasMore(allParams);
         op.bodyParams = addHasMore(bodyParams);
         op.pathParams = addHasMore(pathParams);
@@ -2312,13 +2318,13 @@ public class DefaultCodegen {
         op.headerParams = addHasMore(headerParams);
         // op.cookieParams = cookieParams;
         op.formParams = addHasMore(formParams);
+        op.externalDocs = operation.getExternalDocs();
         // legacy support
         op.nickname = op.operationId;
 
         if (op.allParams.size() > 0) {
             op.hasParams = true;
         }
-        op.externalDocs = operation.getExternalDocs();
 
         // set Restful Flag
         op.isRestfulShow = op.isRestfulShow();
@@ -3109,6 +3115,7 @@ public class DefaultCodegen {
                 final CodegenProperty cp = fromProperty(key, prop);
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
+                m.hasOptional = m.hasOptional || !cp.required;
                 if (cp.isEnum) {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
