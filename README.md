@@ -1035,7 +1035,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Groovy    |  |
 | Go        |  |
 | Haskell   |  |
-| Java      | @bbdg (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) |
+| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) |
 | Kotlin     |  |
 | Lua     | @daurnimator (2017/08) |
 | NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
@@ -1047,7 +1047,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Ruby      | @cliffano (2017/07)  |
 | Rust      | @frol (2017/07) @farcaller (2017/08) | 
 | Scala     | @clasnake (2017/07) |
-| Swift     | @jgavris (2017/07) |
+| Swift     | @jgavris (2017/07) @ehyche (2017/08) |
 | TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07)|
 
 
