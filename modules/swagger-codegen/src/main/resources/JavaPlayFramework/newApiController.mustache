@@ -7,11 +7,15 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Http;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import java.io.File;
+{{^handleExceptions}}
 import java.io.IOException;
+{{/handleExceptions}}
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -27,12 +31,16 @@ import swagger.SwaggerUtils.ApiAction;
 {{#operations}}
 public class {{classname}}Controller extends Controller {
 
-    private final {{classname}}ControllerImp imp;
+    {{^controllerOnly}}
+    private final {{classname}}ControllerImp{{#useInterfaces}}Interface{{/useInterfaces}} imp;
+    {{/controllerOnly}}
     private final ObjectMapper mapper;
 
     @Inject
-    private {{classname}}Controller({{classname}}ControllerImp imp) {
+    private {{classname}}Controller({{^controllerOnly}}{{classname}}ControllerImp{{#useInterfaces}}Interface{{/useInterfaces}} imp{{/controllerOnly}}) {
+        {{^controllerOnly}}
         this.imp = imp;
+        {{/controllerOnly}}
         mapper = new ObjectMapper();
     }
 
@@ -46,8 +54,14 @@ public class {{classname}}Controller extends Controller {
         {{{dataType}}} {{paramName}};
         {{^required}}
         if (node{{paramName}} != null) {
-            {{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isMapContainer}}new TypeReference<Map<{{{dataType}}}>>(){}{{/isMapContainer}}{{#isListContainer}}new TypeReference<List<{{{dataType}}}>>(){}{{/isListContainer}}{{^isListContainer}}{{^isMapContainer}}{{{dataType}}}.class{{/isMapContainer}}{{/isListContainer}});{{/required}}
-        {{#required}}{{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isMapContainer}}new TypeReference<Map<{{{dataType}}}>>(){}{{/isMapContainer}}{{#isListContainer}}new TypeReference<List<{{{dataType}}}>>(){}{{/isListContainer}}{{^isListContainer}}{{^isMapContainer}}{{{dataType}}}.class{{/isMapContainer}}{{/isListContainer}});{{/required}}
+            {{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isContainer}}new TypeReference<{{{dataType}}}>(){}{{/isContainer}}{{^isContainer}}{{{dataType}}}.class{{/isContainer}});{{/required}}
+        {{#required}}{{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isContainer}}new TypeReference<{{{dataType}}}>(){}{{/isContainer}}{{^isContainer}}{{{dataType}}}.class{{/isContainer}});{{/required}}{{#useBeanValidation}}
+        {{#isListContainer}}for ({{{baseType}}} curItem : {{paramName}}) {
+            curItem.validate();
+        }{{/isListContainer}}{{#isMapContainer}}for (Map.Entry<String, {{{baseType}}}> entry : {{paramName}}.entrySet()) {
+            entry.getValue().validate();
+        }
+        {{/isMapContainer}}{{^isContainer}}{{paramName}}.validate();{{/isContainer}}{{/useBeanValidation}}
         {{^required}}
         } else {
             {{paramName}} = null;
@@ -56,7 +70,7 @@ public class {{classname}}Controller extends Controller {
         {{/bodyParams}}
         {{#queryParams}}
         {{#collectionFormat}}
-        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", "{{paramName}}", request().getQueryString("{{baseName}}"));
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().queryString().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         for (String curParam : {{paramName}}List) {
             //noinspection UseBulkOperation
@@ -64,7 +78,7 @@ public class {{classname}}Controller extends Controller {
         }
         {{/collectionFormat}}
         {{^collectionFormat}}
-        String value{{paramName}} = request().getQueryString("{{paramName}}");
+        String value{{paramName}} = request().getQueryString("{{baseName}}");
         {{{dataType}}} {{paramName}};
         {{^required}}
         if (value{{paramName}} != null) {
@@ -79,14 +93,15 @@ public class {{classname}}Controller extends Controller {
         {{#formParams}}
         {{^notFile}}
         {{{dataType}}} {{paramName}} = request().body().asMultipartFormData().getFile("{{baseName}}");
-        {{#required}}if (({{paramName}} == null || ((File) {{paramName}}.getFile()).length() == 0)) {
+        {{#required}}
+        if (({{paramName}} == null || ((File) {{paramName}}.getFile()).length() == 0)) {
             throw new RuntimeException("File cannot be empty");
         }
         {{/required}}
         {{/notFile}}
         {{#notFile}}
         {{#collectionFormat}}
-        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", "{{paramName}}", (request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0]);
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         for (String curParam : {{paramName}}List) {
             //noinspection UseBulkOperation
@@ -109,7 +124,7 @@ public class {{classname}}Controller extends Controller {
         {{/formParams}}
         {{#headerParams}}
         {{#collectionFormat}}
-        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", "{{paramName}}", request().getHeader("{{baseName}}"));
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().headers().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         for (String curParam : {{paramName}}List) {
             //noinspection UseBulkOperation
@@ -129,10 +144,29 @@ public class {{classname}}Controller extends Controller {
         }{{/required}}
         {{/collectionFormat}}
         {{/headerParams}}
-        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-        {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
-        return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
-        {{^returnType}}return ok();{{/returnType}}
+        {{^controllerOnly}}
+        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^isResponseFile}}{{^returnTypeIsPrimitive}}{{#useBeanValidation}}
+        {{#isListContainer}}for ({{{returnType}}} curItem : obj) {
+            curItem.validate();
+        }{{/isListContainer}}{{#isMapContainer}}for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
+            entry.getValue().validate();
+        }
+        {{/isMapContainer}}{{^returnContainer}}obj.validate();{{/returnContainer}}{{/useBeanValidation}}{{/returnTypeIsPrimitive}}{{/isResponseFile}}{{/returnType}}
+        {{#returnType}}
+        {{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        {{/isResponseFile}}
+        {{#isResponseFile}}
+        return ok(obj);
+        {{/isResponseFile}}
+        {{/returnType}}
+        {{^returnType}}
+        return ok();
+        {{/returnType}}
+        {{/controllerOnly}}
+        {{#controllerOnly}}
+        return ok();
+        {{/controllerOnly}}
     }
 {{/operation}}
 }

@@ -33,6 +33,7 @@ public:
 
     QString host;
     QString basePath;
+    QMap<QString, QString> defaultHeaders;
 
     void deleteOrder(QString* order_id);
     void getInventory();
@@ -55,6 +56,11 @@ signals:
     void getInventorySignalE(QMap<QString, qint32>* summary, QNetworkReply::NetworkError error_type, QString& error_str);
     void getOrderByIdSignalE(SWGOrder* summary, QNetworkReply::NetworkError error_type, QString& error_str);
     void placeOrderSignalE(SWGOrder* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    
+    void deleteOrderSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void getInventorySignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void getOrderByIdSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void placeOrderSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     
 };
 

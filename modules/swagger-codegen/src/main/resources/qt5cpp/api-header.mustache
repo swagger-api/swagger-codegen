@@ -23,6 +23,7 @@ public:
 
     QString host;
     QString basePath;
+    QMap<QString, QString> defaultHeaders;
 
     {{#operations}}{{#operation}}void {{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     {{/operation}}{{/operations}}
@@ -33,6 +34,8 @@ signals:
     {{#operations}}{{#operation}}void {{nickname}}Signal({{#returnType}}{{{returnType}}} summary{{/returnType}});
     {{/operation}}{{/operations}}
     {{#operations}}{{#operation}}void {{nickname}}SignalE({{#returnType}}{{{returnType}}} summary, {{/returnType}}QNetworkReply::NetworkError error_type, QString& error_str);
+    {{/operation}}{{/operations}}
+    {{#operations}}{{#operation}}void {{nickname}}SignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     {{/operation}}{{/operations}}
 };
 

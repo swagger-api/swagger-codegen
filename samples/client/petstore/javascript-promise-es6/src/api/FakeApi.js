@@ -30,7 +30,7 @@ export default class FakeApi {
     * Constructs a new FakeApi. 
     * @alias module:api/FakeApi
     * @class
-    * @param {module:ApiClient} apiClient Optional API client implementation to use,
+    * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
     constructor(apiClient) {
@@ -445,6 +445,65 @@ export default class FakeApi {
      */
     testEnumParameters(opts) {
       return this.testEnumParametersWithHttpInfo(opts)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * test json serialization of form data
+     * 
+     * @param {String} param field1
+     * @param {String} param2 field2
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
+     */
+    testJsonFormDataWithHttpInfo(param, param2) {
+      let postBody = null;
+
+      // verify the required parameter 'param' is set
+      if (param === undefined || param === null) {
+        throw new Error("Missing the required parameter 'param' when calling testJsonFormData");
+      }
+
+      // verify the required parameter 'param2' is set
+      if (param2 === undefined || param2 === null) {
+        throw new Error("Missing the required parameter 'param2' when calling testJsonFormData");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+        'param': param,
+        'param2': param2
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/fake/jsonFormData', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * test json serialization of form data
+     * 
+     * @param {String} param field1
+     * @param {String} param2 field2
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}
+     */
+    testJsonFormData(param, param2) {
+      return this.testJsonFormDataWithHttpInfo(param, param2)
         .then(function(response_and_data) {
           return response_and_data.data;
         });

@@ -30,7 +30,7 @@ export default class FakeApi {
     * Constructs a new FakeApi. 
     * @alias module:api/FakeApi
     * @class
-    * @param {module:ApiClient} apiClient Optional API client implementation to use,
+    * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
     constructor(apiClient) {
@@ -386,6 +386,58 @@ export default class FakeApi {
 
       return this.apiClient.callApi(
         '/fake', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the testJsonFormData operation.
+     * @callback module:api/FakeApi~testJsonFormDataCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * test json serialization of form data
+     * 
+     * @param {String} param field1
+     * @param {String} param2 field2
+     * @param {module:api/FakeApi~testJsonFormDataCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    testJsonFormData(param, param2, callback) {
+      let postBody = null;
+
+      // verify the required parameter 'param' is set
+      if (param === undefined || param === null) {
+        throw new Error("Missing the required parameter 'param' when calling testJsonFormData");
+      }
+
+      // verify the required parameter 'param2' is set
+      if (param2 === undefined || param2 === null) {
+        throw new Error("Missing the required parameter 'param2' when calling testJsonFormData");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+        'param': param,
+        'param2': param2
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/fake/jsonFormData', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

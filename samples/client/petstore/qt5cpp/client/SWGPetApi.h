@@ -34,6 +34,7 @@ public:
 
     QString host;
     QString basePath;
+    QMap<QString, QString> defaultHeaders;
 
     void addPet(SWGPet body);
     void deletePet(qint64 pet_id, QString* api_key);
@@ -72,6 +73,15 @@ signals:
     void updatePetSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
     void updatePetWithFormSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
     void uploadFileSignalE(SWGApiResponse* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    
+    void addPetSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void deletePetSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void findPetsByStatusSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void findPetsByTagsSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void getPetByIdSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void updatePetSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void updatePetWithFormSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void uploadFileSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     
 };
 

@@ -1,28 +1,42 @@
-import {expect} from 'chai';
-import {StoreApiFactory} from 'typescript-fetch-api';
+import { expect } from 'chai';
+import { StoreApiFactory } from '@swagger/typescript-fetch-petstore';
+import { Configuration } from '@swagger/typescript-fetch-petstore';
 
-describe('StoreApiFactory', function() {
+let config: Configuration;
 
-  function runSuite(description: string, requestOptions?: any): void {
+before(function () {
+    config = new Configuration();
+    config.accessToken = "foobar";
+    config.apiKey = (securityName: string) => {
+        // for multiple apiKey security
+        if (securityName === "api_key") {
+            return "foobar";
+        }
+        return;
+    };
+    config.username = "foo";
+    config.password = "bar";
+});
 
-    describe(description, () => {
+describe('StoreApiFactory', function () {
+    function runSuite(description: string, requestOptions?: any): void {
 
-      const requestOptions: any = {credentials: 'include', mode: 'cors'};
+        describe(description, () => {
 
-      it('should get inventory', function() {
-        return StoreApiFactory().getInventory(requestOptions).then((result) => {
-          expect(Object.keys(result)).to.not.be.empty;
+            it('should get inventory', function () {
+                return StoreApiFactory(config).getInventory(requestOptions).then((result: { [key: string]: number }) => {
+                    expect(Object.keys(result)).to.not.be.empty;
+                });
+            });
+
         });
-      });
+    }
 
+    runSuite('without custom request options');
+
+    runSuite('with custom request options', {
+        credentials: 'include',
+        mode: 'cors'
     });
-  }
-
-  runSuite('without custom request options');
-
-  runSuite('with custom request options', {
-    credentials: 'include',
-    mode: 'cors'
-  });
 
 });

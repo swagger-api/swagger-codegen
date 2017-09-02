@@ -33,6 +33,7 @@ public:
 
     QString host;
     QString basePath;
+    QMap<QString, QString> defaultHeaders;
 
     void createUser(SWGUser body);
     void createUsersWithArrayInput(QList<SWGUser*>* body);
@@ -71,6 +72,15 @@ signals:
     void loginUserSignalE(QString* summary, QNetworkReply::NetworkError error_type, QString& error_str);
     void logoutUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
     void updateUserSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    
+    void createUserSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void createUsersWithArrayInputSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void createUsersWithListInputSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void deleteUserSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void getUserByNameSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void loginUserSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void logoutUserSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void updateUserSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     
 };
 

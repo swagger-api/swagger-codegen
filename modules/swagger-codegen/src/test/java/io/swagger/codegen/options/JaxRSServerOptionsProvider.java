@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 
 import java.util.Map;
 
@@ -38,6 +39,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
     public static final String USE_BEANVALIDATION = "true";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
     public static final String JAVA8_MODE_VALUE = "false";
+    public static final String WITH_XML_VALUE = "false";
+    public static final String USE_TAGS = "useTags";
 
 
     @Override
@@ -83,11 +86,13 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.LIBRARY, JAXRS_DEFAULT_LIBRARY_VALUE)
             .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
             .put(JavaClientCodegen.JAVA8_MODE, JAVA8_MODE_VALUE)
+            .put(JavaClientCodegen.WITH_XML, WITH_XML_VALUE)
             //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
-            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE);
+            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+            .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS);
 
         return builder.build();
     }
