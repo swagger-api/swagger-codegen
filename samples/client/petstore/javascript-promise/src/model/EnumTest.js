@@ -136,7 +136,7 @@
      * value: -1
      * @const
      */
-    "-1": -1  };
+    "_1": -1  };
 
   /**
    * Allowed values for the <code>enum_number</code> property.
@@ -148,12 +148,12 @@
      * value: 1.1
      * @const
      */
-    "1.1": 1.1,
+    "1_1": 1.1,
     /**
      * value: -1.2
      * @const
      */
-    "-1.2": -1.2  };
+    "_1_2": -1.2  };
 
 
   return exports;

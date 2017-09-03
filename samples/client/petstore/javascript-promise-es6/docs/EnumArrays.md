@@ -3,17 +3,17 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**justSymbol** | **String** |  | [optional] 
-**arrayEnum** | **[String]** |  | [optional] 
+**just_symbol** | **String** |  | [optional] 
+**array_enum** | **[String]** |  | [optional] 
 
 
 <a name="JustSymbolEnum"></a>
 ## Enum: JustSymbolEnum
 
 
-* `GREATER_THAN_OR_EQUAL_TO` (value: `">="`)
+* `` (value: `">="`)
 
-* `DOLLAR` (value: `"$"`)
+* `value` (value: `"$"`)
 
 
 

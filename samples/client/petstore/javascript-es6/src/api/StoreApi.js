@@ -45,20 +45,20 @@ export default class StoreApi {
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param {String} orderId ID of the order that needs to be deleted
+     * @param {String} order_id ID of the order that needs to be deleted
      * @param {module:api/StoreApi~deleteOrderCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    deleteOrder(orderId, callback) {
+    deleteOrder(order_id, callback) {
       let postBody = null;
 
-      // verify the required parameter 'orderId' is set
-      if (orderId === undefined || orderId === null) {
-        throw new Error("Missing the required parameter 'orderId' when calling deleteOrder");
+      // verify the required parameter 'order_id' is set
+      if (order_id === undefined || order_id === null) {
+        throw new Error("Missing the required parameter 'order_id' when calling deleteOrder");
       }
 
 
       let pathParams = {
-        'order_id': orderId
+        'order_id': order_id
       };
       let queryParams = {
       };
@@ -129,21 +129,21 @@ export default class StoreApi {
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-     * @param {Number} orderId ID of pet that needs to be fetched
+     * @param {Number} order_id ID of pet that needs to be fetched
      * @param {module:api/StoreApi~getOrderByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Order}
      */
-    getOrderById(orderId, callback) {
+    getOrderById(order_id, callback) {
       let postBody = null;
 
-      // verify the required parameter 'orderId' is set
-      if (orderId === undefined || orderId === null) {
-        throw new Error("Missing the required parameter 'orderId' when calling getOrderById");
+      // verify the required parameter 'order_id' is set
+      if (order_id === undefined || order_id === null) {
+        throw new Error("Missing the required parameter 'order_id' when calling getOrderById");
       }
 
 
       let pathParams = {
-        'order_id': orderId
+        'order_id': order_id
       };
       let queryParams = {
       };

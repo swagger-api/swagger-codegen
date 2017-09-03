@@ -487,7 +487,16 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String toVarName(String name) {
         // sanitize name
+
+        // var name starts with number
+        if (name.matches("^\\d.*")) {
+            String varName = "var" + name; // e.g. 200data => var200Data (after camelize)
+            LOGGER.warn(name + " (variable name starts with number) cannot be used as variable name. Renamed to " + varName);
+            name = varName;
+        }
+
         name = sanitizeName(name);  // FIXME parameter should not be assigned. Also declare it as "final"
+
 
         if("_".equals(name)) {
           name = "_u";
@@ -500,7 +509,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
         // camelize (lower first character) the variable name
         // pet_id => petId
-        name = camelize(name, true);
+        //name = camelize(name, true);
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*")) {
@@ -623,6 +632,14 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String toDefaultValueWithParam(String name, Property p) {
         String type = normalizeType(getTypeDeclaration(p));
+        // TODO
+        if (name.matches("^\\d.*")) {
+            String varName = "var" + name; // e.g. 200data => var200Data (after camelize)
+            LOGGER.warn(name + " (variable name starts with number) cannot be used as variable name. Renamed to " + varName);
+            name = varName;
+        }
+
+        name = this.sanitizeName(name);
         if (p instanceof RefProperty) {
             return " = " + type + ".constructFromObject(data['" + name + "']);";
         } else {
@@ -721,6 +738,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         // throw exception if method name is empty
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method/operation name (operationId) not allowed");
+        }
+
+        if (operationId.matches("^\\d.*")) {
+            String varName = "var" + operationId; // e.g. 200data => var200Data (after camelize)
+            LOGGER.warn(operationId + " (operationId starts with number) cannot be used as operationId. Renamed to " + varName);
+            operationId = varName;
         }
 
         operationId = camelize(sanitizeName(operationId), true);
@@ -1041,6 +1064,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         if (value.length() == 0) {
             return "empty";
         }
+
+        value = sanitizeName(value);
 
         // for symbol, e.g. $, #
         if (getSymbolName(value) != null) {

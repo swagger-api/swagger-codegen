@@ -37,7 +37,7 @@
       return object[getter]();
     else
       return object[property];
-  }
+  };
 
   var setProperty = function(object, setter, property, value) {
     // Use setter method if present; otherwise, set the property directly.
@@ -45,7 +45,7 @@
       object[setter](value);
     else
       object[property] = value;
-  }
+  };
 
   describe('FakeApi', function() {
     describe('testClientModel', function() {

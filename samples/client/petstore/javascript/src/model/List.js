@@ -63,7 +63,7 @@
       obj = obj || new exports();
 
       if (data.hasOwnProperty('123-list')) {
-        obj['123-list'] = ApiClient.convertToType(data['123-list'], 'String');
+        obj['123-list'] = ApiClient.convertToType(data['var123_list'], 'String');
       }
     }
     return obj;

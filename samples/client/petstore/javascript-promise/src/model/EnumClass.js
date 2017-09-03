@@ -47,12 +47,12 @@
      * value: "-efg"
      * @const
      */
-    "-efg": "-efg",
+    "_efg": "-efg",
     /**
      * value: "(xyz)"
      * @const
      */
-    "(xyz)": "(xyz)"  };
+    "_xyz": "(xyz)"  };
 
   /**
    * Returns a <code>EnumClass</code> enum value from a Javascript object name.

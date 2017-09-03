@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**_123List** | **String** |  | [optional] 
+**var123_list** | **String** |  | [optional] 
 
 

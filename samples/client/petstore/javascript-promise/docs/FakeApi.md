@@ -235,7 +235,7 @@ No authorization required
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**
-> testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts)
+> testEndpointParameters(_number, _double, pattern_without_delimiter, _byte, opts)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -257,7 +257,7 @@ var _number = 3.4; // Number | None
 
 var _double = 1.2; // Number | None
 
-var patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
+var pattern_without_delimiter = "pattern_without_delimiter_example"; // String | None
 
 var _byte = _byte_example; // Blob | None
 
@@ -273,7 +273,7 @@ var opts = {
   'password': "password_example", // String | None
   'callback': "callback_example" // String | None
 };
-apiInstance.testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts).then(function() {
+apiInstance.testEndpointParameters(_number, _double, pattern_without_delimiter, _byte, opts).then(function() {
   console.log('API called successfully.');
 }, function(error) {
   console.error(error);
@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **_number** | **Number**| None | 
  **_double** | **Number**| None | 
- **patternWithoutDelimiter** | **String**| None | 
+ **pattern_without_delimiter** | **String**| None | 
  **_byte** | **Blob**| None | 
  **integer** | **Number**| None | [optional] 
  **int32** | **Number**| None | [optional] 
@@ -328,14 +328,14 @@ var SwaggerPetstore = require('swagger_petstore');
 var apiInstance = new SwaggerPetstore.FakeApi();
 
 var opts = { 
-  'enumFormStringArray': ["enumFormStringArray_example"], // [String] | Form parameter enum test (string array)
-  'enumFormString': "-efg", // String | Form parameter enum test (string)
-  'enumHeaderStringArray': ["enumHeaderStringArray_example"], // [String] | Header parameter enum test (string array)
-  'enumHeaderString': "-efg", // String | Header parameter enum test (string)
-  'enumQueryStringArray': ["enumQueryStringArray_example"], // [String] | Query parameter enum test (string array)
-  'enumQueryString': "-efg", // String | Query parameter enum test (string)
-  'enumQueryInteger': 56, // Number | Query parameter enum test (double)
-  'enumQueryDouble': 1.2 // Number | Query parameter enum test (double)
+  'enum_form_string_array': ["enum_form_string_array_example"], // [String] | Form parameter enum test (string array)
+  'enum_form_string': "-efg", // String | Form parameter enum test (string)
+  'enum_header_string_array': ["enum_header_string_array_example"], // [String] | Header parameter enum test (string array)
+  'enum_header_string': "-efg", // String | Header parameter enum test (string)
+  'enum_query_string_array': ["enum_query_string_array_example"], // [String] | Query parameter enum test (string array)
+  'enum_query_string': "-efg", // String | Query parameter enum test (string)
+  'enum_query_integer': 56, // Number | Query parameter enum test (double)
+  'enum_query_double': 1.2 // Number | Query parameter enum test (double)
 };
 apiInstance.testEnumParameters(opts).then(function() {
   console.log('API called successfully.');
@@ -349,14 +349,14 @@ apiInstance.testEnumParameters(opts).then(function() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enumFormStringArray** | [**[String]**](String.md)| Form parameter enum test (string array) | [optional] 
- **enumFormString** | **String**| Form parameter enum test (string) | [optional] [default to -efg]
- **enumHeaderStringArray** | [**[String]**](String.md)| Header parameter enum test (string array) | [optional] 
- **enumHeaderString** | **String**| Header parameter enum test (string) | [optional] [default to -efg]
- **enumQueryStringArray** | [**[String]**](String.md)| Query parameter enum test (string array) | [optional] 
- **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [default to -efg]
- **enumQueryInteger** | **Number**| Query parameter enum test (double) | [optional] 
- **enumQueryDouble** | **Number**| Query parameter enum test (double) | [optional] 
+ **enum_form_string_array** | [**[String]**](String.md)| Form parameter enum test (string array) | [optional] 
+ **enum_form_string** | **String**| Form parameter enum test (string) | [optional] [default to -efg]
+ **enum_header_string_array** | [**[String]**](String.md)| Header parameter enum test (string array) | [optional] 
+ **enum_header_string** | **String**| Header parameter enum test (string) | [optional] [default to -efg]
+ **enum_query_string_array** | [**[String]**](String.md)| Query parameter enum test (string array) | [optional] 
+ **enum_query_string** | **String**| Query parameter enum test (string) | [optional] [default to -efg]
+ **enum_query_integer** | **Number**| Query parameter enum test (double) | [optional] 
+ **enum_query_double** | **Number**| Query parameter enum test (double) | [optional] 
 
 ### Return type
 
