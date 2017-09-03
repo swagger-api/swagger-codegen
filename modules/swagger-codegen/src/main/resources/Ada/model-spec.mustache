@@ -1,0 +1,29 @@
+{{>licenseInfo}}
+{{#imports}}with {{import}};
+{{/imports}}
+with Swagger.Streams;
+with Ada.Containers.Vectors;
+package {{package}}.Models is
+
+{{#orderedModels}}{{#model}}
+   --  ------------------------------
+   --  {{title}}
+   --  {{description}}
+   --  ------------------------------
+   type {{classname}} is
+     record
+       {{#vars}}
+       {{name}} : {{datatype}};
+       {{/vars}}
+     end record;
+
+   package {{classname}}_Vectors is
+      new Ada.Containers.Vectors ({{classname}}, Positive);
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in {{classname}});
+{{/model}}
+{{/orderedModels}}
+
+end {{package}}.Models;

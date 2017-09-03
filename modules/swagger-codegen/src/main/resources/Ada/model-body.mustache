@@ -1,0 +1,24 @@
+{{>licenseInfo}}
+
+package body {{package}}.Models is
+{{#orderedModels}}
+{{#model}}
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in {{classname}}) is
+   begin
+      Into.Start_Entity (Name);
+      {{#vars}}{{^isString}}{{^isInteger}}
+      Serialize (Into, "{{baseName}}", Value.{{name}});
+      {{/isInteger}}{{/isString}}{{#isString}}
+      Into.Write_Entity ("{{baseName}}", Value.{{name}});
+      {{/isString}}{{#isInteger}}
+      Into.Write_Entity ("{{baseName}}", Value.{{name}});
+      {{/isInteger}}{{/vars}}
+      Into.End_Entity (Name);
+   end Serialize;
+{{/model}}
+{{/orderedModels}}
+
+end {{package}}.Models;
