@@ -1,0 +1,24 @@
+{{>licenseInfo}}
+{{#imports}}with {{import}};
+{{/imports}}
+with {{package}}.Models;
+with Swagger.Clients;
+package {{package}}.Clients is
+
+   type Client_Type is new Swagger.Clients.Client_Type with null record;
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+   --  {{summary}}
+   {{#notes}}--  {{.}}{{/notes}}
+   procedure {{operationId}}
+      (Client : in out Client_Type;{{#allParams}}
+       {{paramName}} : in {{^isString}}{{^isPrimitiveType}}{{^isContainer}}{{package}}.Models.{{/isContainer}}{{/isPrimitiveType}}{{/isString}}{{dataType}}{{#hasMore}};{{/hasMore}}{{/allParams}});
+
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+end {{package}}.Clients;
