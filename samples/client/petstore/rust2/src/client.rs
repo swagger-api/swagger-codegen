@@ -83,10 +83,10 @@ fn into_base_path<T: IntoUrl>(input: T, correct_scheme: Option<&'static str>) ->
 }
 
 /// A client that implements the API by making HTTP calls out to a server.
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Client {
     base_path: String,
-    hyper_client: Arc<hyper::client::Client>,
+    hyper_client: Arc<Fn() -> hyper::client::Client + Sync + Send>,
 }
 
 impl Client {
@@ -95,7 +95,7 @@ impl Client {
     {
         Ok(Client {
             base_path: into_base_path(base_path, Some("http"))?,
-            hyper_client: Arc::new(hyper::client::Client::new()),
+            hyper_client: Arc::new(hyper::client::Client::new),
         })
     }
 
@@ -105,19 +105,23 @@ impl Client {
         where T: IntoUrl,
               CA: AsRef<Path>
     {
-        // SSL implementation
-        let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls())?;
+        let ca_certificate = ca_certificate.as_ref().to_owned();
 
-        // Server authentication
-        ssl.builder_mut().set_ca_file(ca_certificate)?;
+        let https_hyper_client = move || {
+            // SSL implementation
+            let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
 
-        let ssl = hyper_openssl::OpensslClient::from(ssl.build());
-        let connector = hyper::net::HttpsConnector::new(ssl);
-        let hyper_client = hyper::client::Client::with_connector(connector);
+            // Server authentication
+            ssl.builder_mut().set_ca_file(ca_certificate.clone()).unwrap();
+
+            let ssl = hyper_openssl::OpensslClient::from(ssl.build());
+            let connector = hyper::net::HttpsConnector::new(ssl);
+            hyper::client::Client::with_connector(connector)
+        };
 
         Ok(Client {
                 base_path: into_base_path(base_path, Some("https"))?,
-                hyper_client: Arc::new(hyper_client)
+                hyper_client: Arc::new(https_hyper_client),
             })
     }
 
@@ -131,24 +135,30 @@ impl Client {
               K: AsRef<Path>,
               C: AsRef<Path>
     {
-        // SSL implementation
-        let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls())?;
+        let ca_certificate = ca_certificate.as_ref().to_owned();
+        let client_key = client_key.as_ref().to_owned();
+        let client_certificate = client_certificate.as_ref().to_owned();
 
-        // Server authentication
-        ssl.builder_mut().set_ca_file(ca_certificate)?;
+        let https_mutual_hyper_client = move || {
+            // SSL implementation
+            let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
 
-        // Client authentication
-        ssl.builder_mut().set_private_key_file(client_key, openssl::x509::X509_FILETYPE_PEM)?;
-        ssl.builder_mut().set_certificate_chain_file(client_certificate)?;
-        ssl.builder_mut().check_private_key()?;
+            // Server authentication
+            ssl.builder_mut().set_ca_file(ca_certificate.clone()).unwrap();
 
-        let ssl = hyper_openssl::OpensslClient::from(ssl.build());
-        let connector = hyper::net::HttpsConnector::new(ssl);
-        let hyper_client = hyper::client::Client::with_connector(connector);
+            // Client authentication
+            ssl.builder_mut().set_private_key_file(client_key.clone(), openssl::x509::X509_FILETYPE_PEM).unwrap();
+            ssl.builder_mut().set_certificate_chain_file(client_certificate.clone()).unwrap();
+            ssl.builder_mut().check_private_key().unwrap();
+
+            let ssl = hyper_openssl::OpensslClient::from(ssl.build());
+            let connector = hyper::net::HttpsConnector::new(ssl);
+            hyper::client::Client::with_connector(connector)
+        };
 
         Ok(Client {
                 base_path: into_base_path(base_path, Some("https"))?,
-                hyper_client: Arc::new(hyper_client)
+                hyper_client: Arc::new(https_mutual_hyper_client)
             })
     }
 
@@ -161,15 +171,14 @@ impl Client {
     /// The reason for this function's existence is to support legacy test code, which did mocking at the hyper layer.
     /// This is not a recommended way to write new tests. If other reasons are found for using this function, they
     /// should be mentioned here.
-    #[deprecated(note="Use of a custom transport implementation is not recommended.")]
     pub fn try_new_with_hyper_client<T>(base_path: T,
-                                    hyper_client: hyper::client::Client)
+                                    hyper_client: Arc<Fn() -> hyper::client::Client + Sync + Send>)
                                     -> Result<Client, ClientInitError>
         where T: IntoUrl
     {
         Ok(Client {
             base_path: into_base_path(base_path, None)?,
-            hyper_client: Arc::new(hyper_client)
+            hyper_client: hyper_client
         })
     }
 }
@@ -185,7 +194,8 @@ impl Api for Client {
         let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = match body {
@@ -241,7 +251,8 @@ impl Api for Client {
         let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = match body {
@@ -297,7 +308,8 @@ impl Api for Client {
         let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = match body {
@@ -353,7 +365,8 @@ impl Api for Client {
         let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = match body {
@@ -409,7 +422,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Patch, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Patch, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -460,7 +474,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -514,7 +529,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -569,7 +585,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -615,7 +632,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Patch, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Patch, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -668,7 +686,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -715,7 +734,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Delete, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Delete, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -766,7 +786,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -822,7 +843,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -875,7 +897,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -935,7 +958,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Put, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Put, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -992,7 +1016,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1057,7 +1082,8 @@ impl Api for Client {
         let boundary = fields.boundary();
         let multipart_header = Mime(TopLevel::Multipart, SubLevel::FormData, vec![(Attr::Boundary, Value::Ext(boundary.to_string()))]);
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1120,7 +1146,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Delete, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Delete, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1169,7 +1196,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1217,7 +1245,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1277,7 +1306,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -1335,7 +1365,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -1384,7 +1415,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -1433,7 +1465,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Post, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
@@ -1480,7 +1513,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Delete, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Delete, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1529,7 +1563,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1591,7 +1626,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1648,7 +1684,8 @@ impl Api for Client {
 
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Get, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
@@ -1694,7 +1731,8 @@ impl Api for Client {
         let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
 
 
-        let request = self.hyper_client.request(hyper::method::Method::Put, &url);
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Put, &url);
         let mut custom_headers = hyper::header::Headers::new();
 
         let request = request.body(&body);
