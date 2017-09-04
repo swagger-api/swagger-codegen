@@ -23,13 +23,8 @@ fn ssl() -> Result<OpensslServer, ErrorStack> {
     let mut ssl = SslAcceptorBuilder::mozilla_intermediate_raw(SslMethod::tls())?;
 
     // Server authentication
-    ssl.builder_mut().set_private_key_file(
-        "examples/server-key.pem",
-        X509_FILETYPE_PEM,
-    )?;
-    ssl.builder_mut().set_certificate_chain_file(
-        "examples/server-chain.pem",
-    )?;
+    ssl.builder_mut().set_private_key_file("examples/server-key.pem", X509_FILETYPE_PEM)?;
+    ssl.builder_mut().set_certificate_chain_file("examples/server-chain.pem")?;
     ssl.builder_mut().check_private_key()?;
 
     Ok(OpensslServer::from(ssl.build()))
@@ -39,12 +34,12 @@ fn ssl() -> Result<OpensslServer, ErrorStack> {
 /// and pass it to the web server.
 fn main() {
     let matches = App::new("server")
-        .arg(Arg::with_name("https").long("https").help(
-            "Whether to use HTTPS or not",
-        ))
+        .arg(Arg::with_name("https")
+            .long("https")
+            .help("Whether to use HTTPS or not"))
         .get_matches();
 
-    let server = server_lib::Server {};
+    let server = server_lib::Server{};
     let router = petstore_api::router(server);
 
     let mut chain = Chain::new(router);
@@ -55,13 +50,9 @@ fn main() {
 
     if matches.is_present("https") {
         // Using Simple HTTPS
-        Iron::new(chain)
-            .https("localhost:8080", ssl().expect("Failed to load SSL keys"))
-            .expect("Failed to start HTTPS server");
+        Iron::new(chain).https("localhost:8080", ssl().expect("Failed to load SSL keys")).expect("Failed to start HTTPS server");
     } else {
         // Using HTTP
-        Iron::new(chain).http("localhost:8080").expect(
-            "Failed to start HTTP server",
-        );
+        Iron::new(chain).http("localhost:8080").expect("Failed to start HTTP server");
     }
 }

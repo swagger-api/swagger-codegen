@@ -33,15 +33,37 @@ use std::collections::BTreeSet;
 use swagger::auth::{Authorization, AuthData, Scopes};
 use swagger::{ApiError, Context, XSpanId};
 
-use {Api, FakeOuterBooleanSerializeResponse, FakeOuterCompositeSerializeResponse,
-     FakeOuterNumberSerializeResponse, FakeOuterStringSerializeResponse, TestClientModelResponse,
-     TestEndpointParametersResponse, TestEnumParametersResponse, TestJsonFormDataResponse,
-     TestClassnameResponse, AddPetResponse, DeletePetResponse, FindPetsByStatusResponse,
-     FindPetsByTagsResponse, GetPetByIdResponse, UpdatePetResponse, UpdatePetWithFormResponse,
-     UploadFileResponse, DeleteOrderResponse, GetInventoryResponse, GetOrderByIdResponse,
-     PlaceOrderResponse, CreateUserResponse, CreateUsersWithArrayInputResponse,
-     CreateUsersWithListInputResponse, DeleteUserResponse, GetUserByNameResponse,
-     LoginUserResponse, LogoutUserResponse, UpdateUserResponse};
+use {Api,
+     FakeOuterBooleanSerializeResponse,
+     FakeOuterCompositeSerializeResponse,
+     FakeOuterNumberSerializeResponse,
+     FakeOuterStringSerializeResponse,
+     TestClientModelResponse,
+     TestEndpointParametersResponse,
+     TestEnumParametersResponse,
+     TestJsonFormDataResponse,
+     TestClassnameResponse,
+     AddPetResponse,
+     DeletePetResponse,
+     FindPetsByStatusResponse,
+     FindPetsByTagsResponse,
+     GetPetByIdResponse,
+     UpdatePetResponse,
+     UpdatePetWithFormResponse,
+     UploadFileResponse,
+     DeleteOrderResponse,
+     GetInventoryResponse,
+     GetOrderByIdResponse,
+     PlaceOrderResponse,
+     CreateUserResponse,
+     CreateUsersWithArrayInputResponse,
+     CreateUsersWithListInputResponse,
+     DeleteUserResponse,
+     GetUserByNameResponse,
+     LoginUserResponse,
+     LogoutUserResponse,
+     UpdateUserResponse
+     };
 #[allow(unused_imports)]
 use models;
 
@@ -52,125 +74,130 @@ mod response_mimetypes {
 
     // The macro is called per-operation to beat the recursion limit
     /// Create Mime objects for the response content types for FakeOuterBooleanSerialize
-    lazy_static!{}
+    lazy_static! { 
+    }
     /// Create Mime objects for the response content types for FakeOuterCompositeSerialize
-    lazy_static!{}
+    lazy_static! { 
+    }
     /// Create Mime objects for the response content types for FakeOuterNumberSerialize
-    lazy_static!{}
+    lazy_static! { 
+    }
     /// Create Mime objects for the response content types for FakeOuterStringSerialize
-    lazy_static!{}
+    lazy_static! { 
+    }
     /// Create Mime objects for the response content types for TestClientModel
-    lazy_static! {
+    lazy_static! { 
         pub static ref TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for TestEndpointParameters
-    lazy_static! {
+    lazy_static! { 
         pub static ref TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml; ("charset")=("utf-8"));
         pub static ref TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND: Mime = mime!(Application/Xml; ("charset")=("utf-8"));
     }
     /// Create Mime objects for the response content types for TestEnumParameters
-    lazy_static! {
+    lazy_static! { 
         pub static ref TEST_ENUM_PARAMETERS_INVALID_REQUEST: Mime = mime!(Star/Star);
         pub static ref TEST_ENUM_PARAMETERS_NOT_FOUND: Mime = mime!(Star/Star);
     }
     /// Create Mime objects for the response content types for TestJsonFormData
-    lazy_static!{}
+    lazy_static! { 
+    }
     /// Create Mime objects for the response content types for TestClassname
-    lazy_static! {
+    lazy_static! { 
         pub static ref TEST_CLASSNAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for AddPet
-    lazy_static! {
+    lazy_static! { 
         pub static ref ADD_PET_INVALID_INPUT: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for DeletePet
-    lazy_static! {
+    lazy_static! { 
         pub static ref DELETE_PET_INVALID_PET_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for FindPetsByStatus
-    lazy_static! {
+    lazy_static! { 
         pub static ref FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for FindPetsByTags
-    lazy_static! {
+    lazy_static! { 
         pub static ref FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref FIND_PETS_BY_TAGS_INVALID_TAG_VALUE: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetPetById
-    lazy_static! {
+    lazy_static! { 
         pub static ref GET_PET_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_PET_BY_ID_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_PET_BY_ID_PET_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdatePet
-    lazy_static! {
+    lazy_static! { 
         pub static ref UPDATE_PET_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref UPDATE_PET_PET_NOT_FOUND: Mime = mime!(Application/Xml);
         pub static ref UPDATE_PET_VALIDATION_EXCEPTION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdatePetWithForm
-    lazy_static! {
+    lazy_static! { 
         pub static ref UPDATE_PET_WITH_FORM_INVALID_INPUT: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UploadFile
-    lazy_static! {
+    lazy_static! { 
         pub static ref UPLOAD_FILE_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for DeleteOrder
-    lazy_static! {
+    lazy_static! { 
         pub static ref DELETE_ORDER_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref DELETE_ORDER_ORDER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetInventory
-    lazy_static! {
+    lazy_static! { 
         pub static ref GET_INVENTORY_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for GetOrderById
-    lazy_static! {
+    lazy_static! { 
         pub static ref GET_ORDER_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_ORDER_BY_ID_INVALID_ID_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_ORDER_BY_ID_ORDER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for PlaceOrder
-    lazy_static! {
+    lazy_static! { 
         pub static ref PLACE_ORDER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref PLACE_ORDER_INVALID_ORDER: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUser
-    lazy_static! {
+    lazy_static! { 
         pub static ref CREATE_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUsersWithArrayInput
-    lazy_static! {
+    lazy_static! { 
         pub static ref CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for CreateUsersWithListInput
-    lazy_static! {
+    lazy_static! { 
         pub static ref CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for DeleteUser
-    lazy_static! {
+    lazy_static! { 
         pub static ref DELETE_USER_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref DELETE_USER_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetUserByName
-    lazy_static! {
+    lazy_static! { 
         pub static ref GET_USER_BY_NAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref GET_USER_BY_NAME_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for LoginUser
-    lazy_static! {
+    lazy_static! { 
         pub static ref LOGIN_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
         pub static ref LOGIN_USER_INVALID_USERNAME: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for LogoutUser
-    lazy_static! {
+    lazy_static! { 
         pub static ref LOGOUT_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UpdateUser
-    lazy_static! {
+    lazy_static! { 
         pub static ref UPDATE_USER_INVALID_USER_SUPPLIED: Mime = mime!(Application/Xml);
         pub static ref UPDATE_USER_USER_NOT_FOUND: Mime = mime!(Application/Xml);
     }
@@ -179,10 +206,7 @@ mod response_mimetypes {
 
 
 /// Create a new router for `Api`
-pub fn router<T>(api: T) -> Router
-where
-    T: Api + Send + Sync + Clone + 'static,
-{
+pub fn router<T>(api: T) -> Router where T: Api + Send + Sync + Clone + 'static {
     let mut router = Router::new();
     add_routes(&mut router, api);
     router
@@ -208,19 +232,13 @@ where
 ///
 /// This function exists to allow legacy code, which doesn't separate its APIs properly, to make
 /// use of this crate.
-#[deprecated(note = "APIs should not overlap - only for use in legacy code.")]
-pub fn route<T>(router: &mut Router, api: T)
-where
-    T: Api + Send + Sync + Clone + 'static,
-{
+#[deprecated(note="APIs should not overlap - only for use in legacy code.")]
+pub fn route<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone + 'static {
     add_routes(router, api)
 }
 
 /// Add routes for `Api` to a provided router
-fn add_routes<T>(router: &mut Router, api: T)
-where
-    T: Api + Send + Sync + Clone + 'static,
-{
+fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone + 'static {
 
     let api_clone = api.clone();
     router.post(
@@ -263,7 +281,7 @@ where
                     Ok(rsp) => match rsp {
                         FakeOuterBooleanSerializeResponse::OutputBoolean(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
                                 response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -327,7 +345,7 @@ where
                     Ok(rsp) => match rsp {
                         FakeOuterCompositeSerializeResponse::OutputComposite(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
                                 response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -391,7 +409,7 @@ where
                     Ok(rsp) => match rsp {
                         FakeOuterNumberSerializeResponse::OutputNumber(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
                                 response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -455,7 +473,7 @@ where
                     Ok(rsp) => match rsp {
                         FakeOuterStringSerializeResponse::OutputString(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
                                 response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -520,7 +538,7 @@ where
                     Ok(rsp) => match rsp {
                         TestClientModelResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -588,7 +606,7 @@ where
                     Ok(rsp) => match rsp {
                         TestEndpointParametersResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -597,7 +615,7 @@ where
                         },
                         TestEndpointParametersResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -660,7 +678,7 @@ where
                     Ok(rsp) => match rsp {
                         TestEnumParametersResponse::InvalidRequest => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_INVALID_REQUEST.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -669,7 +687,7 @@ where
                         },
                         TestEnumParametersResponse::NotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_ENUM_PARAMETERS_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -716,7 +734,7 @@ where
                     Ok(rsp) => match rsp {
                         TestJsonFormDataResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(200)));
-
+    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
@@ -786,7 +804,7 @@ where
                     Ok(rsp) => match rsp {
                         TestClassnameResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -878,7 +896,7 @@ where
                     Ok(rsp) => match rsp {
                         AddPetResponse::InvalidInput => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::ADD_PET_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -962,7 +980,7 @@ where
                     Ok(rsp) => match rsp {
                         DeletePetResponse::InvalidPetValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::DELETE_PET_INVALID_PET_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1037,7 +1055,7 @@ where
                     Ok(rsp) => match rsp {
                         FindPetsByStatusResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1046,7 +1064,7 @@ where
                         },
                         FindPetsByStatusResponse::InvalidStatusValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1121,7 +1139,7 @@ where
                     Ok(rsp) => match rsp {
                         FindPetsByTagsResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1130,7 +1148,7 @@ where
                         },
                         FindPetsByTagsResponse::InvalidTagValue => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::FIND_PETS_BY_TAGS_INVALID_TAG_VALUE.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1190,7 +1208,7 @@ where
                     Ok(rsp) => match rsp {
                         GetPetByIdResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1199,7 +1217,7 @@ where
                         },
                         GetPetByIdResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1208,7 +1226,7 @@ where
                         },
                         GetPetByIdResponse::PetNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_PET_BY_ID_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1298,7 +1316,7 @@ where
                     Ok(rsp) => match rsp {
                         UpdatePetResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1309,7 +1327,7 @@ where
                         },
                         UpdatePetResponse::PetNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_PET_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1320,7 +1338,7 @@ where
                         },
                         UpdatePetResponse::ValidationException => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_VALIDATION_EXCEPTION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1403,7 +1421,7 @@ where
                     Ok(rsp) => match rsp {
                         UpdatePetWithFormResponse::InvalidInput => {
                             let mut response = Response::with((status::Status::from_u16(405)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_PET_WITH_FORM_INVALID_INPUT.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1518,7 +1536,7 @@ where
                     Ok(rsp) => match rsp {
                         UploadFileResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1571,7 +1589,7 @@ where
                     Ok(rsp) => match rsp {
                         DeleteOrderResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1580,7 +1598,7 @@ where
                         },
                         DeleteOrderResponse::OrderNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::DELETE_ORDER_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1631,7 +1649,7 @@ where
                     Ok(rsp) => match rsp {
                         GetInventoryResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1684,7 +1702,7 @@ where
                     Ok(rsp) => match rsp {
                         GetOrderByIdResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1693,7 +1711,7 @@ where
                         },
                         GetOrderByIdResponse::InvalidIDSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_INVALID_ID_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1702,7 +1720,7 @@ where
                         },
                         GetOrderByIdResponse::OrderNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_ORDER_BY_ID_ORDER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1767,7 +1785,7 @@ where
                     Ok(rsp) => match rsp {
                         PlaceOrderResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1778,7 +1796,7 @@ where
                         },
                         PlaceOrderResponse::InvalidOrder => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::PLACE_ORDER_INVALID_ORDER.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1845,7 +1863,7 @@ where
                     Ok(rsp) => match rsp {
                         CreateUserResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::CREATE_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1912,7 +1930,7 @@ where
                     Ok(rsp) => match rsp {
                         CreateUsersWithArrayInputResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -1979,7 +1997,7 @@ where
                     Ok(rsp) => match rsp {
                         CreateUsersWithListInputResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2034,7 +2052,7 @@ where
                     Ok(rsp) => match rsp {
                         DeleteUserResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2043,7 +2061,7 @@ where
                         },
                         DeleteUserResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::DELETE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2096,7 +2114,7 @@ where
                     Ok(rsp) => match rsp {
                         GetUserByNameResponse::SuccessfulOperation(body) => {
                             let mut response = Response::with((status::Status::from_u16(200), serde_json::to_string(&body).expect("Impossible to fail to serialize")));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2105,7 +2123,7 @@ where
                         },
                         GetUserByNameResponse::InvalidUsernameSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2114,7 +2132,7 @@ where
                         },
                         GetUserByNameResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::GET_USER_BY_NAME_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2173,7 +2191,7 @@ where
                             response.headers.set(ResponseXRateLimit(x_rate_limit));
                             header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
                             response.headers.set(ResponseXExpiresAfter(x_expires_after));
-
+    
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2182,7 +2200,7 @@ where
                         },
                         LoginUserResponse::InvalidUsername => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::LOGIN_USER_INVALID_USERNAME.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2226,7 +2244,7 @@ where
                     Ok(rsp) => match rsp {
                         LogoutUserResponse::SuccessfulOperation => {
                             let mut response = Response::with((status::Status::from_u16(0)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::LOGOUT_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2300,7 +2318,7 @@ where
                     Ok(rsp) => match rsp {
                         UpdateUserResponse::InvalidUserSupplied => {
                             let mut response = Response::with((status::Status::from_u16(400)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_INVALID_USER_SUPPLIED.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2311,7 +2329,7 @@ where
                         },
                         UpdateUserResponse::UserNotFound => {
                             let mut response = Response::with((status::Status::from_u16(404)));
-
+    
                             response.headers.set(ContentType(response_mimetypes::UPDATE_USER_USER_NOT_FOUND.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -2346,16 +2364,14 @@ impl BeforeMiddleware for ExtractAuthData {
         {
             header! { (ApiKey1, "api_key") => [String] }
             if let Some(header) = req.headers.get::<ApiKey1>() {
-                req.extensions.insert::<AuthData>(
-                    AuthData::ApiKey(header.0.clone()),
-                );
+                req.extensions.insert::<AuthData>(AuthData::ApiKey(header.0.clone()));
                 return Ok(());
             }
         }
         {
             let header = match req.get_ref::<UrlEncodedQuery>() {
                 Ok(query) => query.get("api_key_query").map(|v| v[0].clone()),
-                _ => None,
+                _ => None
             };
             if let Some(key) = header {
                 req.extensions.insert::<AuthData>(AuthData::ApiKey(key));
@@ -2366,9 +2382,7 @@ impl BeforeMiddleware for ExtractAuthData {
             use hyper::header::{Authorization, Basic, Bearer};
             use std::ops::Deref;
             if let Some(basic) = req.headers.get::<Authorization<Basic>>() {
-                req.extensions.insert::<AuthData>(
-                    AuthData::Basic(basic.deref().clone()),
-                );
+                req.extensions.insert::<AuthData>(AuthData::Basic(basic.deref().clone()));
                 return Ok(());
             }
         }
@@ -2376,9 +2390,7 @@ impl BeforeMiddleware for ExtractAuthData {
             use hyper::header::{Authorization, Basic, Bearer};
             use std::ops::Deref;
             if let Some(bearer) = req.headers.get::<Authorization<Bearer>>() {
-                req.extensions.insert::<AuthData>(
-                    AuthData::Bearer(bearer.deref().clone()),
-                );
+                req.extensions.insert::<AuthData>(AuthData::Bearer(bearer.deref().clone()));
                 return Ok(());
             }
         }
