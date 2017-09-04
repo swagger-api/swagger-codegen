@@ -10,14 +10,12 @@ use swagger;
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AdditionalPropertiesClass {
     #[serde(rename = "map_property")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub map_property: Option<HashMap<String, String>>,
 
     #[serde(rename = "map_of_map_property")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub map_of_map_property: Option<HashMap<String, HashMap<String, String>>>,
-
-
 }
 
 impl AdditionalPropertiesClass {
@@ -35,14 +33,12 @@ pub struct Animal {
     pub class_name: String,
 
     #[serde(rename = "color")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub color: Option<String>,
-
-
 }
 
 impl Animal {
-    pub fn new(class_name: String, ) -> Animal {
+    pub fn new(class_name: String) -> Animal {
         Animal {
             class_name: class_name,
             color: Some("red".to_string()),
@@ -55,18 +51,16 @@ pub type AnimalFarm = Vec<Animal>;
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ApiResponse {
     #[serde(rename = "code")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub code: Option<i32>,
 
     #[serde(rename = "type")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub _type: Option<String>,
 
     #[serde(rename = "message")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
-
-
 }
 
 impl ApiResponse {
@@ -82,52 +76,42 @@ impl ApiResponse {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ArrayOfArrayOfNumberOnly {
     #[serde(rename = "ArrayArrayNumber")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_array_number: Option<Vec<Vec<f64>>>,
-
-
 }
 
 impl ArrayOfArrayOfNumberOnly {
     pub fn new() -> ArrayOfArrayOfNumberOnly {
-        ArrayOfArrayOfNumberOnly {
-            array_array_number: None,
-        }
+        ArrayOfArrayOfNumberOnly { array_array_number: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ArrayOfNumberOnly {
     #[serde(rename = "ArrayNumber")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_number: Option<Vec<f64>>,
-
-
 }
 
 impl ArrayOfNumberOnly {
     pub fn new() -> ArrayOfNumberOnly {
-        ArrayOfNumberOnly {
-            array_number: None,
-        }
+        ArrayOfNumberOnly { array_number: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ArrayTest {
     #[serde(rename = "array_of_string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_of_string: Option<Vec<String>>,
 
     #[serde(rename = "array_array_of_integer")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_array_of_integer: Option<Vec<Vec<i64>>>,
 
     #[serde(rename = "array_array_of_model")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_array_of_model: Option<Vec<Vec<models::ReadOnlyFirst>>>,
-
-
 }
 
 impl ArrayTest {
@@ -143,31 +127,29 @@ impl ArrayTest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Capitalization {
     #[serde(rename = "smallCamel")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub small_camel: Option<String>,
 
     #[serde(rename = "CapitalCamel")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub capital_camel: Option<String>,
 
     #[serde(rename = "small_Snake")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub small_snake: Option<String>,
 
     #[serde(rename = "Capital_Snake")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub capital_snake: Option<String>,
 
     #[serde(rename = "SCA_ETH_Flow_Points")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub sca_eth_flow_points: Option<String>,
 
-    /// Name of the pet 
+    /// Name of the pet
     #[serde(rename = "ATT_NAME")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub att_name: Option<String>,
-
-
 }
 
 impl Capitalization {
@@ -186,14 +168,12 @@ impl Capitalization {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Category {
     #[serde(rename = "id")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<i64>,
 
     #[serde(rename = "name")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-
-
 }
 
 impl Category {
@@ -209,34 +189,26 @@ impl Category {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ClassModel {
     #[serde(rename = "_class")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub _class: Option<String>,
-
-
 }
 
 impl ClassModel {
     pub fn new() -> ClassModel {
-        ClassModel {
-            _class: None,
-        }
+        ClassModel { _class: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Client {
     #[serde(rename = "client")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub client: Option<String>,
-
-
 }
 
 impl Client {
     pub fn new() -> Client {
-        Client {
-            client: None,
-        }
+        Client { client: None }
     }
 }
 
@@ -244,15 +216,13 @@ impl Client {
 pub struct EnumArrays {
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "just_symbol")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub just_symbol: Option<String>,
 
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "array_enum")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub array_enum: Option<Vec<String>>,
-
-
 }
 
 impl EnumArrays {
@@ -270,7 +240,7 @@ impl EnumArrays {
 #[allow(non_camel_case_types)]
 #[repr(C)]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]
-pub enum EnumClass { 
+pub enum EnumClass {
     #[serde(rename = "_abc")]
     _ABC,
     #[serde(rename = "-efg")]
@@ -305,24 +275,22 @@ impl ::std::str::FromStr for EnumClass {
 pub struct EnumTest {
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "enum_string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub enum_string: Option<String>,
 
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "enum_integer")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub enum_integer: Option<i32>,
 
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "enum_number")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub enum_number: Option<f64>,
 
     #[serde(rename = "outerEnum")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub outer_enum: Option<models::OuterEnum>,
-
-
 }
 
 impl EnumTest {
@@ -339,58 +307,61 @@ impl EnumTest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FormatTest {
     #[serde(rename = "integer")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub integer: Option<i32>,
 
     #[serde(rename = "int32")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub int32: Option<i32>,
 
     #[serde(rename = "int64")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub int64: Option<i64>,
 
     #[serde(rename = "number")]
     pub number: f64,
 
     #[serde(rename = "float")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub float: Option<f32>,
 
     #[serde(rename = "double")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub double: Option<f64>,
 
     #[serde(rename = "string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub string: Option<String>,
 
     #[serde(rename = "byte")]
     pub byte: swagger::ByteArray,
 
     #[serde(rename = "binary")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub binary: Option<swagger::ByteArray>,
 
     #[serde(rename = "date")]
     pub date: chrono::DateTime<chrono::Utc>,
 
     #[serde(rename = "dateTime")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub date_time: Option<chrono::DateTime<chrono::Utc>>,
 
     #[serde(rename = "uuid")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub uuid: Option<uuid::Uuid>,
 
     #[serde(rename = "password")]
     pub password: String,
-
-
 }
 
 impl FormatTest {
-    pub fn new(number: f64, byte: swagger::ByteArray, date: chrono::DateTime<chrono::Utc>, password: String, ) -> FormatTest {
+    pub fn new(
+        number: f64,
+        byte: swagger::ByteArray,
+        date: chrono::DateTime<chrono::Utc>,
+        password: String,
+    ) -> FormatTest {
         FormatTest {
             integer: None,
             int32: None,
@@ -412,14 +383,12 @@ impl FormatTest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct HasOnlyReadOnly {
     #[serde(rename = "bar")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub bar: Option<String>,
 
     #[serde(rename = "foo")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub foo: Option<String>,
-
-
 }
 
 impl HasOnlyReadOnly {
@@ -434,32 +403,26 @@ impl HasOnlyReadOnly {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct List {
     #[serde(rename = "123-list")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub _123_list: Option<String>,
-
-
 }
 
 impl List {
     pub fn new() -> List {
-        List {
-            _123_list: None,
-        }
+        List { _123_list: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MapTest {
     #[serde(rename = "map_map_of_string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub map_map_of_string: Option<HashMap<String, HashMap<String, String>>>,
 
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "map_of_enum_string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub map_of_enum_string: Option<HashMap<String, String>>,
-
-
 }
 
 impl MapTest {
@@ -474,18 +437,16 @@ impl MapTest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MixedPropertiesAndAdditionalPropertiesClass {
     #[serde(rename = "uuid")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub uuid: Option<uuid::Uuid>,
 
     #[serde(rename = "dateTime")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub date_time: Option<chrono::DateTime<chrono::Utc>>,
 
     #[serde(rename = "map")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub map: Option<HashMap<String, models::Animal>>,
-
-
 }
 
 impl MixedPropertiesAndAdditionalPropertiesClass {
@@ -502,14 +463,12 @@ impl MixedPropertiesAndAdditionalPropertiesClass {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Model200Response {
     #[serde(rename = "name")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<i32>,
 
     #[serde(rename = "class")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub class: Option<String>,
-
-
 }
 
 impl Model200Response {
@@ -525,17 +484,13 @@ impl Model200Response {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ModelReturn {
     #[serde(rename = "return")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub _return: Option<i32>,
-
-
 }
 
 impl ModelReturn {
     pub fn new() -> ModelReturn {
-        ModelReturn {
-            _return: None,
-        }
+        ModelReturn { _return: None }
     }
 }
 
@@ -546,22 +501,20 @@ pub struct Name {
     pub name: i32,
 
     #[serde(rename = "snake_case")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub snake_case: Option<i32>,
 
     #[serde(rename = "property")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub property: Option<String>,
 
     #[serde(rename = "123Number")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub _123_number: Option<i32>,
-
-
 }
 
 impl Name {
-    pub fn new(name: i32, ) -> Name {
+    pub fn new(name: i32) -> Name {
         Name {
             name: name,
             snake_case: None,
@@ -574,49 +527,43 @@ impl Name {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct NumberOnly {
     #[serde(rename = "JustNumber")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub just_number: Option<f64>,
-
-
 }
 
 impl NumberOnly {
     pub fn new() -> NumberOnly {
-        NumberOnly {
-            just_number: None,
-        }
+        NumberOnly { just_number: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Order {
     #[serde(rename = "id")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<i64>,
 
     #[serde(rename = "petId")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub pet_id: Option<i64>,
 
     #[serde(rename = "quantity")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub quantity: Option<i32>,
 
     #[serde(rename = "shipDate")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ship_date: Option<chrono::DateTime<chrono::Utc>>,
 
     /// Order Status
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "status")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
 
     #[serde(rename = "complete")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub complete: Option<bool>,
-
-
 }
 
 impl Order {
@@ -657,18 +604,16 @@ impl ::std::ops::DerefMut for OuterBoolean {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct OuterComposite {
     #[serde(rename = "my_number")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub my_number: Option<models::OuterNumber>,
 
     #[serde(rename = "my_string")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub my_string: Option<models::OuterString>,
 
     #[serde(rename = "my_boolean")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub my_boolean: Option<models::OuterBoolean>,
-
-
 }
 
 impl OuterComposite {
@@ -687,7 +632,7 @@ impl OuterComposite {
 #[allow(non_camel_case_types)]
 #[repr(C)]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]
-pub enum OuterEnum { 
+pub enum OuterEnum {
     #[serde(rename = "placed")]
     PLACED,
     #[serde(rename = "approved")]
@@ -765,11 +710,11 @@ impl ::std::ops::DerefMut for OuterString {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Pet {
     #[serde(rename = "id")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<i64>,
 
     #[serde(rename = "category")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub category: Option<models::Category>,
 
     #[serde(rename = "name")]
@@ -779,20 +724,18 @@ pub struct Pet {
     pub photo_urls: Vec<String>,
 
     #[serde(rename = "tags")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub tags: Option<Vec<models::Tag>>,
 
     /// pet status in the store
     // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "status")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
-
-
 }
 
 impl Pet {
-    pub fn new(name: String, photo_urls: Vec<String>, ) -> Pet {
+    pub fn new(name: String, photo_urls: Vec<String>) -> Pet {
         Pet {
             id: None,
             category: None,
@@ -807,14 +750,12 @@ impl Pet {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ReadOnlyFirst {
     #[serde(rename = "bar")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub bar: Option<String>,
 
     #[serde(rename = "baz")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub baz: Option<String>,
-
-
 }
 
 impl ReadOnlyFirst {
@@ -829,31 +770,25 @@ impl ReadOnlyFirst {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SpecialModelName {
     #[serde(rename = "$special[property.name]")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub special_property_name: Option<i64>,
-
-
 }
 
 impl SpecialModelName {
     pub fn new() -> SpecialModelName {
-        SpecialModelName {
-            special_property_name: None,
-        }
+        SpecialModelName { special_property_name: None }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Tag {
     #[serde(rename = "id")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<i64>,
 
     #[serde(rename = "name")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-
-
 }
 
 impl Tag {
@@ -868,39 +803,37 @@ impl Tag {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct User {
     #[serde(rename = "id")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<i64>,
 
     #[serde(rename = "username")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub username: Option<String>,
 
     #[serde(rename = "firstName")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub first_name: Option<String>,
 
     #[serde(rename = "lastName")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub last_name: Option<String>,
 
     #[serde(rename = "email")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub email: Option<String>,
 
     #[serde(rename = "password")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub password: Option<String>,
 
     #[serde(rename = "phone")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub phone: Option<String>,
 
     /// User Status
     #[serde(rename = "userStatus")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub user_status: Option<i32>,
-
-
 }
 
 impl User {
@@ -924,18 +857,16 @@ pub struct Cat {
     pub class_name: String,
 
     #[serde(rename = "color")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub color: Option<String>,
 
     #[serde(rename = "declawed")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub declawed: Option<bool>,
-
-
 }
 
 impl Cat {
-    pub fn new(class_name: String, ) -> Cat {
+    pub fn new(class_name: String) -> Cat {
         Cat {
             class_name: class_name,
             color: Some("red".to_string()),
@@ -950,18 +881,16 @@ pub struct Dog {
     pub class_name: String,
 
     #[serde(rename = "color")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub color: Option<String>,
 
     #[serde(rename = "breed")]
-    #[serde(skip_serializing_if="Option::is_none")]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub breed: Option<String>,
-
-
 }
 
 impl Dog {
-    pub fn new(class_name: String, ) -> Dog {
+    pub fn new(class_name: String) -> Dog {
         Dog {
             class_name: class_name,
             color: Some("red".to_string()),
@@ -969,4 +898,3 @@ impl Dog {
         }
     }
 }
-
