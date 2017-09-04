@@ -20,8 +20,8 @@ cache:
   - $HOME/samples/client/petstore/typescript-fetch/builds/es6-target/typings
   - $HOME/samples/client/petstore/typescript-fetch/builds/with-npm-version/node_modules
   - $HOME/samples/client/petstore/typescript-fetch/npm/with-npm-version/typings
-  - $HOME/samples/client/petstore/typescript-angular/node_modules
-  - $HOME/samples/client/petstore/typescript-angular/typings
+  - $HOME/samples/client/petstore/typescript-angularjs/node_modules
+  - $HOME/samples/client/petstore/typescript-angularjs/typings
   - $HOME/.cocoapods/repos/master
 # note: docker is not yet supported in iOS build
 #services:
@@ -104,7 +104,7 @@ script:
 
 after_success:
   # push a snapshot version to maven repo
-  - if [ $SONATYPE_USERNAME ] && [ -z $TRAVIS_TAG ] && [ "$TRAVIS_BRANCH" = "2.3.0" ]; then
+  - if [ $SONATYPE_USERNAME ] && [ -z $TRAVIS_TAG ] && [ "$TRAVIS_BRANCH" = "master" ]; then
       mvn clean deploy --settings .travis/settings.xml;
-      echo "Finished mvn clean deploy for 2.3.0";
+      echo "Finished mvn clean deploy for $TRAVIS_BRANCH";
     fi;

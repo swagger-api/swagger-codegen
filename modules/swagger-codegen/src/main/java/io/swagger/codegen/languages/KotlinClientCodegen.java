@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
@@ -200,6 +201,10 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             this.setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
+            if (!additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE))
+                this.setModelPackage(packageName + ".models");
+            if (!additionalProperties.containsKey(CodegenConstants.API_PACKAGE))
+                this.setApiPackage(packageName + ".apis");
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
@@ -224,14 +229,6 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             LOGGER.warn(CodegenConstants.INVOKER_PACKAGE + " with " + this.getName() + " generator is ignored. Use " + CodegenConstants.PACKAGE_NAME + ".");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
-            LOGGER.warn(CodegenConstants.MODEL_PACKAGE + " with " + this.getName() + " generator is ignored. Setting this value independently of " + CodegenConstants.PACKAGE_NAME + " is not currently supported.");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
-            LOGGER.warn(CodegenConstants.API_PACKAGE + " with " + this.getName() + " generator is ignored. Setting this value independently of " + CodegenConstants.PACKAGE_NAME + " is not currently supported.");
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage());
@@ -383,5 +380,10 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         return name;
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        return postProcessModelsEnum(super.postProcessModels(objs));
     }
 }

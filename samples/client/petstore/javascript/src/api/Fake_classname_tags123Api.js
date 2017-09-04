@@ -41,7 +41,7 @@
    * Constructs a new Fake_classname_tags123Api. 
    * @alias module:api/Fake_classname_tags123Api
    * @class
-   * @param {module:ApiClient} apiClient Optional API client implementation to use,
+   * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
    * default to {@link module:ApiClient#instance} if unspecified.
    */
   var exports = function(apiClient) {
@@ -82,7 +82,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['api_key_query'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Client;

@@ -2,6 +2,8 @@ package io.swagger.client.api;
 
 import io.swagger.client.CollectionFormats.*;
 
+
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -9,8 +11,8 @@ import okhttp3.RequestBody;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;

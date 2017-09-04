@@ -150,7 +150,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 .SERIALIZE_BIG_DECIMAL_AS_STRING_DESC));
         cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util. This option only works for Java API client"));
         cliOptions.add(new CliOption("hideGenerationTimestamp", "hides the timestamp when files were generated"));
-        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type. This option only works for Java API client (resttemplate)"));
+        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
@@ -638,19 +638,21 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (ap.getItems() == null) {
                 return null;
             }
+
             return String.format(pattern, getTypeDeclaration(ap.getItems()));
         } else if (p instanceof MapProperty) {
             final MapProperty ap = (MapProperty) p;
             final String pattern;
             if (fullJavaUtil) {
-                pattern = "new java.util.HashMap<String, %s>()";
+                pattern = "new java.util.HashMap<%s>()";
             } else {
-                pattern = "new HashMap<String, %s>()";
+                pattern = "new HashMap<%s>()";
             }
             if (ap.getAdditionalProperties() == null) {
                 return null;
             }
-            return String.format(pattern, getTypeDeclaration(ap.getAdditionalProperties()));
+
+            return String.format(pattern, String.format("String, %s", getTypeDeclaration(ap.getAdditionalProperties())));
         } else if (p instanceof IntegerProperty) {
             IntegerProperty dp = (IntegerProperty) p;
             if (dp.getDefault() != null) {
@@ -837,10 +839,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         }
 
-        if ("array".equals(property.containerType)) {
-          model.imports.add("ArrayList");
-        } else if ("map".equals(property.containerType)) {
-          model.imports.add("HashMap");
+        if (!fullJavaUtil) {
+            if ("array".equals(property.containerType)) {
+                model.imports.add("ArrayList");
+            } else if ("map".equals(property.containerType)) {
+                model.imports.add("HashMap");
+            }
         }
 
         if(!BooleanUtils.toBoolean(model.isEnum)) {
