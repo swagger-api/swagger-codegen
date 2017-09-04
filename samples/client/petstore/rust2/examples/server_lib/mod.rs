@@ -161,7 +161,7 @@ impl Api for Server {
     }
 
     /// uploads an image
-    fn upload_file(&self, pet_id: i64, additional_metadata: Option<String>, file: Box<Future<Item=Option<Box<Stream<Item=Vec<u8>, Error=Error> + Send>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
+    fn upload_file(&self, pet_id: i64, additional_metadata: Option<String>, file: Box<Future<Item=Option<BoxStream<Vec<u8>, Error>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
         let context = context.clone();
         println!("upload_file({}, {:?}, ) - X-Span-ID: {:?}", pet_id, additional_metadata, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         let _ = file; //Suppresses unused param warning

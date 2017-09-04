@@ -210,7 +210,7 @@ fn main() {
         Some("UploadFile") => {
             // Using a non-default `Context` is not required; this is just an example!
             let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), Box::new(future::ok(Some(Box::new(stream::once(Ok(b"hello".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_> + Send>, &context).wait();
+            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), future::ok(Some(stream::once(Ok(b"hello".to_vec())).boxed())).boxed(), &context).wait();
             println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
          },
 
