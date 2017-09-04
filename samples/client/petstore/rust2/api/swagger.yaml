@@ -357,7 +357,9 @@ paths:
         required: false
         type: "file"
         formatString: "{:?}"
-        example: "future::ok(Some(stream::once(Ok(b\"hello\".to_vec())).boxed())).boxed()"
+        example: "Box::new(future::ok(Some(Box::new(stream::once(Ok(b\"hello\".to_vec())))\
+          \ as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_>\
+          \ + Send>"
       responses:
         200:
           description: "successful operation"

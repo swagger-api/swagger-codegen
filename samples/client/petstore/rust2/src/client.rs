@@ -819,7 +819,7 @@ impl Api for Client {
         Box::new(futures::done(result))
     }
 
-    fn upload_file(&self, param_pet_id: i64, param_additional_metadata: Option<String>, param_file: Box<Future<Item=Option<BoxStream<Vec<u8>, Error>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
+    fn upload_file(&self, param_pet_id: i64, param_additional_metadata: Option<String>, param_file: Box<Future<Item=Option<Box<Stream<Item=Vec<u8>, Error=Error> + Send>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/pet/{petId}/uploadImage?", self.base_path, petId=param_pet_id.to_string());

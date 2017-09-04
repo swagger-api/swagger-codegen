@@ -136,12 +136,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 {{#pathParams}}{{#-first}}
                 // Path parameters
-{{/-first}}                let param_{{paramName}} = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
-                    .find("{{baseName}}").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter {{baseName}}".to_string())))?;
-                    //.to_string();
-                let param_{{paramName}} = percent_decode(param_{{paramName}}.as_bytes()).decode_utf8()
-                    .map_err(|_| Response::with((status::BadRequest, format!("Could not decode URL parameter as UTF-8: {}", param_{{paramName}}))))?
-                    .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter {{baseName}}: {}", e))))?;
+{{/-first}}                let param_{{paramName}} = {
+                    let param = req.extensions.get::<Router>().ok_or_else(|| Response::with((status::InternalServerError, "An internal error occurred".to_string())))?
+                        .find("{{baseName}}").ok_or_else(|| Response::with((status::BadRequest, "Missing path parameter {{baseName}}".to_string())))?;
+                    percent_decode(param.as_bytes()).decode_utf8()
+                        .map_err(|_| Response::with((status::BadRequest, format!("Couldn't percent-decode path parameter as UTF-8: {}", param))))?
+                        .parse().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse path parameter {{baseName}}: {}", e))))?
+                };
 {{/pathParams}}
 {{#headerParams}}{{#-first}}
                 // Header parameters
