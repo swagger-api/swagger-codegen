@@ -65,7 +65,7 @@ export default class {{classname}} {{#parent}}{{^parentModel}}{{#vendorExtension
     * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{baseName}}{{#defaultValue}}
     * @default {{{defaultValue}}}{{/defaultValue}}
     */{{/emitJSDoc}}
-    {{baseName}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
+    {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
 {{/vars}}
 
 {{#useInheritance}}{{#interfaceModels}}
@@ -75,7 +75,7 @@ export default class {{classname}} {{#parent}}{{^parentModel}}{{#vendorExtension
     * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{baseName}}{{#defaultValue}}
     * @default {{{defaultValue}}}{{/defaultValue}}
     */{{/emitJSDoc}}
-    {{baseName}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
+    {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
     {{/allVars}}
 {{/interfaceModels}}{{/useInheritance}}
 

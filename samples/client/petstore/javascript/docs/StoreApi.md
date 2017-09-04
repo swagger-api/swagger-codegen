@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="deleteOrder"></a>
 # **deleteOrder**
-> deleteOrder(orderId)
+> deleteOrder(order_id)
 
 Delete purchase order by ID
 
@@ -24,7 +24,7 @@ var SwaggerPetstore = require('swagger_petstore');
 
 var apiInstance = new SwaggerPetstore.StoreApi();
 
-var orderId = "orderId_example"; // String | ID of the order that needs to be deleted
+var order_id = "order_id_example"; // String | ID of the order that needs to be deleted
 
 
 var callback = function(error, data, response) {
@@ -34,14 +34,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.deleteOrder(orderId, callback);
+apiInstance.deleteOrder(order_id, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **String**| ID of the order that needs to be deleted | 
+ **order_id** | **String**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -105,7 +105,7 @@ This endpoint does not need any parameter.
 
 <a name="getOrderById"></a>
 # **getOrderById**
-> Order getOrderById(orderId)
+> Order getOrderById(order_id)
 
 Find purchase order by ID
 
@@ -117,7 +117,7 @@ var SwaggerPetstore = require('swagger_petstore');
 
 var apiInstance = new SwaggerPetstore.StoreApi();
 
-var orderId = 789; // Number | ID of pet that needs to be fetched
+var order_id = 789; // Number | ID of pet that needs to be fetched
 
 
 var callback = function(error, data, response) {
@@ -127,14 +127,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getOrderById(orderId, callback);
+apiInstance.getOrderById(order_id, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **Number**| ID of pet that needs to be fetched | 
+ **order_id** | **Number**| ID of pet that needs to be fetched | 
 
 ### Return type
 

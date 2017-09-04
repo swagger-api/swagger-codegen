@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**justNumber** | **Number** |  | [optional] 
+**JustNumber** | **Number** |  | [optional] 
 
 

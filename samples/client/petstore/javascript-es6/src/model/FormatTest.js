@@ -118,23 +118,23 @@ export default class FormatTest {
     /**
     * @member {Number} number
     */
-    number = undefined;
+    _number = undefined;
     /**
     * @member {Number} float
     */
-    float = undefined;
+    _float = undefined;
     /**
     * @member {Number} double
     */
-    double = undefined;
+    _double = undefined;
     /**
     * @member {String} string
     */
-    string = undefined;
+    _string = undefined;
     /**
     * @member {Blob} byte
     */
-    byte = undefined;
+    _byte = undefined;
     /**
     * @member {Blob} binary
     */
@@ -142,7 +142,7 @@ export default class FormatTest {
     /**
     * @member {Date} date
     */
-    date = undefined;
+    _date = undefined;
     /**
     * @member {Date} dateTime
     */

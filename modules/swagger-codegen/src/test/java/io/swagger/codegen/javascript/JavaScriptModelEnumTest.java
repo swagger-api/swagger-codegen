@@ -145,7 +145,7 @@ public class JavaScriptModelEnumTest {
         one.put("name", "1");
         one.put("value", "1");
         HashMap<String, String> minusOne = new HashMap<String, String>();
-        minusOne.put("name", "-1");
+        minusOne.put("name", "_1");
         minusOne.put("value", "-1");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(one, minusOne));
 
