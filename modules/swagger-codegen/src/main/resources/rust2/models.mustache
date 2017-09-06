@@ -63,7 +63,34 @@ impl ::std::ops::DerefMut for {{classname}} {
         &mut self.0
     }
 }
-{{/dataType}}{{^dataType}}{{#arrayModelType}}{{! vec}}pub type {{classname}} = Vec<{{{arrayModelType}}}>;
+{{/dataType}}{{^dataType}}{{#arrayModelType}}{{! vec}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct {{classname}}(Vec<{{{arrayModelType}}}>);
+
+impl From<Vec<{{arrayModelType}}>> for {{classname}} {
+    fn from(x: Vec<{{arrayModelType}}>) -> Self {
+        {{classname}}(x)
+    }
+}
+
+impl From<{{classname}}> for Vec<{{arrayModelType}}> {
+    fn from(x: {{classname}}) -> Self {
+        x.0
+    }
+}
+
+impl ::std::ops::Deref for {{classname}} {
+    type Target = Vec<{{{arrayModelType}}}>;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl ::std::ops::DerefMut for {{classname}} {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
 {{/arrayModelType}}{{^arrayModelType}}{{! general struct}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct {{classname}} {
 {{#vars}}{{#description}}    /// {{{description}}}

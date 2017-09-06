@@ -50,7 +50,34 @@ impl Animal {
     }
 }
 
-pub type AnimalFarm = Vec<Animal>;
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct AnimalFarm(Vec<Animal>);
+
+impl From<Vec<Animal>> for AnimalFarm {
+    fn from(x: Vec<Animal>) -> Self {
+        AnimalFarm(x)
+    }
+}
+
+impl From<AnimalFarm> for Vec<Animal> {
+    fn from(x: AnimalFarm) -> Self {
+        x.0
+    }
+}
+
+impl ::std::ops::Deref for AnimalFarm {
+    type Target = Vec<Animal>;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl ::std::ops::DerefMut for AnimalFarm {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ApiResponse {
