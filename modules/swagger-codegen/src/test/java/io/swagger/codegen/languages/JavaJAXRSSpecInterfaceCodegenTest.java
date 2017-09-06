@@ -27,11 +27,14 @@ public class JavaJAXRSSpecInterfaceCodegenTest {
     }
 
     @Test
-    public void do_not_process_pomInterface_by_default() {
+    public void do_process_pomInterface_by_default() {
         generator.processOpts();
         for (SupportingFile file : generator.supportingFiles()) {
-            Assert.assertNotEquals("pomInterface.mustache", file.templateFile);
+            if ("pomInterface.mustache".equals(file.templateFile)) {
+                return;
+            }
         }
+        Assert.fail("Missing pomInterface.mustache");
     }
 
     @Test
@@ -60,7 +63,7 @@ public class JavaJAXRSSpecInterfaceCodegenTest {
         for (CliOption option : generator.cliOptions()) {
             if (option.getOpt().equals("createPom")) {
                 Assert.assertEquals(BooleanProperty.TYPE, option.getType());
-                Assert.assertEquals("false", option.getDefault());
+                Assert.assertEquals("true", option.getDefault());
                 return;
             }
         }

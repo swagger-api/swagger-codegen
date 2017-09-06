@@ -21,7 +21,7 @@ public class JavaJAXRSSpecInterfaceCodegen extends JavaJAXRSSpecServerCodegen {
         //TODO: add doc templates
         apiDocTemplateFiles.remove("api_doc.mustache");
 
-        CliOption createPom = CliOption.newBoolean("createPom", "Create pom");
+        CliOption createPom = CliOption.newBoolean("createPom", "Create pom").defaultValue(Boolean.TRUE.toString());
         cliOptions.add(createPom);
     }
 
@@ -44,7 +44,7 @@ public class JavaJAXRSSpecInterfaceCodegen extends JavaJAXRSSpecServerCodegen {
         if (additionalProperties.containsKey("createPom")) {
             return Boolean.valueOf(additionalProperties.get("createPom").toString());
         }
-        return false;
+        return true;
     }
 
 
