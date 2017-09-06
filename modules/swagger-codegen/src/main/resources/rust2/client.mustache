@@ -233,6 +233,7 @@ impl Api for Client {
                 },
 {{/responses}}
                 code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
+            }
         }{{#vendorExtensions}}{{#hasFile}}
 
         // Helper function to convert a Stream into a String. The String can then be used to build the HTTP body.
