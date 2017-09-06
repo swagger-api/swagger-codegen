@@ -27,6 +27,7 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         typeMapping.put("Attribute", "PureCloudPlatform.Client.V2.Model.Attribute");
         // Prevent collision between base namespace and model PureCloud
         typeMapping.put("PureCloud", "PureCloudPlatform.Client.V2.Model.PureCloud");
+        typeMapping.put("Action", "PureCloudPlatform.Client.V2.Model.Action");
 
         // Custom mappings for swagger type -> .NET type
         typeMapping.put("LocalDateTime", "DateTime?");
