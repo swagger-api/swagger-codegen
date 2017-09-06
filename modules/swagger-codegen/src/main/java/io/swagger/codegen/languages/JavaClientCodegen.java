@@ -280,7 +280,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         if (additionalProperties.containsKey("jackson")) {
             supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", invokerFolder, "RFC3339DateFormat.java"));
-            if ("threetenbp".equals(dateLibrary) && (usePlayWS && !PLAY_25.equals(playVersion))) {
+            if ("threetenbp".equals(dateLibrary) && !usePlayWS) {
                 supportingFiles.add(new SupportingFile("CustomInstantDeserializer.mustache", invokerFolder, "CustomInstantDeserializer.java"));
             }
         }
