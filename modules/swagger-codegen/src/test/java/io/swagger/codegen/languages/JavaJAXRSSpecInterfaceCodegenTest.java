@@ -19,7 +19,7 @@ public class JavaJAXRSSpecInterfaceCodegenTest {
     }
 
     @Test
-    public void do_not_process_pom_by_default() {
+    public void never_process_pom_from_superclass() {
         generator.processOpts();
         for (SupportingFile file : generator.supportingFiles()) {
             Assert.assertNotEquals("pom.mustache", file.templateFile);
@@ -27,23 +27,31 @@ public class JavaJAXRSSpecInterfaceCodegenTest {
     }
 
     @Test
-    public void process_pom_if_createPom_is_true() {
+    public void do_not_process_pomInterface_by_default() {
+        generator.processOpts();
+        for (SupportingFile file : generator.supportingFiles()) {
+            Assert.assertNotEquals("pomInterface.mustache", file.templateFile);
+        }
+    }
+
+    @Test
+    public void process_pomInterface_if_createPom_is_true() {
         generator.additionalProperties().put("createPom", "true");
         generator.processOpts();
         for (SupportingFile file : generator.supportingFiles()) {
-            if ("pom.mustache".equals(file.templateFile)) {
+            if ("pomInterface.mustache".equals(file.templateFile)) {
                 return;
             }
         }
-        Assert.fail("Missing pom.mustache");
+        Assert.fail("Missing pomInterface.mustache");
     }
 
     @Test
-    public void do_not_process_pom_if_createPom_is_false() {
+    public void do_not_process_pomInterface_if_createPom_is_false() {
         generator.additionalProperties().put("createPom", "false");
         generator.processOpts();
         for (SupportingFile file : generator.supportingFiles()) {
-            Assert.assertNotEquals("pom.mustache", file.templateFile);
+            Assert.assertNotEquals("pomInterface.mustache", file.templateFile);
         }
     }
 

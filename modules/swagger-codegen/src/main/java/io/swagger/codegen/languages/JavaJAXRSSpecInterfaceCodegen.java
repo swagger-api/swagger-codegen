@@ -14,6 +14,10 @@ public class JavaJAXRSSpecInterfaceCodegen extends JavaJAXRSSpecServerCodegen {
         apiTemplateFiles.remove("api.mustache");
         apiTemplateFiles.put("apiInterface.mustache", ".java");
 
+        // Rename artifactId
+        artifactId = "swagger-jaxrs-client";
+
+
         //TODO: add doc templates
         apiDocTemplateFiles.remove("api_doc.mustache");
 
@@ -24,14 +28,15 @@ public class JavaJAXRSSpecInterfaceCodegen extends JavaJAXRSSpecServerCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
+        // Make sure super class' pom and RestApplication are skipped.
         for (Iterator<SupportingFile> iterator = supportingFiles.iterator(); iterator.hasNext(); ) {
-            // Remove pom if createPom is anything else thantrue, and never write RestApplication since this is an interface based client
-            SupportingFile supportingFile = iterator.next();
-            if (supportingFile.templateFile.equals("pom.mustache") && !createPom()) {
-                iterator.remove();
-            } else if (supportingFile.templateFile.equals("RestApplication.mustache")) {
+            String templateFile = iterator.next().templateFile;
+            if (templateFile.equals("pom.mustache") || templateFile.equals("RestApplication.mustache")) {
                 iterator.remove();
             }
+        }
+        if (createPom()) {
+            writeOptional(outputFolder, new SupportingFile("pomInterface.mustache", "", "pom.xml"));
         }
     }
 
