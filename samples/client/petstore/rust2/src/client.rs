@@ -209,8 +209,7 @@ impl Api for Client {
 
                     Ok(FakeOuterBooleanSerializeResponse::OutputBoolean(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -252,8 +251,7 @@ impl Api for Client {
 
                     Ok(FakeOuterCompositeSerializeResponse::OutputComposite(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -295,8 +293,7 @@ impl Api for Client {
 
                     Ok(FakeOuterNumberSerializeResponse::OutputNumber(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -338,8 +335,7 @@ impl Api for Client {
 
                     Ok(FakeOuterStringSerializeResponse::OutputString(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -378,8 +374,7 @@ impl Api for Client {
 
                     Ok(TestClientModelResponse::SuccessfulOperation(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -414,8 +409,7 @@ impl Api for Client {
 
                     Ok(TestEndpointParametersResponse::UserNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -461,8 +455,7 @@ impl Api for Client {
 
                     Ok(TestEnumParametersResponse::NotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -492,8 +485,7 @@ impl Api for Client {
 
                     Ok(TestJsonFormDataResponse::SuccessfulOperation)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -532,8 +524,7 @@ impl Api for Client {
 
                     Ok(TestClassnameResponse::SuccessfulOperation(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -568,8 +559,7 @@ impl Api for Client {
 
                     Ok(AddPetResponse::InvalidInput)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -603,8 +593,7 @@ impl Api for Client {
 
                     Ok(DeletePetResponse::InvalidPetValue)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -646,8 +635,7 @@ impl Api for Client {
 
                     Ok(FindPetsByStatusResponse::InvalidStatusValue)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -689,8 +677,7 @@ impl Api for Client {
 
                     Ok(FindPetsByTagsResponse::InvalidTagValue)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -734,8 +721,7 @@ impl Api for Client {
 
                     Ok(GetPetByIdResponse::PetNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -780,8 +766,7 @@ impl Api for Client {
 
                     Ok(UpdatePetResponse::ValidationException)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -811,8 +796,7 @@ impl Api for Client {
 
                     Ok(UpdatePetWithFormResponse::InvalidInput)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -870,8 +854,7 @@ impl Api for Client {
 
                     Ok(UploadFileResponse::SuccessfulOperation(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         // Helper function to convert a Stream into a String. The String can then be used to build the HTTP body.
@@ -918,8 +901,7 @@ impl Api for Client {
 
                     Ok(DeleteOrderResponse::OrderNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -953,8 +935,7 @@ impl Api for Client {
 
                     Ok(GetInventoryResponse::SuccessfulOperation(body))
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -998,8 +979,7 @@ impl Api for Client {
 
                     Ok(GetOrderByIdResponse::OrderNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1043,8 +1023,7 @@ impl Api for Client {
 
                     Ok(PlaceOrderResponse::InvalidOrder)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1079,8 +1058,7 @@ impl Api for Client {
 
                     Ok(CreateUserResponse::SuccessfulOperation)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1115,8 +1093,7 @@ impl Api for Client {
 
                     Ok(CreateUsersWithArrayInputResponse::SuccessfulOperation)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1151,8 +1128,7 @@ impl Api for Client {
 
                     Ok(CreateUsersWithListInputResponse::SuccessfulOperation)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1187,8 +1163,7 @@ impl Api for Client {
 
                     Ok(DeleteUserResponse::UserNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1232,8 +1207,7 @@ impl Api for Client {
 
                     Ok(GetUserByNameResponse::UserNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1280,8 +1254,7 @@ impl Api for Client {
 
                     Ok(LoginUserResponse::InvalidUsername)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1311,8 +1284,7 @@ impl Api for Client {
 
                     Ok(LogoutUserResponse::SuccessfulOperation)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
@@ -1352,8 +1324,7 @@ impl Api for Client {
 
                     Ok(UpdateUserResponse::UserNotFound)
                 },
-                code => Err(ApiError(format!("Unexpected response code: {}", code)))
-            }
+                code => Err(ApiError(format!("Unexpected response code: {}\n{:?}", code, response)))
         }
 
         let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
