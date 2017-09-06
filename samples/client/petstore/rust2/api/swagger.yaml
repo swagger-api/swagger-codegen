@@ -127,11 +127,11 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
+          default: "available"
         collectionFormat: "csv"
         formatString: "{:?}"
         example: "&Vec::new()"
@@ -825,10 +825,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_form_string"
@@ -850,10 +850,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_header_string"
@@ -875,10 +875,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_query_string"

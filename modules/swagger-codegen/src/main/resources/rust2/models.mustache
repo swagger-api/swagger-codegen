@@ -45,6 +45,12 @@ impl From<{{dataType}}> for {{classname}} {
     }
 }
 
+impl From<{{classname}}> for {{dataType}} {
+    fn from(x: {{classname}}) -> Self {
+        x.0
+    }
+}
+
 impl ::std::ops::Deref for {{classname}} {
     type Target = {{{dataType}}};
     fn deref(&self) -> &{{{dataType}}} {

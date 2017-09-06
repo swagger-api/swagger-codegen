@@ -641,6 +641,12 @@ impl From<bool> for OuterBoolean {
     }
 }
 
+impl From<OuterBoolean> for bool {
+    fn from(x: OuterBoolean) -> Self {
+        x.0
+    }
+}
+
 impl ::std::ops::Deref for OuterBoolean {
     type Target = bool;
     fn deref(&self) -> &bool {
@@ -727,6 +733,12 @@ impl From<f64> for OuterNumber {
     }
 }
 
+impl From<OuterNumber> for f64 {
+    fn from(x: OuterNumber) -> Self {
+        x.0
+    }
+}
+
 impl ::std::ops::Deref for OuterNumber {
     type Target = f64;
     fn deref(&self) -> &f64 {
@@ -746,6 +758,12 @@ pub struct OuterString(String);
 impl From<String> for OuterString {
     fn from(x: String) -> Self {
         OuterString(x)
+    }
+}
+
+impl From<OuterString> for String {
+    fn from(x: OuterString) -> Self {
+        x.0
     }
 }
 
