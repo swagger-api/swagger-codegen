@@ -375,7 +375,7 @@ public class ApiInvoker {
         return "no data";
       }
     } catch (UnsupportedEncodingException ex) {
-      throw new ApiException();
+      throw new ApiException(0, "UnsupportedEncodingException");
     }
   }
 
@@ -386,7 +386,7 @@ public class ApiInvoker {
         mRequestQueue.add(request);
       }
     } catch (UnsupportedEncodingException ex) {
-      throw new ApiException();
+      throw new ApiException(0, "UnsupportedEncodingException");
     }
   }
 
