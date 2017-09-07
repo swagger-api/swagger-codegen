@@ -67,8 +67,10 @@ public class CodegenIgnoreProcessor {
                 LOGGER.error(String.format("Could not process %s.", targetIgnoreFile.getName()), e.getMessage());
             }
         } else {
-            // log info message
-            LOGGER.info(String.format("No %s file found.", targetIgnoreFile.getName()));
+            // log debug level message
+	    if (LOGGER.isDebugEnabled()) {  
+	        LOGGER.debug(String.format("No %s file found.", targetIgnoreFile.getName()));
+	    }
         }
     }
 
