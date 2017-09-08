@@ -175,6 +175,11 @@ export class {{classname}} {
             '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/consumes}}
         ];
+
+        if (consumes != null) {
+            headers.set('Content-Type', produces.join(';'));
+        }
+
         let canConsumeForm = this.canConsumeForm(consumes);
         let useForm = false;
 {{#formParams}}
@@ -193,6 +198,10 @@ export class {{classname}} {
             '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/produces}}
         ];
+
+        if (produces != null) {
+            headers.set('Accept', produces.join(';'));
+        }
 
 {{#authMethods}}
         // authentication ({{name}}) required
