@@ -176,8 +176,8 @@ export class {{classname}} {
             {{/consumes}}
         ];
 
-        if (consumes != null) {
-            headers.set('Content-Type', produces.join(';'));
+        if ((consumes != null) && (consumes.length > 0)) {
+            headers.set('Content-Type', consumes.join(';'));
         }
 
         let canConsumeForm = this.canConsumeForm(consumes);
@@ -199,7 +199,7 @@ export class {{classname}} {
             {{/produces}}
         ];
 
-        if (produces != null) {
+        if ((produces != null) && (produces.length > 0)) {
             headers.set('Accept', produces.join(';'));
         }
 
