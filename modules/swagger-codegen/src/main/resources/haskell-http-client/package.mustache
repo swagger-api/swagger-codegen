@@ -48,6 +48,7 @@ library:
   - {{title}}.Model
   - {{title}}.MimeTypes
   - {{title}}.Lens
+  - {{title}}.Logging
   dependencies:
   - aeson >=1.0 && <2.0
   - bytestring >=0.10.0 && <0.11
@@ -64,7 +65,7 @@ library:
   - network >=2.6.2 && <2.7
   - random >=1.1
   - exceptions >= 0.4
-  - monad-logger >=0.3 && <0.4
+  - {{^x-useMonadLogger}}katip >=0.4 && < 0.6{{/x-useMonadLogger}}{{#x-useMonadLogger}}monad-logger >=0.3 && <0.4{{/x-useMonadLogger}}
   - safe-exceptions <0.2
   - case-insensitive
   - microlens >= 0.4.3 && <0.5
