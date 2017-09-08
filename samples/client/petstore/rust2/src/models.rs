@@ -53,15 +53,48 @@ impl Animal {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AnimalFarm(Vec<Animal>);
 
-impl From<Vec<Animal>> for AnimalFarm {
+impl ::std::convert::From<Vec<Animal>> for AnimalFarm {
     fn from(x: Vec<Animal>) -> Self {
         AnimalFarm(x)
     }
 }
 
-impl From<AnimalFarm> for Vec<Animal> {
+impl ::std::convert::From<AnimalFarm> for Vec<Animal> {
     fn from(x: AnimalFarm) -> Self {
         x.0
+    }
+}
+
+impl ::std::iter::FromIterator<Animal> for AnimalFarm {
+    fn from_iter<U: IntoIterator<Item=Animal>>(u: U) -> Self {
+        AnimalFarm(Vec::<Animal>::from_iter(u))
+    }
+}
+
+impl ::std::iter::IntoIterator for AnimalFarm {
+    type Item = Animal;
+    type IntoIter = ::std::vec::IntoIter<Animal>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a AnimalFarm {
+    type Item = &'a Animal;
+    type IntoIter = ::std::slice::Iter<'a, Animal>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&self.0).into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a mut AnimalFarm {
+    type Item = &'a mut Animal;
+    type IntoIter = ::std::slice::IterMut<'a, Animal>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&mut self.0).into_iter()
     }
 }
 
@@ -662,13 +695,13 @@ impl Order {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct OuterBoolean(bool);
 
-impl From<bool> for OuterBoolean {
+impl ::std::convert::From<bool> for OuterBoolean {
     fn from(x: bool) -> Self {
         OuterBoolean(x)
     }
 }
 
-impl From<OuterBoolean> for bool {
+impl ::std::convert::From<OuterBoolean> for bool {
     fn from(x: OuterBoolean) -> Self {
         x.0
     }
@@ -754,13 +787,13 @@ impl ::std::str::FromStr for OuterEnum {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct OuterNumber(f64);
 
-impl From<f64> for OuterNumber {
+impl ::std::convert::From<f64> for OuterNumber {
     fn from(x: f64) -> Self {
         OuterNumber(x)
     }
 }
 
-impl From<OuterNumber> for f64 {
+impl ::std::convert::From<OuterNumber> for f64 {
     fn from(x: OuterNumber) -> Self {
         x.0
     }
@@ -782,13 +815,13 @@ impl ::std::ops::DerefMut for OuterNumber {
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct OuterString(String);
 
-impl From<String> for OuterString {
+impl ::std::convert::From<String> for OuterString {
     fn from(x: String) -> Self {
         OuterString(x)
     }
 }
 
-impl From<OuterString> for String {
+impl ::std::convert::From<OuterString> for String {
     fn from(x: OuterString) -> Self {
         x.0
     }

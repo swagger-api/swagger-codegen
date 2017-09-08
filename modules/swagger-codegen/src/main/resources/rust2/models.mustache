@@ -39,13 +39,13 @@ impl ::std::str::FromStr for {{classname}} {
 {{/isEnum}}{{^isEnum}}{{#dataType}}{{! newtype}}#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct {{classname}}({{{dataType}}});
 
-impl From<{{dataType}}> for {{classname}} {
+impl ::std::convert::From<{{dataType}}> for {{classname}} {
     fn from(x: {{dataType}}) -> Self {
         {{classname}}(x)
     }
 }
 
-impl From<{{classname}}> for {{dataType}} {
+impl ::std::convert::From<{{classname}}> for {{dataType}} {
     fn from(x: {{classname}}) -> Self {
         x.0
     }
@@ -66,15 +66,48 @@ impl ::std::ops::DerefMut for {{classname}} {
 {{/dataType}}{{^dataType}}{{#arrayModelType}}{{! vec}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct {{classname}}(Vec<{{{arrayModelType}}}>);
 
-impl From<Vec<{{arrayModelType}}>> for {{classname}} {
+impl ::std::convert::From<Vec<{{arrayModelType}}>> for {{classname}} {
     fn from(x: Vec<{{arrayModelType}}>) -> Self {
         {{classname}}(x)
     }
 }
 
-impl From<{{classname}}> for Vec<{{arrayModelType}}> {
+impl ::std::convert::From<{{classname}}> for Vec<{{arrayModelType}}> {
     fn from(x: {{classname}}) -> Self {
         x.0
+    }
+}
+
+impl ::std::iter::FromIterator<{{arrayModelType}}> for {{classname}} {
+    fn from_iter<U: IntoIterator<Item={{arrayModelType}}>>(u: U) -> Self {
+        {{classname}}(Vec::<{{arrayModelType}}>::from_iter(u))
+    }
+}
+
+impl ::std::iter::IntoIterator for {{classname}} {
+    type Item = {{arrayModelType}};
+    type IntoIter = ::std::vec::IntoIter<{{arrayModelType}}>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a {{classname}} {
+    type Item = &'a {{arrayModelType}};
+    type IntoIter = ::std::slice::Iter<'a, {{arrayModelType}}>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&self.0).into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a mut {{classname}} {
+    type Item = &'a mut {{arrayModelType}};
+    type IntoIter = ::std::slice::IterMut<'a, {{arrayModelType}}>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&mut self.0).into_iter()
     }
 }
 
