@@ -299,10 +299,6 @@ class FormatTest implements ModelInterface, ArrayAccess
         if ($this->container['byte'] === null) {
             $invalid_properties[] = "'byte' can't be null";
         }
-        if (!preg_match("/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/", $this->container['byte'])) {
-            $invalid_properties[] = "invalid value for 'byte', must be conform to the pattern /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/.";
-        }
-
         if ($this->container['date'] === null) {
             $invalid_properties[] = "'date' can't be null";
         }
@@ -366,9 +362,6 @@ class FormatTest implements ModelInterface, ArrayAccess
             return false;
         }
         if ($this->container['byte'] === null) {
-            return false;
-        }
-        if (!preg_match("/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/", $this->container['byte'])) {
             return false;
         }
         if ($this->container['date'] === null) {
@@ -595,11 +588,6 @@ class FormatTest implements ModelInterface, ArrayAccess
      */
     public function setByte($byte)
     {
-
-        if ((!preg_match("/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/", $byte))) {
-            throw new \InvalidArgumentException("invalid value for $byte when calling FormatTest., must conform to the pattern /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/.");
-        }
-
         $this->container['byte'] = $byte;
 
         return $this;

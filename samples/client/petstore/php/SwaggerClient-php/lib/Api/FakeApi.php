@@ -1380,8 +1380,8 @@ class FakeApi
         if ($pattern_without_delimiter === null) {
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
-        if (!preg_match("/^[A-Z].*/", $pattern_without_delimiter)) {
-            throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*/.");
+        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter)) {
+            throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.");
         }
 
         // verify the required parameter 'byte' is set
