@@ -758,6 +758,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [General Electric](https://www.ge.com/)
+- [Genesys - PureCloud](http://developer.mypurecloud.com/)
 - [Germin8](http://www.germin8.com)
 - [GigaSpaces](http://www.gigaspaces.com)
 - [goTransverse](http://www.gotransverse.com/api)
@@ -770,7 +771,6 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Individual Standard IVS](http://www.individual-standard.com) 
 - [Intent HQ](http://www.intenthq.com)
-- [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [Kabuku](http://www.kabuku.co.jp/en)
 - [Kurio](https://kurio.co.id)
 - [Kuroi](http://kuroiwebdesign.com/)
@@ -955,6 +955,7 @@ Here is a list of template creators:
    * Perl: @wing328
    * PHP (Guzzle): @baartosz
    * PowerShell: @beatcracker
+   * R: @ramnov
    * Rust: @farcaller
    * Swift: @tkqubo
    * Swift 3: @hexelon
@@ -1035,19 +1036,19 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Groovy    |  |
 | Go        |  |
 | Haskell   |  |
-| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) |
+| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) |
 | Kotlin     |  |
 | Lua     | @daurnimator (2017/08) |
 | NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
 | ObjC      |  |
 | Perl      | @wing328 (2017/07) |
-| PHP      | @jebentier (2017/07) @dkarlovi (2017/07) @mandrean (2017/08) |
+| PHP      | @jebentier (2017/07) @dkarlovi (2017/07) @mandrean (2017/08) @jfastnacht (2017/09) |
 | Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) |
 | R        |  |
 | Ruby      | @cliffano (2017/07)  |
 | Rust      | @frol (2017/07) @farcaller (2017/08) | 
 | Scala     | @clasnake (2017/07) |
-| Swift     | @jgavris (2017/07) |
+| Swift     | @jgavris (2017/07) @ehyche (2017/08) |
 | TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07)|
 
 

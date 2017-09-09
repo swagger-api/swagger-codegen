@@ -20,6 +20,7 @@ io.swagger.codegen.languages.FlaskConnexionCodegen
 io.swagger.codegen.languages.GoClientCodegen
 io.swagger.codegen.languages.GoServerCodegen
 io.swagger.codegen.languages.GroovyClientCodegen
+io.swagger.codegen.languages.HaskellHttpClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
 io.swagger.codegen.languages.JMeterCodegen
 io.swagger.codegen.languages.JavaCXFClientCodegen
@@ -50,6 +51,7 @@ io.swagger.codegen.languages.PowerShellClientCodegen
 io.swagger.codegen.languages.PistacheServerCodegen
 io.swagger.codegen.languages.PythonClientCodegen
 io.swagger.codegen.languages.Qt5CPPGenerator
+io.swagger.codegen.languages.RClientCodegen
 io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.RestbedCodegen
 io.swagger.codegen.languages.RubyClientCodegen

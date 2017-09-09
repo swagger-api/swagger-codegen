@@ -39,7 +39,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
         /// <param name="Declawed">Declawed.</param>
-        public Cat(bool? Declawed = default(bool?), string ClassName = default(string), string Color = "red", bool? Declawed = default(bool?))
+        public Cat(bool? Declawed = default(bool?), string ClassName = "Cat", string Color = "red") : base(ClassName, Color)
         {
             this.Declawed = Declawed;
         }
@@ -58,6 +58,8 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Cat {\n");
+
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
             sb.Append("  Declawed: ").Append(Declawed).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -67,7 +69,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public  new string ToJson()
+        public override string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -92,7 +94,7 @@ namespace IO.Swagger.Model
             if (input == null)
                 return false;
 
-            return 
+            return base.Equals(input) && 
                 (
                     this.Declawed == input.Declawed ||
                     (this.Declawed != null &&
@@ -108,7 +110,7 @@ namespace IO.Swagger.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hashCode = base.GetHashCode();
                 if (this.Declawed != null)
                     hashCode = hashCode * 59 + this.Declawed.GetHashCode();
                 return hashCode;
@@ -122,6 +124,7 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            foreach(var x in BaseValidate(validationContext)) yield return x;
             yield break;
         }
     }
