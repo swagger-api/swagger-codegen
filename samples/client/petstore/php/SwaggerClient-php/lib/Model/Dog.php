@@ -29,8 +29,6 @@
 
 namespace Swagger\Client\Model;
 
-use \ArrayAccess;
-
 /**
  * Dog Class Doc Comment
  *
@@ -39,7 +37,7 @@ use \ArrayAccess;
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Dog extends Animal implements ModelInterface, ArrayAccess
+class Dog extends Animal 
 {
     const DISCRIMINATOR = null;
 

@@ -21,8 +21,10 @@
 
 namespace {{modelPackage}};
 {{^isEnum}}
+{{^parentSchema}}
 
 use \ArrayAccess;
+{{/parentSchema}}
 {{/isEnum}}
 
 /**
