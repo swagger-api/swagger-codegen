@@ -195,9 +195,9 @@ class MapTest implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
@@ -250,12 +250,12 @@ class MapTest implements ModelInterface, ArrayAccess
      */
     public function setMapOfEnumString($map_of_enum_string)
     {
-        $allowed_values = $this->getMapOfEnumStringAllowableValues();
-        if (!is_null($map_of_enum_string) && array_diff($map_of_enum_string, $allowed_values)) {
+        $allowedValues = $this->getMapOfEnumStringAllowableValues();
+        if (!is_null($map_of_enum_string) && array_diff($map_of_enum_string, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'map_of_enum_string', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }

@@ -221,23 +221,23 @@ class Pet implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
         if ($this->container['name'] === null) {
-            $invalid_properties[] = "'name' can't be null";
+            $invalidProperties[] = "'name' can't be null";
         }
         if ($this->container['photo_urls'] === null) {
-            $invalid_properties[] = "'photo_urls' can't be null";
+            $invalidProperties[] = "'photo_urls' can't be null";
         }
-        $allowed_values = $this->getStatusAllowableValues();
-        if (!in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($this->container['status'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'status', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
@@ -255,8 +255,8 @@ class Pet implements ModelInterface, ArrayAccess
         if ($this->container['photo_urls'] === null) {
             return false;
         }
-        $allowed_values = $this->getStatusAllowableValues();
-        if (!in_array($this->container['status'], $allowed_values)) {
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!in_array($this->container['status'], $allowedValues)) {
             return false;
         }
         return true;
@@ -384,12 +384,12 @@ class Pet implements ModelInterface, ArrayAccess
      */
     public function setStatus($status)
     {
-        $allowed_values = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowed_values)) {
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($status) && !in_array($status, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'status', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }

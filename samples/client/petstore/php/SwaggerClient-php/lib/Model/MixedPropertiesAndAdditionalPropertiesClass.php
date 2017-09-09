@@ -187,9 +187,9 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**

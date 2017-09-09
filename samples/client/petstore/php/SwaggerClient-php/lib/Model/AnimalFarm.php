@@ -174,9 +174,9 @@ class AnimalFarm implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = parent::listInvalidProperties();
+        $invalidProperties = parent::listInvalidProperties();
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**

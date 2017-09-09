@@ -209,17 +209,17 @@ class EnumArrays implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        $allowed_values = $this->getJustSymbolAllowableValues();
-        if (!in_array($this->container['just_symbol'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getJustSymbolAllowableValues();
+        if (!in_array($this->container['just_symbol'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'just_symbol', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
@@ -231,8 +231,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getJustSymbolAllowableValues();
-        if (!in_array($this->container['just_symbol'], $allowed_values)) {
+        $allowedValues = $this->getJustSymbolAllowableValues();
+        if (!in_array($this->container['just_symbol'], $allowedValues)) {
             return false;
         }
         return true;
@@ -255,12 +255,12 @@ class EnumArrays implements ModelInterface, ArrayAccess
      */
     public function setJustSymbol($just_symbol)
     {
-        $allowed_values = $this->getJustSymbolAllowableValues();
-        if (!is_null($just_symbol) && !in_array($just_symbol, $allowed_values)) {
+        $allowedValues = $this->getJustSymbolAllowableValues();
+        if (!is_null($just_symbol) && !in_array($just_symbol, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'just_symbol', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -285,12 +285,12 @@ class EnumArrays implements ModelInterface, ArrayAccess
      */
     public function setArrayEnum($array_enum)
     {
-        $allowed_values = $this->getArrayEnumAllowableValues();
-        if (!is_null($array_enum) && array_diff($array_enum, $allowed_values)) {
+        $allowedValues = $this->getArrayEnumAllowableValues();
+        if (!is_null($array_enum) && array_diff($array_enum, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'array_enum', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }

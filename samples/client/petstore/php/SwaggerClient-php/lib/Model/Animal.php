@@ -185,12 +185,12 @@ class Animal implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
         if ($this->container['class_name'] === null) {
-            $invalid_properties[] = "'class_name' can't be null";
+            $invalidProperties[] = "'class_name' can't be null";
         }
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**

@@ -194,12 +194,12 @@ class Name implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
         if ($this->container['name'] === null) {
-            $invalid_properties[] = "'name' can't be null";
+            $invalidProperties[] = "'name' can't be null";
         }
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
