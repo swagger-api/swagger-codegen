@@ -35,7 +35,6 @@ class PetPetId implements Operation\DeleteInterface, Operation\GetInterface, Ope
      */
     public function handleGet(ServerRequestInterface $request)
     {
-	throw new \Exception('test');
         //TODO implement method
         throw new PHException\HttpCode(500, "Not implemented");
     }
