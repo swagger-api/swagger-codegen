@@ -33,18 +33,19 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                 Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
 
         typeMapping = new HashMap<String, String>();
-        typeMapping.put("date", "ASF.Types.Datetime");
-        typeMapping.put("DateTime", "ASF.Types.Datetime");
-        typeMapping.put("string", "ASF.Types.String");
-        typeMapping.put("integer", "ASF.Types.Integer");
-        typeMapping.put("long", "ASF.Types.Long");
-        typeMapping.put("boolean", "ASF.Types.Boolean");
-        typeMapping.put("array", "ASF.Types.Vector");
+        typeMapping.put("date", "Swagger.Date");
+        typeMapping.put("DateTime", "Swagger.Datetime");
+        typeMapping.put("string", "Swagger.String");
+        typeMapping.put("integer", "Integer");
+        typeMapping.put("long", "Swagger.Long");
+        typeMapping.put("boolean", "Boolean");
+        typeMapping.put("array", "Swagger.Vector");
         typeMapping.put("map", "ASF.Types.Map");
-        typeMapping.put("object", "ASF.Types.Object");
-        typeMapping.put("binary", "ASF.Types.Blob");
-        typeMapping.put("number", "ASF.Types.Double");
-        typeMapping.put("UUID", "ASF.Types.String");
+        typeMapping.put("object", "Swagger.Object");
+        typeMapping.put("number", "Swagger.Number");
+        typeMapping.put("UUID", "Swagger.String");
+        typeMapping.put("file", "Swagger.Http_Content_Type");
+        typeMapping.put("binary", "Swagger.Binary");
 
         super.importMapping = new HashMap<String, String>();
         importMapping.put("std::vector", "#include <vector>");
@@ -88,17 +89,21 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             packageName = (String) additionalProperties.get(CodegenConstants.PACKAGE_NAME);
         }
-        supportingFiles.add(new SupportingFile("model-spec.mustache", null, "client" + File.separator + toFilename(modelPackage) + "-models.ads"));
-        supportingFiles.add(new SupportingFile("model-body.mustache", null, "client" + File.separator + toFilename(modelPackage) + "-models.adb"));
-        supportingFiles.add(new SupportingFile("model-spec.mustache", null, "server" + File.separator + toFilename(modelPackage) + "-models.ads"));
-        supportingFiles.add(new SupportingFile("model-body.mustache", null, "server" + File.separator + toFilename(modelPackage) + "-models.adb"));
-        supportingFiles.add(new SupportingFile("client-spec.mustache", null, "client" + File.separator + toFilename(modelPackage) + "-clients.ads"));
-        supportingFiles.add(new SupportingFile("client-body.mustache", null, "client" + File.separator + toFilename(modelPackage) + "-clients.adb"));
-        supportingFiles.add(new SupportingFile("server-spec.mustache", null, "server" + File.separator + toFilename(modelPackage) + "-servers.ads"));
-        supportingFiles.add(new SupportingFile("server-body.mustache", null, "server" + File.separator + toFilename(modelPackage) + "-servers.adb"));
+        String serverPrefix = "src" + File.separator + "server" + File.separator + toFilename(modelPackage);
+        String clientPrefix = "src" + File.separator + "client" + File.separator + toFilename(modelPackage);
+        supportingFiles.add(new SupportingFile("model-spec.mustache", null, clientPrefix + "-models.ads"));
+        supportingFiles.add(new SupportingFile("model-body.mustache", null, clientPrefix + "-models.adb"));
+        supportingFiles.add(new SupportingFile("model-spec.mustache", null, serverPrefix + "-models.ads"));
+        supportingFiles.add(new SupportingFile("model-body.mustache", null, serverPrefix + "-models.adb"));
+        supportingFiles.add(new SupportingFile("client-spec.mustache", null, clientPrefix + "-clients.ads"));
+        supportingFiles.add(new SupportingFile("client-body.mustache", null, clientPrefix + "-clients.adb"));
+        supportingFiles.add(new SupportingFile("server-spec.mustache", null, serverPrefix + "-servers.ads"));
+        supportingFiles.add(new SupportingFile("server-body.mustache", null, serverPrefix + "-servers.adb"));
         if (additionalProperties.containsKey(USER_INFO_PATH)) {
             userInfoPath = additionalProperties.get(USER_INFO_PATH).toString();
         }
+        // String title = swagger.getInfo().getTitle();
+        supportingFiles.add(new SupportingFile("gnat-project.mustache", "", "project.gpr"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -126,7 +131,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
      */
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name; // add an underscore to the name
+        return "p_" + name; // add an underscore to the name
     }
 
     @Override
