@@ -18,7 +18,8 @@ package {{package}}.Models is
      end record;
 
    package {{classname}}_Vectors is
-      new Ada.Containers.Vectors ({{classname}}, Positive);
+      new Ada.Containers.Vectors (Index_Type   => Positive,
+                                  Element_Type => {{classname}});
 
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
