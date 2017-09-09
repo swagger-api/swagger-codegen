@@ -94,6 +94,9 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
 
     @Override
     public String toVarName(String name) {
+        if (reservedWords.contains(name)) {
+            return escapeReservedWord(name);
+        }
         if (typeMapping.keySet().contains(name) || typeMapping.values().contains(name)
                 || importMapping.values().contains(name) || defaultIncludes.contains(name)
                 || languageSpecificPrimitives.contains(name)) {
