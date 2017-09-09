@@ -14,8 +14,8 @@ package {{package}}.Clients is
    --  {{summary}}
    {{#notes}}--  {{.}}{{/notes}}
    procedure {{operationId}}
-      (Client : in out Client_Type;{{#allParams}}
-       {{paramName}} : in {{^isString}}{{^isPrimitiveType}}{{^isContainer}}{{package}}.Models.{{/isContainer}}{{/isPrimitiveType}}{{/isString}}{{dataType}}{{#hasMore}};{{/hasMore}}{{/allParams}});
+      (Client : in out Client_Type{{#hasParams}};{{/hasParams}}{{#allParams}}
+       {{paramName}} : in {{^isFile}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}{{package}}.Models.{{/isContainer}}{{/isPrimitiveType}}{{/isString}}{{/isFile}}{{dataType}}{{#hasMore}};{{/hasMore}}{{/allParams}});
 
 {{/operation}}
 {{/operations}}
