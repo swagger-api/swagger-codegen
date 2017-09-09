@@ -130,11 +130,13 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
     }
     {{/isEnum}}{{/vars}}
 
+    {{^parentSchema}}
     /**
      * Associative array for storing property values
      * @var mixed[]
      */
     protected $container = [];
+    {{/parentSchema}}
 
     /**
      * Constructor

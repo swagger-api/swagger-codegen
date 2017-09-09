@@ -151,11 +151,6 @@ class Cat extends Animal
 
     
 
-    /**
-     * Associative array for storing property values
-     * @var mixed[]
-     */
-    protected $container = [];
 
     /**
      * Constructor
