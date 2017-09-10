@@ -24,6 +24,11 @@ package {{package}}.Models is
    procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
                         Name  : in String;
                         Value : in {{classname}});
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in {{classname}}_Vectors.Vector);
+
 {{/model}}
 {{/orderedModels}}
 
