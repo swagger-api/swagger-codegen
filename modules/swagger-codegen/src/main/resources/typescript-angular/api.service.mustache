@@ -176,7 +176,7 @@ export class {{classname}} {
             {{/consumes}}
         ];
 
-        if ((consumes != null) && (consumes.length > 0)) {
+        if (consumes != null && consumes.length > 0) {
             headers.set('Content-Type', consumes.join(';'));
         }
 
@@ -199,7 +199,7 @@ export class {{classname}} {
             {{/produces}}
         ];
 
-        if ((produces != null) && (produces.length > 0)) {
+        if (produces != null && produces.length > 0) {
             headers.set('Accept', produces.join(';'));
         }
 
