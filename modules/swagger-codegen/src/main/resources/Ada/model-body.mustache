@@ -1,6 +1,9 @@
 {{>licenseInfo}}
 
 package body {{package}}.Models is
+
+   use Swagger.Streams;
+
 {{#orderedModels}}
 {{#model}}
 
@@ -8,16 +11,27 @@ package body {{package}}.Models is
                         Name  : in String;
                         Value : in {{classname}}) is
    begin
-      Into.Start_Entity (Name);
-      {{#vars}}{{^isString}}{{^isInteger}}
-      Serialize (Into, "{{baseName}}", Value.{{name}});
-      {{/isInteger}}{{/isString}}{{#isString}}
-      Into.Write_Entity ("{{baseName}}", Value.{{name}});
-      {{/isString}}{{#isInteger}}
-      Into.Write_Entity ("{{baseName}}", Value.{{name}});
-      {{/isInteger}}{{/vars}}
+      Into.Start_Entity (Name);{{#vars}}{{^isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isDateTime}}
+      Serialize (Into, "{{baseName}}", Value.{{name}});{{/isDateTime}}{{/isContainer}}{{/isString}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{^isLong}}
+      Into.Write_Entity ("{{baseName}}", Value.{{name}});{{/isLong}}{{/isPrimitiveType}}{{#isLong}}
+      Serialize (Into, "{{baseName}}", Value.{{name}});{{/isLong}}{{#isString}}
+      Into.Write_Entity ("{{baseName}}", Value.{{name}});{{/isString}}{{#isContainer}}
+      Serialize (Into, "{{baseName}}", Value.{{name}});{{/isContainer}}{{#isDateTime}}
+      Into.Write_Entity ("{{baseName}}", Value.{{name}});{{/isDateTime}}{{/vars}}
       Into.End_Entity (Name);
    end Serialize;
+
+   procedure Serialize (Into  : in out Swagger.Streams.Output_Stream'Class;
+                        Name  : in String;
+                        Value : in {{classname}}_Vectors.Vector) is
+   begin
+      Into.Start_Array (Name);
+      for Item of Value loop
+         Serialize (Into, "", Item);
+      end loop;
+      Into.End_Array (Name);
+   end Serialize;
+
 {{/model}}
 {{/orderedModels}}
 
