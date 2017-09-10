@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 
 import io.swagger.codegen.*;
+import io.swagger.models.properties.*;
 
 public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     public static final String USER_INFO_PATH = "userInfoPath";
@@ -15,6 +16,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     public AdaCodegen() {
         super();
 
+        modelNameSuffix = "_Type";
         orderedModels = new ArrayList<Map<String, Object>>();
         modelDepends = new HashMap<String, List<String>>();
         embeddedTemplateDir = templateDir = "Ada";
@@ -30,12 +32,12 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                 this.apiPackage);
 
         languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
+                Arrays.asList("integer", "boolean", "Integer", "Character", "Boolean", "long", "float", "double", "int32_t", "int64_t"));
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("date", "Swagger.Date");
         typeMapping.put("DateTime", "Swagger.Datetime");
-        typeMapping.put("string", "Swagger.String");
+        typeMapping.put("string", "Swagger.UString");
         typeMapping.put("integer", "Integer");
         typeMapping.put("long", "Swagger.Long");
         typeMapping.put("boolean", "Boolean");
@@ -143,6 +145,45 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    /**
+     * Optional - type declaration. This is a String which is used by the
+     * templates to instantiate your types. There is typically special handling
+     * for different property types
+     *
+     * @return a string value used as the `dataType` field for model templates,
+     *         `returnType` for api templates
+     */
+    @Override
+    public String getTypeDeclaration(Property p) {
+        String swaggerType = getSwaggerType(p);
+
+        if (p instanceof ArrayProperty) {
+            ArrayProperty ap = (ArrayProperty) p;
+            Property inner = ap.getItems();
+            return getTypeDeclaration(inner) + "_Vectors.Vector";
+        }
+        if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            Property inner = mp.getAdditionalProperties();
+            return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
+        }
+        if (typeMapping.containsKey(swaggerType)) {
+            return typeMapping.get(swaggerType);
+        }
+        //  LOGGER.info("Swagger type " + swaggerType);
+        if (languageSpecificPrimitives.contains(swaggerType)) {
+            return swaggerType;
+        }
+        String modelType = toModelName(swaggerType);
+        if (p instanceof StringProperty || p instanceof DateProperty
+                || p instanceof DateTimeProperty || p instanceof FileProperty
+                || languageSpecificPrimitives.contains(modelType)) {
+            return modelType;
+        }
+
+        return modelPackage + ".Models." + modelType;
     }
 
     @SuppressWarnings("unchecked")
