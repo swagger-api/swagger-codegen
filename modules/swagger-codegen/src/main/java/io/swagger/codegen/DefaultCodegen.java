@@ -3498,7 +3498,14 @@ public class DefaultCodegen {
      * @return Sanitized tag
      */
     public String sanitizeTag(String tag) {
-        return camelize(sanitizeName(tag));
+        tag = camelize(sanitizeName(tag));
+
+        // tag starts with numbers
+        if (tag.matches("^\\d.*")) {
+            tag = "_" + tag;
+        }
+
+        return tag;
     }
 
     /**
