@@ -7,7 +7,7 @@ defmodule SwaggerPetstore.Model.User do
   
   """
 
-  @derive [Poison.Encoder, Poison.Decoder]
+  @derive [Poison.Encoder]
   defstruct [
     :"id",
     :"username",
@@ -18,5 +18,11 @@ defmodule SwaggerPetstore.Model.User do
     :"phone",
     :"userStatus"
   ]
+end
+
+defimpl Poison.Decoder, for: SwaggerPetstore.Model.User do
+  def decode(value, _options) do
+    value
+  end
 end
 

@@ -83,6 +83,20 @@ defmodule SwaggerPetstore.RequestBuilder do
   """
   @spec add_param(map(), :atom, :atom, any()) :: map()
   def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
+  def add_param(request, :body, key, value) do
+    request
+    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
+    |> Map.update!(:body, &(Tesla.Multipart.add_field(&1, key, Poison.encode!(value), headers: [{:"Content-Type", "application/json"}])))
+  end
+  def add_param(request, :file, name, path) do
+    request
+    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
+    |> Map.update!(:body, &(Tesla.Multipart.add_file(&1, path, name: name)))
+  end
+  def add_param(request, :form, name, value) do
+    request
+    |> Map.update(:body, %{name => value}, &(Map.put(&1, name, value)))
+  end
   def add_param(request, location, key, value) do
     Map.update(request, location, [{key, value}], &(&1 ++ [{key, value}]))
   end

@@ -28,7 +28,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     String supportedElixirVersion = "1.4";
     List<String> extraApplications = Arrays.asList(":logger");
     List<String> deps = Arrays.asList(
-            "{:tesla, \"~> 0.5\"}",
+            "{:tesla, \"~> 0.8\"}",
             "{:poison, \">= 1.0.0\"}"
     );
 
@@ -142,7 +142,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("boolean", "Boolean");
         typeMapping.put("Date", "DateTime");
         typeMapping.put("DateTime", "DateTime");
-        typeMapping.put("file", "PID");
+        typeMapping.put("file", "String");
         typeMapping.put("map", "Map");
         typeMapping.put("array", "List");
         typeMapping.put("list", "List");
@@ -263,6 +263,17 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                 eco.setReplacedPathName(buffer.toString());
             }
             eco.setPathTemplateNames(pathTemplateNames);
+
+            // detect multipart form types
+            if (eco.hasConsumes == Boolean.TRUE) {
+                Map<String, String> firstType = eco.consumes.get(0);
+                if (firstType != null) {
+                    if ("multipart/form-data".equals(firstType.get("mediaType"))) {
+                        eco.isMultipart = Boolean.TRUE;
+                    }
+                }
+            }
+
             newOs.add(eco);
         }
         operations.put("operation", newOs);
@@ -548,6 +559,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                 // <type>.t
                 sb.append(param.dataType);
                 sb.append(".t");
+            } else if (param.isFile) {
+                sb.append("String.t");
             } else {
                 // <module>.Model.<type>.t
                 sb.append(moduleName);

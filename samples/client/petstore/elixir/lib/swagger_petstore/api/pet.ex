@@ -212,7 +212,7 @@ defmodule SwaggerPetstore.Api.Pet do
   - pet_id (Integer): ID of pet to update
   - opts (KeywordList): [optional] Optional parameters
     - :additional_metadata (String): Additional data to pass to server
-    - :file (PID): file to upload
+    - :file (String): file to upload
 
   ## Returns
 

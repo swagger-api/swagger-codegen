@@ -7,11 +7,17 @@ defmodule SwaggerPetstore.Model.ApiResponse do
   
   """
 
-  @derive [Poison.Encoder, Poison.Decoder]
+  @derive [Poison.Encoder]
   defstruct [
     :"code",
     :"type",
     :"message"
   ]
+end
+
+defimpl Poison.Decoder, for: SwaggerPetstore.Model.ApiResponse do
+  def decode(value, _options) do
+    value
+  end
 end
 

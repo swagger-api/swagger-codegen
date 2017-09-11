@@ -7,7 +7,7 @@ defmodule SwaggerPetstore.Model.Order do
   
   """
 
-  @derive [Poison.Encoder, Poison.Decoder]
+  @derive [Poison.Encoder]
   defstruct [
     :"id",
     :"petId",
@@ -16,5 +16,11 @@ defmodule SwaggerPetstore.Model.Order do
     :"status",
     :"complete"
   ]
+end
+
+defimpl Poison.Decoder, for: SwaggerPetstore.Model.Order do
+  def decode(value, _options) do
+    value
+  end
 end
 

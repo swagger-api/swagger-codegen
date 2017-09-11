@@ -7,10 +7,16 @@ defmodule SwaggerPetstore.Model.Tag do
   
   """
 
-  @derive [Poison.Encoder, Poison.Decoder]
+  @derive [Poison.Encoder]
   defstruct [
     :"id",
     :"name"
   ]
+end
+
+defimpl Poison.Decoder, for: SwaggerPetstore.Model.Tag do
+  def decode(value, _options) do
+    value
+  end
 end
 
