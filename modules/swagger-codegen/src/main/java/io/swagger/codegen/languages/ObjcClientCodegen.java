@@ -308,6 +308,13 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
+
+        if (swaggerType == null) {
+            swaggerType = ""; // set swagger type to empty string if null
+        }
+
+        // TODO avoid using toLowerCase as typeMapping should be case-sensitive
+
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
             type = typeMapping.get(swaggerType.toLowerCase());
             if (languageSpecificPrimitives.contains(type) && !foundationClasses.contains(type)) {
