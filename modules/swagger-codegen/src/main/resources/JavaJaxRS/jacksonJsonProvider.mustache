@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -20,8 +21,8 @@ public class JacksonJsonProvider extends JacksonJaxbJsonProvider {
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .registerModule(new JodaModule())
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .setDateFormat(new RFC3339DateFormat());
-
         setMapper(objectMapper);
     }
 }
