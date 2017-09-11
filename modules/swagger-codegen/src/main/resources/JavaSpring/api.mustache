@@ -72,10 +72,11 @@ public interface {{classname}} {
 {{/useSpringCloudClient}}
 {{^useSpringCloudClient}}
     {{#jdk8}}default {{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}},{{/allParams}} @RequestHeader(value = "Accept", required = false) String accept) throws Exception{{^jdk8}};{{/jdk8}}{{#jdk8}} {
-        // do some magic!
-        return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK){{#async}}){{/async}};
+        {{^delegate-method}}return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK){{#async}}){{/async}};{{/delegate-method}}
+        {{#delegate-method}}return {{operationId}}{{httpMethod}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/delegate-method}}
     }{{/jdk8}}
 
+    {{#delegate-method}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}{{httpMethod}}({{#allParams}}{{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}MultipartFile{{/isFile}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}});{{/delegate-method}}
 {{/useSpringCloudClient}}
 {{/operation}}
 }
