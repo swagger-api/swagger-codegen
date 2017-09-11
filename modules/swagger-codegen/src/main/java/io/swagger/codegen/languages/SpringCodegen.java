@@ -209,7 +209,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (this.interfaceOnly && this.delegatePattern) {
             if (library.equals(SPRING_CLOUD_LIBRARY)) {
                 throw new IllegalArgumentException(
-                        String.format("Can not generate code with `%s` and `%s` true.", DELEGATE_PATTERN, INTERFACE_ONLY));
+                        String.format("Can not generate code with `%s` and `%s` both true.", DELEGATE_PATTERN, INTERFACE_ONLY));
             } else if (this.java8) {
                 this.delegateMethod = true;
                 additionalProperties.put("delegate-method", true);
