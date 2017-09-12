@@ -14,6 +14,7 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.SemVer;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
@@ -35,7 +36,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
-    protected String ngVersion = "4";
 
     public TypeScriptAngularClientCodegen() {
         super();
@@ -55,7 +55,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         this.cliOptions.add(new CliOption(NPM_REPOSITORY, "Use this property to set an url your private npmRepo in the package.json"));
         this.cliOptions.add(new CliOption(SNAPSHOT, "When setting this property to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(WITH_INTERFACES, "Setting this property to true will generate interfaces next to the default class implementations.", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
-        this.cliOptions.add(new CliOption(NG_VERSION, "The version of Angular (2 or 4). Default is '4'"));
+        this.cliOptions.add(new CliOption(NG_VERSION, "The version of Angular. Default is '4.3'"));
     }
 
     @Override
@@ -100,21 +100,16 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         }
 
         // determine NG version
+        SemVer ngVersion;
         if (additionalProperties.containsKey(NG_VERSION)) {
-            if ("2".equals(additionalProperties.get(NG_VERSION).toString())) {
-                additionalProperties.put("isNg2x", true);
-                setNgVersion("2");
-            } else if ("4".equals(additionalProperties.get(NG_VERSION).toString())) {
-                additionalProperties.put("isNg4x", true);
-                setNgVersion("4");
-            } else {
-                throw new IllegalArgumentException("Invalid ngVersion, which must be either '2' or '4'");
-            }
+            ngVersion = new SemVer(additionalProperties.get(NG_VERSION).toString());
         } else {
-            // default to 4
-            additionalProperties.put("isNg4x", true);
-            setNgVersion("4");
+            ngVersion = new SemVer("4.3.0");
         }
+        additionalProperties.put(NG_VERSION, ngVersion);
+        additionalProperties.put("injectionToken", ngVersion.atLeast("4.0.0") ? "InjectionToken" : "OpaqueToken");
+        additionalProperties.put("injectionTokenTyped", ngVersion.atLeast("4.0.0"));
+        additionalProperties.put("httpClientSupported", ngVersion.atLeast("4.3.0") ? "true" : null);
     }
 
     private void addNpmPackageGeneration() {
@@ -314,14 +309,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     @Override
     public String toModelImport(String name) {
         return modelPackage() + "/" + toModelFilename(name);
-    }
-
-    public String getNgVersion() {
-        return ngVersion;
-    }
-
-    public void setNgVersion(String ngVersion) {
-        this.ngVersion = ngVersion;
     }
 
     public String getNpmName() {
