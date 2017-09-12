@@ -37,9 +37,7 @@ void
 {{classname}}::cleanup() {
     {{#vars}}{{#complexType}}
     if({{name}} != nullptr) {
-        {{#isContainer}}
-        {{#isListContainer}}QList<{{complexType}}*>* arr = {{name}};{{/isListContainer}}
-        {{#isMapContainer}}QMap<QString, {{complexType}}*>* arr = {{name}};{{/isMapContainer}}
+        {{#isContainer}}{{#isListContainer}}QList<{{complexType}}*>* arr = {{name}};{{/isListContainer}}{{#isMapContainer}}QMap<QString, {{complexType}}*>* arr = {{name}};{{/isMapContainer}}
         foreach({{complexType}}* o, *arr) {
             delete o;
         }
