@@ -37,7 +37,7 @@ ghc-options: -Wall
 library:
   source-dirs: lib
   ghc-options:
-  
+  - -funbox-strict-fields
   exposed-modules:
   - SwaggerPetstore
   - SwaggerPetstore.API
@@ -45,6 +45,7 @@ library:
   - SwaggerPetstore.Model
   - SwaggerPetstore.MimeTypes
   - SwaggerPetstore.Lens
+  - SwaggerPetstore.Logging
   dependencies:
   - aeson >=1.0 && <2.0
   - bytestring >=0.10.0 && <0.11
@@ -61,7 +62,7 @@ library:
   - network >=2.6.2 && <2.7
   - random >=1.1
   - exceptions >= 0.4
-  - monad-logger >=0.3 && <0.4
+  - katip >=0.4 && < 0.6
   - safe-exceptions <0.2
   - case-insensitive
   - microlens >= 0.4.3 && <0.5
