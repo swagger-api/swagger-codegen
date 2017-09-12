@@ -13,9 +13,7 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
-import { Http, Headers, URLSearchParams }                    from '@angular/http';
-import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
-import { Response, ResponseContentType }                     from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams }               from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
@@ -32,32 +30,17 @@ import { CustomQueryEncoderHelper }                          from '../encoder';
 export class PetService {
 
     protected basePath = 'http://petstore.swagger.io/v2';
-    public defaultHeaders: Headers = new Headers();
-    public configuration: Configuration = new Configuration();
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
         if (configuration) {
             this.configuration = configuration;
-			this.basePath = basePath || configuration.basePath || this.basePath;
+            this.basePath = basePath || configuration.basePath || this.basePath;
         }
-    }
-
-    /**
-     * 
-     * Extends object by coping non-existing properties.
-     * @param objA object to be extended
-     * @param objB source object
-     */
-    private extendObj<T1,T2>(objA: T1, objB: T2) {
-        for(let key in objB){
-            if(objB.hasOwnProperty(key)){
-                (objA as any)[key] = (objB as any)[key];
-            }
-        }
-        return <T1&T2>objA;
     }
 
     /**
@@ -74,187 +57,31 @@ export class PetService {
         return false;
     }
 
-    /**
-     * 
-     * @summary Add a new pet to the store
-     * @param body Pet object that needs to be added to the store
-     */
-    public addPet(body: Pet, extraHttpRequestParams?: any): Observable<{}> {
-        return this.addPetWithHttpInfo(body, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * 
-     * @summary Deletes a pet
-     * @param petId Pet id to delete
-     * @param apiKey 
-     */
-    public deletePet(petId: number, apiKey?: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.deletePetWithHttpInfo(petId, apiKey, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * Multiple status values can be provided with comma separated strings
-     * @summary Finds Pets by status
-     * @param status Status values that need to be considered for filter
-     */
-    public findPetsByStatus(status: Array<string>, extraHttpRequestParams?: any): Observable<Array<Pet>> {
-        return this.findPetsByStatusWithHttpInfo(status, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-     * @summary Finds Pets by tags
-     * @param tags Tags to filter by
-     */
-    public findPetsByTags(tags: Array<string>, extraHttpRequestParams?: any): Observable<Array<Pet>> {
-        return this.findPetsByTagsWithHttpInfo(tags, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * Returns a single pet
-     * @summary Find pet by ID
-     * @param petId ID of pet to return
-     */
-    public getPetById(petId: number, extraHttpRequestParams?: any): Observable<Pet> {
-        return this.getPetByIdWithHttpInfo(petId, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * 
-     * @summary Update an existing pet
-     * @param body Pet object that needs to be added to the store
-     */
-    public updatePet(body: Pet, extraHttpRequestParams?: any): Observable<{}> {
-        return this.updatePetWithHttpInfo(body, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * 
-     * @summary Updates a pet in the store with form data
-     * @param petId ID of pet that needs to be updated
-     * @param name Updated name of the pet
-     * @param status Updated status of the pet
-     */
-    public updatePetWithForm(petId: number, name?: string, status?: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.updatePetWithFormWithHttpInfo(petId, name, status, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
-    /**
-     * 
-     * @summary uploads an image
-     * @param petId ID of pet to update
-     * @param additionalMetadata Additional data to pass to server
-     * @param file file to upload
-     */
-    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: any): Observable<ApiResponse> {
-        return this.uploadFileWithHttpInfo(petId, additionalMetadata, file, extraHttpRequestParams)
-            .map((response: Response) => {
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json() || {};
-                }
-            });
-    }
-
 
     /**
      * Add a new pet to the store
      * 
      * @param body Pet object that needs to be added to the store
      */
-    public addPetWithHttpInfo(body: Pet, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet';
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'body' is not null or undefined
+    public addPet(body: Pet, ): Observable<{}> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
 
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
+        let headers = this.defaultHeaders;
 
         // authentication (petstore_auth) required
-        // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
-        headers.set('Content-Type', 'application/json');
-
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
+        return this.httpClient.post<any>(`${this.basePath}/pet`, body, {
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -263,50 +90,28 @@ export class PetService {
      * @param petId Pet id to delete
      * @param apiKey 
      */
-    public deletePetWithHttpInfo(petId: number, apiKey?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'petId' is not null or undefined
+    public deletePet(petId: number, apiKey?: string, ): Observable<{}> {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
+
+        let headers = this.defaultHeaders;
         if (apiKey !== undefined && apiKey !== null) {
-            headers.set('api_key', String(apiKey));
+            headers = headers.set('api_key', String(apiKey));
         }
 
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
-
         // authentication (petstore_auth) required
-        // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
+        return this.httpClient.delete<any>(`${this.basePath}/pet/${petId}`, {
             headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -314,49 +119,32 @@ export class PetService {
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter
      */
-    public findPetsByStatusWithHttpInfo(status: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/findByStatus';
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'status' is not null or undefined
+    public findPetsByStatus(status: Array<string>, ): Observable<Array<Pet>> {
         if (status === null || status === undefined) {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
+
+        let queryParameters = new HttpParams();
         if (status) {
-            queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
+            queryParameters = queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
 
 
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
+        let headers = this.defaultHeaders;
 
         // authentication (petstore_auth) required
-        // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
+        return this.httpClient.get<any>(`${this.basePath}/pet/findByStatus`, {
+            params: queryParameters,
             headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -364,49 +152,32 @@ export class PetService {
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
      */
-    public findPetsByTagsWithHttpInfo(tags: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/findByTags';
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'tags' is not null or undefined
+    public findPetsByTags(tags: Array<string>, ): Observable<Array<Pet>> {
         if (tags === null || tags === undefined) {
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
+
+        let queryParameters = new HttpParams();
         if (tags) {
-            queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
+            queryParameters = queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
 
 
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
+        let headers = this.defaultHeaders;
 
         // authentication (petstore_auth) required
-        // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
+        return this.httpClient.get<any>(`${this.basePath}/pet/findByTags`, {
+            params: queryParameters,
             headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -414,42 +185,22 @@ export class PetService {
      * Returns a single pet
      * @param petId ID of pet to return
      */
-    public getPetByIdWithHttpInfo(petId: number, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'petId' is not null or undefined
+    public getPetById(petId: number, ): Observable<Pet> {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
 
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
+        let headers = this.defaultHeaders;
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
+        return this.httpClient.get<any>(`${this.basePath}/pet/${petId}`, {
             headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -457,48 +208,25 @@ export class PetService {
      * 
      * @param body Pet object that needs to be added to the store
      */
-    public updatePetWithHttpInfo(body: Pet, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet';
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'body' is not null or undefined
+    public updatePet(body: Pet, ): Observable<{}> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
 
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
+        let headers = this.defaultHeaders;
 
         // authentication (petstore_auth) required
-        // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
-        headers.set('Content-Type', 'application/json');
-
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Put,
+        return this.httpClient.put<any>(`${this.basePath}/pet`, body, {
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -508,17 +236,21 @@ export class PetService {
      * @param name Updated name of the pet
      * @param status Updated status of the pet
      */
-    public updatePetWithFormWithHttpInfo(petId: number, name?: string, status?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'petId' is not null or undefined
+    public updatePetWithForm(petId: number, name?: string, status?: string, ): Observable<{}> {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (petstore_auth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
@@ -528,44 +260,17 @@ export class PetService {
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
           set(param: string, value: any): void;
         };
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
-
-        // authentication (petstore_auth) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-            
         if (name !== undefined) {
             formParams.set('name', <any>name);
         }
-
         if (status !== undefined) {
             formParams.set('status', <any>status);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
+        return this.httpClient.post<any>(`${this.basePath}/pet/${petId}`, formParams, {
             headers: headers,
-            body: formParams.toString(),
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
     /**
@@ -575,17 +280,21 @@ export class PetService {
      * @param additionalMetadata Additional data to pass to server
      * @param file file to upload
      */
-    public uploadFileWithHttpInfo(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/pet/${petId}/uploadImage'
-                    .replace('${' + 'petId' + '}', String(petId));
-
-        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        // verify required parameter 'petId' is not null or undefined
+    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, ): Observable<ApiResponse> {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (petstore_auth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'multipart/form-data'
@@ -596,43 +305,17 @@ export class PetService {
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
           set(param: string, value: any): void;
         };
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/json'
-        ];
-
-        // authentication (petstore_auth) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-            
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
-
         if (file !== undefined) {
             formParams.set('file', <any>file);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
+        return this.httpClient.post<any>(`${this.basePath}/pet/${petId}/uploadImage`, formParams, {
             headers: headers,
-            body: formParams.toString(),
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+            withCredentials: this.configuration.withCredentials,
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
     }
 
 }
