@@ -165,11 +165,9 @@ export class UserService {
         if (username !== undefined) {
             queryParameters = queryParameters.set('username', <any>username);
         }
-
         if (password !== undefined) {
             queryParameters = queryParameters.set('password', <any>password);
         }
-
 
         let headers = this.defaultHeaders;
 

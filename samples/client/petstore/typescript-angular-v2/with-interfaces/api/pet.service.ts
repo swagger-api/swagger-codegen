@@ -282,7 +282,6 @@ export class PetService implements PetServiceInterface {
             queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
 
-
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // authentication (petstore_auth) required
@@ -321,7 +320,6 @@ export class PetService implements PetServiceInterface {
         if (tags) {
             queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
-
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 

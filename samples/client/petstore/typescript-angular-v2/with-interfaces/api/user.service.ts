@@ -341,11 +341,9 @@ export class UserService implements UserServiceInterface {
         if (username !== undefined) {
             queryParameters.set('username', <any>username);
         }
-
         if (password !== undefined) {
             queryParameters.set('password', <any>password);
         }
-
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 

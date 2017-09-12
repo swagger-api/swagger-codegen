@@ -129,7 +129,6 @@ export class PetService {
             queryParameters = queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
 
-
         let headers = this.defaultHeaders;
 
         // authentication (petstore_auth) required
@@ -161,7 +160,6 @@ export class PetService {
         if (tags) {
             queryParameters = queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
-
 
         let headers = this.defaultHeaders;
 
