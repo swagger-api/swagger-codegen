@@ -1,0 +1,25 @@
+-module({{classname}}_api).
+
+-export([{{#operations}}{{#operation}}{{^-first}},
+         {{/-first}}{{operationId}}/{{#length}}{{allParams}}{{/length}}{{/operation}}{{/operations}}]).
+
+-define(BASE_URL, <<"{{{basePath}}}">>).
+
+{{#operations}}
+    {{#operation}}
+
+%% {{summary}}
+%% {{^notes.isEmpty}}
+%% {{notes}}
+%% {{/notes.isEmpty}}
+{{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{paramName}}{{/allParams}}) ->
+    Method = {{#lowercase}}{{httpMethod}}{{/lowercase}},
+    Path = ["{{{replacedPathName}}}"],
+    QS = [{{^queryParams.isEmpty}}{{#queryParams}}{{^-first}}, {{/-first}}{<<"{{baseName}}">>, {{paramName}}}{{/queryParams}}{{/queryParams.isEmpty}}],
+    Headers = [{{^headerParams.isEmpty}}{{#headerParams}}{{^-first}}, {{/-first}}{<<"{{baseName}}">>, {{paramName}}}{{/headerParams}}{{/headerParams.isEmpty}}],
+    Body1 = {{^formParams.isEmpty}}{form, [{{#formParams}}{{^-first}}, {{/-first}}{<<"{{baseName}}">>, {{paramName}}}{{/formParams}}]}{{/formParams.isEmpty}}{{#formParams.isEmpty}}{{#bodyParams.isEmpty}}[]{{/bodyParams.isEmpty}}{{^bodyParams.isEmpty}}{{#bodyParams}}{{paramName}}{{/bodyParams}}{{/bodyParams.isEmpty}}{{/formParams.isEmpty}},
+    Opts = [],
+    Url = hackney_url:make_url(?BASE_URL, Path, QS),
+    hackney:request(Method, Url, Headers, Body1, Opts).
+    {{/operation}}
+{{/operations}}
