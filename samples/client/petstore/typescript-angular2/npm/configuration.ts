@@ -1,8 +1,10 @@
+import { Observable } from 'rxjs/Observable';
+
 export interface ConfigurationParameters {
     apiKeys?: {[ key: string ]: string};
     username?: string;
     password?: string;
-    accessToken?: string | (() => string);
+    accessToken?: string | ((name: string, scopes?: string[]) => Observable<string>);
     basePath?: string;
     withCredentials?: boolean;
 }
@@ -11,7 +13,7 @@ export class Configuration {
     apiKeys?: {[ key: string ]: string};
     username?: string;
     password?: string;
-    accessToken?: string | (() => string);
+    accessToken?: string | ((name: string, scopes?: string[]) => Observable<string>);
     basePath?: string;
     withCredentials?: boolean;
 

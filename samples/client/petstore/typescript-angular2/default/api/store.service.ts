@@ -39,7 +39,7 @@ export class StoreService {
         }
         if (configuration) {
             this.configuration = configuration;
-			this.basePath = basePath || configuration.basePath || this.basePath;
+            this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
 
@@ -73,7 +73,7 @@ export class StoreService {
     }
 
     /**
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
      * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
@@ -104,7 +104,7 @@ export class StoreService {
     }
 
     /**
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
@@ -146,7 +146,7 @@ export class StoreService {
                     .replace('${' + 'orderId' + '}', String(orderId));
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
@@ -159,19 +159,23 @@ export class StoreService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Delete,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -182,7 +186,7 @@ export class StoreService {
         const path = this.basePath + '/store/inventory';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
 
         // to determine the Accept header
@@ -192,22 +196,27 @@ export class StoreService {
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headersObservable = headersObservable.do((headers: Headers) =>
+                headers.set('api_key', this.configuration.apiKeys["api_key"]));
         }
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -220,7 +229,7 @@ export class StoreService {
                     .replace('${' + 'orderId' + '}', String(orderId));
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
@@ -233,19 +242,23 @@ export class StoreService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -257,7 +270,7 @@ export class StoreService {
         const path = this.basePath + '/store/order';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
@@ -270,22 +283,27 @@ export class StoreService {
             'application/json'
         ];
 
-            
-        headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
 }

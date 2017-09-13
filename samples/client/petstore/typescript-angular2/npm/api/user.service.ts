@@ -39,7 +39,7 @@ export class UserService {
         }
         if (configuration) {
             this.configuration = configuration;
-			this.basePath = basePath || configuration.basePath || this.basePath;
+            this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
 
@@ -73,8 +73,8 @@ export class UserService {
     }
 
     /**
-     * Create user
      * This can only be done by the logged in user.
+     * @summary Create user
      * @param body Created user object
      */
     public createUser(body: User, extraHttpRequestParams?: any): Observable<{}> {
@@ -89,8 +89,8 @@ export class UserService {
     }
 
     /**
-     * Creates list of users with given input array
      * 
+     * @summary Creates list of users with given input array
      * @param body List of user object
      */
     public createUsersWithArrayInput(body: Array<User>, extraHttpRequestParams?: any): Observable<{}> {
@@ -105,8 +105,8 @@ export class UserService {
     }
 
     /**
-     * Creates list of users with given input array
      * 
+     * @summary Creates list of users with given input array
      * @param body List of user object
      */
     public createUsersWithListInput(body: Array<User>, extraHttpRequestParams?: any): Observable<{}> {
@@ -121,8 +121,8 @@ export class UserService {
     }
 
     /**
-     * Delete user
      * This can only be done by the logged in user.
+     * @summary Delete user
      * @param username The name that needs to be deleted
      */
     public deleteUser(username: string, extraHttpRequestParams?: any): Observable<{}> {
@@ -137,8 +137,8 @@ export class UserService {
     }
 
     /**
-     * Get user by user name
      * 
+     * @summary Get user by user name
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     public getUserByName(username: string, extraHttpRequestParams?: any): Observable<User> {
@@ -153,8 +153,8 @@ export class UserService {
     }
 
     /**
-     * Logs user into the system
      * 
+     * @summary Logs user into the system
      * @param username The user name for login
      * @param password The password for login in clear text
      */
@@ -170,8 +170,8 @@ export class UserService {
     }
 
     /**
-     * Logs out current logged in user session
      * 
+     * @summary Logs out current logged in user session
      */
     public logoutUser(extraHttpRequestParams?: any): Observable<{}> {
         return this.logoutUserWithHttpInfo(extraHttpRequestParams)
@@ -185,8 +185,8 @@ export class UserService {
     }
 
     /**
-     * Updated user
      * This can only be done by the logged in user.
+     * @summary Updated user
      * @param username name that need to be deleted
      * @param body Updated user object
      */
@@ -211,7 +211,7 @@ export class UserService {
         const path = this.basePath + '/user';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
@@ -224,22 +224,27 @@ export class UserService {
             'application/json'
         ];
 
-            
-        headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -251,7 +256,7 @@ export class UserService {
         const path = this.basePath + '/user/createWithArray';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
@@ -264,22 +269,27 @@ export class UserService {
             'application/json'
         ];
 
-            
-        headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -291,7 +301,7 @@ export class UserService {
         const path = this.basePath + '/user/createWithList';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
         if (body === null || body === undefined) {
@@ -304,22 +314,27 @@ export class UserService {
             'application/json'
         ];
 
-            
-        headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -332,7 +347,7 @@ export class UserService {
                     .replace('${' + 'username' + '}', String(username));
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
@@ -345,19 +360,23 @@ export class UserService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Delete,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -370,7 +389,7 @@ export class UserService {
                     .replace('${' + 'username' + '}', String(username));
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
@@ -383,19 +402,23 @@ export class UserService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -408,7 +431,7 @@ export class UserService {
         const path = this.basePath + '/user/login';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
@@ -433,19 +456,23 @@ export class UserService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -456,7 +483,7 @@ export class UserService {
         const path = this.basePath + '/user/logout';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
 
         // to determine the Accept header
@@ -465,19 +492,23 @@ export class UserService {
             'application/json'
         ];
 
-            
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -491,7 +522,7 @@ export class UserService {
                     .replace('${' + 'username' + '}', String(username));
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
@@ -508,22 +539,27 @@ export class UserService {
             'application/json'
         ];
 
-            
-        headers.set('Content-Type', 'application/json');
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Put,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
+
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Put,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
+
+          return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(path, requestOptions);
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
 }

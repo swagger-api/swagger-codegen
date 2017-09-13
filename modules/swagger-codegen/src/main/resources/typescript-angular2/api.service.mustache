@@ -44,7 +44,7 @@ export class {{classname}} {
         }
         if (configuration) {
             this.configuration = configuration;
-			this.basePath = basePath || configuration.basePath || this.basePath;
+            this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
 
@@ -119,7 +119,7 @@ export class {{classname}} {
                     .replace('${' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
 {{#allParams}}
 {{#required}}
@@ -157,12 +157,12 @@ export class {{classname}} {
 {{#headerParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
-            headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            headersObservable = headersObservable.do((headers: Headers) => headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])));
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined && {{paramName}} !== null) {
-            headers.set('{{baseName}}', String({{paramName}}));
+            headersObservable = headersObservable.do((headers: Headers) => headers.set('{{baseName}}', String({{paramName}})));
         }
         {{/isListContainer}}
 
@@ -198,7 +198,8 @@ export class {{classname}} {
 {{#isApiKey}}
 {{#isKeyInHeader}}
         if (this.configuration.apiKeys["{{keyParamName}}"]) {
-            headers.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]);
+            headersObservable = headersObservable.do((headers: Headers) =>
+                headers.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]));
         }
 
 {{/isKeyInHeader}}
@@ -212,24 +213,27 @@ export class {{classname}} {
 {{#isBasic}}
         // http basic authentication required
         if (this.configuration.username || this.configuration.password) {
-            headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+            headersObservable = headersObservable.do((headers: Headers) =>
+                headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password)));
         }
 
 {{/isBasic}}
 {{#isOAuth}}
         // oauth required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
+                : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
+                headers.set('Authorization', 'Bearer ' + accessToken));
         }
 
 {{/isOAuth}}
 {{/authMethods}}
-            
+
 {{#bodyParam}}
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) =>
+            headers.set('Content-Type', 'application/json'));
 
 {{/bodyParam}}
 {{#formParams}}
@@ -252,27 +256,31 @@ export class {{classname}} {
         {{/isListContainer}}
 
 {{/formParams}}
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: {{httpMethod}},
-            headers: headers,
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: {{httpMethod}},
+              headers: headers,
 {{#bodyParam}}
-            body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
+              body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
-            body: formParams.toString(),
+              body: formParams.toString(),
 {{/hasFormParams}}
 {{#isResponseFile}}
-            responseType: ResponseContentType.Blob,
+              responseType: ResponseContentType.Blob,
 {{/isResponseFile}}
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
 
-        return this.http.request(path, requestOptions);
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
 {{/operation}}
