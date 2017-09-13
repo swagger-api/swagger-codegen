@@ -72,6 +72,10 @@ class ApiClient(object):
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
+    
+    def __del__(self):
+        self.pool.close()
+        self.pool.join()
 
     @property
     def user_agent(self):
@@ -97,7 +101,7 @@ class ApiClient(object):
                    _return_http_data_only=None, collection_formats=None, _preload_content=True,
                    _request_timeout=None):
 
-        config = Configuration()
+        config = self.configuration
 
         # header parameters
         header_params = header_params or {}
@@ -602,17 +606,23 @@ class ApiClient(object):
         :param klass: class literal.
         :return: model object.
         """
-        if not klass.swagger_types:
+
+        if not klass.swagger_types and not hasattr(klass, 'get_real_child_model'):
             return data
 
         kwargs = {}
-        for attr, attr_type in iteritems(klass.swagger_types):
-            if data is not None \
-               and klass.attribute_map[attr] in data \
-               and isinstance(data, (list, dict)):
-                value = data[klass.attribute_map[attr]]
-                kwargs[attr] = self.__deserialize(value, attr_type)
+        if klass.swagger_types is not None:
+            for attr, attr_type in iteritems(klass.swagger_types):
+                if data is not None \
+                   and klass.attribute_map[attr] in data \
+                   and isinstance(data, (list, dict)):
+                    value = data[klass.attribute_map[attr]]
+                    kwargs[attr] = self.__deserialize(value, attr_type)
 
-        instance = klass(**kwargs)     
+        instance = klass(**kwargs)
 
+        if hasattr(instance, 'get_real_child_model'):
+            klass_name = instance.get_real_child_model(data)
+            if klass_name:
+                instance = self.__deserialize(data, klass_name)
         return instance

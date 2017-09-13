@@ -166,7 +166,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "deprecated" : true
       }
     },
     "/pet/{petId}" : {
@@ -657,7 +658,10 @@
               "$ref" : "#/definitions/Client"
             }
           }
-        }
+        },
+        "security" : [ {
+          "api_key_query" : [ ]
+        } ]
       }
     },
     "/fake" : {
@@ -1041,6 +1045,11 @@
       "type" : "apiKey",
       "name" : "api_key",
       "in" : "header"
+    },
+    "api_key_query" : {
+      "type" : "apiKey",
+      "name" : "api_key_query",
+      "in" : "query"
     },
     "http_basic_test" : {
       "type" : "basic"

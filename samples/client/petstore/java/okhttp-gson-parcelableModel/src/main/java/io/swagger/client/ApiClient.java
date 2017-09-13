@@ -90,6 +90,7 @@ public class ApiClient {
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
         authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+        authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
         authentications.put("http_basic_test", new HttpBasicAuth());
         authentications.put("petstore_auth", new OAuth());
         // Prevent the authentications from being modified.
@@ -552,12 +553,13 @@ public class ApiClient {
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
      *   application/vnd.company+json
+     * "* / *" is also default to JSON
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
       String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-      return mime != null && (mime.matches(jsonMime) || mime.equalsIgnoreCase("application/json-patch+json"));
+      return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
     }
 
     /**
@@ -588,11 +590,11 @@ public class ApiClient {
      *
      * @param contentTypes The Content-Type array to select from
      * @return The Content-Type header to use. If the given array is empty,
-     *   JSON will be used.
+     *   or matches "any", JSON will be used.
      */
     public String selectHeaderContentType(String[] contentTypes) {
-        if (contentTypes.length == 0) {
-            return "application/json";
+        if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
+             return "application/json";
         }
         for (String contentType : contentTypes) {
             if (isJsonMime(contentType)) {

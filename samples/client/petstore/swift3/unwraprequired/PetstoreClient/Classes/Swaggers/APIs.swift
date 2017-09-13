@@ -52,13 +52,13 @@ open class RequestBuilder<T> {
 
     open func addHeaders(_ aHeaders:[String:String]) {
         for (header, value) in aHeaders {
-            headers[header] = value
+            addHeader(name: header, value: value)
         }
     }
 
     open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) { }
 
-    public func addHeader(name: String, value: String) -> Self {
+    @discardableResult public func addHeader(name: String, value: String) -> Self {
         if !value.isEmpty {
             headers[name] = value
         }
