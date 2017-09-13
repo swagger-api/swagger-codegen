@@ -75,8 +75,8 @@ export class {{classname}} {
 
 
 {{^useHttpClient}}
-{{! not sure why we used to generate a second method here rather than inlining those few lines of code, 
-    but let's keep it for now for the sake of backwards compatiblity. }}  
+{{! not sure why we used to generate a second method here rather than inlining those few lines of code,
+    but let's keep it for now for the sake of backwards compatiblity. }}
 {{#operation}}
     /**
      * {{&notes}}
@@ -152,17 +152,17 @@ export class {{classname}} {
         {{/isListContainer}}
 {{/queryParams}}
 
-{{/hasQueryParams}} 
-        let headers = {{#useHttpClient}}this.defaultHeaders;{{/useHttpClient}}{{^useHttpClient}}new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845{{/useHttpClient}}
+{{/hasQueryParams}}
+        let headersObservable = Observable.of({{#useHttpClient}}this.defaultHeaders{{/useHttpClient}}{{^useHttpClient}}new Headers(this.defaultHeaders.toJSON()){{/useHttpClient}});
 {{#headerParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
-            {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            headersObservable = headersObservable.{{#useHttpClient}}map((headers: HttpHeaders) => { return {{/useHttpClient}}{{^useHttpClient}}do((headers: Headers) => { {{/useHttpClient}}headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])); });
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined && {{paramName}} !== null) {
-            {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('{{baseName}}', String({{paramName}}));
+            headersObservable = headersObservable.{{#useHttpClient}}map((headers: HttpHeaders) => { return {{/useHttpClient}}{{^useHttpClient}}do((headers: Headers) => { {{/useHttpClient}}headers.set('{{baseName}}', String({{paramName}})); });
         }
         {{/isListContainer}}
 {{/headerParams}}
@@ -172,7 +172,7 @@ export class {{classname}} {
 {{#isApiKey}}
 {{#isKeyInHeader}}
         if (this.configuration.apiKeys["{{keyParamName}}"]) {
-            {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]);
+            headersObservable = headersObservable.{{#useHttpClient}}map((headers: HttpHeaders) => { return {{/useHttpClient}}{{^useHttpClient}}do((headers: Headers) => { {{/useHttpClient}}headers.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]); });
         }
 
 {{/isKeyInHeader}}
@@ -185,23 +185,26 @@ export class {{classname}} {
 {{/isApiKey}}
 {{#isBasic}}
         if (this.configuration.username || this.configuration.password) {
-            {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+            headersObservable = headersObservable.{{#useHttpClient}}map((headers: HttpHeaders) => { return {{/useHttpClient}}{{^useHttpClient}}do((headers: Headers) => { {{/useHttpClient}}headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password)); });
         }
 
 {{/isBasic}}
 {{#isOAuth}}
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: {{#useHttpClient}}Http{{/useHttpClient}}Headers, accessToken: string) => {
+                {{#useHttpClient}}return {{/useHttpClient}}headers.set('Authorization', 'Bearer ' + accessToken);{{^useHttpClient}}
+                return headers;{{/useHttpClient}}
+            });
         }
 
 {{/isOAuth}}
 {{/authMethods}}
 {{#bodyParam}}
 {{^useHttpClient}}
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
 {{/useHttpClient}}
 {{/bodyParam}}
@@ -235,7 +238,7 @@ export class {{classname}} {
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
-            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8'));
 {{/useHttpClient}}
         }
 
@@ -263,8 +266,8 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 {{#useHttpClient}}
-        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}
-        {{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams, {{/hasFormParams}}{
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}
+          {{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams, {{/hasFormParams}}{
 {{#hasQueryParams}}
             params: queryParameters,
 {{/hasQueryParams}}
@@ -273,33 +276,32 @@ export class {{classname}} {
             responseType: "blob",
 {{/isResponseFile}}
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
 {{/useHttpClient}}
 {{^useHttpClient}}
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: {{httpMethod}},
-            headers: headers,
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: {{httpMethod}},
+              headers: headers,
 {{#bodyParam}}
-            body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
+              body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
-            body: convertFormParamsToString ? formParams.toString() : formParams,
+              body: convertFormParamsToString ? formParams.toString() : formParams,
 {{/hasFormParams}}
 {{#isResponseFile}}
-            responseType: ResponseContentType.Blob,
+              responseType: ResponseContentType.Blob,
 {{/isResponseFile}}
 {{#hasQueryParams}}
-            search: queryParameters,
+              search: queryParameters,
 {{/hasQueryParams}}
-            withCredentials:this.configuration.withCredentials
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}{{{path}}}`, requestOptions);
-{{/useHttpClient}}        
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}{{{path}}}`, requestOptions));
+{{/useHttpClient}}
     }
 
 {{/operation}}}

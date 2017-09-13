@@ -13,11 +13,27 @@
 
 
 /**
- * A tag for a pet
+ * An order for a pets from the pet store
  */
-export interface Tag {
+export interface Order {
     id?: number;
 
-    name?: string;
+    petId?: number;
+
+    quantity?: number;
+
+    shipDate?: Date;
+
+    /**
+     * Order Status
+     */
+    status?: Order.StatusEnum;
+
+    complete?: boolean;
 
 }
+export namespace Order {
+    export type StatusEnum = 'placed' | 'approved' | 'delivered';
+}
+
+

@@ -10,28 +10,32 @@
  * Do not edit the class manually.
  */
 
+import { Category } from './category';
+import { Tag } from './tag';
 
 
 /**
- * An order for a pets from the pet store
+ * A pet for sale in the pet store
  */
-export interface Order {
+export interface Pet {
     id?: number;
 
-    petId?: number;
+    category?: Category;
 
-    quantity?: number;
+    name: string;
 
-    shipDate?: Date;
+    photoUrls: Array<string>;
+
+    tags?: Array<Tag>;
 
     /**
-     * Order Status
+     * pet status in the store
      */
-    status?: Order.StatusEnum;
-
-    complete?: boolean;
+    status?: Pet.StatusEnum;
 
 }
-export namespace Order {
-    export type StatusEnum = 'placed' | 'approved' | 'delivered';
+export namespace Pet {
+    export type StatusEnum = 'available' | 'pending' | 'sold';
 }
+
+

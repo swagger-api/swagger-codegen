@@ -205,30 +205,32 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet`, requestOptions));
     }
 
     /**
@@ -242,30 +244,32 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
         if (apiKey !== undefined && apiKey !== null) {
-            headers.set('api_key', String(apiKey));
+            headersObservable = headersObservable.do((headers: Headers) => { headers.set('api_key', String(apiKey)); });
         }
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Delete,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions));
     }
 
     /**
@@ -283,28 +287,30 @@ export class PetService implements PetServiceInterface {
             queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/findByStatus`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/findByStatus`, requestOptions));
     }
 
     /**
@@ -322,28 +328,30 @@ export class PetService implements PetServiceInterface {
             queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/findByTags`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/findByTags`, requestOptions));
     }
 
     /**
@@ -356,24 +364,23 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headersObservable = headersObservable.do((headers: Headers) => { headers.set('api_key', this.configuration.apiKeys["api_key"]); });
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions));
     }
 
     /**
@@ -386,30 +393,32 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Put,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Put,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet`, requestOptions));
     }
 
     /**
@@ -424,14 +433,17 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
         // to determine the Content-Type header
@@ -450,7 +462,7 @@ export class PetService implements PetServiceInterface {
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
-            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8'));
         }
 
 
@@ -462,18 +474,17 @@ export class PetService implements PetServiceInterface {
             formParams.append('status', <any>status);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: convertFormParamsToString ? formParams.toString() : formParams,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: convertFormParamsToString ? formParams.toString() : formParams,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions));
     }
 
     /**
@@ -488,14 +499,17 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+                headers.set('Authorization', 'Bearer ' + accessToken);
+                return headers;
+            });
         }
 
         // to determine the Content-Type header
@@ -517,7 +531,7 @@ export class PetService implements PetServiceInterface {
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
-            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8'));
         }
 
 
@@ -529,18 +543,17 @@ export class PetService implements PetServiceInterface {
             formParams.append('file', <any>file);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: convertFormParamsToString ? formParams.toString() : formParams,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: convertFormParamsToString ? formParams.toString() : formParams,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, requestOptions));
     }
 
 }

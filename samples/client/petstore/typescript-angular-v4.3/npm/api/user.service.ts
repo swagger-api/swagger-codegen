@@ -68,13 +68,13 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.post<any>(`${this.basePath}/user`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/user`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -87,13 +87,13 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.post<any>(`${this.basePath}/user/createWithArray`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/user/createWithArray`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -106,13 +106,13 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.post<any>(`${this.basePath}/user/createWithList`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/user/createWithList`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -125,13 +125,13 @@ export class UserService {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -144,13 +144,13 @@ export class UserService {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.get<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -175,14 +175,14 @@ export class UserService {
             queryParameters = queryParameters.set('password', <any>password);
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.get<any>(`${this.basePath}/user/login`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/user/login`, 
+          {
             params: queryParameters,
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -191,13 +191,13 @@ export class UserService {
      */
     public logoutUser(): Observable<{}> {
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.get<any>(`${this.basePath}/user/logout`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/user/logout`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -214,13 +214,13 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
 }

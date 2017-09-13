@@ -860,6 +860,7 @@
                 <module>samples/client/petstore/typescript-jquery/npm</module>-->
                 <module>samples/client/petstore/typescript-angular-v2/npm</module>
                 <module>samples/client/petstore/typescript-angular-v4/npm</module>
+                <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
                 <module>samples/client/petstore/swift3/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/promisekit/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/rxswift/SwaggerClientTests</module>

@@ -68,13 +68,13 @@ export class StoreService {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -83,18 +83,18 @@ export class StoreService {
      */
     public getInventory(): Observable<{ [key: string]: number; }> {
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headersObservable = headersObservable.map((headers: HttpHeaders) => { return headers.set('api_key', this.configuration.apiKeys["api_key"]); });
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/store/inventory`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/store/inventory`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -107,13 +107,13 @@ export class StoreService {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.get<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -126,13 +126,13 @@ export class StoreService {
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
-        return this.httpClient.post<any>(`${this.basePath}/store/order`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/store/order`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
 }

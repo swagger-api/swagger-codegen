@@ -13,13 +13,13 @@
 
 
 /**
- * Describes the result of uploading an image resource
+ * A category for a pet
  */
-export interface ApiResponse {
-    code?: number;
+export interface Category {
+    id?: number;
 
-    type?: string;
-
-    message?: string;
+    name?: string;
 
 }
+
+

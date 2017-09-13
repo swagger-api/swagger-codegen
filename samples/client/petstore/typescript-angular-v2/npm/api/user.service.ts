@@ -199,22 +199,21 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user`, requestOptions));
     }
 
     /**
@@ -227,22 +226,21 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/createWithArray`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/createWithArray`, requestOptions));
     }
 
     /**
@@ -255,22 +253,21 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/createWithList`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/createWithList`, requestOptions));
     }
 
     /**
@@ -283,19 +280,18 @@ export class UserService {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Delete,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions));
     }
 
     /**
@@ -308,19 +304,18 @@ export class UserService {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions));
     }
 
     /**
@@ -345,20 +340,19 @@ export class UserService {
             queryParameters.set('password', <any>password);
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/login`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/login`, requestOptions));
     }
 
     /**
@@ -367,19 +361,18 @@ export class UserService {
      */
     public logoutUserWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/logout`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/logout`, requestOptions));
     }
 
     /**
@@ -396,22 +389,21 @@ export class UserService {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Put,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Put,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions));
     }
 
 }

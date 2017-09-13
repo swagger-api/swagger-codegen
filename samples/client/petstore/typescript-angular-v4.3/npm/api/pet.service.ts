@@ -69,21 +69,23 @@ export class PetService {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/pet`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -97,24 +99,26 @@ export class PetService {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
         if (apiKey !== undefined && apiKey !== null) {
-            headers = headers.set('api_key', String(apiKey));
+            headersObservable = headersObservable.map((headers: HttpHeaders) => { return headers.set('api_key', String(apiKey)); });
         }
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
-        return this.httpClient.delete<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.delete<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -132,22 +136,24 @@ export class PetService {
             queryParameters = queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/findByStatus`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/pet/findByStatus`, 
+          {
             params: queryParameters,
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -165,22 +171,24 @@ export class PetService {
             queryParameters = queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/findByTags`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/pet/findByTags`, 
+          {
             params: queryParameters,
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -193,18 +201,18 @@ export class PetService {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headersObservable = headersObservable.map((headers: HttpHeaders) => { return headers.set('api_key', this.configuration.apiKeys["api_key"]); });
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.get<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -217,21 +225,23 @@ export class PetService {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/pet`, body, 
-        {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.put<any>(`${this.basePath}/pet`, body, 
+          {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -246,14 +256,16 @@ export class PetService {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
         // to determine the Content-Type header
@@ -280,11 +292,11 @@ export class PetService {
             formParams = formParams.append('status', <any>status) || formParams;
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
-        convertFormParamsToString ? formParams.toString() : formParams, {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+          convertFormParamsToString ? formParams.toString() : formParams, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
     /**
@@ -299,14 +311,16 @@ export class PetService {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
 
-        let headers = this.defaultHeaders;
+        let headersObservable = Observable.of(this.defaultHeaders);
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+            let accessTokenObservable = typeof this.configuration.accessToken === 'function'
+              ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+              : Observable.of(this.configuration.accessToken);
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: HttpHeaders, accessToken: string) => {
+                return headers.set('Authorization', 'Bearer ' + accessToken);
+            });
         }
 
         // to determine the Content-Type header
@@ -336,11 +350,11 @@ export class PetService {
             formParams = formParams.append('file', <any>file) || formParams;
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, 
-        convertFormParamsToString ? formParams.toString() : formParams, {
+        return headersObservable.mergeMap((headers: HttpHeaders) => this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, 
+          convertFormParamsToString ? formParams.toString() : formParams, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
-        });
+        }));
     }
 
 }

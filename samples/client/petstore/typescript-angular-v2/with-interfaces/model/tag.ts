@@ -10,30 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { Category } from './category';
-import { Tag } from './tag';
 
 
 /**
- * A pet for sale in the pet store
+ * A tag for a pet
  */
-export interface Pet {
+export interface Tag {
     id?: number;
 
-    category?: Category;
-
-    name: string;
-
-    photoUrls: Array<string>;
-
-    tags?: Array<Tag>;
-
-    /**
-     * pet status in the store
-     */
-    status?: Pet.StatusEnum;
+    name?: string;
 
 }
-export namespace Pet {
-    export type StatusEnum = 'available' | 'pending' | 'sold';
-}
+
+

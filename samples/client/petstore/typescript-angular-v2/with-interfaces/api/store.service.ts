@@ -134,19 +134,18 @@ export class StoreService implements StoreServiceInterface {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Delete,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Delete,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions));
     }
 
     /**
@@ -155,24 +154,23 @@ export class StoreService implements StoreServiceInterface {
      */
     public getInventoryWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
-            headers.set('api_key', this.configuration.apiKeys["api_key"]);
+            headersObservable = headersObservable.do((headers: Headers) => { headers.set('api_key', this.configuration.apiKeys["api_key"]); });
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/store/inventory`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/store/inventory`, requestOptions));
     }
 
     /**
@@ -185,19 +183,18 @@ export class StoreService implements StoreServiceInterface {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Get,
-            headers: headers,
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Get,
+              headers: headers,
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions));
     }
 
     /**
@@ -210,22 +207,21 @@ export class StoreService implements StoreServiceInterface {
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }
 
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON()));
 
-        headers.set('Content-Type', 'application/json');
+        headersObservable = headersObservable.do((headers: Headers) => headers.set('Content-Type', 'application/json'));
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Post,
-            headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            withCredentials:this.configuration.withCredentials
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+            let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Post,
+              headers: headers,
+              body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+              withCredentials:this.configuration.withCredentials
+            });
+            return requestOptions;
         });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
 
-        return this.http.request(`${this.basePath}/store/order`, requestOptions);
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(`${this.basePath}/store/order`, requestOptions));
     }
 
 }
