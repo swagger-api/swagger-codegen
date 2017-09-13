@@ -175,7 +175,7 @@ export class StoreService {
           return requestOptions;
         });
 
-        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -216,7 +216,7 @@ export class StoreService {
           return requestOptions;
         });
 
-        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -258,7 +258,7 @@ export class StoreService {
           return requestOptions;
         });
 
-        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
     /**
@@ -303,7 +303,7 @@ export class StoreService {
           return requestOptions;
         });
 
-        return requestOptionsObservable.flatMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
 }
