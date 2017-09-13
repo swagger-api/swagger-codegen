@@ -132,4 +132,17 @@ public final class CodegenConfiguratorUtils {
 
         return result;
     }
+
+    public static void applySupportFilesMappingsKvpList(List<String> supportFilesMappings, CodegenConfigurator configurator) {
+        for(String propString : supportFilesMappings) {
+            applySupportFilesMappingsKvp(propString, configurator);
+        }
+    }
+
+    public static void applySupportFilesMappingsKvp(String supportFilesMapping, CodegenConfigurator configurator) {
+        final Map<String, String> map = createMapFromKeyValuePairs(supportFilesMapping);
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            configurator.addSupportFilesMapping(entry.getKey().trim(), entry.getValue().trim());
+        }
+    }
 }

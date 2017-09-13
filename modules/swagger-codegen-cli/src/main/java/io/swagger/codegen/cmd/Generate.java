@@ -43,6 +43,10 @@ public class Generate implements Runnable {
             description = "folder containing the template files")
     private String templateDir;
 
+    @Option(name = {"-m", "--template-mapping"}, title = "template mapping for support files",
+            description = "maps templates with file names template1=file1,template2=file2.")
+    private List<String> supportFilesMapping = new ArrayList<>();
+
     @Option(
             name = {"-a", "--auth"},
             title = "authorization",
@@ -280,6 +284,7 @@ public class Generate implements Runnable {
         applyAdditionalPropertiesKvpList(additionalProperties, configurator);
         applyLanguageSpecificPrimitivesCsvList(languageSpecificPrimitives, configurator);
         applyReservedWordsMappingsKvpList(reservedWordsMappings, configurator);
+        applySupportFilesMappingsKvpList(supportFilesMapping, configurator);
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
 
         new DefaultGenerator().opts(clientOptInput).generate();

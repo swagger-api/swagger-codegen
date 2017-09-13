@@ -556,4 +556,38 @@ public class GenerateTest {
         setupAndRunTest("-i", "swagger.yaml", "-l", "java", "-o", "src/main/java", false, null,
                 additionalParameters);
     }
+
+    @Test
+    public void testSupportFilesMappings() throws Exception {
+        setupAndRunGenericTest("--template-mapping", "hello=world,key=,foo=bar,key2");
+
+        new FullVerifications() {
+            {
+                configurator.addSupportFilesMapping("hello", "world");
+                times = 1;
+                configurator.addSupportFilesMapping("foo", "bar");
+                times = 1;
+                configurator.addSupportFilesMapping("key", "");
+                times = 1;
+                configurator.addSupportFilesMapping("key2", "");
+                times = 1;
+            }
+        };
+
+        setupAndRunGenericTest("--template-mapping", "hello=world", "--template-mapping", "key=",
+                "--template-mapping", "foo=bar", "--template-mapping", "key2");
+
+        new FullVerifications() {
+            {
+                configurator.addSupportFilesMapping("hello", "world");
+                times = 1;
+                configurator.addSupportFilesMapping("foo", "bar");
+                times = 1;
+                configurator.addSupportFilesMapping("key", "");
+                times = 1;
+                configurator.addSupportFilesMapping("key2", "");
+                times = 1;
+            }
+        };
+    }
 }
