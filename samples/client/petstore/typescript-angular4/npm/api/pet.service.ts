@@ -45,7 +45,7 @@ export class PetService {
     }
 
     /**
-     * 
+     *
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
@@ -235,8 +235,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -296,8 +298,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -351,8 +355,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -406,8 +412,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -505,8 +513,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -572,8 +582,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 
@@ -644,8 +656,10 @@ export class PetService {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 

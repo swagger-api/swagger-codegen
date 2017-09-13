@@ -44,7 +44,7 @@ export class UserService {
     }
 
     /**
-     * 
+     *
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object

@@ -49,7 +49,7 @@ export class {{classname}} {
     }
 
     /**
-     * 
+     *
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
@@ -224,8 +224,10 @@ export class {{classname}} {
             let accessTokenObservable = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
                 : Observable.of(this.configuration.accessToken);
-            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) =>
-                headers.set('Authorization', 'Bearer ' + accessToken));
+            headersObservable = headersObservable.zip(accessTokenObservable, (headers: Headers, accessToken: string) => {
+              headers.set('Authorization', 'Bearer ' + accessToken);
+              return headers;
+            });
         }
 
 {{/isOAuth}}
