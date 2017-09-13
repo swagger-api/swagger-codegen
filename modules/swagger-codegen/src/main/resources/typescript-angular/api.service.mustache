@@ -233,7 +233,7 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 {{#useHttpClient}}
-        return this.httpClient.{{httpMethod}}<any>(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}{{#hasFormParams}}formParams, {{/hasFormParams}}{
+        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}{{#hasFormParams}}formParams, {{/hasFormParams}}{
 {{#hasQueryParams}}
             params: queryParameters,
 {{/hasQueryParams}}
