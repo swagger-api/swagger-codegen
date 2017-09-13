@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
@@ -22,11 +24,10 @@ import '../rxjs-operators';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
-/* tslint:disable:no-unused-variable member-ordering */
-
 
 @Injectable()
 export class FakeService {
+
     protected basePath = 'https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
@@ -37,12 +38,12 @@ export class FakeService {
         }
         if (configuration) {
             this.configuration = configuration;
-			this.basePath = basePath || configuration.basePath || this.basePath;
+            this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
 
     /**
-     * 
+     *
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
@@ -71,8 +72,8 @@ export class FakeService {
     }
 
     /**
-     * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      */
     public testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, extraHttpRequestParams?: any): Observable<{}> {
@@ -96,11 +97,11 @@ export class FakeService {
         const path = this.basePath + '/fake';
 
         let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        let headersObservable = Observable.of(new Headers(this.defaultHeaders.toJSON())); // https://github.com/angular/angular/issues/6845
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json', 
+            'application/json',
             '*_/   =end --       '
         ];
         let canConsumeForm = this.canConsumeForm(consumes);
@@ -111,28 +112,32 @@ export class FakeService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/json', 
+            'application/json',
             '*_/   =end --       '
         ];
 
-            
+
         if (test code inject * &#39; &quot; &#x3D;end  rn n r !== undefined) {
             formParams.set('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>test code inject * &#39; &quot; &#x3D;end  rn n r);
         }
 
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Put,
-            headers: headers,
-            body: formParams.toString(),
-            search: queryParameters,
-            withCredentials:this.configuration.withCredentials
-        });
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
+        let requestOptionsObservable = headersObservable.map((headers: Headers) => {
+          let requestOptions: RequestOptionsArgs = new RequestOptions({
+              method: RequestMethod.Put,
+              headers: headers,
+              body: formParams.toString(),
+              search: queryParameters,
+              withCredentials:this.configuration.withCredentials
+          });
+          // https://github.com/swagger-api/swagger-codegen/issues/4037
+          if (extraHttpRequestParams) {
+              requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+          }
 
-        return this.http.request(path, requestOptions);
+          return requestOptions;
+        });
+
+        return requestOptionsObservable.mergeMap((requestOptions: RequestOptionsArgs) => this.http.request(path, requestOptions));
     }
 
 }
