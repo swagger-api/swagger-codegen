@@ -70,11 +70,11 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("long", "integer()");
         typeMapping.put("double", "float()");
         typeMapping.put("array", "list()");
-        typeMapping.put("map", "map()");
+        typeMapping.put("map", "maps:map()");
         typeMapping.put("number", "integer()");
         typeMapping.put("bigdecimal", "float()");
         typeMapping.put("List", "list()");
-        typeMapping.put("object", "binary()");
+        typeMapping.put("object", "maps:map()");
         typeMapping.put("file", "binary()");
         typeMapping.put("binary", "binary()");
         typeMapping.put("bytearray", "binary()");
@@ -94,6 +94,29 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String getTypeDeclaration(String name) {
         return name + ":" + name + "()";
+    }
+
+    @Override
+    public String getTypeDeclaration(Property p) {
+        String swaggerType = getSwaggerType(p);
+        if (typeMapping.containsKey(swaggerType)) {
+            return typeMapping.get(swaggerType);
+        }
+        return swaggerType;
+    }
+
+    @Override
+    public String getSwaggerType(Property p) {
+        String swaggerType = super.getSwaggerType(p);
+        String type = null;
+        if(typeMapping.containsKey(swaggerType)) {
+            type = typeMapping.get(swaggerType);
+            if(languageSpecificPrimitives.contains(type))
+                return (type);
+        }
+        else
+            type = getTypeDeclaration(toModelName(snakeCase(swaggerType)));
+        return type;
     }
 
     @Override
@@ -131,12 +154,30 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             }
         });
 
+        additionalProperties.put("qsEncode", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(qsEncode(fragment.context()));
+            }
+        });
+
         modelPackage = packageName;
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("rebar.config.mustache","", "rebar.config"));
         supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator + this.packageName + ".app.src"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+    }
+
+    public String qsEncode(Object o) {
+        String r = new String();
+        CodegenParameter q = (CodegenParameter) o;
+        if (q.isListContainer) {
+            r += "[{<<\"" + q.baseName + "\">>, X} || X <- " + q.paramName + "]";
+        } else {
+            r += "{<<\"" + q.baseName + "\">>, " + q.paramName + "}";
+        }
+        return r;
     }
 
     @Override
