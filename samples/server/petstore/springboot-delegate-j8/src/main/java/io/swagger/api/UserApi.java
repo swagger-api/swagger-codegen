@@ -36,10 +36,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)
     default ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -48,10 +49,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)
     default ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -60,10 +62,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)
     default ResponseEntity<Void> createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -73,10 +76,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
     default ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true ) @PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -87,10 +91,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true ) @PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<User>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -100,10 +105,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<String> loginUser( @NotNull@ApiParam(value = "The user name for login", required = true) @Valid @RequestParam(value = "username", required = true) String username, @NotNull@ApiParam(value = "The password for login in clear text", required = true) @Valid @RequestParam(value = "password", required = true) String password, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<String>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Logs out current logged in user session", notes = "", response = Void.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -112,10 +118,11 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<Void> logoutUser( @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 
     @ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })
     @ApiResponses(value = { 
@@ -125,8 +132,9 @@ public interface UserApi {
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.PUT)
     default ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true ) @PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
+        
     }
 
+    
 }

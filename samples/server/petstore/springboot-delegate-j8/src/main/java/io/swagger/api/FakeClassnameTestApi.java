@@ -38,8 +38,9 @@ public interface FakeClassnameTestApi {
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
     default ResponseEntity<Client> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
-        // do some magic!
         return new ResponseEntity<Client>(HttpStatus.OK);
+        
     }
 
+    
 }

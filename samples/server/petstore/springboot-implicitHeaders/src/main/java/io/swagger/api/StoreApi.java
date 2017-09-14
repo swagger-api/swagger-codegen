@@ -40,6 +40,7 @@ public interface StoreApi {
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
+    
 
     @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
         @Authorization(value = "api_key")
@@ -54,6 +55,7 @@ public interface StoreApi {
         method = RequestMethod.GET)
     ResponseEntity<Map<String, Integer>> getInventory( @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
+    
 
     @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
@@ -68,6 +70,7 @@ public interface StoreApi {
         method = RequestMethod.GET)
     ResponseEntity<Order> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
+    
 
     @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
@@ -81,4 +84,5 @@ public interface StoreApi {
         method = RequestMethod.POST)
     ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
+    
 }
