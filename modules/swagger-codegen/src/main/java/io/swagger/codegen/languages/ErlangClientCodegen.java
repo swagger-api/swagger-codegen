@@ -42,7 +42,7 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     public ErlangClientCodegen() {
         super();
         outputFolder = "generated-code/erlang";
-        //modelTemplateFiles.put("model.mustache", ".erl");
+        modelTemplateFiles.put("model.mustache", ".erl");
         apiTemplateFiles.put("api.mustache", ".erl");
 
         embeddedTemplateDir = templateDir = "erlang-client";
@@ -58,28 +58,29 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         instantiationTypes.clear();
 
         typeMapping.clear();
-        typeMapping.put("enum", "binary");
-        typeMapping.put("date", "date");
-        typeMapping.put("datetime", "datetime");
-        typeMapping.put("boolean", "boolean");
-        typeMapping.put("string", "binary");
-        typeMapping.put("integer", "integer");
-        typeMapping.put("int", "integer");
-        typeMapping.put("float", "integer");
-        typeMapping.put("long", "integer");
-        typeMapping.put("double", "float");
-        typeMapping.put("array", "list");
-        typeMapping.put("map", "map");
-        typeMapping.put("number", "integer");
-        typeMapping.put("bigdecimal", "float");
-        typeMapping.put("List", "list");
-        typeMapping.put("object", "object");
-        typeMapping.put("file", "file");
-        typeMapping.put("binary", "binary");
-        typeMapping.put("bytearray", "binary");
-        typeMapping.put("byte", "binary");
-        typeMapping.put("uuid", "binary");
-        typeMapping.put("password", "binary");
+        typeMapping.put("enum", "binary()");
+        typeMapping.put("date", "calendar:date()");
+        typeMapping.put("datetime", "calendar:datetime()");
+        typeMapping.put("date-time", "calendar:datetime()");
+        typeMapping.put("boolean", "boolean()");
+        typeMapping.put("string", "binary()");
+        typeMapping.put("integer", "integer()");
+        typeMapping.put("int", "integer()");
+        typeMapping.put("float", "integer()");
+        typeMapping.put("long", "integer()");
+        typeMapping.put("double", "float()");
+        typeMapping.put("array", "list()");
+        typeMapping.put("map", "map()");
+        typeMapping.put("number", "integer()");
+        typeMapping.put("bigdecimal", "float()");
+        typeMapping.put("List", "list()");
+        typeMapping.put("object", "binary()");
+        typeMapping.put("file", "binary()");
+        typeMapping.put("binary", "binary()");
+        typeMapping.put("bytearray", "binary()");
+        typeMapping.put("byte", "binary()");
+        typeMapping.put("uuid", "binary()");
+        typeMapping.put("password", "binary()");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Erlang application name (convention: lowercase).")
@@ -88,6 +89,11 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
                        .defaultValue(this.packageVersion));
 
 
+    }
+
+    @Override
+    public String getTypeDeclaration(String name) {
+        return name + ":" + name + "()";
     }
 
     @Override
@@ -158,27 +164,18 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         return outputFolder + File.separator + sourceFolder + File.separator;
     }
 
+    @Override
+    public String modelFileFolder() {
+        return outputFolder + File.separator + sourceFolder + File.separator;
+    }
 
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
         name = sanitizeName(name.replaceAll("-", "_"));
-
-        // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$"))
-            return name;
-
-        // camelize (lower first character) the variable name
-        // pet_id => PetId
-        name = camelize(name);
-
         // for reserved word or word starting with number, append _
         if (isReservedWord(name))
             name = escapeReservedWord(name);
-
-        // for reserved word or word starting with number, append _
-        if (name.matches("^\\d.*"))
-            name = "Var" + name;
 
         return name;
     }

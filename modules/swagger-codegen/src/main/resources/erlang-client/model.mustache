@@ -1,0 +1,12 @@
+{{#models}}
+{{#model}}
+-module({{classname}}).
+
+-export_type([{{classname}}/0]).
+
+-type {{classname}}() ::
+    #{ {{#vars}}'{{name}}' => {{{datatype}}}{{#hasMore}},
+       {{/hasMore}}{{/vars}}
+     }.
+{{/model}}
+{{/models}}
