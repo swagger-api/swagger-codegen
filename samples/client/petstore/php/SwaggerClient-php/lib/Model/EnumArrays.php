@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * EnumArrays Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class EnumArrays implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'EnumArrays';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -60,6 +62,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -89,6 +92,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -98,6 +102,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -107,6 +112,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -163,6 +169,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getJustSymbolAllowableValues()
@@ -175,6 +182,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getArrayEnumAllowableValues()
@@ -188,12 +196,14 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -241,6 +251,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Gets just_symbol
+     *
      * @return string
      */
     public function getJustSymbol()
@@ -250,7 +261,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Sets just_symbol
-     * @param string $just_symbol
+     *
+     * @param  string $just_symbol
      * @return $this
      */
     public function setJustSymbol($just_symbol)
@@ -271,6 +283,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Gets array_enum
+     *
      * @return string[]
      */
     public function getArrayEnum()
@@ -280,7 +293,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Sets array_enum
-     * @param string[] $array_enum
+     *
+     * @param  string[] $array_enum
      * @return $this
      */
     public function setArrayEnum($array_enum)
@@ -300,6 +314,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -310,6 +325,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -320,6 +336,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -335,6 +352,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -345,6 +363,7 @@ class EnumArrays implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

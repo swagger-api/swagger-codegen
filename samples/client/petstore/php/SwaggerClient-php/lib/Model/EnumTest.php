@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * EnumTest Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class EnumTest implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Enum_Test';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -62,6 +64,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -93,6 +96,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -104,6 +108,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -115,6 +120,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -176,6 +182,7 @@ class EnumTest implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getEnumStringAllowableValues()
@@ -189,6 +196,7 @@ class EnumTest implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getEnumIntegerAllowableValues()
@@ -201,6 +209,7 @@ class EnumTest implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getEnumNumberAllowableValues()
@@ -214,12 +223,14 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -293,6 +304,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets enum_string
+     *
      * @return string
      */
     public function getEnumString()
@@ -302,7 +314,8 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets enum_string
-     * @param string $enum_string
+     *
+     * @param  string $enum_string
      * @return $this
      */
     public function setEnumString($enum_string)
@@ -323,6 +336,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets enum_integer
+     *
      * @return int
      */
     public function getEnumInteger()
@@ -332,7 +346,8 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets enum_integer
-     * @param int $enum_integer
+     *
+     * @param  int $enum_integer
      * @return $this
      */
     public function setEnumInteger($enum_integer)
@@ -353,6 +368,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets enum_number
+     *
      * @return double
      */
     public function getEnumNumber()
@@ -362,7 +378,8 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets enum_number
-     * @param double $enum_number
+     *
+     * @param  double $enum_number
      * @return $this
      */
     public function setEnumNumber($enum_number)
@@ -383,6 +400,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets outer_enum
+     *
      * @return \Swagger\Client\Model\OuterEnum
      */
     public function getOuterEnum()
@@ -392,7 +410,8 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets outer_enum
-     * @param \Swagger\Client\Model\OuterEnum $outer_enum
+     *
+     * @param  \Swagger\Client\Model\OuterEnum $outer_enum
      * @return $this
      */
     public function setOuterEnum($outer_enum)
@@ -403,6 +422,7 @@ class EnumTest implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -413,6 +433,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -423,6 +444,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -438,6 +460,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -448,6 +471,7 @@ class EnumTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

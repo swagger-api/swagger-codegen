@@ -32,10 +32,10 @@ namespace Swagger\Client\Model;
 /**
  * Dog Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Dog extends Animal 
 {
@@ -43,12 +43,14 @@ class Dog extends Animal
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Dog';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -57,6 +59,7 @@ class Dog extends Animal
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -85,6 +88,7 @@ class Dog extends Animal
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -93,6 +97,7 @@ class Dog extends Animal
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -101,6 +106,7 @@ class Dog extends Animal
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -154,6 +160,7 @@ class Dog extends Animal
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -193,6 +200,7 @@ class Dog extends Animal
 
     /**
      * Gets breed
+     *
      * @return string
      */
     public function getBreed()
@@ -202,7 +210,8 @@ class Dog extends Animal
 
     /**
      * Sets breed
-     * @param string $breed
+     *
+     * @param  string $breed
      * @return $this
      */
     public function setBreed($breed)
@@ -213,6 +222,7 @@ class Dog extends Animal
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -223,6 +233,7 @@ class Dog extends Animal
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -233,6 +244,7 @@ class Dog extends Animal
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -248,6 +260,7 @@ class Dog extends Animal
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -258,6 +271,7 @@ class Dog extends Animal
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * SpecialModelName Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class SpecialModelName implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = '$special[model.name]';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -59,6 +61,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -87,6 +90,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -95,6 +99,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -103,6 +108,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -155,12 +161,14 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -195,6 +203,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Gets special_property_name
+     *
      * @return int
      */
     public function getSpecialPropertyName()
@@ -204,7 +213,8 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Sets special_property_name
-     * @param int $special_property_name
+     *
+     * @param  int $special_property_name
      * @return $this
      */
     public function setSpecialPropertyName($special_property_name)
@@ -215,6 +225,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -225,6 +236,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -235,6 +247,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -250,6 +263,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -260,6 +274,7 @@ class SpecialModelName implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

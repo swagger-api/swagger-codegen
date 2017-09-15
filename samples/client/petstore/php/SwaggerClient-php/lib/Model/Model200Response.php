@@ -34,11 +34,11 @@ use \ArrayAccess;
 /**
  * Model200Response Class Doc Comment
  *
- * @category    Class
+ * @category Class
  * @description Model for testing model name starting with number
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Model200Response implements ModelInterface, ArrayAccess
 {
@@ -46,12 +46,14 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = '200_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -61,6 +63,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -90,6 +93,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -99,6 +103,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -108,6 +113,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -161,12 +167,14 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -202,6 +210,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Gets name
+     *
      * @return int
      */
     public function getName()
@@ -211,7 +220,8 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Sets name
-     * @param int $name
+     *
+     * @param  int $name
      * @return $this
      */
     public function setName($name)
@@ -223,6 +233,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Gets class
+     *
      * @return string
      */
     public function getClass()
@@ -232,7 +243,8 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Sets class
-     * @param string $class
+     *
+     * @param  string $class
      * @return $this
      */
     public function setClass($class)
@@ -243,6 +255,7 @@ class Model200Response implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -253,6 +266,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -263,6 +277,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -278,6 +293,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -288,6 +304,7 @@ class Model200Response implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

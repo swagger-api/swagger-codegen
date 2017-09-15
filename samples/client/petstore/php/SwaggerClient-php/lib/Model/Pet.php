@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * Pet Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Pet implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Pet';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -64,6 +66,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -97,6 +100,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -110,6 +114,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -123,6 +128,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -182,6 +188,7 @@ class Pet implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getStatusAllowableValues()
@@ -196,12 +203,14 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -265,6 +274,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -274,7 +284,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets id
-     * @param int $id
+     *
+     * @param  int $id
      * @return $this
      */
     public function setId($id)
@@ -286,6 +297,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets category
+     *
      * @return \Swagger\Client\Model\Category
      */
     public function getCategory()
@@ -295,7 +307,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets category
-     * @param \Swagger\Client\Model\Category $category
+     *
+     * @param  \Swagger\Client\Model\Category $category
      * @return $this
      */
     public function setCategory($category)
@@ -307,6 +320,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -316,7 +330,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets name
-     * @param string $name
+     *
+     * @param  string $name
      * @return $this
      */
     public function setName($name)
@@ -328,6 +343,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets photo_urls
+     *
      * @return string[]
      */
     public function getPhotoUrls()
@@ -337,7 +353,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets photo_urls
-     * @param string[] $photo_urls
+     *
+     * @param  string[] $photo_urls
      * @return $this
      */
     public function setPhotoUrls($photo_urls)
@@ -349,6 +366,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets tags
+     *
      * @return \Swagger\Client\Model\Tag[]
      */
     public function getTags()
@@ -358,7 +376,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets tags
-     * @param \Swagger\Client\Model\Tag[] $tags
+     *
+     * @param  \Swagger\Client\Model\Tag[] $tags
      * @return $this
      */
     public function setTags($tags)
@@ -370,6 +389,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets status
+     *
      * @return string
      */
     public function getStatus()
@@ -379,7 +399,8 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets status
-     * @param string $status pet status in the store
+     *
+     * @param  string $status pet status in the store
      * @return $this
      */
     public function setStatus($status)
@@ -399,6 +420,7 @@ class Pet implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -409,6 +431,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -419,6 +442,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -434,6 +458,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -444,6 +469,7 @@ class Pet implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * Capitalization Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Capitalization implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Capitalization';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -64,6 +66,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -97,6 +100,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -110,6 +114,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -123,6 +128,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -180,12 +186,14 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -225,6 +233,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets small_camel
+     *
      * @return string
      */
     public function getSmallCamel()
@@ -234,7 +243,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets small_camel
-     * @param string $small_camel
+     *
+     * @param  string $small_camel
      * @return $this
      */
     public function setSmallCamel($small_camel)
@@ -246,6 +256,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets capital_camel
+     *
      * @return string
      */
     public function getCapitalCamel()
@@ -255,7 +266,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets capital_camel
-     * @param string $capital_camel
+     *
+     * @param  string $capital_camel
      * @return $this
      */
     public function setCapitalCamel($capital_camel)
@@ -267,6 +279,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets small_snake
+     *
      * @return string
      */
     public function getSmallSnake()
@@ -276,7 +289,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets small_snake
-     * @param string $small_snake
+     *
+     * @param  string $small_snake
      * @return $this
      */
     public function setSmallSnake($small_snake)
@@ -288,6 +302,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets capital_snake
+     *
      * @return string
      */
     public function getCapitalSnake()
@@ -297,7 +312,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets capital_snake
-     * @param string $capital_snake
+     *
+     * @param  string $capital_snake
      * @return $this
      */
     public function setCapitalSnake($capital_snake)
@@ -309,6 +325,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets sca_eth_flow_points
+     *
      * @return string
      */
     public function getScaEthFlowPoints()
@@ -318,7 +335,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets sca_eth_flow_points
-     * @param string $sca_eth_flow_points
+     *
+     * @param  string $sca_eth_flow_points
      * @return $this
      */
     public function setScaEthFlowPoints($sca_eth_flow_points)
@@ -330,6 +348,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets att_name
+     *
      * @return string
      */
     public function getAttName()
@@ -339,7 +358,8 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets att_name
-     * @param string $att_name Name of the pet
+     *
+     * @param  string $att_name Name of the pet
      * @return $this
      */
     public function setAttName($att_name)
@@ -350,6 +370,7 @@ class Capitalization implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -360,6 +381,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -370,6 +392,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -385,6 +408,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -395,6 +419,7 @@ class Capitalization implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

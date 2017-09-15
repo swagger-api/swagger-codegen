@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * MixedPropertiesAndAdditionalPropertiesClass Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'MixedPropertiesAndAdditionalPropertiesClass';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -61,6 +63,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -91,6 +94,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -101,6 +105,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -111,6 +116,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -165,12 +171,14 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -207,6 +215,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Gets uuid
+     *
      * @return string
      */
     public function getUuid()
@@ -216,7 +225,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Sets uuid
-     * @param string $uuid
+     *
+     * @param  string $uuid
      * @return $this
      */
     public function setUuid($uuid)
@@ -228,6 +238,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Gets date_time
+     *
      * @return \DateTime
      */
     public function getDateTime()
@@ -237,7 +248,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Sets date_time
-     * @param \DateTime $date_time
+     *
+     * @param  \DateTime $date_time
      * @return $this
      */
     public function setDateTime($date_time)
@@ -249,6 +261,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Gets map
+     *
      * @return map[string,\Swagger\Client\Model\Animal]
      */
     public function getMap()
@@ -258,7 +271,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Sets map
-     * @param map[string,\Swagger\Client\Model\Animal] $map
+     *
+     * @param  map[string,\Swagger\Client\Model\Animal] $map
      * @return $this
      */
     public function setMap($map)
@@ -269,6 +283,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -279,6 +294,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -289,6 +305,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -304,6 +321,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -314,6 +332,7 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

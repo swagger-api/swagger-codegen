@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * Order Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Order implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Order';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -64,6 +66,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -97,6 +100,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -110,6 +114,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -123,6 +128,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -182,6 +188,7 @@ class Order implements ModelInterface, ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getStatusAllowableValues()
@@ -196,12 +203,14 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -253,6 +262,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -262,7 +272,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets id
-     * @param int $id
+     *
+     * @param  int $id
      * @return $this
      */
     public function setId($id)
@@ -274,6 +285,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets pet_id
+     *
      * @return int
      */
     public function getPetId()
@@ -283,7 +295,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets pet_id
-     * @param int $pet_id
+     *
+     * @param  int $pet_id
      * @return $this
      */
     public function setPetId($pet_id)
@@ -295,6 +308,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets quantity
+     *
      * @return int
      */
     public function getQuantity()
@@ -304,7 +318,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets quantity
-     * @param int $quantity
+     *
+     * @param  int $quantity
      * @return $this
      */
     public function setQuantity($quantity)
@@ -316,6 +331,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets ship_date
+     *
      * @return \DateTime
      */
     public function getShipDate()
@@ -325,7 +341,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets ship_date
-     * @param \DateTime $ship_date
+     *
+     * @param  \DateTime $ship_date
      * @return $this
      */
     public function setShipDate($ship_date)
@@ -337,6 +354,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets status
+     *
      * @return string
      */
     public function getStatus()
@@ -346,7 +364,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets status
-     * @param string $status Order Status
+     *
+     * @param  string $status Order Status
      * @return $this
      */
     public function setStatus($status)
@@ -367,6 +386,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets complete
+     *
      * @return bool
      */
     public function getComplete()
@@ -376,7 +396,8 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets complete
-     * @param bool $complete
+     *
+     * @param  bool $complete
      * @return $this
      */
     public function setComplete($complete)
@@ -387,6 +408,7 @@ class Order implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -397,6 +419,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -407,6 +430,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -422,6 +446,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -432,6 +457,7 @@ class Order implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

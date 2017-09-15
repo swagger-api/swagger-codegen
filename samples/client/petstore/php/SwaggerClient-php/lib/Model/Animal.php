@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * Animal Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Animal implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Animal';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -60,6 +62,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -89,6 +92,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -98,6 +102,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -107,6 +112,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -160,12 +166,14 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -211,6 +219,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Gets class_name
+     *
      * @return string
      */
     public function getClassName()
@@ -220,7 +229,8 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Sets class_name
-     * @param string $class_name
+     *
+     * @param  string $class_name
      * @return $this
      */
     public function setClassName($class_name)
@@ -232,6 +242,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Gets color
+     *
      * @return string
      */
     public function getColor()
@@ -241,7 +252,8 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Sets color
-     * @param string $color
+     *
+     * @param  string $color
      * @return $this
      */
     public function setColor($color)
@@ -252,6 +264,7 @@ class Animal implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -262,6 +275,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -272,6 +286,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -287,6 +302,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -297,6 +313,7 @@ class Animal implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * User Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class User implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class User implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'User';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -66,6 +68,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -101,6 +104,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -116,6 +120,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -131,6 +136,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -190,12 +196,14 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -237,6 +245,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -246,7 +255,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets id
-     * @param int $id
+     *
+     * @param  int $id
      * @return $this
      */
     public function setId($id)
@@ -258,6 +268,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets username
+     *
      * @return string
      */
     public function getUsername()
@@ -267,7 +278,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets username
-     * @param string $username
+     *
+     * @param  string $username
      * @return $this
      */
     public function setUsername($username)
@@ -279,6 +291,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets first_name
+     *
      * @return string
      */
     public function getFirstName()
@@ -288,7 +301,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets first_name
-     * @param string $first_name
+     *
+     * @param  string $first_name
      * @return $this
      */
     public function setFirstName($first_name)
@@ -300,6 +314,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets last_name
+     *
      * @return string
      */
     public function getLastName()
@@ -309,7 +324,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets last_name
-     * @param string $last_name
+     *
+     * @param  string $last_name
      * @return $this
      */
     public function setLastName($last_name)
@@ -321,6 +337,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets email
+     *
      * @return string
      */
     public function getEmail()
@@ -330,7 +347,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets email
-     * @param string $email
+     *
+     * @param  string $email
      * @return $this
      */
     public function setEmail($email)
@@ -342,6 +360,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets password
+     *
      * @return string
      */
     public function getPassword()
@@ -351,7 +370,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets password
-     * @param string $password
+     *
+     * @param  string $password
      * @return $this
      */
     public function setPassword($password)
@@ -363,6 +383,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets phone
+     *
      * @return string
      */
     public function getPhone()
@@ -372,7 +393,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets phone
-     * @param string $phone
+     *
+     * @param  string $phone
      * @return $this
      */
     public function setPhone($phone)
@@ -384,6 +406,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets user_status
+     *
      * @return int
      */
     public function getUserStatus()
@@ -393,7 +416,8 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets user_status
-     * @param int $user_status User Status
+     *
+     * @param  int $user_status User Status
      * @return $this
      */
     public function setUserStatus($user_status)
@@ -404,6 +428,7 @@ class User implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -414,6 +439,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -424,6 +450,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -439,6 +466,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -449,6 +477,7 @@ class User implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()

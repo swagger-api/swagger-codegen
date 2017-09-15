@@ -34,10 +34,10 @@ use \ArrayAccess;
 /**
  * ArrayTest Class Doc Comment
  *
- * @category    Class
- * @package     Swagger\Client
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  Swagger\Client
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
 class ArrayTest implements ModelInterface, ArrayAccess
 {
@@ -45,12 +45,14 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'ArrayTest';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -61,6 +63,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
       * Array of property to format mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerFormats = [
@@ -91,6 +94,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes where the key is the local name, and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -101,6 +105,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -111,6 +116,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -165,12 +171,14 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
+     *
      * @param mixed[] $data Associated array of property values initializing the model
      */
     public function __construct(array $data = null)
@@ -207,6 +215,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets array_of_string
+     *
      * @return string[]
      */
     public function getArrayOfString()
@@ -216,7 +225,8 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets array_of_string
-     * @param string[] $array_of_string
+     *
+     * @param  string[] $array_of_string
      * @return $this
      */
     public function setArrayOfString($array_of_string)
@@ -228,6 +238,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets array_array_of_integer
+     *
      * @return int[][]
      */
     public function getArrayArrayOfInteger()
@@ -237,7 +248,8 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets array_array_of_integer
-     * @param int[][] $array_array_of_integer
+     *
+     * @param  int[][] $array_array_of_integer
      * @return $this
      */
     public function setArrayArrayOfInteger($array_array_of_integer)
@@ -249,6 +261,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets array_array_of_model
+     *
      * @return \Swagger\Client\Model\ReadOnlyFirst[][]
      */
     public function getArrayArrayOfModel()
@@ -258,7 +271,8 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets array_array_of_model
-     * @param \Swagger\Client\Model\ReadOnlyFirst[][] $array_array_of_model
+     *
+     * @param  \Swagger\Client\Model\ReadOnlyFirst[][] $array_array_of_model
      * @return $this
      */
     public function setArrayArrayOfModel($array_array_of_model)
@@ -269,6 +283,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
+     *
      * @param  integer $offset Offset
      * @return boolean
      */
@@ -279,6 +294,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets offset.
+     *
      * @param  integer $offset Offset
      * @return mixed
      */
@@ -289,6 +305,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Sets value based on offset.
+     *
      * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
@@ -304,6 +321,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Unsets offset.
+     *
      * @param  integer $offset Offset
      * @return void
      */
@@ -314,6 +332,7 @@ class ArrayTest implements ModelInterface, ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
