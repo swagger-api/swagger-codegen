@@ -99,7 +99,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
      *
      * @var string[]
      */
@@ -141,7 +142,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     ];
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
      *
      * @return array
      */
@@ -194,7 +196,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Constructor
      *
-     * @param mixed[] $data Associated array of property values initializing the model
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
