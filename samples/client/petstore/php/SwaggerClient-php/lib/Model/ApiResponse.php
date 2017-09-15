@@ -230,7 +230,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Sets code
      *
-     * @param  int $code
+     * @param int $code
+     *
      * @return $this
      */
     public function setCode($code)
@@ -253,7 +254,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Sets type
      *
-     * @param  string $type
+     * @param string $type
+     *
      * @return $this
      */
     public function setType($type)
@@ -276,7 +278,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Sets message
      *
-     * @param  string $message
+     * @param string $message
+     *
      * @return $this
      */
     public function setMessage($message)
@@ -288,7 +291,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -299,7 +303,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -310,8 +315,9 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -326,7 +332,8 @@ class ApiResponse implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

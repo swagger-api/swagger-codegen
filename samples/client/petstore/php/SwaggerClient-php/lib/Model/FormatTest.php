@@ -405,7 +405,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets integer
      *
-     * @param  int $integer
+     * @param int $integer
+     *
      * @return $this
      */
     public function setInteger($integer)
@@ -436,7 +437,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets int32
      *
-     * @param  int $int32
+     * @param int $int32
+     *
      * @return $this
      */
     public function setInt32($int32)
@@ -467,7 +469,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets int64
      *
-     * @param  int $int64
+     * @param int $int64
+     *
      * @return $this
      */
     public function setInt64($int64)
@@ -490,7 +493,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets number
      *
-     * @param  float $number
+     * @param float $number
+     *
      * @return $this
      */
     public function setNumber($number)
@@ -521,7 +525,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets float
      *
-     * @param  float $float
+     * @param float $float
+     *
      * @return $this
      */
     public function setFloat($float)
@@ -552,7 +557,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets double
      *
-     * @param  double $double
+     * @param double $double
+     *
      * @return $this
      */
     public function setDouble($double)
@@ -583,7 +589,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets string
      *
-     * @param  string $string
+     * @param string $string
+     *
      * @return $this
      */
     public function setString($string)
@@ -611,7 +618,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets byte
      *
-     * @param  string $byte
+     * @param string $byte
+     *
      * @return $this
      */
     public function setByte($byte)
@@ -634,7 +642,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets binary
      *
-     * @param  string $binary
+     * @param string $binary
+     *
      * @return $this
      */
     public function setBinary($binary)
@@ -657,7 +666,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets date
      *
-     * @param  \DateTime $date
+     * @param \DateTime $date
+     *
      * @return $this
      */
     public function setDate($date)
@@ -680,7 +690,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets date_time
      *
-     * @param  \DateTime $date_time
+     * @param \DateTime $date_time
+     *
      * @return $this
      */
     public function setDateTime($date_time)
@@ -703,7 +714,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets uuid
      *
-     * @param  string $uuid
+     * @param string $uuid
+     *
      * @return $this
      */
     public function setUuid($uuid)
@@ -726,7 +738,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets password
      *
-     * @param  string $password
+     * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
@@ -745,7 +758,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -756,7 +770,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -767,8 +782,9 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -783,7 +799,8 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

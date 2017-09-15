@@ -319,7 +319,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Sets enum_string
      *
-     * @param  string $enum_string
+     * @param string $enum_string
+     *
      * @return $this
      */
     public function setEnumString($enum_string)
@@ -351,7 +352,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Sets enum_integer
      *
-     * @param  int $enum_integer
+     * @param int $enum_integer
+     *
      * @return $this
      */
     public function setEnumInteger($enum_integer)
@@ -383,7 +385,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Sets enum_number
      *
-     * @param  double $enum_number
+     * @param double $enum_number
+     *
      * @return $this
      */
     public function setEnumNumber($enum_number)
@@ -415,7 +418,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Sets outer_enum
      *
-     * @param  \Swagger\Client\Model\OuterEnum $outer_enum
+     * @param \Swagger\Client\Model\OuterEnum $outer_enum
+     *
      * @return $this
      */
     public function setOuterEnum($outer_enum)
@@ -427,7 +431,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -438,7 +443,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -449,8 +455,9 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -465,7 +472,8 @@ class EnumTest implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

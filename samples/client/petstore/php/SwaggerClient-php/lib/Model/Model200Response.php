@@ -225,7 +225,8 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Sets name
      *
-     * @param  int $name
+     * @param int $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -248,7 +249,8 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Sets class
      *
-     * @param  string $class
+     * @param string $class
+     *
      * @return $this
      */
     public function setClass($class)
@@ -260,7 +262,8 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -271,7 +274,8 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -282,8 +286,9 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -298,7 +303,8 @@ class Model200Response implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

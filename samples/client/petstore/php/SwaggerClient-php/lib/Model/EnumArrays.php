@@ -266,7 +266,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Sets just_symbol
      *
-     * @param  string $just_symbol
+     * @param string $just_symbol
+     *
      * @return $this
      */
     public function setJustSymbol($just_symbol)
@@ -298,7 +299,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Sets array_enum
      *
-     * @param  string[] $array_enum
+     * @param string[] $array_enum
+     *
      * @return $this
      */
     public function setArrayEnum($array_enum)
@@ -319,7 +321,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -330,7 +333,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -341,8 +345,9 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -357,7 +362,8 @@ class EnumArrays implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

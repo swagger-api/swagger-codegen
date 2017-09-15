@@ -230,7 +230,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Sets uuid
      *
-     * @param  string $uuid
+     * @param string $uuid
+     *
      * @return $this
      */
     public function setUuid($uuid)
@@ -253,7 +254,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Sets date_time
      *
-     * @param  \DateTime $date_time
+     * @param \DateTime $date_time
+     *
      * @return $this
      */
     public function setDateTime($date_time)
@@ -276,7 +278,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Sets map
      *
-     * @param  map[string,\Swagger\Client\Model\Animal] $map
+     * @param map[string,\Swagger\Client\Model\Animal] $map
+     *
      * @return $this
      */
     public function setMap($map)
@@ -288,7 +291,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -299,7 +303,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -310,8 +315,9 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -326,7 +332,8 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ModelInterface, Arr
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

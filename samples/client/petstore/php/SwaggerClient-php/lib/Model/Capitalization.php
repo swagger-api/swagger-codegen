@@ -248,7 +248,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets small_camel
      *
-     * @param  string $small_camel
+     * @param string $small_camel
+     *
      * @return $this
      */
     public function setSmallCamel($small_camel)
@@ -271,7 +272,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets capital_camel
      *
-     * @param  string $capital_camel
+     * @param string $capital_camel
+     *
      * @return $this
      */
     public function setCapitalCamel($capital_camel)
@@ -294,7 +296,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets small_snake
      *
-     * @param  string $small_snake
+     * @param string $small_snake
+     *
      * @return $this
      */
     public function setSmallSnake($small_snake)
@@ -317,7 +320,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets capital_snake
      *
-     * @param  string $capital_snake
+     * @param string $capital_snake
+     *
      * @return $this
      */
     public function setCapitalSnake($capital_snake)
@@ -340,7 +344,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets sca_eth_flow_points
      *
-     * @param  string $sca_eth_flow_points
+     * @param string $sca_eth_flow_points
+     *
      * @return $this
      */
     public function setScaEthFlowPoints($sca_eth_flow_points)
@@ -363,7 +368,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets att_name
      *
-     * @param  string $att_name Name of the pet
+     * @param string $att_name Name of the pet
+     *
      * @return $this
      */
     public function setAttName($att_name)
@@ -375,7 +381,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -386,7 +393,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -397,8 +405,9 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -413,7 +422,8 @@ class Capitalization implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

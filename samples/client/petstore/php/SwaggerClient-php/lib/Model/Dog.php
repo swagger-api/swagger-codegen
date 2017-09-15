@@ -215,7 +215,8 @@ class Dog extends Animal
     /**
      * Sets breed
      *
-     * @param  string $breed
+     * @param string $breed
+     *
      * @return $this
      */
     public function setBreed($breed)
@@ -227,7 +228,8 @@ class Dog extends Animal
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -238,7 +240,8 @@ class Dog extends Animal
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -249,8 +252,9 @@ class Dog extends Animal
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -265,7 +269,8 @@ class Dog extends Animal
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

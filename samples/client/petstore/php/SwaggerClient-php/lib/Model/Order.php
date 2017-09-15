@@ -277,7 +277,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -300,7 +301,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets pet_id
      *
-     * @param  int $pet_id
+     * @param int $pet_id
+     *
      * @return $this
      */
     public function setPetId($pet_id)
@@ -323,7 +325,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets quantity
      *
-     * @param  int $quantity
+     * @param int $quantity
+     *
      * @return $this
      */
     public function setQuantity($quantity)
@@ -346,7 +349,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets ship_date
      *
-     * @param  \DateTime $ship_date
+     * @param \DateTime $ship_date
+     *
      * @return $this
      */
     public function setShipDate($ship_date)
@@ -369,7 +373,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param  string $status Order Status
+     * @param string $status Order Status
+     *
      * @return $this
      */
     public function setStatus($status)
@@ -401,7 +406,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets complete
      *
-     * @param  bool $complete
+     * @param bool $complete
+     *
      * @return $this
      */
     public function setComplete($complete)
@@ -413,7 +419,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -424,7 +431,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -435,8 +443,9 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -451,7 +460,8 @@ class Order implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

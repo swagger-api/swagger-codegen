@@ -289,7 +289,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -312,7 +313,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets category
      *
-     * @param  \Swagger\Client\Model\Category $category
+     * @param \Swagger\Client\Model\Category $category
+     *
      * @return $this
      */
     public function setCategory($category)
@@ -335,7 +337,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets name
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -358,7 +361,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets photo_urls
      *
-     * @param  string[] $photo_urls
+     * @param string[] $photo_urls
+     *
      * @return $this
      */
     public function setPhotoUrls($photo_urls)
@@ -381,7 +385,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets tags
      *
-     * @param  \Swagger\Client\Model\Tag[] $tags
+     * @param \Swagger\Client\Model\Tag[] $tags
+     *
      * @return $this
      */
     public function setTags($tags)
@@ -404,7 +409,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param  string $status pet status in the store
+     * @param string $status pet status in the store
+     *
      * @return $this
      */
     public function setStatus($status)
@@ -425,7 +431,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -436,7 +443,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -447,8 +455,9 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -463,7 +472,8 @@ class Pet implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

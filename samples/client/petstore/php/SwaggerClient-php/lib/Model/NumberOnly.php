@@ -218,7 +218,8 @@ class NumberOnly implements ModelInterface, ArrayAccess
     /**
      * Sets just_number
      *
-     * @param  float $just_number
+     * @param float $just_number
+     *
      * @return $this
      */
     public function setJustNumber($just_number)
@@ -230,7 +231,8 @@ class NumberOnly implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -241,7 +243,8 @@ class NumberOnly implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -252,8 +255,9 @@ class NumberOnly implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -268,7 +272,8 @@ class NumberOnly implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)

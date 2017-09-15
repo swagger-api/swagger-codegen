@@ -260,7 +260,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -283,7 +284,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets username
      *
-     * @param  string $username
+     * @param string $username
+     *
      * @return $this
      */
     public function setUsername($username)
@@ -306,7 +308,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets first_name
      *
-     * @param  string $first_name
+     * @param string $first_name
+     *
      * @return $this
      */
     public function setFirstName($first_name)
@@ -329,7 +332,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets last_name
      *
-     * @param  string $last_name
+     * @param string $last_name
+     *
      * @return $this
      */
     public function setLastName($last_name)
@@ -352,7 +356,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets email
      *
-     * @param  string $email
+     * @param string $email
+     *
      * @return $this
      */
     public function setEmail($email)
@@ -375,7 +380,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets password
      *
-     * @param  string $password
+     * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
@@ -398,7 +404,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets phone
      *
-     * @param  string $phone
+     * @param string $phone
+     *
      * @return $this
      */
     public function setPhone($phone)
@@ -421,7 +428,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets user_status
      *
-     * @param  int $user_status User Status
+     * @param int $user_status User Status
+     *
      * @return $this
      */
     public function setUserStatus($user_status)
@@ -433,7 +441,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -444,7 +453,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -455,8 +465,9 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -471,7 +482,8 @@ class User implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param  integer $offset Offset
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
