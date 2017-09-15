@@ -98,7 +98,10 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
-        list($response) = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        $responseWithHeaders = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        list($response) = $responseWithHeaders;
+        $response["api_status"] = $responseWithHeaders["1"];
+        $response["headers"] = $responseWithHeaders["2"];
         return $response;
     }
 
