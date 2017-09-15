@@ -28,6 +28,7 @@
  */
 
 namespace Swagger\Client\Model;
+use \Swagger\Client\ObjectSerializer;
 
 /**
  * Dog Class Doc Comment
@@ -280,10 +281,13 @@ class Dog extends Animal
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

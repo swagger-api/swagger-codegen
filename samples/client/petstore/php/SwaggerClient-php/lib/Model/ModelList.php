@@ -30,6 +30,7 @@
 namespace Swagger\Client\Model;
 
 use \ArrayAccess;
+use \Swagger\Client\ObjectSerializer;
 
 /**
  * ModelList Class Doc Comment
@@ -283,10 +284,13 @@ class ModelList implements ModelInterface, ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

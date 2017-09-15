@@ -28,6 +28,7 @@
  */
 
 namespace Swagger\Client\Model;
+use \Swagger\Client\ObjectSerializer;
 
 /**
  * EnumClass Class Doc Comment
