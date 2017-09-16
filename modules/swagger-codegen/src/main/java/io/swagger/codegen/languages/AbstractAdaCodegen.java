@@ -92,6 +92,58 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         );
     }
 
+    /**
+     * @brief Turn a parameter name, operation name into an Ada identifier.
+     *
+     * Ada programming standard avoid the camelcase syntax and prefer the underscore
+     * notation.  We also have to make sure the identifier is not a reserved keyword.
+     * When this happens, we add the configurable prefix.  The function translates:
+     *
+     * body              -> P_Body
+     * petId             -> Pet_Id
+     * updatePetWithForm -> Update_Pet_With_Form
+     *
+     * @param name the parameter name.
+     * @param prefix the optional prefix in case the parameter name is a reserved keyword.
+     * @return the Ada identifier to be used.
+     */
+    protected String toAdaIdentifier(String name, String prefix) {
+        // We cannot use reserved keywords for identifiers
+        if (isReservedWord(name)) {
+            LOGGER.warn("Identifier '" + name + "' is a reserved word, renamed to " + prefix + name);
+            name = prefix + name;
+        }
+        StringBuilder result = new StringBuilder();
+        boolean needUpperCase = true;
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (needUpperCase) {
+                needUpperCase = false;
+                result.append(Character.toUpperCase(c));
+
+            } else if (Character.isUpperCase((c))) {
+                if (!needUpperCase) {
+                    result.append('_');
+                }
+                result.append(c);
+                needUpperCase = false;
+            } else {
+                result.append(c);
+                if (c == '_') {
+                    needUpperCase = true;
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    @Override
+    public String toOperationId(String operationId) {
+        String sanitizedOperationId = sanitizeName(operationId);
+
+        return toAdaIdentifier(sanitizedOperationId, "Call_");
+    }
+
     @Override
     public String toVarName(String name) {
         if (reservedWords.contains(name)) {
@@ -112,7 +164,7 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
 
     @Override
     public String toParamName(String name) {
-        return sanitizeName(super.toParamName(name));
+        return toAdaIdentifier(super.toParamName(name), "P_");
     }
 
     @Override
