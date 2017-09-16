@@ -186,45 +186,41 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         return modelPackage + ".Models." + modelType;
     }
 
+    /**
+     * @brief Post process the media types (produces and consumes) for Ada code generator.
+     *
+     * For each media type, add a adaMediaType member that gives the Ada enum constant
+     * for the corresponding type.
+     *
+     * @param types the list of media types.
+     */
+    protected void postProcessMediaTypes(List<Map<String, String>> types) {
+        if (types != null) {
+            for (Map<String, String> media : types) {
+                String mt = media.get("mediaType");
+                if (mt != null) {
+                    mt = mt.replace('/', '_');
+                    media.put("adaMediaType", mt.toUpperCase());
+                }
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
-        List<CodegenOperation> newOpList = new ArrayList<CodegenOperation>();
-        for (CodegenOperation op : operationList) {
-            String path = new String(op.path);
 
-            String[] items = path.split("/", -1);
-            List<String> splitPath = new ArrayList<String>();
-            for (String item : items) {
-                if (item.matches("^\\{(.*)\\}$")) {
-                    item = "*";
-                }
-                splitPath.add(item);
-                op.path += item + "/";
-            }
-            op.vendorExtensions.put("x-codegen-userInfoPath", userInfoPath);
-            boolean foundInNewList = false;
-            for (CodegenOperation op1 : newOpList) {
-                if (!foundInNewList) {
-                    if (op1.path.equals(op.path)) {
-                        foundInNewList = true;
-                        List<CodegenOperation> currentOtherMethodList = (List<CodegenOperation>) op1.vendorExtensions.get("x-codegen-otherMethods");
-                        if (currentOtherMethodList == null) {
-                            currentOtherMethodList = new ArrayList<CodegenOperation>();
-                        }
-                        op.operationIdCamelCase = op1.operationIdCamelCase;
-                        currentOtherMethodList.add(op);
-                        op1.vendorExtensions.put("x-codegen-otherMethods", currentOtherMethodList);
-                    }
-                }
-            }
-            if (!foundInNewList) {
-                newOpList.add(op);
+        for (CodegenOperation op1 : operationList) {
+            postProcessMediaTypes(op1.produces);
+            postProcessMediaTypes(op1.consumes);
+            if (op1.notes.length() > 0) {
+                op1.vendorExtensions.put("x-has-notes", Boolean.TRUE);
+            } else {
+                op1.vendorExtensions.put("x-has-notes", Boolean.FALSE);
             }
         }
-        operations.put("operation", newOpList);
         return objs;
     }
 
