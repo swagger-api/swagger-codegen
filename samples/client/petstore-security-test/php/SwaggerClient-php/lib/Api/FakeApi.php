@@ -162,9 +162,11 @@ class FakeApi
     public function testCodeInjectEndRnNRAsync($test_code_inject____end____rn_n_r = null)
     {
         return $this->testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -184,22 +186,25 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**

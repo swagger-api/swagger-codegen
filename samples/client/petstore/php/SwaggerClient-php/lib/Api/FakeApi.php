@@ -181,9 +181,11 @@ class FakeApi
     public function fakeOuterBooleanSerializeAsync($body = null)
     {
         return $this->fakeOuterBooleanSerializeAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -203,36 +205,39 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -418,9 +423,11 @@ class FakeApi
     public function fakeOuterCompositeSerializeAsync($body = null)
     {
         return $this->fakeOuterCompositeSerializeAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -440,36 +447,39 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -655,9 +665,11 @@ class FakeApi
     public function fakeOuterNumberSerializeAsync($body = null)
     {
         return $this->fakeOuterNumberSerializeAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -677,36 +689,39 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -892,9 +907,11 @@ class FakeApi
     public function fakeOuterStringSerializeAsync($body = null)
     {
         return $this->fakeOuterStringSerializeAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -914,36 +931,39 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1133,9 +1153,11 @@ class FakeApi
     public function testClientModelAsync($body)
     {
         return $this->testClientModelAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1155,36 +1177,39 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1396,9 +1421,11 @@ class FakeApi
     public function testEndpointParametersAsync($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
         return $this->testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1431,22 +1458,25 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1775,9 +1805,11 @@ class FakeApi
     public function testEnumParametersAsync($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
     {
         return $this->testEnumParametersAsyncWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1804,22 +1836,25 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -2031,9 +2066,11 @@ class FakeApi
     public function testJsonFormDataAsync($param, $param2)
     {
         return $this->testJsonFormDataAsyncWithHttpInfo($param, $param2)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -2054,22 +2091,25 @@ class FakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**

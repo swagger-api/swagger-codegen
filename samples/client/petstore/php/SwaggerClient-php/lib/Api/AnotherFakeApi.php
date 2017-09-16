@@ -185,9 +185,11 @@ class AnotherfakeApi
     public function testSpecialTagsAsync($body)
     {
         return $this->testSpecialTagsAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -207,36 +209,39 @@ class AnotherfakeApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**

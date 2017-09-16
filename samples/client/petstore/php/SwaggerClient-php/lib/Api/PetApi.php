@@ -162,9 +162,11 @@ class PetApi
     public function addPetAsync($body)
     {
         return $this->addPetAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -184,22 +186,25 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -379,9 +384,11 @@ class PetApi
     public function deletePetAsync($pet_id, $api_key = null)
     {
         return $this->deletePetAsyncWithHttpInfo($pet_id, $api_key)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -402,22 +409,25 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -627,9 +637,11 @@ class PetApi
     public function findPetsByStatusAsync($status)
     {
         return $this->findPetsByStatusAsyncWithHttpInfo($status)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -649,36 +661,39 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -882,9 +897,11 @@ class PetApi
     public function findPetsByTagsAsync($tags)
     {
         return $this->findPetsByTagsAsyncWithHttpInfo($tags)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -904,36 +921,39 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1137,9 +1157,11 @@ class PetApi
     public function getPetByIdAsync($pet_id)
     {
         return $this->getPetByIdAsyncWithHttpInfo($pet_id)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1159,36 +1181,39 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1371,9 +1396,11 @@ class PetApi
     public function updatePetAsync($body)
     {
         return $this->updatePetAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1393,22 +1420,25 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1591,9 +1621,11 @@ class PetApi
     public function updatePetWithFormAsync($pet_id, $name = null, $status = null)
     {
         return $this->updatePetWithFormAsyncWithHttpInfo($pet_id, $name, $status)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1615,22 +1647,25 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1851,9 +1886,11 @@ class PetApi
     public function uploadFileAsync($pet_id, $additional_metadata = null, $file = null)
     {
         return $this->uploadFileAsyncWithHttpInfo($pet_id, $additional_metadata, $file)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1875,36 +1912,39 @@ class PetApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**

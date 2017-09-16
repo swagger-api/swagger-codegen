@@ -162,9 +162,11 @@ class UserApi
     public function createUserAsync($body)
     {
         return $this->createUserAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -184,22 +186,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -372,9 +377,11 @@ class UserApi
     public function createUsersWithArrayInputAsync($body)
     {
         return $this->createUsersWithArrayInputAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -394,22 +401,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -582,9 +592,11 @@ class UserApi
     public function createUsersWithListInputAsync($body)
     {
         return $this->createUsersWithListInputAsyncWithHttpInfo($body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -604,22 +616,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -792,9 +807,11 @@ class UserApi
     public function deleteUserAsync($username)
     {
         return $this->deleteUserAsyncWithHttpInfo($username)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -814,22 +831,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1030,9 +1050,11 @@ class UserApi
     public function getUserByNameAsync($username)
     {
         return $this->getUserByNameAsyncWithHttpInfo($username)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1052,36 +1074,39 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1285,9 +1310,11 @@ class UserApi
     public function loginUserAsync($username, $password)
     {
         return $this->loginUserAsyncWithHttpInfo($username, $password)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1308,36 +1335,39 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                $responseBody = $response->getBody();
-                if ($returnType === '\SplFileObject') {
-                    $content = $responseBody; //stream goes to serializer
-                } else {
-                    $content = $responseBody->getContents();
-                    if ($returnType !== 'string') {
-                        $content = json_decode($content);
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
                     }
-                }
 
-                return [
-                    ObjectSerializer::deserialize($content, $returnType, []),
-                    $response->getStatusCode(),
-                    $response->getHeaders()
-                ];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1519,9 +1549,11 @@ class UserApi
     public function logoutUserAsync()
     {
         return $this->logoutUserAsyncWithHttpInfo()
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1540,22 +1572,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
@@ -1721,9 +1756,11 @@ class UserApi
     public function updateUserAsync($username, $body)
     {
         return $this->updateUserAsyncWithHttpInfo($username, $body)
-            ->then(function ($response) {
-                return $response[0];
-            });
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
     }
 
     /**
@@ -1744,22 +1781,25 @@ class UserApi
 
         return $this->client
             ->sendAsync($request)
-            ->then(function ($response) use ($returnType) {
-                return [null, $response->getStatusCode(), $response->getHeaders()];
-            }, function ($exception) {
-                $response = $exception->getResponse();
-                $statusCode = $response->getStatusCode();
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
                         $statusCode,
-                        $exception->getRequest()->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            });
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
     }
 
     /**
