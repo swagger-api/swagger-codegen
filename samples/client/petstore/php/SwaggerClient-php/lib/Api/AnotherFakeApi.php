@@ -1,6 +1,6 @@
 <?php
 /**
- * AnotherFakeApi
+ * AnotherfakeApi
  * PHP version 5
  *
  * @category Class
@@ -39,14 +39,14 @@ use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
 /**
- * AnotherFakeApi Class Doc Comment
+ * AnotherfakeApi Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class AnotherFakeApi
+class AnotherfakeApi
 {
     /**
      * @var ClientInterface
@@ -60,8 +60,8 @@ class AnotherFakeApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -86,7 +86,7 @@ class AnotherFakeApi
      *
      * To test special tags
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
@@ -102,7 +102,7 @@ class AnotherFakeApi
      *
      * To test special tags
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
@@ -167,7 +167,7 @@ class AnotherFakeApi
      *
      * To test special tags
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -183,7 +183,7 @@ class AnotherFakeApi
      *
      * To test special tags
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -223,7 +223,7 @@ class AnotherFakeApi
     /**
      * Create request for operation 'testSpecialTags'
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

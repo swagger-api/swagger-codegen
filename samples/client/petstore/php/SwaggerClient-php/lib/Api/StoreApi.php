@@ -60,8 +60,8 @@ class StoreApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -86,7 +86,7 @@ class StoreApi
      *
      * Delete purchase order by ID
      *
-     * @param string $order_id ID of the order that needs to be deleted (required)
+     * @param  string $order_id ID of the order that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -101,7 +101,7 @@ class StoreApi
      *
      * Delete purchase order by ID
      *
-     * @param string $order_id ID of the order that needs to be deleted (required)
+     * @param  string $order_id ID of the order that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -148,7 +148,7 @@ class StoreApi
      *
      * Delete purchase order by ID
      *
-     * @param string $order_id ID of the order that needs to be deleted (required)
+     * @param  string $order_id ID of the order that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -164,7 +164,7 @@ class StoreApi
      *
      * Delete purchase order by ID
      *
-     * @param string $order_id ID of the order that needs to be deleted (required)
+     * @param  string $order_id ID of the order that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -190,7 +190,7 @@ class StoreApi
     /**
      * Create request for operation 'deleteOrder'
      *
-     * @param string $order_id ID of the order that needs to be deleted (required)
+     * @param  string $order_id ID of the order that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -493,7 +493,7 @@ class StoreApi
      *
      * Find purchase order by ID
      *
-     * @param int $order_id ID of pet that needs to be fetched (required)
+     * @param  int $order_id ID of pet that needs to be fetched (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
@@ -509,7 +509,7 @@ class StoreApi
      *
      * Find purchase order by ID
      *
-     * @param int $order_id ID of pet that needs to be fetched (required)
+     * @param  int $order_id ID of pet that needs to be fetched (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
@@ -574,7 +574,7 @@ class StoreApi
      *
      * Find purchase order by ID
      *
-     * @param int $order_id ID of pet that needs to be fetched (required)
+     * @param  int $order_id ID of pet that needs to be fetched (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -590,7 +590,7 @@ class StoreApi
      *
      * Find purchase order by ID
      *
-     * @param int $order_id ID of pet that needs to be fetched (required)
+     * @param  int $order_id ID of pet that needs to be fetched (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -630,7 +630,7 @@ class StoreApi
     /**
      * Create request for operation 'getOrderById'
      *
-     * @param int $order_id ID of pet that needs to be fetched (required)
+     * @param  int $order_id ID of pet that needs to be fetched (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -724,7 +724,7 @@ class StoreApi
      *
      * Place an order for a pet
      *
-     * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
+     * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
@@ -740,7 +740,7 @@ class StoreApi
      *
      * Place an order for a pet
      *
-     * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
+     * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
@@ -805,7 +805,7 @@ class StoreApi
      *
      * Place an order for a pet
      *
-     * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
+     * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -821,7 +821,7 @@ class StoreApi
      *
      * Place an order for a pet
      *
-     * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
+     * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -861,7 +861,7 @@ class StoreApi
     /**
      * Create request for operation 'placeOrder'
      *
-     * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
+     * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

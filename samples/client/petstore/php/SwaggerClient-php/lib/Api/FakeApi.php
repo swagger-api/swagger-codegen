@@ -60,8 +60,8 @@ class FakeApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -84,7 +84,7 @@ class FakeApi
     /**
      * Operation fakeOuterBooleanSerialize
      *
-     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterBoolean
@@ -98,7 +98,7 @@ class FakeApi
     /**
      * Operation fakeOuterBooleanSerializeWithHttpInfo
      *
-     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterBoolean, HTTP status code, HTTP response headers (array of strings)
@@ -163,7 +163,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -179,7 +179,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -219,7 +219,7 @@ class FakeApi
     /**
      * Create request for operation 'fakeOuterBooleanSerialize'
      *
-     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -301,7 +301,7 @@ class FakeApi
     /**
      * Operation fakeOuterCompositeSerialize
      *
-     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterComposite
@@ -315,7 +315,7 @@ class FakeApi
     /**
      * Operation fakeOuterCompositeSerializeWithHttpInfo
      *
-     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterComposite, HTTP status code, HTTP response headers (array of strings)
@@ -380,7 +380,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -396,7 +396,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -436,7 +436,7 @@ class FakeApi
     /**
      * Create request for operation 'fakeOuterCompositeSerialize'
      *
-     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -518,7 +518,7 @@ class FakeApi
     /**
      * Operation fakeOuterNumberSerialize
      *
-     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterNumber
@@ -532,7 +532,7 @@ class FakeApi
     /**
      * Operation fakeOuterNumberSerializeWithHttpInfo
      *
-     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterNumber, HTTP status code, HTTP response headers (array of strings)
@@ -597,7 +597,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -613,7 +613,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -653,7 +653,7 @@ class FakeApi
     /**
      * Create request for operation 'fakeOuterNumberSerialize'
      *
-     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -735,7 +735,7 @@ class FakeApi
     /**
      * Operation fakeOuterStringSerialize
      *
-     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterString
@@ -749,7 +749,7 @@ class FakeApi
     /**
      * Operation fakeOuterStringSerializeWithHttpInfo
      *
-     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterString, HTTP status code, HTTP response headers (array of strings)
@@ -814,7 +814,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -830,7 +830,7 @@ class FakeApi
      *
      * 
      *
-     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -870,7 +870,7 @@ class FakeApi
     /**
      * Create request for operation 'fakeOuterStringSerialize'
      *
-     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -954,7 +954,7 @@ class FakeApi
      *
      * To test \"client\" model
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
@@ -970,7 +970,7 @@ class FakeApi
      *
      * To test \"client\" model
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
@@ -1035,7 +1035,7 @@ class FakeApi
      *
      * To test \"client\" model
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1051,7 +1051,7 @@ class FakeApi
      *
      * To test \"client\" model
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1091,7 +1091,7 @@ class FakeApi
     /**
      * Create request for operation 'testClientModel'
      *
-     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1179,20 +1179,20 @@ class FakeApi
      *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      *
-     * @param float $number None (required)
-     * @param double $double None (required)
-     * @param string $pattern_without_delimiter None (required)
-     * @param string $byte None (required)
-     * @param int $integer None (optional)
-     * @param int $int32 None (optional)
-     * @param int $int64 None (optional)
-     * @param float $float None (optional)
-     * @param string $string None (optional)
-     * @param string $binary None (optional)
-     * @param \DateTime $date None (optional)
-     * @param \DateTime $date_time None (optional)
-     * @param string $password None (optional)
-     * @param string $callback None (optional)
+     * @param  float $number None (required)
+     * @param  double $double None (required)
+     * @param  string $pattern_without_delimiter None (required)
+     * @param  string $byte None (required)
+     * @param  int $integer None (optional)
+     * @param  int $int32 None (optional)
+     * @param  int $int64 None (optional)
+     * @param  float $float None (optional)
+     * @param  string $string None (optional)
+     * @param  string $binary None (optional)
+     * @param  \DateTime $date None (optional)
+     * @param  \DateTime $date_time None (optional)
+     * @param  string $password None (optional)
+     * @param  string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1207,20 +1207,20 @@ class FakeApi
      *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      *
-     * @param float $number None (required)
-     * @param double $double None (required)
-     * @param string $pattern_without_delimiter None (required)
-     * @param string $byte None (required)
-     * @param int $integer None (optional)
-     * @param int $int32 None (optional)
-     * @param int $int64 None (optional)
-     * @param float $float None (optional)
-     * @param string $string None (optional)
-     * @param string $binary None (optional)
-     * @param \DateTime $date None (optional)
-     * @param \DateTime $date_time None (optional)
-     * @param string $password None (optional)
-     * @param string $callback None (optional)
+     * @param  float $number None (required)
+     * @param  double $double None (required)
+     * @param  string $pattern_without_delimiter None (required)
+     * @param  string $byte None (required)
+     * @param  int $integer None (optional)
+     * @param  int $int32 None (optional)
+     * @param  int $int64 None (optional)
+     * @param  float $float None (optional)
+     * @param  string $string None (optional)
+     * @param  string $binary None (optional)
+     * @param  \DateTime $date None (optional)
+     * @param  \DateTime $date_time None (optional)
+     * @param  string $password None (optional)
+     * @param  string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1267,20 +1267,20 @@ class FakeApi
      *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      *
-     * @param float $number None (required)
-     * @param double $double None (required)
-     * @param string $pattern_without_delimiter None (required)
-     * @param string $byte None (required)
-     * @param int $integer None (optional)
-     * @param int $int32 None (optional)
-     * @param int $int64 None (optional)
-     * @param float $float None (optional)
-     * @param string $string None (optional)
-     * @param string $binary None (optional)
-     * @param \DateTime $date None (optional)
-     * @param \DateTime $date_time None (optional)
-     * @param string $password None (optional)
-     * @param string $callback None (optional)
+     * @param  float $number None (required)
+     * @param  double $double None (required)
+     * @param  string $pattern_without_delimiter None (required)
+     * @param  string $byte None (required)
+     * @param  int $integer None (optional)
+     * @param  int $int32 None (optional)
+     * @param  int $int64 None (optional)
+     * @param  float $float None (optional)
+     * @param  string $string None (optional)
+     * @param  string $binary None (optional)
+     * @param  \DateTime $date None (optional)
+     * @param  \DateTime $date_time None (optional)
+     * @param  string $password None (optional)
+     * @param  string $callback None (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1296,20 +1296,20 @@ class FakeApi
      *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      *
-     * @param float $number None (required)
-     * @param double $double None (required)
-     * @param string $pattern_without_delimiter None (required)
-     * @param string $byte None (required)
-     * @param int $integer None (optional)
-     * @param int $int32 None (optional)
-     * @param int $int64 None (optional)
-     * @param float $float None (optional)
-     * @param string $string None (optional)
-     * @param string $binary None (optional)
-     * @param \DateTime $date None (optional)
-     * @param \DateTime $date_time None (optional)
-     * @param string $password None (optional)
-     * @param string $callback None (optional)
+     * @param  float $number None (required)
+     * @param  double $double None (required)
+     * @param  string $pattern_without_delimiter None (required)
+     * @param  string $byte None (required)
+     * @param  int $integer None (optional)
+     * @param  int $int32 None (optional)
+     * @param  int $int64 None (optional)
+     * @param  float $float None (optional)
+     * @param  string $string None (optional)
+     * @param  string $binary None (optional)
+     * @param  \DateTime $date None (optional)
+     * @param  \DateTime $date_time None (optional)
+     * @param  string $password None (optional)
+     * @param  string $callback None (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1335,20 +1335,20 @@ class FakeApi
     /**
      * Create request for operation 'testEndpointParameters'
      *
-     * @param float $number None (required)
-     * @param double $double None (required)
-     * @param string $pattern_without_delimiter None (required)
-     * @param string $byte None (required)
-     * @param int $integer None (optional)
-     * @param int $int32 None (optional)
-     * @param int $int64 None (optional)
-     * @param float $float None (optional)
-     * @param string $string None (optional)
-     * @param string $binary None (optional)
-     * @param \DateTime $date None (optional)
-     * @param \DateTime $date_time None (optional)
-     * @param string $password None (optional)
-     * @param string $callback None (optional)
+     * @param  float $number None (required)
+     * @param  double $double None (required)
+     * @param  string $pattern_without_delimiter None (required)
+     * @param  string $byte None (required)
+     * @param  int $integer None (optional)
+     * @param  int $int32 None (optional)
+     * @param  int $int64 None (optional)
+     * @param  float $float None (optional)
+     * @param  string $string None (optional)
+     * @param  string $binary None (optional)
+     * @param  \DateTime $date None (optional)
+     * @param  \DateTime $date_time None (optional)
+     * @param  string $password None (optional)
+     * @param  string $callback None (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1380,8 +1380,8 @@ class FakeApi
         if ($pattern_without_delimiter === null) {
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
-        if (!preg_match("/^[A-Z].*/", $pattern_without_delimiter)) {
-            throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*/.");
+        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter)) {
+            throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.");
         }
 
         // verify the required parameter 'byte' is set
@@ -1550,14 +1550,14 @@ class FakeApi
      *
      * To test enum parameters
      *
-     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
-     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
-     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
-     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
-     * @param int $enum_query_integer Query parameter enum test (double) (optional)
-     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @param  string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param  string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param  string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param  int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param  double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1572,14 +1572,14 @@ class FakeApi
      *
      * To test enum parameters
      *
-     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
-     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
-     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
-     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
-     * @param int $enum_query_integer Query parameter enum test (double) (optional)
-     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @param  string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param  string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param  string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param  int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param  double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1626,14 +1626,14 @@ class FakeApi
      *
      * To test enum parameters
      *
-     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
-     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
-     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
-     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
-     * @param int $enum_query_integer Query parameter enum test (double) (optional)
-     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @param  string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param  string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param  string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param  int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param  double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1649,14 +1649,14 @@ class FakeApi
      *
      * To test enum parameters
      *
-     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
-     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
-     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
-     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
-     * @param int $enum_query_integer Query parameter enum test (double) (optional)
-     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @param  string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param  string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param  string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param  int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param  double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1682,14 +1682,14 @@ class FakeApi
     /**
      * Create request for operation 'testEnumParameters'
      *
-     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
-     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
-     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
-     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
-     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
-     * @param int $enum_query_integer Query parameter enum test (double) (optional)
-     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @param  string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param  string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param  string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param  string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param  int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param  double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1806,8 +1806,8 @@ class FakeApi
      *
      * test json serialization of form data
      *
-     * @param string $param field1 (required)
-     * @param string $param2 field2 (required)
+     * @param  string $param field1 (required)
+     * @param  string $param2 field2 (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1822,8 +1822,8 @@ class FakeApi
      *
      * test json serialization of form data
      *
-     * @param string $param field1 (required)
-     * @param string $param2 field2 (required)
+     * @param  string $param field1 (required)
+     * @param  string $param2 field2 (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1870,8 +1870,8 @@ class FakeApi
      *
      * test json serialization of form data
      *
-     * @param string $param field1 (required)
-     * @param string $param2 field2 (required)
+     * @param  string $param field1 (required)
+     * @param  string $param2 field2 (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1887,8 +1887,8 @@ class FakeApi
      *
      * test json serialization of form data
      *
-     * @param string $param field1 (required)
-     * @param string $param2 field2 (required)
+     * @param  string $param field1 (required)
+     * @param  string $param2 field2 (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1914,8 +1914,8 @@ class FakeApi
     /**
      * Create request for operation 'testJsonFormData'
      *
-     * @param string $param field1 (required)
-     * @param string $param2 field2 (required)
+     * @param  string $param field1 (required)
+     * @param  string $param2 field2 (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

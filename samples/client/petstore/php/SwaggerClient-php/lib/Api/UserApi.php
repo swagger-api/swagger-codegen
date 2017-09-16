@@ -60,8 +60,8 @@ class UserApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -86,7 +86,7 @@ class UserApi
      *
      * Create user
      *
-     * @param \Swagger\Client\Model\User $body Created user object (required)
+     * @param  \Swagger\Client\Model\User $body Created user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -101,7 +101,7 @@ class UserApi
      *
      * Create user
      *
-     * @param \Swagger\Client\Model\User $body Created user object (required)
+     * @param  \Swagger\Client\Model\User $body Created user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -148,7 +148,7 @@ class UserApi
      *
      * Create user
      *
-     * @param \Swagger\Client\Model\User $body Created user object (required)
+     * @param  \Swagger\Client\Model\User $body Created user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -164,7 +164,7 @@ class UserApi
      *
      * Create user
      *
-     * @param \Swagger\Client\Model\User $body Created user object (required)
+     * @param  \Swagger\Client\Model\User $body Created user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -190,7 +190,7 @@ class UserApi
     /**
      * Create request for operation 'createUser'
      *
-     * @param \Swagger\Client\Model\User $body Created user object (required)
+     * @param  \Swagger\Client\Model\User $body Created user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -278,7 +278,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -293,7 +293,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -340,7 +340,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -356,7 +356,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -382,7 +382,7 @@ class UserApi
     /**
      * Create request for operation 'createUsersWithArrayInput'
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -470,7 +470,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -485,7 +485,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -532,7 +532,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -548,7 +548,7 @@ class UserApi
      *
      * Creates list of users with given input array
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -574,7 +574,7 @@ class UserApi
     /**
      * Create request for operation 'createUsersWithListInput'
      *
-     * @param \Swagger\Client\Model\User[] $body List of user object (required)
+     * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -662,7 +662,7 @@ class UserApi
      *
      * Delete user
      *
-     * @param string $username The name that needs to be deleted (required)
+     * @param  string $username The name that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -677,7 +677,7 @@ class UserApi
      *
      * Delete user
      *
-     * @param string $username The name that needs to be deleted (required)
+     * @param  string $username The name that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -724,7 +724,7 @@ class UserApi
      *
      * Delete user
      *
-     * @param string $username The name that needs to be deleted (required)
+     * @param  string $username The name that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -740,7 +740,7 @@ class UserApi
      *
      * Delete user
      *
-     * @param string $username The name that needs to be deleted (required)
+     * @param  string $username The name that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -766,7 +766,7 @@ class UserApi
     /**
      * Create request for operation 'deleteUser'
      *
-     * @param string $username The name that needs to be deleted (required)
+     * @param  string $username The name that needs to be deleted (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -853,7 +853,7 @@ class UserApi
      *
      * Get user by user name
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
+     * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\User
@@ -869,7 +869,7 @@ class UserApi
      *
      * Get user by user name
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
+     * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\User, HTTP status code, HTTP response headers (array of strings)
@@ -934,7 +934,7 @@ class UserApi
      *
      * Get user by user name
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
+     * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -950,7 +950,7 @@ class UserApi
      *
      * Get user by user name
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
+     * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -990,7 +990,7 @@ class UserApi
     /**
      * Create request for operation 'getUserByName'
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
+     * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1077,8 +1077,8 @@ class UserApi
      *
      * Logs user into the system
      *
-     * @param string $username The user name for login (required)
-     * @param string $password The password for login in clear text (required)
+     * @param  string $username The user name for login (required)
+     * @param  string $password The password for login in clear text (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return string
@@ -1094,8 +1094,8 @@ class UserApi
      *
      * Logs user into the system
      *
-     * @param string $username The user name for login (required)
-     * @param string $password The password for login in clear text (required)
+     * @param  string $username The user name for login (required)
+     * @param  string $password The password for login in clear text (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of string, HTTP status code, HTTP response headers (array of strings)
@@ -1160,8 +1160,8 @@ class UserApi
      *
      * Logs user into the system
      *
-     * @param string $username The user name for login (required)
-     * @param string $password The password for login in clear text (required)
+     * @param  string $username The user name for login (required)
+     * @param  string $password The password for login in clear text (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1177,8 +1177,8 @@ class UserApi
      *
      * Logs user into the system
      *
-     * @param string $username The user name for login (required)
-     * @param string $password The password for login in clear text (required)
+     * @param  string $username The user name for login (required)
+     * @param  string $password The password for login in clear text (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1218,8 +1218,8 @@ class UserApi
     /**
      * Create request for operation 'loginUser'
      *
-     * @param string $username The user name for login (required)
-     * @param string $password The password for login in clear text (required)
+     * @param  string $username The user name for login (required)
+     * @param  string $password The password for login in clear text (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1492,8 +1492,8 @@ class UserApi
      *
      * Updated user
      *
-     * @param string $username name that need to be deleted (required)
-     * @param \Swagger\Client\Model\User $body Updated user object (required)
+     * @param  string $username name that need to be deleted (required)
+     * @param  \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1508,8 +1508,8 @@ class UserApi
      *
      * Updated user
      *
-     * @param string $username name that need to be deleted (required)
-     * @param \Swagger\Client\Model\User $body Updated user object (required)
+     * @param  string $username name that need to be deleted (required)
+     * @param  \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1556,8 +1556,8 @@ class UserApi
      *
      * Updated user
      *
-     * @param string $username name that need to be deleted (required)
-     * @param \Swagger\Client\Model\User $body Updated user object (required)
+     * @param  string $username name that need to be deleted (required)
+     * @param  \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1573,8 +1573,8 @@ class UserApi
      *
      * Updated user
      *
-     * @param string $username name that need to be deleted (required)
-     * @param \Swagger\Client\Model\User $body Updated user object (required)
+     * @param  string $username name that need to be deleted (required)
+     * @param  \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1600,8 +1600,8 @@ class UserApi
     /**
      * Create request for operation 'updateUser'
      *
-     * @param string $username name that need to be deleted (required)
-     * @param \Swagger\Client\Model\User $body Updated user object (required)
+     * @param  string $username name that need to be deleted (required)
+     * @param  \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
