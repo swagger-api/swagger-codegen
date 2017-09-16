@@ -5,12 +5,34 @@ package body {{package}}.Clients is
 {{#operations}}
 {{#operation}}
 
-   --  {{summary}}
-   --  {{notes}}
-   procedure {{operationId}} ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
-      {{/hasMore}}{{/allParams}}) is
+   --  {{summary}}{{#vendorExtensions.x-has-notes}}
+   --  {{unescapedNotes}}{{/vendorExtensions.x-has-notes}}
+   procedure {{operationId}}
+      (Client : in out Client_Type{{#hasParams}};{{/hasParams}}{{#allParams}}
+       {{paramName}} : in {{^isFile}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}{{package}}.Models.{{/isContainer}}{{/isPrimitiveType}}{{/isString}}{{/isFile}}{{dataType}}{{#hasMore}};{{/hasMore}}{{/allParams}}) is
+      URI : Swagger.Clients.URI_Type;{{#hasBodyParam}}
+      Req : Swagger.Clients.Request_Type;{{/hasBodyParam}}
    begin
-      null;
+      Client.Set_Accept (({{#hasProduces}}{{#produces}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
+                          {{/hasMore}}{{/produces}}{{/hasProduces}}));{{#hasBodyParam}}
+      Client.Initialize (Req, ({{#hasConsumes}}{{#consumes}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
+                               {{/hasMore}}{{/consumes}}{{/hasConsumes}}{{^hasConsumes}}1 => Swagger.Clients.APPLICATION_JSON{{/hasConsumes}}));{{/hasBodyParam}}{{#bodyParams}}{{^isQueryParam}}
+      {{^isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isDateTime}}
+      Serialize (Req, "{{paramName}}", {{paramName}});{{/isDateTime}}{{/isContainer}}{{/isString}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{^isLong}}
+      Req.Write_Entity ("{{paramName}}", {{paramName}});{{/isLong}}{{/isPrimitiveType}}{{#isLong}}
+      Serialize (Req, "{{paramName}}", {{paramName}});{{/isLong}}{{#isContainer}}
+      Serialize (Req, "{{paramName}}", {{paramName}});{{/isContainer}}{{#isDateTime}}
+      Req.Write_Entity ("{{paramName}}", {{paramName}});{{/isDateTime}}{{/isQueryParam}}{{/bodyParams}}
+{{#queryParams}}{{#isQueryParam}}
+      {{^isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isDateTime}}
+      URI.Add_Param ("{{paramName}}", {{paramName}});{{/isDateTime}}{{/isContainer}}{{/isString}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{^isLong}}
+      URI.Add_Param ("{{paramName}}", {{paramName}});{{/isLong}}{{/isPrimitiveType}}{{#isLong}}
+      URI.Add_Param ("{{paramName}}", {{paramName}});{{/isLong}}{{#isContainer}}
+      URI.Add_Param ("{{paramName}}", {{paramName}});{{/isContainer}}{{#isDateTime}}
+      URI.Add_Param ("{{paramName}}", {{paramName}});{{/isDateTime}}{{/isQueryParam}}{{/queryParams}}
+      URI.Set_Path ("{{path}}");{{#pathParams}}
+      URI.Set_Path_Param ("{{paramName}}", {{paramName}});{{/pathParams}}
+      Client.Call (Swagger.Clients.{{httpMethod}}, URI{{#hasBodyParam}}, Req{{/hasBodyParam}});
    end {{operationId}};
 {{/operation}}
 {{/operations}}
