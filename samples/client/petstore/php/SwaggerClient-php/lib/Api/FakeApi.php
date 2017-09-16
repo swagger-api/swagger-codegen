@@ -1609,6 +1609,8 @@ class FakeApi
         if ($callback !== null) {
             $formParams['callback'] = ObjectSerializer::toFormValue($callback);
         }
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
@@ -1885,6 +1887,8 @@ class FakeApi
         if ($enum_query_double !== null) {
             $formParams['enum_query_double'] = ObjectSerializer::toFormValue($enum_query_double);
         }
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
@@ -2109,6 +2113,8 @@ class FakeApi
         if ($param2 !== null) {
             $formParams['param2'] = ObjectSerializer::toFormValue($param2);
         }
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(

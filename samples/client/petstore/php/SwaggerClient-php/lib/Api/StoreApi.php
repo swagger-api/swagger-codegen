@@ -236,6 +236,8 @@ class StoreApi
             );
         }
 
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
@@ -467,6 +469,8 @@ class StoreApi
 
 
 
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
@@ -729,6 +733,8 @@ class StoreApi
             );
         }
 
+        // body params
+        $_tempBody = null;
 
         if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
