@@ -137,7 +137,11 @@ use {{invokerPackage}}\ObjectSerializer;
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -170,7 +174,11 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#responses}}
             {{#dataType}}
                 {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '{{dataType}}', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '{{dataType}}',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             {{/dataType}}
@@ -198,9 +206,10 @@ use {{invokerPackage}}\ObjectSerializer;
      */
     public function {{operationId}}Async({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
-        return $this->{{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})->then(function ($response) {
-            return $response[0];
-        });
+        return $this->{{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -224,37 +233,43 @@ use {{invokerPackage}}\ObjectSerializer;
         $returnType = '{{returnType}}';
         $request = $this->{{operationId}}Request({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            {{#returnType}}
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                {{#returnType}}
+                $responseBody = $response->getBody();
+                if ($returnType === '\SplFileObject') {
+                    $content = $responseBody; //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = json_decode($content);
+                    }
                 }
-            }
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-            {{/returnType}}
-            {{^returnType}}
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-            {{/returnType}}
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+                return [
+                    ObjectSerializer::deserialize($content, $returnType, []),
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+                {{/returnType}}
+                {{^returnType}}
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+                {{/returnType}}
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -273,7 +288,9 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#required}}
         // verify the required parameter '{{paramName}}' is set
         if (${{paramName}} === null) {
-            throw new \InvalidArgumentException('Missing the required parameter ${{paramName}} when calling {{operationId}}');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter ${{paramName}} when calling {{operationId}}'
+            );
         }
         {{/required}}
         {{#hasValidation}}
@@ -354,7 +371,11 @@ use {{invokerPackage}}\ObjectSerializer;
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $resourcePath = str_replace('{' . '{{baseName}}' . '}', ObjectSerializer::toPathValue(${{paramName}}), $resourcePath);
+            $resourcePath = str_replace(
+                '{' . '{{baseName}}' . '}',
+                ObjectSerializer::toPathValue(${{paramName}}),
+                $resourcePath
+            );
         }
         {{/pathParams}}
 
@@ -402,13 +423,15 @@ use {{invokerPackage}}\ObjectSerializer;
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -434,9 +457,6 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/isOAuth}}
         {{/authMethods}}
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -448,9 +468,10 @@ use {{invokerPackage}}\ObjectSerializer;
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             '{{httpMethod}}',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );

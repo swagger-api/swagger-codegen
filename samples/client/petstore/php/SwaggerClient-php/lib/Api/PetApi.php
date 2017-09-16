@@ -129,7 +129,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -157,9 +161,10 @@ class PetApi
      */
     public function addPetAsync($body)
     {
-        return $this->addPetAsyncWithHttpInfo($body)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->addPetAsyncWithHttpInfo($body)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -177,18 +182,24 @@ class PetApi
         $returnType = '';
         $request = $this->addPetRequest($body);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -203,7 +214,9 @@ class PetApi
     {
         // verify the required parameter 'body' is set
         if ($body === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $body when calling addPet');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling addPet'
+            );
         }
 
         $resourcePath = '/pet';
@@ -245,13 +258,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -259,9 +274,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -274,9 +286,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'POST',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -332,7 +345,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -361,9 +378,10 @@ class PetApi
      */
     public function deletePetAsync($pet_id, $api_key = null)
     {
-        return $this->deletePetAsyncWithHttpInfo($pet_id, $api_key)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deletePetAsyncWithHttpInfo($pet_id, $api_key)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -382,18 +400,24 @@ class PetApi
         $returnType = '';
         $request = $this->deletePetRequest($pet_id, $api_key);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -409,7 +433,9 @@ class PetApi
     {
         // verify the required parameter 'pet_id' is set
         if ($pet_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling deletePet');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pet_id when calling deletePet'
+            );
         }
 
         $resourcePath = '/pet/{petId}';
@@ -426,7 +452,11 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace(
+                '{' . 'petId' . '}',
+                ObjectSerializer::toPathValue($pet_id),
+                $resourcePath
+            );
         }
 
 
@@ -454,13 +484,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -468,9 +500,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -483,9 +512,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'DELETE',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -540,7 +570,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -566,7 +600,11 @@ class PetApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Swagger\Client\Model\Pet[]',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
@@ -586,9 +624,10 @@ class PetApi
      */
     public function findPetsByStatusAsync($status)
     {
-        return $this->findPetsByStatusAsyncWithHttpInfo($status)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->findPetsByStatusAsyncWithHttpInfo($status)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -606,32 +645,38 @@ class PetApi
         $returnType = '\Swagger\Client\Model\Pet[]';
         $request = $this->findPetsByStatusRequest($status);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\SplFileObject') {
+                    $content = $responseBody; //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = json_decode($content);
+                    }
                 }
-            }
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+                return [
+                    ObjectSerializer::deserialize($content, $returnType, []),
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -646,7 +691,9 @@ class PetApi
     {
         // verify the required parameter 'status' is set
         if ($status === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $status when calling findPetsByStatus');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $status when calling findPetsByStatus'
+            );
         }
 
         $resourcePath = '/pet/findByStatus';
@@ -690,13 +737,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -704,9 +753,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -719,9 +765,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'GET',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -776,7 +823,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -802,7 +853,11 @@ class PetApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Swagger\Client\Model\Pet[]',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
@@ -822,9 +877,10 @@ class PetApi
      */
     public function findPetsByTagsAsync($tags)
     {
-        return $this->findPetsByTagsAsyncWithHttpInfo($tags)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->findPetsByTagsAsyncWithHttpInfo($tags)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -842,32 +898,38 @@ class PetApi
         $returnType = '\Swagger\Client\Model\Pet[]';
         $request = $this->findPetsByTagsRequest($tags);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\SplFileObject') {
+                    $content = $responseBody; //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = json_decode($content);
+                    }
                 }
-            }
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+                return [
+                    ObjectSerializer::deserialize($content, $returnType, []),
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -882,7 +944,9 @@ class PetApi
     {
         // verify the required parameter 'tags' is set
         if ($tags === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $tags when calling findPetsByTags');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $tags when calling findPetsByTags'
+            );
         }
 
         $resourcePath = '/pet/findByTags';
@@ -926,13 +990,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -940,9 +1006,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -955,9 +1018,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'GET',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -1012,7 +1076,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -1038,7 +1106,11 @@ class PetApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Swagger\Client\Model\Pet',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
@@ -1058,9 +1130,10 @@ class PetApi
      */
     public function getPetByIdAsync($pet_id)
     {
-        return $this->getPetByIdAsyncWithHttpInfo($pet_id)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getPetByIdAsyncWithHttpInfo($pet_id)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -1078,32 +1151,38 @@ class PetApi
         $returnType = '\Swagger\Client\Model\Pet';
         $request = $this->getPetByIdRequest($pet_id);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\SplFileObject') {
+                    $content = $responseBody; //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = json_decode($content);
+                    }
                 }
-            }
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+                return [
+                    ObjectSerializer::deserialize($content, $returnType, []),
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -1118,7 +1197,9 @@ class PetApi
     {
         // verify the required parameter 'pet_id' is set
         if ($pet_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling getPetById');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pet_id when calling getPetById'
+            );
         }
 
         $resourcePath = '/pet/{petId}';
@@ -1131,7 +1212,11 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace(
+                '{' . 'petId' . '}',
+                ObjectSerializer::toPathValue($pet_id),
+                $resourcePath
+            );
         }
 
 
@@ -1159,13 +1244,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -1174,9 +1261,6 @@ class PetApi
         if ($apiKey !== null) {
             $headers['api_key'] = $apiKey;
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1189,9 +1273,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'GET',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -1245,7 +1330,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -1273,9 +1362,10 @@ class PetApi
      */
     public function updatePetAsync($body)
     {
-        return $this->updatePetAsyncWithHttpInfo($body)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updatePetAsyncWithHttpInfo($body)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -1293,18 +1383,24 @@ class PetApi
         $returnType = '';
         $request = $this->updatePetRequest($body);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -1319,7 +1415,9 @@ class PetApi
     {
         // verify the required parameter 'body' is set
         if ($body === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $body when calling updatePet');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling updatePet'
+            );
         }
 
         $resourcePath = '/pet';
@@ -1361,13 +1459,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -1375,9 +1475,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1390,9 +1487,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'PUT',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -1450,7 +1548,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -1480,9 +1582,10 @@ class PetApi
      */
     public function updatePetWithFormAsync($pet_id, $name = null, $status = null)
     {
-        return $this->updatePetWithFormAsyncWithHttpInfo($pet_id, $name, $status)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updatePetWithFormAsyncWithHttpInfo($pet_id, $name, $status)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -1502,18 +1605,24 @@ class PetApi
         $returnType = '';
         $request = $this->updatePetWithFormRequest($pet_id, $name, $status);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -1530,7 +1639,9 @@ class PetApi
     {
         // verify the required parameter 'pet_id' is set
         if ($pet_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling updatePetWithForm');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pet_id when calling updatePetWithForm'
+            );
         }
 
         $resourcePath = '/pet/{petId}';
@@ -1543,7 +1654,11 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace(
+                '{' . 'petId' . '}',
+                ObjectSerializer::toPathValue($pet_id),
+                $resourcePath
+            );
         }
 
         // form params
@@ -1579,13 +1694,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -1593,9 +1710,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1608,9 +1722,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'POST',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -1669,7 +1784,11 @@ class PetApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -1695,7 +1814,11 @@ class PetApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ApiResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Swagger\Client\Model\ApiResponse',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
@@ -1717,9 +1840,10 @@ class PetApi
      */
     public function uploadFileAsync($pet_id, $additional_metadata = null, $file = null)
     {
-        return $this->uploadFileAsyncWithHttpInfo($pet_id, $additional_metadata, $file)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->uploadFileAsyncWithHttpInfo($pet_id, $additional_metadata, $file)
+            ->then(function ($response) {
+                return $response[0];
+            });
     }
 
     /**
@@ -1739,32 +1863,38 @@ class PetApi
         $returnType = '\Swagger\Client\Model\ApiResponse';
         $request = $this->uploadFileRequest($pet_id, $additional_metadata, $file);
 
-        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
+        return $this->client
+            ->sendAsync($request)
+            ->then(function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\SplFileObject') {
+                    $content = $responseBody; //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = json_decode($content);
+                    }
                 }
-            }
 
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new ApiException(
-                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        });
+                return [
+                    ObjectSerializer::deserialize($content, $returnType, []),
+                    $response->getStatusCode(),
+                    $response->getHeaders()
+                ];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $exception->getRequest()->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            });
     }
 
     /**
@@ -1781,7 +1911,9 @@ class PetApi
     {
         // verify the required parameter 'pet_id' is set
         if ($pet_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling uploadFile');
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pet_id when calling uploadFile'
+            );
         }
 
         $resourcePath = '/pet/{petId}/uploadImage';
@@ -1794,7 +1926,11 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace(
+                '{' . 'petId' . '}',
+                ObjectSerializer::toPathValue($pet_id),
+                $resourcePath
+            );
         }
 
         // form params
@@ -1831,13 +1967,15 @@ class PetApi
                         'contents' => $formParamValue
                     ];
                 }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
 
             } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
             }
         }
 
@@ -1845,9 +1983,6 @@ class PetApi
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1860,9 +1995,10 @@ class PetApi
             $headers
         );
 
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'POST',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
