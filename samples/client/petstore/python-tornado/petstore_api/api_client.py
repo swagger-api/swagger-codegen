@@ -16,6 +16,7 @@ import re
 import json
 import mimetypes
 import tempfile
+import tornado.gen
 from multiprocessing.pool import ThreadPool
 
 from datetime import date, datetime
@@ -94,6 +95,7 @@ class ApiClient(object):
     def set_default_header(self, header_name, header_value):
         self.default_headers[header_name] = header_value
 
+    @tornado.gen.coroutine
     def __call_api(self, resource_path, method,
                    path_params=None, query_params=None, header_params=None,
                    body=None, post_params=None, files=None,
@@ -147,7 +149,7 @@ class ApiClient(object):
         url = self.configuration.host + resource_path
 
         # perform request and return response
-        response_data = self.request(method, url,
+        response_data = yield self.request(method, url,
                                      query_params=query_params,
                                      headers=header_params,
                                      post_params=post_params, body=body,
