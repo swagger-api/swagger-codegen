@@ -87,6 +87,7 @@ class PetApi
      * Add a new pet to the store
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -102,6 +103,7 @@ class PetApi
      * Add a new pet to the store
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -149,6 +151,7 @@ class PetApi
      * Add a new pet to the store
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -165,6 +168,7 @@ class PetApi
      * Add a new pet to the store
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -191,6 +195,7 @@ class PetApi
      * Create request for operation 'addPet'
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -284,6 +289,7 @@ class PetApi
      *
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -300,6 +306,7 @@ class PetApi
      *
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -348,6 +355,7 @@ class PetApi
      *
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -365,6 +373,7 @@ class PetApi
      *
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -392,6 +401,7 @@ class PetApi
      *
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -487,6 +497,7 @@ class PetApi
      * Finds Pets by status
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet[]
@@ -503,6 +514,7 @@ class PetApi
      * Finds Pets by status
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
@@ -568,6 +580,7 @@ class PetApi
      * Finds Pets by status
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -584,6 +597,7 @@ class PetApi
      * Finds Pets by status
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -624,6 +638,7 @@ class PetApi
      * Create request for operation 'findPetsByStatus'
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -718,6 +733,7 @@ class PetApi
      * Finds Pets by tags
      *
      * @param  string[] $tags Tags to filter by (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet[]
@@ -734,6 +750,7 @@ class PetApi
      * Finds Pets by tags
      *
      * @param  string[] $tags Tags to filter by (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
@@ -799,6 +816,7 @@ class PetApi
      * Finds Pets by tags
      *
      * @param  string[] $tags Tags to filter by (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -815,6 +833,7 @@ class PetApi
      * Finds Pets by tags
      *
      * @param  string[] $tags Tags to filter by (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -855,6 +874,7 @@ class PetApi
      * Create request for operation 'findPetsByTags'
      *
      * @param  string[] $tags Tags to filter by (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -949,6 +969,7 @@ class PetApi
      * Find pet by ID
      *
      * @param  int $pet_id ID of pet to return (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet
@@ -965,6 +986,7 @@ class PetApi
      * Find pet by ID
      *
      * @param  int $pet_id ID of pet to return (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet, HTTP status code, HTTP response headers (array of strings)
@@ -1030,6 +1052,7 @@ class PetApi
      * Find pet by ID
      *
      * @param  int $pet_id ID of pet to return (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1046,6 +1069,7 @@ class PetApi
      * Find pet by ID
      *
      * @param  int $pet_id ID of pet to return (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1086,6 +1110,7 @@ class PetApi
      * Create request for operation 'getPetById'
      *
      * @param  int $pet_id ID of pet to return (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1178,6 +1203,7 @@ class PetApi
      * Update an existing pet
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1193,6 +1219,7 @@ class PetApi
      * Update an existing pet
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1240,6 +1267,7 @@ class PetApi
      * Update an existing pet
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1256,6 +1284,7 @@ class PetApi
      * Update an existing pet
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1282,6 +1311,7 @@ class PetApi
      * Create request for operation 'updatePet'
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1376,6 +1406,7 @@ class PetApi
      * @param  int $pet_id ID of pet that needs to be updated (required)
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1393,6 +1424,7 @@ class PetApi
      * @param  int $pet_id ID of pet that needs to be updated (required)
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1442,6 +1474,7 @@ class PetApi
      * @param  int $pet_id ID of pet that needs to be updated (required)
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1460,6 +1493,7 @@ class PetApi
      * @param  int $pet_id ID of pet that needs to be updated (required)
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1488,6 +1522,7 @@ class PetApi
      * @param  int $pet_id ID of pet that needs to be updated (required)
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1589,6 +1624,7 @@ class PetApi
      * @param  int $pet_id ID of pet to update (required)
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\ApiResponse
@@ -1607,6 +1643,7 @@ class PetApi
      * @param  int $pet_id ID of pet to update (required)
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\ApiResponse, HTTP status code, HTTP response headers (array of strings)
@@ -1674,6 +1711,7 @@ class PetApi
      * @param  int $pet_id ID of pet to update (required)
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1692,6 +1730,7 @@ class PetApi
      * @param  int $pet_id ID of pet to update (required)
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1734,6 +1773,7 @@ class PetApi
      * @param  int $pet_id ID of pet to update (required)
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

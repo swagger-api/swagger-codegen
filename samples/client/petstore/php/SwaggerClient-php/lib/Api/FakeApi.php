@@ -85,6 +85,7 @@ class FakeApi
      * Operation fakeOuterBooleanSerialize
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterBoolean
@@ -99,6 +100,7 @@ class FakeApi
      * Operation fakeOuterBooleanSerializeWithHttpInfo
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterBoolean, HTTP status code, HTTP response headers (array of strings)
@@ -164,6 +166,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -180,6 +183,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -220,6 +224,7 @@ class FakeApi
      * Create request for operation 'fakeOuterBooleanSerialize'
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -302,6 +307,7 @@ class FakeApi
      * Operation fakeOuterCompositeSerialize
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterComposite
@@ -316,6 +322,7 @@ class FakeApi
      * Operation fakeOuterCompositeSerializeWithHttpInfo
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterComposite, HTTP status code, HTTP response headers (array of strings)
@@ -381,6 +388,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -397,6 +405,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -437,6 +446,7 @@ class FakeApi
      * Create request for operation 'fakeOuterCompositeSerialize'
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -519,6 +529,7 @@ class FakeApi
      * Operation fakeOuterNumberSerialize
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterNumber
@@ -533,6 +544,7 @@ class FakeApi
      * Operation fakeOuterNumberSerializeWithHttpInfo
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterNumber, HTTP status code, HTTP response headers (array of strings)
@@ -598,6 +610,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -614,6 +627,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -654,6 +668,7 @@ class FakeApi
      * Create request for operation 'fakeOuterNumberSerialize'
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -736,6 +751,7 @@ class FakeApi
      * Operation fakeOuterStringSerialize
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\OuterString
@@ -750,6 +766,7 @@ class FakeApi
      * Operation fakeOuterStringSerializeWithHttpInfo
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\OuterString, HTTP status code, HTTP response headers (array of strings)
@@ -815,6 +832,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -831,6 +849,7 @@ class FakeApi
      * 
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -871,6 +890,7 @@ class FakeApi
      * Create request for operation 'fakeOuterStringSerialize'
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -955,6 +975,7 @@ class FakeApi
      * To test \"client\" model
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
@@ -971,6 +992,7 @@ class FakeApi
      * To test \"client\" model
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
@@ -1036,6 +1058,7 @@ class FakeApi
      * To test \"client\" model
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1052,6 +1075,7 @@ class FakeApi
      * To test \"client\" model
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1092,6 +1116,7 @@ class FakeApi
      * Create request for operation 'testClientModel'
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1193,6 +1218,7 @@ class FakeApi
      * @param  \DateTime $date_time None (optional)
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1221,6 +1247,7 @@ class FakeApi
      * @param  \DateTime $date_time None (optional)
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1281,6 +1308,7 @@ class FakeApi
      * @param  \DateTime $date_time None (optional)
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1310,6 +1338,7 @@ class FakeApi
      * @param  \DateTime $date_time None (optional)
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1349,6 +1378,7 @@ class FakeApi
      * @param  \DateTime $date_time None (optional)
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1558,6 +1588,7 @@ class FakeApi
      * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1580,6 +1611,7 @@ class FakeApi
      * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1634,6 +1666,7 @@ class FakeApi
      * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1657,6 +1690,7 @@ class FakeApi
      * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1690,6 +1724,7 @@ class FakeApi
      * @param  string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
@@ -1808,6 +1843,7 @@ class FakeApi
      *
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -1824,6 +1860,7 @@ class FakeApi
      *
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -1872,6 +1909,7 @@ class FakeApi
      *
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1889,6 +1927,7 @@ class FakeApi
      *
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -1916,6 +1955,7 @@ class FakeApi
      *
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

@@ -87,6 +87,7 @@ class AnotherfakeApi
      * To test special tags
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
@@ -103,6 +104,7 @@ class AnotherfakeApi
      * To test special tags
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
@@ -168,6 +170,7 @@ class AnotherfakeApi
      * To test special tags
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -184,6 +187,7 @@ class AnotherfakeApi
      * To test special tags
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -224,6 +228,7 @@ class AnotherfakeApi
      * Create request for operation 'testSpecialTags'
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */

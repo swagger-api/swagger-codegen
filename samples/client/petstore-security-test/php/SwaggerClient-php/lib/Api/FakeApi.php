@@ -87,6 +87,7 @@ class FakeApi
      * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      *
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -102,6 +103,7 @@ class FakeApi
      * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      *
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
@@ -149,6 +151,7 @@ class FakeApi
      * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      *
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -165,6 +168,7 @@ class FakeApi
      * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      *
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
@@ -191,6 +195,7 @@ class FakeApi
      * Create request for operation 'testCodeInjectEndRnNR'
      *
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
