@@ -6,13 +6,13 @@ with Swagger.Clients;
 package {{package}}.Clients is
 
    type Client_Type is new Swagger.Clients.Client_Type with null record;
+
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
 {{#operation}}
-
-   --  {{summary}}
-   {{#notes}}--  {{.}}{{/notes}}
+   --  {{summary}}{{#vendorExtensions.x-has-notes}}
+   --  {{unescapedNotes}}{{/vendorExtensions.x-has-notes}}
    procedure {{operationId}}
       (Client : in out Client_Type{{#hasParams}};{{/hasParams}}{{#allParams}}
        {{paramName}} : in {{^isFile}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}{{package}}.Models.{{/isContainer}}{{/isPrimitiveType}}{{/isString}}{{/isFile}}{{dataType}}{{#hasMore}};{{/hasMore}}{{/allParams}});
