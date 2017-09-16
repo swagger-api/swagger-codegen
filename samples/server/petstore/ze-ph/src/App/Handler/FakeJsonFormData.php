@@ -10,11 +10,13 @@ use Articus\PathHandler\Attribute as PHAttribute;
 use Articus\PathHandler\Exception as PHException;
 use Psr\Http\Message\ServerRequestInterface;
 
-
 class FakeJsonFormData implements Operation\GetInterface
 {
     /**
      * test json serialization of form data
+     * @param ServerRequestInterface $request
+     *
+     * @throws PHException\HttpCode 500 if the method is not implemented
      */
     public function handleGet(ServerRequestInterface $request)
     {

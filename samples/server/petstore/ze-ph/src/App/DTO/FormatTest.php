@@ -6,7 +6,7 @@ use Articus\DataTransfer\Annotation as DTA;
 
 /**
  */
-class FormatTest 
+class FormatTest
 {
     /**
      * @DTA\Data(field="integer", nullable=true)
@@ -101,4 +101,3 @@ class FormatTest
      */
     public $password;
 }
-
