@@ -194,16 +194,19 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
      *
      * @param types the list of media types.
      */
-    protected void postProcessMediaTypes(List<Map<String, String>> types) {
+    protected int postProcessMediaTypes(List<Map<String, String>> types) {
+        int count = 0;
         if (types != null) {
             for (Map<String, String> media : types) {
                 String mt = media.get("mediaType");
                 if (mt != null) {
                     mt = mt.replace('/', '_');
                     media.put("adaMediaType", mt.toUpperCase());
+                    count++;
                 }
             }
         }
+        return count;
     }
 
     @SuppressWarnings("unchecked")
@@ -213,8 +216,16 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
 
         for (CodegenOperation op1 : operationList) {
-            postProcessMediaTypes(op1.produces);
-            postProcessMediaTypes(op1.consumes);
+            if (postProcessMediaTypes(op1.produces) == 1) {
+                op1.vendorExtensions.put("x-has-uniq-produces", Boolean.TRUE);
+            } else {
+                op1.vendorExtensions.put("x-has-uniq-produces", Boolean.FALSE);
+            }
+            if (postProcessMediaTypes(op1.consumes) == 1) {
+                op1.vendorExtensions.put("x-has-uniq-consumes", Boolean.TRUE);
+            } else {
+                op1.vendorExtensions.put("x-has-uniq-consumes", Boolean.FALSE);
+            }
             if (op1.notes.length() > 0) {
                 op1.vendorExtensions.put("x-has-notes", Boolean.TRUE);
             } else {
