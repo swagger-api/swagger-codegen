@@ -197,7 +197,12 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         // Give the base class a chance to process
         super.postProcessParameter(parameter);
 
-        parameter.vendorExtensions.put("x-is-model-type", parameter.dataType.startsWith(modelPackage));
+        boolean isModel = parameter.dataType.startsWith(modelPackage);
+        if (!isModel && !parameter.isPrimitiveType && !parameter.isDate
+                && !parameter.isString && !parameter.isContainer && !parameter.isFile) {
+            isModel = true;
+        }
+        parameter.vendorExtensions.put("x-is-model-type", isModel);
     }
 
     /**
