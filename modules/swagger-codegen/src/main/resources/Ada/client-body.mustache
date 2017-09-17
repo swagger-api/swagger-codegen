@@ -1,5 +1,8 @@
 {{>licenseInfo}}
 package body {{package}}.Clients is
+
+   use {{package}}.Models;
+
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
@@ -13,15 +16,15 @@ package body {{package}}.Clients is
       URI : Swagger.Clients.URI_Type;{{#hasBodyParam}}
       Req : Swagger.Clients.Request_Type;{{/hasBodyParam}}
    begin
-      Client.Set_Accept (({{#hasProduces}}{{#produces}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
+      Client.Set_Accept (({{#hasProduces}}{{#produces}}{{#vendorExtensions.x-has-uniq-produces}}1 => {{/vendorExtensions.x-has-uniq-produces}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
                           {{/hasMore}}{{/produces}}{{/hasProduces}}));{{#hasBodyParam}}
-      Client.Initialize (Req, ({{#hasConsumes}}{{#consumes}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
+      Client.Initialize (Req, ({{#hasConsumes}}{{#consumes}}{{#vendorExtensions.x-has-uniq-consumes}}1 -> {{/vendorExtensions.x-has-uniq-consumes}}Swagger.Clients.{{adaMediaType}}{{#hasMore}},
                                {{/hasMore}}{{/consumes}}{{/hasConsumes}}{{^hasConsumes}}1 => Swagger.Clients.APPLICATION_JSON{{/hasConsumes}}));{{/hasBodyParam}}{{#bodyParams}}{{^isQueryParam}}
       {{^isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isDateTime}}
-      Serialize (Req, "{{paramName}}", {{paramName}});{{/isDateTime}}{{/isContainer}}{{/isString}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{^isLong}}
+      Serialize (Req.Stream, "{{paramName}}", {{paramName}});{{/isDateTime}}{{/isContainer}}{{/isString}}{{/isPrimitiveType}}{{#isPrimitiveType}}{{^isLong}}
       Req.Write_Entity ("{{paramName}}", {{paramName}});{{/isLong}}{{/isPrimitiveType}}{{#isLong}}
-      Serialize (Req, "{{paramName}}", {{paramName}});{{/isLong}}{{#isContainer}}
-      Serialize (Req, "{{paramName}}", {{paramName}});{{/isContainer}}{{#isDateTime}}
+      Serialize (Req.Stream, "{{paramName}}", {{paramName}});{{/isLong}}{{#isContainer}}
+      Serialize (Req.Stream, "{{paramName}}", {{paramName}});{{/isContainer}}{{#isDateTime}}
       Req.Write_Entity ("{{paramName}}", {{paramName}});{{/isDateTime}}{{/isQueryParam}}{{/bodyParams}}
 {{#queryParams}}{{#isQueryParam}}
       {{^isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isDateTime}}
@@ -31,7 +34,7 @@ package body {{package}}.Clients is
       URI.Add_Param ("{{paramName}}", {{paramName}});{{/isContainer}}{{#isDateTime}}
       URI.Add_Param ("{{paramName}}", {{paramName}});{{/isDateTime}}{{/isQueryParam}}{{/queryParams}}
       URI.Set_Path ("{{path}}");{{#pathParams}}
-      URI.Set_Path_Param ("{{paramName}}", {{paramName}});{{/pathParams}}
+      URI.Set_Path_Param ("{{paramName}}", {{^isString}}Swagger.To_String ({{/isString}}{{paramName}}{{^isString}}){{/isString}});{{/pathParams}}
       Client.Call (Swagger.Clients.{{httpMethod}}, URI{{#hasBodyParam}}, Req{{/hasBodyParam}});
    end {{operationId}};
 {{/operation}}
