@@ -8,7 +8,7 @@
 with "config";
 with "util";
 with "asf";
-project {{{appName}}} is
+project {{{projectName}}} is
 
     Mains := ("{{{appName}}}-server.adb");
     for Main use Mains;
@@ -20,4 +20,4 @@ project {{{appName}}} is
     package Compiler renames Config.Compiler;
     package Linker renames Config.Linker;
 
-end {{{appName}}};
+end {{{projectName}}};
