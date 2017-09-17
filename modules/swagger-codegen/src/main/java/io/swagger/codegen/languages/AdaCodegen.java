@@ -4,6 +4,10 @@ import java.io.File;
 import java.util.*;
 
 import io.swagger.codegen.*;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Response;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.*;
 
 public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
@@ -228,6 +232,28 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         return count;
     }
 
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
+                                          Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+
+        if (operation.getResponses() != null && !operation.getResponses().isEmpty()) {
+            Response methodResponse = findMethodResponse(operation.getResponses());
+
+            if (methodResponse != null) {
+                if (methodResponse.getSchema() != null) {
+                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
+                    op.vendorExtensions.put("x-codegen-response", cm);
+                    if(cm.datatype == "HttpContent")
+                    {
+                        op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
+                    }
+                }
+            }
+        }
+        return op;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -264,12 +290,15 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                 CodegenModel m = (CodegenModel) v;
                 List<String> d = new ArrayList<String>();
                 for (CodegenProperty p : m.allVars) {
+                    boolean isModel = false;
                     if (!p.isString && !p.isPrimitiveType && !p.isContainer && !p.isInteger) {
                         if (!d.contains(p.datatype)) {
                             // LOGGER.info("Model " + m.name + " uses " + p.datatype);
                             d.add(p.datatype);
+                            isModel = true;
                         }
                     }
+                    p.vendorExtensions.put("x-is-model-type", isModel);
                 }
                 modelDepends.put(m.name, d);
                 orderedModels.add(model);
