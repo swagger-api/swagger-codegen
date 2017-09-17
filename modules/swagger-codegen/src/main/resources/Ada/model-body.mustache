@@ -32,6 +32,30 @@ package body {{package}}.Models is
       Into.End_Array (Name);
    end Serialize;
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out {{classname}}) is
+      Object : Swagger.Value_Type;
+   begin
+      Swagger.Streams.Deserialize (From, Name, Object);{{#vars}}{{#vendorExtensions.x-is-model-type}}
+      Deserialize (Object, "{{baseName}}", Value.{{name}});{{/vendorExtensions.x-is-model-type}}{{^vendorExtensions.x-is-model-type}}
+      Swagger.Streams.Deserialize (Object, "{{baseName}}", Value.{{name}});{{/vendorExtensions.x-is-model-type}}{{/vars}}
+   end Deserialize;
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out {{classname}}_Vectors.Vector) is
+      List : Swagger.Value_Array_Type;
+      Item : {{classname}};
+   begin
+      Value.Clear;
+      Swagger.Streams.Deserialize (From, Name, List);
+      for Data of List loop
+         Deserialize (Data, "", Item);
+         Value.Append (Item);
+      end loop;
+   end Deserialize;
+
 {{/model}}
 {{/orderedModels}}
 
