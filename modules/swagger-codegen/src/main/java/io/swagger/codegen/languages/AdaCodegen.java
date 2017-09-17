@@ -187,6 +187,20 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     }
 
     /**
+     * Overrides postProcessParameter to add a vendor extension "x-is-model-type".
+     * This boolean indicates that the parameter comes from the model package.
+     *
+     * @param parameter CodegenParameter object to be processed.
+     */
+    @Override
+    public void postProcessParameter(CodegenParameter parameter){
+        // Give the base class a chance to process
+        super.postProcessParameter(parameter);
+
+        parameter.vendorExtensions.put("x-is-model-type", parameter.dataType.startsWith(modelPackage));
+    }
+
+    /**
      * @brief Post process the media types (produces and consumes) for Ada code generator.
      *
      * For each media type, add a adaMediaType member that gives the Ada enum constant
