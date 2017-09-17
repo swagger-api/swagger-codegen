@@ -29,6 +29,14 @@ package {{package}}.Models is
                         Name  : in String;
                         Value : in {{classname}}_Vectors.Vector);
 
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out {{classname}});
+
+   procedure Deserialize (From  : in Swagger.Value_Type;
+                          Name  : in String;
+                          Value : out {{classname}}_Vectors.Vector);
+
 {{/model}}
 {{/orderedModels}}
 
