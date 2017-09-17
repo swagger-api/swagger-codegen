@@ -13,6 +13,7 @@ import io.swagger.models.properties.*;
 public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     public static final String USER_INFO_PATH = "userInfoPath";
     protected String packageName = "swagger";
+    protected String projectName = "Swagger";
     protected String userInfoPath = "/var/www/html/";
     protected List<Map<String, Object>> orderedModels;
     protected Map<String, List<String>> modelDepends;
@@ -25,15 +26,15 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         modelDepends = new HashMap<String, List<String>>();
         embeddedTemplateDir = templateDir = "Ada";
 
-        cliOptions.add(new CliOption(USER_INFO_PATH, "Path to the user and group files"));
-
         // CLI options
+        addOption(CodegenConstants.PROJECT_NAME, "GNAT project name",
+                  this.projectName);
         addOption(CodegenConstants.PACKAGE_NAME, "Ada package name (convention: name.space.model).",
-                this.modelPackage);
+                  this.modelPackage);
         addOption(CodegenConstants.MODEL_PACKAGE, "Ada package for models (convention: name.space.model).",
-                this.modelPackage);
+                  this.modelPackage);
         addOption(CodegenConstants.API_PACKAGE, "Ada package for apis (convention: name.space.api).",
-                this.apiPackage);
+                  this.apiPackage);
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList("integer", "boolean", "Integer", "Character", "Boolean", "long", "float", "double", "int32_t", "int64_t"));
@@ -111,11 +112,20 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         // String title = swagger.getInfo().getTitle();
         supportingFiles.add(new SupportingFile("gnat-project.mustache", "", "project.gpr"));
 
+        if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
+            projectName = (String) additionalProperties.get(CodegenConstants.PROJECT_NAME);
+        } else {
+            // default: set project based on package name
+            // e.g. petstore.api (package name) => petstore_api (project name)
+            projectName = packageName.replaceAll("\\.", "_");
+        }
+
         /*
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("package", this.modelPackage);
+        additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
     }
 
     @Override
