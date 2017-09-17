@@ -167,7 +167,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
+            return "Swagger." + getTypeDeclaration(inner) + "_Map";
         }
         if (typeMapping.containsKey(swaggerType)) {
             return typeMapping.get(swaggerType);
