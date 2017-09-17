@@ -291,10 +291,14 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                 List<String> d = new ArrayList<String>();
                 for (CodegenProperty p : m.allVars) {
                     boolean isModel = false;
-                    if (!p.isString && !p.isPrimitiveType && !p.isContainer && !p.isInteger) {
-                        if (!d.contains(p.datatype)) {
+                    CodegenProperty item = p;
+                    if (p.isContainer) {
+                        item = p.items;
+                    }
+                    if (!item.isString && !item.isPrimitiveType && !item.isContainer && !item.isInteger) {
+                        if (!d.contains(item.datatype)) {
                             // LOGGER.info("Model " + m.name + " uses " + p.datatype);
-                            d.add(p.datatype);
+                            d.add(item.datatype);
                             isModel = true;
                         }
                     }
