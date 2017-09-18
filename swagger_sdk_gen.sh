@@ -50,6 +50,14 @@ then rm -rf intouch_api/nodejs_client
      cd swagger-js-codegen
      node ../nodejs_sdk_gen > ../intouch_api/nodejs_client/node_$BUILD_NUMBER
      fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/nodejs_client --deb-no-default-config-files  nodejs="/usr/share/nodejs/capillary-libs/swagger-sdk"
+elif [ "$Client" = "python" ]
+then rm -rf intouch_api/python_client
+  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i $url  \
+  -l python \
+  -o intouch_api/python_client/python
+  tar cvzf intouch_api/python_client/python_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/python_client/python/ .
+  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/python_client --deb-no-default-config-files  python="/usr/share/python/capillary-libs/swagger-sdk"
 else " no client is selected"
 fi
 echo "SWAGGER SDK SUCCESSFULLY GENERATED"
