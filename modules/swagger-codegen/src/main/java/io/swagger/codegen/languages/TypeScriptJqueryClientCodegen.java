@@ -1,7 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.*;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.*;
 import org.slf4j.Logger;
@@ -9,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
+import java.util.List;
+import java.util.Map;
 
 public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptJqueryClientCodegen.class);
@@ -62,6 +61,50 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+
+                //If there is more than one formData parameter of type 'file' we merge them into one
+                //since there is no way in jQuery to send them separately. This has the downside
+                //of taking the the validation from the first file parameters and applying it to the others.
+                List<CodegenParameter> fileFormDataParameters = new ArrayList<>();
+                for (CodegenParameter param : operation.allParams) {
+                    if (param.isFormParam && param.isFile) {
+                        fileFormDataParameters.add(param);
+                    }
+                }
+                if (fileFormDataParameters.size() > 1) {
+                    operation.allParams.get(operation.allParams.indexOf(fileFormDataParameters.get(0))).baseName = "files";
+                    operation.allParams.get(operation.allParams.indexOf(fileFormDataParameters.get(0))).paramName = "files";
+                    for (int i = 1; i < fileFormDataParameters.size(); i++) {
+                        operation.allParams.remove(fileFormDataParameters.get(i));
+                    }
+                }
+                fileFormDataParameters.clear();
+
+                for (CodegenParameter param : operation.formParams) {
+                    if (param.isFile) {
+                        fileFormDataParameters.add(param);
+                    }
+                }
+
+                if (fileFormDataParameters.size() > 1) {
+                    operation.formParams.get(operation.formParams.indexOf(fileFormDataParameters.get(0))).baseName = "files";
+                    operation.formParams.get(operation.formParams.indexOf(fileFormDataParameters.get(0))).paramName = "files";
+                    for (int i = 1; i < fileFormDataParameters.size(); i++) {
+                        operation.formParams.remove(fileFormDataParameters.get(i));
+                    }
+                }
+            }
+        }
+
+        return objs;
     }
 
     private String getIndexDirectory() {
