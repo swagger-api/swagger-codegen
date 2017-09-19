@@ -446,7 +446,6 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (final CodegenOperation operation : ops) {
-                System.err.println("operationID = " + operation.operationId + ", camel = " + operation.operationIdCamelCase);
                 List<CodegenResponse> responses = operation.responses;
                 if (responses != null) {
                     for (final CodegenResponse resp : responses) {
