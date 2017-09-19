@@ -50,8 +50,13 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Pet"
+        uppercase_data_type: "PET"
+        refName: "Pet"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "ADD_PET"
+        consumesXml: true
       responses:
         405:
           description: "Invalid input"
@@ -62,6 +67,7 @@ paths:
         - "write:pets"
         - "read:pets"
       operation_id: "add_pet"
+      uppercase_operation_id: "ADD_PET"
       path: "/pet"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -85,8 +91,13 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Pet"
+        uppercase_data_type: "PET"
+        refName: "Pet"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "UPDATE_PET"
+        consumesXml: true
       responses:
         400:
           description: "Invalid ID supplied"
@@ -105,6 +116,7 @@ paths:
         - "write:pets"
         - "read:pets"
       operation_id: "update_pet"
+      uppercase_operation_id: "UPDATE_PET"
       path: "/pet"
       HttpMethod: "Put"
       httpmethod: "put"
@@ -127,11 +139,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
         formatString: "{:?}"
         example: "&Vec::new()"
@@ -144,6 +156,8 @@ paths:
               $ref: "#/definitions/Pet"
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "VEC<PET>"
+          producesXml: true
         400:
           description: "Invalid status value"
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
@@ -153,6 +167,7 @@ paths:
         - "write:pets"
         - "read:pets"
       operation_id: "find_pets_by_status"
+      uppercase_operation_id: "FIND_PETS_BY_STATUS"
       path: "/pet/findByStatus"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -187,6 +202,8 @@ paths:
               $ref: "#/definitions/Pet"
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "VEC<PET>"
+          producesXml: true
         400:
           description: "Invalid tag value"
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
@@ -197,6 +214,7 @@ paths:
         - "read:pets"
       deprecated: true
       operation_id: "find_pets_by_tags"
+      uppercase_operation_id: "FIND_PETS_BY_TAGS"
       path: "/pet/findByTags"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -226,6 +244,8 @@ paths:
             $ref: "#/definitions/Pet"
           uppercase_operation_id: "GET_PET_BY_ID"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "PET"
+          producesXml: true
         400:
           description: "Invalid ID supplied"
           uppercase_operation_id: "GET_PET_BY_ID"
@@ -237,6 +257,7 @@ paths:
       security:
       - api_key: []
       operation_id: "get_pet_by_id"
+      uppercase_operation_id: "GET_PET_BY_ID"
       path: "/pet/:petId"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -284,6 +305,7 @@ paths:
         - "write:pets"
         - "read:pets"
       operation_id: "update_pet_with_form"
+      uppercase_operation_id: "UPDATE_PET_WITH_FORM"
       path: "/pet/:petId"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -321,6 +343,7 @@ paths:
         - "write:pets"
         - "read:pets"
       operation_id: "delete_pet"
+      uppercase_operation_id: "DELETE_PET"
       path: "/pet/:petId"
       HttpMethod: "Delete"
       httpmethod: "delete"
@@ -367,11 +390,13 @@ paths:
             $ref: "#/definitions/ApiResponse"
           uppercase_operation_id: "UPLOAD_FILE"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "APIRESPONSE"
       security:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
       operation_id: "upload_file"
+      uppercase_operation_id: "UPLOAD_FILE"
       path: "/pet/:petId/uploadImage"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -396,9 +421,11 @@ paths:
               format: "int32"
           uppercase_operation_id: "GET_INVENTORY"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "HASHMAP<STRING, I32>"
       security:
       - api_key: []
       operation_id: "get_inventory"
+      uppercase_operation_id: "GET_INVENTORY"
       path: "/store/inventory"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -419,8 +446,12 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Order"
+        uppercase_data_type: "ORDER"
+        refName: "Order"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "PLACE_ORDER"
       responses:
         200:
           description: "successful operation"
@@ -428,11 +459,14 @@ paths:
             $ref: "#/definitions/Order"
           uppercase_operation_id: "PLACE_ORDER"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "ORDER"
+          producesXml: true
         400:
           description: "Invalid Order"
           uppercase_operation_id: "PLACE_ORDER"
           uppercase_message: "INVALID_ORDER"
       operation_id: "place_order"
+      uppercase_operation_id: "PLACE_ORDER"
       path: "/store/order"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -466,6 +500,8 @@ paths:
             $ref: "#/definitions/Order"
           uppercase_operation_id: "GET_ORDER_BY_ID"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "ORDER"
+          producesXml: true
         400:
           description: "Invalid ID supplied"
           uppercase_operation_id: "GET_ORDER_BY_ID"
@@ -475,6 +511,7 @@ paths:
           uppercase_operation_id: "GET_ORDER_BY_ID"
           uppercase_message: "ORDER_NOT_FOUND"
       operation_id: "get_order_by_id"
+      uppercase_operation_id: "GET_ORDER_BY_ID"
       path: "/store/order/:order_id"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -506,6 +543,7 @@ paths:
           uppercase_operation_id: "DELETE_ORDER"
           uppercase_message: "ORDER_NOT_FOUND"
       operation_id: "delete_order"
+      uppercase_operation_id: "DELETE_ORDER"
       path: "/store/order/:order_id"
       HttpMethod: "Delete"
       httpmethod: "delete"
@@ -526,14 +564,19 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/User"
+        uppercase_data_type: "USER"
+        refName: "User"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "CREATE_USER"
       responses:
         default:
           description: "successful operation"
           uppercase_operation_id: "CREATE_USER"
           uppercase_message: "SUCCESSFUL_OPERATION"
       operation_id: "create_user"
+      uppercase_operation_id: "CREATE_USER"
       path: "/user"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -559,12 +602,15 @@ paths:
             $ref: "#/definitions/User"
         formatString: "{:?}"
         example: "&Vec::new()"
+        model_key: "itemList"
+        uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
       responses:
         default:
           description: "successful operation"
           uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
           uppercase_message: "SUCCESSFUL_OPERATION"
       operation_id: "create_users_with_array_input"
+      uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
       path: "/user/createWithArray"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -589,12 +635,15 @@ paths:
             $ref: "#/definitions/User"
         formatString: "{:?}"
         example: "&Vec::new()"
+        model_key: "itemList"
+        uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
       responses:
         default:
           description: "successful operation"
           uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
           uppercase_message: "SUCCESSFUL_OPERATION"
       operation_id: "create_users_with_list_input"
+      uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
       path: "/user/createWithList"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -639,11 +688,14 @@ paths:
               description: "date in UTC when toekn expires"
           uppercase_operation_id: "LOGIN_USER"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "STRING"
+          producesXml: true
         400:
           description: "Invalid username/password supplied"
           uppercase_operation_id: "LOGIN_USER"
           uppercase_message: "INVALID_USERNAME"
       operation_id: "login_user"
+      uppercase_operation_id: "LOGIN_USER"
       path: "/user/login"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -664,6 +716,7 @@ paths:
           uppercase_operation_id: "LOGOUT_USER"
           uppercase_message: "SUCCESSFUL_OPERATION"
       operation_id: "logout_user"
+      uppercase_operation_id: "LOGOUT_USER"
       path: "/user/logout"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -692,6 +745,8 @@ paths:
             $ref: "#/definitions/User"
           uppercase_operation_id: "GET_USER_BY_NAME"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "USER"
+          producesXml: true
         400:
           description: "Invalid username supplied"
           uppercase_operation_id: "GET_USER_BY_NAME"
@@ -701,6 +756,7 @@ paths:
           uppercase_operation_id: "GET_USER_BY_NAME"
           uppercase_message: "USER_NOT_FOUND"
       operation_id: "get_user_by_name"
+      uppercase_operation_id: "GET_USER_BY_NAME"
       path: "/user/:username"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -727,8 +783,12 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/User"
+        uppercase_data_type: "USER"
+        refName: "User"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "UPDATE_USER"
       responses:
         400:
           description: "Invalid user supplied"
@@ -739,6 +799,7 @@ paths:
           uppercase_operation_id: "UPDATE_USER"
           uppercase_message: "USER_NOT_FOUND"
       operation_id: "update_user"
+      uppercase_operation_id: "UPDATE_USER"
       path: "/user/:username"
       HttpMethod: "Put"
       httpmethod: "put"
@@ -770,6 +831,7 @@ paths:
           uppercase_operation_id: "DELETE_USER"
           uppercase_message: "USER_NOT_FOUND"
       operation_id: "delete_user"
+      uppercase_operation_id: "DELETE_USER"
       path: "/user/:username"
       HttpMethod: "Delete"
       httpmethod: "delete"
@@ -790,8 +852,12 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Client"
+        uppercase_data_type: "CLIENT"
+        refName: "Client"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "TEST_CLASSNAME"
       responses:
         200:
           description: "successful operation"
@@ -799,9 +865,11 @@ paths:
             $ref: "#/definitions/Client"
           uppercase_operation_id: "TEST_CLASSNAME"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "CLIENT"
       security:
       - api_key_query: []
       operation_id: "test_classname"
+      uppercase_operation_id: "TEST_CLASSNAME"
       path: "/fake_classname_test"
       HttpMethod: "Patch"
       httpmethod: "patch"
@@ -825,10 +893,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_form_string"
@@ -850,10 +918,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_header_string"
@@ -875,10 +943,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         formatString: "{:?}"
         example: "Some(&Vec::new())"
       - name: "enum_query_string"
@@ -925,6 +993,7 @@ paths:
           uppercase_operation_id: "TEST_ENUM_PARAMETERS"
           uppercase_message: "NOT_FOUND"
       operation_id: "test_enum_parameters"
+      uppercase_operation_id: "TEST_ENUM_PARAMETERS"
       path: "/fake"
       HttpMethod: "Get"
       httpmethod: "get"
@@ -1075,6 +1144,7 @@ paths:
       security:
       - http_basic_test: []
       operation_id: "test_endpoint_parameters"
+      uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
       path: "/fake"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -1095,8 +1165,12 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Client"
+        uppercase_data_type: "CLIENT"
+        refName: "Client"
         formatString: "{:?}"
         example: "???"
+        model_key: "itemList"
+        uppercase_operation_id: "TEST_CLIENT_MODEL"
       responses:
         200:
           description: "successful operation"
@@ -1104,7 +1178,9 @@ paths:
             $ref: "#/definitions/Client"
           uppercase_operation_id: "TEST_CLIENT_MODEL"
           uppercase_message: "SUCCESSFUL_OPERATION"
+          uppercase_data_type: "CLIENT"
       operation_id: "test_client_model"
+      uppercase_operation_id: "TEST_CLIENT_MODEL"
       path: "/fake"
       HttpMethod: "Patch"
       httpmethod: "patch"
@@ -1122,8 +1198,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/OuterNumber"
+        uppercase_data_type: "OUTERNUMBER"
+        refName: "OuterNumber"
         formatString: "{:?}"
         example: "None"
+        model_key: "itemList"
+        uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
       responses:
         200:
           description: "Output number"
@@ -1131,7 +1211,9 @@ paths:
             $ref: "#/definitions/OuterNumber"
           uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
           uppercase_message: "OUTPUT_NUMBER"
+          uppercase_data_type: "OUTERNUMBER"
       operation_id: "fake_outer_number_serialize"
+      uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
       path: "/fake/outer/number"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -1148,8 +1230,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/OuterString"
+        uppercase_data_type: "OUTERSTRING"
+        refName: "OuterString"
         formatString: "{:?}"
         example: "None"
+        model_key: "itemList"
+        uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
       responses:
         200:
           description: "Output string"
@@ -1157,7 +1243,9 @@ paths:
             $ref: "#/definitions/OuterString"
           uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
           uppercase_message: "OUTPUT_STRING"
+          uppercase_data_type: "OUTERSTRING"
       operation_id: "fake_outer_string_serialize"
+      uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
       path: "/fake/outer/string"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -1174,8 +1262,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/OuterBoolean"
+        uppercase_data_type: "OUTERBOOLEAN"
+        refName: "OuterBoolean"
         formatString: "{:?}"
         example: "None"
+        model_key: "itemList"
+        uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
       responses:
         200:
           description: "Output boolean"
@@ -1183,7 +1275,9 @@ paths:
             $ref: "#/definitions/OuterBoolean"
           uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
           uppercase_message: "OUTPUT_BOOLEAN"
+          uppercase_data_type: "OUTERBOOLEAN"
       operation_id: "fake_outer_boolean_serialize"
+      uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
       path: "/fake/outer/boolean"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -1200,8 +1294,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/OuterComposite"
+        uppercase_data_type: "OUTERCOMPOSITE"
+        refName: "OuterComposite"
         formatString: "{:?}"
         example: "None"
+        model_key: "itemList"
+        uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
       responses:
         200:
           description: "Output composite"
@@ -1209,7 +1307,9 @@ paths:
             $ref: "#/definitions/OuterComposite"
           uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
           uppercase_message: "OUTPUT_COMPOSITE"
+          uppercase_data_type: "OUTERCOMPOSITE"
       operation_id: "fake_outer_composite_serialize"
+      uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
       path: "/fake/outer/composite"
       HttpMethod: "Post"
       httpmethod: "post"
@@ -1243,9 +1343,66 @@ paths:
           uppercase_operation_id: "TEST_JSON_FORM_DATA"
           uppercase_message: "SUCCESSFUL_OPERATION"
       operation_id: "test_json_form_data"
+      uppercase_operation_id: "TEST_JSON_FORM_DATA"
       path: "/fake/jsonFormData"
       HttpMethod: "Get"
       httpmethod: "get"
+  /fake/xmlFeatures:
+    get:
+      summary: "Get some XML"
+      operationId: "getXmlFeatures"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/xmlObject"
+          uppercase_operation_id: "GET_XML_FEATURES"
+          uppercase_message: "SUCCESS"
+          uppercase_data_type: "XMLOBJECT"
+          producesXml: true
+          has_namespace: "true"
+      operation_id: "get_xml_features"
+      uppercase_operation_id: "GET_XML_FEATURES"
+      path: "/fake/xmlFeatures"
+      HttpMethod: "Get"
+      httpmethod: "get"
+    post:
+      summary: "Post some xml"
+      operationId: "postXmlFeatures"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "xmlObject"
+        required: true
+        schema:
+          $ref: "#/definitions/xmlObject"
+        uppercase_data_type: "XMLOBJECT"
+        refName: "xmlObject"
+        formatString: "{:?}"
+        example: "???"
+        has_namespace: "true"
+        model_key: "itemList"
+        uppercase_operation_id: "POST_XML_FEATURES"
+        consumesXml: true
+      responses:
+        200:
+          description: "Success"
+          uppercase_operation_id: "POST_XML_FEATURES"
+          uppercase_message: "SUCCESS"
+      operation_id: "post_xml_features"
+      uppercase_operation_id: "POST_XML_FEATURES"
+      path: "/fake/xmlFeatures"
+      HttpMethod: "Post"
+      httpmethod: "post"
+      noClientExample: true
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -1284,7 +1441,7 @@ definitions:
         type: "string"
         description: "Order Status"
         enum:
-        - "placed"
+        - "placedtest"
         - "approved"
         - "delivered"
       complete:
@@ -1296,9 +1453,10 @@ definitions:
       id: 0
       shipDate: "2000-01-23T04:56:07.000+00:00"
       complete: false
-      status: "placed"
+      status: "placedtest"
     xml:
       name: "Order"
+    upperCaseName: "ORDER"
   Category:
     type: "object"
     properties:
@@ -1312,6 +1470,7 @@ definitions:
       id: 6
     xml:
       name: "Category"
+    upperCaseName: "CATEGORY"
   User:
     type: "object"
     properties:
@@ -1346,6 +1505,7 @@ definitions:
       username: "username"
     xml:
       name: "User"
+    upperCaseName: "USER"
   Tag:
     type: "object"
     properties:
@@ -1359,6 +1519,7 @@ definitions:
       id: 1
     xml:
       name: "Tag"
+    upperCaseName: "TAG"
   Pet:
     type: "object"
     required:
@@ -1412,6 +1573,7 @@ definitions:
       status: "available"
     xml:
       name: "Pet"
+    upperCaseName: "PET"
   ApiResponse:
     type: "object"
     properties:
@@ -1426,6 +1588,7 @@ definitions:
       code: 0
       type: "type"
       message: "message"
+    upperCaseName: "APIRESPONSE"
   $special[model.name]:
     properties:
       $special[property.name]:
@@ -1433,6 +1596,7 @@ definitions:
         format: "int64"
     xml:
       name: "$special[model.name]"
+    upperCaseName: "$SPECIAL[MODEL.NAME]"
   Return:
     properties:
       return:
@@ -1441,6 +1605,7 @@ definitions:
     description: "Model for testing reserved words"
     xml:
       name: "Return"
+    upperCaseName: "RETURN"
   Name:
     required:
     - "name"
@@ -1460,6 +1625,7 @@ definitions:
     description: "Model for testing model name same as property name"
     xml:
       name: "Name"
+    upperCaseName: "NAME"
   200_response:
     properties:
       name:
@@ -1470,11 +1636,13 @@ definitions:
     description: "Model for testing model name starting with number"
     xml:
       name: "Name"
+    upperCaseName: "200_RESPONSE"
   ClassModel:
     properties:
       _class:
         type: "string"
     description: "Model for testing model with \"_class\" property"
+    upperCaseName: "CLASSMODEL"
   Dog:
     allOf:
     - $ref: "#/definitions/Animal"
@@ -1482,6 +1650,7 @@ definitions:
       properties:
         breed:
           type: "string"
+    upperCaseName: "DOG"
   Cat:
     allOf:
     - $ref: "#/definitions/Animal"
@@ -1489,6 +1658,7 @@ definitions:
       properties:
         declawed:
           type: "boolean"
+    upperCaseName: "CAT"
   Animal:
     type: "object"
     required:
@@ -1500,10 +1670,12 @@ definitions:
       color:
         type: "string"
         default: "red"
+    upperCaseName: "ANIMAL"
   AnimalFarm:
     type: "array"
     items:
       $ref: "#/definitions/Animal"
+    upperCaseName: "ANIMALFARM"
   format_test:
     type: "object"
     required:
@@ -1562,6 +1734,7 @@ definitions:
         format: "password"
         minLength: 10
         maxLength: 64
+    upperCaseName: "FORMAT_TEST"
   EnumClass:
     type: "string"
     enum:
@@ -1569,6 +1742,7 @@ definitions:
     - "-efg"
     - "(xyz)"
     default: "-efg"
+    upperCaseName: "ENUMCLASS"
   Enum_Test:
     type: "object"
     properties:
@@ -1592,6 +1766,7 @@ definitions:
         - -1.2
       outerEnum:
         $ref: "#/definitions/OuterEnum"
+    upperCaseName: "ENUM_TEST"
   AdditionalPropertiesClass:
     type: "object"
     properties:
@@ -1605,6 +1780,7 @@ definitions:
           type: "object"
           additionalProperties:
             type: "string"
+    upperCaseName: "ADDITIONALPROPERTIESCLASS"
   MixedPropertiesAndAdditionalPropertiesClass:
     type: "object"
     properties:
@@ -1618,11 +1794,13 @@ definitions:
         type: "object"
         additionalProperties:
           $ref: "#/definitions/Animal"
+    upperCaseName: "MIXEDPROPERTIESANDADDITIONALPROPERTIESCLASS"
   List:
     type: "object"
     properties:
       123-list:
         type: "string"
+    upperCaseName: "LIST"
   Client:
     type: "object"
     properties:
@@ -1630,6 +1808,7 @@ definitions:
         type: "string"
     example:
       client: "client"
+    upperCaseName: "CLIENT"
   ReadOnlyFirst:
     type: "object"
     properties:
@@ -1638,6 +1817,7 @@ definitions:
         readOnly: true
       baz:
         type: "string"
+    upperCaseName: "READONLYFIRST"
   hasOnlyReadOnly:
     type: "object"
     properties:
@@ -1647,6 +1827,7 @@ definitions:
       foo:
         type: "string"
         readOnly: true
+    upperCaseName: "HASONLYREADONLY"
   Capitalization:
     type: "object"
     properties:
@@ -1663,6 +1844,7 @@ definitions:
       ATT_NAME:
         type: "string"
         description: "Name of the pet\n"
+    upperCaseName: "CAPITALIZATION"
   MapTest:
     type: "object"
     properties:
@@ -1679,6 +1861,7 @@ definitions:
           enum:
           - "UPPER"
           - "lower"
+    upperCaseName: "MAPTEST"
   ArrayTest:
     type: "object"
     properties:
@@ -1699,11 +1882,13 @@ definitions:
           type: "array"
           items:
             $ref: "#/definitions/ReadOnlyFirst"
+    upperCaseName: "ARRAYTEST"
   NumberOnly:
     type: "object"
     properties:
       JustNumber:
         type: "number"
+    upperCaseName: "NUMBERONLY"
   ArrayOfNumberOnly:
     type: "object"
     properties:
@@ -1711,6 +1896,7 @@ definitions:
         type: "array"
         items:
           type: "number"
+    upperCaseName: "ARRAYOFNUMBERONLY"
   ArrayOfArrayOfNumberOnly:
     type: "object"
     properties:
@@ -1720,6 +1906,7 @@ definitions:
           type: "array"
           items:
             type: "number"
+    upperCaseName: "ARRAYOFARRAYOFNUMBERONLY"
   EnumArrays:
     type: "object"
     properties:
@@ -1735,18 +1922,23 @@ definitions:
           enum:
           - "fish"
           - "crab"
+    upperCaseName: "ENUMARRAYS"
   OuterEnum:
     type: "string"
     enum:
     - "placed"
     - "approved"
     - "delivered"
+    upperCaseName: "OUTERENUM"
   OuterNumber:
     type: "number"
+    upperCaseName: "OUTERNUMBER"
   OuterString:
     type: "string"
+    upperCaseName: "OUTERSTRING"
   OuterBoolean:
     type: "boolean"
+    upperCaseName: "OUTERBOOLEAN"
   OuterComposite:
     type: "object"
     properties:
@@ -1760,6 +1952,31 @@ definitions:
       my_string: {}
       my_number: {}
       my_boolean: {}
+    upperCaseName: "OUTERCOMPOSITE"
+  xmlObject:
+    required:
+    - "itemList"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "myXmlObject"
+      itemList:
+        $ref: "#/definitions/itemList"
+        itemXmlName: "item"
+    xml:
+      name: "group"
+      namespace: "http://example.com/schema.xsd"
+    upperCaseName: "XMLOBJECT"
+  itemList:
+    type: "array"
+    items:
+      type: "string"
+      example: "my item"
+      xml:
+        name: "item"
+    upperCaseName: "ITEMLIST"
+    itemXmlName: "item"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

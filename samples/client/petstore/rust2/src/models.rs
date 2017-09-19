@@ -2,6 +2,9 @@
 extern crate chrono;
 extern crate uuid;
 
+use serde_xml_rs;
+use serde::ser::Serializer;
+
 use std::collections::HashMap;
 use models;
 use swagger;
@@ -16,7 +19,6 @@ pub struct AdditionalPropertiesClass {
     #[serde(rename = "map_of_map_property")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub map_of_map_property: Option<HashMap<String, HashMap<String, String>>>,
-
 
 }
 
@@ -37,7 +39,6 @@ pub struct Animal {
     #[serde(rename = "color")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub color: Option<String>,
-
 
 }
 
@@ -126,7 +127,6 @@ pub struct ApiResponse {
     #[serde(skip_serializing_if="Option::is_none")]
     pub message: Option<String>,
 
-
 }
 
 impl ApiResponse {
@@ -145,7 +145,6 @@ pub struct ArrayOfArrayOfNumberOnly {
     #[serde(skip_serializing_if="Option::is_none")]
     pub array_array_number: Option<Vec<Vec<f64>>>,
 
-
 }
 
 impl ArrayOfArrayOfNumberOnly {
@@ -161,7 +160,6 @@ pub struct ArrayOfNumberOnly {
     #[serde(rename = "ArrayNumber")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub array_number: Option<Vec<f64>>,
-
 
 }
 
@@ -186,7 +184,6 @@ pub struct ArrayTest {
     #[serde(rename = "array_array_of_model")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub array_array_of_model: Option<Vec<Vec<models::ReadOnlyFirst>>>,
-
 
 }
 
@@ -227,7 +224,6 @@ pub struct Capitalization {
     #[serde(skip_serializing_if="Option::is_none")]
     pub att_name: Option<String>,
 
-
 }
 
 impl Capitalization {
@@ -244,6 +240,7 @@ impl Capitalization {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Category")]
 pub struct Category {
     #[serde(rename = "id")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -252,7 +249,6 @@ pub struct Category {
     #[serde(rename = "name")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
-
 
 }
 
@@ -272,7 +268,6 @@ pub struct ClassModel {
     #[serde(skip_serializing_if="Option::is_none")]
     pub _class: Option<String>,
 
-
 }
 
 impl ClassModel {
@@ -288,7 +283,6 @@ pub struct Client {
     #[serde(rename = "client")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub client: Option<String>,
-
 
 }
 
@@ -311,7 +305,6 @@ pub struct EnumArrays {
     #[serde(rename = "array_enum")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub array_enum: Option<Vec<String>>,
-
 
 }
 
@@ -382,7 +375,6 @@ pub struct EnumTest {
     #[serde(skip_serializing_if="Option::is_none")]
     pub outer_enum: Option<models::OuterEnum>,
 
-
 }
 
 impl EnumTest {
@@ -446,7 +438,6 @@ pub struct FormatTest {
     #[serde(rename = "password")]
     pub password: String,
 
-
 }
 
 impl FormatTest {
@@ -479,7 +470,6 @@ pub struct HasOnlyReadOnly {
     #[serde(skip_serializing_if="Option::is_none")]
     pub foo: Option<String>,
 
-
 }
 
 impl HasOnlyReadOnly {
@@ -491,12 +481,81 @@ impl HasOnlyReadOnly {
     }
 }
 
+// Utility function for wrapping list elements when serializing xml
+fn wrap_in_item<S>(item: &Vec<String>, serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    serde_xml_rs::wrap_primitives(item, serializer, "item")
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ItemList(Vec<String>);
+
+impl ::std::convert::From<Vec<String>> for ItemList {
+    fn from(x: Vec<String>) -> Self {
+        ItemList(x)
+    }
+}
+
+impl ::std::convert::From<ItemList> for Vec<String> {
+    fn from(x: ItemList) -> Self {
+        x.0
+    }
+}
+
+impl ::std::iter::FromIterator<String> for ItemList {
+    fn from_iter<U: IntoIterator<Item=String>>(u: U) -> Self {
+        ItemList(Vec::<String>::from_iter(u))
+    }
+}
+
+impl ::std::iter::IntoIterator for ItemList {
+    type Item = String;
+    type IntoIter = ::std::vec::IntoIter<String>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a ItemList {
+    type Item = &'a String;
+    type IntoIter = ::std::slice::Iter<'a, String>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&self.0).into_iter()
+    }
+}
+
+impl<'a> ::std::iter::IntoIterator for &'a mut ItemList {
+    type Item = &'a mut String;
+    type IntoIter = ::std::slice::IterMut<'a, String>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        (&mut self.0).into_iter()
+    }
+}
+
+impl ::std::ops::Deref for ItemList {
+    type Target = Vec<String>;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl ::std::ops::DerefMut for ItemList {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct List {
     #[serde(rename = "123-list")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub _123_list: Option<String>,
-
 
 }
 
@@ -518,7 +577,6 @@ pub struct MapTest {
     #[serde(rename = "map_of_enum_string")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub map_of_enum_string: Option<HashMap<String, String>>,
-
 
 }
 
@@ -545,7 +603,6 @@ pub struct MixedPropertiesAndAdditionalPropertiesClass {
     #[serde(skip_serializing_if="Option::is_none")]
     pub map: Option<HashMap<String, models::Animal>>,
 
-
 }
 
 impl MixedPropertiesAndAdditionalPropertiesClass {
@@ -560,6 +617,7 @@ impl MixedPropertiesAndAdditionalPropertiesClass {
 
 /// Model for testing model name starting with number
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Name")]
 pub struct Model200Response {
     #[serde(rename = "name")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -568,7 +626,6 @@ pub struct Model200Response {
     #[serde(rename = "class")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub class: Option<String>,
-
 
 }
 
@@ -583,11 +640,11 @@ impl Model200Response {
 
 /// Model for testing reserved words
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Return")]
 pub struct ModelReturn {
     #[serde(rename = "return")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub _return: Option<i32>,
-
 
 }
 
@@ -601,6 +658,7 @@ impl ModelReturn {
 
 /// Model for testing model name same as property name
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Name")]
 pub struct Name {
     #[serde(rename = "name")]
     pub name: i32,
@@ -616,7 +674,6 @@ pub struct Name {
     #[serde(rename = "123Number")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub _123_number: Option<i32>,
-
 
 }
 
@@ -637,7 +694,6 @@ pub struct NumberOnly {
     #[serde(skip_serializing_if="Option::is_none")]
     pub just_number: Option<f64>,
 
-
 }
 
 impl NumberOnly {
@@ -649,6 +705,7 @@ impl NumberOnly {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Order")]
 pub struct Order {
     #[serde(rename = "id")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -676,7 +733,6 @@ pub struct Order {
     #[serde(skip_serializing_if="Option::is_none")]
     pub complete: Option<bool>,
 
-
 }
 
 impl Order {
@@ -693,6 +749,7 @@ impl Order {
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
+
 pub struct OuterBoolean(bool);
 
 impl ::std::convert::From<bool> for OuterBoolean {
@@ -720,6 +777,7 @@ impl ::std::ops::DerefMut for OuterBoolean {
     }
 }
 
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct OuterComposite {
     #[serde(rename = "my_number")]
@@ -733,7 +791,6 @@ pub struct OuterComposite {
     #[serde(rename = "my_boolean")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub my_boolean: Option<models::OuterBoolean>,
-
 
 }
 
@@ -785,6 +842,7 @@ impl ::std::str::FromStr for OuterEnum {
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
+
 pub struct OuterNumber(f64);
 
 impl ::std::convert::From<f64> for OuterNumber {
@@ -812,7 +870,9 @@ impl ::std::ops::DerefMut for OuterNumber {
     }
 }
 
+
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
+
 pub struct OuterString(String);
 
 impl ::std::convert::From<String> for OuterString {
@@ -840,7 +900,9 @@ impl ::std::ops::DerefMut for OuterString {
     }
 }
 
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Pet")]
 pub struct Pet {
     #[serde(rename = "id")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -865,7 +927,6 @@ pub struct Pet {
     #[serde(rename = "status")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub status: Option<String>,
-
 
 }
 
@@ -892,7 +953,6 @@ pub struct ReadOnlyFirst {
     #[serde(skip_serializing_if="Option::is_none")]
     pub baz: Option<String>,
 
-
 }
 
 impl ReadOnlyFirst {
@@ -905,11 +965,11 @@ impl ReadOnlyFirst {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "$special[model.name]")]
 pub struct SpecialModelName {
     #[serde(rename = "$special[property.name]")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub special_property_name: Option<i64>,
-
 
 }
 
@@ -922,6 +982,7 @@ impl SpecialModelName {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "Tag")]
 pub struct Tag {
     #[serde(rename = "id")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -930,7 +991,6 @@ pub struct Tag {
     #[serde(rename = "name")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub name: Option<String>,
-
 
 }
 
@@ -944,6 +1004,7 @@ impl Tag {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "User")]
 pub struct User {
     #[serde(rename = "id")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -978,7 +1039,6 @@ pub struct User {
     #[serde(skip_serializing_if="Option::is_none")]
     pub user_status: Option<i32>,
 
-
 }
 
 impl User {
@@ -997,6 +1057,27 @@ impl User {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename = "group")]
+pub struct XmlObject {
+    #[serde(rename = "name")]
+    pub name: String,
+
+    #[serde(rename = "itemList")]
+    #[serde(serialize_with = "wrap_in_item")]
+    pub item_list: models::ItemList,
+
+}
+
+impl XmlObject {
+    pub fn new(name: String, item_list: models::ItemList, ) -> XmlObject {
+        XmlObject {
+            name: name,
+            item_list: item_list,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Cat {
     #[serde(rename = "className")]
     pub class_name: String,
@@ -1008,7 +1089,6 @@ pub struct Cat {
     #[serde(rename = "declawed")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub declawed: Option<bool>,
-
 
 }
 
@@ -1035,7 +1115,6 @@ pub struct Dog {
     #[serde(skip_serializing_if="Option::is_none")]
     pub breed: Option<String>,
 
-
 }
 
 impl Dog {
@@ -1048,3 +1127,10 @@ impl Dog {
     }
 }
 
+//XML namespaces
+pub mod namespaces {
+    lazy_static!{
+        pub static ref XMLOBJECT: String = "http://example.com/schema.xsd".to_string();
+        
+    }
+}

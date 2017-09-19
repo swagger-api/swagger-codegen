@@ -1,5 +1,4 @@
 #![allow(unused_extern_crates)]
-extern crate serde_json;
 extern crate hyper_openssl;
 extern crate chrono;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
@@ -23,8 +22,13 @@ use std::path::Path;
 use std::sync::Arc;
 use std::str;
 
+use mimetypes;
+
+use serde_json;
+{{#usesXml}}use serde_xml_rs;{{/usesXml}}
+
 #[allow(unused_imports)]
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 
@@ -189,12 +193,22 @@ impl Api for Client {
         let boundary = fields.boundary();
         let multipart_header = Mime(TopLevel::Multipart, SubLevel::FormData, vec![(Attr::Boundary, Value::Ext(boundary.to_string()))]);{{/hasFile}}{{/vendorExtensions}}{{#bodyParam}}{{#-first}}
         // Body parameter
-{{/-first}}{{#required}}
-        let body = serde_json::to_string(&param_{{paramName}}).expect("Impossible to fail to serialize");
-{{/required}}{{^required}}
-        let body = param_{{paramName}}.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
-{{/required}}{{/bodyParam}}
-
+{{/-first}}{{#required}}{{#vendorExtensions}}{{#consumesXml}}
+{{^has_namespace}}        let body = serde_xml_rs::to_string(&param_{{paramName}}).expect("impossible to fail to serialize");{{/has_namespace}}{{#has_namespace}}
+        let mut namespaces = BTreeMap::new();
+        // An empty string is used to indicate a global namespace in xmltree.
+        namespaces.insert("".to_string(), models::namespaces::{{uppercase_data_type}}.clone());
+        let body = serde_xml_rs::to_string_with_namespaces(&param_{{paramName}}, namespaces).expect("impossible to fail to serialize");{{/has_namespace}}{{/consumesXml}}{{^consumesXml}}
+        let body = serde_json::to_string(&param_{{paramName}}).expect("impossible to fail to serialize");{{/consumesXml}}{{/vendorExtensions}}
+{{/required}}{{^required}}        let body = param_{{paramName}}.map(|ref body| {
+{{#vendorExtensions}}{{#consumesXml}}
+{{^has_namespace}}        serde_xml_rs::to_string(body).expect("impossible to fail to serialize"){{/has_namespace}}{{#has_namespace}}
+            let mut namespaces = BTreeMap::new();
+            // An empty string is used to indicate a global namespace in xmltree.
+            namespaces.insert("".to_string(), models::namespaces::{{uppercase_data_type}}.clone());
+            serde_xml_rs::to_string_with_namespaces(body, namespaces).expect("impossible to fail to serialize"){{/has_namespace}}{{/consumesXml}}{{^consumesXml}}
+            serde_json::to_string(body).expect("impossible to fail to serialize"){{/consumesXml}}{{/vendorExtensions}}
+        });{{/required}}{{/bodyParam}}
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::{{#vendorExtensions}}{{HttpMethod}}{{/vendorExtensions}}, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -206,7 +220,7 @@ impl Api for Client {
         };
 {{/required}}
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::{{#vendorExtensions}}{{uppercase_operation_id}}{{/vendorExtensions}}.clone()));
 {{/bodyParam}}
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 {{#headerParams}}{{#-first}}
@@ -228,11 +242,12 @@ impl Api for Client {
 {{#responses}}
                 {{code}} => {
 {{#dataType}}{{^isFile}}                    let mut buf = String::new();
-                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<{{{dataType}}}>(&buf)?;{{/isFile}}{{#isFile}}                    let mut buf = Vec::new();
+                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;{{#vendorExtensions}}{{#producesXml}}
+                    let body = serde_xml_rs::from_str::<{{{dataType}}}>(&buf)?;{{/producesXml}}{{^producesXml}}
+                    let body = serde_json::from_str::<{{{dataType}}}>(&buf)?;
+{{/producesXml}}{{/vendorExtensions}}{{/isFile}}{{#isFile}}                    let mut buf = Vec::new();
                     response.read_to_end(&mut buf).map_err(|e| ApiError(format!("Received error reading response: {}", e)))?;
                     let body = Box::new(stream::once(Ok(buf)));{{/isFile}}
-
 {{/dataType}}
 
 {{#headers}}                    header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }

@@ -31,6 +31,8 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Rust2Codegen.class);
 
+    private HashMap<String, String> modelXmlNames = new HashMap<String, String>();
+
     protected String apiVersion = "1.0.0";
     protected int serverPort = 8080;
     protected String projectName = "swagger-server";
@@ -162,6 +164,7 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("models.mustache", "src", "models.rs"));
         supportingFiles.add(new SupportingFile("server.mustache", "src", "server.rs"));
         supportingFiles.add(new SupportingFile("client.mustache", "src", "client.rs"));
+        supportingFiles.add(new SupportingFile("mimetypes.mustache", "src", "mimetypes.rs"));
         supportingFiles.add(new SupportingFile("example-server.mustache", "examples", "server.rs"));
         supportingFiles.add(new SupportingFile("example-client.mustache", "examples", "client.rs"));
         supportingFiles.add(new SupportingFile("example-server_lib.mustache", "examples/server_lib", "mod.rs"));
@@ -426,6 +429,7 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
         op.vendorExtensions.put("operation_id", underscore(op.operationId));
+        op.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
         op.vendorExtensions.put("path", op.path.replace("{", ":").replace("}", ""));
         op.vendorExtensions.put("HttpMethod", Character.toUpperCase(op.httpMethod.charAt(0)) + op.httpMethod.substring(1).toLowerCase());
         op.vendorExtensions.put("httpmethod", op.httpMethod.toLowerCase());
@@ -491,20 +495,37 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
                 }
             }
         }
-        for (CodegenParameter param : op.headerParams) {
-            // Give header params a name in camel case. CodegenParameters don't have a nameInCamelCase property.
-            param.vendorExtensions.put("typeName", toModelName(param.baseName));
-        }
-        for (CodegenResponse rsp : op.responses) {
-            rsp.message = camelize(rsp.message.split("[^A-Za-z ]")[0].replace(" ", "_"));
-            rsp.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
-            rsp.vendorExtensions.put("uppercase_message", underscore(rsp.message).toUpperCase());
-            for (CodegenProperty header : rsp.headers) {
-                header.nameInCamelCase = toModelName(header.baseName);
+
+        List<String> consumes = new ArrayList<String>();
+        if (operation.getConsumes() != null) {
+            if (operation.getConsumes().size() > 0) {
+                // use consumes defined in the operation
+                consumes = operation.getConsumes();
             }
+        } else if (swagger != null && swagger.getConsumes() != null && swagger.getConsumes().size() > 0) {
+            // use consumes defined globally
+            consumes = swagger.getConsumes();
+            LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
         }
-        for (CodegenProperty header : op.responseHeaders) {
-            header.nameInCamelCase = toModelName(header.baseName);
+
+        boolean consumesXml = false;
+        // if "consumes" is defined (per operation or using global definition)
+        if (consumes != null && !consumes.isEmpty()) {
+            List<Map<String, String>> c = new ArrayList<Map<String, String>>();
+            for (String key : consumes) {
+                Map<String, String> mediaType = new HashMap<String, String>();
+                String mimeType = processMimeType(key);
+
+                if (mimeType.startsWith("Application/Xml")) {
+                    additionalProperties.put("usesXml", true);
+                    consumesXml = true;
+                }
+
+                mediaType.put("mediaType", mimeType);
+                c.add(mediaType);
+            }
+            op.consumes = c;
+            op.hasConsumes = true;
         }
 
         List<String> produces = new ArrayList<String>();
@@ -519,22 +540,93 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
             LOGGER.debug("No produces defined in operation. Using global produces (" + swagger.getProduces() + ") for " + op.operationId);
         }
 
+        boolean producesXml = false;
         if (produces != null && !produces.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
             for (String key : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
+                String mimeType = processMimeType(key);
 
-                String result = this.processMimeType(key);
-                if ("application/json".equals(key)) {
-                    mediaType.put("hasJson", "true");
-                } else {
-                    mediaType.put("mediaType", result);
+                if (mimeType.startsWith("Application/Xml")) {
+                    additionalProperties.put("usesXml", true);
+                    producesXml = true;
                 }
 
+                mediaType.put("mediaType", mimeType);
                 c.add(mediaType);
             }
             op.produces = c;
             op.hasProduces = true;
+        }
+
+        if (op.bodyParam != null) {
+
+            if (paramHasXmlNamespace(op.bodyParam, definitions)){
+                op.bodyParam.vendorExtensions.put("has_namespace", "true");
+            }
+            for (String key : definitions.keySet()) {
+                op.bodyParam.vendorExtensions.put("model_key", key);
+            }
+
+            op.bodyParam.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
+            if (consumesXml) {
+                op.bodyParam.vendorExtensions.put("consumesXml", true);
+            }
+
+        }
+        for (CodegenParameter param : op.bodyParams) {
+
+            if (paramHasXmlNamespace(param, definitions)){
+                param.vendorExtensions.put("has_namespace", "true");
+            }
+
+            param.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
+
+            if (consumesXml) {
+                param.vendorExtensions.put("consumesXml", true);
+            }
+        }
+        for (CodegenParameter param : op.headerParams) {
+            // Give header params a name in camel case. CodegenParameters don't have a nameInCamelCase property.
+            param.vendorExtensions.put("typeName", toModelName(param.baseName));
+        }
+        for (CodegenResponse rsp : op.responses) {
+            rsp.message = camelize(rsp.message.split("[^A-Za-z ]")[0].replace(" ", "_"));
+            rsp.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
+            rsp.vendorExtensions.put("uppercase_message", underscore(rsp.message).toUpperCase());
+            if (rsp.dataType != null) {
+                rsp.vendorExtensions.put("uppercase_data_type", (rsp.dataType.replace("models::", "")).toUpperCase());
+
+                if (producesXml) {
+                    rsp.vendorExtensions.put("producesXml", true);
+                }
+
+                // Check whether we're returning an object with a defined XML namespace.
+                Object property = rsp.schema;
+                if ((property != null) && (property instanceof RefProperty)){
+
+                    RefProperty refProperty = (RefProperty) property;
+                    String refName = refProperty.get$ref();
+                    if (refName.indexOf("#/definitions/") == 0) {
+                        refName = refName.substring("#/definitions/".length());
+                    }
+
+                    Model model = definitions.get(refName);
+
+                    if ((model != null) && (model instanceof ModelImpl)) {
+                        Xml xml = ((ModelImpl) model).getXml();
+                        if ((xml != null) && (xml.getNamespace() != null)){
+                            rsp.vendorExtensions.put("has_namespace", "true");
+                        }
+                    }
+                }
+            }
+            for (CodegenProperty header : rsp.headers) {
+                header.nameInCamelCase = toModelName(header.baseName);
+            }
+        }
+        for (CodegenProperty header : op.responseHeaders) {
+            header.nameInCamelCase = toModelName(header.baseName);
         }
 
         return op;
@@ -596,15 +688,25 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
             if (model instanceof RefModel) {
                 String name = ((RefModel) model).getSimpleRef();
                 name = toModelName(name);
-                name = "models::" + getTypeDeclaration(name);
+                // We need to be able to look up the model in the model definitions later.
+                parameter.vendorExtensions.put("uppercase_data_type", name.toUpperCase());
 
+                name = "models::" + getTypeDeclaration(name);
                 parameter.baseType = name;
                 parameter.dataType = name;
+
+                String refName = ((RefModel) model).get$ref();
+                if (refName.indexOf("#/definitions/") == 0) {
+                    refName = refName.substring("#/definitions/".length());
+                }
+                parameter.vendorExtensions.put("refName", refName);
+
+            } else if (model instanceof ModelImpl) {
+                parameter.vendorExtensions.put("refName", ((ModelImpl) model).getName());
             }
         }
         return parameter;
     }
-
 
     @Override
     public CodegenProperty fromProperty(String name, Property p) {
@@ -638,14 +740,63 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel mdl = super.fromModel(name, model, allDefinitions);
+        mdl.vendorExtensions.put("upperCaseName", name.toUpperCase());
         if (model instanceof ModelImpl) {
              ModelImpl modelImpl = (ModelImpl) model;
              mdl.dataType = typeMapping.get(modelImpl.getType());
         }
         if (model instanceof ArrayModel) {
+            ArrayModel am = (ArrayModel) model;
+            if ((am.getItems() != null) &&
+                (am.getItems().getXml() != null)){
+
+                // If this model's items require wrapping in xml, squirrel
+                // away the xml name so we can insert it into the relevant model fields.
+                String xmlName = am.getItems().getXml().getName();
+                if (xmlName != null) {
+                    mdl.vendorExtensions.put("itemXmlName", xmlName);
+                    modelXmlNames.put("models::" + mdl.classname, xmlName);
+                }
+            }
             mdl.arrayModelType = toModelName(mdl.arrayModelType);
         }
+
+        if (mdl.xmlNamespace != null) {
+            additionalProperties.put("usesXmlNamespaces", true);
+        }
+
         return mdl;
+    }
+
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs){
+        Map<String, Object> newObjs = super.postProcessAllModels(objs);
+
+        //Index all CodegenModels by model name.
+        HashMap<String, CodegenModel> allModels = new HashMap<String, CodegenModel>();
+        for (Entry<String, Object> entry : objs.entrySet()) {
+            String modelName = toModelName(entry.getKey());
+            Map<String, Object> inner = (Map<String, Object>) entry.getValue();
+            List<Map<String, Object>> models = (List<Map<String, Object>>) inner.get("models");
+            for (Map<String, Object> mo : models) {
+                CodegenModel cm = (CodegenModel) mo.get("model");
+                allModels.put(modelName, cm);
+            }
+        }
+
+        for (Entry<String, CodegenModel> entry : allModels.entrySet()){
+            String modelName = entry.getKey();
+            CodegenModel model = entry.getValue();
+
+            for(CodegenProperty prop : model.vars){
+                String xmlName = modelXmlNames.get(prop.datatype);
+                if (xmlName != null){
+                    prop.vendorExtensions.put("itemXmlName", xmlName);
+                }
+            }
+        }
+
+        return newObjs;
     }
 
     @Override
@@ -733,6 +884,24 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         return super.postProcessModelsEnum(objs);
+
+    }
+
+    private boolean paramHasXmlNamespace(CodegenParameter param, Map<String, Model> definitions){
+        Object refName = param.vendorExtensions.get("refName");
+
+        if ((refName != null) && (refName instanceof String)) {
+            String name = (String) refName;
+            Model model = definitions.get(name);
+
+            if ((model != null) && (model instanceof ModelImpl)) {
+                Xml xml = ((ModelImpl) model).getXml();
+                if ((xml != null) && (xml.getNamespace() != null)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private String processMimeType(String mimeType){
@@ -743,7 +912,6 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
         String media = split_attributes[0];
         String[] mediaTypes = media.split("/");
 
-         // Escape quotation marks and special characters to avoid code injection.
         if (mediaTypes.length == 2) {
 
             if (mediaTypes[0].equals("*")){

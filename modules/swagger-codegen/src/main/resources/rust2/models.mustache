@@ -2,6 +2,9 @@
 extern crate chrono;
 extern crate uuid;
 
+{{#usesXml}}use serde_xml_rs;{{/usesXml}}
+use serde::ser::Serializer;
+
 use std::collections::HashMap;
 use models;
 use swagger;
@@ -13,7 +16,8 @@ use swagger;
 /// which helps with FFI.
 #[allow(non_camel_case_types)]
 #[repr(C)]
-#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]{{#xmlName}}
+#[serde(rename = "{{xmlName}}")]{{/xmlName}}
 pub enum {{classname}} { {{#allowableValues}}{{#enumVars}}
     #[serde(rename = {{{value}}})]
     {{name}},{{/enumVars}}{{/allowableValues}}
@@ -37,6 +41,7 @@ impl ::std::str::FromStr for {{classname}} {
     }
 }
 {{/isEnum}}{{^isEnum}}{{#dataType}}{{! newtype}}#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Deserialize)]
+{{#xmlName}}#[serde(rename = "{{xmlName}}")]{{/xmlName}}
 pub struct {{classname}}({{{dataType}}});
 
 impl ::std::convert::From<{{dataType}}> for {{classname}} {
@@ -63,7 +68,16 @@ impl ::std::ops::DerefMut for {{classname}} {
         &mut self.0
     }
 }
-{{/dataType}}{{^dataType}}{{#arrayModelType}}{{! vec}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+
+{{/dataType}}{{^dataType}}{{#arrayModelType}}{{#vendorExtensions}}{{#itemXmlName}}// Utility function for wrapping list elements when serializing xml
+fn wrap_in_{{itemXmlName}}<S>(item: &Vec<{{arrayModelType}}>, serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    serde_xml_rs::wrap_primitives(item, serializer, "{{itemXmlName}}")
+}
+
+{{/itemXmlName}}{{/vendorExtensions}}{{! vec}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct {{classname}}(Vec<{{{arrayModelType}}}>);
 
 impl ::std::convert::From<Vec<{{arrayModelType}}>> for {{classname}} {
@@ -124,20 +138,22 @@ impl ::std::ops::DerefMut for {{classname}} {
     }
 }
 
-{{/arrayModelType}}{{^arrayModelType}}{{! general struct}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+{{/arrayModelType}}{{^arrayModelType}}{{! general struct}}#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]{{#xmlName}}
+#[serde(rename = "{{xmlName}}")]{{/xmlName}}
 pub struct {{classname}} {
 {{#vars}}{{#description}}    /// {{{description}}}
 {{/description}}{{#isEnum}}    // Note: inline enums are not fully supported by swagger-codegen
-{{/isEnum}}    #[serde(rename = "{{baseName}}")]{{#required}}
+{{/isEnum}}    #[serde(rename = "{{baseName}}")]{{#vendorExtensions}}{{#itemXmlName}}
+    #[serde(serialize_with = "wrap_in_{{itemXmlName}}")]{{/itemXmlName}}{{/vendorExtensions}}{{#required}}
     pub {{name}}: {{#vendorExtensions}}{{#x-nullable}}swagger::Nullable<{{/x-nullable}}{{/vendorExtensions}}{{{datatype}}}{{#vendorExtensions}}{{#x-nullable}}>{{/x-nullable}}{{/vendorExtensions}},
-
 {{/required}}{{^required}}{{#vendorExtensions}}{{#x-nullable}}    #[serde(deserialize_with = "swagger::nullable_format::deserialize_optional_nullable")]
     #[serde(default = "swagger::nullable_format::default_optional_nullable")]
 {{/x-nullable}}{{/vendorExtensions}}
     #[serde(skip_serializing_if="Option::is_none")]
     pub {{name}}: Option<{{#vendorExtensions}}{{#x-nullable}}swagger::Nullable<{{/x-nullable}}{{/vendorExtensions}}{{#isListContainer}}Vec<{{#items}}{{{datatype}}}{{/items}}>{{/isListContainer}}{{^isListContainer}}{{{datatype}}}{{/isListContainer}}{{#vendorExtensions}}{{#x-nullable}}>{{/x-nullable}}{{/vendorExtensions}}>,
+{{/required}}
 
-{{/required}}{{/vars}}
+{{/vars}}
 }
 
 impl {{classname}} {
@@ -148,4 +164,12 @@ impl {{classname}} {
         }
     }
 }
-{{/arrayModelType}}{{/dataType}}{{/isEnum}}{{/model}}{{/models}}
+{{/arrayModelType}}{{/dataType}}{{/isEnum}}{{/model}}{{/models}}{{#usesXmlNamespaces}}
+//XML namespaces
+pub mod namespaces {
+    lazy_static!{
+        {{#models}}{{#model}}{{#xmlNamespace}}pub static ref {{#vendorExtensions}}{{upperCaseName}}{{/vendorExtensions}}: String = "{{xmlNamespace}}".to_string();
+        {{/xmlNamespace}}{{/model}}{{/models}}
+    }
+}
+{{/usesXmlNamespaces}}

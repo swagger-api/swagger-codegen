@@ -5,8 +5,8 @@ authors = [{{#infoEmail}}"{{infoEmail}}"{{/infoEmail}}]
 
 [features]
 default = ["client", "server"]
-client = ["serde_json", "serde_ignored", "hyper", "hyper-openssl", "uuid"{{#apiHasFile}}, "multipart"{{/apiHasFile}}]
-server = ["serde_json", "serde_ignored", "hyper", "iron", "router", "bodyparser", "urlencoded", "uuid"{{#apiHasFile}}, "multipart"{{/apiHasFile}}]
+client = ["serde_json", {{#usesXml}}"serde-xml-rs", {{/usesXml}}"serde_ignored", "hyper", "hyper-openssl", "uuid"{{#apiHasFile}}, "multipart"{{/apiHasFile}}]
+server = ["serde_json", {{#usesXml}}"serde-xml-rs", {{/usesXml}}"serde_ignored", "hyper", "iron", "router", "bodyparser", "urlencoded", "uuid"{{#apiHasFile}}, "multipart"{{/apiHasFile}}]
 
 [dependencies]
 bodyparser = {version = "0.7", optional = true}
@@ -23,9 +23,12 @@ serde = "1.0"
 serde_derive = "1.0"
 serde_ignored = {version = "0.0.4", optional = true}
 serde_json = {version = "1.0", optional = true}
-swagger = "0.3"
+# ToDo: this should be updated once our upstream PR to serde-xml-rs is accepted
+swagger = {git = "git://github.com/Metaswitch/swagger-rs.git", branch = "xml"}
 urlencoded = {version = "0.5", optional = true}
 uuid = {version = "0.5", optional = true, features = ["serde", "v4"]}
+# ToDo: this should be updated to point at the official crate once our upstream PR is accepted
+{{#usesXml}}serde-xml-rs = {git = "git://github.com/Metaswitch/serde-xml-rs.git" , branch = "master", optional = true}{{/usesXml}}
 
 [dev-dependencies]
 clap = "2.25"

@@ -1,5 +1,4 @@
 #![allow(unused_extern_crates)]
-extern crate serde_json;
 extern crate hyper_openssl;
 extern crate chrono;
 extern crate multipart;
@@ -23,14 +22,21 @@ use std::path::Path;
 use std::sync::Arc;
 use std::str;
 
+use mimetypes;
+
+use serde_json;
+use serde_xml_rs;
+
 #[allow(unused_imports)]
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 
 use swagger::{Context, ApiError, XSpanId};
 
 use {Api,
+     GetXmlFeaturesResponse,
+     PostXmlFeaturesResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -185,15 +191,115 @@ impl Client {
 
 impl Api for Client {
 
+    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
+
+
+        let url = format!("{}/v2/fake/xmlFeatures?", self.base_path);
+
+
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Get, &url);
+        let mut custom_headers = hyper::header::Headers::new();
+
+        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
+
+
+        let request = request.headers(custom_headers);
+
+        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+        fn parse_response(mut response: hyper::client::response::Response) -> Result<GetXmlFeaturesResponse, ApiError> {
+            match response.status.to_u16() {
+                200 => {
+                    let mut buf = String::new();
+                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_xml_rs::from_str::<models::XmlObject>(&buf)?;
+
+
+                    Ok(GetXmlFeaturesResponse::Success(body))
+                },
+                code => {
+                    let mut buf = [0; 100];
+                    let debug_body = match response.read(&mut buf) {
+                        Ok(len) => match str::from_utf8(&buf[..len]) {
+                            Ok(body) => Cow::from(body),
+                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
+                        },
+                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
+                    };
+                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
+                                         code,
+                                         response.headers,
+                                         debug_body)))
+                }
+            }
+        }
+
+        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
+        Box::new(futures::done(result))
+    }
+
+    fn post_xml_features(&self, param_xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
+
+
+        let url = format!("{}/v2/fake/xmlFeatures?", self.base_path);
+
+
+
+        let mut namespaces = BTreeMap::new();
+        // An empty string is used to indicate a global namespace in xmltree.
+        namespaces.insert("".to_string(), models::namespaces::XMLOBJECT.clone());
+        let body = serde_xml_rs::to_string_with_namespaces(&param_xml_object, namespaces).expect("impossible to fail to serialize");
+
+        let hyper_client = (self.hyper_client)();
+        let request = hyper_client.request(hyper::method::Method::Post, &url);
+        let mut custom_headers = hyper::header::Headers::new();
+
+        let request = request.body(&body);
+
+        custom_headers.set(ContentType(mimetypes::requests::POST_XML_FEATURES.clone()));
+        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
+
+
+        let request = request.headers(custom_headers);
+
+        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+        fn parse_response(mut response: hyper::client::response::Response) -> Result<PostXmlFeaturesResponse, ApiError> {
+            match response.status.to_u16() {
+                200 => {
+
+
+                    Ok(PostXmlFeaturesResponse::Success)
+                },
+                code => {
+                    let mut buf = [0; 100];
+                    let debug_body = match response.read(&mut buf) {
+                        Ok(len) => match str::from_utf8(&buf[..len]) {
+                            Ok(body) => Cow::from(body),
+                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
+                        },
+                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
+                    };
+                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
+                                         code,
+                                         response.headers,
+                                         debug_body)))
+                }
+            }
+        }
+
+        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
+        Box::new(futures::done(result))
+    }
+
     fn fake_outer_boolean_serialize(&self, param_body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send> {
 
 
         let url = format!("{}/v2/fake/outer/boolean?", self.base_path);
 
+        let body = param_body.map(|ref body| {
 
-        let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
-
-
+            serde_json::to_string(body).expect("impossible to fail to serialize")
+        });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -203,7 +309,7 @@ impl Api for Client {
             None => request,
         };
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::FAKE_OUTER_BOOLEAN_SERIALIZE.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -247,10 +353,10 @@ impl Api for Client {
 
         let url = format!("{}/v2/fake/outer/composite?", self.base_path);
 
+        let body = param_body.map(|ref body| {
 
-        let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
-
-
+            serde_json::to_string(body).expect("impossible to fail to serialize")
+        });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -260,7 +366,7 @@ impl Api for Client {
             None => request,
         };
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::FAKE_OUTER_COMPOSITE_SERIALIZE.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -304,10 +410,10 @@ impl Api for Client {
 
         let url = format!("{}/v2/fake/outer/number?", self.base_path);
 
+        let body = param_body.map(|ref body| {
 
-        let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
-
-
+            serde_json::to_string(body).expect("impossible to fail to serialize")
+        });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -317,7 +423,7 @@ impl Api for Client {
             None => request,
         };
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::FAKE_OUTER_NUMBER_SERIALIZE.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -361,10 +467,10 @@ impl Api for Client {
 
         let url = format!("{}/v2/fake/outer/string?", self.base_path);
 
+        let body = param_body.map(|ref body| {
 
-        let body = param_body.map(|ref body| serde_json::to_string(body).expect("Impossible to fail to serialize"));
-
-
+            serde_json::to_string(body).expect("impossible to fail to serialize")
+        });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -374,7 +480,7 @@ impl Api for Client {
             None => request,
         };
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::FAKE_OUTER_STRING_SERIALIZE.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -419,8 +525,7 @@ impl Api for Client {
         let url = format!("{}/v2/fake?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Patch, &url);
@@ -428,7 +533,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::TEST_CLIENT_MODEL.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -471,7 +576,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/fake?", self.base_path);
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -526,7 +630,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/fake?{enum_query_string_array}{enum_query_string}{enum_query_integer}", self.base_path, enum_query_string_array=query_enum_query_string_array, enum_query_string=query_enum_query_string, enum_query_integer=query_enum_query_integer);
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -584,7 +687,6 @@ impl Api for Client {
         let url = format!("{}/v2/fake/jsonFormData?", self.base_path);
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -629,8 +731,7 @@ impl Api for Client {
         let url = format!("{}/v2/fake_classname_test?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Patch, &url);
@@ -638,7 +739,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::TEST_CLASSNAME.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -683,8 +784,7 @@ impl Api for Client {
         let url = format!("{}/v2/pet?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -692,7 +792,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::ADD_PET.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -731,7 +831,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -785,7 +884,6 @@ impl Api for Client {
         let url = format!("{}/v2/pet/findByStatus?{status}", self.base_path, status=query_status);
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -801,8 +899,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<Vec<models::Pet>>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)?;
 
 
                     Ok(FindPetsByStatusResponse::SuccessfulOperation(body))
@@ -842,7 +939,6 @@ impl Api for Client {
         let url = format!("{}/v2/pet/findByTags?{tags}", self.base_path, tags=query_tags);
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -858,8 +954,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<Vec<models::Pet>>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)?;
 
 
                     Ok(FindPetsByTagsResponse::SuccessfulOperation(body))
@@ -896,7 +991,6 @@ impl Api for Client {
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -912,8 +1006,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Pet>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<models::Pet>(&buf)?;
 
 
                     Ok(GetPetByIdResponse::SuccessfulOperation(body))
@@ -955,8 +1048,7 @@ impl Api for Client {
         let url = format!("{}/v2/pet?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Put, &url);
@@ -964,7 +1056,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::UPDATE_PET.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -1013,7 +1105,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -1081,7 +1172,6 @@ impl Api for Client {
         let body = fields.to_body().read_to_string(&mut body_string);
         let boundary = fields.boundary();
         let multipart_header = Mime(TopLevel::Multipart, SubLevel::FormData, vec![(Attr::Boundary, Value::Ext(boundary.to_string()))]);
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -1145,7 +1235,6 @@ impl Api for Client {
         let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Delete, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -1193,7 +1282,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/store/inventory?", self.base_path);
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -1244,7 +1332,6 @@ impl Api for Client {
         let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -1260,8 +1347,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Order>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<models::Order>(&buf)?;
 
 
                     Ok(GetOrderByIdResponse::SuccessfulOperation(body))
@@ -1303,8 +1389,7 @@ impl Api for Client {
         let url = format!("{}/v2/store/order?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1312,7 +1397,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::PLACE_ORDER.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -1324,8 +1409,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Order>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<models::Order>(&buf)?;
 
 
                     Ok(PlaceOrderResponse::SuccessfulOperation(body))
@@ -1362,8 +1446,7 @@ impl Api for Client {
         let url = format!("{}/v2/user?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1371,7 +1454,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::CREATE_USER.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -1412,8 +1495,7 @@ impl Api for Client {
         let url = format!("{}/v2/user/createWithArray?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1421,7 +1503,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::CREATE_USERS_WITH_ARRAY_INPUT.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -1462,8 +1544,7 @@ impl Api for Client {
         let url = format!("{}/v2/user/createWithList?", self.base_path);
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1471,7 +1552,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::CREATE_USERS_WITH_LIST_INPUT.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 
@@ -1510,7 +1591,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -1562,7 +1642,6 @@ impl Api for Client {
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -1578,8 +1657,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::User>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<models::User>(&buf)?;
 
 
                     Ok(GetUserByNameResponse::SuccessfulOperation(body))
@@ -1625,7 +1703,6 @@ impl Api for Client {
         let url = format!("{}/v2/user/login?{username}{password}", self.base_path, username=query_username, password=query_password);
 
 
-
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Get, &url);
         let mut custom_headers = hyper::header::Headers::new();
@@ -1641,8 +1718,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<String>(&buf)?;
-
+                    let body = serde_xml_rs::from_str::<String>(&buf)?;
 
                     header! { (ResponseXRateLimit, "X-Rate-Limit") => [i32] }
                     let response_x_rate_limit = response.headers.get::<ResponseXRateLimit>().ok_or_else(|| "Required response header X-Rate-Limit for response 200 was not found.")?;
@@ -1681,7 +1757,6 @@ impl Api for Client {
 
 
         let url = format!("{}/v2/user/logout?", self.base_path);
-
 
 
         let hyper_client = (self.hyper_client)();
@@ -1728,8 +1803,7 @@ impl Api for Client {
         let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
 
 
-        let body = serde_json::to_string(&param_body).expect("Impossible to fail to serialize");
-
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Put, &url);
@@ -1737,7 +1811,7 @@ impl Api for Client {
 
         let request = request.body(&body);
 
-        custom_headers.set(hyper::header::ContentType::json());
+        custom_headers.set(ContentType(mimetypes::requests::UPDATE_USER.clone()));
         context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
 
 

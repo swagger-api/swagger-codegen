@@ -1,6 +1,5 @@
 #![allow(unused_extern_crates)]
 extern crate serde_ignored;
-extern crate serde_json;
 extern crate iron;
 extern crate router;
 extern crate bodyparser;
@@ -19,10 +18,14 @@ use self::iron::{status, modifiers, BeforeMiddleware};
 use self::iron::url::percent_encoding::percent_decode;
 use self::router::Router;
 use self::urlencoded::UrlEncodedQuery;
+use mimetypes;
 {{#apiHasFile}}use multipart::server::{Multipart, SaveResult};{{/apiHasFile}}
 
+use serde_json;
+{{#usesXml}}use serde_xml_rs;{{/usesXml}}
+
 #[allow(unused_imports)]
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 use std::io::Error;
@@ -40,18 +43,6 @@ use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
 use models;
 
 header! { (Warning, "Warning") => [String] }
-
-mod response_mimetypes {
-    use hyper::mime::*;
-
-    // The macro is called per-operation to beat the recursion limit
-{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}    /// Create Mime objects for the response content types for {{operationId}}
-    lazy_static! { {{#responses}}{{#produces}}{{#-first}}
-        pub static ref {{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}: Mime = mime!({{#hasJson}}Application/Json{{/hasJson}}{{^hasJson}}{{#-first}}{{{mediaType}}}{{/-first}}{{/hasJson}});{{/-first}}{{/produces}}{{/responses}}
-    }
-{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
-}
-
 
 /// Create a new router for `Api`
 pub fn router<T>(api: T) -> Router where T: Api + Send + Sync + Clone + 'static {
@@ -171,8 +162,9 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{/required}}
                 let mut unused_elements = Vec::new();
 
-                let param_{{paramName}} = if let Some(param_{{paramName}}_raw) = param_{{paramName}}_raw {
-                    let deserializer = &mut serde_json::Deserializer::from_str(&param_{{paramName}}_raw);
+                let param_{{paramName}} = if let Some(param_{{paramName}}_raw) = param_{{paramName}}_raw { {{#vendorExtensions}}{{#consumesXml}}
+                    let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_{{paramName}}_raw.as_bytes());{{/consumesXml}}{{^consumesXml}}
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_{{paramName}}_raw);{{/consumesXml}}{{/vendorExtensions}}
 
                     let param_{{paramName}}: Option<{{{dataType}}}> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -232,7 +224,16 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
 {{#responses}}
                         {{operationId}}Response::{{message}}{{#dataType}}{{^headers}}(body){{/headers}}{{#headers}}{{#-first}}{ body{{/-first}}{{/headers}}{{/dataType}}{{#headers}}{{#-first}}{{^dataType}}{ {{/dataType}}{{#dataType}}, {{/dataType}}{{/-first}}{{^-first}}, {{/-first}}{{name}}{{#-last}} }{{/-last}}{{/headers}} => {
-{{^isFile}}                            let mut response = Response::with((status::Status::from_u16({{code}}){{#dataType}}, serde_json::to_string(&body).expect("Impossible to fail to serialize"){{/dataType}}));{{/isFile}}{{#isFile}}                            body.fold(Vec::new(), |mut body, chunk| {
+{{^isFile}}
+{{#dataType}}{{#vendorExtensions}}{{#producesXml}}
+{{^has_namespace}}                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");{{/has_namespace}}{{#has_namespace}}
+                            let mut namespaces = BTreeMap::new();
+                            // An empty string is used to indicate a global namespace in xmltree.
+                            namespaces.insert("".to_string(), models::namespaces::{{uppercase_data_type}}.clone());
+                            let body_string = serde_xml_rs::to_string_with_namespaces(&body, namespaces).expect("impossible to fail to serialize");{{/has_namespace}}{{/producesXml}}{{^producesXml}}
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");{{/producesXml}}{{/vendorExtensions}}{{/dataType}}
+
+                            let mut response = Response::with((status::Status::from_u16({{code}}){{#dataType}}, body_string{{/dataType}}));{{/isFile}}{{#isFile}}                            body.fold(Vec::new(), |mut body, chunk| {
                                 body.extend(chunk.iter());
                                 future::ok::<Vec<u8>, Error>(body)
                             })
@@ -249,12 +250,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                                 response.status = Some(status::Status::from_u16({{code}}));
                                 response.body = Some(Box::new(rsp));
 {{/isFile}}
-
 {{#headers}}{{#isFile}}    {{/isFile}}                            header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }
 {{#isFile}}    {{/isFile}}                            response.headers.set(Response{{nameInCamelCase}}({{name}}));
 {{/headers}}
     {{#produces}}{{#-first}}
-{{#isFile}}    {{/isFile}}                            response.headers.set(ContentType(response_mimetypes::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
+{{#isFile}}    {{/isFile}}                            response.headers.set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
 {{/-first}}{{/produces}}
 {{#isFile}}    {{/isFile}}                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 {{#bodyParams}}                            if !unused_elements.is_empty() {

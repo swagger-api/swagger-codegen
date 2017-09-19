@@ -14,6 +14,8 @@ use futures::{Future, future, Stream, stream};
 #[allow(unused_imports)]
 use petstore_api::{Api,
                       ApiError,
+                      GetXmlFeaturesResponse,
+                      PostXmlFeaturesResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
@@ -51,6 +53,7 @@ fn main() {
         .arg(Arg::with_name("operation")
             .help("Sets the operation to run")
             .possible_values(&[
+    "GetXmlFeatures",
     "FakeOuterBooleanSerialize",
     "FakeOuterCompositeSerialize",
     "FakeOuterNumberSerialize",
@@ -90,6 +93,21 @@ fn main() {
     };
 
     match matches.value_of("operation") {
+
+        Some("GetXmlFeatures") => {
+            // Using a non-default `Context` is not required; this is just an example!
+            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
+            let result = client.get_xml_features(&context).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+         },
+
+        // Disabled because there's no example.
+        // Some("PostXmlFeatures") => {
+        //     // Using a non-default `Context` is not required; this is just an example!
+        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
+        //     let result = client.post_xml_features(???, &context).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //  },
 
         Some("FakeOuterBooleanSerialize") => {
             // Using a non-default `Context` is not required; this is just an example!

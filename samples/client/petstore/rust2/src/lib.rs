@@ -3,6 +3,7 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
+extern crate serde_xml_rs;
 extern crate futures;
 extern crate chrono;
 extern crate multipart;
@@ -26,8 +27,21 @@ use std::collections::HashMap;
 
 pub use futures::Future;
 
+#[cfg(any(feature = "client", feature = "server"))]
+mod mimetypes;
+
 pub use swagger::{ApiError, Context, XSpanId};
 
+
+#[derive(Debug, PartialEq)]
+pub enum GetXmlFeaturesResponse {
+    Success ( models::XmlObject ) ,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum PostXmlFeaturesResponse {
+    Success ,
+}
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterBooleanSerializeResponse {
@@ -192,8 +206,13 @@ pub enum UpdateUserResponse {
 }
 
 
-
 pub trait Api {
+
+    /// Get some XML
+    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
+
+    /// Post some xml
+    fn post_xml_features(&self, xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send>;
 
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
