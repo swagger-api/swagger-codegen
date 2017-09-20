@@ -1,21 +1,11 @@
 package io.swagger.codegen.languages;
-//import com.wordnik.swagger.codegen.*;
-//import com.wordnik.swagger.models.properties.*;
-import io.swagger.codegen.*;
 
 import com.google.common.base.CaseFormat;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenResponse;
-import io.swagger.codegen.CodegenSecurity;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
+
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
@@ -28,31 +18,17 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
-import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ScalazClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
     
@@ -198,7 +174,7 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
 
     @Override
     public String getHelp() {
-        return "Generates a Scala client library (beta).";
+        return "Generates a Scalaz client library that uses http4s";
     }
 
     @Override
@@ -252,17 +228,11 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
         public abstract String formatFragment(String fragment);
     }
 
-    // @Override
-    // public String toEnumName(CodegenProperty property) {
-    //     return formatIdentifier(stripPackageName(property.baseName), true);
-    // }
-
     @Override
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
         return input.replace("\"", "");
     }
-
     
     private class EnumEntryLambda extends CustomLambda {
         @Override
