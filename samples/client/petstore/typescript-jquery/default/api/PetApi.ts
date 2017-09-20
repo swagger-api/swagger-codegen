@@ -420,7 +420,6 @@ export class PetApi {
         let headerParams: any = {};
         let formParams = new FormData();
         let reqHasFile = false;
-
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
@@ -500,7 +499,6 @@ export class PetApi {
         let headerParams: any = {};
         let formParams = new FormData();
         let reqHasFile = false;
-
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
