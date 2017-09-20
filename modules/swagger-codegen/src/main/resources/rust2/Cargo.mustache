@@ -23,11 +23,11 @@ serde = "1.0"
 serde_derive = "1.0"
 serde_ignored = {version = "0.0.4", optional = true}
 serde_json = {version = "1.0", optional = true}
-# ToDo: this should be updated once our upstream PR to serde-xml-rs is accepted
-swagger = {git = "git://github.com/Metaswitch/swagger-rs.git", branch = "xml"}
+swagger = "0.5"
 urlencoded = {version = "0.5", optional = true}
 uuid = {version = "0.5", optional = true, features = ["serde", "v4"]}
-# ToDo: this should be updated to point at the official crate once our upstream PR is accepted
+# ToDo: this should be updated to point at the official crate once
+# https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
 {{#usesXml}}serde-xml-rs = {git = "git://github.com/Metaswitch/serde-xml-rs.git" , branch = "master", optional = true}{{/usesXml}}
 
 [dev-dependencies]
