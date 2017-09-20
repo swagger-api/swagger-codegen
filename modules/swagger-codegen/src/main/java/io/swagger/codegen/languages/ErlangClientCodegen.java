@@ -140,13 +140,6 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
-        additionalProperties.put("lowercase", new Mustache.Lambda() {
-            @Override
-            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
-                writer.write(lowercase(fragment.execute()));
-            }
-        });
-
         additionalProperties.put("length", new Mustache.Lambda() {
             @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
@@ -268,6 +261,9 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         List<ExtendedCodegenOperation> newOs = new ArrayList<ExtendedCodegenOperation>();
         Pattern pattern = Pattern.compile("(.*)\\{([^\\}]+)\\}(.*)");
         for (CodegenOperation o : os) {
+            // force http method to lower case
+            o.httpMethod = o.httpMethod.toLowerCase();
+
             ArrayList<String> pathTemplateNames = new ArrayList<String>();
             Matcher matcher = pattern.matcher(o.path);
             StringBuffer buffer = new StringBuffer();
@@ -295,10 +291,6 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
 
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
-    }
-
-    String lowercase(String word) {
-        return word.toLowerCase();
     }
 
     String length(Object o) {

@@ -13,7 +13,7 @@
 {{/notes.isEmpty}}
 -spec {{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{dataType}}{{/allParams}}) -> {{#returnType}}{{returnBaseType}}{{/returnType}}{{^returnType}}ok{{/returnType}}.
 {{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{paramName}}{{/allParams}}) ->
-    Method = {{#lowercase}}{{httpMethod}}{{/lowercase}},
+    Method = {{httpMethod}},
     Path = ["{{{replacedPathName}}}"],
     QS = lists:flatten([{{^queryParams.isEmpty}}{{#queryParams}}{{^-first}}, {{/-first}}{{#qsEncode}}{{this}}{{/qsEncode}}{{/queryParams}}{{/queryParams.isEmpty}}]),
     Headers = [{{^headerParams.isEmpty}}{{#headerParams}}{{^-first}}, {{/-first}}{<<"{{baseName}}">>, {{paramName}}}{{/headerParams}}{{/headerParams.isEmpty}}],
