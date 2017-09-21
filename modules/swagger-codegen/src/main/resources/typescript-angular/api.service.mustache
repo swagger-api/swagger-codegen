@@ -78,6 +78,11 @@ export class {{classname}} {
         return false;
     }
 
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
 {{#operation}}
     /**
      * {{&notes}}
@@ -177,7 +182,7 @@ export class {{classname}} {
         ];
 
         if (consumes != null && consumes.length > 0) {
-            headers.set('Content-Type', consumes.join(';'));
+            headers.set('Content-Type', consumes.filter(item => this.isJsonMime(item)).join(";"));
         }
 
         let canConsumeForm = this.canConsumeForm(consumes);
@@ -200,7 +205,7 @@ export class {{classname}} {
         ];
 
         if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.join(';'));
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
         }
 
 {{#authMethods}}
