@@ -38,7 +38,7 @@
             {{/queryParams}}
 			)
           {{/hasQueryParams}}
-          )
+          ))
 
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 
