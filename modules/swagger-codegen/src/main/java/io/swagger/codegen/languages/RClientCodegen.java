@@ -141,6 +141,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("description.mustache", "", "DESCRIPTION"));
+        supportingFiles.add(new SupportingFile("namespace.mustache", "", "NAMESPACE"));
         supportingFiles.add(new SupportingFile("Rbuildignore.mustache", "", ".Rbuildignore"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
     }
