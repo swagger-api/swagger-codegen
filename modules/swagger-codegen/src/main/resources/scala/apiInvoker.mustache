@@ -122,7 +122,7 @@ class ApiInvoker(val mapper: ObjectMapper = ScalaJsonUtil.getJsonMapper,
       }
     })
     var formData: MultivaluedMapImpl = null
-    if(contentType == "application/x-www-form-urlencoded") {
+    if (contentType == "application/x-www-form-urlencoded") {
       formData = new MultivaluedMapImpl()
       formParams.foreach(p => formData.add(p._1, p._2))
     }
@@ -130,25 +130,25 @@ class ApiInvoker(val mapper: ObjectMapper = ScalaJsonUtil.getJsonMapper,
     val response: ClientResponse = method match {
       case "GET" => builder.get(classOf[ClientResponse]).asInstanceOf[ClientResponse]
       case "POST" =>
-        if(formData != null) {
+        if (formData != null && formData.size() > 0) {
             builder.post(classOf[ClientResponse], formData)
-        } else if(body != null && body.isInstanceOf[File]) {
+        } else if (body != null && body.isInstanceOf[File]) {
           val file = body.asInstanceOf[File]
           val form = new FormDataMultiPart()
           form.field("filename", file.getName)
           form.bodyPart(new FileDataBodyPart("file", file, MediaType.MULTIPART_FORM_DATA_TYPE))
           builder.post(classOf[ClientResponse], form)
         } else {
-          if(body == null) {
+          if (body == null) {
             builder.post(classOf[ClientResponse], serialize(body))
           } else {
             builder.`type`(contentType).post(classOf[ClientResponse], serialize(body))
           }
         }
       case "PUT" =>
-        if(formData != null) {
+        if (formData != null) {
             builder.post(classOf[ClientResponse], formData)
-        } else if(body == null) {
+        } else if (body == null) {
             builder.put(classOf[ClientResponse], null)
         } else {
             builder.`type`(contentType).put(classOf[ClientResponse], serialize(body))
