@@ -76,18 +76,14 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      May be overridden by a subclass if you want to control the request
      configuration (e.g. to override the cache policy).
      */
-    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
-        if isBody {
-            var request = URLRequest(url: URL(string: URLString)!)
-            request.httpMethod = method.rawValue
-            headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
-            if let parameters = self.parameters {
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
-            }
-            return manager.request(request)
+    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) throws -> DataRequest {
+        let originalRequest = try URLRequest(url: URLString, method: method, headers: headers)
+        if let encoding = encoding as? JSONEncoding {
+            let encodedRequest = try encoding.encode(originalRequest, withJSONObject: parameters)
+            return manager.request(encodedRequest)
         } else {
-            return manager.request(URLString, method: method, parameters: parameters as? Parameters, encoding: encoding, headers: headers)
+            let encodedRequest = try encoding.encode(originalRequest, with: parameters as? Parameters)
+            return manager.request(encodedRequest)
         }
     }
 
@@ -140,11 +136,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
-            if let onProgressReady = self.onProgressReady {
-                onProgressReady(request.progress)
+            do {
+                let request = try makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
+                if let onProgressReady = self.onProgressReady {
+                    onProgressReady(request.progress)
+                }
+                processRequest(request: request, managerId, completion)
+            } catch {
+                completion(nil, ErrorResponse.HttpError(statusCode: 500, data: nil, error: error))
             }
-            processRequest(request: request, managerId, completion)
         }
 
     }
