@@ -514,7 +514,7 @@ export class PetApi {
             formParams.append('additionalMetadata', <any>additionalMetadata);
         }
         reqHasFile = true;
-        formParams.append("file", file);
+        formParams = file;
         // to determine the Content-Type header
         let consumes: string[] = [
             'multipart/form-data'
