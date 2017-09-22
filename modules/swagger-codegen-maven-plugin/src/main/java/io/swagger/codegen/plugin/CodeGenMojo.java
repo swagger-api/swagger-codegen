@@ -15,17 +15,18 @@ package io.swagger.codegen.plugin;
  */
 
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applySupportFilesMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
@@ -308,7 +309,11 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(readonly = true, required = true, defaultValue = "${project}")
     private MavenProject project;
 
-
+    /**
+     * List of template files mappings to support files.
+     */
+    @Parameter(name = "supportFilesMappings")
+    private List<String> supportFilesMappings;
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -507,6 +512,10 @@ public class CodeGenMojo extends AbstractMojo {
                 System.setProperty(key, value);
                 configurator.addSystemProperty(key, value);
             }
+        }
+
+        if (supportFilesMappings != null) {
+            applySupportFilesMappingsKvpList(supportFilesMappings, configurator);
         }
 
         final ClientOptInput input = configurator.toClientOptInput();

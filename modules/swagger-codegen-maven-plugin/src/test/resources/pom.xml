@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.swagger</groupId>
+  <artifactId>swagger-codegen-maven-plugin</artifactId>
+  <version>2.3.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Test CodeGenMojo</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <version>2.3.0-SNAPSHOT</version>
+
+        <configuration>
+          <inputSpec>${project.basedir}/api.json</inputSpec>
+          <skip>false</skip>
+                <language>java</language>
+
+                <output>${project.build.directory}/generated-sources</output>
+                <apiPackage>io.swagger.api</apiPackage>
+                <modelPackage>io.swagger.model</modelPackage>
+                <invokerPackage>io.swagger.service</invokerPackage>
+                <groupId>io.swagger</groupId>
+                <artifactId>api</artifactId>
+                <artifactVersion>${project.version}</artifactVersion>
+                <addCompileSourceRoot>false</addCompileSourceRoot>
+                <supportFilesMappings>
+                    <supportFilesMapping>template1=supportFile1.mustache</supportFilesMapping>
+                    <supportFilesMapping>template2=supportFile2.mustache</supportFilesMapping>
+                    <supportFilesMapping>template3=supportFile3.mustache</supportFilesMapping>
+                </supportFilesMappings>
+                <configOptions>
+                    <useBeanValidationFeature>true</useBeanValidationFeature>
+                    <generateSpringApplication>true</generateSpringApplication>
+                    <useSpringAnnotationConfig>true</useSpringAnnotationConfig>
+                    <dateLibrary>legacy</dateLibrary>
+                    <useBeanValidation>true</useBeanValidation>
+                    <generateSpringApplication>true</generateSpringApplication>
+                    <useSpringAnnotationConfig>true</useSpringAnnotationConfig>
+                    <useBeanValidationFeature>true</useBeanValidationFeature>
+                    <generateSpringBootApplication>true</generateSpringBootApplication>
+                    <generateJbossDeploymentDescriptor>true</generateJbossDeploymentDescriptor>
+                    <useCloneable>true</useCloneable>
+                    <useEcmAnnotations>true</useEcmAnnotations>
+                    <useGenericResponse>true</useGenericResponse>
+                    <useEcmGenericRequest>true</useEcmGenericRequest>
+                </configOptions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
