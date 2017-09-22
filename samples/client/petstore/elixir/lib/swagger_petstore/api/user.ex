@@ -198,7 +198,7 @@ defmodule SwaggerPetstore.Api.User do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - username (String): name that need to be updated
+  - username (String): name that need to be deleted
   - body (User): Updated user object
   - opts (KeywordList): [optional] Optional parameters
 

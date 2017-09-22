@@ -10,10 +10,28 @@ defmodule SwaggerPetstore.Connection do
   use Tesla
 
   # Add any middleware here (authentication)
-  plug Tesla.Middleware.BaseUrl, "http://petstore.swagger.io/v2"
+  plug Tesla.Middleware.BaseUrl, "http://petstore.swagger.io:80/v2"
   plug Tesla.Middleware.Headers, %{"User-Agent" => "Elixir"}
   plug Tesla.Middleware.EncodeJson
 
+  @doc """
+  Configure an client connection using Basic authentication.
+
+  ## Parameters
+
+  - username (String): Username used for authentication
+  - password (String): Password used for authentication
+
+  # Returns
+
+  Tesla.Env.client
+  """
+  @spec new(String.t, String.t) :: Tesla.Env.client
+  def new(username, password) do
+    Tesla.build_client([
+      {Tesla.Middleware.BasicAuth, %{username: username, password: password}}
+    ])
+  end
   @scopes [
     "write:pets", # modify pets in your account
     "read:pets" # read your pets

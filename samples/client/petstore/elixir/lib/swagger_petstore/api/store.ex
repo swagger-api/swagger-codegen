@@ -13,12 +13,12 @@ defmodule SwaggerPetstore.Api.Store do
 
   @doc """
   Delete purchase order by ID
-  For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+  For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
 
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - order_id (Integer): ID of the order that needs to be deleted
+  - order_id (String): ID of the order that needs to be deleted
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -26,7 +26,7 @@ defmodule SwaggerPetstore.Api.Store do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec delete_order(Tesla.Env.client, Integer.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec delete_order(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def delete_order(connection, order_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -62,7 +62,7 @@ defmodule SwaggerPetstore.Api.Store do
 
   @doc """
   Find purchase order by ID
-  For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
+  For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
 
   ## Parameters
 
