@@ -16,8 +16,14 @@ class ApiClient {
   Map<String, Authentication> _authentications = {};
 
   final dson = new Dartson.JSON()
-      {{#transformers}}..addTransformer(new {{transformer}}(), {{className}})
-      {{/transformers}}..addTransformer(new DateTimeParser(), DateTime);
+  {{#models}}
+    {{#model}}
+      {{#isEnum}}
+      ..addTransformer(new {{classname}}TypeTransformer(), {{classname}})
+      {{/isEnum}}
+    {{/model}}
+  {{/models}}
+      ..addTransformer(new DateTimeParser(), DateTime);
 
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');

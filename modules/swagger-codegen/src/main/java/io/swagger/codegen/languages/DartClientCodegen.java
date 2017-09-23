@@ -307,29 +307,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
-        Map<String, Object> result = postProcessModelsEnum(objs);
-
-        // Build a list of all the enum models.
-        List<Object> models = (List<Object>) objs.get("models");
-        // Check if there already exists a list.
-        Object storedTransformers = additionalProperties.get("transformers");
-        List<Map<String, String>> enumTransformers = storedTransformers != null ?
-                (List<Map<String, String>>) storedTransformers :
-                new ArrayList<Map<String, String>>();
-        for (Object modelObject : models) {
-            Map<String, Object> modelMap = (Map<String, Object>) modelObject;
-            CodegenModel model = (CodegenModel) modelMap.get("model");
-            if (model.isEnum && model.allowableValues != null) {
-                Map<String, String> enumObject = new HashMap<String, String>();
-                String className = model.classname;
-                enumObject.put("className", className);
-                enumObject.put("transformer", className + "TypeTransformer");
-                enumTransformers.add(enumObject);
-            }
-        }
-        // Store the list as an additional property.
-        additionalProperties.put("transformers", enumTransformers);
-        return result;
+        return postProcessModelsEnum(objs);
     }
 
     @Override
@@ -337,12 +315,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (value.length() == 0) {
             return "EMPTY";
         }
-
-        // The lone difference with the super version is the replacement of non
-        // word characters with '__' instead of '_'. This is to handle negative
-        // numbers, so that e.g. -1 is transformed into '__1' and not '_1' like
-        // 1 is.
-        String var = value.replaceAll("\\W+", "__").toUpperCase();
+        String var = value.replaceAll("\\W+", "_").toUpperCase();
         if ("number".equalsIgnoreCase(datatype) || "int".equalsIgnoreCase(datatype)) {
             return "NUMBER_" + var;
         } else {

@@ -1,7 +1,10 @@
 @Entity()
 enum {{classname}} {
-  {{#allowableValues}}{{#enumVars}}{{name}}{{^-last}},{{/-last}}
-  {{/enumVars}}{{/allowableValues}}
+  {{#allowableValues}}
+    {{#enumVars}}
+  {{name}}{{^-last}},{{/-last}}
+    {{/enumVars}}
+  {{/allowableValues}}
 }
 
 class {{classname}}TypeTransformer extends TypeTransformer<{{classname}}> {
@@ -9,8 +12,11 @@ class {{classname}}TypeTransformer extends TypeTransformer<{{classname}}> {
   @override
   dynamic encode({{classname}} data) {
     switch(data) {
-      {{#allowableValues}}{{#enumVars}}case {{classname}}.{{name}}: return {{value}};
-      {{/enumVars}}{{/allowableValues}}
+      {{#allowableValues}}
+        {{#enumVars}}
+      case {{classname}}.{{name}}: return {{value}};
+        {{/enumVars}}
+      {{/allowableValues}}
       default: throw('Unknown enum value to encode: $data');
     }
   }
@@ -18,8 +24,11 @@ class {{classname}}TypeTransformer extends TypeTransformer<{{classname}}> {
   @override
   {{classname}} decode(dynamic data) {
     switch (data) {
-      {{#allowableValues}}{{#enumVars}}case {{value}}: return {{classname}}.{{name}};
-      {{/enumVars}}{{/allowableValues}}
+      {{#allowableValues}}
+        {{#enumVars}}
+      case {{value}}: return {{classname}}.{{name}};
+        {{/enumVars}}
+      {{/allowableValues}}
       default: throw('Unknown enum value to decode: $data');
     }
   }
