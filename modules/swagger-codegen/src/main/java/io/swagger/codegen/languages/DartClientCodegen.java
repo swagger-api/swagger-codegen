@@ -343,8 +343,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         // numbers, so that e.g. -1 is transformed into '__1' and not '_1' like
         // 1 is.
         String var = value.replaceAll("\\W+", "__").toUpperCase();
-        if (var.matches("\\d.*")) {
-            return "_" + var;
+        if ("number".equalsIgnoreCase(datatype) || "int".equalsIgnoreCase(datatype)) {
+            return "NUMBER_" + var;
         } else {
             return var;
         }
