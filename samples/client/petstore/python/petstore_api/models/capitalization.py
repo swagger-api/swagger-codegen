@@ -254,3 +254,11 @@ class Capitalization(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.small_camel,
+          self.capital_camel,
+          self.small_snake,
+          self.capital_snake,
+          self.sca_eth_flow_points,
+          self.att_name))

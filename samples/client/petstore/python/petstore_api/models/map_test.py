@@ -155,3 +155,7 @@ class MapTest(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.map_map_of_string,
+          self.map_of_enum_string))
