@@ -466,3 +466,18 @@ class FormatTest(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.integer,
+          self.int32,
+          self.int64,
+          self.number,
+          self.float,
+          self.double,
+          self.string,
+          self.byte,
+          self.binary,
+          self.date,
+          self.date_time,
+          self.uuid,
+          self.password))

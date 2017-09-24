@@ -174,3 +174,8 @@ class ArrayTest(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.array_of_string,
+          self.array_array_of_integer,
+          self.array_array_of_model))

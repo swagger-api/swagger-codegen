@@ -174,3 +174,8 @@ class OuterComposite(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.my_number,
+          self.my_string,
+          self.my_boolean))

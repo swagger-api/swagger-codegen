@@ -306,3 +306,13 @@ class User(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.id,
+          self.username,
+          self.first_name,
+          self.last_name,
+          self.email,
+          self.password,
+          self.phone,
+          self.user_status))

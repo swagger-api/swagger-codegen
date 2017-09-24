@@ -218,3 +218,9 @@ class EnumTest(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.enum_string,
+          self.enum_integer,
+          self.enum_number,
+          self.outer_enum))

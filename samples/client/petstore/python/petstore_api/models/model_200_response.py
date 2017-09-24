@@ -148,3 +148,7 @@ class Model200Response(object):
         Returns true if both objects are not equal
         """
         return not self == other
+
+    def __hash__(self):
+      return hash((self.name,
+          self._class))
