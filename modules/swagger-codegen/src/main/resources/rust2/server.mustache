@@ -254,7 +254,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 {{#isFile}}    {{/isFile}}                            response.headers.set(Response{{nameInCamelCase}}({{name}}));
 {{/headers}}
     {{#produces}}{{#-first}}
-{{#isFile}}    {{/isFile}}                            response.headers.set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
+{{#dataType}}{{#isFile}}    {{/isFile}}                            response.headers.set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));{{/dataType}}
 {{/-first}}{{/produces}}
 {{#isFile}}    {{/isFile}}                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 {{#bodyParams}}                            if !unused_elements.is_empty() {

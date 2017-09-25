@@ -203,7 +203,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(200)));    
-                            response.headers.set(ContentType(mimetypes::responses::POST_XML_FEATURES_SUCCESS.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -605,7 +605,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_ENDPOINT_PARAMETERS_INVALID_USERNAME_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -615,7 +615,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_ENDPOINT_PARAMETERS_USER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -679,7 +679,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_ENUM_PARAMETERS_INVALID_REQUEST.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -689,7 +689,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_ENUM_PARAMETERS_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -902,7 +902,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
-                            response.headers.set(ContentType(mimetypes::responses::ADD_PET_INVALID_INPUT.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -987,7 +987,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::DELETE_PET_INVALID_PET_VALUE.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1074,7 +1074,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_STATUS_INVALID_STATUS_VALUE.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1161,7 +1161,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_TAGS_INVALID_TAG_VALUE.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1233,7 +1233,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_PET_BY_ID_INVALID_ID_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1243,7 +1243,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_PET_BY_ID_PET_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1334,7 +1334,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_PET_INVALID_ID_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1346,7 +1346,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_PET_PET_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1358,7 +1358,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_PET_VALIDATION_EXCEPTION.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1442,7 +1442,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_PET_WITH_FORM_INVALID_INPUT.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1613,7 +1613,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::DELETE_ORDER_INVALID_ID_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1623,7 +1623,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::DELETE_ORDER_ORDER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1741,7 +1741,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_INVALID_ID_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1751,7 +1751,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_ORDER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1830,7 +1830,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::PLACE_ORDER_INVALID_ORDER.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1898,7 +1898,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
-                            response.headers.set(ContentType(mimetypes::responses::CREATE_USER_SUCCESSFUL_OPERATION.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1966,7 +1966,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
-                            response.headers.set(ContentType(mimetypes::responses::CREATE_USERS_WITH_ARRAY_INPUT_SUCCESSFUL_OPERATION.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -2034,7 +2034,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
-                            response.headers.set(ContentType(mimetypes::responses::CREATE_USERS_WITH_LIST_INPUT_SUCCESSFUL_OPERATION.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -2090,7 +2090,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::DELETE_USER_INVALID_USERNAME_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2100,7 +2100,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::DELETE_USER_USER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2165,7 +2165,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_USER_BY_NAME_INVALID_USERNAME_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2175,7 +2175,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_USER_BY_NAME_USER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2246,7 +2246,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::LOGIN_USER_INVALID_USERNAME.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2291,7 +2291,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
-                            response.headers.set(ContentType(mimetypes::responses::LOGOUT_USER_SUCCESSFUL_OPERATION.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -2366,7 +2366,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_USER_INVALID_USER_SUPPLIED.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -2378,7 +2378,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
-                            response.headers.set(ContentType(mimetypes::responses::UPDATE_USER_USER_NOT_FOUND.clone()));
+
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
