@@ -371,9 +371,8 @@ public class SpringCodegen extends AbstractJavaCodegen
                 opList = new ArrayList<CodegenOperation>();
                 operations.put(basePath, opList);
             }
-            co.baseName = basePath;
-            co.operationIdCamelCase = DefaultCodegen.camelize(co.operationId);
             opList.add(co);
+            co.baseName = basePath;
         } else {
             super.addOperationToGroup(tag, resourcePath, operation, co, operations);
         }
