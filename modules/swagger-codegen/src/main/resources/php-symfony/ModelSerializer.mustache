@@ -43,7 +43,7 @@ class ModelSerializer
     {
         $normalized = $this->normalize($data);
         if ($format === 'json') {
-            return json_encode($normalized, 15, 512);
+            return json_encode($normalized, 13, 512);
         }
 
         throw new \InvalidArgumentException('Unsupported serialization format: '.$format);
@@ -63,7 +63,19 @@ class ModelSerializer
     {
         switch ($format) {
             case 'json':
-                $normalized = json_decode($data, true, 512, 15);
+                if (version_compare(PHP_VERSION, '5.4.0', '>=') && !(defined('JSON_C_VERSION') && PHP_INT_SIZE > 4)) {
+                    // In PHP >=5.4.0, json_decode() accepts an options parameter, that allows you
+                    // to specify that large ints (like Steam Transaction IDs) should be treated as
+                    // strings, rather than the PHP default behaviour of converting them to floats.
+                    $normalized = json_decode($data, true, 512, 15);
+                } else {
+                    // Not all servers will support that, however, so for older versions we must
+                    // manually detect large ints in the JSON string and quote them (thus converting
+                    // them to strings) before decoding, hence the preg_replace() call.
+                    $max_int_length = strlen((string) PHP_INT_MAX) - 1;
+                    $json_without_bigints = preg_replace('/:\s*(-?\d{' . $max_int_length . ',})/', ': "$1"', $data);
+                    $normalized = json_decode($json_without_bigints, true, 512, 13);
+                }
                 break;
             default:
                 throw new \InvalidArgumentException('Unsupported serialization format: '.$format);
