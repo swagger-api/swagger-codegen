@@ -1,8 +1,13 @@
 @Entity()
-enum {{classname}} {
+class {{classname}} {
+  /// The underlying value of this enum member.
+  final {{dataType}} value;
+
+  const {{classname}}._internal(this.value);
+
   {{#allowableValues}}
     {{#enumVars}}
-  {{name}}{{^-last}},{{/-last}}
+  static const {{classname}} {{name}} = const {{classname}}._internal({{value}});
     {{/enumVars}}
   {{/allowableValues}}
 }
@@ -11,14 +16,7 @@ class {{classname}}TypeTransformer extends TypeTransformer<{{classname}}> {
 
   @override
   dynamic encode({{classname}} data) {
-    switch(data) {
-      {{#allowableValues}}
-        {{#enumVars}}
-      case {{classname}}.{{name}}: return {{value}};
-        {{/enumVars}}
-      {{/allowableValues}}
-      default: throw('Unknown enum value to encode: $data');
-    }
+    return data.value;
   }
 
   @override
