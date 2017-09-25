@@ -3255,14 +3255,6 @@ public class DefaultCodegen {
         p = Pattern.compile("(_)(.)");
         m = p.matcher(word);
         while (m.find()) {
-            word = m.replaceFirst(m.group(2).toUpperCase());
-            m = p.matcher(word);
-        }
-
-        // Remove all hyphens (hyphen-case to camelCase)
-        p = Pattern.compile("(-)(.)");
-        m = p.matcher(word);
-        while (m.find()) {
             String original = m.group(2);
             String upperCase = original.toUpperCase();
             if (original.equals(upperCase)) {
@@ -3273,6 +3265,13 @@ public class DefaultCodegen {
             m = p.matcher(word);
         }
 
+        // Remove all hyphens (hyphen-case to camelCase)
+        p = Pattern.compile("(-)(.)");
+        m = p.matcher(word);
+        while (m.find()) {
+            word = m.replaceFirst(m.group(2).toUpperCase());
+            m = p.matcher(word);
+        }
 
         if (lowercaseFirstLetter && word.length() > 0) {
             word = word.substring(0, 1).toLowerCase() + word.substring(1);
