@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use std::io::Error;
 
 use petstore_api::{Api, ApiError, Context,
+                      TestSpecialTagsResponse,
                       GetXmlFeaturesResponse,
                       PostXmlFeaturesResponse,
                       FakeOuterBooleanSerializeResponse,
@@ -49,6 +50,13 @@ use petstore_api::models;
 pub struct Server;
 
 impl Api for Server {
+
+    /// To test special tags
+    fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send> {
+        let context = context.clone();
+        println!("test_special_tags({:?}) - X-Span-ID: {:?}", body, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        Box::new(futures::failed("Generic failure".into()))
+    }
 
     /// Get some XML
     fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {

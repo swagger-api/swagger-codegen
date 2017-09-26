@@ -13,7 +13,7 @@ To see how to make this your own, look here:
 [README](https://github.com/swagger-api/swagger-codegen/blob/master/README.md)
 
 - API version: 1.0.0
-- Build date: 2017-09-25T15:19:26.689+01:00
+- Build date: 2017-09-26T16:36:55.563+01:00
 
 ## Examples
 
@@ -40,6 +40,7 @@ cargo run --example server
 To run a client, follow one of the following simple steps:
 
 ```
+cargo run --example client TestSpecialTags
 cargo run --example client GetXmlFeatures
 cargo run --example client PostXmlFeatures
 cargo run --example client FakeOuterBooleanSerialize

@@ -24,7 +24,7 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Rust**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
@@ -62,13 +62,15 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
     - [To build a server stub](#to-build-a-server-stub)
     - [To build the codegen library](#to-build-the-codegen-library)
   - [Workflow Integration](#workflow-integration)
+    - [Maven Integration](#maven-integration)
+    - [Gradle Integration](#gradle-integration)
   - [Github Integration](#github-integration)
   - [Online Generators](#online-generators)
   - [Guidelines for Contribution](https://github.com/swagger-api/swagger-codegen/wiki/Guidelines-for-Contribution)
   - [Companies/Projects using Swagger Codegen](#companiesprojects-using-swagger-codegen)
   - [Presentations/Videos/Tutorials/Books](#presentationsvideostutorialsbooks)
   - [Swagger Codegen Core Team](#swagger-codegen-core-team)
-  - [Swagger Codegen Evangelist](#swagger-codegen-evangelist)
+  - [Swagger Codegen Technical Committee](#swagger-codegen-technical-committee)
   - [License](#license)
 
 
@@ -618,9 +620,15 @@ mvn package
 
 Note!  The templates are included in the library generated.  If you want to modify the templates, you'll need to either repackage the library OR specify a path to your scripts
 
-## Workflow integration
+## Workflow Integration
+
+### Maven Integration
 
 You can use the [swagger-codegen-maven-plugin](modules/swagger-codegen-maven-plugin/README.md) for integrating with your workflow, and generating any codegen target.
+
+### Gradle Integration
+
+[Gradle Swagger Generator Plugin](https://github.com/int128/gradle-swagger-generator-plugin) is available for generating source code and API document.
 
 ## GitHub Integration
 
@@ -745,6 +753,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [DecentFoX](http://decentfox.com/)
 - [DocRaptor](https://docraptor.com)
 - [DocuSign](https://www.docusign.com)
+- [Elastic](https://www.elastic.co/)
 - [Ergon](http://www.ergon.ch/)
 - [Dell EMC](https://www.emc.com/)
 - [eureka](http://eure.jp/)
@@ -758,6 +767,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [General Electric](https://www.ge.com/)
+- [Genesys - PureCloud](http://developer.mypurecloud.com/)
 - [Germin8](http://www.germin8.com)
 - [GigaSpaces](http://www.gigaspaces.com)
 - [goTransverse](http://www.gotransverse.com/api)
@@ -770,7 +780,6 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Individual Standard IVS](http://www.individual-standard.com) 
 - [Intent HQ](http://www.intenthq.com)
-- [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [Kabuku](http://www.kabuku.co.jp/en)
 - [Kurio](https://kurio.co.id)
 - [Kuroi](http://kuroiwebdesign.com/)
@@ -846,6 +855,9 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 
 Presentations/Videos/Tutorials/Books
 ----------------------------------------
+- 2011/08/31 - [Introducing Swagger](https://www.slideshare.net/fehguy/introducing-swagger) by [Tony Tam](https://twitter.com/fehguy)
+- 2014/05/22 - [Swagger APIs for Humans and Robots](https://www.slideshare.net/fehguy/swagger-apis-for-humans-and-robots-gluecon) by [Tony Tam](https://twitter.com/fehguy) at [Gluecon](http://gluecon.com/)
+- 2014/11/11 - [Genie 2.0: Second Wish Granted!](https://medium.com/netflix-techblog/genie-2-0-second-wish-granted-d888d79455c6) by [Tom Gianos](http://www.linkedin.com/in/thomasgianos/) and [Amit Sharma](https://www.linkedin.com/pub/amit-sharma/5/163/a83) @ [Netflix](https://www.netflix.com/) Big Data Platform Team
 - 2015/07/28 - [Enriching RESTful Services with Swagger](https://blog.philipphauer.de/enriching-restful-services-swagger/) by [Philipp Hauer](https://blog.philipphauer.de/)
 - 2015/11/11 - [Generate client stubs & document your REST-API using Swagger & Spring](https://www.youtube.com/watch?v=43GhBbP--oI) by [Johannes Fiala](https://github.com/jfiala) @ Devoxx Belgium 2015
 - 2015/12/03 - [こんなに簡単! Swagger Codegenのカスタマイズ](http://qiita.com/Quramy/items/c583f3213f0b77ff1bac) by [Quramy](http://qiita.com/Quramy)
@@ -853,20 +865,33 @@ Presentations/Videos/Tutorials/Books
 - 2016/01/15 - [How to end manual REST-API client coding](https://www.youtube.com/watch?v=RzZRdqZp6Oo) by [Johannes Fiala](https://github.com/jfiala) @ dotJS 2015
 - 2016/04/27 - [Automated REST API Development](https://yos.io/2016/04/27/automated-api-development/) by [Yos Riady](https://www.linkedin.com/in/yosriady)
 - 2016/05/29 - [Generating Java Spring-MVC code from Swagger Spec](https://www.clianz.com/2016/05/29/java-mvc-swagger-gen/) by [@icha024](https://github.com/icha024)
+- 2016/09/28 - [1 UNBELIEVABLE TRICK TO CREATE AN EASY TO CONSUME API IN .NET](https://stapp.space/1-simple-trick-to-create-a-good-api-in-net/) by [Piotr Stapp](https://stapp.space/author/piotr-stapp/)
+- 2016/10/10 - [Using swagger-codegen with Marketo](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/) by [Kenny Elkington](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/)
+- 2016/10/12 - [Designing a Swagger API](https://sookocheff.com/post/api/swagger/) by [Kevin Sookocheff](https://sookocheff.com/)
 - 2016/11/05 - [How to generate a REST Application](https://www.youtube.com/watch?v=iyC9BWMe75Q) by [Johannes Fiala](https://github.com/jfiala) @ DevFest Vienna 2016
 - 2016/11/10 - [Building an AEM API clients ecosystem](http://blog.cliffano.com/2016/11/10/adobe-marketing-cloud-community-expo/) by Cliffano Subagio, Michael Diender, Stephen Shim from Shine Solutions @ [Adobe Marketing Cloud Community Expo (AMCCE)](https://www.meetup.com/Melbourne-AEM-CQ-Meetup/events/233363101/)
 - 2016/11/18 - [How to generate a REST CXF3 application from Swagger-Contract](https://www.slideshare.net/johannes_fiala/how-to-generate-a-rest-cxf3-application-from-swagger-apacheconeu-2016) by [Johannes Fiala](https://github.com/jfiala) @ ApacheConEU 2016
 - 2016/11/25 - [Swagger Codegen for Swift3 and NodeJS](https://normand1.github.io/blog/swift/swagger/codegen/2016/11/25/Swagger-Codegen-for-Swift3-and-NodeJS.html) by [David Norman](https://github.com/normand1)
+- 2016/12/08 - [Generate client side code using Swagger Codegen](https://carra-lucia-ltd.co.uk/2016/12/08/generate-client-side-code-using-swagger-codegen/) by [theFerkel](https://carra-lucia-ltd.co.uk/author/theferkel/)
+- 2017/01/16 - [Zero to API in 4 minutes](https://cidrblock.github.io/zero-to-api-in-4-minutes.html) by [Bradley A. Thornton](https://github.com/cidrblock)
+- 2017/02/09 - [「Swaggerを利用した新規サービス開発」というタイトルで登壇して来ました](https://techblog.recochoku.jp/1055) by [recotech](https://www.slideshare.net/recotech) 
 - 2017/03/03 - [Swagger Codegen の使い方の簡単な説明です](https://speakerdeck.com/wagyu298/swagger-codegen) by [wagyu298](https://github.com/wagyu298)
 - 2017/03/24 - [Using Open API Specification To Put Lyft SDK Support in the Fast Lane](https://medium.com/lyft-developer-platform/using-open-api-specification-to-put-lyft-sdk-support-in-the-fast-lane-7b623218e4ee) by [Val Polouchkine](https://github.com/vpolouchkine)
+- 2017/04/13 - [Automatically Generating your API Client with Swagger and Swagger Codegen](https://www.youtube.com/watch?v=EzKwi-u9jQo) by [Jesse Collis](https://github.com/jessedc) @ Melbourne Cocoaheads
 - 2017/04/27 - [Swagger Codegen のPHP実装があまりにアレだったので、ライブラリ自作して公開してみた](http://qiita.com/imunew/items/2e9c472e0097e329f2cd) by [imunew](http://qiita.com/imunew)
 - 2017/05/17 - [Diseño de APIs con OpenAPI](https://www.slideshare.net/pjmolina/diseo-de-apis-con-openapi) by [Pedro J. Molina](https://github.com/pjmolina) @ [JSDayES 2017](http://2017.jsday.es/)
 - 2017/05/22 - [Presentation of the Vert.x-Swagger project](http://vertx.io/blog/presentation-of-the-vert-x-swagger-project/) by [@phiz71](http://github.com/phiz71)
 - 2017/05/22 - [Automatically generating your API from a swagger file using gradle](https://www.jcore.com/2017/05/22/automatically-generating-api-using-swagger-and-gradle/) by [Deniz Turan](https://www.jcore.com/author/deniz/)
 - 2017/06/21 - [Swagger Presentation - Warsaw Ruby Users Group](https://www.youtube.com/watch?v=uCnnDMFQB8U) by [@rafalpetryka](http://github.com/rafalpetryka)
 - 2017/06/29 - [Making SDKs: the bespoke, the hopeful and the generated](https://devrel.net/developer-experience/making-sdks-bespoke-hopeful-generated) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square)) at DevXcon 2017
+- 2017/07/11 - [OpenAPI development with Python](https://www.slideshare.net/TakuroWada/20170711-euro-python2017) by [Takuro Wada](https://github.com/taxpon) at [EuroPython 2017](https://ep2017.europython.eu/en/)
 - 2017/07/29 - [How Square makes its SDKs](https://medium.com/square-corner-blog/how-square-makes-its-sdks-6a0fd7ea4b2d) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square))
 - 2017/07/31 - [How to Generate a Deployable REST CXF3 Application from a Swagger-Contract](https://www.youtube.com/watch?v=gM63rJlUHZQ) by [Johannes Fiala](https://github.com/jfiala) @ Voxxed Days Vienna
+- 2017/08/11 - [Swagger Codegen 自动生成Retrofit 代码](https://juejin.im/entry/598d8eb86fb9a03c52459e2a) by [徐磊](http://www.jianshu.com/u/792c738b33fc) 
+- 2017/08/24 - [APIs First](https://engineering.squarespace.com/blog/2017/apis-first) by [roykachouh](https://github.com/roykachouh) ([Square](https://github.com/square))
+- 2017/08/31 - [Bringing Jenkins Remote Access API To The Masses](http://blog.cliffano.com/2017/09/01/jenkins-world-2017/) by [Cliffano Subagio](http://cliffano.com) from Shine Solutions @ [Jenkins World 2017](https://jenkinsworld20162017.sched.com/)
+- 2017/09/09 - [OpenAPIを利用したPythonWebアプリケーション開発](https://www.slideshare.net/TakuroWada/openapipythonweb) by [taxpon](https://github.com/taxpon) at [PyCon JP 2017](https://pycon.jp/2017/ja/)
+- 2017/09/21 - [Generating an Elastic Cloud Enterprise Client](https://www.elastic.co/blog/generating-an-elastic-cloud-enterprise-client) by [Greg Marzouka](https://github.com/gmarz) ([Elastic](https://www.elastic.co/))
 
 
 # Swagger Codegen Core Team
@@ -910,7 +935,7 @@ Swagger Codegen core team members are contributors who have been making signific
 | Java Play Framework |  |
 | NancyFX |  |
 | NodeJS | @kolyjjj (2016/05/01) |  
-| PHP Lumen | @abcsum (2016/05/01) |
+| PHP Lumen | @abcsun (2016/05/01) |
 | PHP Silex |  |
 | PHP Slim  |  |
 | Python Flask  |  |
@@ -938,7 +963,7 @@ Here is a list of template creators:
    * Go (rewritten in 2.3.0): @antihax
    * Java (Feign): @davidkiss
    * Java (Retrofit): @0legg
-   * Java (Retrofi2): @emilianobonassi
+   * Java (Retrofit2): @emilianobonassi
    * Java (Jersey2): @xhh
    * Java (okhttp-gson): @xhh
    * Java (RestTemplate): @nbruno
@@ -952,6 +977,7 @@ Here is a list of template creators:
    * Perl: @wing328
    * PHP (Guzzle): @baartosz
    * PowerShell: @beatcracker
+   * R: @ramnov
    * Rust: @farcaller
    * Rust2: @metaswitch
    * Swift: @tkqubo
@@ -978,7 +1004,7 @@ Here is a list of template creators:
    * JAX-RS CXF: @hiveship
    * JAX-RS CXF (CDI): @nickcmaynard
    * JAX-RS RestEasy (JBoss EAP): @jfiala
-   * PHP Lumen: @abcsum
+   * PHP Lumen: @abcsun
    * PHP Slim: @jfastnacht
    * PHP Symfony: @ksm2
    * PHP Zend Expressive (with Path Handler): @Articus
@@ -1004,25 +1030,51 @@ Here are the requirements to become a core team member:
 
  To become a Template Creator, simply submit a PR for new API client (e.g. Rust, Elixir) or server stub (e.g. Ruby Grape) generator.
 
-# Swagger Codegen Evangelist
+# Swagger Codegen Technical Committee
 
-Swagger Codegen Evangelist shoulders one or more of the following responsibilities:
+Members of the Swagger Codegen technical committee shoulder the following responsibilities:
 
-- publishes articles on the benefit of Swagger Codegen
-- organizes local Meetups
-- presents the benefits of Swagger Codegen in local Meetups or conferences
-- actively answers questions from others in [Github](https://github.com/swagger-api/swagger-codegen/issues), [StackOverflow](stackoverflow.com/search?q=%5Bswagger%5D)
-- submits PRs to improve Swagger Codegen
-- reviews PRs submitted by the others
-- ranks within top 100 in the [contributor list](https://github.com/swagger-api/swagger-codegen/graphs/contributors)
+- Provides guidance and direction to other users
+- Reviews pull requests and issues
+- Improves the generator by making enhancements, fixing bugs or updating documentations
+- Sets the technical direction of the generator
 
-If you want to be a Swagger Codegen Evangelist, please kindly apply by sending an email to wing328hk@gmail.com (@wing328)
+Who is eligible? Those who want to join must have at least 3 PRs merged into a generator. (Exceptions can be granted to template creators or contributors who have made a lot of code changes with less than 3 merged PRs)
 
-### List of Swagger Codegen Evangelists
+If you want to join the committee, please kindly apply by sending an email to wing328hk@gmail.com ([@wing328](https://github.com/wing328)) with your Github ID.
 
-- Cliffano Subagio (@cliffano from Australia joined on Dec 9, 2016)
-  - [Building An AEM API Clients Ecosystem](http://www.slideshare.net/cliffano/building-an-aem-api-clients-ecosystem)
-  - [Adobe Marketing Cloud Community Expo](http://blog.cliffano.com/2016/11/10/adobe-marketing-cloud-community-expo/)
+## Members of Technical Committee
+
+| Languages     | Member (join date) |
+|:-------------|:-------------|
+| ActionScript |      |
+| Apex  |     |
+| Bash  | @frol (2017/07) @bkryza (2017/08) |
+| C++      | @ravinikam (2017/07) @stkrwork (2017/07) |  
+| C#        | @mandrean (2017/08) |
+| Clojure   |  |
+| Dart      | @ircecho (2017/07) |
+| Eiffel    |  |
+| Elixir    |  |
+| Erlang    |  |
+| Groovy    |  |
+| Go        |  |
+| Haskell   |  |
+| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) |
+| Kotlin     |  |
+| Lua     | @daurnimator (2017/08) |
+| NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
+| ObjC      |  |
+| Perl      | @wing328 (2017/07) |
+| PHP      | @jebentier (2017/07) @dkarlovi (2017/07) @mandrean (2017/08) @jfastnacht (2017/09) @ackintosh (2017/09) |
+| Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) |
+| R        |  |
+| Ruby      | @cliffano (2017/07) @zlx (2017/09) |
+| Rust      | @frol (2017/07) @farcaller (2017/08) | 
+| Scala     | @clasnake (2017/07) |
+| Swift     | @jgavris (2017/07) @ehyche (2017/08) |
+| TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) |
+
 
 # License information on Generated Code
 

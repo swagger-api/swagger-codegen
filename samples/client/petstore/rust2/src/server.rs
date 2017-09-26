@@ -37,6 +37,7 @@ use swagger::auth::{Authorization, AuthData, Scopes};
 use swagger::{ApiError, Context, XSpanId};
 
 use {Api,
+     TestSpecialTagsResponse,
      GetXmlFeaturesResponse,
      PostXmlFeaturesResponse,
      FakeOuterBooleanSerializeResponse,
@@ -108,6 +109,75 @@ pub fn route<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone 
 
 /// Add routes for `Api` to a provided router
 fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone + 'static {
+
+    let api_clone = api.clone();
+    router.patch(
+        "/v2/another-fake/dummy",
+        move |req: &mut Request| {
+            let mut context = Context::default();
+
+            // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+            fn handle_request<T>(req: &mut Request, api: &T, context: &mut Context) -> Result<Response, Response> where T: Api {
+
+                context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                context.auth_data = req.extensions.remove::<AuthData>();
+                context.authorization = req.extensions.remove::<Authorization>();
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+
+                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let mut unused_elements = Vec::new();
+
+                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
+
+                    let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - doesn't match schema: {}", e))))?;
+
+                    param_body
+                } else {
+                    None
+                };
+                let param_body = param_body.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter body".to_string())))?;
+
+
+                match api.test_special_tags(param_body, context).wait() {
+                    Ok(rsp) => match rsp {
+                        TestSpecialTagsResponse::SuccessfulOperation(body) => {
+
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
+
+                            let mut response = Response::with((status::Status::from_u16(200), body_string));    
+                            response.headers.set(ContentType(mimetypes::responses::TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION.clone()));
+
+                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                            }
+                            Ok(response)
+                        },
+                    },
+                    Err(_) => {
+                        // Application code returned an error. This should not happen, as the implementation should
+                        // return a valid response.
+                        Err(Response::with((status::InternalServerError, "An internal error occurred".to_string())))
+                    }
+                }
+            }
+
+            handle_request(req, &api_clone, &mut context).or_else(|mut response| {
+                context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                Ok(response)
+            })
+        },
+        "TestSpecialTags");
 
     let api_clone = api.clone();
     router.get(

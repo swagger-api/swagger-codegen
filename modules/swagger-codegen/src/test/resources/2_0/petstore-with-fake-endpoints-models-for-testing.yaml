@@ -898,7 +898,6 @@ paths:
       responses:
         '200':
           description: successful operation
-
   /fake/xmlFeatures:
     get:
       summary: Get some XML
@@ -928,6 +927,29 @@ paths:
       responses:
         200:
           description: Success
+  /another-fake/dummy:
+    patch:
+      tags:
+        - "$another-fake?"
+      summary: To test special tags
+      description: To test special tags
+      operationId: test_special_tags
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: client model
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Client'
 
 securityDefinitions:
   petstore_auth:

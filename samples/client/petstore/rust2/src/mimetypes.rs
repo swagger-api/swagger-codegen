@@ -4,6 +4,10 @@ pub mod responses {
     use hyper::mime::*;
 
     // The macro is called per-operation to beat the recursion limit
+    /// Create Mime objects for the response content types for TestSpecialTags
+    lazy_static! {
+        pub static ref TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+    }
     /// Create Mime objects for the response content types for GetXmlFeatures
     lazy_static! {
         pub static ref GET_XML_FEATURES_SUCCESS: Mime = mime!(Application/Xml);
@@ -57,6 +61,10 @@ pub mod responses {
 
 pub mod requests {
     use hyper::mime::*;
+   /// Create Mime objects for the request content types for TestSpecialTags
+    lazy_static! {
+        pub static ref TEST_SPECIAL_TAGS: Mime = mime!(Application/Json);
+    }
    /// Create Mime objects for the request content types for PostXmlFeatures
     lazy_static! {
         pub static ref POST_XML_FEATURES: Mime = mime!(Application/Xml);

@@ -34,6 +34,11 @@ pub use swagger::{ApiError, Context, XSpanId};
 
 
 #[derive(Debug, PartialEq)]
+pub enum TestSpecialTagsResponse {
+    SuccessfulOperation ( models::Client ) ,
+}
+
+#[derive(Debug, PartialEq)]
 pub enum GetXmlFeaturesResponse {
     Success ( models::XmlObject ) ,
 }
@@ -207,6 +212,9 @@ pub enum UpdateUserResponse {
 
 
 pub trait Api {
+
+    /// To test special tags
+    fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send>;
 
     /// Get some XML
     fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
