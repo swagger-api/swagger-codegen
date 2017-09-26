@@ -11,11 +11,12 @@
 #'
 #' @section Methods:
 #' \describe{
-#' {{#operation}}
-#' {{operationId}} 
-#' {{/operation}}
+{{#operation}}
+#'
+#' {{operationId}} {{summary}} 
+#'
+{{/operation}}
 #' }
-#' @section Details:
 #' 
 #' @export
 {{classname}} <- R6::R6Class(
@@ -30,28 +31,23 @@
       }
     },
     {{#operation}}
-    {{operationId}} = function({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}} ...){
+    {{operationId}} = function({{#allParams}}{{paramName}}, {{/allParams}}...){
       args <- list(...)
       body <- NULL
       queryParams <- list()
       headerParams <- character()
       {{#hasHeaderParams}}
       {{#headerParams}}
-      if (!is.null(args$`{{paramName}}`)) {
-        headerParams['{{baseName}}'] <- args$`{{paramName}}`
+      if (!missing(`{{paramName}}`)) {
+        headerParams['{{baseName}}'] <- `{{paramName}}`
       }
       {{/headerParams}}
       {{/hasHeaderParams}}
       {{#hasQueryParams}}
       {{#queryParams}}
-      {{#required}}
-      queryParams['{{baseName}}'] <- {{paramName}}
-      {{/required}}
-      {{^required}}
-      if (!is.null(args$`{{paramName}}`)) {
-        queryParams['{{baseName}}'] <- args$`{{paramName}}`
+      if (!missing(`{{paramName}}`)) {
+        queryParams['{{baseName}}'] <- {{paramName}}
       }
-      {{/required}}
       {{/queryParams}}
       {{/hasQueryParams}}
       {{#hasFormParams}}
@@ -64,24 +60,22 @@
           "{{baseName}}" = httr::upload_file({{paramName}}){{#hasMore}},{{/hasMore}}
           {{/isFile}}
         {{/formParams}}
-      ){{/hasFormParams}}     
+      )     
+      {{/hasFormParams}}
       {{#hasBodyParam}}
       {{#bodyParams}}
-      {{#required}}
-      body <- `{{paramName}}`$toJSON()
-      {{/required}}
-      {{^required}}
-      if (!is.null(args$`{{paramName}}`)) {
-        body <- args$`{{paramName}}`$toJSON()
+      if (!missing(`{{paramName}}`)) {
+        body <- `{{paramName}}`$toJSON()
       }
-      {{/required}}
       {{/bodyParams}}
       {{/hasBodyParam}}
+
       resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path{{#pathParams}}, "/", {{paramName}}{{/pathParams}}),
                                  method = "{{httpMethod}}",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
-                                 body = body)
+                                 body = body, 
+                                 ...)
       
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
         {{#returnType}} 

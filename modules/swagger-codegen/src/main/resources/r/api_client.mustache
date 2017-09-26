@@ -20,29 +20,41 @@ ApiClient  <- R6::R6Class(
     configuration = NULL,
     userAgent = NULL,
     defaultHeaders = NULL,
-    initialize = function(defaultHeaders = NULL){
+    initialize = function(basePath, configuration, defaultHeaders){
+        if (!missing(basePath)) {
+            self$basePath <- basePath
+        }
+
+        if (!missing(configuration)) {
+            self$configuration <- configuration
+        }
+
+        if (!missing(defaultHeaders)) {
+            self$defaultHeaders <- defaultHeaders
+        }
+
         self$`userAgent` <- '{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/r{{/httpUserAgent}}'
     },
-    callApi = function(url, method, queryParams, headerParams, body){
+    callApi = function(url, method, queryParams, headerParams, body, ...){
         headers <- httr::add_headers(headerParams)
 
         if (method == "GET") {
-            httr::GET(url, queryParams, headers)
+            httr::GET(url, queryParams, headers, ...)
         }
         else if (method == "POST") {
-            httr::POST(url, queryParams, headers, body = body)
+            httr::POST(url, queryParams, headers, body = body, ...)
         }
         else if (method == "PUT") {
-            httr::PUT(url, queryParams, headers, body = body)
+            httr::PUT(url, queryParams, headers, body = body, ...)
         }
         else if (method == "PATCH") {
-            httr::PATCH(url, queryParams, headers, body = body)
+            httr::PATCH(url, queryParams, headers, body = body, ...)
         }
         else if (method == "HEAD") {
-            httr::HEAD(url, queryParams, headers)
+            httr::HEAD(url, queryParams, headers, ...)
         }
         else if (method == "DELETE") {
-            httr::DELETE(url, queryParams, headers)
+            httr::DELETE(url, queryParams, headers, ...)
         }
         else {
             stop("http method must be `GET`, `HEAD`, `OPTIONS`, `POST`, `PATCH`, `PUT` or `DELETE`.")
