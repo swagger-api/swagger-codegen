@@ -11,6 +11,7 @@ protocol JSONEncodable {
 }
 
 public enum ErrorResponse : Error {
+    case ClientError(error: Error)
     case HttpError(statusCode: Int, data: Data?, error: Error)
     case DecodeError(response: Data?, decodeError: DecodeError)
 }

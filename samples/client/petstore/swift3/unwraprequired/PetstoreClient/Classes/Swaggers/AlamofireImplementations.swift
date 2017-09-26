@@ -143,7 +143,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
                 processRequest(request: request, managerId, completion)
             } catch {
-                completion(nil, ErrorResponse.HttpError(statusCode: 500, data: nil, error: error))
+                completion(nil, ErrorResponse.ClientError(error: error))
             }
         }
 
