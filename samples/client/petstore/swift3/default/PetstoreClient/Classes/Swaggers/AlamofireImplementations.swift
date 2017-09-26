@@ -43,6 +43,19 @@ private struct SynchronizedDictionary<K: Hashable, V> {
 
 }
 
+open class JSONEncodingWrapper: ParameterEncoding {
+    var bodyParameters: Any?
+    var encoding: JSONEncoding = JSONEncoding()
+
+    public init(parameters: Any?) {
+        self.bodyParameters = parameters
+    }
+
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        return try encoding.encode(urlRequest, withJSONObject: bodyParameters)
+    }
+}
+
 // Store manager to retain its reference
 private var managerStore = SynchronizedDictionary<String, Alamofire.SessionManager>()
 
@@ -76,15 +89,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      May be overridden by a subclass if you want to control the request
      configuration (e.g. to override the cache policy).
      */
-    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) throws -> DataRequest {
-        let originalRequest = try URLRequest(url: URLString, method: method, headers: headers)
-        if let encoding = encoding as? JSONEncoding {
-            let encodedRequest = try encoding.encode(originalRequest, withJSONObject: parameters)
-            return manager.request(encodedRequest)
-        } else {
-            let encodedRequest = try encoding.encode(originalRequest, with: parameters as? Parameters)
-            return manager.request(encodedRequest)
-        }
+    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
+        return manager.request(URLString, method: method, parameters: parameters as? Parameters, encoding: encoding, headers: headers)
     }
 
     override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) {
@@ -93,7 +99,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         let manager = createSessionManager()
         managerStore[managerId] = manager
 
-        let encoding:ParameterEncoding = isBody ? JSONEncoding() : URLEncoding()
+        let encoding:ParameterEncoding = isBody ? JSONEncodingWrapper(parameters: parameters) : URLEncoding()
 
         let xMethod = Alamofire.HTTPMethod(rawValue: method)
 
@@ -136,15 +142,11 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            do {
-                let request = try makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
-                if let onProgressReady = self.onProgressReady {
-                    onProgressReady(request.progress)
-                }
-                processRequest(request: request, managerId, completion)
-            } catch {
-                completion(nil, ErrorResponse.ClientError(error: error))
+            let request = try makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
+            if let onProgressReady = self.onProgressReady {
+                onProgressReady(request.progress)
             }
+            processRequest(request: request, managerId, completion)
         }
 
     }
