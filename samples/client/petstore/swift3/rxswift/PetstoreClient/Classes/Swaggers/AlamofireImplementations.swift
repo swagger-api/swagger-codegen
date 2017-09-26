@@ -43,7 +43,7 @@ private struct SynchronizedDictionary<K: Hashable, V> {
 
 }
 
-open class JSONEncodingWrapper: ParameterEncoding {
+class JSONEncodingWrapper: ParameterEncoding {
     var bodyParameters: Any?
     var encoding: JSONEncoding = JSONEncoding()
 
@@ -142,7 +142,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            let request = try makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
+            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
             if let onProgressReady = self.onProgressReady {
                 onProgressReady(request.progress)
             }
