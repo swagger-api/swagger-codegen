@@ -96,6 +96,12 @@ pub struct Client {
     hyper_client: Arc<Fn() -> hyper::client::Client + Sync + Send>,
 }
 
+impl fmt::Debug for Client {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Client {{ base_path: {} }}", self.base_path)
+    }
+}
+
 impl Client {
     pub fn try_new_http<T>(base_path: T) -> Result<Client, ClientInitError>
         where T: IntoUrl
