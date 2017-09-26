@@ -1,3 +1,5 @@
+{{>partial_header}}
+
 #' ApiClient Class
 #'
 #' Generic API client for Swagger client library builds.
@@ -14,37 +16,33 @@
 ApiClient  <- R6::R6Class(
   'ApiClient',
   public = list(
-    id = NULL,
-    name = NULL,
+    basePath = "{{{basePath}}}",
+    configuration = NULL,
     userAgent = NULL,
-    initialize = function(id, configuration, ){
-      if (!missing(id)) {
-        stopifnot(is.numeric(id), length(id) == 1)
-        self$id <- id
-      }
-      if (!missing(name)) {
-        stopifnot(is.character(name), length(name) == 1)
-        self$name <- name
-      }
+    defaultHeaders = NULL,
+    initialize = function(defaultHeaders = NULL){
+        self$`userAgent` <- '{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/r{{/httpUserAgent}}'
     },
-    callApi = function(urlPath, method, pathParams, queryParams, headerParams, postParams, files, responseType){
+    callApi = function(url, method, queryParams, headerParams, body){
+        headers <- httr::add_headers(headerParams)
+
         if (method == "GET") {
-            httr::GET(urlPath, queryParams, headerParams)
+            httr::GET(url, queryParams, headers)
         }
         else if (method == "POST") {
-            httr::POST(urlPath, queryParams, headerParams)
+            httr::POST(url, queryParams, headers, body = body)
         }
         else if (method == "PUT") {
-            httr::PUT(urlPath, queryParams, headerParams)
+            httr::PUT(url, queryParams, headers, body = body)
         }
         else if (method == "PATCH") {
-            httr::PATCH(urlPath, queryParams, headerParams)
+            httr::PATCH(url, queryParams, headers, body = body)
         }
         else if (method == "HEAD") {
-            httr::HEAD(urlPath, queryParams, headerParams)
+            httr::HEAD(url, queryParams, headers)
         }
         else if (method == "DELETE") {
-            httr::DELETE(urlPath, queryParams, headerParams)
+            httr::DELETE(url, queryParams, headers)
         }
         else {
             stop("http method must be `GET`, `HEAD`, `OPTIONS`, `POST`, `PATCH`, `PUT` or `DELETE`.")
