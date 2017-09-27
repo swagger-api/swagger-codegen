@@ -1417,6 +1417,153 @@ definitions:
         $ref: '#/definitions/OuterString'
       my_boolean:
         $ref: '#/definitions/OuterBoolean'
+  StringEnum:
+    type: string
+    enum:
+      - 1
+      - 2
+      - 3
+  ObjectWithStringEnum:
+    type: object
+    properties:
+      innerEnum:
+        type: string
+        enum:
+          - 10
+          - 20
+          - 30
+      arrayWithInnerEnum:
+        type: array
+        items:
+          type: string
+          enum:
+            - 100
+            - 200
+            - 300
+      arrayWithOuterEnum:
+        type: array
+        items:
+          $ref: '#/definitions/StringEnum'
+  IntegerEnum:
+    type: integer
+    format: int32
+    enum:
+      - 1
+      - 2
+      - 3
+  ObjectWithIntegerEnum:
+    type: object
+    properties:
+      innerEnum:
+        type: integer
+        format: int32
+        enum:
+          - 10
+          - 20
+          - 30
+      arrayWithInnerEnum:
+        type: array
+        items:
+          type: integer
+          format: int32
+          enum:
+            - 100
+            - 200
+            - 300
+      arrayWithOuterEnum:
+        type: array
+        items:
+          $ref: '#/definitions/IntegerEnum'
+  LongEnum:
+    type: integer
+    format: int64
+    enum:
+      - 1
+      - 2
+      - 3
+  ObjectWithLongEnum:
+    type: object
+    properties:
+      innerEnum:
+        type: integer
+        format: int64
+        enum:
+          - 10
+          - 20
+          - 30
+      arrayWithInnerEnum:
+        type: array
+        items:
+          type: integer
+          format: int64
+          enum:
+            - 100
+            - 200
+            - 300
+      arrayWithOuterEnum:
+        type: array
+        items:
+          $ref: '#/definitions/LongEnum'
+  FloatEnum:
+    type: number
+    format: float
+    enum:
+      - 1
+      - 2
+      - 3
+  ObjectWithFloatEnum:
+    type: object
+    properties:
+      innerEnum:
+        type: number
+        format: float
+        enum:
+          - 10
+          - 20
+          - 30
+      arrayWithInnerEnum:
+        type: array
+        items:
+          type: number
+          format: float
+          enum:
+            - 100
+            - 200
+            - 300
+      arrayWithOuterEnum:
+        type: array
+        items:
+          $ref: '#/definitions/FloatEnum'
+  DoubleEnum:
+    type: number
+    format: double
+    enum:
+      - 1
+      - 2
+      - 3
+  ObjectWithDoubleEnum:
+    type: object
+    properties:
+      innerEnum:
+        type: number
+        format: double
+        enum:
+          - 10
+          - 20
+          - 30
+      arrayWithInnerEnum:
+        type: array
+        items:
+          type: number
+          format: double
+          enum:
+            - 100
+            - 200
+            - 300
+      arrayWithOuterEnum:
+        type: array
+        items:
+          $ref: '#/definitions/DoubleEnum'
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
