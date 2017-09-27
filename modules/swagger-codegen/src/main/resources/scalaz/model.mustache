@@ -28,13 +28,13 @@ object {{classname}} {
 
   object {{datatypeWithEnum}} {
     def to{{datatypeWithEnum}}(s: String): Option[{{datatypeWithEnum}}] = s match {
-{{#_enum}}      case "{{.}}" => Some({{.}})
+{{#_enum}}      case "{{#fnEnumEntry}}{{.}}{{/fnEnumEntry}}" => Some({{#fnEnumEntry}}{{.}}{{/fnEnumEntry}})
 {{/_enum}}
       case _ => None
     }
 
     def from{{datatypeWithEnum}}(x: {{datatypeWithEnum}}): String = x match {
-{{#_enum}}      case {{.}} => "{{.}}"
+{{#_enum}}      case {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} => "{{#fnEnumEntry}}{{.}}{{/fnEnumEntry}}"
 {{/_enum}}
     }
   }

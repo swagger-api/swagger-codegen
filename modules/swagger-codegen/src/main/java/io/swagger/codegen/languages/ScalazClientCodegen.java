@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ScalazClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
-    
+
     public ScalazClientCodegen() {
         super();
         outputFolder        = "generated-code/scalaz";
@@ -55,6 +55,15 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
                 "private", "protected", "return", "sealed", "super", "this", "throw",
                 "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
             );
+
+        additionalProperties.put("apiPackage", apiPackage);
+
+        //theFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
+
+        supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
+        supportingFiles.add(new SupportingFile("dateTimeCodecs.mustache", (sourceFolder + File.separator + apiPackage).replace(".", File.separator), "DateTimeCodecs.scala"));
+        supportingFiles.add(new SupportingFile("HelperCodecs.mustache", (sourceFolder + File.separator + apiPackage).replace(".", File.separator), "HelperCodecs.scala"));
+        supportingFiles.add(new SupportingFile("QueryParamTypeclass.mustache", (sourceFolder + File.separator + apiPackage).replace(".", File.separator), "QueryParamTypeclass.scala"));
 
         importMapping.remove("List");
         importMapping.remove("Set");
@@ -81,7 +90,7 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
         typeMapping.put("number", "BigDecimal");
         typeMapping.put("date-time", "DateTime");
         typeMapping.put("date", "DateTime");
-        
+
 
         //instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("array", "ListBuffer");
@@ -240,4 +249,18 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
             return formatIdentifier(fragment, true);
         }
     }
+
+    // private static class JavadocLambda extends CustomLambda {
+    //     @Override
+    //     public String formatFragment(String fragment) {
+    //         final String[] lines = fragment.split("\\r?\\n");
+    //         final StringBuilder sb = new StringBuilder();
+    //         sb.append("  /**\n");
+    //         for (String line : lines) {
+    //             sb.append("   * ").append(line).append("\n");
+    //         }
+    //         sb.append("   */\n");
+    //         return sb.toString();
+    //     }
+    // }
 }

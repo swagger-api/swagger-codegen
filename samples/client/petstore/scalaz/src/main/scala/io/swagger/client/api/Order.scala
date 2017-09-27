@@ -27,16 +27,16 @@ object Order {
 
   object Status {
     def toStatus(s: String): Option[Status] = s match {
-      case "placed" => Some(placed)
-      case "approved" => Some(approved)
-      case "delivered" => Some(delivered)
+      case "Placed" => Some(Placed)
+      case "Approved" => Some(Approved)
+      case "Delivered" => Some(Delivered)
       case _ => None
     }
 
     def fromStatus(x: Status): String = x match {
-      case placed => "placed"
-      case approved => "approved"
-      case delivered => "delivered"
+      case Placed => "Placed"
+      case Approved => "Approved"
+      case Delivered => "Delivered"
     }
   }
 

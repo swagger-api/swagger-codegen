@@ -4,6 +4,7 @@ import argonaut._
 import argonaut.EncodeJson._
 import argonaut.DecodeJson._
 
+import java.io.File
 import java.net.URLEncoder
 import java.util.UUID
 
@@ -18,25 +19,17 @@ import org.joda.time.DateTime
 
 import scalaz.concurrent.Task
 
-object DateTimeCodecs {
-  implicit def dateTimeEncodeJson: EncodeJson[DateTime] =
-    EncodeJson[DateTime](dt => StringEncodeJson(dt.toString))
+import HelperCodecs._
 
-  implicit def dateTimeDecodeJson: DecodeJson[DateTime] =
-    DecodeJson.of[String].map(DateTime.parse(_)) setName "org.joda.time.DateTime"
-}
-
-object DefaultApi {
+object UserApi {
 
   val client = PooledHttp1Client()
 
   def escape(value: String): String = URLEncoder.encode(value, "utf-8").replaceAll("\\+", "%20")
 
-  def createUser(host: String, body: User)  = {
-    import body._
+  def createUser(host: String, body: User): Task[Unit] = {
+    val path = "/user"
     
-    
-    val path = "/user"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -48,14 +41,14 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def createUsersWithArrayInput(host: String, body: List[User])  = {
-    import body._
+  
+  def createUsersWithArrayInput(host: String, body: List[User]): Task[Unit] = {
+    val path = "/user/createWithArray"
     
-    
-    val path = "/user/createWithArray"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -67,14 +60,14 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def createUsersWithListInput(host: String, body: List[User])  = {
-    import body._
+  
+  def createUsersWithListInput(host: String, body: List[User]): Task[Unit] = {
+    val path = "/user/createWithList"
     
-    
-    val path = "/user/createWithList"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -86,15 +79,13 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def deleteUser(host: String, username: String)  = {
-    
-    
-    
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+  
+  def deleteUser(host: String, username: String): Task[Unit] = {
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.DELETE
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -107,15 +98,15 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def getUserByName(host: String, username: String) : Task[User] = {
-    
+  
+  def getUserByName(host: String, username: String): Task[User] = {
     implicit val returnTypeDecoder: EntityDecoder[User] = jsonOf[User]
-    
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -129,32 +120,34 @@ object DefaultApi {
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
       resp          <- client.expect[User](req)
+
     } yield resp
   }
-  def loginUser(host: String, username: String, password: String) : Task[String] = {
-    
+  
+  def loginUser(host: String, username: String, password: String)(implicit usernameQuery: QueryParam[String], passwordQuery: QueryParam[String]): Task[String] = {
     implicit val returnTypeDecoder: EntityDecoder[String] = jsonOf[String]
+
+    val path = "/user/login"
     
-    val path = "/user/login"    
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
       )
     val queryParams = Query(
-      (username, Some(username)), (password, Some(password)))
+      ("username", Some(usernameQuery.toParamString(username))), ("password", Some(passwordQuery.toParamString(password))))
 
     for {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
       resp          <- client.expect[String](req)
+
     } yield resp
   }
-  def logoutUser(host: String, )  = {
+  
+  def logoutUser(host: String): Task[Unit] = {
+    val path = "/user/logout"
     
-    
-    
-    val path = "/user/logout"    
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -166,15 +159,13 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def updateUser(host: String, username: String, body: User)  = {
-    import body._
-    
-    
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+  
+  def updateUser(host: String, username: String, body: User): Task[Unit] = {
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.PUT
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -187,21 +178,21 @@ object DefaultApi {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
+  
 }
 
-class HttpServiceApi(service: HttpService) {
+class HttpServiceUserApi(service: HttpService) {
   val client = Client.fromHttpService(service)
 
   def escape(value: String): String = URLEncoder.encode(value, "utf-8").replaceAll("\\+", "%20")
 
-  def createUser(body: User)  = {
-    import body._
+  def createUser(body: User): Task[Unit] = {
+    val path = "/user"
     
-
-    val path = "/user"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -213,14 +204,14 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def createUsersWithArrayInput(body: List[User])  = {
-    import body._
+  
+  def createUsersWithArrayInput(body: List[User]): Task[Unit] = {
+    val path = "/user/createWithArray"
     
-
-    val path = "/user/createWithArray"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -232,14 +223,14 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def createUsersWithListInput(body: List[User])  = {
-    import body._
+  
+  def createUsersWithListInput(body: List[User]): Task[Unit] = {
+    val path = "/user/createWithList"
     
-
-    val path = "/user/createWithList"    
     val httpMethod = Method.POST
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -251,15 +242,13 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def deleteUser(username: String)  = {
-    
-    
-
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+  
+  def deleteUser(username: String): Task[Unit] = {
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.DELETE
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -272,15 +261,15 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def getUserByName(username: String) : Task[User] = {
-    
+  
+  def getUserByName(username: String): Task[User] = {
     implicit val returnTypeDecoder: EntityDecoder[User] = jsonOf[User]
 
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -294,32 +283,34 @@ class HttpServiceApi(service: HttpService) {
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
       resp          <- client.expect[User](req)
+
     } yield resp
   }
-  def loginUser(username: String, password: String) : Task[String] = {
-    
+  
+  def loginUser(username: String, password: String)(implicit usernameQuery: QueryParam[String], passwordQuery: QueryParam[String]): Task[String] = {
     implicit val returnTypeDecoder: EntityDecoder[String] = jsonOf[String]
 
-    val path = "/user/login"    
+    val path = "/user/login"
+    
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
       )
     val queryParams = Query(
-      (username, Some(username)), (password, Some(password)))
+      ("username", Some(usernameQuery.toParamString(username))), ("password", Some(passwordQuery.toParamString(password))))
 
     for {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
       resp          <- client.expect[String](req)
+
     } yield resp
   }
-  def logoutUser()  = {
+  
+  def logoutUser(): Task[Unit] = {
+    val path = "/user/logout"
     
-    
-
-    val path = "/user/logout"    
     val httpMethod = Method.GET
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
@@ -331,15 +322,13 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType))
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
-  def updateUser(username: String, body: User)  = {
-    import body._
-    
-
-    val path = "/user/{username}"
-      .replaceAll("\\{" + "username" + "\\}",escape(username.toString))
+  
+  def updateUser(username: String, body: User): Task[Unit] = {
+    val path = "/user/{username}".replaceAll("\\{" + "username" + "\\}",escape(username.toString))
     
     val httpMethod = Method.PUT
     val contentType = `Content-Type`(MediaType.`application/json`)
@@ -352,8 +341,10 @@ class HttpServiceApi(service: HttpService) {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)).withBody(body)
-      resp          <- client.expect[](req)
+      resp          <- client.fetch[Unit](req)(_ => Task.now(()))
+
     } yield resp
   }
+  
 }
 

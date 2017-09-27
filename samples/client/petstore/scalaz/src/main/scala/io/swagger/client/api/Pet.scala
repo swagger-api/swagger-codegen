@@ -27,16 +27,16 @@ object Pet {
 
   object Status {
     def toStatus(s: String): Option[Status] = s match {
-      case "available" => Some(available)
-      case "pending" => Some(pending)
-      case "sold" => Some(sold)
+      case "Available" => Some(Available)
+      case "Pending" => Some(Pending)
+      case "Sold" => Some(Sold)
       case _ => None
     }
 
     def fromStatus(x: Status): String = x match {
-      case available => "available"
-      case pending => "pending"
-      case sold => "sold"
+      case Available => "Available"
+      case Pending => "Pending"
+      case Sold => "Sold"
     }
   }
 

@@ -4,6 +4,7 @@ import argonaut._
 import argonaut.EncodeJson._
 import argonaut.DecodeJson._
 
+import java.io.File
 import java.net.URLEncoder
 import java.util.UUID
 
@@ -18,76 +19,65 @@ import org.joda.time.DateTime
 
 import scalaz.concurrent.Task
 
-object DateTimeCodecs {
-  implicit def dateTimeEncodeJson: EncodeJson[DateTime] =
-    EncodeJson[DateTime](dt => StringEncodeJson(dt.toString))
-
-  implicit def dateTimeDecodeJson: DecodeJson[DateTime] =
-    DecodeJson.of[String].map(DateTime.parse(_)) setName "org.joda.time.DateTime"
-}
+import HelperCodecs._
 
 {{#operations}}
-object DefaultApi {
+object {{classname}} {
 
   val client = PooledHttp1Client()
 
   def escape(value: String): String = URLEncoder.encode(value, "utf-8").replaceAll("\\+", "%20")
 
   {{#operation}}
-  def {{nickname}}(host: String, {{#allParams}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#returnType}}: Task[{{returnType}}]{{/returnType}} = {
-    {{#bodyParam}}import {{paramName}}._{{/bodyParam}}
-    {{#returnType}}implicit val returnTypeDecoder: EntityDecoder[{{returnType}}] = jsonOf[{{returnType}}]{{/returnType}}
-    
-    val path = "{{path}}"{{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}",escape({{paramName}}.toString))
-    {{/pathParams}}
+  def {{nickname}}(host: String{{#allParams}}{{#-first}}, {{/-first}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#queryParams}}{{#-first}}(implicit {{/-first}}{{paramName}}Query: QueryParam[{{dataType}}]{{^-last}}, {{/-last}}{{#-last}}){{/-last}}{{/queryParams}}: {{>operationReturnType}}{{#returnType}}    implicit val returnTypeDecoder: EntityDecoder[{{returnType}}] = jsonOf[{{returnType}}]
+
+{{/returnType}}
+    val path = "{{path}}"{{#pathParams}}.replaceAll("\\{" + "{{baseName}}" + "\\}",escape({{paramName}}.toString)){{/pathParams}}
     
     val httpMethod = Method.{{httpMethod}}
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
       {{#headerParams}}Header("{{baseName}}", {{paramName}}){{^-last}}, {{/-last}}{{/headerParams}})
     val queryParams = Query(
-      {{#queryParams}}({{paramName}}, Some({{baseName}})){{^-last}}, {{/-last}}{{/queryParams}})
+      {{#queryParams}}("{{paramName}}", Some({{baseName}}Query.toParamString({{baseName}}))){{^-last}}, {{/-last}}{{/queryParams}})
 
     for {
       uri           <- Task.fromDisjunction(Uri.fromString(host + path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)){{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
-      resp          <- client.expect[{{returnType}}](req)
+      {{>clientFunction}}
     } yield resp
   }
+  
   {{/operation}}
 }
 
-class HttpServiceApi(service: HttpService) {
+class HttpService{{classname}}(service: HttpService) {
   val client = Client.fromHttpService(service)
 
   def escape(value: String): String = URLEncoder.encode(value, "utf-8").replaceAll("\\+", "%20")
 
   {{#operation}}
-  def {{nickname}}({{#allParams}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#returnType}}: Task[{{returnType}}]{{/returnType}} = {
-    {{#bodyParam}}import {{paramName}}._{{/bodyParam}}
-    {{#returnType}}implicit val returnTypeDecoder: EntityDecoder[{{returnType}}] = jsonOf[{{returnType}}]{{/returnType}}
+  def {{nickname}}({{#allParams}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#queryParams}}{{#-first}}(implicit {{/-first}}{{paramName}}Query: QueryParam[{{dataType}}]{{^-last}}, {{/-last}}{{#-last}}){{/-last}}{{/queryParams}}: {{>operationReturnType}}{{#returnType}}    implicit val returnTypeDecoder: EntityDecoder[{{returnType}}] = jsonOf[{{returnType}}]
 
-    val path = "{{path}}"{{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}",escape({{paramName}}.toString))
-    {{/pathParams}}
+{{/returnType}}
+    val path = "{{path}}"{{#pathParams}}.replaceAll("\\{" + "{{baseName}}" + "\\}",escape({{paramName}}.toString)){{/pathParams}}
     
     val httpMethod = Method.{{httpMethod}}
     val contentType = `Content-Type`(MediaType.`application/json`)
     val headers = Headers(
       {{#headerParams}}Header("{{baseName}}", {{paramName}}){{^-last}}, {{/-last}}{{/headerParams}})
     val queryParams = Query(
-      {{#queryParams}}({{paramName}}, Some({{baseName}})){{^-last}}, {{/-last}}{{/queryParams}})
+      {{#queryParams}}("{{paramName}}", Some({{baseName}}Query.toParamString({{baseName}}))){{^-last}}, {{/-last}}{{/queryParams}})
 
     for {
       uri           <- Task.fromDisjunction(Uri.fromString(path))
       uriWithParams =  uri.copy(query = queryParams)
       req           =  Request(method = httpMethod, uri = uriWithParams, headers = headers.put(contentType)){{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
-      resp          <- client.expect[{{returnType}}](req)
+      {{>clientFunction}}
     } yield resp
   }
+  
   {{/operation}}
 }
-
 {{/operations}}
