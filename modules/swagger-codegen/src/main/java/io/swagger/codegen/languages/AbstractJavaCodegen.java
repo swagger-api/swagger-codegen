@@ -662,7 +662,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else if (p instanceof LongProperty) {
             LongProperty dp = (LongProperty) p;
             if (dp.getDefault() != null) {
-                return dp.getDefault().toString()+"l";
+                return dp.getDefault().toString()+"L";
             }
            return "null";
         } else if (p instanceof DoubleProperty) {
@@ -980,9 +980,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         // number
-        if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
-            String varName = "NUMBER_" + value;
+        if (representsInteger(datatype) || representsLong(datatype) ||
+                representsFloat(datatype) || representsDouble(datatype)) {
+            String varName = "NUMBER_" + forceDotOnDecimal(value, datatype);
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");
@@ -999,17 +999,21 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     @Override
-    public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Double".equals(datatype)) {
-            return value;
-        } else if ("Long".equals(datatype)) {
-            // add l to number, e.g. 2048 => 2048l
-            return value + "l";
-        } else if ("Float".equals(datatype)) {
+    public String toEnumValue(final String value, final String datatype) {
+        final String varValue = forceDotOnDecimal(value, datatype);
+        if (representsInteger(datatype)) {
+            return varValue;
+        } else if (representsLong(datatype)) {
+            // add L to number, e.g. 2048 => 2048L
+            return varValue + "L";
+        } else if (representsDouble(datatype)) {
+            // add d to number, e.g. 3.14 => 3.14d
+            return varValue + "d";
+        } else if (representsFloat(datatype)) {
             // add f to number, e.g. 3.14 => 3.14f
-            return value + "f";
+            return varValue + "f";
         } else {
-            return "\"" + escapeText(value) + "\"";
+            return "\"" + escapeText(varValue) + "\"";
         }
     }
 
@@ -1018,6 +1022,40 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
         op.path = sanitizePath(op.path);
         return op;
+    }
+
+    /**
+     * Depending on a property or model the values for enums will be differently read.
+     * To ensure equality between models, which are enums, and inner enum as properties this
+     * method will force a decimal point on decimal numbers if it doesn't contain it, yet.
+     * <p>
+     * So decimal enums will always look the same in the generated model:
+     * 1   => NUMBER_1_DOT_0(1.0d)
+     * 1.0 => NUMBER_1_DOT_0(1.0d)
+     */
+    private static String forceDotOnDecimal(final String value, final String datatype) {
+        if (representsFloat(datatype) || representsDouble(datatype)) {
+            if (!value.contains(".")) {
+                return value + ".0";
+            }
+        }
+        return value;
+    }
+
+    private static boolean representsInteger(final String datatype) {
+        return "Integer".equals(datatype) || "List<Integer>".equals(datatype);
+    }
+
+    private static boolean representsDouble(final String datatype) {
+        return "Double".equals(datatype) || "List<Double>".equals(datatype);
+    }
+
+    private static boolean representsFloat(final String datatype) {
+        return "Float".equals(datatype) || "List<Float>".equals(datatype);
+    }
+
+    private static boolean representsLong(final String datatype) {
+        return "Long".equals(datatype) || "List<Long>".equals(datatype);
     }
 
     private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
