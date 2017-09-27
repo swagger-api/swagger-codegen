@@ -20,9 +20,14 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonElement;
+import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.TypeSelector;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
+
+import io.swagger.client.model.*;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -31,6 +36,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 public class JSON {
     private Gson gson;
@@ -39,8 +46,25 @@ public class JSON {
     private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
 
+    public static GsonBuilder createGson() {
+        GsonFireBuilder fireBuilder = new GsonFireBuilder()
+          .registerTypeSelector(Animal.class, new TypeSelector() {
+            @Override
+            public Class getClassForElement(JsonElement readElement) {
+                Map classByDiscriminatorValue = new HashMap();
+                classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
+                classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
+                String discriminatorField = "className";
+                String discriminatorValue = readElement.getAsJsonObject().get(discriminatorField).getAsString();
+                return (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
+            }
+          })
+        ;
+        return fireBuilder.createGsonBuilder();
+    }
+
     public JSON() {
-        gson = new GsonBuilder()
+        gson = createGson()
             .registerTypeAdapter(Date.class, dateTypeAdapter)
             .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
             .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
