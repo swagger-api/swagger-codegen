@@ -1,6 +1,8 @@
 sudo: required
 language: objective-c
 osx_image: xcode8.2
+env:
+  - ELIXIR="v1.5.1"
 cache:
   directories:
   - $HOME/.m2
