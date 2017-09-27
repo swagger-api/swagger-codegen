@@ -199,4 +199,3 @@ class HttpServiceStoreApi(service: HttpService) {
   }
   
 }
-

@@ -355,4 +355,3 @@ class HttpServicePetApi(service: HttpService) {
   }
   
 }
-

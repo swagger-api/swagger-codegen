@@ -347,4 +347,3 @@ class HttpServiceUserApi(service: HttpService) {
   }
   
 }
-

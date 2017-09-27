@@ -58,8 +58,6 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
 
         additionalProperties.put("apiPackage", apiPackage);
 
-        //theFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
-
         supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("dateTimeCodecs.mustache", (sourceFolder + File.separator + apiPackage).replace(".", File.separator), "DateTimeCodecs.scala"));
         supportingFiles.add(new SupportingFile("HelperCodecs.mustache", (sourceFolder + File.separator + apiPackage).replace(".", File.separator), "HelperCodecs.scala"));
@@ -249,18 +247,4 @@ public class ScalazClientCodegen extends AbstractScalaCodegen implements Codegen
             return formatIdentifier(fragment, true);
         }
     }
-
-    // private static class JavadocLambda extends CustomLambda {
-    //     @Override
-    //     public String formatFragment(String fragment) {
-    //         final String[] lines = fragment.split("\\r?\\n");
-    //         final StringBuilder sb = new StringBuilder();
-    //         sb.append("  /**\n");
-    //         for (String line : lines) {
-    //             sb.append("   * ").append(line).append("\n");
-    //         }
-    //         sb.append("   */\n");
-    //         return sb.toString();
-    //     }
-    // }
 }
