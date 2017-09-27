@@ -14,6 +14,7 @@ build:
     - sudo apt-get update
     - sudo apt-get install esl-erlang
     - sudo apt-get install elixir
+    - elixir --version
   ci:
     - cp pom.xml.shippable pom.xml
     - mvn verify -P samples
