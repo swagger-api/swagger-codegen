@@ -482,10 +482,10 @@ public class CodegenTest {
     @DataProvider(name = "fromModelEnumTest")
     public static Object[][] fromModelEnumTest() {
         return new Object[][]{
-                {"IntegerEnum", true, false, "integer", Arrays.asList(1, 2, 3)},
-                {"LongEnum", false, false, "long", Arrays.asList(1, 2, 3) /* this seems wrong, the SwaggerParser should read the enum values as Long not as Integer */},
-                {"FloatEnum", false, true, "float", Arrays.asList("1", "2", "3") /* this seems wrong, the SwaggerParser should read the enum values as Float not as String */},
-                {"DoubleEnum", false, false, "double", Arrays.asList("1", "2", "3") /* this seems wrong, the SwaggerParser should read the enum values as Double not as String */},
+                {"IntegerEnum", true, false, "integer", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"LongEnum", false, false, "long", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"FloatEnum", false, true, "float", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"DoubleEnum", false, false, "double", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
         };
     }
 
