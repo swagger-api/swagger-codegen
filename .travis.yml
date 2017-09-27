@@ -1,6 +1,8 @@
 sudo: required
 language: objective-c
 osx_image: xcode8.2
+env:
+  - ELIXIR="v1.5.1"
 cache:
   directories:
   - $HOME/.m2
@@ -57,6 +59,11 @@ before_install:
   - mkdir -p ~/.local/bin
   - export PATH=$HOME/.local/bin:$PATH
   - travis_retry curl --insecure -L https://www.stackage.org/stack/osx-x86_64 | tar xz --strip-components=1 --include '*/stack' -C ~/.local/bin
+  # for elixir
+  - brew install elixir
+  #- mkdir -p vendor/elixir
+  #- wget -q https://github.com/elixir-lang/elixir/releases/download/$ELIXIR/Precompiled.zip && unzip -qq Precompiled.zip -d vendor/elixir
+  #- export PATH="$PATH:$PWD/vendor/elixir/bin"
   # start local petstore server
   - git clone -b docker --single-branch https://github.com/wing328/swagger-samples
   - cd swagger-samples/java/java-jersey-jaxrs

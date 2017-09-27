@@ -10,7 +10,15 @@ build:
   cache_dir_list:
     - $HOME/.m2
   ci:
+    - wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+    - sudo apt-get update
+    - sudo apt-get install esl-erlang
+    - sudo apt-get install elixir
+    - elixir --version
+    - mix --version
+    - cp pom.xml.shippable pom.xml
+    - mvn verify -P samples
     # generate all petstore sampless (client, servers, doc)
-    - ./bin/run-all-petstore 2>&1 > run-all-petstore.log
-  post_ci:
-    - tail run-all-petstore.log
+    #- ./bin/run-all-petstore 2>&1 > run-all-petstore.log
+    #  post_ci:
+    #    - tail run-all-petstore.log
