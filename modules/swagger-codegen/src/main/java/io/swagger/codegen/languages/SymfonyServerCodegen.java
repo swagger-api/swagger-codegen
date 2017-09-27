@@ -105,9 +105,6 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
             )
         );
 
-        //instantiationTypes.put("array", "array");
-        //instantiationTypes.put("map", "map");
-
         defaultIncludes = new HashSet<String>(
             Arrays.asList(
                 "\\DateTime",
@@ -340,9 +337,6 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 if (response.dataType != null) {
                     final String dataType = extractSimpleName(response.dataType);
                     response.vendorExtensions.put("x-simpleName", dataType);
-                    // if (!typeMapping.containsValue(dataType)) {
-                    //     imports.add(response.dataType.replaceFirst("\\[\\]$", ""));
-                    // }
                 }
             }
 
