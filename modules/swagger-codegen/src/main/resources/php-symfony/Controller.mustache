@@ -22,6 +22,10 @@ namespace {{controllerPackage}};
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use {{servicePackage}}\StrictJsonDeserializationVisitor;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\Naming\CamelCaseNamingStrategy;
+use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 
 /**
  * Controller Class Doc Comment
@@ -33,7 +37,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class Controller extends BaseController
 {
-
 	/**
 	 * This will return a response with code 400. Usage example:
 	 *     return $this->createBadRequestResponse('Unable to access this page!');
@@ -75,9 +78,9 @@ class Controller extends BaseController
 	 *
 	 * @return string A serialized data string.
 	 */
-	public function serialize($data, $format)
+	protected function serialize($data, $format)
 	{
-		return $this->get('{{bundleAlias}}.model.model_serializer')->serialize($data, $format);
+		return $this->get('jms_serializer')->serialize($data, $format);
 	}
 
 	/**
@@ -89,10 +92,25 @@ class Controller extends BaseController
 	 *
 	 * @return mixed A deserialized data.
 	 */
-	public function deserialize($data, $class, $format)
+	protected function deserialize($data, $class, $format)
 	{
-		return $this->get('{{bundleAlias}}.model.model_serializer')->deserialize($data, $class, $format);
+		$naming_strategy = new SerializedNameAnnotationStrategy(new CamelCaseNamingStrategy());
+		$serializer = SerializerBuilder::create()
+			->setDeserializationVisitor($format, new StrictJsonDeserializationVisitor($naming_strategy))
+			->build();
+
+		return $serializer->deserialize($data, $class, $format);
 	}
+
+	protected function validate($data, $asserts = null)
+    {
+        $errors = $this->get('validator')->validate($data, $asserts);
+
+        if (count($errors) > 0) {
+            $errorsString = (string)$errors;
+            return $this->createBadRequestResponse($errorsString);
+        }
+    }
 
 	/**
 	 * Decodes a string value.

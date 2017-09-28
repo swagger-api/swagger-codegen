@@ -32,7 +32,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
     protected String bundleExtensionName;
     protected String bundleAlias;
     protected String controllerDirName = "Controller";
+    protected String serviceDirName = "Service";
     protected String controllerPackage;
+    protected String servicePackage;
     protected Boolean phpLegacySupport = Boolean.TRUE;
 
     protected HashSet<String> typeHintable;
@@ -239,6 +241,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
 
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
         additionalProperties.put("controllerPackage", controllerPackage);
+        additionalProperties.put("servicePackage", servicePackage);
         additionalProperties.put("apiTestsPackage", apiTestsPackage);
         additionalProperties.put("modelTestsPackage", modelTestsPackage);
 
@@ -274,6 +277,8 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         supportingFiles.add(new SupportingFile("ApiServer.mustache", toPackagePath(apiPackage, srcBasePath), "ApiServer.php"));
         supportingFiles.add(new SupportingFile("ModelSerializer.mustache", toPackagePath(modelPackage, srcBasePath), "ModelSerializer.php"));
         supportingFiles.add(new SupportingFile("ModelInterface.mustache", toPackagePath(modelPackage, srcBasePath), "ModelInterface.php"));
+        supportingFiles.add(new SupportingFile("StrictJsonDeserializationVisitor.mustache", toPackagePath(servicePackage, srcBasePath), "StrictJsonDeserializationVisitor.php"));
+        supportingFiles.add(new SupportingFile("TypeMismatchException.mustache", toPackagePath(servicePackage, srcBasePath), "TypeMismatchException.php"));
         supportingFiles.add(new SupportingFile("routing.mustache", configDir, "routing.yml"));
         supportingFiles.add(new SupportingFile("services.mustache", configDir, "services.yml"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
@@ -419,6 +424,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         apiTestsPackage = testsPackage + "\\" + apiDirName;
         modelTestsPackage = testsPackage + "\\" + modelDirName;
         controllerPackage = invokerPackage + "\\" + controllerDirName;
+        servicePackage = invokerPackage + "\\" + serviceDirName;
     }
 
     @Override
@@ -476,6 +482,15 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
             return name;
         } else {
             return modelPackage() + "\\" + name;
+        }
+    }
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            return value;
+        } else {
+            return "\"" + escapeText(value) + "\"";
         }
     }
 

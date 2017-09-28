@@ -21,6 +21,9 @@
 
 namespace {{modelPackage}};
 
+use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\SerializedName;
 {{^isEnum}}
 {{#useStatements}}use {{this}};
 {{/useStatements}}
@@ -36,5 +39,5 @@ namespace {{modelPackage}};
  * @package {{modelPackage}}
  * @author  Swagger Codegen team
  */
-{{#isEnum}}{{>model_enum}}{{/isEnum}}{{^isEnum}}{{>model_generic}}{{/isEnum}}
+{{>model_generic}}
 {{/model}}{{/models}}

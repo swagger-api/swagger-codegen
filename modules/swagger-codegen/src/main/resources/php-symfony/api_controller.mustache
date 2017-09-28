@@ -101,6 +101,10 @@ class {{controllerName}} extends Controller
         {{#bodyParams}}
         // Handle body params
         ${{paramName}} = $this->deserialize($request->getContent(), '{{{dataType}}}', 'json');
+        $response = $this->validate(${{paramName}});
+        if ($response instanceof Response) {
+            return $response;
+        }
         {{/bodyParams}}
 
         // Parse incoming parameters
