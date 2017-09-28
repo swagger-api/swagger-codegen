@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace  {
+namespace IO.Swagger.Model {
 
   /// <summary>
   /// An order for a pets from the pet store

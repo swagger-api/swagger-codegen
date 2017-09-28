@@ -216,7 +216,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     private void generateModelDocumentation(List<File> files, Map<String, Object> models, String modelName) throws IOException {
-        models.put("modelPackage", config.modelPackage());
         for (String templateName : config.modelDocTemplateFiles().keySet()) {
             String suffix = config.modelDocTemplateFiles().get(templateName);
             String filename = config.modelDocFileFolder() + File.separator + config.toModelDocFilename(modelName) + suffix;
@@ -336,6 +335,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         // generate files based on processed models
         for (String modelName : allProcessedModels.keySet()) {
             Map<String, Object> models = (Map<String, Object>) allProcessedModels.get(modelName);
+            models.put("modelPackage", config.modelPackage());
             try {
                 //don't generate models that have an import mapping
                 if (config.importMapping().containsKey(modelName)) {

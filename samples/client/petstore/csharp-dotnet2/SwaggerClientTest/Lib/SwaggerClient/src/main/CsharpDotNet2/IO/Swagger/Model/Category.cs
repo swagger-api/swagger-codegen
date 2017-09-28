@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace  {
+namespace IO.Swagger.Model {
 
   /// <summary>
   /// A category for a pet
