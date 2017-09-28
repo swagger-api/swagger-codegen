@@ -74,7 +74,7 @@ public class EnumTest implements Parcelable {
 
       @Override
       public EnumStringEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return EnumStringEnum.fromValue(String.valueOf(value));
       }
     }
@@ -124,7 +124,7 @@ public class EnumTest implements Parcelable {
 
       @Override
       public EnumIntegerEnum read(final JsonReader jsonReader) throws IOException {
-        Integer value = jsonReader.nextInt();
+        Object value = jsonReader.nextInt();
         return EnumIntegerEnum.fromValue(String.valueOf(value));
       }
     }
@@ -138,9 +138,9 @@ public class EnumTest implements Parcelable {
    */
   @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
-    NUMBER_1_DOT_1(1.1),
+    NUMBER_1_DOT_1(1.1d),
     
-    NUMBER_MINUS_1_DOT_2(-1.2);
+    NUMBER_MINUS_1_DOT_2(-1.2d);
 
     private Double value;
 
@@ -174,7 +174,7 @@ public class EnumTest implements Parcelable {
 
       @Override
       public EnumNumberEnum read(final JsonReader jsonReader) throws IOException {
-        Double value = jsonReader.nextDouble();
+        Object value = jsonReader.nextDouble();
         return EnumNumberEnum.fromValue(String.valueOf(value));
       }
     }
