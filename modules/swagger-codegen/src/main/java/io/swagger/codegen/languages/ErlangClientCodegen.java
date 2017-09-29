@@ -264,6 +264,10 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             // force http method to lower case
             o.httpMethod = o.httpMethod.toLowerCase();
 
+            if (o.isListContainer) {
+                o.returnType = "[" + o.returnBaseType + "]";
+            }
+
             ArrayList<String> pathTemplateNames = new ArrayList<String>();
             Matcher matcher = pattern.matcher(o.path);
             StringBuffer buffer = new StringBuffer();

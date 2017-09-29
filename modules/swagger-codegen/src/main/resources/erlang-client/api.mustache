@@ -11,7 +11,7 @@
 {{^notes.isEmpty}}
 %% {{notes}}
 {{/notes.isEmpty}}
--spec {{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{dataType}}{{/allParams}}) -> {{#returnType}}{{returnBaseType}}{{/returnType}}{{^returnType}}ok{{/returnType}}.
+-spec {{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{dataType}}{{/allParams}}) -> {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}ok{{/returnType}}.
 {{operationId}}({{#allParams}}{{^-first}}, {{/-first}}{{paramName}}{{/allParams}}) ->
     Method = {{httpMethod}},
     Path = ["{{{replacedPathName}}}"],
@@ -29,6 +29,7 @@
             {{#hasProduces}}{{#produces}}
               <<"{{{mediaType}}}", _/binary>> ->
                   {ok, Body} = hackney:body(ClientRef),
+
                   jsx:decode(Body, [returns_maps, {labels, attempt_atom}]){{#hasMore}}; {{/hasMore}}{{/produces}}
             {{/hasProduces}}
             end{{^-last}}; {{/-last}}
