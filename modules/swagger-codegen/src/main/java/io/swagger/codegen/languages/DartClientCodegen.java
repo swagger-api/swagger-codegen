@@ -393,6 +393,9 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
             enumVar.put("name", name);
             enumVar.put("value", toEnumValue(
                     value.get("numericValue").toString(), cm.dataType));
+            if (value.containsKey("description")) {
+                enumVar.put("description", value.get("description").toString());
+            }
             enumVars.add(enumVar);
         }
         cm.allowableValues.put("enumVars", enumVars);
