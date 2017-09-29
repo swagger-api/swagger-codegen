@@ -25,6 +25,7 @@ import { Pet } from '../model/pet';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import { CustomQueryEncoderHelper }                          from '../encoder';
 
 
 @Injectable()
@@ -45,7 +46,7 @@ export class PetService {
     }
 
     /**
-     * 
+     *
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
@@ -71,6 +72,11 @@ export class PetService {
             }
         }
         return false;
+    }
+
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
     }
 
     /**
@@ -215,7 +221,7 @@ export class PetService {
     public addPetWithHttpInfo(body: Pet, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet';
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
@@ -229,6 +235,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -238,7 +248,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -264,9 +274,9 @@ export class PetService {
      */
     public deletePetWithHttpInfo(petId: number, apiKey?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
+                    .replace('${' + 'petId' + '}', encodeURIComponent(String(petId)));
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'petId' is not null or undefined
@@ -284,6 +294,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -293,7 +307,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
@@ -316,7 +330,7 @@ export class PetService {
     public findPetsByStatusWithHttpInfo(status: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/findByStatus';
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'status' is not null or undefined
@@ -334,6 +348,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -343,7 +361,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -366,7 +384,7 @@ export class PetService {
     public findPetsByTagsWithHttpInfo(tags: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/findByTags';
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'tags' is not null or undefined
@@ -384,6 +402,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -393,7 +415,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -415,9 +437,9 @@ export class PetService {
      */
     public getPetByIdWithHttpInfo(petId: number, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
+                    .replace('${' + 'petId' + '}', encodeURIComponent(String(petId)));
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'petId' is not null or undefined
@@ -431,12 +453,16 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
             headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
-            
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -459,7 +485,7 @@ export class PetService {
     public updatePetWithHttpInfo(body: Pet, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet';
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'body' is not null or undefined
@@ -473,6 +499,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -482,7 +512,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -509,9 +539,9 @@ export class PetService {
      */
     public updatePetWithFormWithHttpInfo(petId: number, name?: string, status?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/${petId}'
-                    .replace('${' + 'petId' + '}', String(petId));
+                    .replace('${' + 'petId' + '}', encodeURIComponent(String(petId)));
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'petId' is not null or undefined
@@ -522,6 +552,11 @@ export class PetService {
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
         ];
+
+        if (consumes != null && consumes.length > 0) {
+            headers.set('Content-Type', consumes.filter(item => this.isJsonMime(item)).join(";"));
+        }
+
         let canConsumeForm = this.canConsumeForm(consumes);
         let useForm = false;
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
@@ -534,6 +569,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -543,7 +582,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         if (name !== undefined) {
             formParams.set('name', <any>name);
         }
@@ -576,9 +615,9 @@ export class PetService {
      */
     public uploadFileWithHttpInfo(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + '/pet/${petId}/uploadImage'
-                    .replace('${' + 'petId' + '}', String(petId));
+                    .replace('${' + 'petId' + '}', encodeURIComponent(String(petId)));
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // verify required parameter 'petId' is not null or undefined
@@ -589,6 +628,11 @@ export class PetService {
         let consumes: string[] = [
             'multipart/form-data'
         ];
+
+        if (consumes != null && consumes.length > 0) {
+            headers.set('Content-Type', consumes.filter(item => this.isJsonMime(item)).join(";"));
+        }
+
         let canConsumeForm = this.canConsumeForm(consumes);
         let useForm = false;
         useForm = canConsumeForm;
@@ -601,6 +645,10 @@ export class PetService {
             'application/json'
         ];
 
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -610,7 +658,7 @@ export class PetService {
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-            
+
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
