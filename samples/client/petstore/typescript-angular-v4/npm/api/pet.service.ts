@@ -59,11 +59,6 @@ export class PetService {
         return false;
     }
 
-    public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$');
-        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
-    }
-
     /**
      * 
      * @summary Add a new pet to the store
@@ -210,10 +205,6 @@ export class PetService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
-
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -254,20 +245,6 @@ export class PetService {
             headers.set('api_key', String(apiKey));
         }
 
-<<<<<<< HEAD
-=======
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/xml',
-            'application/json'
-        ];
-
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
-
->>>>>>> master
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -286,7 +263,7 @@ export class PetService {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
         }
 
-        return this.http.request(`${this.basePath}/pet/${petId}`, requestOptions);
+        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(petId)}`, requestOptions);
     }
 
     /**
@@ -305,10 +282,6 @@ export class PetService {
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
@@ -349,10 +322,6 @@ export class PetService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
-
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -387,10 +356,6 @@ export class PetService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
-
         // authentication (api_key) required
         if (this.configuration.apiKeys["api_key"]) {
             headers.set('api_key', this.configuration.apiKeys["api_key"]);
@@ -406,7 +371,7 @@ export class PetService {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
         }
 
-        return this.http.request(`${this.basePath}/pet/${petId}`, requestOptions);
+        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(petId)}`, requestOptions);
     }
 
     /**
@@ -420,10 +385,6 @@ export class PetService {
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
@@ -460,29 +421,8 @@ export class PetService {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
-<<<<<<< HEAD
-=======
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/x-www-form-urlencoded'
-        ];
-
-        if (consumes != null && consumes.length > 0) {
-            headers.set('Content-Type', consumes.filter(item => this.isJsonMime(item)).join(";"));
-        }
-
-        let canConsumeForm = this.canConsumeForm(consumes);
-        let useForm = false;
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
->>>>>>> master
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
 
         // authentication (petstore_auth) required
         if (this.configuration.accessToken) {
@@ -519,7 +459,7 @@ export class PetService {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
         }
 
-        return this.http.request(`${this.basePath}/pet/${petId}`, requestOptions);
+        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(petId)}`, requestOptions);
     }
 
     /**
@@ -548,40 +488,12 @@ export class PetService {
         let consumes: string[] = [
             'multipart/form-data'
         ];
-
-        if (consumes != null && consumes.length > 0) {
-            headers.set('Content-Type', consumes.filter(item => this.isJsonMime(item)).join(";"));
-        }
-
         let canConsumeForm = this.canConsumeForm(consumes);
         let useForm = false;
         useForm = canConsumeForm;
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
           set(param: string, value: any): void;
         };
-<<<<<<< HEAD
-=======
-
-        // to determine the Accept header
-        let produces: string[] = [
-            'application/json'
-        ];
-
-        if (produces != null && produces.length > 0) {
-            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
-        }
-
-        // authentication (petstore_auth) required
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-            
->>>>>>> master
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
@@ -600,7 +512,7 @@ export class PetService {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
         }
 
-        return this.http.request(`${this.basePath}/pet/${petId}/uploadImage`, requestOptions);
+        return this.http.request(`${this.basePath}/pet/${encodeURIComponent(petId)}/uploadImage`, requestOptions);
     }
 
 }

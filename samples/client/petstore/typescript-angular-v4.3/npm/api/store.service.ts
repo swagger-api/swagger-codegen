@@ -62,14 +62,14 @@ export class StoreService {
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      * @param orderId ID of the order that needs to be deleted
      */
-    public deleteOrder(orderId: string, ): Observable<{}> {
+    public deleteOrder(orderId: string): Observable<{}> {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
         let headers = this.defaultHeaders;
 
-        return this.httpClient.delete<any>(`${this.basePath}/store/order/${orderId}`, {
+        return this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(orderId)}`, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -99,14 +99,14 @@ export class StoreService {
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      * @param orderId ID of pet that needs to be fetched
      */
-    public getOrderById(orderId: number, ): Observable<Order> {
+    public getOrderById(orderId: number): Observable<Order> {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
         let headers = this.defaultHeaders;
 
-        return this.httpClient.get<any>(`${this.basePath}/store/order/${orderId}`, {
+        return this.httpClient.get<any>(`${this.basePath}/store/order/${encodeURIComponent(orderId)}`, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -117,7 +117,7 @@ export class StoreService {
      * 
      * @param body order placed for purchasing the pet
      */
-    public placeOrder(body: Order, ): Observable<Order> {
+    public placeOrder(body: Order): Observable<Order> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }

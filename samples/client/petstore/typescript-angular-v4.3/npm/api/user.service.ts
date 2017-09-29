@@ -62,7 +62,7 @@ export class UserService {
      * This can only be done by the logged in user.
      * @param body Created user object
      */
-    public createUser(body: User, ): Observable<{}> {
+    public createUser(body: User): Observable<{}> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -80,7 +80,7 @@ export class UserService {
      * 
      * @param body List of user object
      */
-    public createUsersWithArrayInput(body: Array<User>, ): Observable<{}> {
+    public createUsersWithArrayInput(body: Array<User>): Observable<{}> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -98,7 +98,7 @@ export class UserService {
      * 
      * @param body List of user object
      */
-    public createUsersWithListInput(body: Array<User>, ): Observable<{}> {
+    public createUsersWithListInput(body: Array<User>): Observable<{}> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -116,14 +116,14 @@ export class UserService {
      * This can only be done by the logged in user.
      * @param username The name that needs to be deleted
      */
-    public deleteUser(username: string, ): Observable<{}> {
+    public deleteUser(username: string): Observable<{}> {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
         let headers = this.defaultHeaders;
 
-        return this.httpClient.delete<any>(`${this.basePath}/user/${username}`, {
+        return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(username)}`, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -134,14 +134,14 @@ export class UserService {
      * 
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
-    public getUserByName(username: string, ): Observable<User> {
+    public getUserByName(username: string): Observable<User> {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
         let headers = this.defaultHeaders;
 
-        return this.httpClient.get<any>(`${this.basePath}/user/${username}`, {
+        return this.httpClient.get<any>(`${this.basePath}/user/${encodeURIComponent(username)}`, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -153,7 +153,7 @@ export class UserService {
      * @param username The user name for login
      * @param password The password for login in clear text
      */
-    public loginUser(username: string, password: string, ): Observable<string> {
+    public loginUser(username: string, password: string): Observable<string> {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
@@ -198,7 +198,7 @@ export class UserService {
      * @param username name that need to be deleted
      * @param body Updated user object
      */
-    public updateUser(username: string, body: User, ): Observable<{}> {
+    public updateUser(username: string, body: User): Observable<{}> {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
@@ -208,7 +208,7 @@ export class UserService {
 
         let headers = this.defaultHeaders;
 
-        return this.httpClient.put<any>(`${this.basePath}/user/${username}`, body, {
+        return this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(username)}`, body, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
