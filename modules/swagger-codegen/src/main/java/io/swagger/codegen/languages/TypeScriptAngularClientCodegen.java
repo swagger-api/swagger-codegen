@@ -247,8 +247,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 }
             }
 
-            // Convert path to TypeScript template string
-            op.path = op.path.replaceAll("\\{(.*?)\\}", "\\$\\{$1\\}");
+            // Convert path to TypeScript template string, applying URI encoding
+            op.path = op.path.replaceAll("\\{(.*?)\\}", "\\$\\{encodeURIComponent($1)\\}");
         }
 
         // Add additional filename information for model imports in the services

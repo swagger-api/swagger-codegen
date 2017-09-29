@@ -58,6 +58,11 @@ export class UserService {
         return false;
     }
 
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
     /**
      * This can only be done by the logged in user.
      * @summary Create user
@@ -200,6 +205,14 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -228,6 +241,14 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -256,6 +277,14 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -277,13 +306,32 @@ export class UserService {
      * This can only be done by the logged in user.
      * @param username The name that needs to be deleted
      */
+<<<<<<< HEAD
     public deleteUserWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+=======
+    public deleteUserWithHttpInfo(username: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + '/user/${username}'
+                    .replace('${' + 'username' + '}', encodeURIComponent(String(username)));
+
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // verify required parameter 'username' is not null or undefined
+>>>>>>> master
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
@@ -302,13 +350,32 @@ export class UserService {
      * 
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
+<<<<<<< HEAD
     public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+=======
+    public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + '/user/${username}'
+                    .replace('${' + 'username' + '}', encodeURIComponent(String(username)));
+
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // verify required parameter 'username' is not null or undefined
+>>>>>>> master
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -346,6 +413,20 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/xml',
+            'application/json'
+        ];
+
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -368,6 +449,21 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/xml',
+            'application/json'
+        ];
+
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
@@ -387,7 +483,18 @@ export class UserService {
      * @param username name that need to be deleted
      * @param body Updated user object
      */
+<<<<<<< HEAD
     public updateUserWithHttpInfo(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+=======
+    public updateUserWithHttpInfo(username: string, body: User, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + '/user/${username}'
+                    .replace('${' + 'username' + '}', encodeURIComponent(String(username)));
+
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // verify required parameter 'username' is not null or undefined
+>>>>>>> master
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
@@ -397,6 +504,14 @@ export class UserService {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
+<<<<<<< HEAD
+=======
+        if (produces != null && produces.length > 0) {
+            headers.set('Accept', produces.filter(item => this.isJsonMime(item)).join(';'));
+        }
+
+            
+>>>>>>> master
         headers.set('Content-Type', 'application/json');
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
