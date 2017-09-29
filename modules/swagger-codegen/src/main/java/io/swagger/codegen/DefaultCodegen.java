@@ -3256,7 +3256,13 @@ public class DefaultCodegen {
         p = Pattern.compile("(_)(.)");
         m = p.matcher(word);
         while (m.find()) {
-            word = m.replaceFirst(m.group(2).toUpperCase());
+            String original = m.group(2);
+            String upperCase = original.toUpperCase();
+            if (original.equals(upperCase)) {
+                word = word.replaceFirst("_", "");
+            } else {
+                word = m.replaceFirst(upperCase);
+            }
             m = p.matcher(word);
         }
 
@@ -3503,7 +3509,7 @@ public class DefaultCodegen {
 
         // tag starts with numbers
         if (tag.matches("^\\d.*")) {
-            tag = "_" + tag;
+            tag = "Class" + tag;
         }
 
         return tag;
