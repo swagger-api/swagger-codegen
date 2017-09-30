@@ -38,20 +38,20 @@ export default class StoreApi {
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param {String} orderId ID of the order that needs to be deleted
+     * @param {String} order_id ID of the order that needs to be deleted
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
-    deleteOrderWithHttpInfo(orderId) {
+    deleteOrderWithHttpInfo(order_id) {
       let postBody = null;
 
-      // verify the required parameter 'orderId' is set
-      if (orderId === undefined || orderId === null) {
-        throw new Error("Missing the required parameter 'orderId' when calling deleteOrder");
+      // verify the required parameter 'order_id' is set
+      if (order_id === undefined || order_id === null) {
+        throw new Error("Missing the required parameter 'order_id' when calling deleteOrder");
       }
 
 
       let pathParams = {
-        'order_id': orderId
+        'order_id': order_id
       };
       let queryParams = {
       };
@@ -75,11 +75,11 @@ export default class StoreApi {
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param {String} orderId ID of the order that needs to be deleted
+     * @param {String} order_id ID of the order that needs to be deleted
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
-    deleteOrder(orderId) {
-      return this.deleteOrderWithHttpInfo(orderId)
+    deleteOrder(order_id) {
+      return this.deleteOrderWithHttpInfo(order_id)
         .then(function(response_and_data) {
           return response_and_data.data;
         });
@@ -132,20 +132,20 @@ export default class StoreApi {
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-     * @param {Number} orderId ID of pet that needs to be fetched
+     * @param {Number} order_id ID of pet that needs to be fetched
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Order} and HTTP response
      */
-    getOrderByIdWithHttpInfo(orderId) {
+    getOrderByIdWithHttpInfo(order_id) {
       let postBody = null;
 
-      // verify the required parameter 'orderId' is set
-      if (orderId === undefined || orderId === null) {
-        throw new Error("Missing the required parameter 'orderId' when calling getOrderById");
+      // verify the required parameter 'order_id' is set
+      if (order_id === undefined || order_id === null) {
+        throw new Error("Missing the required parameter 'order_id' when calling getOrderById");
       }
 
 
       let pathParams = {
-        'order_id': orderId
+        'order_id': order_id
       };
       let queryParams = {
       };
@@ -169,11 +169,11 @@ export default class StoreApi {
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-     * @param {Number} orderId ID of pet that needs to be fetched
+     * @param {Number} order_id ID of pet that needs to be fetched
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Order}
      */
-    getOrderById(orderId) {
-      return this.getOrderByIdWithHttpInfo(orderId)
+    getOrderById(order_id) {
+      return this.getOrderByIdWithHttpInfo(order_id)
         .then(function(response_and_data) {
           return response_and_data.data;
         });

@@ -63,7 +63,7 @@
       obj = obj || new exports();
 
       if (data.hasOwnProperty('$special[property.name]')) {
-        obj['$special[property.name]'] = ApiClient.convertToType(data['$special[property.name]'], 'Number');
+        obj['$special[property.name]'] = ApiClient.convertToType(data['special_property_name'], 'Number');
       }
     }
     return obj;

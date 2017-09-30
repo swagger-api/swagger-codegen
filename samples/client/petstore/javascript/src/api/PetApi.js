@@ -107,7 +107,7 @@
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @param {module:api/PetApi~deletePetCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.deletePet = function(petId, opts, callback) {
@@ -128,7 +128,7 @@
       var collectionQueryParams = {
       };
       var headerParams = {
-        'api_key': opts['apiKey']
+        'api_key': opts['api_key']
       };
       var formParams = {
       };

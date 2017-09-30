@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mapMapOfString** | **{String: {String: String}}** |  | [optional] 
-**mapOfEnumString** | **{String: String}** |  | [optional] 
+**map_map_of_string** | **{String: {String: String}}** |  | [optional] 
+**map_of_enum_string** | **{String: String}** |  | [optional] 
 
 
 <a name="{String: String}"></a>

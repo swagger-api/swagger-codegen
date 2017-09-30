@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**myNumber** | [**OuterNumber**](OuterNumber.md) |  | [optional] 
-**myString** | [**OuterString**](OuterString.md) |  | [optional] 
-**myBoolean** | [**OuterBoolean**](OuterBoolean.md) |  | [optional] 
+**my_number** | [**OuterNumber**](OuterNumber.md) |  | [optional] 
+**my_string** | [**OuterString**](OuterString.md) |  | [optional] 
+**my_boolean** | [**OuterBoolean**](OuterBoolean.md) |  | [optional] 
 
 

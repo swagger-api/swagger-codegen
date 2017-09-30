@@ -11,27 +11,20 @@
  *
  */
 
+import expect, { createSpy, spyOn, isSpy } from 'expect';
+
 (function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
-  } else {
-    // Browser globals (root is window)
-    factory(root.expect, root.SwaggerPetstore);
-  }
+
 }(this, function(expect, SwaggerPetstore) {
   'use strict';
 
-  var instance;
+  let instance;
 
   beforeEach(function() {
     instance = new SwaggerPetstore.Name();
   });
 
-  var getProperty = function(object, getter, property) {
+  let getProperty = function(object, getter, property) {
     // Use getter method if present; otherwise, get the property directly.
     if (typeof object[getter] === 'function')
       return object[getter]();
@@ -39,7 +32,7 @@
       return object[property];
   }
 
-  var setProperty = function(object, setter, property, value) {
+  let setProperty = function(object, setter, property, value) {
     // Use setter method if present; otherwise, set the property directly.
     if (typeof object[setter] === 'function')
       object[setter](value);
@@ -60,8 +53,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property snakeCase (base name: "snake_case")', function() {
-      // uncomment below and update the code to test the property snakeCase
+    it('should have the property snake_case (base name: "snake_case")', function() {
+      // uncomment below and update the code to test the property snake_case
       //var instane = new SwaggerPetstore.Name();
       //expect(instance).to.be();
     });
@@ -72,8 +65,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property _123Number (base name: "123Number")', function() {
-      // uncomment below and update the code to test the property _123Number
+    it('should have the property var123Number (base name: "123Number")', function() {
+      // uncomment below and update the code to test the property var123Number
       //var instane = new SwaggerPetstore.Name();
       //expect(instance).to.be();
     });

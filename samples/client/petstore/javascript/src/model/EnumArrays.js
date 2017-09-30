@@ -93,15 +93,15 @@
      * value: ">="
      * @const
      */
-    "GREATER_THAN_OR_EQUAL_TO": ">=",
+    "": ">=",
     /**
      * value: "$"
      * @const
      */
-    "DOLLAR": "$"  };
+    "value": "$"  };
 
   /**
-   * Allowed values for the <code>arrayEnum</code> property.
+   * Allowed values for the <code>array_enum</code> property.
    * @enum {String}
    * @readonly
    */

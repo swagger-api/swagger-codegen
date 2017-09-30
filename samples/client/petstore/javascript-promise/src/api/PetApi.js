@@ -106,7 +106,7 @@
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
     this.deletePetWithHttpInfo = function(petId, opts) {
@@ -127,7 +127,7 @@
       var collectionQueryParams = {
       };
       var headerParams = {
-        'api_key': opts['apiKey']
+        'api_key': opts['api_key']
       };
       var formParams = {
       };
@@ -149,7 +149,7 @@
      * 
      * @param {Number} petId Pet id to delete
      * @param {Object} opts Optional parameters
-     * @param {String} opts.apiKey 
+     * @param {String} opts.api_key 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
     this.deletePet = function(petId, opts) {

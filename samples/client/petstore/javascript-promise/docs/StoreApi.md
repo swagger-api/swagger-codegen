@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="deleteOrder"></a>
 # **deleteOrder**
-> deleteOrder(orderId)
+> deleteOrder(order_id)
 
 Delete purchase order by ID
 
@@ -24,9 +24,9 @@ var SwaggerPetstore = require('swagger_petstore');
 
 var apiInstance = new SwaggerPetstore.StoreApi();
 
-var orderId = "orderId_example"; // String | ID of the order that needs to be deleted
+var order_id = "order_id_example"; // String | ID of the order that needs to be deleted
 
-apiInstance.deleteOrder(orderId).then(function() {
+apiInstance.deleteOrder(order_id).then(function() {
   console.log('API called successfully.');
 }, function(error) {
   console.error(error);
@@ -38,7 +38,7 @@ apiInstance.deleteOrder(orderId).then(function() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **String**| ID of the order that needs to be deleted | 
+ **order_id** | **String**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -99,7 +99,7 @@ This endpoint does not need any parameter.
 
 <a name="getOrderById"></a>
 # **getOrderById**
-> Order getOrderById(orderId)
+> Order getOrderById(order_id)
 
 Find purchase order by ID
 
@@ -111,9 +111,9 @@ var SwaggerPetstore = require('swagger_petstore');
 
 var apiInstance = new SwaggerPetstore.StoreApi();
 
-var orderId = 789; // Number | ID of pet that needs to be fetched
+var order_id = 789; // Number | ID of pet that needs to be fetched
 
-apiInstance.getOrderById(orderId).then(function(data) {
+apiInstance.getOrderById(order_id).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -125,7 +125,7 @@ apiInstance.getOrderById(orderId).then(function(data) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **Number**| ID of pet that needs to be fetched | 
+ **order_id** | **Number**| ID of pet that needs to be fetched | 
 
 ### Return type
 
