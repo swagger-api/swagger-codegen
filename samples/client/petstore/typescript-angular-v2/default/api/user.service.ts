@@ -58,6 +58,12 @@ export class UserService {
         return false;
     }
 
+
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
     /**
      * This can only be done by the logged in user.
      * @summary Create user

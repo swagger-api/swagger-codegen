@@ -68,6 +68,12 @@ export class {{classname}} {
         return false;
     }
 
+
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
 {{^useHttpClient}}
 {{! not sure why we used to generate a second method here rather than inlining those few lines of code, 
     but let's keep it for now for the sake of backwards compatiblity. }}  

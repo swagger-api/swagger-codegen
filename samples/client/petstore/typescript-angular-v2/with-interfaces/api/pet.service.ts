@@ -60,6 +60,11 @@ export class PetService implements PetServiceInterface {
         return false;
     }
 
+    public isJsonMime(mime: string): boolean {
+        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+    }
+
     /**
      * 
      * @summary Add a new pet to the store
@@ -442,6 +447,7 @@ export class PetService implements PetServiceInterface {
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
           set(param: string, value: any): void;
         };
+
         if (name !== undefined) {
             formParams.set('name', <any>name);
         }
@@ -495,6 +501,7 @@ export class PetService implements PetServiceInterface {
         let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
           set(param: string, value: any): void;
         };
+
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
