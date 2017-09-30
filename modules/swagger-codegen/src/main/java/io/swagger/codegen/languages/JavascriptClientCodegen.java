@@ -485,38 +485,32 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     }
 
     @Override
-    public String toVarName(String name) {
-        // sanitize name
+    public String toVarName(final String name) {
+        String varName = name;
 
+        varName = sanitizeName(varName);
+
+        if("_".equals(varName)) {
+          varName = "_u";
+        }
+        
         // var name starts with number
-        if (name.matches("^\\d.*")) {
-            String varName = "var" + name; // e.g. 200data => var200Data (after camelize)
-            LOGGER.warn(name + " (variable name starts with number) cannot be used as variable name. Renamed to " + varName);
-            name = varName;
+        if (varName.matches("^\\d.*")) {
+            varName = "var" + varName; // e.g. 200Data => var200Data
         }
 
-        name = sanitizeName(name);  // FIXME parameter should not be assigned. Also declare it as "final"
-
-
-        if("_".equals(name)) {
-          name = "_u";
+        // we only camelize if it's all uppper case
+        if (!varName.matches("^[A-Z_]*$")) {
+            // pet_id => petId, _u => _u we want to keey the first _
+            varName = (varName.charAt(0) == '_' ? "_" : "") + camelize(varName, true); 
         }
 
-        // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$")) {
-            return name;
+        // for reserved word, prepend _
+        if (isReservedWord(varName)) {
+            varName = escapeReservedWord(varName);
         }
 
-        // camelize (lower first character) the variable name
-        // pet_id => petId
-        //name = camelize(name, true);
-
-        // for reserved word or word starting with number, append _
-        if (isReservedWord(name) || name.matches("^\\d.*")) {
-            name = escapeReservedWord(name);
-        }
-
-        return name;
+        return varName;
     }
 
     @Override

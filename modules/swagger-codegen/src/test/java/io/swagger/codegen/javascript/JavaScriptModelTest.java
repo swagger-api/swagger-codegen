@@ -379,7 +379,7 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.baseName, "created-at");
         Assert.assertEquals(property.getter, "getCreatedAt");
         Assert.assertEquals(property.setter, "setCreatedAt");
-        Assert.assertEquals(property.name, "created_at");
+        Assert.assertEquals(property.name, "createdAt");
     }
 
     @Test(description = "convert query[password] to queryPassword")
@@ -394,7 +394,7 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.baseName, "query[password]");
         Assert.assertEquals(property.getter, "getQueryPassword");
         Assert.assertEquals(property.setter, "setQueryPassword");
-        Assert.assertEquals(property.name, "query_password");
+        Assert.assertEquals(property.name, "queryPassword");
     }
 
     @Test(description = "properly escape names per 567")

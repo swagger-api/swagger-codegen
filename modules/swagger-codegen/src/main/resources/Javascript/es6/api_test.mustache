@@ -1,8 +1,9 @@
 {{>licenseInfo}}
-import expect, { createSpy, spyOn, isSpy } from 'expect';
+import expect from 'expect';
+import {{moduleName}} from '../../src/index';
 
 (function(root, factory) {
-
+  factory(expect, {{moduleName}});
 }(this, function(expect, {{moduleName}}) {
   'use strict';
 
