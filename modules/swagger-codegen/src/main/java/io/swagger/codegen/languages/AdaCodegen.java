@@ -11,10 +11,8 @@ import io.swagger.models.Swagger;
 import io.swagger.models.properties.*;
 
 public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
-    public static final String USER_INFO_PATH = "userInfoPath";
     protected String packageName = "swagger";
     protected String projectName = "Swagger";
-    protected String userInfoPath = "/var/www/html/";
     protected List<Map<String, Object>> orderedModels;
     protected Map<String, List<String>> modelDepends;
 
@@ -47,21 +45,14 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         typeMapping.put("long", "Swagger.Long");
         typeMapping.put("boolean", "Boolean");
         typeMapping.put("array", "Swagger.Vector");
-        typeMapping.put("map", "ASF.Types.Map");
+        typeMapping.put("map", "Swagger.Map");
         typeMapping.put("object", "Swagger.Object");
         typeMapping.put("number", "Swagger.Number");
-        typeMapping.put("UUID", "Swagger.String");
+        typeMapping.put("UUID", "Swagger.UString");
         typeMapping.put("file", "Swagger.Http_Content_Type");
         typeMapping.put("binary", "Swagger.Binary");
 
         super.importMapping = new HashMap<String, String>();
-        importMapping.put("std::vector", "#include <vector>");
-        importMapping.put("std::map", "#include <map>");
-        importMapping.put("std::string", "#include <string>");
-        importMapping.put("HttpContent", "#include \"HttpContent.h\"");
-        importMapping.put("Object", "#include \"Object.h\"");
-        importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
-        importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
     }
 
     @Override
@@ -76,7 +67,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
 
     @Override
     public String getHelp() {
-        return "Generates an Ada server implementation";
+        return "Generates an Ada client implementation";
     }
 
     protected void addOption(String key, String description, String defaultValue) {
@@ -106,9 +97,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("client-body.mustache", null, clientPrefix + "-clients.adb"));
         supportingFiles.add(new SupportingFile("server-spec.mustache", null, serverPrefix + "-servers.ads"));
         supportingFiles.add(new SupportingFile("server-body.mustache", null, serverPrefix + "-servers.adb"));
-        if (additionalProperties.containsKey(USER_INFO_PATH)) {
-            userInfoPath = additionalProperties.get(USER_INFO_PATH).toString();
-        }
+
         // String title = swagger.getInfo().getTitle();
         supportingFiles.add(new SupportingFile("gnat-project.mustache", "", "project.gpr"));
 
@@ -226,6 +215,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
      * for the corresponding type.
      *
      * @param types the list of media types.
+     * @return the number of media types.
      */
     protected int postProcessMediaTypes(List<Map<String, String>> types) {
         int count = 0;
@@ -254,8 +244,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
-                    if(cm.datatype == "HttpContent")
-                    {
+                    if(cm.datatype == "HttpContent") {
                         op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
                     }
                 }
@@ -271,21 +260,9 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
 
         for (CodegenOperation op1 : operationList) {
-            if (postProcessMediaTypes(op1.produces) == 1) {
-                op1.vendorExtensions.put("x-has-uniq-produces", Boolean.TRUE);
-            } else {
-                op1.vendorExtensions.put("x-has-uniq-produces", Boolean.FALSE);
-            }
-            if (postProcessMediaTypes(op1.consumes) == 1) {
-                op1.vendorExtensions.put("x-has-uniq-consumes", Boolean.TRUE);
-            } else {
-                op1.vendorExtensions.put("x-has-uniq-consumes", Boolean.FALSE);
-            }
-            if (op1.notes.length() > 0) {
-                op1.vendorExtensions.put("x-has-notes", Boolean.TRUE);
-            } else {
-                op1.vendorExtensions.put("x-has-notes", Boolean.FALSE);
-            }
+            op1.vendorExtensions.put("x-has-uniq-produces", postProcessMediaTypes(op1.produces) == 1);
+            op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
+            op1.vendorExtensions.put("x-has-notes", op1.notes.length() > 0);
         }
         return objs;
     }
