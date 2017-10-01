@@ -29,7 +29,6 @@
 namespace Swagger\Client;
 
 use \Swagger\Client\Configuration;
-use \Swagger\Client\ApiClient;
 use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
 
@@ -49,7 +48,6 @@ class Fake_classname_tags123ApiTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-
     }
 
     /**
@@ -57,7 +55,6 @@ class Fake_classname_tags123ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-
     }
 
     /**
@@ -65,7 +62,6 @@ class Fake_classname_tags123ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-
     }
 
     /**
@@ -73,7 +69,6 @@ class Fake_classname_tags123ApiTest extends \PHPUnit_Framework_TestCase
      */
     public static function tearDownAfterClass()
     {
-
     }
 
     /**
@@ -84,7 +79,5 @@ class Fake_classname_tags123ApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testTestClassname()
     {
-
     }
-
 }

@@ -639,16 +639,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 return null;
             }
 
-            String typeDeclaration = getTypeDeclaration(ap.getItems());
-            Object java8obj = additionalProperties.get("java8");
-            if (java8obj != null) {
-                Boolean java8 = Boolean.valueOf(java8obj.toString());
-                if (java8 != null && java8) {
-                    typeDeclaration = "";
-                }
-            }
-
-            return String.format(pattern, typeDeclaration);
+            return String.format(pattern, getTypeDeclaration(ap.getItems()));
         } else if (p instanceof MapProperty) {
             final MapProperty ap = (MapProperty) p;
             final String pattern;
@@ -661,16 +652,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 return null;
             }
 
-            String typeDeclaration = String.format("String, %s", getTypeDeclaration(ap.getAdditionalProperties()));
-            Object java8obj = additionalProperties.get("java8");
-            if (java8obj != null) {
-                Boolean java8 = Boolean.valueOf(java8obj.toString());
-                if (java8 != null && java8) {
-                    typeDeclaration = "";
-                }
-            }
-
-            return String.format(pattern, typeDeclaration);
+            return String.format(pattern, String.format("String, %s", getTypeDeclaration(ap.getAdditionalProperties())));
         } else if (p instanceof IntegerProperty) {
             IntegerProperty dp = (IntegerProperty) p;
             if (dp.getDefault() != null) {
@@ -1018,9 +1000,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Double".equals(datatype)) {
             return value;
+        } else if ("Long".equals(datatype)) {
+            // add l to number, e.g. 2048 => 2048l
+            return value + "l";
         } else if ("Float".equals(datatype)) {
             // add f to number, e.g. 3.14 => 3.14f
             return value + "f";
@@ -1243,11 +1227,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
-    }
-
-    @Override
-    public String sanitizeTag(String tag) {
-        return camelize(sanitizeName(tag));
     }
 
     /**

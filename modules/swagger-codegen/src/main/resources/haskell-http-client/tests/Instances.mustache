@@ -1,0 +1,75 @@
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
+
+module Instances where
+
+import Data.Text (Text, pack)
+import Data.Char (isSpace)
+import Data.List (sort)
+import qualified Data.Time as TI
+import Test.QuickCheck
+import qualified Data.HashMap.Strict as HM
+import qualified Data.Set as Set
+import qualified Data.ByteString.Lazy as BL
+
+import ApproxEq
+import {{title}}.Model
+
+instance Arbitrary Text where
+  arbitrary = pack <$> arbitrary
+
+instance Arbitrary TI.Day where
+  arbitrary = TI.ModifiedJulianDay . (2000 +) <$> arbitrary
+  shrink = (TI.ModifiedJulianDay <$>) . shrink . TI.toModifiedJulianDay
+
+instance Arbitrary TI.UTCTime where
+  arbitrary =
+    TI.UTCTime <$> arbitrary <*> (TI.secondsToDiffTime <$> choose (0, 86401))
+
+instance Arbitrary BL.ByteString where
+    arbitrary = BL.pack <$> arbitrary
+    shrink xs = BL.pack <$> shrink (BL.unpack xs)
+
+instance Arbitrary ByteArray where
+    arbitrary = ByteArray <$> arbitrary
+    shrink (ByteArray xs) = ByteArray <$> shrink xs
+
+instance Arbitrary Binary where
+    arbitrary = Binary <$> arbitrary
+    shrink (Binary xs) = Binary <$> shrink xs
+
+instance Arbitrary DateTime where
+    arbitrary = DateTime <$> arbitrary
+    shrink (DateTime xs) = DateTime <$> shrink xs
+
+instance Arbitrary Date where
+    arbitrary = Date <$> arbitrary
+    shrink (Date xs) = Date <$> shrink xs
+
+-- | Checks if a given list has no duplicates in _O(n log n)_.
+hasNoDups
+  :: (Ord a)
+  => [a] -> Bool
+hasNoDups = go Set.empty
+  where
+    go _ [] = True
+    go s (x:xs)
+      | s' <- Set.insert x s
+      , Set.size s' > Set.size s = go s' xs
+      | otherwise = False
+
+instance ApproxEq TI.Day where
+  (=~) = (==)
+
+-- * Models
+ 
+{{#models}}
+{{#model}}
+instance Arbitrary {{classname}} where
+  arbitrary =
+    {{^hasVars}}pure {{/hasVars}}{{classname}}
+    {{#hasVars}}  <$>{{/hasVars}} {{#vars}}arbitrary -- {{name}} :: {{^required}}Maybe {{/required}}{{datatype}}
+    {{#hasMore}}  <*> {{/hasMore}}{{/vars}}
+
+{{/model}}
+{{/models}}
+

@@ -4,7 +4,6 @@ io.swagger.codegen.languages.AndroidClientCodegen
 io.swagger.codegen.languages.Apache2ConfigCodegen
 io.swagger.codegen.languages.ApexClientCodegen
 io.swagger.codegen.languages.AspNetCoreServerCodegen
-io.swagger.codegen.languages.AsyncScalaClientCodegen
 io.swagger.codegen.languages.BashClientCodegen
 io.swagger.codegen.languages.CSharpClientCodegen
 io.swagger.codegen.languages.ClojureClientCodegen
@@ -21,6 +20,7 @@ io.swagger.codegen.languages.FlaskConnexionCodegen
 io.swagger.codegen.languages.GoClientCodegen
 io.swagger.codegen.languages.GoServerCodegen
 io.swagger.codegen.languages.GroovyClientCodegen
+io.swagger.codegen.languages.HaskellHttpClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
 io.swagger.codegen.languages.JMeterCodegen
 io.swagger.codegen.languages.JavaCXFClientCodegen
@@ -51,6 +51,7 @@ io.swagger.codegen.languages.PowerShellClientCodegen
 io.swagger.codegen.languages.PistacheServerCodegen
 io.swagger.codegen.languages.PythonClientCodegen
 io.swagger.codegen.languages.Qt5CPPGenerator
+io.swagger.codegen.languages.RClientCodegen
 io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.RestbedCodegen
 io.swagger.codegen.languages.RubyClientCodegen
@@ -70,9 +71,9 @@ io.swagger.codegen.languages.Swift4Codegen
 io.swagger.codegen.languages.Swift3Codegen
 io.swagger.codegen.languages.SwiftCodegen
 io.swagger.codegen.languages.TizenClientCodegen
-io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen
-io.swagger.codegen.languages.TypeScriptAngularClientCodegen
 io.swagger.codegen.languages.TypeScriptAureliaClientCodegen
+io.swagger.codegen.languages.TypeScriptAngularClientCodegen
+io.swagger.codegen.languages.TypeScriptAngularJsClientCodegen
 io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
