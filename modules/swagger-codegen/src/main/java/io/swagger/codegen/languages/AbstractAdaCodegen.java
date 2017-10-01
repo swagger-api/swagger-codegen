@@ -139,27 +139,12 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
 
     @Override
     public String toOperationId(String operationId) {
-        String sanitizedOperationId = sanitizeName(operationId);
-
-        return toAdaIdentifier(sanitizedOperationId, "Call_");
+        return toAdaIdentifier(sanitizeName(operationId), "Call_");
     }
 
     @Override
     public String toVarName(String name) {
-        if (reservedWords.contains(name)) {
-            return escapeReservedWord(name);
-        }
-        if (typeMapping.keySet().contains(name) || typeMapping.values().contains(name)
-                || importMapping.values().contains(name) || defaultIncludes.contains(name)
-                || languageSpecificPrimitives.contains(name)) {
-            return sanitizeName(name);
-        }
-
-        if (name.length() > 1) {
-            return sanitizeName(Character.toUpperCase(name.charAt(0)) + name.substring(1));
-        }
-
-        return sanitizeName(name);
+        return toAdaIdentifier(sanitizeName(name), "P_");
     }
 
     @Override
