@@ -1448,7 +1448,10 @@ public class DefaultCodegen {
                     typeAliases.put(name, impl.getType());
                     m.isAlias = true;
                 }
-                m.dataType = getSwaggerType(p);
+                final String dataType = getSwaggerType(p);
+                m.dataType = dataType;
+                m.isInteger = "Integer".equalsIgnoreCase(dataType);
+                m.isFloat = "Float".equalsIgnoreCase(dataType);
             }
             if(impl.getEnum() != null && impl.getEnum().size() > 0) {
                 m.isEnum = true;

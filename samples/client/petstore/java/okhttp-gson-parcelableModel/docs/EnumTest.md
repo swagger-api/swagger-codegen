@@ -31,8 +31,8 @@ NUMBER_MINUS_1 | -1
 ## Enum: EnumNumberEnum
 Name | Value
 ---- | -----
-NUMBER_1_DOT_1 | 1.1
-NUMBER_MINUS_1_DOT_2 | -1.2
+NUMBER_1_DOT_1 | 1.1d
+NUMBER_MINUS_1_DOT_2 | -1.2d
 
 
 

@@ -7,9 +7,18 @@ import io.swagger.models.properties.Property;
 import io.swagger.parser.SwaggerParser;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 
 public class CodegenTest {
 
@@ -219,7 +228,7 @@ public class CodegenTest {
         Assert.assertTrue(op.responses.get(0).isFile);
         Assert.assertTrue(op.isResponseFile);
     }
-    
+
     @Test(description = "discriminator is present")
     public void discriminatorTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/discriminatorTest.json");
@@ -361,7 +370,7 @@ public class CodegenTest {
         final String path = "/tests/localConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/json");
@@ -369,7 +378,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/json");
     }
-    
+
     @Test(description = "use spec consumes and produces")
     public void globalConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -377,7 +386,7 @@ public class CodegenTest {
         final String path = "/tests/globalConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/global_consumes");
@@ -385,7 +394,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/global_produces");
     }
- 
+
     @Test(description = "use operation consumes and produces (reset in operation with empty array)")
     public void localResetConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -393,7 +402,7 @@ public class CodegenTest {
         final String path = "/tests/localResetConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertNotNull(op);
         Assert.assertFalse(op.hasConsumes);
         Assert.assertNull(op.consumes);
@@ -418,5 +427,111 @@ public class CodegenTest {
         final CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions());
 
         Assert.assertTrue(op.isDeprecated);
+    }
+
+    @Test(description = "Setting the values for defined object")
+    public void fromModelObjectTest() throws NoSuchFieldException, IllegalAccessException {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Model model = swagger.getDefinitions().get("Category");
+        final CodegenModel codegenModel = new DefaultCodegen().fromModel("Category", model, swagger.getDefinitions());
+
+        // test the not set fields
+        for (final String fieldName : Arrays.asList("parent", "parentSchema", "interfaces", "parentModel", "interfaceModels",
+                "children", "title", "description", "xmlPrefix", "xmlNamespace", "unescapedDescription", "discriminator",
+                "defaultValue", "arrayModelType", "allowableValues", "externalDocs", "additionalPropertiesType")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertNull(field.get(codegenModel), "Field: " + fieldName);
+        }
+        // test the boolean fields
+        for (final String fieldName : Arrays.asList("isAlias", "emptyVars", "hasMoreModels", "hasEnums", "isEnum",
+                "hasRequired", "isArrayModel", "hasChildren", "isInteger", "isFloat", "hasOnlyReadOnly")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertFalse(field.getBoolean(codegenModel), "Field: " + fieldName);
+        }
+        // test the variables fields - they have all the same content
+        for (final String varsFieldName : Arrays.asList("vars", "optionalVars", "readWriteVars", "allVars")) {
+            final Field field = CodegenModel.class.getField(varsFieldName);
+            final List<CodegenProperty> vars = (List<CodegenProperty>) field.get(codegenModel);
+
+            final Set<List<String>> variables = new HashSet<>();
+            for (final CodegenProperty codegenProperty : vars) {
+                variables.add(Arrays.asList(codegenProperty.baseName, codegenProperty.datatype));
+            }
+            Assert.assertEquals(variables, new HashSet<>(
+                    Arrays.asList(Arrays.asList("id", "Long"), Arrays.asList("name", "String"))
+            ), "Field: " + varsFieldName);
+        }
+        // test the class names which shall all be "Category"
+        for (final String fieldName : Arrays.asList("name", "classname", "classVarName", "xmlName", "classFilename")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertEquals(field.get(codegenModel), "Category", "Field: " + fieldName);
+        }
+        // test the empty collections
+        for (final String fieldName : Arrays.asList("requiredVars", "readOnlyVars", "parentVars", "mandatory", "allMandatory")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            final Collection collection = (Collection) field.get(codegenModel);
+            Assert.assertTrue(collection.isEmpty(), "Field: " + fieldName);
+        }
+
+        Assert.assertEquals(codegenModel.dataType, "object");
+        Assert.assertTrue(codegenModel.hasVars);
+        Assert.assertTrue(codegenModel.hasOptional);
+        Assert.assertTrue(codegenModel.vendorExtensions.isEmpty());
+        Assert.assertEquals(codegenModel.imports, Sets.newHashSet("string"));
+        Assert.assertNotNull(codegenModel.modelJson);
+    }
+
+    @DataProvider(name = "fromModelEnumTest")
+    public static Object[][] fromModelEnumTest() {
+        return new Object[][]{
+                {"IntegerEnum", true, false, "integer", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"LongEnum", false, false, "long", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"FloatEnum", false, true, "float", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+                {"DoubleEnum", false, false, "double", Arrays.asList("1", "2", "3") /* @see: https://github.com/swagger-api/swagger-core/issues/2449 */},
+        };
+    }
+
+    @Test(description = "Setting the values for defined enum", dataProvider = "fromModelEnumTest")
+    public void fromModelEnumTest(final String modelName, final boolean isInteger, final boolean isFloat,
+                                  final String datatype, final List allowableValues) throws NoSuchFieldException, IllegalAccessException {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Model model = swagger.getDefinitions().get(modelName);
+        final CodegenModel codegenModel = new DefaultCodegen().fromModel(modelName, model, swagger.getDefinitions());
+
+        // test the not set fields
+        for (final String fieldName : Arrays.asList("parent", "parentSchema", "interfaces", "parentModel", "interfaceModels",
+                "children", "title", "description", "xmlPrefix", "xmlNamespace", "unescapedDescription", "discriminator",
+                "defaultValue", "arrayModelType", "externalDocs", "additionalPropertiesType", "xmlName")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertNull(field.get(codegenModel), "Field: " + fieldName);
+        }
+        // test the boolean fields
+        for (final String fieldName : Arrays.asList("isAlias", "hasMoreModels", "hasEnums",
+                "hasRequired", "isArrayModel", "hasChildren", "hasVars", "hasOptional")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertFalse(field.getBoolean(codegenModel), "Field: " + fieldName);
+        }
+        // test the class names which shall all be "${modelName}"
+        for (final String fieldName : Arrays.asList("name", "classname", "classVarName", "classFilename")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            Assert.assertEquals(field.get(codegenModel), modelName, "Field: " + fieldName);
+        }
+        // test the empty collections
+        for (final String fieldName : Arrays.asList("vars", "optionalVars", "readWriteVars", "allVars", "requiredVars",
+                "readOnlyVars", "parentVars", "mandatory", "allMandatory", "imports")) {
+            final Field field = CodegenModel.class.getField(fieldName);
+            final Collection collection = (Collection) field.get(codegenModel);
+            Assert.assertTrue(collection.isEmpty(), "Field: " + fieldName);
+        }
+
+        Assert.assertEquals(codegenModel.dataType, datatype);
+        Assert.assertEquals(codegenModel.isInteger, isInteger);
+        Assert.assertEquals(codegenModel.isFloat, isFloat);
+        Assert.assertTrue(codegenModel.isEnum);
+        Assert.assertTrue(codegenModel.emptyVars);
+        Assert.assertTrue(codegenModel.hasOnlyReadOnly);
+        Assert.assertTrue(codegenModel.vendorExtensions.isEmpty());
+        Assert.assertEquals(codegenModel.allowableValues, ImmutableMap.of("values", allowableValues));
+        Assert.assertNotNull(codegenModel.modelJson);
     }
 }

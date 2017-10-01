@@ -51,7 +51,7 @@
 
       @Override
       public {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}} read(final JsonReader jsonReader) throws IOException {
-        {{{datatype}}} value = jsonReader.{{#isInteger}}nextInt(){{/isInteger}}{{^isInteger}}next{{{datatype}}}(){{/isInteger}};
+        {{{dataType}}} value = {{#isFloat}}new Float(jsonReader.nextDouble()); // floats shall be restricted so this cast is safe{{/isFloat}}{{^isFloat}}jsonReader.{{#isInteger}}nextInt(){{/isInteger}}{{^isInteger}}next{{{datatype}}}(){{/isInteger}};{{/isFloat}}
         return {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}.fromValue(String.valueOf(value));
       }
     }

@@ -73,7 +73,7 @@ public class EnumArrays implements Parcelable {
 
       @Override
       public JustSymbolEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return JustSymbolEnum.fromValue(String.valueOf(value));
       }
     }
@@ -123,7 +123,7 @@ public class EnumArrays implements Parcelable {
 
       @Override
       public ArrayEnumEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return ArrayEnumEnum.fromValue(String.valueOf(value));
       }
     }
