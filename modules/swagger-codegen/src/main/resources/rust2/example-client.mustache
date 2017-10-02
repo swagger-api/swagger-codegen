@@ -12,7 +12,7 @@ extern crate clap;
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
 #[allow(unused_imports)]
-use {{externCrateName}}::{Api,
+use {{externCrateName}}::{ApiNoContext, ContextWrapperExt,
                       ApiError{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
                       {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
                      };
@@ -40,14 +40,15 @@ fn main() {
         {{externCrateName}}::Client::try_new_http("http://localhost:{{serverPort}}").expect("Failed to create HTTP client")
     };
 
+    // Using a non-default `Context` is not required; this is just an example!
+    let client = client.with_context({{externCrateName}}::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string()));
+
     match matches.value_of("operation") {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
         {{#vendorExtensions}}{{#noClientExample}}// Disabled because there's no example.
         // {{/noClientExample}}Some("{{operationId}}") => {
-        {{#noClientExample}}// {{/noClientExample}}    // Using a non-default `Context` is not required; this is just an example!
-        {{#noClientExample}}// {{/noClientExample}}    let context = {{externCrateName}}::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        {{#noClientExample}}// {{/noClientExample}}    let result = client.{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{#vendorExtensions}}{{{example}}}{{/vendorExtensions}}, {{/allParams}}&context).wait();
-        {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}}    println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        {{#noClientExample}}// {{/noClientExample}}    let result = client.{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{^-first}}, {{/-first}}{{#vendorExtensions}}{{{example}}}{{/vendorExtensions}}{{/allParams}}).wait();
+        {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}}    println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}} },
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
         _ => {

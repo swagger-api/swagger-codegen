@@ -30,7 +30,7 @@ pub use futures::Future;
 #[cfg(any(feature = "client", feature = "server"))]
 mod mimetypes;
 
-pub use swagger::{ApiError, Context, XSpanId};
+pub use swagger::{ApiError, Context, ContextWrapper};
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{^isResponseFile}}
@@ -42,10 +42,40 @@ pub enum {{operationId}}Response {
 }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
+/// API
 pub trait Api {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{#summary}}    /// {{{summary}}}{{/summary}}
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send>;
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+}
+
+/// API without a `Context`
+pub trait ApiNoContext {
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+{{#summary}}    /// {{{summary}}}{{/summary}}
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send>;
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+}
+
+/// Trait to extend an API to make it easy to bind it to a context.
+pub trait ContextWrapperExt<'a> where Self: Sized {
+    /// Binds this API to a context.
+    fn with_context(self: &'a Self, context: Context) -> ContextWrapper<'a, Self>;
+}
+
+impl<'a, T: Api + Sized> ContextWrapperExt<'a> for T {
+    fn with_context(self: &'a T, context: Context) -> ContextWrapper<'a, T> {
+         ContextWrapper::<T>::new(self, context)
+    }
+}
+
+impl<'a, T: Api> ApiNoContext for ContextWrapper<'a, T> {
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+{{#summary}}    /// {{{summary}}}{{/summary}}
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}) -> Box<Future<Item={{operationId}}Response, Error=ApiError> + Send> {
+        self.api().{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{paramName}}, {{/allParams}}&self.context())
+    }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 }
 

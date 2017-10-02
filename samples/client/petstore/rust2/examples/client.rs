@@ -12,7 +12,7 @@ extern crate clap;
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
 #[allow(unused_imports)]
-use petstore_api::{Api,
+use petstore_api::{ApiNoContext, ContextWrapperExt,
                       ApiError,
                       TestSpecialTagsResponse,
                       GetXmlFeaturesResponse,
@@ -93,239 +93,178 @@ fn main() {
         petstore_api::Client::try_new_http("http://localhost:8080").expect("Failed to create HTTP client")
     };
 
+    // Using a non-default `Context` is not required; this is just an example!
+    let client = client.with_context(petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string()));
+
     match matches.value_of("operation") {
 
         // Disabled because there's no example.
         // Some("TestSpecialTags") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.test_special_tags(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.test_special_tags(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("GetXmlFeatures") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.get_xml_features(&context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.get_xml_features().wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("PostXmlFeatures") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.post_xml_features(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.post_xml_features(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("FakeOuterBooleanSerialize") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.fake_outer_boolean_serialize(None, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.fake_outer_boolean_serialize(None).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("FakeOuterCompositeSerialize") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.fake_outer_composite_serialize(None, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.fake_outer_composite_serialize(None).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("FakeOuterNumberSerialize") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.fake_outer_number_serialize(None, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.fake_outer_number_serialize(None).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("FakeOuterStringSerialize") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.fake_outer_string_serialize(None, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.fake_outer_string_serialize(None).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("TestClientModel") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.test_client_model(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.test_client_model(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("TestEndpointParameters") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.test_endpoint_parameters(3.4, 1.2, "pattern_without_delimiter_example".to_string(), swagger::ByteArray("byte_example".to_string().into_bytes()), Some(56), Some(56), Some(789), Some(3.4), Some("string_example".to_string()), Some(swagger::ByteArray(Vec::from("B"))), None, None, Some("password_example".to_string()), Some("callback_example".to_string()), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.test_endpoint_parameters(3.4, 1.2, "pattern_without_delimiter_example".to_string(), swagger::ByteArray("byte_example".to_string().into_bytes()), Some(56), Some(56), Some(789), Some(3.4), Some("string_example".to_string()), Some(swagger::ByteArray(Vec::from("B"))), None, None, Some("password_example".to_string()), Some("callback_example".to_string())).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("TestEnumParameters") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.test_enum_parameters(Some(&Vec::new()), Some("enum_form_string_example".to_string()), Some(&Vec::new()), Some("enum_header_string_example".to_string()), Some(&Vec::new()), Some("enum_query_string_example".to_string()), Some(56), Some(1.2), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.test_enum_parameters(Some(&Vec::new()), Some("enum_form_string_example".to_string()), Some(&Vec::new()), Some("enum_header_string_example".to_string()), Some(&Vec::new()), Some("enum_query_string_example".to_string()), Some(56), Some(1.2)).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("TestJsonFormData") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.test_json_form_data("param_example".to_string(), "param2_example".to_string(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.test_json_form_data("param_example".to_string(), "param2_example".to_string()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("TestClassname") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.test_classname(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.test_classname(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         // Disabled because there's no example.
         // Some("AddPet") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.add_pet(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.add_pet(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("DeletePet") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.delete_pet(789, Some("api_key_example".to_string()), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.delete_pet(789, Some("api_key_example".to_string())).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("FindPetsByStatus") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.find_pets_by_status(&Vec::new(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.find_pets_by_status(&Vec::new()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("FindPetsByTags") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.find_pets_by_tags(&Vec::new(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.find_pets_by_tags(&Vec::new()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("GetPetById") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.get_pet_by_id(789, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.get_pet_by_id(789).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("UpdatePet") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.update_pet(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.update_pet(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("UpdatePetWithForm") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.update_pet_with_form(789, Some("name_example".to_string()), Some("status_example".to_string()), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.update_pet_with_form(789, Some("name_example".to_string()), Some("status_example".to_string())).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("UploadFile") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), Box::new(future::ok(Some(Box::new(stream::once(Ok(b"hello".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_> + Send>, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.upload_file(789, Some("additional_metadata_example".to_string()), Box::new(future::ok(Some(Box::new(stream::once(Ok(b"hello".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_> + Send>).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("DeleteOrder") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.delete_order("order_id_example".to_string(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.delete_order("order_id_example".to_string()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("GetInventory") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.get_inventory(&context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.get_inventory().wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("GetOrderById") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.get_order_by_id(789, &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.get_order_by_id(789).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("PlaceOrder") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.place_order(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.place_order(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         // Disabled because there's no example.
         // Some("CreateUser") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.create_user(???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.create_user(???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         Some("CreateUsersWithArrayInput") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.create_users_with_array_input(&Vec::new(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.create_users_with_array_input(&Vec::new()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("CreateUsersWithListInput") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.create_users_with_list_input(&Vec::new(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.create_users_with_list_input(&Vec::new()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("DeleteUser") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.delete_user("username_example".to_string(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.delete_user("username_example".to_string()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("GetUserByName") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.get_user_by_name("username_example".to_string(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.get_user_by_name("username_example".to_string()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("LoginUser") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.login_user("username_example".to_string(), "password_example".to_string(), &context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.login_user("username_example".to_string(), "password_example".to_string()).wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         Some("LogoutUser") => {
-            // Using a non-default `Context` is not required; this is just an example!
-            let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-            let result = client.logout_user(&context).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+            let result = client.logout_user().wait();
+            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
         // Disabled because there's no example.
         // Some("UpdateUser") => {
-        //     // Using a non-default `Context` is not required; this is just an example!
-        //     let context = petstore_api::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string());
-        //     let result = client.update_user("username_example".to_string(), ???, &context).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        //     let result = client.update_user("username_example".to_string(), ???).wait();
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
         _ => {
