@@ -28,6 +28,9 @@
       if (!missing(apiClient)) {
         self$apiClient <- apiClient
       }
+      else {
+        self$apiClient <- ApiClient$new()
+      }
     },
     {{#operation}}
     {{operationId}} = function({{#allParams}}{{paramName}}, {{/allParams}}...){
