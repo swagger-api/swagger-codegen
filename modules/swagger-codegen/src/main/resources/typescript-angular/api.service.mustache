@@ -217,28 +217,36 @@ export class {{classname}} {
         if (useForm) {
             formParams = new FormData();
         } else {
-            // TODO: this fails for both, HttpParams and URLSearchParams, if a parameter is a file.
+{{#useHttpClient}}
+            formParams = new HttpParams();
+{{/useHttpClient}}
+{{^useHttpClient}}
+            // TODO: this fails if a parameter is a file.
             convertFormParamsToString = true;
             formParams = new URLSearchParams();
+            // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+{{/useHttpClient}}
         }
+
+
 
 {{#formParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                formParams.append('{{baseName}}', <any>element);
+                {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>element){{#useHttpClient}} || formParams{{/useHttpClient}};
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            formParams.set('{{baseName}}', <any>{{paramName}});
+            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.set('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
         }
         {{/isListContainer}}
 {{/formParams}}
