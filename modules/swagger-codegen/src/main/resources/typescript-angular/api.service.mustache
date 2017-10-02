@@ -239,7 +239,8 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 {{#useHttpClient}}
-        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}{{#hasFormParams}}formParams, {{/hasFormParams}}{
+        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}
+        {{#hasFormParams}}useForm ? formParams : formParams.toString(), {{/hasFormParams}}{
 {{#hasQueryParams}}
             params: queryParameters,
 {{/hasQueryParams}}
@@ -258,7 +259,7 @@ export class {{classname}} {
             body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
-            body: formParams.toString(),
+            body: useForm ? formParams : formParams.toString(),
 {{/hasFormParams}}
 {{#isResponseFile}}
             responseType: ResponseContentType.Blob,
