@@ -61,11 +61,6 @@ export class PetService implements PetServiceInterface {
     }
 
 
-    public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
-        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
-    }
-
     /**
      * 
      * @summary Add a new pet to the store
@@ -443,11 +438,23 @@ export class PetService implements PetServiceInterface {
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
         ];
-        let canConsumeForm = this.canConsumeForm(consumes);
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { set(param: string, value: any): void; };
         let useForm = false;
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
+        let convertFormParamsToString = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            // TODO: this fails if a parameter is a file.
+            convertFormParamsToString = true;
+            formParams = new URLSearchParams();
+            // set the content-type explicitly to avoid having it set to 'text/plain'
+            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        }
+
+
+
         if (name !== undefined) {
             formParams.set('name', <any>name);
         }
@@ -458,7 +465,7 @@ export class PetService implements PetServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: formParams.toString(),
+            body: convertFormParamsToString ? formParams.toString() : formParams,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -495,12 +502,26 @@ export class PetService implements PetServiceInterface {
         let consumes: string[] = [
             'multipart/form-data'
         ];
-        let canConsumeForm = this.canConsumeForm(consumes);
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { set(param: string, value: any): void; };
         let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
         useForm = canConsumeForm;
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            // TODO: this fails if a parameter is a file.
+            convertFormParamsToString = true;
+            formParams = new URLSearchParams();
+            // set the content-type explicitly to avoid having it set to 'text/plain'
+            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        }
+
+
+
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
@@ -511,7 +532,7 @@ export class PetService implements PetServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: formParams.toString(),
+            body: convertFormParamsToString ? formParams.toString() : formParams,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037

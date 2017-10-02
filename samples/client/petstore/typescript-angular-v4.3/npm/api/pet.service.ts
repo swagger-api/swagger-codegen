@@ -58,6 +58,7 @@ export class PetService {
     }
 
 
+
     /**
      * Add a new pet to the store
      * 
@@ -78,7 +79,8 @@ export class PetService {
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet`, body, {
+        return this.httpClient.post<any>(`${this.basePath}/pet`, body, 
+        {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -108,7 +110,8 @@ export class PetService {
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        return this.httpClient.delete<any>(`${this.basePath}/pet/${encodeURIComponent(petId)}`, {
+        return this.httpClient.delete<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+        {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -139,7 +142,8 @@ export class PetService {
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/findByStatus`, {
+        return this.httpClient.get<any>(`${this.basePath}/pet/findByStatus`, 
+        {
             params: queryParameters,
             headers: headers,
             withCredentials: this.configuration.withCredentials,
@@ -171,7 +175,8 @@ export class PetService {
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/findByTags`, {
+        return this.httpClient.get<any>(`${this.basePath}/pet/findByTags`, 
+        {
             params: queryParameters,
             headers: headers,
             withCredentials: this.configuration.withCredentials,
@@ -195,7 +200,8 @@ export class PetService {
             headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
-        return this.httpClient.get<any>(`${this.basePath}/pet/${encodeURIComponent(petId)}`, {
+        return this.httpClient.get<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+        {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -221,7 +227,8 @@ export class PetService {
             headers = headers.set('Authorization', 'Bearer ' + accessToken);
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/pet`, body, {
+        return this.httpClient.put<any>(`${this.basePath}/pet`, body, 
+        {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -253,19 +260,28 @@ export class PetService {
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
         ];
-        let canConsumeForm = this.canConsumeForm(consumes);
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { set(param: string, value: any): void; };
         let useForm = false;
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
-        if (name !== undefined) {
-            formParams.set('name', <any>name);
-        }
-        if (status !== undefined) {
-            formParams.set('status', <any>status);
+        let convertFormParamsToString = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams();
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(petId)}`, formParams, {
+
+
+        if (name !== undefined) {
+            formParams = formParams.set('name', <any>name) || formParams;
+        }
+        if (status !== undefined) {
+            formParams = formParams.set('status', <any>status) || formParams;
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, 
+        convertFormParamsToString ? formParams.toString() : formParams, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
@@ -297,20 +313,31 @@ export class PetService {
         let consumes: string[] = [
             'multipart/form-data'
         ];
-        let canConsumeForm = this.canConsumeForm(consumes);
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { set(param: string, value: any): void; };
         let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
         useForm = canConsumeForm;
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
-        if (additionalMetadata !== undefined) {
-            formParams.set('additionalMetadata', <any>additionalMetadata);
-        }
-        if (file !== undefined) {
-            formParams.set('file', <any>file);
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams();
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(petId)}/uploadImage`, formParams, {
+
+
+        if (additionalMetadata !== undefined) {
+            formParams = formParams.set('additionalMetadata', <any>additionalMetadata) || formParams;
+        }
+        if (file !== undefined) {
+            formParams = formParams.set('file', <any>file) || formParams;
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, 
+        convertFormParamsToString ? formParams.toString() : formParams, {
             headers: headers,
             withCredentials: this.configuration.withCredentials,
         });
