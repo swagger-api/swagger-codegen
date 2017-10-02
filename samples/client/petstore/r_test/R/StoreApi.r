@@ -36,11 +36,13 @@ StoreApi <- R6::R6Class(
   'StoreApi',
   public = list(
     userAgent = "Swagger-Codegen/1.0.0/r",
-    path = "Store",
     apiClient = NULL,
     initialize = function(apiClient){
       if (!missing(apiClient)) {
         self$apiClient <- apiClient
+      }
+      else {
+        self$apiClient <- ApiClient$new()
       }
     },
     delete_order = function(order_id, ...){
@@ -49,7 +51,12 @@ StoreApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", order_id),
+      urlPath <- "/store/order/{orderId}"
+      if (!missing(`order_id`)) {
+        urlPath <- gsub(paste0("\\{", "orderId", "\\}"), `order_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "DELETE",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -71,7 +78,9 @@ StoreApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/store/inventory"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -95,7 +104,12 @@ StoreApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", order_id),
+      urlPath <- "/store/order/{orderId}"
+      if (!missing(`order_id`)) {
+        urlPath <- gsub(paste0("\\{", "orderId", "\\}"), `order_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -122,7 +136,9 @@ StoreApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/store/order"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,

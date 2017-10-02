@@ -48,11 +48,13 @@ UserApi <- R6::R6Class(
   'UserApi',
   public = list(
     userAgent = "Swagger-Codegen/1.0.0/r",
-    path = "User",
     apiClient = NULL,
     initialize = function(apiClient){
       if (!missing(apiClient)) {
         self$apiClient <- apiClient
+      }
+      else {
+        self$apiClient <- ApiClient$new()
       }
     },
     create_user = function(body, ...){
@@ -64,7 +66,9 @@ UserApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/user"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -89,7 +93,9 @@ UserApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/user/createWithArray"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -114,7 +120,9 @@ UserApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/user/createWithList"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -136,7 +144,12 @@ UserApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", username),
+      urlPath <- "/user/{username}"
+      if (!missing(`username`)) {
+        urlPath <- gsub(paste0("\\{", "username", "\\}"), `username`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "DELETE",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -158,7 +171,12 @@ UserApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", username),
+      urlPath <- "/user/{username}"
+      if (!missing(`username`)) {
+        urlPath <- gsub(paste0("\\{", "username", "\\}"), `username`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -188,7 +206,9 @@ UserApi <- R6::R6Class(
         queryParams['password'] <- password
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/user/login"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -212,7 +232,9 @@ UserApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/user/logout"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -237,7 +259,12 @@ UserApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", username),
+      urlPath <- "/user/{username}"
+      if (!missing(`username`)) {
+        urlPath <- gsub(paste0("\\{", "username", "\\}"), `username`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "PUT",
                                  queryParams = queryParams,
                                  headerParams = headerParams,

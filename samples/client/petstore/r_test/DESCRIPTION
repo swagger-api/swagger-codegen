@@ -1,4 +1,4 @@
-Package: Swagger Petstore
+Package: petstore
 Title: R Package Client for Swagger Petstore
 Version: 1.0.0
 Authors@R: person("Swagger Codegen community", email = "apiteam@swagger.io", role = c("aut", "cre"))

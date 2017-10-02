@@ -48,11 +48,13 @@ PetApi <- R6::R6Class(
   'PetApi',
   public = list(
     userAgent = "Swagger-Codegen/1.0.0/r",
-    path = "Pet",
     apiClient = NULL,
     initialize = function(apiClient){
       if (!missing(apiClient)) {
         self$apiClient <- apiClient
+      }
+      else {
+        self$apiClient <- ApiClient$new()
       }
     },
     add_pet = function(body, ...){
@@ -64,7 +66,9 @@ PetApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/pet"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -89,7 +93,12 @@ PetApi <- R6::R6Class(
         headerParams['api_key'] <- `api_key`
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", pet_id),
+      urlPath <- "/pet/{petId}"
+      if (!missing(`pet_id`)) {
+        urlPath <- gsub(paste0("\\{", "petId", "\\}"), `pet_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "DELETE",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -114,7 +123,9 @@ PetApi <- R6::R6Class(
         queryParams['status'] <- status
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/pet/findByStatus"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -141,7 +152,9 @@ PetApi <- R6::R6Class(
         queryParams['tags'] <- tags
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/pet/findByTags"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -165,7 +178,12 @@ PetApi <- R6::R6Class(
       queryParams <- list()
       headerParams <- character()
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", pet_id),
+      urlPath <- "/pet/{petId}"
+      if (!missing(`pet_id`)) {
+        urlPath <- gsub(paste0("\\{", "petId", "\\}"), `pet_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -192,7 +210,9 @@ PetApi <- R6::R6Class(
         body <- `body`$toJSON()
       }
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path),
+      urlPath <- "/pet"
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "PUT",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -218,7 +238,12 @@ PetApi <- R6::R6Class(
           "status" = status
       )     
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", pet_id),
+      urlPath <- "/pet/{petId}"
+      if (!missing(`pet_id`)) {
+        urlPath <- gsub(paste0("\\{", "petId", "\\}"), `pet_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
@@ -244,7 +269,12 @@ PetApi <- R6::R6Class(
           "file" = httr::upload_file(file)
       )     
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path, "/", pet_id),
+      urlPath <- "/pet/{petId}/uploadImage"
+      if (!missing(`pet_id`)) {
+        urlPath <- gsub(paste0("\\{", "petId", "\\}"), `pet_id`, urlPath)
+      }
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "POST",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
