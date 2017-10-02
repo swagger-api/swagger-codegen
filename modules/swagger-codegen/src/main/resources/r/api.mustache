@@ -23,7 +23,6 @@
   '{{classname}}',
   public = list(
     userAgent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/r{{/httpUserAgent}}",
-    path = "{{baseName}}",
     apiClient = NULL,
     initialize = function(apiClient){
       if (!missing(apiClient)) {
@@ -70,7 +69,16 @@
       {{/bodyParams}}
       {{/hasBodyParam}}
 
-      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, "/", self$path{{#pathParams}}, "/", {{paramName}}{{/pathParams}}),
+      urlPath <- "{{path}}"
+      {{#hasPathParams}}
+      {{#pathParams}}
+      if (!missing(`{{paramName}}`)) {
+        urlPath <- gsub(paste0("\\{", "{{baseName}}", "\\}"), `{{paramName}}`, urlPath)
+      }
+      {{/pathParams}}
+      {{/hasPathParams}}
+
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "{{httpMethod}}",
                                  queryParams = queryParams,
                                  headerParams = headerParams,
