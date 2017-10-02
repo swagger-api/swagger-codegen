@@ -69,11 +69,6 @@ export class {{classname}} {
     }
 
 
-    public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
-        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
-    }
-
 {{^useHttpClient}}
 {{! not sure why we used to generate a second method here rather than inlining those few lines of code, 
     but let's keep it for now for the sake of backwards compatiblity. }}  
@@ -207,16 +202,27 @@ export class {{classname}} {
             '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/consumes}}
         ];
-        let canConsumeForm = this.canConsumeForm(consumes);
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { set(param: string, value: any): void; };
         let useForm = false;
+        let convertFormParamsToString = false;
 {{#formParams}}
 {{#isFile}}
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
         useForm = canConsumeForm;
 {{/isFile}}
 {{/formParams}}
-        let formParams = new (useForm ? FormData : URLSearchParams as any)() as {
-          set(param: string, value: any): void;
-        };
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            // TODO: this fails for both, HttpParams and URLSearchParams, if a parameter is a file.
+            convertFormParamsToString = true;
+            formParams = new URLSearchParams();
+            headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        }
+
 {{#formParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
@@ -240,7 +246,7 @@ export class {{classname}} {
 {{/hasFormParams}}
 {{#useHttpClient}}
         return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#bodyParam}}{{paramName}}, {{/bodyParam}}
-        {{#hasFormParams}}useForm ? formParams : formParams.toString(), {{/hasFormParams}}{
+        {{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams, {{/hasFormParams}}{
 {{#hasQueryParams}}
             params: queryParameters,
 {{/hasQueryParams}}
@@ -259,7 +265,7 @@ export class {{classname}} {
             body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
-            body: useForm ? formParams : formParams.toString(),
+            body: convertFormParamsToString ? formParams.toString() : formParams,
 {{/hasFormParams}}
 {{#isResponseFile}}
             responseType: ResponseContentType.Blob,
