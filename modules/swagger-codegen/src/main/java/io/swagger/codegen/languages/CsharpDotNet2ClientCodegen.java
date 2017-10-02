@@ -23,8 +23,9 @@ public class CsharpDotNet2ClientCodegen extends AbstractCSharpCodegen {
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
 
-        setApiPackage("IO.Swagger.Api");
-        setModelPackage("IO.Swagger.Model");
+        setApiPackage(packageName + ".Api");
+        setModelPackage(packageName + ".Model");
+        setClientPackage(packageName + ".Client");
         setSourceFolder("src" + File.separator + "main" + File.separator + this.getName());
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
@@ -49,7 +50,6 @@ public class CsharpDotNet2ClientCodegen extends AbstractCSharpCodegen {
         if (additionalProperties.containsKey(CLIENT_PACKAGE)) {
             setClientPackage((String) additionalProperties.get(CLIENT_PACKAGE));
         } else {
-            setClientPackage(packageName + ".Client");
             additionalProperties.put(CLIENT_PACKAGE, getClientPackage());
         }
 
