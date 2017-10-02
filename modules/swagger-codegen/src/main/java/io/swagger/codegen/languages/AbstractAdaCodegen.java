@@ -93,15 +93,15 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
     }
 
     /**
-     * @brief Turn a parameter name, operation name into an Ada identifier.
+     * Turn a parameter name, operation name into an Ada identifier.
      *
      * Ada programming standard avoid the camelcase syntax and prefer the underscore
      * notation.  We also have to make sure the identifier is not a reserved keyword.
      * When this happens, we add the configurable prefix.  The function translates:
      *
-     * body              -> P_Body
-     * petId             -> Pet_Id
-     * updatePetWithForm -> Update_Pet_With_Form
+     * body              - P_Body
+     * petId             - Pet_Id
+     * updatePetWithForm - Update_Pet_With_Form
      *
      * @param name the parameter name.
      * @param prefix the optional prefix in case the parameter name is a reserved keyword.

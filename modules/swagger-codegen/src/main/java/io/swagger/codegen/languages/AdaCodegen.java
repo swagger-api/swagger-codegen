@@ -209,7 +209,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     }
 
     /**
-     * @brief Post process the media types (produces and consumes) for Ada code generator.
+     * Post process the media types (produces and consumes) for Ada code generator.
      *
      * For each media type, add a adaMediaType member that gives the Ada enum constant
      * for the corresponding type.
