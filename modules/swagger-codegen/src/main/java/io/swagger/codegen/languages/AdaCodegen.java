@@ -57,17 +57,17 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
 
     @Override
     public CodegenType getTag() {
-        return CodegenType.CONFIG;
+        return CodegenType.CLIENT;
     }
 
     @Override
     public String getName() {
-        return "Ada";
+        return "ada";
     }
 
     @Override
     public String getHelp() {
-        return "Generates an Ada client implementation";
+        return "Generates an Ada client implementation (beta).";
     }
 
     protected void addOption(String key, String description, String defaultValue) {
@@ -282,7 +282,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
                     if (p.isContainer) {
                         item = p.items;
                     }
-                    if (!item.isString && !item.isPrimitiveType && !item.isContainer && !item.isInteger) {
+                    if (item != null && !item.isString && !item.isPrimitiveType && !item.isContainer && !item.isInteger) {
                         if (!d.contains(item.datatype)) {
                             // LOGGER.info("Model " + m.name + " uses " + p.datatype);
                             d.add(item.datatype);
