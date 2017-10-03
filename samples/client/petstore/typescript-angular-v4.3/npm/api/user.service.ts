@@ -167,7 +167,7 @@ export class UserService {
             throw new Error('Required parameter password was null or undefined when calling loginUser.');
         }
 
-        let queryParameters = new HttpParams();
+        let queryParameters = new HttpParams('', new CustomQueryEncoderHelper());
         if (username !== undefined) {
             queryParameters = queryParameters.set('username', <any>username);
         }

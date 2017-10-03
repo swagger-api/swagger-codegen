@@ -278,7 +278,7 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         if (status) {
             queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
@@ -317,7 +317,7 @@ export class PetService implements PetServiceInterface {
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
 
-        let queryParameters = new URLSearchParams();
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
         if (tags) {
             queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
@@ -448,7 +448,7 @@ export class PetService implements PetServiceInterface {
         } else {
             // TODO: this fails if a parameter is a file.
             convertFormParamsToString = true;
-            formParams = new URLSearchParams();
+            formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
         }
@@ -515,7 +515,7 @@ export class PetService implements PetServiceInterface {
         } else {
             // TODO: this fails if a parameter is a file.
             convertFormParamsToString = true;
-            formParams = new URLSearchParams();
+            formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
         }

@@ -127,7 +127,7 @@ export class PetService {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
 
-        let queryParameters = new HttpParams();
+        let queryParameters = new HttpParams('', new CustomQueryEncoderHelper());
         if (status) {
             queryParameters = queryParameters.set('status', status.join(COLLECTION_FORMATS['csv']));
         }
@@ -160,7 +160,7 @@ export class PetService {
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
 
-        let queryParameters = new HttpParams();
+        let queryParameters = new HttpParams('', new CustomQueryEncoderHelper());
         if (tags) {
             queryParameters = queryParameters.set('tags', tags.join(COLLECTION_FORMATS['csv']));
         }
@@ -268,7 +268,7 @@ export class PetService {
         if (useForm) {
             formParams = new FormData();
         } else {
-            formParams = new HttpParams();
+            formParams = new HttpParams('', new CustomQueryEncoderHelper());
         }
 
 
@@ -324,7 +324,7 @@ export class PetService {
         if (useForm) {
             formParams = new FormData();
         } else {
-            formParams = new HttpParams();
+            formParams = new HttpParams('', new CustomQueryEncoderHelper());
         }
 
 

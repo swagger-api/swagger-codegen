@@ -116,7 +116,7 @@ export class {{classname}} {
 {{/allParams}}
 
 {{#hasQueryParams}}
-        let queryParameters = new {{#useHttpClient}}HttpParams{{/useHttpClient}}{{^useHttpClient}}URLSearchParams{{/useHttpClient}}();
+        let queryParameters = new {{#useHttpClient}}HttpParams{{/useHttpClient}}{{^useHttpClient}}URLSearchParams{{/useHttpClient}}('', new CustomQueryEncoderHelper());
 {{#queryParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
@@ -218,12 +218,12 @@ export class {{classname}} {
             formParams = new FormData();
         } else {
 {{#useHttpClient}}
-            formParams = new HttpParams();
+            formParams = new HttpParams('', new CustomQueryEncoderHelper());
 {{/useHttpClient}}
 {{^useHttpClient}}
             // TODO: this fails if a parameter is a file.
             convertFormParamsToString = true;
-            formParams = new URLSearchParams();
+            formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
 {{/useHttpClient}}
