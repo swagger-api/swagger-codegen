@@ -284,7 +284,7 @@ export class {{classname}} {
             responseType: "blob",
 {{/isResponseFile}}
             withCredentials: this.configuration.withCredentials,
-            observe: $options && $options.observe
+            observe: $options && $options.observe as any
         });
 {{/useHttpClient}}
 {{^useHttpClient}}
