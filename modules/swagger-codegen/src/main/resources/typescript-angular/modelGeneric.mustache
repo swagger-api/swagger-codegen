@@ -5,8 +5,7 @@ import {
     prepareFormGroup, 
     ApaleoEnumPropertyMetaData, 
     ApaleoPropertyMetaData, 
-    BuildFormOptions, 
-    ResponseModel
+    BuildFormOptions
 } from '@apaleo/angular-api-proxy-common';
 
 export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
@@ -34,8 +33,6 @@ export namespace {{classname}} {
     {{/isEnum}}
 {{/vars}}
 }{{/hasEnums}}
-
-export type {{classname}}WithRawHttp = {{classname}} & ResponseModel<{{classname}}>;
 
 export namespace {{classname}} {
     export const $metaData = { {{#vars}}
