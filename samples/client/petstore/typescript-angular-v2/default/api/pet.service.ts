@@ -439,7 +439,7 @@ export class PetService {
         ];
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { set(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -455,10 +455,10 @@ export class PetService {
 
 
         if (name !== undefined) {
-            formParams.set('name', <any>name);
+            formParams.append('name', <any>name);
         }
         if (status !== undefined) {
-            formParams.set('status', <any>status);
+            formParams.append('status', <any>status);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -503,7 +503,7 @@ export class PetService {
         ];
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { set(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -522,10 +522,10 @@ export class PetService {
 
 
         if (additionalMetadata !== undefined) {
-            formParams.set('additionalMetadata', <any>additionalMetadata);
+            formParams.append('additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams.set('file', <any>file);
+            formParams.append('file', <any>file);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({

@@ -204,7 +204,7 @@ export class {{classname}} {
         ];
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { set(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
 {{#formParams}}
@@ -240,13 +240,13 @@ export class {{classname}} {
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.set('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
         }
         {{/isListContainer}}
 {{/formParams}}
