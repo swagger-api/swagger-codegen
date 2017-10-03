@@ -133,7 +133,19 @@ export class {{classname}} {
      * {{notes}}
      {{#allParams}}* @param $params.{{paramName}} {{description}}
      {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params{{/allParams.0}}{{^useHttpClient}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}> {
+    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options?: { observe?: 'body' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}>;
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param $params.{{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options: { observe: 'response' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}HttpResponse<{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}>{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}>;
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param $params.{{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options?: { observe?: 'body' | 'response' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<any> {
 {{#allParams.0}}        $params = $params || {};{{/allParams.0}}
 {{#allParams}}
         const {{paramName}} = $params.{{paramName}};
@@ -272,6 +284,7 @@ export class {{classname}} {
             responseType: "blob",
 {{/isResponseFile}}
             withCredentials: this.configuration.withCredentials,
+            observe: $options && $options.observe
         });
 {{/useHttpClient}}
 {{^useHttpClient}}
