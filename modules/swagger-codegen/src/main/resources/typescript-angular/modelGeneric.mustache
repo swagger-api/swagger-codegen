@@ -1,3 +1,14 @@
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { 
+    adjustDefaultControls, 
+    getControl, 
+    prepareFormGroup, 
+    ApaleoEnumPropertyMetaData, 
+    ApaleoPropertyMetaData, 
+    BuildFormOptions, 
+    ResponseModel
+} from '@apaleo/angular-api-proxy-common';
+
 export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{#additionalPropertiesType}}
     [key: string]: {{{additionalPropertiesType}}}{{#hasVars}} | any{{/hasVars}};
@@ -16,13 +27,38 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 export namespace {{classname}} {
 {{#vars}}
     {{#isEnum}}
-    export enum {{enumName}} {
-    {{#allowableValues}}
-        {{#enumVars}}
-        {{{name}}} = <any> {{{value}}}{{^-last}},{{/-last}}
-        {{/enumVars}}
-    {{/allowableValues}}
-    }
+    export type {{enumName}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}} | {{/-last}}{{/enumVars}}{{/allowableValues}};
+
+    export const {{enumName}}Values = Object.freeze(
+        [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}] as {{enumName}}[]);
     {{/isEnum}}
 {{/vars}}
 }{{/hasEnums}}
+
+export type {{classname}}WithRawHttp = {{classname}} & ResponseModel<{{classname}}>;
+
+export namespace {{classname}} {
+    export const $metaData = { {{#vars}}
+        {{name}}: Object.freeze({ {{#required}}
+            isRequired: true,{{/required}}{{#minLength}}
+            minLength: {{minLength}},{{/minLength}}{{#maxLength}}
+            maxLength: {{maxLength}},{{/maxLength}}
+            type: '{{{datatype}}}',{{#isEnum}}
+            isEnum: true,
+            allowedEnumValues: {{enumName}}Values,{{/isEnum}}{{#isPrimitiveType}}
+            isPrimitiveType: true,{{/isPrimitiveType}}{{#isListContainer}}
+            isListContainer: true,{{/isListContainer}}{{#isMapContainer}}
+            isMapContainer: true,{{/isMapContainer}}
+        } as {{^isEnum}}ApaleoPropertyMetaData{{/isEnum}}{{#isEnum}}ApaleoEnumPropertyMetaData<{{enumName}}>{{/isEnum}}),{{/vars}}
+    };
+
+    export function $buildForm(fb: FormBuilder, options?: BuildFormOptions<{{classname}}>): FormGroup {
+        const defaultControls = { {{#vars}}{{^isListContainer}}{{^isMapContainer}}
+            {{name}}: {{#isPrimitiveType}}getControl($metaData.{{name}}, options, '{{name}}'){{/isPrimitiveType}}{{^isPrimitiveType}}{{datatype}}.$buildForm(fb){{/isPrimitiveType}},{{/isMapContainer}}{{/isListContainer}}{{/vars}}
+        };
+        const group = fb.group(adjustDefaultControls(defaultControls, options));
+        prepareFormGroup(group, $metaData, options);
+
+        return group;
+    }
+}

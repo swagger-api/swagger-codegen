@@ -14,6 +14,8 @@ import { Response, ResponseContentType }                     from '@angular/http
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
+import { callApiEndpoint, ApaleoRequestOptions, ResponseModel, dateToApaleoIso } from '@apaleo/angular-api-proxy-common';
+
 {{#imports}}
 import { {{classname}} } from '../{{filename}}';
 {{/imports}}
@@ -26,6 +28,26 @@ import { {{classname}}Interface }                            from './{{classname
 {{/withInterfaces}}
 
 {{#operations}}
+
+{{#operation}}
+{{#allParams.0}}export namespace {{nickname}} {
+    export interface Params {
+    {{#allParams}}
+        /**
+        * {{{description}}}
+        */
+        {{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}};
+    {{/allParams}}  
+    }
+    {{#allParams}}{{#isEnum}}
+    export type {{enumName}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}} | {{/-last}}{{/enumVars}}{{/allowableValues}};
+
+    export const {{enumName}}Values = Object.freeze(
+        [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}] as {{enumName}}[]);
+    {{/isEnum}}{{/allParams}}
+}
+{{/allParams.0}}
+{{/operation}}
 
 {{#description}}
 /**
@@ -109,10 +131,12 @@ export class {{classname}} {
     /**
      * {{summary}}
      * {{notes}}
-     {{#allParams}}* @param {{paramName}} {{description}}
+     {{#allParams}}* @param $params.{{paramName}} {{description}}
      {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{^useHttpClient}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}{}{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}> {
+    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params{{/allParams.0}}{{^useHttpClient}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}undefined{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}> {
+{{#allParams.0}}        $params = $params || {};{{/allParams.0}}
 {{#allParams}}
+        const {{paramName}} = $params.{{paramName}};
 {{#required}}
         if ({{paramName}} === null || {{paramName}} === undefined) {
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
@@ -138,7 +162,7 @@ export class {{classname}} {
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
         {{#isDateTime}}
-            {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
+            {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{baseName}}', <any>dateToApaleoIso({{paramName}}));
         {{/isDateTime}}
         {{^isDateTime}}
             {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{baseName}}', <any>{{paramName}});
