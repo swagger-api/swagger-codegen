@@ -24,10 +24,6 @@ namespace {{modelPackage}};
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
-{{^isEnum}}
-{{#useStatements}}use {{this}};
-{{/useStatements}}
-{{/isEnum}}
 
 /**
  * Class representing the {{classname}} model.

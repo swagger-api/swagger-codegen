@@ -110,7 +110,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         defaultIncludes = new HashSet<String>(
             Arrays.asList(
                 "\\DateTime",
-                "\\SplFileObject"
+                "UploadedFile"
             )
         );
 
@@ -134,7 +134,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         typeMapping.put("boolean", "bool");
         typeMapping.put("Date", "\\DateTime");
         typeMapping.put("DateTime", "\\DateTime");
-        typeMapping.put("file", "\\SplFileObject");
+        typeMapping.put("file", "UploadedFile");
         typeMapping.put("map", "array");
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
@@ -275,10 +275,16 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         supportingFiles.add(new SupportingFile("Extension.mustache", dependencyInjectionDir, bundleExtensionName + ".php"));
         supportingFiles.add(new SupportingFile("ApiPass.mustache", dependencyInjectionDir + File.separator + "Compiler", bundleName + "ApiPass.php"));
         supportingFiles.add(new SupportingFile("ApiServer.mustache", toPackagePath(apiPackage, srcBasePath), "ApiServer.php"));
-        supportingFiles.add(new SupportingFile("ModelSerializer.mustache", toPackagePath(modelPackage, srcBasePath), "ModelSerializer.php"));
-        supportingFiles.add(new SupportingFile("ModelInterface.mustache", toPackagePath(modelPackage, srcBasePath), "ModelInterface.php"));
-        supportingFiles.add(new SupportingFile("StrictJsonDeserializationVisitor.mustache", toPackagePath(servicePackage, srcBasePath), "StrictJsonDeserializationVisitor.php"));
-        supportingFiles.add(new SupportingFile("TypeMismatchException.mustache", toPackagePath(servicePackage, srcBasePath), "TypeMismatchException.php"));
+
+        // Serialization components
+        supportingFiles.add(new SupportingFile("serialization/SerializerInterface.mustache", toPackagePath(servicePackage, srcBasePath), "SerializerInterface.php"));
+        supportingFiles.add(new SupportingFile("serialization/JmsSerializer.mustache", toPackagePath(servicePackage, srcBasePath), "JmsSerializer.php"));
+        supportingFiles.add(new SupportingFile("serialization/StrictJsonDeserializationVisitor.mustache", toPackagePath(servicePackage, srcBasePath), "StrictJsonDeserializationVisitor.php"));
+        supportingFiles.add(new SupportingFile("serialization/TypeMismatchException.mustache", toPackagePath(servicePackage, srcBasePath), "TypeMismatchException.php"));
+        // Validation components
+        supportingFiles.add(new SupportingFile("validation/ValidatorInterface.mustache", toPackagePath(servicePackage, srcBasePath), "ValidatorInterface.php"));
+        supportingFiles.add(new SupportingFile("validation/SymfonyValidator.mustache", toPackagePath(servicePackage, srcBasePath), "SymfonyValidator.php"));
+
         supportingFiles.add(new SupportingFile("routing.mustache", configDir, "routing.yml"));
         supportingFiles.add(new SupportingFile("services.mustache", configDir, "services.yml"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
@@ -331,6 +337,14 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 if (!typeHint.isEmpty()) {
                     param.vendorExtensions.put("x-parameterType", typeHint);
                 }
+
+                // Quote default values for strings
+                // @todo: The default values for headers, forms and query params are handled
+                //        in DefaultCodegen fromParameter with no real possibility to override
+                //        the functionality. Thus we are handling quoting of string values here
+                if (param.dataType.equals("string") && param.defaultValue != null && !param.defaultValue.isEmpty()) {
+                    param.defaultValue = "'"+param.defaultValue+"'";
+                }
             }
 
             for (CodegenResponse response : op.responses) {
@@ -363,19 +377,15 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         ArrayList<Object> modelsArray = (ArrayList<Object>) objs.get("models");
         Map<String, Object> models = (Map<String, Object>) modelsArray.get(0);
         CodegenModel model = (CodegenModel) models.get("model");
-        HashSet<String> imports = new HashSet<>();
 
         // Simplify model var type
         for (CodegenProperty var : model.vars) {
             if (var.datatype != null) {
-                final String importType = var.datatype.replaceFirst("\\[\\]$", "");
-                final String dataType = extractSimpleName(var.datatype);
-                final boolean isScalarType = typeMapping.containsValue(importType);
-                var.vendorExtensions.put("x-fullType", var.datatype);
-                if (!isScalarType) {
-                    var.vendorExtensions.put("x-typeAnnotation", dataType.endsWith("[]") ? "array" : dataType);
-                    imports.add(importType);
-                    var.datatype = dataType;
+                // Determine if the paramter type is supported as a type hint and make it available
+                // to the templating engine
+                String typeHint = getTypeHint(var.datatype);
+                if (!typeHint.isEmpty()) {
+                    var.vendorExtensions.put("x-parameterType", typeHint);
                 }
 
                 if (var.isBoolean) {
@@ -383,8 +393,6 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 }
             }
         }
-
-        objs.put("useStatements", new ArrayList<>(imports));
 
         return objs;
     }
@@ -492,6 +500,17 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         } else {
             return "\"" + escapeText(value) + "\"";
         }
+    }
+
+    /**
+     * Return the regular expression/JSON schema pattern (http://json-schema.org/latest/json-schema-validation.html#anchor33)
+     *
+     * @param pattern the pattern (regular expression)
+     * @return properly-escaped pattern
+     */
+    @Override
+    public String toRegularExpression(String pattern) {
+        return escapeText(pattern);
     }
 
     public String toApiName(String name) {
