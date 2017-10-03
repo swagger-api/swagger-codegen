@@ -68,8 +68,8 @@ public class FakeApi {
     }
 
     @POST
-    @Consumes({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
-    @Produces({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
+    @Consumes({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
+    @Produces({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
     @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = Void.class, authorizations = {
         @Authorization(value = "http_basic_test")
     }, tags={ "fake",  })
