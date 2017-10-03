@@ -133,7 +133,7 @@ export class {{classname}} {
      * {{notes}}
      {{#allParams}}* @param $params.{{paramName}} {{description}}
      {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params{{/allParams.0}}{{^useHttpClient}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}undefined{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}> {
+    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params{{/allParams.0}}{{^useHttpClient}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}> {
 {{#allParams.0}}        $params = $params || {};{{/allParams.0}}
 {{#allParams}}
         const {{paramName}} = $params.{{paramName}};
