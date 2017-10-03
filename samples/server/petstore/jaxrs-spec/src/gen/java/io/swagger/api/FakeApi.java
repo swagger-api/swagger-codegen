@@ -18,18 +18,11 @@ import javax.validation.Valid;
 import java.lang.Exception;
 
 @Path("/fake")
-
 @Api(description = "the fake API")
-
-
-
-
-public class FakeApi  {
+public class FakeApi {
 
     @POST
     @Path("/outer/boolean")
-    
-    
     @ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
@@ -39,8 +32,6 @@ public class FakeApi  {
 
     @POST
     @Path("/outer/composite")
-    
-    
     @ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
@@ -50,8 +41,6 @@ public class FakeApi  {
 
     @POST
     @Path("/outer/number")
-    
-    
     @ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
@@ -61,8 +50,6 @@ public class FakeApi  {
 
     @POST
     @Path("/outer/string")
-    
-    
     @ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output string", response = String.class) })
@@ -71,7 +58,6 @@ public class FakeApi  {
     }
 
     @PATCH
-    
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake",  })
@@ -82,7 +68,6 @@ public class FakeApi  {
     }
 
     @POST
-    
     @Consumes({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
     @Produces({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
     @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = Void.class, authorizations = {
@@ -96,7 +81,6 @@ public class FakeApi  {
     }
 
     @GET
-    
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
     @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = Void.class, tags={ "fake",  })
@@ -110,7 +94,6 @@ public class FakeApi  {
     @GET
     @Path("/jsonFormData")
     @Consumes({ "application/json" })
-    
     @ApiOperation(value = "test json serialization of form data", notes = "", response = Void.class, tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })

@@ -16,16 +16,10 @@ import javax.validation.Valid;
 import java.lang.Exception;
 
 @Path("/pet")
-
 @Api(description = "the pet API")
-
-
-
-
-public class PetApi  {
+public class PetApi {
 
     @POST
-    
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Add a new pet to the store", notes = "", response = Void.class, authorizations = {
@@ -42,7 +36,6 @@ public class PetApi  {
 
     @DELETE
     @Path("/{petId}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -58,7 +51,6 @@ public class PetApi  {
 
     @GET
     @Path("/findByStatus")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -75,7 +67,6 @@ public class PetApi  {
 
     @GET
     @Path("/findByTags")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -92,7 +83,6 @@ public class PetApi  {
 
     @GET
     @Path("/{petId}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, authorizations = {
         @Authorization(value = "api_key")
@@ -106,7 +96,6 @@ public class PetApi  {
     }
 
     @PUT
-    
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, authorizations = {

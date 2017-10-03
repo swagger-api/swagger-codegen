@@ -15,17 +15,10 @@ import javax.validation.Valid;
 import java.lang.Exception;
 
 @Path("/user")
-
 @Api(description = "the user API")
-
-
-
-
-public class UserApi  {
+public class UserApi {
 
     @POST
-    
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -36,7 +29,6 @@ public class UserApi  {
 
     @POST
     @Path("/createWithArray")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -47,7 +39,6 @@ public class UserApi  {
 
     @POST
     @Path("/createWithList")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -58,7 +49,6 @@ public class UserApi  {
 
     @DELETE
     @Path("/{username}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -70,7 +60,6 @@ public class UserApi  {
 
     @GET
     @Path("/{username}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -83,7 +72,6 @@ public class UserApi  {
 
     @GET
     @Path("/login")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -95,7 +83,6 @@ public class UserApi  {
 
     @GET
     @Path("/logout")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Logs out current logged in user session", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
@@ -106,7 +93,6 @@ public class UserApi  {
 
     @PUT
     @Path("/{username}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user" })
     @ApiResponses(value = { 
