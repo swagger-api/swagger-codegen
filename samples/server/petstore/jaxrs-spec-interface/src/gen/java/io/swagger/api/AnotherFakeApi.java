@@ -21,7 +21,7 @@ public interface AnotherFakeApi {
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @ApiOperation(value = "To test special tags", notes = "To test special tags", tags={ "$another-fake?" })
-    @ApiResponses(value = {
+    @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     Client testSpecialTags(@Valid Client body);
 }
