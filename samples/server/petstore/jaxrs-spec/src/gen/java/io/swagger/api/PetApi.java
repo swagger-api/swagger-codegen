@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-import java.lang.Exception;
 
 @Path("/pet")
 @Api(description = "the pet API")
@@ -30,7 +29,7 @@ public class PetApi {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(@Valid Pet body) throws Exception {
+    public Response addPet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -45,7 +44,7 @@ public class PetApi {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value", response = Void.class) })
-    public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key")   String apiKey) throws Exception {
+    public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key")   String apiKey) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -61,7 +60,7 @@ public class PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    public Response findPetsByStatus(@QueryParam("status") @NotNull   @ApiParam("Status values that need to be considered for filter")  List<String> status) throws Exception {
+    public Response findPetsByStatus(@QueryParam("status") @NotNull   @ApiParam("Status values that need to be considered for filter")  List<String> status) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -77,7 +76,7 @@ public class PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
-    public Response findPetsByTags(@QueryParam("tags") @NotNull   @ApiParam("Tags to filter by")  List<String> tags) throws Exception {
+    public Response findPetsByTags(@QueryParam("tags") @NotNull   @ApiParam("Tags to filter by")  List<String> tags) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -91,7 +90,7 @@ public class PetApi {
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
-    public Response getPetById(@PathParam("petId") @ApiParam("ID of pet to return") Long petId) throws Exception {
+    public Response getPetById(@PathParam("petId") @ApiParam("ID of pet to return") Long petId) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -108,7 +107,7 @@ public class PetApi {
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Pet not found", response = Void.class),
         @ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(@Valid Pet body) throws Exception {
+    public Response updatePet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -124,7 +123,7 @@ public class PetApi {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response updatePetWithForm(@PathParam("petId") @ApiParam("ID of pet that needs to be updated") Long petId,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status) throws Exception {
+    public Response updatePetWithForm(@PathParam("petId") @ApiParam("ID of pet that needs to be updated") Long petId,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -141,7 +140,7 @@ public class PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
     public Response uploadFile(@PathParam("petId") @ApiParam("ID of pet to update") Long petId,@FormParam(value = "additionalMetadata")  String additionalMetadata, @FormParam(value = "file") InputStream fileInputStream,
-   @FormParam(value = "file") Attachment fileDetail) throws Exception {
+   @FormParam(value = "file") Attachment fileDetail) {
         return Response.ok().entity("magic!").build();
     }
 }

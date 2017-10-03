@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-import java.lang.Exception;
 
 @Path("/another-fake")
 @Api(description = "the another-fake API")
@@ -24,7 +23,7 @@ public class AnotherFakeApi {
     @ApiOperation(value = "To test special tags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Response testSpecialTags(@Valid Client body) throws Exception {
+    public Response testSpecialTags(@Valid Client body) {
         return Response.ok().entity("magic!").build();
     }
 }

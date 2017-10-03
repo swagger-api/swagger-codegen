@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-import java.lang.Exception;
 
 @Path("/user")
 @Api(description = "the user API")
@@ -23,7 +22,7 @@ public class UserApi {
     @ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUser(@Valid User body) throws Exception {
+    public Response createUser(@Valid User body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -33,7 +32,7 @@ public class UserApi {
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithArrayInput(@Valid List<User> body) throws Exception {
+    public Response createUsersWithArrayInput(@Valid List<User> body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -43,7 +42,7 @@ public class UserApi {
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithListInput(@Valid List<User> body) throws Exception {
+    public Response createUsersWithListInput(@Valid List<User> body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -54,7 +53,7 @@ public class UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response deleteUser(@PathParam("username") @ApiParam("The name that needs to be deleted") String username) throws Exception {
+    public Response deleteUser(@PathParam("username") @ApiParam("The name that needs to be deleted") String username) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -66,7 +65,7 @@ public class UserApi {
         @ApiResponse(code = 200, message = "successful operation", response = User.class),
         @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response getUserByName(@PathParam("username") @ApiParam("The name that needs to be fetched. Use user1 for testing. ") String username) throws Exception {
+    public Response getUserByName(@PathParam("username") @ApiParam("The name that needs to be fetched. Use user1 for testing. ") String username) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -77,7 +76,7 @@ public class UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = Void.class) })
-    public Response loginUser(@QueryParam("username") @NotNull   @ApiParam("The user name for login")  String username,@QueryParam("password") @NotNull   @ApiParam("The password for login in clear text")  String password) throws Exception {
+    public Response loginUser(@QueryParam("username") @NotNull   @ApiParam("The user name for login")  String username,@QueryParam("password") @NotNull   @ApiParam("The password for login in clear text")  String password) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -87,7 +86,7 @@ public class UserApi {
     @ApiOperation(value = "Logs out current logged in user session", notes = "", response = Void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response logoutUser() throws Exception {
+    public Response logoutUser() {
         return Response.ok().entity("magic!").build();
     }
 
@@ -98,7 +97,7 @@ public class UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid user supplied", response = Void.class),
         @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response updateUser(@PathParam("username") @ApiParam("name that need to be deleted") String username,@Valid User body) throws Exception {
+    public Response updateUser(@PathParam("username") @ApiParam("name that need to be deleted") String username,@Valid User body) {
         return Response.ok().entity("magic!").build();
     }
 }
