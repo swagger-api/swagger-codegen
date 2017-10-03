@@ -3,7 +3,7 @@
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 {{#useHttpClient}}
-import { HttpClient, HttpHeaders, HttpParams }               from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 {{/useHttpClient}}
 {{^useHttpClient}}
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
