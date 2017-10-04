@@ -33,7 +33,8 @@ use std::io::Error;
 #[allow(unused_imports)]
 use std::collections::BTreeSet;
 
-use swagger::auth::{Authorization, AuthData, Scopes};
+pub use swagger::auth::Authorization;
+use swagger::auth::{AuthData, Scopes};
 use swagger::{ApiError, Context, XSpanId};
 
 use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
