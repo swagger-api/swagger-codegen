@@ -10,19 +10,18 @@ import io.swagger.annotations.*;
 import java.util.List;
 import javax.validation.constraints.*;
 
-@Path("/fake_classname_test")
-@Api(description = "the fake_classname_test API")
-public interface FakeClassnameTestApi {
+@Path("/another-fake")
+@Api(description = "the another-fake API")
+public interface AnotherFakeApi {
 
     @PATCH
+    @Path("/dummy")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @ApiOperation(value = "To test class name in snake case", notes = "", response = Client.class, authorizations = {
-        @Authorization(value = "api_key_query")
-    }, tags={ "fake_classname_tags 123#$%^" })
+    @ApiOperation(value = "To test special tags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class)
     })
-    Client testClassname(@Valid Client body);
+    Client testSpecialTags(@Valid Client body);
 }
 

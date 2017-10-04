@@ -24,7 +24,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class)
     })
-    Boolean fakeOuterBooleanSerialize(Boolean body);
+    Boolean fakeOuterBooleanSerialize(@Valid Boolean body);
 
     @POST
     @Path("/outer/composite")
@@ -32,7 +32,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class)
     })
-    OuterComposite fakeOuterCompositeSerialize(OuterComposite body);
+    OuterComposite fakeOuterCompositeSerialize(@Valid OuterComposite body);
 
     @POST
     @Path("/outer/number")
@@ -40,7 +40,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class)
     })
-    BigDecimal fakeOuterNumberSerialize(BigDecimal body);
+    BigDecimal fakeOuterNumberSerialize(@Valid BigDecimal body);
 
     @POST
     @Path("/outer/string")
@@ -48,7 +48,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output string", response = String.class)
     })
-    String fakeOuterStringSerialize(String body);
+    String fakeOuterStringSerialize(@Valid String body);
 
     @PATCH
     @Consumes({ "application/json" })
@@ -57,7 +57,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class)
     })
-    Client testClientModel(Client body);
+    Client testClientModel(@Valid Client body);
 
     @POST
     @Consumes({ "application/xml; charset&#x3D;utf-8", "application/json; charset&#x3D;utf-8" })
@@ -79,7 +79,7 @@ public interface FakeApi {
         @ApiResponse(code = 400, message = "Invalid request", response = void.class),
         @ApiResponse(code = 404, message = "Not found", response = void.class)
     })
-    void testEnumParameters(@FormParam(value = "enum_form_string_array")  List<String> enumFormStringArray,@FormParam(value = "enum_form_string")  String enumFormString,@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray,@HeaderParam("enum_header_string") String enumHeaderString,@QueryParam("enum_query_string_array")  List<String> enumQueryStringArray,@QueryParam("enum_query_string")  @DefaultValue("-efg") String enumQueryString,@QueryParam("enum_query_integer")  Integer enumQueryInteger,@FormParam(value = "enum_query_double")  Double enumQueryDouble);
+    void testEnumParameters(@FormParam(value = "enum_form_string_array")  List<String> enumFormStringArray,@FormParam(value = "enum_form_string")  String enumFormString,@HeaderParam("enum_header_string_array")   @ApiParam("Header parameter enum test (string array)") List<String> enumHeaderStringArray,@HeaderParam("enum_header_string")  @DefaultValue("-efg")  @ApiParam("Header parameter enum test (string)") String enumHeaderString,@QueryParam("enum_query_string_array")   @ApiParam("Query parameter enum test (string array)")  List<String> enumQueryStringArray,@QueryParam("enum_query_string")  @DefaultValue("-efg")  @ApiParam("Query parameter enum test (string)")  String enumQueryString,@QueryParam("enum_query_integer")   @ApiParam("Query parameter enum test (double)")  Integer enumQueryInteger,@FormParam(value = "enum_query_double")  Double enumQueryDouble);
 
     @GET
     @Path("/jsonFormData")

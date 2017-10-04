@@ -28,7 +28,7 @@ public interface PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input", response = void.class)
     })
-    void addPet(Pet body);
+    void addPet(@Valid Pet body);
 
     @DELETE
     @Path("/{petId}")
@@ -42,7 +42,7 @@ public interface PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value", response = void.class)
     })
-    void deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key") String apiKey);
+    void deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key")   String apiKey);
 
     @GET
     @Path("/findByStatus")
@@ -57,7 +57,7 @@ public interface PetApi {
         @ApiResponse(code = 200, message = "successful operation", response = List<Pet>.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = List<Pet>.class, responseContainer = "List")
     })
-    List<List<Pet>> findPetsByStatus(@QueryParam("status") @NotNull  List<String> status);
+    List<List<Pet>> findPetsByStatus(@QueryParam("status") @NotNull   @ApiParam("Status values that need to be considered for filter")  List<String> status);
 
     @GET
     @Path("/findByTags")
@@ -72,7 +72,7 @@ public interface PetApi {
         @ApiResponse(code = 200, message = "successful operation", response = List<Pet>.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = List<Pet>.class, responseContainer = "List")
     })
-    List<List<Pet>> findPetsByTags(@QueryParam("tags") @NotNull  List<String> tags);
+    List<List<Pet>> findPetsByTags(@QueryParam("tags") @NotNull   @ApiParam("Tags to filter by")  List<String> tags);
 
     @GET
     @Path("/{petId}")
@@ -101,7 +101,7 @@ public interface PetApi {
         @ApiResponse(code = 404, message = "Pet not found", response = void.class),
         @ApiResponse(code = 405, message = "Validation exception", response = void.class)
     })
-    void updatePet(Pet body);
+    void updatePet(@Valid Pet body);
 
     @POST
     @Path("/{petId}")

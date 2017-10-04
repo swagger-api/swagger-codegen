@@ -21,7 +21,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class)
     })
-    void createUser(User body);
+    void createUser(@Valid User body);
 
     @POST
     @Path("/createWithArray")
@@ -30,7 +30,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class)
     })
-    void createUsersWithArrayInput(List<User> body);
+    void createUsersWithArrayInput(@Valid List<User> body);
 
     @POST
     @Path("/createWithList")
@@ -39,7 +39,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class)
     })
-    void createUsersWithListInput(List<User> body);
+    void createUsersWithListInput(@Valid List<User> body);
 
     @DELETE
     @Path("/{username}")
@@ -70,7 +70,7 @@ public interface UserApi {
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class)
     })
-    String loginUser(@QueryParam("username") @NotNull  String username,@QueryParam("password") @NotNull  String password);
+    String loginUser(@QueryParam("username") @NotNull   @ApiParam("The user name for login")  String username,@QueryParam("password") @NotNull   @ApiParam("The password for login in clear text")  String password);
 
     @GET
     @Path("/logout")
@@ -89,6 +89,6 @@ public interface UserApi {
         @ApiResponse(code = 400, message = "Invalid user supplied", response = void.class),
         @ApiResponse(code = 404, message = "User not found", response = void.class)
     })
-    void updateUser(@PathParam("username") @ApiParam("name that need to be deleted") String username,User body);
+    void updateUser(@PathParam("username") @ApiParam("name that need to be deleted") String username,@Valid User body);
 }
 

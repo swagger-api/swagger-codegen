@@ -55,6 +55,6 @@ public interface StoreApi {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid Order", response = Order.class)
     })
-    Order placeOrder(Order body);
+    Order placeOrder(@Valid Order body);
 }
 
