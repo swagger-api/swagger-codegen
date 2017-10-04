@@ -22,7 +22,7 @@ import { User } from '../model/user';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { CustomQueryEncoderHelper }                          from '../encoder';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 
 @Injectable()
@@ -167,7 +167,7 @@ export class UserService {
             throw new Error('Required parameter password was null or undefined when calling loginUser.');
         }
 
-        let queryParameters = new HttpParams('', new CustomQueryEncoderHelper());
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (username !== undefined) {
             queryParameters = queryParameters.set('username', <any>username);
         }

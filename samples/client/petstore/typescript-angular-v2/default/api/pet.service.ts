@@ -445,7 +445,7 @@ export class PetService {
         if (useForm) {
             formParams = new FormData();
         } else {
-            // TODO: this fails if a parameter is a file.
+            // TODO: this fails if a parameter is a file, the api can't consume "multipart/form-data" and a blob is passed.
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
@@ -512,7 +512,7 @@ export class PetService {
         if (useForm) {
             formParams = new FormData();
         } else {
-            // TODO: this fails if a parameter is a file.
+            // TODO: this fails if a parameter is a file, the api can't consume "multipart/form-data" and a blob is passed.
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
