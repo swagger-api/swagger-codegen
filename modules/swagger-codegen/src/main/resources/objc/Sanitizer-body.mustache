@@ -1,7 +1,7 @@
 #import "{{classPrefix}}Sanitizer.h"
 #import "{{classPrefix}}Object.h"
 #import "{{classPrefix}}QueryParamCollection.h"
-#import <ISO8601/ISO8601.h>
+#import "{{classPrefix}}DefaultConfiguration.h"
 
 NSString * const k{{classPrefix}}ApplicationJSONType = @"application/json";
 
@@ -125,8 +125,8 @@ NSString * {{classPrefix}}PercentEscapedStringFromString(NSString *string) {
     }
 }
 
-- (NSString *)dateParameterToString:(id)param {
-    return [param ISO8601String];
+- (NSString *) dateParameterToString:(id)param {
+    return [[{{classPrefix}}DefaultConfiguration sharedConfig].dateFormatter stringFromDate:param];
 }
 
 #pragma mark - Utility Methods

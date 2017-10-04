@@ -86,6 +86,11 @@
 @property (nonatomic) NSString *sslCaCert;
 
 /**
+ * The date formatter used for serialization and deserialization
+ */
+@property (readonly, nonatomic, strong) NSDateFormatter *dateFormatter;
+
+/**
  * Sets API key
  *
  * To remove a apiKey for an identifier, just set the apiKey to nil.

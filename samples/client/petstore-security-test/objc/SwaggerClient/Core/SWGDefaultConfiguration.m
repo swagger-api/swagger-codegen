@@ -2,6 +2,9 @@
 #import "SWGBasicAuthTokenProvider.h"
 #import "SWGLogger.h"
 
+static NSString *const DefaultDateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+static NSString *const UTCTimezone = @"UTC";
+
 @interface SWGDefaultConfiguration ()
 
 @property (nonatomic, strong) NSMutableDictionary *mutableDefaultHeaders;
@@ -33,6 +36,7 @@
         _password = @"";
         _accessToken= @"";
         _verifySSL = YES;
+        _dateFormatter = [[self class] createDefaultDateFormatter];
         _mutableApiKey = [NSMutableDictionary dictionary];
         _mutableApiKeyPrefix = [NSMutableDictionary dictionary];
         _mutableDefaultHeaders = [NSMutableDictionary dictionary];
@@ -147,6 +151,14 @@
 
 - (NSDictionary *)defaultHeaders {
     return [self.mutableDefaultHeaders copy];
+}
+
++ (NSDateFormatter *)createDefaultDateFormatter {
+  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+  [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+  [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:UTCTimezone]];
+  [formatter setDateFormat:DefaultDateFormat];
+  return formatter;
 }
 
 @end

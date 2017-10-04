@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import <ISO8601/ISO8601.h>
 #import <SwaggerClient/SWGApiClient.h>
 #import <SwaggerClient/SWGDefaultConfiguration.h>
 #import <SwaggerClient/SWGQueryParamCollection.h>
@@ -151,14 +150,15 @@
     result = [self.apiClient.sanitizer sanitizeForSerialization:data];
     XCTAssertEqualObjects(result, data);
     
-    // NSDate
-    data = [NSDate dateWithISO8601String:@"1997-07-16T19:20:30.45+01:00"];
+    // [SWGDefaultConfiguration sharedConfig].dateFormatter dateFromString
+    data = [[SWGDefaultConfiguration sharedConfig].dateFormatter dateFromString:@"1997-07-16T19:20:30.45+01:00"];
+
     result = [self.apiClient.sanitizer sanitizeForSerialization:data];
-    XCTAssertEqualObjects(result, [data ISO8601String]);
+    XCTAssertEqualObjects(result, [[SWGDefaultConfiguration sharedConfig].dateFormatter stringFromDate:data]);
     
-    data = [NSDate dateWithISO8601String:@"1997-07-16"];
+    data = [[SWGDefaultConfiguration sharedConfig].dateFormatter dateFromString:@"1997-07-16"];
     result = [self.apiClient.sanitizer sanitizeForSerialization:data];
-    XCTAssertEqualObjects(result, [data ISO8601String]);
+    XCTAssertEqualObjects(result, [[SWGDefaultConfiguration sharedConfig].dateFormatter stringFromDate:data]);
     
     // model
     NSDictionary *petDict = @{@"id": @1, @"name": @"monkey",
