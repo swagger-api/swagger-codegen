@@ -20,7 +20,12 @@ import { {{classname}} } from '../{{filename}}';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+{{#useHttpClient}}
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+{{/useHttpClient}}
+{{^useHttpClient}}
 import { CustomQueryEncoderHelper }                          from '../encoder';
+{{/useHttpClient}}
 {{#withInterfaces}}
 import { {{classname}}Interface }                            from './{{classname}}Interface';
 {{/withInterfaces}}
@@ -116,7 +121,12 @@ export class {{classname}} {
 {{/allParams}}
 
 {{#hasQueryParams}}
-        let queryParameters = new {{#useHttpClient}}HttpParams{{/useHttpClient}}{{^useHttpClient}}URLSearchParams{{/useHttpClient}}('', new CustomQueryEncoderHelper());
+        {{#useHttpClient}}
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        {{/useHttpClient}}
+        {{^useHttpClient}}
+        let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
+        {{/useHttpClient}}
 {{#queryParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
@@ -218,10 +228,10 @@ export class {{classname}} {
             formParams = new FormData();
         } else {
 {{#useHttpClient}}
-            formParams = new HttpParams('', new CustomQueryEncoderHelper());
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
 {{/useHttpClient}}
 {{^useHttpClient}}
-            // TODO: this fails if a parameter is a file.
+            // TODO: this fails if a parameter is a file, the api can't consume "multipart/form-data" and a blob is passed.
             convertFormParamsToString = true;
             formParams = new URLSearchParams('', new CustomQueryEncoderHelper());
             // set the content-type explicitly to avoid having it set to 'text/plain'
