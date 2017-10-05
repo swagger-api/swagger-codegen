@@ -5,7 +5,7 @@ ENV MAVEN_HOME=/usr/share/maven
 VOLUME  ${MAVEN_HOME}/.m2/repository
 
 RUN set -x \
-    && apk add --no-cache ca-certificates openssl bash curl jq nodejs nodejs-npm \
+    && apk add --no-cache ca-certificates openssl bash curl jq nodejs-npm \
     && update-ca-certificates \
     && cd /tmp \
     && wget https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz \
@@ -22,7 +22,7 @@ ADD . ${GEN_DIR}
 
 WORKDIR ${GEN_DIR}
 
-RUN mvn -am -pl "modules/swagger-codegen-cli" package
+RUN /usr/bin/mvn -am -pl "modules/swagger-codegen-cli" package
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
