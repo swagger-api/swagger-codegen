@@ -312,7 +312,8 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toParamName(String name) {
-        return underscore(super.toParamName(name));
+        // should be the same as variable name (stolen from RubyClientCodegen)
+        return toVarName(name);
     }
 
     @Override
