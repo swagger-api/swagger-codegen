@@ -275,7 +275,10 @@ public class Rust2Codegen extends DefaultCodegen implements CodegenConfig {
      */
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name;  // add an underscore to the name
+        if (this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
+        return "_" + name; // add an underscore to the name
     }
 
     /**
