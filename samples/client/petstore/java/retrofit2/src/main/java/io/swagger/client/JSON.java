@@ -54,13 +54,29 @@ public class JSON {
                 Map classByDiscriminatorValue = new HashMap();
                 classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
                 classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
-                String discriminatorField = "className";
-                String discriminatorValue = readElement.getAsJsonObject().get(discriminatorField).getAsString();
-                return (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, "className"));
             }
           })
         ;
         return fireBuilder.createGsonBuilder();
+    }
+
+    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
+        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
+        if(null == element) {
+            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
+        }
+        return element.getAsString();
+    }
+
+    private static Class getClassByDiscriminator(Map classByDiscriminatorValue, String discriminatorValue) {
+        Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
+        if(null == clazz) {
+            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
+        }
+        return clazz;
     }
 
     public JSON() {
