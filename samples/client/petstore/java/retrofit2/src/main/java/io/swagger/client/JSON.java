@@ -54,6 +54,7 @@ public class JSON {
                 Map classByDiscriminatorValue = new HashMap();
                 classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
                 classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
+                classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
                 return getClassByDiscriminator(
                             classByDiscriminatorValue,
                             getDiscriminatorValue(readElement, "className"));
