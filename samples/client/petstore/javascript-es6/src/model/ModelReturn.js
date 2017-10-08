@@ -67,7 +67,7 @@ export default class ModelReturn {
     /**
     * @member {Number} return
     */
-    return = undefined;
+    _return = undefined;
 
 
 

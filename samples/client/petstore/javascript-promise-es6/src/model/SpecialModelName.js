@@ -57,7 +57,7 @@ export default class SpecialModelName {
             
 
             if (data.hasOwnProperty('$special[property.name]')) {
-                obj['$special[property.name]'] = ApiClient.convertToType(data['$special[property.name]'], 'Number');
+                obj['$special[property.name]'] = ApiClient.convertToType(data['special_property_name'], 'Number');
             }
         }
         return obj;
@@ -66,7 +66,7 @@ export default class SpecialModelName {
     /**
     * @member {Number} $special[property.name]
     */
-    $special[property.name] = undefined;
+    special_property_name = undefined;
 
 
 

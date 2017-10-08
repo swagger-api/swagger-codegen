@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**enumString** | **String** |  | [optional] 
-**enumInteger** | **Number** |  | [optional] 
-**enumNumber** | **Number** |  | [optional] 
+**enum_string** | **String** |  | [optional] 
+**enum_integer** | **Number** |  | [optional] 
+**enum_number** | **Number** |  | [optional] 
 **outerEnum** | [**OuterEnum**](OuterEnum.md) |  | [optional] 
 
 
@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 
 * `1` (value: `1`)
 
-* `-1` (value: `-1`)
+* `_1` (value: `-1`)
 
 
 
@@ -37,9 +37,9 @@ Name | Type | Description | Notes
 ## Enum: EnumNumberEnum
 
 
-* `1.1` (value: `1.1`)
+* `1_1` (value: `1.1`)
 
-* `-1.2` (value: `-1.2`)
+* `_1_2` (value: `-1.2`)
 
 
 

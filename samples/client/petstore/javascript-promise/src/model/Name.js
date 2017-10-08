@@ -77,7 +77,7 @@
         obj['property'] = ApiClient.convertToType(data['property'], 'String');
       }
       if (data.hasOwnProperty('123Number')) {
-        obj['123Number'] = ApiClient.convertToType(data['123Number'], 'Number');
+        obj['123Number'] = ApiClient.convertToType(data['var123Number'], 'Number');
       }
     }
     return obj;

@@ -5,8 +5,8 @@
 
 * `_abc` (value: `"_abc"`)
 
-* `-efg` (value: `"-efg"`)
+* `_efg` (value: `"-efg"`)
 
-* `(xyz)` (value: `"(xyz)"`)
+* `_xyz` (value: `"(xyz)"`)
 
 

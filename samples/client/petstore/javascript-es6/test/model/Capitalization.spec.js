@@ -11,27 +11,20 @@
  *
  */
 
+import expect, { createSpy, spyOn, isSpy } from 'expect';
+
 (function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
-  } else {
-    // Browser globals (root is window)
-    factory(root.expect, root.SwaggerPetstore);
-  }
+
 }(this, function(expect, SwaggerPetstore) {
   'use strict';
 
-  var instance;
+  let instance;
 
   beforeEach(function() {
     instance = new SwaggerPetstore.Capitalization();
   });
 
-  var getProperty = function(object, getter, property) {
+  let getProperty = function(object, getter, property) {
     // Use getter method if present; otherwise, get the property directly.
     if (typeof object[getter] === 'function')
       return object[getter]();
@@ -39,7 +32,7 @@
       return object[property];
   }
 
-  var setProperty = function(object, setter, property, value) {
+  let setProperty = function(object, setter, property, value) {
     // Use setter method if present; otherwise, set the property directly.
     if (typeof object[setter] === 'function')
       object[setter](value);
@@ -60,26 +53,26 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property capitalCamel (base name: "CapitalCamel")', function() {
-      // uncomment below and update the code to test the property capitalCamel
+    it('should have the property CapitalCamel (base name: "CapitalCamel")', function() {
+      // uncomment below and update the code to test the property CapitalCamel
       //var instane = new SwaggerPetstore.Capitalization();
       //expect(instance).to.be();
     });
 
-    it('should have the property smallSnake (base name: "small_Snake")', function() {
-      // uncomment below and update the code to test the property smallSnake
+    it('should have the property small_Snake (base name: "small_Snake")', function() {
+      // uncomment below and update the code to test the property small_Snake
       //var instane = new SwaggerPetstore.Capitalization();
       //expect(instance).to.be();
     });
 
-    it('should have the property capitalSnake (base name: "Capital_Snake")', function() {
-      // uncomment below and update the code to test the property capitalSnake
+    it('should have the property Capital_Snake (base name: "Capital_Snake")', function() {
+      // uncomment below and update the code to test the property Capital_Snake
       //var instane = new SwaggerPetstore.Capitalization();
       //expect(instance).to.be();
     });
 
-    it('should have the property sCAETHFlowPoints (base name: "SCA_ETH_Flow_Points")', function() {
-      // uncomment below and update the code to test the property sCAETHFlowPoints
+    it('should have the property SCA_ETH_Flow_Points (base name: "SCA_ETH_Flow_Points")', function() {
+      // uncomment below and update the code to test the property SCA_ETH_Flow_Points
       //var instane = new SwaggerPetstore.Capitalization();
       //expect(instance).to.be();
     });

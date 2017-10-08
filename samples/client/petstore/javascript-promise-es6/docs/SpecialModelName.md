@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**specialPropertyName** | **Number** |  | [optional] 
+**special_property_name** | **Number** |  | [optional] 
 
 
