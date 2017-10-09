@@ -165,12 +165,12 @@ namespace {{packageName}}.Client
 
             if (postBody != null) // http body (model or byte[]) parameter
             {
-				{{#netStandard}}
-				request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = contentType });
-				{{/netStandard}}
-				{{^netStandard}}
-				request.AddParameter(contentType, postBody, ParameterType.RequestBody);
-				{{/netStandard}}
+                {{#netStandard}}
+                request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = contentType });
+                {{/netStandard}}
+                {{^netStandard}}
+                request.AddParameter(contentType, postBody, ParameterType.RequestBody);
+                {{/netStandard}}
             }
 
             return request;
@@ -390,18 +390,18 @@ namespace {{packageName}}.Client
         /// <summary>
         ///Check if the given MIME is a JSON MIME.
         ///JSON MIME examples:
-        ///	   application/json
+        ///    application/json
         ///    application/json; charset=UTF8
         ///    APPLICATION/JSON
         ///    application/vnd.company+json
         /// </summary>
         /// <param name="mime">MIME</param>
-        /// <returns>Returns True if MIME type is json.</returns>		
+        /// <returns>Returns True if MIME type is json.</returns>
         public bool IsJsonMime(String mime)
         {
             var jsonRegex = new Regex("(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
             return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json", StringComparison.InvariantCultureIgnoreCase));
-        }	
+        }    
 
         /// <summary>
         /// Select the Content-Type header's value from the given content-type array:
