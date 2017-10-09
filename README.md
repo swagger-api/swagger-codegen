@@ -24,8 +24,8 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
-- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
+- **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Go**, **Groovy**, **Haskell** (http-client, Servant), **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust**, **Scala**, **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
 - **Others**: **JMeter**
@@ -896,6 +896,7 @@ Presentations/Videos/Tutorials/Books
 - 2017/09/21 - [Generating an Elastic Cloud Enterprise Client](https://www.elastic.co/blog/generating-an-elastic-cloud-enterprise-client) by [Greg Marzouka](https://github.com/gmarz) ([Elastic](https://www.elastic.co/))
 - 2017/09/26 - [How to Use IoT Application Enablement Api Hub JSON Descriptor in Postman and How to Generate Client Code](https://www.linkedin.com/in/radu-simen/) by [Radu Simen](https://www.linkedin.com/in/radu-simen/) ([SAP](https://www.sap.com/))
 - 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
+- 2017/10/04 - [Enterprise-friendly Java client for Microsoft Machine Learning Server](https://blogs.msdn.microsoft.com/mlserver/2017/10/04/enterprise-friendly-java-client-for-microsoft-machine-learning-server/) by [Pratik Palnitkar](https://www.linkedin.com/in/pratikpalnitkar/) ([Microsoft](https://www.microsoft.com/))
 
 # Swagger Codegen Core Team
 
