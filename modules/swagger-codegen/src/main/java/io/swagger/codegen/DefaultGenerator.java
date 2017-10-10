@@ -435,6 +435,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
                 operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
 
+                List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
+                if (authMethods != null && !authMethods.isEmpty()) {
+                    operation.put("_authMethods", authMethods);
+                    operation.put("_hasAuthMethods", true);
+                }
+
                 processMimeTypes(swagger.getConsumes(), operation, "consumes");
                 processMimeTypes(swagger.getProduces(), operation, "produces");
 

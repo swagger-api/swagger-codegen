@@ -112,7 +112,7 @@ class StoreApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/store/order/{order_id}', 'DELETE',
                                         path_params,
@@ -198,7 +198,7 @@ class StoreApi(object):
             select_header_accept(['application/json'])
 
         # Authentication setting
-        auth_settings = ['api_key']
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/store/inventory', 'GET',
                                         path_params,
@@ -296,7 +296,7 @@ class StoreApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/store/order/{order_id}', 'GET',
                                         path_params,
@@ -390,7 +390,7 @@ class StoreApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/store/order', 'POST',
                                         path_params,

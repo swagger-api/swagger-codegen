@@ -112,7 +112,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user', 'POST',
                                         path_params,
@@ -206,7 +206,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/createWithArray', 'POST',
                                         path_params,
@@ -300,7 +300,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/createWithList', 'POST',
                                         path_params,
@@ -394,7 +394,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/{username}', 'DELETE',
                                         path_params,
@@ -488,7 +488,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/{username}', 'GET',
                                         path_params,
@@ -589,7 +589,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/login', 'GET',
                                         path_params,
@@ -675,7 +675,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/logout', 'GET',
                                         path_params,
@@ -776,7 +776,7 @@ class UserApi(object):
             select_header_accept(['application/xml', 'application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'api_key_query', 'http_basic_test', 'petstore_auth']
 
         return self.api_client.call_api('/user/{username}', 'PUT',
                                         path_params,

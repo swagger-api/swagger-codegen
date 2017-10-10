@@ -111,7 +111,7 @@ class FakeApi(object):
             select_header_content_type(['application/json', '*/  \" =end --       '])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['api_key', 'petstore_auth']
 
         return self.api_client.call_api('/fake', 'PUT',
                                         path_params,
