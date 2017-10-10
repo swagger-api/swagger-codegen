@@ -141,6 +141,15 @@ public class CodegenOperation {
     }
 
     /**
+     * Check if act as Restful update method
+     *
+     * @return true if act as Restful update method, false otherwise
+     */
+    public boolean isBodyAllowed() {
+        return Arrays.asList("PUT", "PATCH", "POST").contains(httpMethod.toUpperCase());
+    }
+
+    /**
      * Check if act as Restful destroy method
      *
      * @return true if act as Restful destroy method, false otherwise
