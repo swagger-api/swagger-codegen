@@ -403,8 +403,7 @@ public class CodegenConfigurator implements Serializable {
         config.importMapping().putAll(importMappings);
         config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
         config.reservedWordsMappings().putAll(reservedWordMappings);
-        for(String supportFileTemplate:supportFilesMapping.keySet())
-        {
+        for(String supportFileTemplate:supportFilesMapping.keySet()) {
             config.supportingFiles().add(new SupportingFile(supportFileTemplate,supportFilesMapping.get(supportFileTemplate)));
         }
 
