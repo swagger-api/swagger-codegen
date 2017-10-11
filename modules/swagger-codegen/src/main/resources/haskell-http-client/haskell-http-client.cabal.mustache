@@ -1,7 +1,3 @@
--- This file has been generated from package.yaml by hpack version 0.17.1.
---
--- see: https://github.com/sol/hpack
-
 name:           {{package}}
 version:        0.1.0.0
 synopsis:       Auto-generated {{package}} API Client
@@ -11,10 +7,12 @@ description:    .
                 host: {{host}}
                 .
                 base path: {{basePath}}
+                {{#version}}
                 .
-                apiVersion: {{apiVersion}}
+                {{appName}} API version: {{{.}}}
+                {{/version}}
                 .
-                swagger version: {{swaggerVersion}}
+                OpenAPI spec version: {{swaggerVersion}}
                 .
                 {{^hideGenerationTimestamp}}Generated on: {{generatedDate}}
                 .
@@ -44,6 +42,7 @@ library
     , unordered-containers
     , aeson >=1.0 && <2.0
     , bytestring >=0.10.0 && <0.11
+    , base64-bytestring >1.0 && <2.0
     , containers >=0.5.0.0 && <0.6
     , http-types >=0.8 && <0.10
     , http-client >=0.5 && <0.6
@@ -61,6 +60,7 @@ library
     , safe-exceptions <0.2
     , case-insensitive
     , microlens >= 0.4.3 && <0.5
+    , deepseq >= 1.4 && <1.6
   exposed-modules:
       {{title}}
       {{title}}.API
@@ -92,6 +92,7 @@ test-suite tests
     , time
     , iso8601-time
     , aeson
+    , vector
     , semigroups
     , QuickCheck
   other-modules:
