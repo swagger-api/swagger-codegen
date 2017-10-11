@@ -28,8 +28,6 @@ open class ModelWithStringAdditionalPropertiesOnly: Codable {
         }
     }
 
-    public init() {
-    }
 
     // Encodable protocol methods
 
