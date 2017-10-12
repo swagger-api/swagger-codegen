@@ -128,6 +128,11 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
     }
 
     @Override
+    public String toOperationId(String operationId) {
+        return sanitizeName(super.toOperationId(operationId));
+    }
+
+    @Override
     public String toParamName(String name) {
         return sanitizeName(super.toParamName(name));
     }
