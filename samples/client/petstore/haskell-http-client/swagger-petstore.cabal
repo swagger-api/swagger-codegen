@@ -1,21 +1,19 @@
--- This file has been generated from package.yaml by hpack version 0.17.1.
---
--- see: https://github.com/sol/hpack
-
 name:           swagger-petstore
 version:        0.1.0.0
 synopsis:       Auto-generated swagger-petstore API Client
 description:    .
                 Client library for calling the swagger-petstore API based on http-client.
-                host: petstore.swagger.io
                 .
-                base path: http://petstore.swagger.io/v2
+                host: petstore.swagger.io:80
                 .
-                apiVersion: 0.0.1
+                base path: http://petstore.swagger.io:80/v2
                 .
-                swagger version: 2.0
+                Swagger Petstore API version: 1.0.0
                 .
-                OpenAPI-Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md 
+                OpenAPI spec version: 2.0
+                .
+                OpenAPI-Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
+                .
 category:       Web
 homepage:       https://github.com/swagger-api/swagger-codegen#readme
 author:         Author Name Here
@@ -32,7 +30,7 @@ extra-source-files:
 library
   hs-source-dirs:
       lib
-  ghc-options: -Wall
+  ghc-options: -Wall -funbox-strict-fields
   build-depends:
       base >=4.7 && <5.0
     , transformers >=0.4.0.0
@@ -40,6 +38,7 @@ library
     , unordered-containers
     , aeson >=1.0 && <2.0
     , bytestring >=0.10.0 && <0.11
+    , base64-bytestring >1.0 && <2.0
     , containers >=0.5.0.0 && <0.6
     , http-types >=0.8 && <0.10
     , http-client >=0.5 && <0.6
@@ -53,10 +52,11 @@ library
     , network >=2.6.2 && <2.7
     , random >=1.1
     , exceptions >= 0.4
-    , monad-logger >=0.3 && <0.4
+    , katip >=0.4 && < 0.6
     , safe-exceptions <0.2
     , case-insensitive
     , microlens >= 0.4.3 && <0.5
+    , deepseq >= 1.4 && <1.6
   exposed-modules:
       SwaggerPetstore
       SwaggerPetstore.API
@@ -64,6 +64,7 @@ library
       SwaggerPetstore.Model
       SwaggerPetstore.MimeTypes
       SwaggerPetstore.Lens
+      SwaggerPetstore.Logging
   other-modules:
       Paths_swagger_petstore
   default-language: Haskell2010
@@ -87,6 +88,7 @@ test-suite tests
     , time
     , iso8601-time
     , aeson
+    , vector
     , semigroups
     , QuickCheck
   other-modules:
