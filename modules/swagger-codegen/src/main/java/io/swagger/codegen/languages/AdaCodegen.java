@@ -263,6 +263,34 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             op1.vendorExtensions.put("x-has-uniq-produces", postProcessMediaTypes(op1.produces) == 1);
             op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
             op1.vendorExtensions.put("x-has-notes", op1.notes.length() > 0);
+
+            /*
+             * Scan the path parameter to construct a x-path-index that tells the index of
+             * the path parameter.
+             */
+            for (CodegenParameter p : op1.pathParams) {
+                String path = op1.path;
+                int pos = 0;
+                int index = 0;
+                while (pos >= 0 && pos < path.length()) {
+                    int last;
+                    pos = path.indexOf('{', pos);
+                    if (pos < 0) {
+                        break;
+                    }
+                    pos++;
+                    last = path.indexOf('}', pos);
+                    index++;
+                    if (last < 0) {
+                        break;
+                    }
+                    if (path.substring(pos, last - 1) == p.baseName) {
+                        break;
+                    }
+                    pos = last + 1;
+                }
+                p.vendorExtensions.put("x-path-index", index);
+            }
         }
         return objs;
     }
