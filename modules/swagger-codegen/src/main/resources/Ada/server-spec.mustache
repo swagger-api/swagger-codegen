@@ -1,20 +1,50 @@
 {{>licenseInfo}}
 {{#imports}}with {{import}};
 {{/imports}}
+with Swagger.Servers;
 with {{package}}.Models;
 package {{package}}.Servers is
+   use {{package}}.Models;
+   type Server_Type is limited interface;
+
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
 {{#operation}}
 
-   --  {{summary}}
-   --  {{notes}}
-   procedure {{operationId}} ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
-      {{/hasMore}}{{/allParams}});
+   --  {{summary}}{{#vendorExtensions.x-has-notes}}
+   --  {{notes}}{{/vendorExtensions.x-has-notes}}
+   procedure {{operationId}}
+      (Server : in out Server_Type{{#hasParams}};{{/hasParams}}
+       {{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
+       {{/hasMore}}{{/allParams}}{{#returnType}};
+       Result : out {{returnType}}{{/returnType}}) is abstract;
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+   generic
+      type Implementation_Type is limited new Server_Type with private;
+   package Skeleton is
+
+      procedure Register (Server : in out Swagger.Servers.Application_Type'Class);
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+      --  {{summary}}
+      procedure {{operationId}}
+         (Req : in out Swagger.Servers.Request'Class;
+          Reply : in out Swagger.Servers.Response'Class;
+          Stream : in out Swagger.Servers.Output_Stream'Class);
 
 {{/operation}}
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
+   end Skeleton;
+
 end {{package}}.Servers;
