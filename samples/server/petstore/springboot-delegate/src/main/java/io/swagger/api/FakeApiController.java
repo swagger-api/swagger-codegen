@@ -28,15 +28,12 @@ import javax.validation.Valid;
 public class FakeApiController implements FakeApi {
     private final ObjectMapper objectMapper;
 
-    public FakeApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final FakeApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public FakeApiController(FakeApiDelegate delegate) {
+    public FakeApiController(FakeApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Boolean> fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body,

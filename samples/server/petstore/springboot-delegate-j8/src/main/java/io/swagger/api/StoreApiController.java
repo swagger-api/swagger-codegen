@@ -25,15 +25,12 @@ import javax.validation.Valid;
 public class StoreApiController implements StoreApi {
     private final ObjectMapper objectMapper;
 
-    public StoreApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final StoreApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public StoreApiController(StoreApiDelegate delegate) {
+    public StoreApiController(StoreApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId,
