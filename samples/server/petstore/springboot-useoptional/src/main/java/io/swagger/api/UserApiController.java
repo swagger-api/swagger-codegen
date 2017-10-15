@@ -26,6 +26,7 @@ import javax.validation.Valid;
 public class UserApiController implements UserApi {
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public UserApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }

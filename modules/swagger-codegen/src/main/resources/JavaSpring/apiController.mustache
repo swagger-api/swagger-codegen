@@ -41,6 +41,7 @@ public class {{classname}}Controller implements {{classname}} {
     private final ObjectMapper objectMapper;
 
 {{^isDelegate}}
+    @org.springframework.beans.factory.annotation.Autowired
     public {{classname}}Controller(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }

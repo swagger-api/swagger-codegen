@@ -25,6 +25,7 @@ import javax.validation.Valid;
 public class StoreApiController implements StoreApi {
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public StoreApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
