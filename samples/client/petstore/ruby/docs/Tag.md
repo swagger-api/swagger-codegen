@@ -1,4 +1,4 @@
-# Petstore::Tag
+# SwaggerClient::Tag
 
 ## Properties
 Name | Type | Description | Notes

@@ -1,7 +1,7 @@
 {-
    Swagger Petstore
 
-   This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+   This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
 
    OpenAPI spec version: 2.0
    Swagger Petstore API version: 1.0.0
@@ -66,8 +66,6 @@ data MimeOctetStream = MimeOctetStream deriving (P.Typeable)
 data MimeNoContent = MimeNoContent deriving (P.Typeable)
 data MimeAny = MimeAny deriving (P.Typeable)
 
-data MimeJsonCharsetutf8 = MimeJsonCharsetutf8 deriving (P.Typeable)
-data MimeXmlCharsetutf8 = MimeXmlCharsetutf8 deriving (P.Typeable)
 
 -- ** MimeType Class
 
@@ -116,16 +114,6 @@ instance MimeType MimeAny where
   mimeType _ = Just $ P.fromString "*/*"
 instance MimeType MimeNoContent where
   mimeType _ = Nothing
-
--- | @application/json; charset=utf-8@
-instance MimeType MimeJsonCharsetutf8 where
-  mimeType _ = Just $ P.fromString "application/json; charset=utf-8"
-instance A.ToJSON a => MimeRender MimeJsonCharsetutf8 a where mimeRender _ = A.encode
-instance A.FromJSON a => MimeUnrender MimeJsonCharsetutf8 a where mimeUnrender _ = A.eitherDecode
-
--- | @application/xml; charset=utf-8@
-instance MimeType MimeXmlCharsetutf8 where
-  mimeType _ = Just $ P.fromString "application/xml; charset=utf-8"
 
 
 -- ** MimeRender Class
@@ -183,8 +171,6 @@ instance MimeRender MimeNoContent NoContent where mimeRender _ = P.const BCL.emp
 -- instance MimeRender MimeOctetStream Int where mimeRender _ = BB.toLazyByteString . BB.intDec
 -- instance MimeRender MimeOctetStream Integer where mimeRender _ = BB.toLazyByteString . BB.integerDec
 
--- instance MimeRender MimeJsonCharsetutf8 T.Text where mimeRender _ = undefined
--- instance MimeRender MimeXmlCharsetutf8 T.Text where mimeRender _ = undefined
 
 -- ** MimeUnrender Class
 
@@ -217,8 +203,6 @@ instance MimeUnrender MimeOctetStream String where mimeUnrender _ = P.Right . BC
 -- | @P.Right . P.const NoContent@
 instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
 
--- instance MimeUnrender MimeJsonCharsetutf8 T.Text where mimeUnrender _ = undefined
--- instance MimeUnrender MimeXmlCharsetutf8 T.Text where mimeUnrender _ = undefined
 
 -- ** Request Consumes
 

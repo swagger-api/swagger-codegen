@@ -26,6 +26,7 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:39:48.050+02:00")
 
 @Api(value = "store", description = "the store API")
 public interface StoreApi {
@@ -34,10 +35,10 @@ public interface StoreApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Order not found") })
-    @RequestMapping(value = "/store/order/{order_id}",
+    @RequestMapping(value = "/store/order/{orderId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));
     }
@@ -62,10 +63,10 @@ public interface StoreApi {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Order not found") })
-    @RequestMapping(value = "/store/order/{order_id}",
+    @RequestMapping(value = "/store/order/{orderId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Order>(HttpStatus.OK));
     }

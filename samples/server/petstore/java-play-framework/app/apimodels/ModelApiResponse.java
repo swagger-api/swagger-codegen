@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 /**
  * Describes the result of uploading an image resource
  */
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:39:17.134+02:00")
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class ModelApiResponse   {

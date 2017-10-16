@@ -26,6 +26,7 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:39:48.050+02:00")
 
 @Api(value = "user", description = "the user API")
 public interface UserApi {

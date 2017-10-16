@@ -86,25 +86,6 @@ instance ApproxEq TI.Day where
 
 -- * Models
  
-instance Arbitrary AdditionalPropertiesClass where
-  arbitrary =
-    AdditionalPropertiesClass
-      <$> arbitrary -- additionalPropertiesClassMapProperty :: Maybe (Map.Map String Text)
-      <*> arbitrary -- additionalPropertiesClassMapOfMapProperty :: Maybe (Map.Map String (Map.Map String Text))
-    
-
-instance Arbitrary Animal where
-  arbitrary =
-    Animal
-      <$> arbitrary -- animalClassName :: Text
-      <*> arbitrary -- animalColor :: Maybe Text
-    
-
-instance Arbitrary AnimalFarm where
-  arbitrary =
-    pure AnimalFarm
-     
-
 instance Arbitrary ApiResponse where
   arbitrary =
     ApiResponse
@@ -113,149 +94,11 @@ instance Arbitrary ApiResponse where
       <*> arbitrary -- apiResponseMessage :: Maybe Text
     
 
-instance Arbitrary ArrayOfArrayOfNumberOnly where
-  arbitrary =
-    ArrayOfArrayOfNumberOnly
-      <$> arbitrary -- arrayOfArrayOfNumberOnlyArrayArrayNumber :: Maybe [[Double]]
-    
-
-instance Arbitrary ArrayOfNumberOnly where
-  arbitrary =
-    ArrayOfNumberOnly
-      <$> arbitrary -- arrayOfNumberOnlyArrayNumber :: Maybe [Double]
-    
-
-instance Arbitrary ArrayTest where
-  arbitrary =
-    ArrayTest
-      <$> arbitrary -- arrayTestArrayOfString :: Maybe [Text]
-      <*> arbitrary -- arrayTestArrayArrayOfInteger :: Maybe [[Integer]]
-      <*> arbitrary -- arrayTestArrayArrayOfModel :: Maybe [[ReadOnlyFirst]]
-    
-
-instance Arbitrary Capitalization where
-  arbitrary =
-    Capitalization
-      <$> arbitrary -- capitalizationSmallCamel :: Maybe Text
-      <*> arbitrary -- capitalizationCapitalCamel :: Maybe Text
-      <*> arbitrary -- capitalizationSmallSnake :: Maybe Text
-      <*> arbitrary -- capitalizationCapitalSnake :: Maybe Text
-      <*> arbitrary -- capitalizationScaEthFlowPoints :: Maybe Text
-      <*> arbitrary -- capitalizationAttName :: Maybe Text
-    
-
 instance Arbitrary Category where
   arbitrary =
     Category
       <$> arbitrary -- categoryId :: Maybe Integer
       <*> arbitrary -- categoryName :: Maybe Text
-    
-
-instance Arbitrary ClassModel where
-  arbitrary =
-    ClassModel
-      <$> arbitrary -- classModelClass :: Maybe Text
-    
-
-instance Arbitrary Client where
-  arbitrary =
-    Client
-      <$> arbitrary -- clientClient :: Maybe Text
-    
-
-instance Arbitrary EnumArrays where
-  arbitrary =
-    EnumArrays
-      <$> arbitrary -- enumArraysJustSymbol :: Maybe Text
-      <*> arbitrary -- enumArraysArrayEnum :: Maybe [Text]
-    
-
-instance Arbitrary EnumClass where
-  arbitrary =
-    pure EnumClass
-     
-
-instance Arbitrary EnumTest where
-  arbitrary =
-    EnumTest
-      <$> arbitrary -- enumTestEnumString :: Maybe Text
-      <*> arbitrary -- enumTestEnumInteger :: Maybe Int
-      <*> arbitrary -- enumTestEnumNumber :: Maybe Double
-      <*> arbitrary -- enumTestOuterEnum :: Maybe OuterEnum
-    
-
-instance Arbitrary FormatTest where
-  arbitrary =
-    FormatTest
-      <$> arbitrary -- formatTestInteger :: Maybe Int
-      <*> arbitrary -- formatTestInt32 :: Maybe Int
-      <*> arbitrary -- formatTestInt64 :: Maybe Integer
-      <*> arbitrary -- formatTestNumber :: Double
-      <*> arbitrary -- formatTestFloat :: Maybe Float
-      <*> arbitrary -- formatTestDouble :: Maybe Double
-      <*> arbitrary -- formatTestString :: Maybe Text
-      <*> arbitrary -- formatTestByte :: ByteArray
-      <*> arbitrary -- formatTestBinary :: Maybe Binary
-      <*> arbitrary -- formatTestDate :: Date
-      <*> arbitrary -- formatTestDateTime :: Maybe DateTime
-      <*> arbitrary -- formatTestUuid :: Maybe Text
-      <*> arbitrary -- formatTestPassword :: Text
-    
-
-instance Arbitrary HasOnlyReadOnly where
-  arbitrary =
-    HasOnlyReadOnly
-      <$> arbitrary -- hasOnlyReadOnlyBar :: Maybe Text
-      <*> arbitrary -- hasOnlyReadOnlyFoo :: Maybe Text
-    
-
-instance Arbitrary MapTest where
-  arbitrary =
-    MapTest
-      <$> arbitrary -- mapTestMapMapOfString :: Maybe (Map.Map String (Map.Map String Text))
-      <*> arbitrary -- mapTestMapOfEnumString :: Maybe (Map.Map String Text)
-    
-
-instance Arbitrary MixedPropertiesAndAdditionalPropertiesClass where
-  arbitrary =
-    MixedPropertiesAndAdditionalPropertiesClass
-      <$> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassUuid :: Maybe Text
-      <*> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassDateTime :: Maybe DateTime
-      <*> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassMap :: Maybe (Map.Map String Animal)
-    
-
-instance Arbitrary Model200Response where
-  arbitrary =
-    Model200Response
-      <$> arbitrary -- model200ResponseName :: Maybe Int
-      <*> arbitrary -- model200ResponseClass :: Maybe Text
-    
-
-instance Arbitrary ModelList where
-  arbitrary =
-    ModelList
-      <$> arbitrary -- modelList123List :: Maybe Text
-    
-
-instance Arbitrary ModelReturn where
-  arbitrary =
-    ModelReturn
-      <$> arbitrary -- modelReturnReturn :: Maybe Int
-    
-
-instance Arbitrary Name where
-  arbitrary =
-    Name
-      <$> arbitrary -- nameName :: Int
-      <*> arbitrary -- nameSnakeCase :: Maybe Int
-      <*> arbitrary -- nameProperty :: Maybe Text
-      <*> arbitrary -- name123Number :: Maybe Int
-    
-
-instance Arbitrary NumberOnly where
-  arbitrary =
-    NumberOnly
-      <$> arbitrary -- numberOnlyJustNumber :: Maybe Double
     
 
 instance Arbitrary Order where
@@ -269,34 +112,6 @@ instance Arbitrary Order where
       <*> arbitrary -- orderComplete :: Maybe Bool
     
 
-instance Arbitrary OuterBoolean where
-  arbitrary =
-    pure OuterBoolean
-     
-
-instance Arbitrary OuterComposite where
-  arbitrary =
-    OuterComposite
-      <$> arbitrary -- outerCompositeMyNumber :: Maybe OuterNumber
-      <*> arbitrary -- outerCompositeMyString :: Maybe OuterString
-      <*> arbitrary -- outerCompositeMyBoolean :: Maybe OuterBoolean
-    
-
-instance Arbitrary OuterEnum where
-  arbitrary =
-    pure OuterEnum
-     
-
-instance Arbitrary OuterNumber where
-  arbitrary =
-    pure OuterNumber
-     
-
-instance Arbitrary OuterString where
-  arbitrary =
-    pure OuterString
-     
-
 instance Arbitrary Pet where
   arbitrary =
     Pet
@@ -306,19 +121,6 @@ instance Arbitrary Pet where
       <*> arbitrary -- petPhotoUrls :: [Text]
       <*> arbitrary -- petTags :: Maybe [Tag]
       <*> arbitrary -- petStatus :: Maybe Text
-    
-
-instance Arbitrary ReadOnlyFirst where
-  arbitrary =
-    ReadOnlyFirst
-      <$> arbitrary -- readOnlyFirstBar :: Maybe Text
-      <*> arbitrary -- readOnlyFirstBaz :: Maybe Text
-    
-
-instance Arbitrary SpecialModelName where
-  arbitrary =
-    SpecialModelName
-      <$> arbitrary -- specialModelNameSpecialPropertyName :: Maybe Integer
     
 
 instance Arbitrary Tag where
@@ -339,22 +141,6 @@ instance Arbitrary User where
       <*> arbitrary -- userPassword :: Maybe Text
       <*> arbitrary -- userPhone :: Maybe Text
       <*> arbitrary -- userUserStatus :: Maybe Int
-    
-
-instance Arbitrary Cat where
-  arbitrary =
-    Cat
-      <$> arbitrary -- catClassName :: Text
-      <*> arbitrary -- catColor :: Maybe Text
-      <*> arbitrary -- catDeclawed :: Maybe Bool
-    
-
-instance Arbitrary Dog where
-  arbitrary =
-    Dog
-      <$> arbitrary -- dogClassName :: Text
-      <*> arbitrary -- dogColor :: Maybe Text
-      <*> arbitrary -- dogBreed :: Maybe Text
     
 
 

@@ -1,4 +1,4 @@
-# Petstore::Pet
+# SwaggerClient::Pet
 
 ## Properties
 Name | Type | Description | Notes

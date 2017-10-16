@@ -2,7 +2,7 @@
 
 WWW::SwaggerClient::Role - a Moose role for the Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
 
 # VERSION
 
@@ -221,9 +221,6 @@ Each of these calls returns a hashref with various useful pieces of information.
 
 To load the API packages:
 ```perl
-use WWW::SwaggerClient::AnotherFakeApi;
-use WWW::SwaggerClient::FakeApi;
-use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
 use WWW::SwaggerClient::StoreApi;
 use WWW::SwaggerClient::UserApi;
@@ -232,42 +229,12 @@ use WWW::SwaggerClient::UserApi;
 
 To load the models:
 ```perl
-use WWW::SwaggerClient::Object::AdditionalPropertiesClass;
-use WWW::SwaggerClient::Object::Animal;
-use WWW::SwaggerClient::Object::AnimalFarm;
 use WWW::SwaggerClient::Object::ApiResponse;
-use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
-use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
-use WWW::SwaggerClient::Object::ArrayTest;
-use WWW::SwaggerClient::Object::Capitalization;
 use WWW::SwaggerClient::Object::Category;
-use WWW::SwaggerClient::Object::ClassModel;
-use WWW::SwaggerClient::Object::Client;
-use WWW::SwaggerClient::Object::EnumArrays;
-use WWW::SwaggerClient::Object::EnumClass;
-use WWW::SwaggerClient::Object::EnumTest;
-use WWW::SwaggerClient::Object::FormatTest;
-use WWW::SwaggerClient::Object::HasOnlyReadOnly;
-use WWW::SwaggerClient::Object::List;
-use WWW::SwaggerClient::Object::MapTest;
-use WWW::SwaggerClient::Object::MixedPropertiesAndAdditionalPropertiesClass;
-use WWW::SwaggerClient::Object::Model200Response;
-use WWW::SwaggerClient::Object::ModelReturn;
-use WWW::SwaggerClient::Object::Name;
-use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
-use WWW::SwaggerClient::Object::OuterBoolean;
-use WWW::SwaggerClient::Object::OuterComposite;
-use WWW::SwaggerClient::Object::OuterEnum;
-use WWW::SwaggerClient::Object::OuterNumber;
-use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
-use WWW::SwaggerClient::Object::ReadOnlyFirst;
-use WWW::SwaggerClient::Object::SpecialModelName;
 use WWW::SwaggerClient::Object::Tag;
 use WWW::SwaggerClient::Object::User;
-use WWW::SwaggerClient::Object::Cat;
-use WWW::SwaggerClient::Object::Dog;
 
 ````
 
@@ -279,86 +246,45 @@ use lib 'lib';
 use strict;
 use warnings;
 # load the API package
-use WWW::SwaggerClient::AnotherFakeApi;
-use WWW::SwaggerClient::FakeApi;
-use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
 use WWW::SwaggerClient::StoreApi;
 use WWW::SwaggerClient::UserApi;
 
 # load the models
-use WWW::SwaggerClient::Object::AdditionalPropertiesClass;
-use WWW::SwaggerClient::Object::Animal;
-use WWW::SwaggerClient::Object::AnimalFarm;
 use WWW::SwaggerClient::Object::ApiResponse;
-use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
-use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
-use WWW::SwaggerClient::Object::ArrayTest;
-use WWW::SwaggerClient::Object::Capitalization;
 use WWW::SwaggerClient::Object::Category;
-use WWW::SwaggerClient::Object::ClassModel;
-use WWW::SwaggerClient::Object::Client;
-use WWW::SwaggerClient::Object::EnumArrays;
-use WWW::SwaggerClient::Object::EnumClass;
-use WWW::SwaggerClient::Object::EnumTest;
-use WWW::SwaggerClient::Object::FormatTest;
-use WWW::SwaggerClient::Object::HasOnlyReadOnly;
-use WWW::SwaggerClient::Object::List;
-use WWW::SwaggerClient::Object::MapTest;
-use WWW::SwaggerClient::Object::MixedPropertiesAndAdditionalPropertiesClass;
-use WWW::SwaggerClient::Object::Model200Response;
-use WWW::SwaggerClient::Object::ModelReturn;
-use WWW::SwaggerClient::Object::Name;
-use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
-use WWW::SwaggerClient::Object::OuterBoolean;
-use WWW::SwaggerClient::Object::OuterComposite;
-use WWW::SwaggerClient::Object::OuterEnum;
-use WWW::SwaggerClient::Object::OuterNumber;
-use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
-use WWW::SwaggerClient::Object::ReadOnlyFirst;
-use WWW::SwaggerClient::Object::SpecialModelName;
 use WWW::SwaggerClient::Object::Tag;
 use WWW::SwaggerClient::Object::User;
-use WWW::SwaggerClient::Object::Cat;
-use WWW::SwaggerClient::Object::Dog;
 
 # for displaying the API response data
 use Data::Dumper;
 use WWW::SwaggerClient::;
 
 my $api_instance = WWW::SwaggerClient::->new(
+
+    # Configure OAuth2 access token for authorization: petstore_auth
+    access_token => 'YOUR_ACCESS_TOKEN',
 );
 
-my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
+my $body = WWW::SwaggerClient::Object::Pet->new(); # Pet | Pet object that needs to be added to the store
 
 eval {
-    my $result = $api_instance->test_special_tags(body => $body);
-    print Dumper($result);
+    $api_instance->add_pet(body => $body);
 };
 if ($@) {
-    warn "Exception when calling AnotherFakeApi->test_special_tags: $@\n";
+    warn "Exception when calling PetApi->add_pet: $@\n";
 }
 
 ```
 
 # DOCUMENTATION FOR API ENDPOINTS
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AnotherFakeApi* | [**test_special_tags**](docs/AnotherFakeApi.md#test_special_tags) | **PATCH** /another-fake/dummy | To test special tags
-*FakeApi* | [**fake_outer_boolean_serialize**](docs/FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
-*FakeApi* | [**fake_outer_composite_serialize**](docs/FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
-*FakeApi* | [**fake_outer_number_serialize**](docs/FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
-*FakeApi* | [**fake_outer_string_serialize**](docs/FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
-*FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
-*FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-*FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
-*FakeApi* | [**test_json_form_data**](docs/FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
-*FakeClassnameTags123Api* | [**test_classname**](docs/FakeClassnameTags123Api.md#test_classname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**add_pet**](docs/PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**delete_pet**](docs/PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**find_pets_by_status**](docs/PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
@@ -367,9 +293,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**update_pet**](docs/PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**update_pet_with_form**](docs/PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**upload_file**](docs/PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
+*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
 *StoreApi* | [**get_inventory**](docs/StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{order_id} | Find purchase order by ID
+*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
 *StoreApi* | [**place_order**](docs/StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 *UserApi* | [**create_user**](docs/UserApi.md#create_user) | **POST** /user | Create user
 *UserApi* | [**create_users_with_array_input**](docs/UserApi.md#create_users_with_array_input) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -382,42 +308,12 @@ Class | Method | HTTP request | Description
 
 
 # DOCUMENTATION FOR MODELS
- - [WWW::SwaggerClient::Object::AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
- - [WWW::SwaggerClient::Object::Animal](docs/Animal.md)
- - [WWW::SwaggerClient::Object::AnimalFarm](docs/AnimalFarm.md)
  - [WWW::SwaggerClient::Object::ApiResponse](docs/ApiResponse.md)
- - [WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
- - [WWW::SwaggerClient::Object::ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
- - [WWW::SwaggerClient::Object::ArrayTest](docs/ArrayTest.md)
- - [WWW::SwaggerClient::Object::Capitalization](docs/Capitalization.md)
  - [WWW::SwaggerClient::Object::Category](docs/Category.md)
- - [WWW::SwaggerClient::Object::ClassModel](docs/ClassModel.md)
- - [WWW::SwaggerClient::Object::Client](docs/Client.md)
- - [WWW::SwaggerClient::Object::EnumArrays](docs/EnumArrays.md)
- - [WWW::SwaggerClient::Object::EnumClass](docs/EnumClass.md)
- - [WWW::SwaggerClient::Object::EnumTest](docs/EnumTest.md)
- - [WWW::SwaggerClient::Object::FormatTest](docs/FormatTest.md)
- - [WWW::SwaggerClient::Object::HasOnlyReadOnly](docs/HasOnlyReadOnly.md)
- - [WWW::SwaggerClient::Object::List](docs/List.md)
- - [WWW::SwaggerClient::Object::MapTest](docs/MapTest.md)
- - [WWW::SwaggerClient::Object::MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
- - [WWW::SwaggerClient::Object::Model200Response](docs/Model200Response.md)
- - [WWW::SwaggerClient::Object::ModelReturn](docs/ModelReturn.md)
- - [WWW::SwaggerClient::Object::Name](docs/Name.md)
- - [WWW::SwaggerClient::Object::NumberOnly](docs/NumberOnly.md)
  - [WWW::SwaggerClient::Object::Order](docs/Order.md)
- - [WWW::SwaggerClient::Object::OuterBoolean](docs/OuterBoolean.md)
- - [WWW::SwaggerClient::Object::OuterComposite](docs/OuterComposite.md)
- - [WWW::SwaggerClient::Object::OuterEnum](docs/OuterEnum.md)
- - [WWW::SwaggerClient::Object::OuterNumber](docs/OuterNumber.md)
- - [WWW::SwaggerClient::Object::OuterString](docs/OuterString.md)
  - [WWW::SwaggerClient::Object::Pet](docs/Pet.md)
- - [WWW::SwaggerClient::Object::ReadOnlyFirst](docs/ReadOnlyFirst.md)
- - [WWW::SwaggerClient::Object::SpecialModelName](docs/SpecialModelName.md)
  - [WWW::SwaggerClient::Object::Tag](docs/Tag.md)
  - [WWW::SwaggerClient::Object::User](docs/User.md)
- - [WWW::SwaggerClient::Object::Cat](docs/Cat.md)
- - [WWW::SwaggerClient::Object::Dog](docs/Dog.md)
 
 
 # DOCUMENTATION FOR AUTHORIZATION
@@ -427,16 +323,6 @@ Class | Method | HTTP request | Description
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
-
-## api_key_query
-
-- **Type**: API key
-- **API key parameter name**: api_key_query
-- **Location**: URL query string
-
-## http_basic_test
-
-- **Type**: HTTP basic authentication
 
 ## petstore_auth
 
