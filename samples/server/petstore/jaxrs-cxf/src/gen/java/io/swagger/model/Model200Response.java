@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * Model for testing model name starting with number
+ **/
 @ApiModel(description="Model for testing model name starting with number")
 public class Model200Response  {
   

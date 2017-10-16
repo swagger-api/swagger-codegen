@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * Model for testing reserved words
+ **/
 @ApiModel(description="Model for testing reserved words")
 public class ModelReturn  {
   

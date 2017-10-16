@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * Model for testing model name same as property name
+ **/
 @ApiModel(description="Model for testing model name same as property name")
 public class Name  {
   

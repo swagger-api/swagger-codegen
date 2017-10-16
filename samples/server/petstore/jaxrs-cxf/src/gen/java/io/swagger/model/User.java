@@ -28,6 +28,9 @@ public class User  {
   @ApiModelProperty(value = "")
   private String phone = null;
   @ApiModelProperty(value = "User Status")
+ /**
+   * User Status  
+  **/
   private Integer userStatus = null;
 
  /**

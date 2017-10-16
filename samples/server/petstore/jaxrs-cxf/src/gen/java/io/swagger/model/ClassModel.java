@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * Model for testing model with \"_class\" property
+ **/
 @ApiModel(description="Model for testing model with \"_class\" property")
 public class ClassModel  {
   
