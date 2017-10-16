@@ -2,7 +2,7 @@ package io.swagger.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:39:48.865+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:46:18.812+02:00")
 
 public class WebApplication extends AbstractAnnotationConfigDispatcherServletInitializer {
 

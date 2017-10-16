@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:39:48.865+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-16T17:46:18.812+02:00")
 
 @Controller
 public class StoreApiController implements StoreApi {
