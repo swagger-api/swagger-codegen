@@ -400,8 +400,8 @@ namespace {{packageName}}.Client
         public bool IsJsonMime(String mime)
         {
             var jsonRegex = new Regex("(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
-            return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json", StringComparison.InvariantCultureIgnoreCase));
-        }    
+            return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json"));
+        }
 
         /// <summary>
         /// Select the Content-Type header's value from the given content-type array:
@@ -417,7 +417,7 @@ namespace {{packageName}}.Client
 
             foreach (var contentType in contentTypes)
             {
-                if (IsJsonMime(contentType))
+                if (IsJsonMime(contentType.ToLower()))
                     return contentType;
             }
 
