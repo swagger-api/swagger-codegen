@@ -59,9 +59,12 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
 {{#vendorExtensions.extraAnnotation}}
   {{{vendorExtensions.extraAnnotation}}}
 {{/vendorExtensions.extraAnnotation}}
-{{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  public {{{datatypeWithEnum}}} {{getter}}() {
+{{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  {{#isEnum}}public String {{getter}}() {
+    if({{name}} == null) {return null;}
+    return {{name}}.value();
+  }{{/isEnum}}{{^isEnum}}public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
-  }
+  }{{/isEnum}}
 
   {{^isReadOnly}}
   public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
