@@ -126,8 +126,11 @@ public enum EnumNumberEnum {
    * Get enumString
    * @return enumString
   **/
-  public EnumStringEnum getEnumString() {
-    return enumString;
+  public String getEnumString() {
+    if(enumString == null) {
+      return null;
+    }
+    return enumString.value();
   }
 
   public void setEnumString(EnumStringEnum enumString) {
@@ -143,8 +146,11 @@ public enum EnumNumberEnum {
    * Get enumInteger
    * @return enumInteger
   **/
-  public EnumIntegerEnum getEnumInteger() {
-    return enumInteger;
+  public Integer getEnumInteger() {
+    if(enumInteger == null) {
+      return null;
+    }
+    return enumInteger.value();
   }
 
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
@@ -160,8 +166,11 @@ public enum EnumNumberEnum {
    * Get enumNumber
    * @return enumNumber
   **/
-  public EnumNumberEnum getEnumNumber() {
-    return enumNumber;
+  public Double getEnumNumber() {
+    if(enumNumber == null) {
+      return null;
+    }
+    return enumNumber.value();
   }
 
   public void setEnumNumber(EnumNumberEnum enumNumber) {

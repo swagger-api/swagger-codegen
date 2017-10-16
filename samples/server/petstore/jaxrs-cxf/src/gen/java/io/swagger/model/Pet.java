@@ -164,8 +164,11 @@ public enum StatusEnum {
    * pet status in the store
    * @return status
   **/
-  public StatusEnum getStatus() {
-    return status;
+  public String getStatus() {
+    if(status == null) {
+      return null;
+    }
+    return status.value();
   }
 
   public void setStatus(StatusEnum status) {

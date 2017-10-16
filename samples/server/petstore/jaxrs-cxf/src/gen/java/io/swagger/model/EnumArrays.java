@@ -90,8 +90,11 @@ public enum ArrayEnumEnum {
    * Get justSymbol
    * @return justSymbol
   **/
-  public JustSymbolEnum getJustSymbol() {
-    return justSymbol;
+  public String getJustSymbol() {
+    if(justSymbol == null) {
+      return null;
+    }
+    return justSymbol.value();
   }
 
   public void setJustSymbol(JustSymbolEnum justSymbol) {
