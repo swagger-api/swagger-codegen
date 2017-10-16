@@ -170,9 +170,11 @@ public enum StatusEnum {
    * pet status in the store
    * @return status
   **/
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
+  @JsonProperty("status")  public String getStatus() {
+    if(status == null) {
+      return null;
+    }
+    return status.value();
   }
 
   public void setStatus(StatusEnum status) {
