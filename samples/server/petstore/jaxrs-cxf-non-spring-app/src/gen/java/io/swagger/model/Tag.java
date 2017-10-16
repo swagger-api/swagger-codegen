@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * A tag for a pet
+ **/
 @ApiModel(description="A tag for a pet")
 public class Tag  {
   

@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * Describes the result of uploading an image resource
+ **/
 @ApiModel(description="Describes the result of uploading an image resource")
 public class ModelApiResponse  {
   

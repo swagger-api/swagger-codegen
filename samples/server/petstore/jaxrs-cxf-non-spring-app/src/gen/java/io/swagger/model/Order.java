@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
+/**
+  * An order for a pets from the pet store
+ **/
 @ApiModel(description="An order for a pets from the pet store")
 public class Order  {
   
@@ -58,6 +61,9 @@ public enum StatusEnum {
 }
 
   @ApiModelProperty(value = "Order Status")
+ /**
+   * Order Status  
+  **/
   private StatusEnum status = null;
   @ApiModelProperty(value = "")
   private Boolean complete = false;
