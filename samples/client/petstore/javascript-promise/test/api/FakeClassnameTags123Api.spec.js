@@ -31,7 +31,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new SwaggerPetstore.Fake_classname_tags123Api();
+    instance = new SwaggerPetstore.FakeClassnameTags123Api();
   });
 
   var getProperty = function(object, getter, property) {
@@ -50,7 +50,7 @@
       object[property] = value;
   }
 
-  describe('Fake_classname_tags123Api', function() {
+  describe('FakeClassnameTags123Api', function() {
     describe('testClassname', function() {
       it('should call testClassname successfully', function(done) {
         //uncomment below and update the code to test testClassname
