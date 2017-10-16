@@ -22,32 +22,32 @@ public interface StoreApiDelegate {
      * @see StoreApi#deleteOrder
      */
     default ResponseEntity<Void> deleteOrder(String orderId) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see StoreApi#getInventory
      */
     default ResponseEntity<Map<String, Integer>> getInventory() {
-    // do some magic!
-    return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see StoreApi#getOrderById
      */
     default ResponseEntity<Order> getOrderById(Long orderId) {
-    // do some magic!
-    return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see StoreApi#placeOrder
      */
     default ResponseEntity<Order> placeOrder(Order body) {
-    // do some magic!
-    return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

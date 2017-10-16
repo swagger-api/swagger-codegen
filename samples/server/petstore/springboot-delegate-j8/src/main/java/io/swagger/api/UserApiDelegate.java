@@ -22,40 +22,40 @@ public interface UserApiDelegate {
      * @see UserApi#createUser
      */
     default ResponseEntity<Void> createUser(User body) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see UserApi#createUsersWithArrayInput
      */
     default ResponseEntity<Void> createUsersWithArrayInput(List<User> body) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see UserApi#createUsersWithListInput
      */
     default ResponseEntity<Void> createUsersWithListInput(List<User> body) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see UserApi#deleteUser
      */
     default ResponseEntity<Void> deleteUser(String username) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see UserApi#getUserByName
      */
     default ResponseEntity<User> getUserByName(String username) {
-    // do some magic!
-    return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -63,16 +63,16 @@ public interface UserApiDelegate {
      */
     default ResponseEntity<String> loginUser(String username,
         String password) {
-    // do some magic!
-    return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
      * @see UserApi#logoutUser
      */
     default ResponseEntity<Void> logoutUser() {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -80,8 +80,8 @@ public interface UserApiDelegate {
      */
     default ResponseEntity<Void> updateUser(String username,
         User body) {
-    // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

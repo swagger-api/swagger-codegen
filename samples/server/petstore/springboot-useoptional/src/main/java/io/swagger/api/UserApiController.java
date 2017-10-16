@@ -23,47 +23,52 @@ import java.util.List;
 import java.util.Optional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Controller
 public class UserApiController implements UserApi {
 
-    private final Logger log = LoggerFactory.getLogger(AnotherFakeApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserApiController.class);
 
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private HttpServletRequest request;
+
+    @org.springframework.beans.factory.annotation.Autowired
     public UserApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("username") String username) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathVariable("username") String username) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/xml")) {
             try {
                 return new ResponseEntity<User>(objectMapper.readValue("<User>  <id>123456789</id>  <username>aeiou</username>  <firstName>aeiou</firstName>  <lastName>aeiou</lastName>  <email>aeiou</email>  <password>aeiou</password>  <phone>aeiou</phone>  <userStatus>123</userStatus></User>", User.class), HttpStatus.NOT_IMPLEMENTED);
@@ -87,7 +92,7 @@ public class UserApiController implements UserApi {
 
     public ResponseEntity<String> loginUser(@NotNull @ApiParam(value = "The user name for login", required = true) @Valid @RequestParam(value = "username", required = true) String username,@NotNull @ApiParam(value = "The password for login in clear text", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/xml")) {
             try {
                 return new ResponseEntity<String>(objectMapper.readValue("aeiou", String.class), HttpStatus.NOT_IMPLEMENTED);
@@ -111,13 +116,13 @@ public class UserApiController implements UserApi {
 
     public ResponseEntity<Void> logoutUser() {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true) @PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

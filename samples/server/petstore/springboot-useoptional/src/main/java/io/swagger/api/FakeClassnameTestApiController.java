@@ -22,23 +22,28 @@ import java.util.List;
 import java.util.Optional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Controller
 public class FakeClassnameTestApiController implements FakeClassnameTestApi {
 
-    private final Logger log = LoggerFactory.getLogger(AnotherFakeApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(FakeClassnameTestApiController.class);
 
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private HttpServletRequest request;
+
+    @org.springframework.beans.factory.annotation.Autowired
     public FakeClassnameTestApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Client> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         // do some magic!
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 return new ResponseEntity<Client>(objectMapper.readValue("{  \"client\" : \"client\"}", Client.class), HttpStatus.NOT_IMPLEMENTED);

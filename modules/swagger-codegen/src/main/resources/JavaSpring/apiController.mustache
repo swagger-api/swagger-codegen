@@ -29,27 +29,18 @@ import java.util.Optional;
 {{#async}}
 import java.util.concurrent.Callable;
 {{/async}}
-{{/jdk8-no-delegate}}
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 {{#useBeanValidation}}
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 {{/useBeanValidation}}
+{{/jdk8-no-delegate}}
 {{>generatedAnnotation}}
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
-{{^jdk8-no-delegate}}
-
-    private final Logger log = LoggerFactory.getLogger(AnotherFakeApiController.class);
-{{/jdk8-no-delegate}}
-
-    private final ObjectMapper objectMapper;
-
-    public {{classname}}Controller(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
@@ -61,12 +52,28 @@ public class {{classname}}Controller implements {{classname}} {
 
 {{/isDelegate}}
 {{^jdk8-no-delegate}}
+    {{^isDelegate}}
+        {{^async}}
+    private static final Logger log = LoggerFactory.getLogger({{classname}}Controller.class);
+
+    private final ObjectMapper objectMapper;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    private HttpServletRequest request;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public {{classname}}Controller(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+        {{/async}}
+    {{/isDelegate}}
 {{#operation}}
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
         // do some magic!
         {{^isDelegate}}
         {{^async}}
-        String accept = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Accept");
+        String accept = request.getHeader("Accept");
         {{#examples}}
         if (accept != null && accept.contains("{{{contentType}}}")) {
             try {

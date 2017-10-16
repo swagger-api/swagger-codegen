@@ -21,19 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Controller
 public class FakeClassnameTestApiController implements FakeClassnameTestApi {
-
-    private final Logger log = LoggerFactory.getLogger(AnotherFakeApiController.class);
-
-    private final ObjectMapper objectMapper;
-
-    public FakeClassnameTestApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     private final FakeClassnameTestApiDelegate delegate;
 
