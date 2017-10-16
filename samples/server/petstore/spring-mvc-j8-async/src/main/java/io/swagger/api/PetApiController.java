@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 @Controller
 public class PetApiController implements PetApi {
+
     private final ObjectMapper objectMapper;
 
     public PetApiController(ObjectMapper objectMapper) {

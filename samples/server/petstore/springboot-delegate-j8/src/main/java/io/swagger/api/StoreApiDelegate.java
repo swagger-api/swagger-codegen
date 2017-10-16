@@ -23,7 +23,7 @@ public interface StoreApiDelegate {
      */
     default ResponseEntity<Void> deleteOrder(String orderId) {
     // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -31,7 +31,7 @@ public interface StoreApiDelegate {
      */
     default ResponseEntity<Map<String, Integer>> getInventory() {
     // do some magic!
-    return new ResponseEntity<Map<String, Integer>>(HttpStatus.OK);
+    return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -39,7 +39,7 @@ public interface StoreApiDelegate {
      */
     default ResponseEntity<Order> getOrderById(Long orderId) {
     // do some magic!
-    return new ResponseEntity<Order>(HttpStatus.OK);
+    return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -47,7 +47,7 @@ public interface StoreApiDelegate {
      */
     default ResponseEntity<Order> placeOrder(Order body) {
     // do some magic!
-    return new ResponseEntity<Order>(HttpStatus.OK);
+    return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

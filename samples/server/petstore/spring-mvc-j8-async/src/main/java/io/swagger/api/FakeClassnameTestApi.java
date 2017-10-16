@@ -38,9 +38,9 @@ public interface FakeClassnameTestApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default CompletableFuture<ResponseEntity<Client>> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Client>> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         // do some magic!
-        return CompletableFuture.completedFuture(new ResponseEntity<Client>(HttpStatus.OK));
+        return CompletableFuture.completedFuture(new ResponseEntity<Client>(HttpStatus.NOT_IMPLEMENTED));
     }
 
 }

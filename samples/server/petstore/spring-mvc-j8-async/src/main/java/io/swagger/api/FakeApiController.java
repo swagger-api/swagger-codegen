@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 @Controller
 public class FakeApiController implements FakeApi {
+
     private final ObjectMapper objectMapper;
 
     public FakeApiController(ObjectMapper objectMapper) {

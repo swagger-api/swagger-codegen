@@ -35,9 +35,9 @@ public interface AnotherFakeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default ResponseEntity<Client> testSpecialTags(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default ResponseEntity<Client> testSpecialTags(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         // do some magic!
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<Client>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

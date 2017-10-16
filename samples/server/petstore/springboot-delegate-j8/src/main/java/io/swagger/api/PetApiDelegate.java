@@ -24,7 +24,7 @@ public interface PetApiDelegate {
      */
     default ResponseEntity<Void> addPet(Pet body) {
     // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -33,7 +33,7 @@ public interface PetApiDelegate {
     default ResponseEntity<Void> deletePet(Long petId,
         String apiKey) {
     // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -41,7 +41,7 @@ public interface PetApiDelegate {
      */
     default ResponseEntity<List<Pet>> findPetsByStatus(List<String> status) {
     // do some magic!
-    return new ResponseEntity<List<Pet>>(HttpStatus.OK);
+    return new ResponseEntity<List<Pet>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -49,7 +49,7 @@ public interface PetApiDelegate {
      */
     default ResponseEntity<List<Pet>> findPetsByTags(List<String> tags) {
     // do some magic!
-    return new ResponseEntity<List<Pet>>(HttpStatus.OK);
+    return new ResponseEntity<List<Pet>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -57,7 +57,7 @@ public interface PetApiDelegate {
      */
     default ResponseEntity<Pet> getPetById(Long petId) {
     // do some magic!
-    return new ResponseEntity<Pet>(HttpStatus.OK);
+    return new ResponseEntity<Pet>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -65,7 +65,7 @@ public interface PetApiDelegate {
      */
     default ResponseEntity<Void> updatePet(Pet body) {
     // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -75,7 +75,7 @@ public interface PetApiDelegate {
         String name,
         String status) {
     // do some magic!
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -85,7 +85,7 @@ public interface PetApiDelegate {
         String additionalMetadata,
         MultipartFile file) {
     // do some magic!
-    return new ResponseEntity<ModelApiResponse>(HttpStatus.OK);
+    return new ResponseEntity<ModelApiResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
