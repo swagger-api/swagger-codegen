@@ -951,7 +951,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                         hasBodyParameters = true;
                     }
                 }
-                if (hasBodyParameters){
+                if (hasBodyParameters || hasFormParameters){
                     String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
                     String contentType =  operation.getConsumes() == null || operation.getConsumes().isEmpty() ? defaultContentType : operation.getConsumes().get(0);
                     operation.setVendorExtension("x-contentType", contentType);
