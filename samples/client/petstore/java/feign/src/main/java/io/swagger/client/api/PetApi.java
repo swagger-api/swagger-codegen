@@ -163,6 +163,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}")
   @Headers({
+    "Content-Type: application/x-www-form-urlencoded",
     "Accept: application/json",
   })
   void updatePetWithForm(@Param("petId") Long petId, @Param("name") String name, @Param("status") String status);
@@ -177,6 +178,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}/uploadImage")
   @Headers({
+    "Content-Type: multipart/form-data",
     "Accept: application/json",
   })
   ModelApiResponse uploadFile(@Param("petId") Long petId, @Param("additionalMetadata") String additionalMetadata, @Param("file") File file);
