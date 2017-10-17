@@ -33,12 +33,12 @@ public class FakeClassnameTestApiController implements FakeClassnameTestApi {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public FakeClassnameTestApiController(ObjectMapper objectMapper) {
+    public FakeClassnameTestApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
     public ResponseEntity<Client> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {

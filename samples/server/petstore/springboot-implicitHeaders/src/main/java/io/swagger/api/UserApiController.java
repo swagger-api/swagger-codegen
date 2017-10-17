@@ -33,12 +33,12 @@ public class UserApiController implements UserApi {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public UserApiController(ObjectMapper objectMapper) {
+    public UserApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
     public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body) {

@@ -35,12 +35,12 @@ public class PetApiController implements PetApi {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public PetApiController(ObjectMapper objectMapper) {
+    public PetApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
     public ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body) {

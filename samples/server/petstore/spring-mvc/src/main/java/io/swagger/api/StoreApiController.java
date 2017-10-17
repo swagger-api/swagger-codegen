@@ -33,12 +33,12 @@ public class StoreApiController implements StoreApi {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public StoreApiController(ObjectMapper objectMapper) {
+    public StoreApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
     public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathVariable("order_id") String orderId) {

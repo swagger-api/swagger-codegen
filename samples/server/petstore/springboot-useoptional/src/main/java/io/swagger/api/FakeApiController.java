@@ -37,12 +37,12 @@ public class FakeApiController implements FakeApi {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public FakeApiController(ObjectMapper objectMapper) {
+    public FakeApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
     public ResponseEntity<Boolean> fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body) {

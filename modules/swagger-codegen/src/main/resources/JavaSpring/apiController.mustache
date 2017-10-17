@@ -58,12 +58,12 @@ public class {{classname}}Controller implements {{classname}} {
 
     private final ObjectMapper objectMapper;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public {{classname}}Controller(ObjectMapper objectMapper) {
+    public {{classname}}Controller(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
+        this.request = request;
     }
 
         {{/async}}
