@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -285,6 +286,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 typeMapping.put("DateTime", "OffsetDateTime");
                 importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
             }
+
+             typeMapping.put("DateTime", "Date");
+             importMapping.put("DateTime", "java.util.Date");
         }
     }
 
