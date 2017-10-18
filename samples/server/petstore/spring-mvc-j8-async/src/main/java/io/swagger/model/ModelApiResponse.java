@@ -10,9 +10,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ModelApiResponse
+ * Describes the result of uploading an image resource
  */
+@ApiModel(description = "Describes the result of uploading an image resource")
 @Validated
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-18T14:54:52.329+03:00")
 
 public class ModelApiResponse   {
   @JsonProperty("code")
