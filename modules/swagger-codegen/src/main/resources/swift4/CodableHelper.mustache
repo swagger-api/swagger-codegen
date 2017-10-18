@@ -21,7 +21,7 @@ open class CodableHelper {
         if let df = self.dateformatter {
             decoder.dateDecodingStrategy = .formatted(df)
         } else {
-            decoder.dateDecodingStrategy = .deferredToDate
+            decoder.dataDecodingStrategy = .base64
             if #available(iOS 10.0, *) {
                 decoder.dateDecodingStrategy = .iso8601
             }
