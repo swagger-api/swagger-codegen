@@ -1,9 +1,8 @@
 package io.swagger.api;
 
 import io.swagger.model.Client;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,17 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class AnotherFakeApiController implements AnotherFakeApi {
@@ -42,7 +38,6 @@ public class AnotherFakeApiController implements AnotherFakeApi {
     }
 
     public ResponseEntity<Client> testSpecialTags(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
-        // do some magic!
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -53,7 +48,7 @@ public class AnotherFakeApiController implements AnotherFakeApi {
             }
         }
 
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<Client>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

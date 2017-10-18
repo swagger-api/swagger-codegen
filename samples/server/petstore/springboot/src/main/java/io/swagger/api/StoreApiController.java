@@ -2,9 +2,8 @@ package io.swagger.api;
 
 import java.util.Map;
 import io.swagger.model.Order;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,16 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class StoreApiController implements StoreApi {
@@ -42,13 +38,11 @@ public class StoreApiController implements StoreApi {
     }
 
     public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathVariable("order_id") String orderId) {
-        // do some magic!
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Map<String, Integer>> getInventory() {
-        // do some magic!
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -59,11 +53,10 @@ public class StoreApiController implements StoreApi {
             }
         }
 
-        return new ResponseEntity<Map<String, Integer>>(HttpStatus.OK);
+        return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Order> getOrderById(@Min(1) @Max(5) @ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathVariable("order_id") Long orderId) {
-        // do some magic!
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/xml")) {
             try {
@@ -83,11 +76,10 @@ public class StoreApiController implements StoreApi {
             }
         }
 
-        return new ResponseEntity<Order>(HttpStatus.OK);
+        return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body) {
-        // do some magic!
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/xml")) {
             try {
@@ -107,7 +99,7 @@ public class StoreApiController implements StoreApi {
             }
         }
 
-        return new ResponseEntity<Order>(HttpStatus.OK);
+        return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
