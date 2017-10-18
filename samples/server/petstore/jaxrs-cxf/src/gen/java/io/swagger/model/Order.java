@@ -1,16 +1,11 @@
 package io.swagger.model;
 
-import java.util.Date;
-import javax.validation.constraints.*;
-
 import io.swagger.annotations.ApiModelProperty;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 
 public class Order  {
   
@@ -59,6 +54,18 @@ public enum StatusEnum {
   private StatusEnum status = null;
   @ApiModelProperty(value = "")
   private Boolean complete = false;
+
+  public Order() {}
+
+
+  public Order(Long id, Long petId, Integer quantity, Date shipDate, StatusEnum status, Boolean complete) {
+    this.id = id;
+    this.petId = petId;
+    this.quantity = quantity;
+    this.shipDate = shipDate;
+    this.status = status;
+    this.complete = complete;
+  }
 
  /**
    * Get id

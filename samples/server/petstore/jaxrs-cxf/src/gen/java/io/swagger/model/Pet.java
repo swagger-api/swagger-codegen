@@ -63,6 +63,22 @@ public enum StatusEnum {
   @ApiModelProperty(value = "pet status in the store")
   private StatusEnum status = null;
 
+  public Pet() {}
+
+  public Pet(String name, List<String> photoUrls) {
+    this.name = name;
+    this.photoUrls = photoUrls;
+  }
+
+  public Pet(Long id, Category category, String name, List<String> photoUrls, List<Tag> tags, StatusEnum status) {
+    this.id = id;
+    this.category = category;
+    this.name = name;
+    this.photoUrls = photoUrls;
+    this.tags = tags;
+    this.status = status;
+  }
+
  /**
    * Get id
    * @return id
