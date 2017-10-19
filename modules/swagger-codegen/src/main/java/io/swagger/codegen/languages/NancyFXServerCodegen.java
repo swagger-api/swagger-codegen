@@ -46,6 +46,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private static final String IMMUTABLE_OPTION = "immutable";
     private static final String USE_BASE_PATH = "writeModulePath";
     private static final String PACKAGE_CONTEXT = "packageContext";
+    private static final String ASYNC = "async";
 
     private static final Map<String, Predicate<Property>> propertyToSwaggerTypeMapping =
             createPropertyToSwaggerTypeMapping();
@@ -78,6 +79,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addOption(INTERFACE_PREFIX, INTERFACE_PREFIX_DESC, interfacePrefix);
         addOption(OPTIONAL_PROJECT_GUID,OPTIONAL_PROJECT_GUID_DESC, null);
         addOption(PACKAGE_CONTEXT, "Optionally overrides the PackageContext which determines the namespace (namespace=packageName.packageContext). If not set, packageContext will default to basePath.", null);
+        addOption(ASYNC, "Set to true to enable the generation of async routes.", "false");
 
         // CLI Switches
         addSwitch(SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_BY_REQUIRED_FLAG_DESC, sortParamsByRequiredFlag);
