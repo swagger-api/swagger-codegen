@@ -32,7 +32,7 @@ import {{invokerPackage}}.auth.*;
 import {{invokerPackage}}.auth.OAuth.AccessTokenListener;
 
 {{>generatedAnnotation}}
-public class ApiClient {
+public class ApiClient implements io.swagger.codegen.common.feign.SwaggerFeignApiClient {
   public interface Api {}
 
   protected ObjectMapper objectMapper;
