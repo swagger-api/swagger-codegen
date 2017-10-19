@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -334,7 +335,7 @@ public class FormatTest implements Parcelable {
         Objects.equals(this._float, formatTest._float) &&
         Objects.equals(this._double, formatTest._double) &&
         Objects.equals(this.string, formatTest.string) &&
-        Objects.equals(this._byte, formatTest._byte) &&
+        Arrays.equals(this._byte, formatTest._byte) &&
         Objects.equals(this.binary, formatTest.binary) &&
         Objects.equals(this.date, formatTest.date) &&
         Objects.equals(this.dateTime, formatTest.dateTime) &&
@@ -344,7 +345,7 @@ public class FormatTest implements Parcelable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
+    return Objects.hash(integer, int32, int64, number, _float, _double, string, Arrays.hashCode(_byte), binary, date, dateTime, uuid, password);
   }
 
 
