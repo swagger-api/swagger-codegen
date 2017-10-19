@@ -141,9 +141,9 @@ public class CodegenOperation {
     }
 
     /**
-     * Check if act as Restful update method
+     * Check if body param is allowed for the request method
      *
-     * @return true if act as Restful update method, false otherwise
+     * @return true request method is PUT, PATCH or POST; false otherwise
      */
     public boolean isBodyAllowed() {
         return Arrays.asList("PUT", "PATCH", "POST").contains(httpMethod.toUpperCase());
