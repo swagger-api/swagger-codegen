@@ -47,7 +47,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   {{/maximum}}
    * @return {{name}}
   **/
-  @JsonProperty("{{name}}")
+  @JsonProperty("{{baseName}}")
 {{#vendorExtensions.extraAnnotation}}
   {{{vendorExtensions.extraAnnotation}}}
 {{/vendorExtensions.extraAnnotation}}
