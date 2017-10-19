@@ -1,5 +1,5 @@
 {{>licenseInfo}}
-import $request = require('request');
+import localVarRequest = require('request');
 import http = require('http');
 {{^supportsES6}}
 import Promise = require('bluebird');
@@ -216,13 +216,13 @@ export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: $request.Options): void;
+    applyToRequest(requestOptions: localVarRequest.Options): void;
 }
 
 export class HttpBasicAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(requestOptions: $request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
         }
@@ -235,7 +235,7 @@ export class ApiKeyAuth implements Authentication {
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: $request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (this.location == "query") {
             (<any>requestOptions.qs)[this.paramName] = this.apiKey;
         } else if (this.location == "header" && requestOptions && requestOptions.headers) {
@@ -247,7 +247,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
     public accessToken: string;
 
-    applyToRequest(requestOptions: $request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (requestOptions && requestOptions.headers) {
             requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
         }
@@ -257,7 +257,7 @@ export class OAuth implements Authentication {
 export class VoidAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(_: $request.Options): void {
+    applyToRequest(_: localVarRequest.Options): void {
         // Do nothing
     }
 }
@@ -410,7 +410,7 @@ export class {{classname}} {
 {{/isFile}}
 
 {{/formParams}}
-        let requestOptions: $request.Options = {
+        let requestOptions: localVarRequest.Options = {
             method: '{{httpMethod}}',
             qs: queryParameters,
             headers: headerParams,
@@ -441,7 +441,7 @@ export class {{classname}} {
             }
         }
         return new Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }>((resolve, reject) => {
-            $request(requestOptions, (error, response, body) => {
+            localVarRequest(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
