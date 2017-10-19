@@ -145,22 +145,25 @@ class ModelSerializer
             return $data;
         }
 
-        // Denormalize enum
-        if (method_exists($class, 'getAllowableEnumValues')) {
-            if (!in_array($data, $class::getAllowableEnumValues())) {
-                $imploded = implode("', '", $class::getAllowableEnumValues());
-                throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
+        $reflectionClass = new \ReflectionClass($class);
+        if ($reflectionClass->implementsInterface(ModelInterface::class)) {
+            // Denormalize enum
+            if (method_exists($class, 'getAllowableEnumValues')) {
+                if (!in_array($data, $class::getAllowableEnumValues())) {
+                    $imploded = implode("', '", $class::getAllowableEnumValues());
+                    throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
+                }
+
+                return $data;
             }
 
-            return $data;
-        }
-
-        // If a discriminator is defined and points to a valid subclass, use it.
-        $discriminator = $class::DISCRIMINATOR;
-        if (!empty($discriminator) && isset($data[$discriminator]) && is_string($data[$discriminator])) {
-            $subclass = '{{modelPackage}}\\'.$data[$discriminator];
-            if (is_subclass_of($subclass, $class)) {
-                $class = $subclass;
+            // If a discriminator is defined and points to a valid subclass, use it.
+            $discriminator = $class::DISCRIMINATOR;
+            if (!empty($discriminator) && isset($data[$discriminator]) && is_string($data[$discriminator])) {
+                $subclass = 'Sponsoo\Bundle\SwaggerBundle\Model\\'.$data[$discriminator];
+                if (is_subclass_of($subclass, $class)) {
+                    $class = $subclass;
+                }
             }
         }
 
