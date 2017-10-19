@@ -142,7 +142,7 @@ public enum StatusEnum {
   **/
   @JsonProperty("status")
   public String getStatus() {
-    if(status == null) {
+    if (status == null) {
       return null;
     }
     return status.value();

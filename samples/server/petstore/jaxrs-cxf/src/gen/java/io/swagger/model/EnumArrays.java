@@ -93,7 +93,7 @@ public enum ArrayEnumEnum {
   **/
   @JsonProperty("just_symbol")
   public String getJustSymbol() {
-    if(justSymbol == null) {
+    if (justSymbol == null) {
       return null;
     }
     return justSymbol.value();
