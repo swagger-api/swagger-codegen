@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import request = require('request');
+import $request = require('request');
 import http = require('http');
 import Promise = require('bluebird');
 
@@ -424,13 +424,13 @@ export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: request.Options): void;
+    applyToRequest(requestOptions: $request.Options): void;
 }
 
 export class HttpBasicAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: $request.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
         }
@@ -443,7 +443,7 @@ export class ApiKeyAuth implements Authentication {
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: $request.Options): void {
         if (this.location == "query") {
             (<any>requestOptions.qs)[this.paramName] = this.apiKey;
         } else if (this.location == "header" && requestOptions && requestOptions.headers) {
@@ -455,7 +455,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
     public accessToken: string;
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: $request.Options): void {
         if (requestOptions && requestOptions.headers) {
             requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
         }
@@ -465,7 +465,7 @@ export class OAuth implements Authentication {
 export class VoidAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(_: request.Options): void {
+    applyToRequest(_: $request.Options): void {
         // Do nothing
     }
 }
@@ -540,7 +540,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -562,7 +562,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -597,7 +597,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'DELETE',
             qs: queryParameters,
             headers: headerParams,
@@ -618,7 +618,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -654,7 +654,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -675,7 +675,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: Array<Pet>;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -712,7 +712,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -733,7 +733,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: Array<Pet>;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -767,7 +767,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -788,7 +788,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: Pet;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -821,7 +821,7 @@ export class PetApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'PUT',
             qs: queryParameters,
             headers: headerParams,
@@ -843,7 +843,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -886,7 +886,7 @@ export class PetApi {
             formParams['status'] = ObjectSerializer.serialize(status, "string");
         }
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -907,7 +907,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -951,7 +951,7 @@ export class PetApi {
         }
         useFormData = true;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -972,7 +972,7 @@ export class PetApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: ApiResponse;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1058,7 +1058,7 @@ export class StoreApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'DELETE',
             qs: queryParameters,
             headers: headerParams,
@@ -1077,7 +1077,7 @@ export class StoreApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1103,7 +1103,7 @@ export class StoreApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -1124,7 +1124,7 @@ export class StoreApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: { [key: string]: number; };  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1158,7 +1158,7 @@ export class StoreApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -1177,7 +1177,7 @@ export class StoreApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: Order;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1210,7 +1210,7 @@ export class StoreApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -1230,7 +1230,7 @@ export class StoreApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: Order;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1315,7 +1315,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -1335,7 +1335,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1367,7 +1367,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -1387,7 +1387,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1419,7 +1419,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'POST',
             qs: queryParameters,
             headers: headerParams,
@@ -1439,7 +1439,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1472,7 +1472,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'DELETE',
             qs: queryParameters,
             headers: headerParams,
@@ -1491,7 +1491,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1524,7 +1524,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -1543,7 +1543,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: User;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1590,7 +1590,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -1609,7 +1609,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body: string;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1636,7 +1636,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'GET',
             qs: queryParameters,
             headers: headerParams,
@@ -1655,7 +1655,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -1694,7 +1694,7 @@ export class UserApi {
 
         let useFormData = false;
 
-        let requestOptions: request.Options = {
+        let requestOptions: $request.Options = {
             method: 'PUT',
             qs: queryParameters,
             headers: headerParams,
@@ -1714,7 +1714,7 @@ export class UserApi {
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            $request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
