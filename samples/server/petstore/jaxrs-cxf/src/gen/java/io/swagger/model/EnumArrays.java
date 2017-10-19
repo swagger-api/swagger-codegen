@@ -91,7 +91,7 @@ public enum ArrayEnumEnum {
    * Get justSymbol
    * @return justSymbol
   **/
-  @JsonProperty("justSymbol")
+  @JsonProperty("just_symbol")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -109,7 +109,7 @@ public enum ArrayEnumEnum {
    * Get arrayEnum
    * @return arrayEnum
   **/
-  @JsonProperty("arrayEnum")
+  @JsonProperty("array_enum")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }

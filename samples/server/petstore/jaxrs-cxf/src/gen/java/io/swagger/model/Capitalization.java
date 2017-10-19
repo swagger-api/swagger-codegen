@@ -49,7 +49,7 @@ public class Capitalization  {
    * Get capitalCamel
    * @return capitalCamel
   **/
-  @JsonProperty("capitalCamel")
+  @JsonProperty("CapitalCamel")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -67,7 +67,7 @@ public class Capitalization  {
    * Get smallSnake
    * @return smallSnake
   **/
-  @JsonProperty("smallSnake")
+  @JsonProperty("small_Snake")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -85,7 +85,7 @@ public class Capitalization  {
    * Get capitalSnake
    * @return capitalSnake
   **/
-  @JsonProperty("capitalSnake")
+  @JsonProperty("Capital_Snake")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -103,7 +103,7 @@ public class Capitalization  {
    * Get scAETHFlowPoints
    * @return scAETHFlowPoints
   **/
-  @JsonProperty("scAETHFlowPoints")
+  @JsonProperty("SCA_ETH_Flow_Points")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }

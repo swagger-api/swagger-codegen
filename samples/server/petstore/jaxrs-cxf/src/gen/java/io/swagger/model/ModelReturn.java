@@ -23,7 +23,7 @@ public class ModelReturn  {
    * Get _return
    * @return _return
   **/
-  @JsonProperty("_return")
+  @JsonProperty("return")
   public Integer getReturn() {
     return _return;
   }

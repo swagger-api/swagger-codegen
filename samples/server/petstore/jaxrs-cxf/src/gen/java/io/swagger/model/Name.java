@@ -48,7 +48,7 @@ public class Name  {
    * Get snakeCase
    * @return snakeCase
   **/
-  @JsonProperty("snakeCase")
+  @JsonProperty("snake_case")
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -76,7 +76,7 @@ public class Name  {
    * Get _123Number
    * @return _123Number
   **/
-  @JsonProperty("_123Number")
+  @JsonProperty("123Number")
   public Integer get123Number() {
     return _123Number;
   }

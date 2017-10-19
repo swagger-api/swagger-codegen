@@ -23,7 +23,7 @@ public class ClassModel  {
    * Get propertyClass
    * @return propertyClass
   **/
-  @JsonProperty("propertyClass")
+  @JsonProperty("_class")
   public String getPropertyClass() {
     return propertyClass;
   }

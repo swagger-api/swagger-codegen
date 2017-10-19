@@ -26,7 +26,7 @@ public class OuterComposite  {
    * Get myNumber
    * @return myNumber
   **/
-  @JsonProperty("myNumber")
+  @JsonProperty("my_number")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -44,7 +44,7 @@ public class OuterComposite  {
    * Get myString
    * @return myString
   **/
-  @JsonProperty("myString")
+  @JsonProperty("my_string")
   public String getMyString() {
     return myString;
   }
@@ -62,7 +62,7 @@ public class OuterComposite  {
    * Get myBoolean
    * @return myBoolean
   **/
-  @JsonProperty("myBoolean")
+  @JsonProperty("my_boolean")
   public Boolean getMyBoolean() {
     return myBoolean;
   }

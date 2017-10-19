@@ -22,7 +22,7 @@ public class NumberOnly  {
    * Get justNumber
    * @return justNumber
   **/
-  @JsonProperty("justNumber")
+  @JsonProperty("JustNumber")
   public BigDecimal getJustNumber() {
     return justNumber;
   }

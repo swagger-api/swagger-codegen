@@ -26,7 +26,7 @@ public class AdditionalPropertiesClass  {
    * Get mapProperty
    * @return mapProperty
   **/
-  @JsonProperty("mapProperty")
+  @JsonProperty("map_property")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -49,7 +49,7 @@ public class AdditionalPropertiesClass  {
    * Get mapOfMapProperty
    * @return mapOfMapProperty
   **/
-  @JsonProperty("mapOfMapProperty")
+  @JsonProperty("map_of_map_property")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

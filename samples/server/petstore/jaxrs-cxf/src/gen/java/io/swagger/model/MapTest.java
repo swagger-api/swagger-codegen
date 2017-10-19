@@ -59,7 +59,7 @@ public enum InnerEnum {
    * Get mapMapOfString
    * @return mapMapOfString
   **/
-  @JsonProperty("mapMapOfString")
+  @JsonProperty("map_map_of_string")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -82,7 +82,7 @@ public enum InnerEnum {
    * Get mapOfEnumString
    * @return mapOfEnumString
   **/
-  @JsonProperty("mapOfEnumString")
+  @JsonProperty("map_of_enum_string")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

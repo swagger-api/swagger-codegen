@@ -43,7 +43,7 @@ public class Model200Response  {
    * Get propertyClass
    * @return propertyClass
   **/
-  @JsonProperty("propertyClass")
+  @JsonProperty("class")
   public String getPropertyClass() {
     return propertyClass;
   }

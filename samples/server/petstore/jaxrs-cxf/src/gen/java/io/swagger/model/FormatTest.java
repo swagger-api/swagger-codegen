@@ -130,7 +130,7 @@ public class FormatTest  {
    * maximum: 987.6
    * @return _float
   **/
-  @JsonProperty("_float")
+  @JsonProperty("float")
  @DecimalMin("54.3") @DecimalMax("987.6")  public Float getFloat() {
     return _float;
   }
@@ -150,7 +150,7 @@ public class FormatTest  {
    * maximum: 123.4
    * @return _double
   **/
-  @JsonProperty("_double")
+  @JsonProperty("double")
  @DecimalMin("67.8") @DecimalMax("123.4")  public Double getDouble() {
     return _double;
   }
@@ -186,7 +186,7 @@ public class FormatTest  {
    * Get _byte
    * @return _byte
   **/
-  @JsonProperty("_byte")
+  @JsonProperty("byte")
   @NotNull
  @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public byte[] getByte() {
     return _byte;

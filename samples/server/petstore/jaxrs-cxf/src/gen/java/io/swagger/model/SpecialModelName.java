@@ -21,7 +21,7 @@ public class SpecialModelName  {
    * Get specialPropertyName
    * @return specialPropertyName
   **/
-  @JsonProperty("specialPropertyName")
+  @JsonProperty("$special[property.name]")
   public Long getSpecialPropertyName() {
     return specialPropertyName;
   }
