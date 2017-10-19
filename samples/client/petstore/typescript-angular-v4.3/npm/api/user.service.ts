@@ -134,7 +134,6 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -155,7 +154,6 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.get<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -188,7 +186,6 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.get<any>(`${this.basePath}/user/login`,
-            
             {
                 params: queryParameters,
                 headers: headers,
@@ -206,7 +203,6 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.get<any>(`${this.basePath}/user/logout`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,

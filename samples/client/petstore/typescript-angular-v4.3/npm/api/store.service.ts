@@ -71,7 +71,6 @@ export class StoreService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -93,7 +92,6 @@ export class StoreService {
         }
 
         return this.httpClient.get<any>(`${this.basePath}/store/inventory`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -114,7 +112,6 @@ export class StoreService {
         let headers = this.defaultHeaders;
 
         return this.httpClient.get<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
-            
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
