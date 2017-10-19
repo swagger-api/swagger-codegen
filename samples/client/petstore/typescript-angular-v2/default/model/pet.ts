@@ -37,3 +37,5 @@ export interface Pet {
 export namespace Pet {
     export type StatusEnum = 'available' | 'pending' | 'sold';
 }
+
+
