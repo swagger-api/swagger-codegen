@@ -15,7 +15,7 @@ import { {{classname}} } from './{{importPath}}';
 {{/apiInfo}}
 
 @NgModule({
-  imports:      [ CommonModule, {{#useHttpClient}}HttpClientModule{{/useHttpClient}}{{^useHttpClient}}{{/useHttpClient}} ],
+  imports:      [ CommonModule, {{#useHttpClient}}HttpClientModule{{/useHttpClient}}{{^useHttpClient}}HttpModule{{/useHttpClient}} ],
   declarations: [],
   exports:      [],
   providers:    [ {{#apiInfo}}{{#apis}}{{classname}}{{#hasMore}}, {{/hasMore}}{{/apis}}{{/apiInfo}} ]
