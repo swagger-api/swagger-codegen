@@ -127,8 +127,9 @@ public enum EnumNumberEnum {
    * Get enumString
    * @return enumString
   **/
-  @JsonProperty("enum_string")  public String getEnumString() {
-    if(enumString == null) {
+  @JsonProperty("enum_string")
+  public String getEnumString() {
+    if (enumString == null) {
       return null;
     }
     return enumString.value();
@@ -147,8 +148,9 @@ public enum EnumNumberEnum {
    * Get enumInteger
    * @return enumInteger
   **/
-  @JsonProperty("enum_integer")  public Integer getEnumInteger() {
-    if(enumInteger == null) {
+  @JsonProperty("enum_integer")
+  public Integer getEnumInteger() {
+    if (enumInteger == null) {
       return null;
     }
     return enumInteger.value();
@@ -167,8 +169,9 @@ public enum EnumNumberEnum {
    * Get enumNumber
    * @return enumNumber
   **/
-  @JsonProperty("enum_number")  public Double getEnumNumber() {
-    if(enumNumber == null) {
+  @JsonProperty("enum_number")
+  public Double getEnumNumber() {
+    if (enumNumber == null) {
       return null;
     }
     return enumNumber.value();
