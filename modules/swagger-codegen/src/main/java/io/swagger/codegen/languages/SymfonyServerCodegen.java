@@ -76,7 +76,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         modelDocPath = docsBasePath + File.separator + modelDirName;
         outputFolder = "generated-code" + File.separator + "php";
         apiTemplateFiles.put("api_controller.mustache", ".php");
-        modelTestTemplateFiles.put("model_test.mustache", ".php");
+        modelTestTemplateFiles.put("testing/model_test.mustache", ".php");
+        apiTestTemplateFiles = new HashMap<String, String>();
+        apiTestTemplateFiles.put("testing/api_test.mustache", ".php");
         embeddedTemplateDir = templateDir = "php-symfony";
 
         setReservedWordsLowerCase(
@@ -285,12 +287,18 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         supportingFiles.add(new SupportingFile("validation/ValidatorInterface.mustache", toPackagePath(servicePackage, srcBasePath), "ValidatorInterface.php"));
         supportingFiles.add(new SupportingFile("validation/SymfonyValidator.mustache", toPackagePath(servicePackage, srcBasePath), "SymfonyValidator.php"));
 
+        // Testing components
+        supportingFiles.add(new SupportingFile("testing/phpunit.xml.mustache", getPackagePath(), "phpunit.xml.dist"));
+        supportingFiles.add(new SupportingFile("testing/pom.xml", getPackagePath(), "pom.xml"));
+        supportingFiles.add(new SupportingFile("testing/AppKernel.php", toPackagePath(testsPackage, srcBasePath), "AppKernel.php"));
+        supportingFiles.add(new SupportingFile("testing/test_config.yml", toPackagePath(testsPackage, srcBasePath), "test_config.yml"));
+
         supportingFiles.add(new SupportingFile("routing.mustache", configDir, "routing.yml"));
         supportingFiles.add(new SupportingFile("services.mustache", configDir, "services.yml"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
         supportingFiles.add(new SupportingFile("autoload.mustache", getPackagePath(), "autoload.php"));
         supportingFiles.add(new SupportingFile("README.mustache", getPackagePath(), "README.md"));
-        supportingFiles.add(new SupportingFile("phpunit.xml.mustache", getPackagePath(), "phpunit.xml.dist"));
+        
         supportingFiles.add(new SupportingFile(".travis.yml", getPackagePath(), ".travis.yml"));
         supportingFiles.add(new SupportingFile(".php_cs", getPackagePath(), ".php_cs"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", getPackagePath(), "git_push.sh"));
