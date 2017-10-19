@@ -127,7 +127,7 @@ public enum EnumNumberEnum {
    * @return enumString
   **/
   public String getEnumString() {
-    if(enumString == null) {
+    if (enumString == null) {
       return null;
     }
     return enumString.value();
@@ -147,7 +147,7 @@ public enum EnumNumberEnum {
    * @return enumInteger
   **/
   public Integer getEnumInteger() {
-    if(enumInteger == null) {
+    if (enumInteger == null) {
       return null;
     }
     return enumInteger.value();
@@ -167,7 +167,7 @@ public enum EnumNumberEnum {
    * @return enumNumber
   **/
   public Double getEnumNumber() {
-    if(enumNumber == null) {
+    if (enumNumber == null) {
       return null;
     }
     return enumNumber.value();

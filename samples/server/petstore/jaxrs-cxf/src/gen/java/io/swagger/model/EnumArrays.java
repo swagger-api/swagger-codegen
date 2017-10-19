@@ -91,7 +91,7 @@ public enum ArrayEnumEnum {
    * @return justSymbol
   **/
   public String getJustSymbol() {
-    if(justSymbol == null) {
+    if (justSymbol == null) {
       return null;
     }
     return justSymbol.value();

@@ -165,7 +165,7 @@ public enum StatusEnum {
    * @return status
   **/
   public String getStatus() {
-    if(status == null) {
+    if (status == null) {
       return null;
     }
     return status.value();
