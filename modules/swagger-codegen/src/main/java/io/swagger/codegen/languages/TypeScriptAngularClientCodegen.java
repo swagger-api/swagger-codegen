@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
+import java.lang.StringBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 
 import io.swagger.codegen.CliOption;
@@ -82,7 +85,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
         supportingFiles.add(new SupportingFile("api.module.mustache", getIndexDirectory(), "api.module.ts"));
-        supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));        
+        supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         supportingFiles.add(new SupportingFile("configuration.mustache", getIndexDirectory(), "configuration.ts"));
         supportingFiles.add(new SupportingFile("variables.mustache", getIndexDirectory(), "variables.ts"));
         supportingFiles.add(new SupportingFile("encoder.mustache", getIndexDirectory(), "encoder.ts"));
@@ -149,7 +152,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     public boolean isDataTypeFile(final String dataType) {
         return dataType != null && dataType.equals("Blob");
     }
-    
+
     @Override
     public String getTypeDeclaration(Property p) {
         Property inner;
@@ -247,8 +250,55 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 }
             }
 
-            // Convert path to TypeScript template string, applying URI encoding
-            op.path = op.path.replaceAll("\\{(.*?)\\}", "\\$\\{encodeURIComponent(String($1))\\}");
+            // Generate the regex objects needed to parse the path properly.
+            Pattern pathPattern = Pattern.compile("\\{(.*?)\\}");
+            Matcher pathMatcher = pathPattern.matcher(op.path);
+
+            // Prep a string buffer where we're going to set up our new version of the string.
+            StringBuffer pathBuffer = new StringBuffer();
+
+            // Iterate through the matches for the regex.
+            // This should be anything that was contained inside curly-braces.
+            while(pathMatcher.find()) {
+                // Get a substring of our match.
+                String templateSection = op.path.substring(pathMatcher.start(), pathMatcher.end());
+
+                // Generate regex objects again, this time for the substring.
+                // We needed to nest these, so we didn't accidentally find matches outside the curly-braces.
+                Pattern templateSectionPattern = Pattern.compile("\\_(\\w)");
+                Matcher templateSectionMatcher = templateSectionPattern.matcher(templateSection);
+
+                // Prep a string buffer where we're going to set up our new version of the string.
+                StringBuffer templateSectionBuffer = new StringBuffer();
+
+                // Iterate through the matches for the regex.
+                // This should be any underscores followed by a single character.
+                while(templateSectionMatcher.find()) {
+                    // Add the piece of the string up to our current match.
+                    templateSectionMatcher.appendReplacement(templateSectionBuffer, "");
+
+                    // Grab the match itself.
+                    String underscoreSection = templateSection.substring(templateSectionMatcher.start(), templateSectionMatcher.end());
+
+                    // Add the capitalized character while leaving out the underscore.
+                    templateSectionBuffer.append(underscoreSection.substring(1).toUpperCase());
+                }
+
+                // Append the rest of the string after our final match.
+                templateSectionMatcher.appendTail(templateSectionBuffer);
+
+                // Replace the substring in path with the new, correctly formatted section.
+                String replacement = templateSectionBuffer.toString();
+                replacement = replacement.substring(1, replacement.length() - 1);
+                replacement = "\\$\\{encodeURIComponent\\(String\\(" + replacement + "\\)\\)\\}";
+                pathMatcher.appendReplacement(pathBuffer, replacement);
+            }
+
+            // Append the rest of the string after our final match.
+            pathMatcher.appendTail(pathBuffer);
+
+            // Overwrite path to TypeScript template string, after applying everything we just did.
+            op.path = pathBuffer.toString();
         }
 
         // Add additional filename information for model imports in the services
@@ -272,7 +322,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             CodegenModel cm = (CodegenModel) mo.get("model");
             mo.put("tsImports", toTsImports(cm,cm.imports));
         }
-        
+
         return result;
     }
 
