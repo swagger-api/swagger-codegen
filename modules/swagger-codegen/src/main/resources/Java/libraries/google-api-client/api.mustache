@@ -51,7 +51,13 @@ public class {{classname}} {
     **/
     public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
         HttpResponse response = {{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+        {{#returnType}}
         return apiClient.getObjectMapper().readValue(response.getContent(), {{{returnType}}}.class);
+        {{/returnType}}
+        {{^returnType}}
+        return;
+        {{/returnType}}
     }
 
     public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
