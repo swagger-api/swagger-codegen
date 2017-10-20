@@ -63,6 +63,12 @@ public class FakeApiServiceImpl implements FakeApi {
         
     }
     
+    public void testInlineAdditionalProperties(Object param) {
+        // TODO: Implement...
+        
+        
+    }
+    
     public void testJsonFormData(String param, String param2) {
         // TODO: Implement...
         
