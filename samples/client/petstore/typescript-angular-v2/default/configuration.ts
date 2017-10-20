@@ -32,12 +32,14 @@ export class Configuration {
      * @returns {string} the selected content-type or <code>undefined</code> if no selection could be made.
      */
     public selectHeaderContentType (contentTypes: string[]): string {
-        if (contentTypes.length == 0)
+        if (contentTypes.length == 0) {
             return undefined;
+        }
 
         let type = contentTypes.find(x => this.isJsonMime(x));
-        if (type === undefined) 
+        if (type === undefined) {
             return contentTypes[0];
+        }
         return type;
     }
 
@@ -49,12 +51,14 @@ export class Configuration {
      * @returns {string} the selected content-type or <code>undefined</code> if no selection could be made.
      */
     public selectHeaderAccept(accepts: string[]): string  {
-        if (accepts.length == 0)
+        if (accepts.length == 0) {
             return undefined;
+        }
 
         let type = accepts.find(x => this.isJsonMime(x));
-        if (type === undefined) 
+        if (type === undefined) { 
             return accepts[0];
+        }
         return type;
     }
 
@@ -68,8 +72,8 @@ export class Configuration {
      * @param {string} mime - MIME (Multipurpose Internet Mail Extensions)
      * @return {boolean} True if the given MIME is JSON, false otherwise.
      */
-    public isJsonMime(mime: string): boolean {
-        let jsonMimeRegEx = new RegExp("^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
-        return mime != null && jsonMimeRegEx.test(mime);
+    public isJsonMime(mime: string): boolean {		
+        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');		
+        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');		
     }
 }
