@@ -29,7 +29,6 @@ namespace {{modelPackage}};
  */
 class ModelSerializer
 {
-
     /**
      * Serializes data to a given type format.
      *
@@ -50,13 +49,13 @@ class ModelSerializer
     }
 
     /**
-     * Deserializes data from a given type format.
+     * De-serializes data from a given type format.
      *
      * @param string $data   The data to deserialize.
      * @param string $class  The target class to deserialize to.
      * @param string $format The source serialization format.
      *
-     * @return mixed  A deserialized value.
+     * @return mixed  A de-serialized value.
      * @throws \InvalidArgumentException When invalid serialization format was used.
      */
     public function deserialize($data, $class, $format)
@@ -84,6 +83,15 @@ class ModelSerializer
         return $this->denormalize($normalized, $class);
     }
 
+    /**
+     * Normalizes data for a given type format.
+     *
+     * @param mixed       $data
+     * @param string|null $format
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function normalize($data, $format = null)
     {
         if (is_scalar($data) || null === $data) {
@@ -92,7 +100,7 @@ class ModelSerializer
 
         if (is_array($data)) {
             return array_map(function ($value) use ($format) {
-               return $this->normalize($value, $format);
+                return $this->normalize($value, $format);
             }, $data);
         }
 
@@ -122,18 +130,29 @@ class ModelSerializer
         return (string) $data;
     }
 
+    /**
+     * De-normalizes data for a given class and type format.
+     *
+     * @param mixed       $data
+     * @param string      $class
+     * @param string|null $format
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function denormalize($data, $class, $format = null)
     {
         if ($data === null) {
             return null;
         }
 
-        if (in_array($class, ['DateTime', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
+        $basicTypes = ['boolean', 'bool', 'integer' , 'int', 'float', 'double', 'string', 'array', 'null'];
+        if (in_array($class, $basicTypes, true)) {
             settype($data, $class);
             return $data;
         }
 
-        // Denormalize array
+        // De-normalize array
         if (substr($class, -2) === '[]') {
             $innerClass = substr($class, 0, -2);
             return array_map(function ($value) use ($format, $innerClass) {
@@ -147,7 +166,7 @@ class ModelSerializer
 
         $reflectionClass = new \ReflectionClass($class);
         if ($reflectionClass->implementsInterface(ModelInterface::class)) {
-            // Denormalize enum
+            // De-normalize enum
             if (method_exists($class, 'getAllowableEnumValues')) {
                 if (!in_array($data, $class::getAllowableEnumValues())) {
                     $imploded = implode("', '", $class::getAllowableEnumValues());
@@ -158,18 +177,18 @@ class ModelSerializer
             }
 
             // If a discriminator is defined and points to a valid subclass, use it.
-            $discriminator = $class::DISCRIMINATOR;
+            $discriminator = $reflectionClass->getConstant('DISCRIMINATOR');
+
             if (!empty($discriminator) && isset($data[$discriminator]) && is_string($data[$discriminator])) {
                 $subclass = 'Sponsoo\Bundle\SwaggerBundle\Model\\'.$data[$discriminator];
                 if (is_subclass_of($subclass, $class)) {
                     $class = $subclass;
                 }
             }
-        }
 
-        // Denormalize another model
-        $values = new $class();
-        if ($values instanceof ModelInterface) {
+            /** @var ModelInterface $values */
+            $values = new $class();
+
             foreach ($values->modelAttributes() as $name => $attribute) {
                 list($baseName, $innerClass, $format, $setter) = $attribute;
 
