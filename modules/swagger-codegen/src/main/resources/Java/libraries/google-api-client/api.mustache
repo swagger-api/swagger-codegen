@@ -1,0 +1,83 @@
+package {{package}};
+
+import {{invokerPackage}}.ApiClient;
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpContent;
+import com.google.api.client.http.HttpMethods;
+import com.google.api.client.http.HttpResponse;
+
+import javax.ws.rs.core.UriBuilder;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+{{>generatedAnnotation}}
+{{#operations}}
+public class {{classname}} {
+    private ApiClient {{localVariablePrefix}}apiClient;
+
+    public {{classname}}() {
+        this(new ApiClient());
+    }
+
+    public {{classname}}(ApiClient apiClient) {
+        this.{{localVariablePrefix}}apiClient = apiClient;
+    }
+
+    public ApiClient getApiClient() {
+        return {{localVariablePrefix}}apiClient;
+    }
+
+    public void setApiClient(ApiClient apiClient) {
+        this.{{localVariablePrefix}}apiClient = apiClient;
+    }
+
+    {{#operation}}
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#responses}}     * <p><b>{{code}}</b>{{#message}} - {{message}}{{/message}}
+    {{/responses}}{{#allParams}}     * @param {{paramName}} {{description}}{{^description}}The {{paramName}} parameter{{/description}}
+    {{/allParams}}{{#returnType}}     * @return {{returnType}}
+    {{/returnType}}     * @throws IOException if an error occurs while attempting to invoke the API
+    {{#externalDocs}}
+    * {{description}}
+    * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+    **/
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
+        HttpResponse response = {{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        return apiClient.getObjectMapper().readValue(response.getContent(), {{{returnType}}}.class);
+    }
+
+    public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
+        Object {{localVariablePrefix}}postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+        {{#allParams}}{{#required}}
+        // verify the required parameter '{{paramName}}' is set
+        if ({{paramName}} == null) {
+            throw new IllegalArgumentException("Missing the required parameter '{{paramName}}' when calling {{operationId}}");
+        }
+        {{/required}}{{/allParams}}{{#hasPathParams}}
+
+        // create a map of path variables
+        final Map<String, Object> uriVariables = new HashMap<>();{{#pathParams}}
+        uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}{{/hasPathParams}}
+
+        UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");{{#hasQueryParams}}
+        {{#queryParams}}if ({{paramName}} != null) {
+            uriBuilder = uriBuilder.queryParam("{{baseName}}", {{paramName}});
+        }{{#hasMore}}{{/hasMore}}{{/queryParams}}{{/hasQueryParams}}
+
+        String url = uriBuilder.buildFromMap(uriVariables).toString();
+        GenericUrl genericUrl = new GenericUrl(url);
+
+        HttpContent content = postBody == null ? null : new ApiClient.JacksonJsonHttpContent(postBody);
+        return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
+    }
+    {{/operation}}
+}
+{{/operations}}
