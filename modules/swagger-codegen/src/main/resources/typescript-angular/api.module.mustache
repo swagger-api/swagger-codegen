@@ -12,14 +12,24 @@ import { {{classname}} } from './{{importPath}}';
 @NgModule({
   imports:      [ CommonModule, HttpModule ],
   declarations: [],
-  exports:      [],
-  providers:    [ {{#apiInfo}}{{#apis}}{{classname}}{{#hasMore}}, {{/hasMore}}{{/apis}}{{/apiInfo}} ]
+  exports:      []
 })
 export class ApiModule {
-    public static forConfig(configurationFactory: () => Configuration): ModuleWithProviders {
+    public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
         return {
             ngModule: ApiModule,
-            providers: [ {provide: Configuration, useFactory: configurationFactory}]
+            providers: [ {provide: Configuration, useFactory: configurationFactory}, 
+            {{#apiInfo}}
+            {{#apis}}
+            {{classname}}{{#hasMore}}, {{/hasMore}}
+            {{/apis}}
+            {{/apiInfo}}]
+        }
+    }
+
+    constructor( @Optional() @SkipSelf() parentModule: ApiModule) {
+        if (parentModule) {
+            throw new Error('ApiModule is already loaded. Import your base AppModule only.');
         }
     }
 }
