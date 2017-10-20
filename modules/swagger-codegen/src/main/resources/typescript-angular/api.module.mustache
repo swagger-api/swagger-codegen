@@ -18,10 +18,11 @@ export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
         return {
             ngModule: ApiModule,
-            providers: [ {provide: Configuration, useFactory: configurationFactory}, 
+            providers: [ 
+            { provide: Configuration, useFactory: configurationFactory}, 
             {{#apiInfo}}
             {{#apis}}
-            {{classname}}{{#hasMore}}, {{/hasMore}}
+            {{classname}}{{#hasMore}},{{/hasMore}}
             {{/apis}}
             {{/apiInfo}}]
         }
