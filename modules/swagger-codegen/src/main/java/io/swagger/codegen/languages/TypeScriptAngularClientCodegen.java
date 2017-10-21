@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Set;
 
 import io.swagger.codegen.CliOption;
@@ -250,52 +248,51 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 }
             }
 
-            // Generate the regex objects needed to parse the path properly.
-            Pattern pathPattern = Pattern.compile("\\{(.*?)\\}");
-            Matcher pathMatcher = pathPattern.matcher(op.path);
-
             // Prep a string buffer where we're going to set up our new version of the string.
             StringBuffer pathBuffer = new StringBuffer();
 
-            // Iterate through the matches for the regex.
-            // This should be anything that was contained inside curly-braces.
-            while(pathMatcher.find()) {
-                // Get a substring of our match.
-                String templateSection = op.path.substring(pathMatcher.start(), pathMatcher.end());
+            // Set up other variables for tracking the current state of the string.
+            int insideCurly = 0;
+            boolean foundUnderscore = false;
 
-                // Generate regex objects again, this time for the substring.
-                // We needed to nest these, so we didn't accidentally find matches outside the curly-braces.
-                Pattern templateSectionPattern = Pattern.compile("\\_(\\w)");
-                Matcher templateSectionMatcher = templateSectionPattern.matcher(templateSection);
+            // Iterate through existing string, one character at a time.
+            for(int i = 0; i < op.path.length(); i++) {
+                switch(op.path.charAt(i)) {
+                    case '{':
+                        // We entered curly braces, so track that.
+                        insideCurly++;
 
-                // Prep a string buffer where we're going to set up our new version of the string.
-                StringBuffer templateSectionBuffer = new StringBuffer();
+                        // Add the more complicated component instead of just the brace.
+                        pathBuffer.append("${encodeURIComponent(String(");
+                        break;
+                    case '}':
+                        // We exited curly braces, so track that.
+                        insideCurly--;
 
-                // Iterate through the matches for the regex.
-                // This should be any underscores followed by a single character.
-                while(templateSectionMatcher.find()) {
-                    // Add the piece of the string up to our current match.
-                    templateSectionMatcher.appendReplacement(templateSectionBuffer, "");
-
-                    // Grab the match itself.
-                    String underscoreSection = templateSection.substring(templateSectionMatcher.start(), templateSectionMatcher.end());
-
-                    // Add the capitalized character while leaving out the underscore.
-                    templateSectionBuffer.append(underscoreSection.substring(1).toUpperCase());
+                        // Add the more complicated component instead of just the brace.
+                        pathBuffer.append("))}");
+                        break;
+                    case '_':
+                        // If we're inside the curly brace, the following character will need to be uppercase.
+                        // Otherwise, just add the character.
+                        if (insideCurly > 0) {
+                            foundUnderscore = true;
+                        } else {
+                            pathBuffer.append(op.path.charAt(i));
+                        }
+                        break;
+                    default:
+                        // If we previously found an underscore, we need an uppercase letter.
+                        // Otherwise, just add the character.
+                        if (foundUnderscore) {
+                            pathBuffer.append(Character.toUpperCase(op.path.charAt(i)));
+                            foundUnderscore = false;
+                        } else {
+                            pathBuffer.append(op.path.charAt(i));
+                        }
+                        break;
                 }
-
-                // Append the rest of the string after our final match.
-                templateSectionMatcher.appendTail(templateSectionBuffer);
-
-                // Replace the substring in path with the new, correctly formatted section.
-                String replacement = templateSectionBuffer.toString();
-                replacement = replacement.substring(1, replacement.length() - 1);
-                replacement = "\\$\\{encodeURIComponent\\(String\\(" + replacement + "\\)\\)\\}";
-                pathMatcher.appendReplacement(pathBuffer, replacement);
             }
-
-            // Append the rest of the string after our final match.
-            pathMatcher.appendTail(pathBuffer);
 
             // Overwrite path to TypeScript template string, after applying everything we just did.
             op.path = pathBuffer.toString();
