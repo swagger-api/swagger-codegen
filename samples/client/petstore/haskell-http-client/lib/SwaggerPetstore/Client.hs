@@ -1,7 +1,7 @@
 {-
    Swagger Petstore
 
-   This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+   This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
 
    OpenAPI spec version: 2.0
    Swagger Petstore API version: 1.0.0
@@ -45,74 +45,10 @@ import qualified Network.HTTP.Types as NH
 import qualified Web.FormUrlEncoded as WH
 import qualified Web.HttpApiData as WH
 
-<<<<<<< HEAD
-import qualified Control.Exception.Safe as E
--- * Config
-
--- | 
-data SwaggerPetstoreConfig = SwaggerPetstoreConfig
-  { configHost  :: BCL.ByteString -- ^ host supplied in the Request
-  , configUserAgent :: Text -- ^ user-agent supplied in the Request
-  , configLogExecWithContext :: LogExecWithContext -- ^ Run a block using a Logger instance
-  , configLogContext :: LogContext -- ^ Configures the logger
-  , configAuthMethods :: [AnyAuthMethod] -- ^ List of configured auth methods
-  }
-
--- | display the config
-instance Show SwaggerPetstoreConfig where
-  show c =
-    T.printf
-      "{ configHost = %v, configUserAgent = %v, ..}"
-      (show (configHost c))
-      (show (configUserAgent c))
-
--- | constructs a default SwaggerPetstoreConfig
---
--- configHost:
---
--- @http://petstore.swagger.io/v2@
---
--- configUserAgent:
---
--- @"swagger-haskell-http-client/1.0.0"@
---
-newConfig :: IO SwaggerPetstoreConfig
-newConfig = do
-    logCxt <- initLogContext
-    return $ SwaggerPetstoreConfig
-        { configHost = "http://petstore.swagger.io/v2"
-        , configUserAgent = "swagger-haskell-http-client/1.0.0"
-        , configLogExecWithContext = runDefaultLogExecWithContext
-        , configLogContext = logCxt
-        , configAuthMethods = []
-        }  
-
--- | updates config use AuthMethod on matching requests
-addAuthMethod :: AuthMethod auth => SwaggerPetstoreConfig -> auth -> SwaggerPetstoreConfig
-addAuthMethod config@SwaggerPetstoreConfig {configAuthMethods = as} a =
-  config { configAuthMethods = AnyAuthMethod a : as}
-
--- | updates the config to use stdout logging
-withStdoutLogging :: SwaggerPetstoreConfig -> IO SwaggerPetstoreConfig
-withStdoutLogging p = do
-    logCxt <- stdoutLoggingContext (configLogContext p)
-    return $ p { configLogExecWithContext = stdoutLoggingExec, configLogContext = logCxt }
-
--- | updates the config to use stderr logging
-withStderrLogging :: SwaggerPetstoreConfig -> IO SwaggerPetstoreConfig
-withStderrLogging p = do
-    logCxt <- stderrLoggingContext (configLogContext p)
-    return $ p { configLogExecWithContext = stderrLoggingExec, configLogContext = logCxt }
-
--- | updates the config to disable logging
-withNoLogging :: SwaggerPetstoreConfig -> SwaggerPetstoreConfig
-withNoLogging p = p { configLogExecWithContext =  runNullLogExec}
-=======
 import Data.Function ((&))
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import GHC.Exts (IsString(..))
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 -- * Dispatch
 

@@ -1,7 +1,7 @@
 {-
    Swagger Petstore
 
-   This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+   This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
 
    OpenAPI spec version: 2.0
    Swagger Petstore API version: 1.0.0
@@ -62,13 +62,10 @@ data MimeOctetStream = MimeOctetStream deriving (P.Typeable)
 data MimeNoContent = MimeNoContent deriving (P.Typeable)
 data MimeAny = MimeAny deriving (P.Typeable)
 
-<<<<<<< HEAD
-=======
 -- | A type for responses without content-body.
 data NoContent = NoContent
   deriving (P.Show, P.Eq, P.Typeable)
 
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 -- * MimeType Class
 
@@ -118,12 +115,7 @@ instance MimeType MimeAny where
 instance MimeType MimeNoContent where
   mimeType _ = Nothing
 
-<<<<<<< HEAD
-
--- ** MimeRender Class
-=======
 -- * MimeRender Class
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 class MimeType mtype => MimeRender mtype x where
     mimeRender  :: P.Proxy mtype -> x -> BL.ByteString
@@ -170,12 +162,7 @@ instance MimeRender MimeMultipartFormData T.Text where mimeRender _ = mimeRender
 instance MimeRender MimeNoContent NoContent where mimeRender _ = P.const BCL.empty
 
 
-<<<<<<< HEAD
-
--- ** MimeUnrender Class
-=======
 -- * MimeUnrender Class
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 class MimeType mtype => MimeUnrender mtype o where
     mimeUnrender :: P.Proxy mtype -> BL.ByteString -> P.Either String o
@@ -204,17 +191,4 @@ instance MimeUnrender MimeOctetStream T.Text where mimeUnrender _ = P.left P.sho
 instance MimeUnrender MimeOctetStream String where mimeUnrender _ = P.Right . BCL.unpack
 
 -- | @P.Right . P.const NoContent@
-<<<<<<< HEAD
 instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
-
-
--- ** Request Consumes
-
-class MimeType mtype => Consumes req mtype where
-
--- ** Request Produces
-
-class MimeType mtype => Produces req mtype where
-=======
-instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a

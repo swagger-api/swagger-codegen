@@ -5,6 +5,7 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -111,11 +112,8 @@ public enum StatusEnum {
    * Get name
    * @return name
   **/
-<<<<<<< HEAD
-=======
   @JsonProperty("name")
   @NotNull
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
   public String getName() {
     return name;
   }
@@ -133,11 +131,8 @@ public enum StatusEnum {
    * Get photoUrls
    * @return photoUrls
   **/
-<<<<<<< HEAD
-=======
   @JsonProperty("photoUrls")
   @NotNull
->>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
