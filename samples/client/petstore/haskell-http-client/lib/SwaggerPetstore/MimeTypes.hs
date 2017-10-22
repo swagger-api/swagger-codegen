@@ -23,39 +23,35 @@ Module : SwaggerPetstore.MimeTypes
 
 module SwaggerPetstore.MimeTypes where
 
-import SwaggerPetstore.Model as M
-
+import qualified Control.Arrow as P (left)
 import qualified Data.Aeson as A
-
 import qualified Data.ByteString as B
-import qualified Data.ByteString.Lazy as BL
 import qualified Data.ByteString.Builder as BB
 import qualified Data.ByteString.Char8 as BC
+import qualified Data.ByteString.Lazy as BL
 import qualified Data.ByteString.Lazy.Char8 as BCL
-
-
-import qualified Network.HTTP.Media as ME
-
-import qualified Web.FormUrlEncoded as WH
-import qualified Web.HttpApiData as WH
-
 import qualified Data.Data as P (Typeable)
 import qualified Data.Proxy as P (Proxy(..))
-import qualified Data.Text as T
 import qualified Data.String as P
+import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
-import qualified Control.Arrow as P (left)
+import qualified Network.HTTP.Media as ME
+import qualified Web.FormUrlEncoded as WH
+import qualified Web.HttpApiData as WH
 
 import Prelude (($), (.),(<$>),(<*>),Maybe(..),Bool(..),Char,Double,FilePath,Float,Int,Integer,String,fmap,undefined,mempty)
 import qualified Prelude as P
 
--- * Content Negotiation
 
--- | A type for responses without content-body.
-data NoContent = NoContent
-  deriving (P.Show, P.Eq)
+-- * Consumes Class
 
--- ** Mime Types
+class MimeType mtype => Consumes req mtype where
+
+-- * Produces Class
+
+class MimeType mtype => Produces req mtype where
+
+-- * Default Mime Types
 
 data MimeJSON = MimeJSON deriving (P.Typeable)
 data MimeXML = MimeXML deriving (P.Typeable)
@@ -66,8 +62,15 @@ data MimeOctetStream = MimeOctetStream deriving (P.Typeable)
 data MimeNoContent = MimeNoContent deriving (P.Typeable)
 data MimeAny = MimeAny deriving (P.Typeable)
 
+<<<<<<< HEAD
+=======
+-- | A type for responses without content-body.
+data NoContent = NoContent
+  deriving (P.Show, P.Eq, P.Typeable)
 
--- ** MimeType Class
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
+
+-- * MimeType Class
 
 class P.Typeable mtype => MimeType mtype  where
   {-# MINIMAL mimeType | mimeTypes #-}
@@ -89,7 +92,7 @@ class P.Typeable mtype => MimeType mtype  where
   mimeTypes' :: mtype -> [ME.MediaType]
   mimeTypes' _ = mimeTypes (P.Proxy :: P.Proxy mtype)
 
--- ** MimeType Instances
+-- Default MimeType Instances
 
 -- | @application/json; charset=utf-8@
 instance MimeType MimeJSON where
@@ -115,8 +118,12 @@ instance MimeType MimeAny where
 instance MimeType MimeNoContent where
   mimeType _ = Nothing
 
+<<<<<<< HEAD
 
 -- ** MimeRender Class
+=======
+-- * MimeRender Class
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 class MimeType mtype => MimeRender mtype x where
     mimeRender  :: P.Proxy mtype -> x -> BL.ByteString
@@ -124,7 +131,10 @@ class MimeType mtype => MimeRender mtype x where
     mimeRender' _ x = mimeRender (P.Proxy :: P.Proxy mtype) x
 
 
--- ** MimeRender Instances
+mimeRenderDefaultMultipartFormData :: WH.ToHttpApiData a => a -> BL.ByteString
+mimeRenderDefaultMultipartFormData = BL.fromStrict . T.encodeUtf8 . WH.toQueryParam
+
+-- Default MimeRender Instances
 
 -- | `A.encode`
 instance A.ToJSON a => MimeRender MimeJSON a where mimeRender _ = A.encode
@@ -146,13 +156,9 @@ instance MimeRender MimeOctetStream T.Text where mimeRender _ = BL.fromStrict . 
 instance MimeRender MimeOctetStream String where mimeRender _ = BCL.pack
 
 instance MimeRender MimeMultipartFormData BL.ByteString where mimeRender _ = P.id
-instance MimeRender MimeMultipartFormData Binary where mimeRender _ = unBinary
 
-instance MimeRender MimeMultipartFormData ByteArray where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData Bool where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData Char where mimeRender _ = mimeRenderDefaultMultipartFormData
-instance MimeRender MimeMultipartFormData Date where mimeRender _ = mimeRenderDefaultMultipartFormData
-instance MimeRender MimeMultipartFormData DateTime where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData Double where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData Float where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData Int where mimeRender _ = mimeRenderDefaultMultipartFormData
@@ -160,26 +166,23 @@ instance MimeRender MimeMultipartFormData Integer where mimeRender _ = mimeRende
 instance MimeRender MimeMultipartFormData String where mimeRender _ = mimeRenderDefaultMultipartFormData
 instance MimeRender MimeMultipartFormData T.Text where mimeRender _ = mimeRenderDefaultMultipartFormData
 
-mimeRenderDefaultMultipartFormData :: WH.ToHttpApiData a => a -> BL.ByteString
-mimeRenderDefaultMultipartFormData = BL.fromStrict . T.encodeUtf8 . WH.toQueryParam
-
 -- | @P.Right . P.const NoContent@
 instance MimeRender MimeNoContent NoContent where mimeRender _ = P.const BCL.empty
 
--- instance MimeRender MimeOctetStream Double where mimeRender _ = BB.toLazyByteString . BB.doubleDec
--- instance MimeRender MimeOctetStream Float where mimeRender _ = BB.toLazyByteString . BB.floatDec
--- instance MimeRender MimeOctetStream Int where mimeRender _ = BB.toLazyByteString . BB.intDec
--- instance MimeRender MimeOctetStream Integer where mimeRender _ = BB.toLazyByteString . BB.integerDec
 
+<<<<<<< HEAD
 
 -- ** MimeUnrender Class
+=======
+-- * MimeUnrender Class
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 
 class MimeType mtype => MimeUnrender mtype o where
     mimeUnrender :: P.Proxy mtype -> BL.ByteString -> P.Either String o
     mimeUnrender' :: mtype -> BL.ByteString -> P.Either String o
     mimeUnrender' _ x = mimeUnrender (P.Proxy :: P.Proxy mtype) x
 
--- ** MimeUnrender Instances
+-- Default MimeUnrender Instances
 
 -- | @A.eitherDecode@
 instance A.FromJSON a => MimeUnrender MimeJSON a where mimeUnrender _ = A.eitherDecode
@@ -201,6 +204,7 @@ instance MimeUnrender MimeOctetStream T.Text where mimeUnrender _ = P.left P.sho
 instance MimeUnrender MimeOctetStream String where mimeUnrender _ = P.Right . BCL.unpack
 
 -- | @P.Right . P.const NoContent@
+<<<<<<< HEAD
 instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
 
 
@@ -211,3 +215,6 @@ class MimeType mtype => Consumes req mtype where
 -- ** Request Produces
 
 class MimeType mtype => Produces req mtype where
+=======
+instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a

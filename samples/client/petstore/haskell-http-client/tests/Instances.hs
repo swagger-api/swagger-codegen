@@ -2,10 +2,9 @@
 
 module Instances where
 
-import Control.Monad
-import Data.Char (isSpace)
-import Data.List (sort)
-import Test.QuickCheck
+import SwaggerPetstore.Model
+import SwaggerPetstore.Core
+
 import qualified Data.Aeson as A
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.HashMap.Strict as HM
@@ -14,8 +13,12 @@ import qualified Data.Text as T
 import qualified Data.Time as TI
 import qualified Data.Vector as V
 
+import Control.Monad
+import Data.Char (isSpace)
+import Data.List (sort)
+import Test.QuickCheck
+
 import ApproxEq
-import SwaggerPetstore.Model
 
 instance Arbitrary T.Text where
   arbitrary = T.pack <$> arbitrary
@@ -86,6 +89,29 @@ instance ApproxEq TI.Day where
 
 -- * Models
  
+<<<<<<< HEAD
+=======
+instance Arbitrary AdditionalPropertiesClass where
+  arbitrary =
+    AdditionalPropertiesClass
+      <$> arbitrary -- additionalPropertiesClassMapProperty :: Maybe (Map.Map String Text)
+      <*> arbitrary -- additionalPropertiesClassMapOfMapProperty :: Maybe (Map.Map String (Map.Map String Text))
+    
+
+instance Arbitrary Animal where
+  arbitrary =
+    Animal
+      <$> arbitrary -- animalClassName :: Text
+      <*> arbitrary -- animalColor :: Maybe Text
+    
+
+instance Arbitrary AnimalFarm where
+  arbitrary =
+    
+    pure AnimalFarm
+     
+
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary ApiResponse where
   arbitrary =
     ApiResponse
@@ -101,6 +127,117 @@ instance Arbitrary Category where
       <*> arbitrary -- categoryName :: Maybe Text
     
 
+<<<<<<< HEAD
+=======
+instance Arbitrary ClassModel where
+  arbitrary =
+    ClassModel
+      <$> arbitrary -- classModelClass :: Maybe Text
+    
+
+instance Arbitrary Client where
+  arbitrary =
+    Client
+      <$> arbitrary -- clientClient :: Maybe Text
+    
+
+instance Arbitrary EnumArrays where
+  arbitrary =
+    EnumArrays
+      <$> arbitrary -- enumArraysJustSymbol :: Maybe Text
+      <*> arbitrary -- enumArraysArrayEnum :: Maybe [Text]
+    
+
+instance Arbitrary EnumClass where
+  arbitrary =
+    
+    pure EnumClass
+     
+
+instance Arbitrary EnumTest where
+  arbitrary =
+    EnumTest
+      <$> arbitrary -- enumTestEnumString :: Maybe Text
+      <*> arbitrary -- enumTestEnumInteger :: Maybe Int
+      <*> arbitrary -- enumTestEnumNumber :: Maybe Double
+      <*> arbitrary -- enumTestOuterEnum :: Maybe OuterEnum
+    
+
+instance Arbitrary FormatTest where
+  arbitrary =
+    FormatTest
+      <$> arbitrary -- formatTestInteger :: Maybe Int
+      <*> arbitrary -- formatTestInt32 :: Maybe Int
+      <*> arbitrary -- formatTestInt64 :: Maybe Integer
+      <*> arbitrary -- formatTestNumber :: Double
+      <*> arbitrary -- formatTestFloat :: Maybe Float
+      <*> arbitrary -- formatTestDouble :: Maybe Double
+      <*> arbitrary -- formatTestString :: Maybe Text
+      <*> arbitrary -- formatTestByte :: ByteArray
+      <*> arbitrary -- formatTestBinary :: Maybe Binary
+      <*> arbitrary -- formatTestDate :: Date
+      <*> arbitrary -- formatTestDateTime :: Maybe DateTime
+      <*> arbitrary -- formatTestUuid :: Maybe Text
+      <*> arbitrary -- formatTestPassword :: Text
+    
+
+instance Arbitrary HasOnlyReadOnly where
+  arbitrary =
+    HasOnlyReadOnly
+      <$> arbitrary -- hasOnlyReadOnlyBar :: Maybe Text
+      <*> arbitrary -- hasOnlyReadOnlyFoo :: Maybe Text
+    
+
+instance Arbitrary MapTest where
+  arbitrary =
+    MapTest
+      <$> arbitrary -- mapTestMapMapOfString :: Maybe (Map.Map String (Map.Map String Text))
+      <*> arbitrary -- mapTestMapOfEnumString :: Maybe (Map.Map String Text)
+    
+
+instance Arbitrary MixedPropertiesAndAdditionalPropertiesClass where
+  arbitrary =
+    MixedPropertiesAndAdditionalPropertiesClass
+      <$> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassUuid :: Maybe Text
+      <*> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassDateTime :: Maybe DateTime
+      <*> arbitrary -- mixedPropertiesAndAdditionalPropertiesClassMap :: Maybe (Map.Map String Animal)
+    
+
+instance Arbitrary Model200Response where
+  arbitrary =
+    Model200Response
+      <$> arbitrary -- model200ResponseName :: Maybe Int
+      <*> arbitrary -- model200ResponseClass :: Maybe Text
+    
+
+instance Arbitrary ModelList where
+  arbitrary =
+    ModelList
+      <$> arbitrary -- modelList123List :: Maybe Text
+    
+
+instance Arbitrary ModelReturn where
+  arbitrary =
+    ModelReturn
+      <$> arbitrary -- modelReturnReturn :: Maybe Int
+    
+
+instance Arbitrary Name where
+  arbitrary =
+    Name
+      <$> arbitrary -- nameName :: Int
+      <*> arbitrary -- nameSnakeCase :: Maybe Int
+      <*> arbitrary -- nameProperty :: Maybe Text
+      <*> arbitrary -- name123Number :: Maybe Int
+    
+
+instance Arbitrary NumberOnly where
+  arbitrary =
+    NumberOnly
+      <$> arbitrary -- numberOnlyJustNumber :: Maybe Double
+    
+
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary Order where
   arbitrary =
     Order
@@ -112,6 +249,35 @@ instance Arbitrary Order where
       <*> arbitrary -- orderComplete :: Maybe Bool
     
 
+<<<<<<< HEAD
+=======
+instance Arbitrary OuterBoolean where
+  arbitrary =
+    OuterBoolean <$> arbitrary
+
+instance Arbitrary OuterComposite where
+  arbitrary =
+    OuterComposite
+      <$> arbitrary -- outerCompositeMyNumber :: Maybe OuterNumber
+      <*> arbitrary -- outerCompositeMyString :: Maybe OuterString
+      <*> arbitrary -- outerCompositeMyBoolean :: Maybe OuterBoolean
+    
+
+instance Arbitrary OuterEnum where
+  arbitrary =
+    
+    pure OuterEnum
+     
+
+instance Arbitrary OuterNumber where
+  arbitrary =
+    OuterNumber <$> arbitrary
+
+instance Arbitrary OuterString where
+  arbitrary =
+    OuterString <$> arbitrary
+
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary Pet where
   arbitrary =
     Pet

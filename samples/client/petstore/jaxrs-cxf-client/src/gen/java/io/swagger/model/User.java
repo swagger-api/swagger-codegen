@@ -10,7 +10,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+  * A User who is purchasing from the pet store
+ **/
 @ApiModel(description="A User who is purchasing from the pet store")
 public class User  {
   
@@ -29,12 +33,16 @@ public class User  {
   @ApiModelProperty(value = "")
   private String phone = null;
   @ApiModelProperty(value = "User Status")
+ /**
+   * User Status  
+  **/
   private Integer userStatus = null;
 
  /**
    * Get id
    * @return id
   **/
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -52,6 +60,7 @@ public class User  {
    * Get username
    * @return username
   **/
+  @JsonProperty("username")
   public String getUsername() {
     return username;
   }
@@ -69,6 +78,7 @@ public class User  {
    * Get firstName
    * @return firstName
   **/
+  @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
   }
@@ -86,6 +96,7 @@ public class User  {
    * Get lastName
    * @return lastName
   **/
+  @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
   }
@@ -103,6 +114,7 @@ public class User  {
    * Get email
    * @return email
   **/
+  @JsonProperty("email")
   public String getEmail() {
     return email;
   }
@@ -120,6 +132,7 @@ public class User  {
    * Get password
    * @return password
   **/
+  @JsonProperty("password")
   public String getPassword() {
     return password;
   }
@@ -137,6 +150,7 @@ public class User  {
    * Get phone
    * @return phone
   **/
+  @JsonProperty("phone")
   public String getPhone() {
     return phone;
   }
@@ -154,6 +168,7 @@ public class User  {
    * User Status
    * @return userStatus
   **/
+  @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
   }

@@ -11,7 +11,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+  * An order for a pets from the pet store
+ **/
 @ApiModel(description="An order for a pets from the pet store")
 public class Order  {
   
@@ -57,6 +61,9 @@ public enum StatusEnum {
 }
 
   @ApiModelProperty(value = "Order Status")
+ /**
+   * Order Status  
+  **/
   private StatusEnum status = null;
   @ApiModelProperty(value = "")
   private Boolean complete = false;
@@ -65,6 +72,7 @@ public enum StatusEnum {
    * Get id
    * @return id
   **/
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -82,6 +90,7 @@ public enum StatusEnum {
    * Get petId
    * @return petId
   **/
+  @JsonProperty("petId")
   public Long getPetId() {
     return petId;
   }
@@ -99,6 +108,7 @@ public enum StatusEnum {
    * Get quantity
    * @return quantity
   **/
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
@@ -116,6 +126,7 @@ public enum StatusEnum {
    * Get shipDate
    * @return shipDate
   **/
+  @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
   }
@@ -133,6 +144,7 @@ public enum StatusEnum {
    * Order Status
    * @return status
   **/
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -150,6 +162,7 @@ public enum StatusEnum {
    * Get complete
    * @return complete
   **/
+  @JsonProperty("complete")
   public Boolean isComplete() {
     return complete;
   }

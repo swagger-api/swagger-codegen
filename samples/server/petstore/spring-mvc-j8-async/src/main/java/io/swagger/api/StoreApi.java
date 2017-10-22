@@ -31,7 +31,11 @@ import javax.validation.Valid;
 @Api(value = "store", description = "the store API")
 public interface StoreApi {
 
+<<<<<<< HEAD
     @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class, tags={ "store", })
+=======
+    @ApiOperation(value = "Delete purchase order by ID", nickname = "deleteOrder", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store", })
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Order not found") })
