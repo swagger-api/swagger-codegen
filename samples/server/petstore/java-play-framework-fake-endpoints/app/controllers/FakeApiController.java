@@ -20,6 +20,7 @@ import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.validation.constraints.*;
+import play.Configuration;
 
 import swagger.SwaggerUtils.ApiAction;
 
@@ -28,11 +29,13 @@ public class FakeApiController extends Controller {
 
     private final FakeApiControllerImpInterface imp;
     private final ObjectMapper mapper;
+    private final Configuration configuration;
 
     @Inject
-    private FakeApiController(FakeApiControllerImpInterface imp) {
+    private FakeApiController(Configuration configuration, FakeApiControllerImpInterface imp) {
         this.imp = imp;
         mapper = new ObjectMapper();
+        this.configuration = configuration;
     }
 
 
@@ -42,7 +45,9 @@ public class FakeApiController extends Controller {
         Boolean body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Boolean.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                body.validate();
+            }
         } else {
             body = null;
         }
@@ -57,12 +62,17 @@ public class FakeApiController extends Controller {
         OuterComposite body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), OuterComposite.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                body.validate();
+            }
         } else {
             body = null;
         }
         OuterComposite obj = imp.fakeOuterCompositeSerialize(body);
-        obj.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            obj.validate();
+        }
+        
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
@@ -73,12 +83,17 @@ public class FakeApiController extends Controller {
         BigDecimal body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), BigDecimal.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                body.validate();
+            }
         } else {
             body = null;
         }
         BigDecimal obj = imp.fakeOuterNumberSerialize(body);
-        obj.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            obj.validate();
+        }
+        
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
@@ -89,7 +104,9 @@ public class FakeApiController extends Controller {
         String body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), String.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                body.validate();
+            }
         } else {
             body = null;
         }
@@ -104,12 +121,17 @@ public class FakeApiController extends Controller {
         Client body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Client.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                body.validate();
+            }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         Client obj = imp.testClientModel(body);
-        obj.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            obj.validate();
+        }
+        
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
@@ -277,6 +299,22 @@ public class FakeApiController extends Controller {
             enumHeaderString = "-efg";
         }
         imp.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+        return ok();
+    }
+
+    @ApiAction
+    public Result testInlineAdditionalProperties() throws Exception {
+        JsonNode nodeparam = request().body().asJson();
+        Object param;
+        if (nodeparam != null) {
+            param = mapper.readValue(nodeparam.toString(), Object.class);
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                param.validate();
+            }
+        } else {
+            throw new IllegalArgumentException("'param' parameter is required");
+        }
+        imp.testInlineAdditionalProperties(param);
         return ok();
     }
 
