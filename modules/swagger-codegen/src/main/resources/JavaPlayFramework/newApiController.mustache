@@ -63,12 +63,19 @@ public class {{classname}}Controller extends Controller {
             {{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isContainer}}new TypeReference<{{{dataType}}}>(){}{{/isContainer}}{{^isContainer}}{{{dataType}}}.class{{/isContainer}});
             {{#useBeanValidation}}
             if (configuration.getBoolean("useInputBeanValidation")) {
-                {{#isListContainer}}for ({{{baseType}}} curItem : {{paramName}}) {
+                {{#isListContainer}}
+                for ({{{baseType}}} curItem : {{paramName}}) {
                     curItem.validate();
-                }{{/isListContainer}}{{#isMapContainer}}for (Map.Entry<String, {{{baseType}}}> entry : {{paramName}}.entrySet()) {
+                }
+                {{/isListContainer}}
+                {{#isMapContainer}}
+                for (Map.Entry<String, {{{baseType}}}> entry : {{paramName}}.entrySet()) {
                     entry.getValue().validate();
                 }
-                {{/isMapContainer}}{{^isContainer}}{{paramName}}.validate();{{/isContainer}}
+                {{/isMapContainer}}
+                {{^isContainer}}
+                {{paramName}}.validate();
+                {{/isContainer}}
             }
             {{/useBeanValidation}}
         } else {
@@ -182,17 +189,30 @@ public class {{classname}}Controller extends Controller {
         {{/collectionFormat}}
         {{/headerParams}}
         {{^controllerOnly}}
-        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^isResponseFile}}{{^returnTypeIsPrimitive}}
+        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}
+        {{^isResponseFile}}
+        {{^returnTypeIsPrimitive}}
         {{#useBeanValidation}}
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            {{#isListContainer}}for ({{{returnType}}} curItem : obj) {
+            {{#isListContainer}}
+            for ({{{returnType}}} curItem : obj) {
                 curItem.validate();
-            }{{/isListContainer}}{{#isMapContainer}}for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
+            }
+            {{/isListContainer}}
+            {{#isMapContainer}}
+            for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
                 entry.getValue().validate();
             }
-            {{/isMapContainer}}{{^returnContainer}}obj.validate();{{/returnContainer}}
+            {{/isMapContainer}}
+            {{^returnContainer}}
+            obj.validate();
+            {{/returnContainer}}
         }
-        {{/useBeanValidation}}{{/returnTypeIsPrimitive}}{{/isResponseFile}}{{/returnType}}
+        {{/useBeanValidation}}
+        {{/returnTypeIsPrimitive}}
+        {{/isResponseFile}}
+        {{/returnType}}
         {{#returnType}}
         {{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
         return ok(result);
