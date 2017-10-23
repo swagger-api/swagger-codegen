@@ -80,7 +80,6 @@ public class UserApiController extends Controller {
     @ApiAction
     public Result getUserByName(String username) throws Exception {
         User obj = imp.getUserByName(username);
-
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }

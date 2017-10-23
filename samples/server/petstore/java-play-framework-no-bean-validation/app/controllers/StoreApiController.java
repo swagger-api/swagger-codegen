@@ -48,7 +48,6 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result getOrderById(Long orderId) throws Exception {
         Order obj = imp.getOrderById(orderId);
-
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
@@ -63,7 +62,6 @@ public class StoreApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         Order obj = imp.placeOrder(body);
-
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }

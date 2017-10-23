@@ -100,7 +100,6 @@ public class UserApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             obj.validate();
         }
-        
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
