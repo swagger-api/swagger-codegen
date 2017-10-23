@@ -1,22 +1,23 @@
--- This file has been generated from package.yaml by hpack version 0.17.1.
---
--- see: https://github.com/sol/hpack
-
 name:           {{package}}
 version:        0.1.0.0
 synopsis:       Auto-generated {{package}} API Client
 description:    .
                 Client library for calling the {{package}} API based on http-client.
                 .
+                host: {{host}}
+                .
                 base path: {{basePath}}
+                {{#version}}
                 .
-                apiVersion: {{apiVersion}}
+                {{appName}} API version: {{{.}}}
+                {{/version}}
                 .
-                swagger version: {{swaggerVersion}}
+                OpenAPI spec version: {{swaggerVersion}}
                 .
                 {{^hideGenerationTimestamp}}Generated on: {{generatedDate}}
                 .
                 {{/hideGenerationTimestamp}}OpenAPI-Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/{{swaggerVersion}}.md
+                .
 category:       Web
 homepage:       https://github.com/swagger-api/swagger-codegen#readme
 author:         Author Name Here
@@ -28,12 +29,12 @@ cabal-version:  >= 1.10
 
 extra-source-files:
     README.md
-    swagger.json
+    swagger.yaml
 
 library
   hs-source-dirs:
       lib
-  ghc-options: -Wall
+  ghc-options: -Wall -funbox-strict-fields
   build-depends:
       base >=4.7 && <5.0
     , transformers >=0.4.0.0
@@ -41,6 +42,7 @@ library
     , unordered-containers
     , aeson >=1.0 && <2.0
     , bytestring >=0.10.0 && <0.11
+    , base64-bytestring >1.0 && <2.0
     , containers >=0.5.0.0 && <0.6
     , http-types >=0.8 && <0.10
     , http-client >=0.5 && <0.6
@@ -54,16 +56,20 @@ library
     , network >=2.6.2 && <2.7
     , random >=1.1
     , exceptions >= 0.4
-    , monad-logger >=0.3 && <0.4
+    , {{^x-useMonadLogger}}katip >=0.4 && < 0.6{{/x-useMonadLogger}}{{#x-useMonadLogger}}monad-logger >=0.3 && <0.4{{/x-useMonadLogger}}
     , safe-exceptions <0.2
     , case-insensitive
+    , microlens >= 0.4.3 && <0.5
+    , deepseq >= 1.4 && <1.6
   exposed-modules:
       {{title}}
       {{title}}.API
       {{title}}.Client
-      {{title}}.Model
+      {{title}}.Core
+      {{title}}.Logging
       {{title}}.MimeTypes
-      {{#generateLenses}}{{title}}.Lens{{/generateLenses}}
+      {{title}}.Model
+      {{title}}.ModelLens
   other-modules:
       Paths_{{pathsName}}
   default-language: Haskell2010
@@ -73,7 +79,7 @@ test-suite tests
   main-is: Test.hs
   hs-source-dirs:
       tests
-  ghc-options: -fno-warn-orphans
+  ghc-options: -Wall -fno-warn-orphans
   build-depends:
       base >=4.7 && <5.0
     , transformers >=0.4.0.0
@@ -87,6 +93,7 @@ test-suite tests
     , time
     , iso8601-time
     , aeson
+    , vector
     , semigroups
     , QuickCheck
   other-modules:

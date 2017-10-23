@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.3.0-SNAPSHOT+baikal11</version>
+    <version>2.3.0-SNAPSHOT+baikal14</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -865,12 +865,14 @@
                 <module>samples/client/petstore/typescript-jquery/npm</module>-->
                 <module>samples/client/petstore/typescript-angular-v2/npm</module>
                 <module>samples/client/petstore/typescript-angular-v4/npm</module>
+                <!-- comment out due to https://github.com/swagger-api/swagger-codegen/issues/6658
                 <module>samples/client/petstore/swift3/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/promisekit/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/rxswift/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift/promisekit/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift/rxswift/SwaggerClientTests</module>
+                -->
                 <!-- comment out objc tests as it's timing out
                 <module>samples/client/petstore/objc/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/objc/core-data/SwaggerClientTests</module>-->
@@ -953,7 +955,7 @@
     </repositories>
 
     <properties>
-        <swagger-parser-version>1.0.32</swagger-parser-version>
+        <swagger-parser-version>1.0.32+baikal</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <swagger-core-version>1.5.16</swagger-core-version>

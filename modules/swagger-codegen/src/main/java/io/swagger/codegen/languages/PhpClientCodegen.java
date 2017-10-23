@@ -117,6 +117,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("string", "string");
         typeMapping.put("byte", "int");
         typeMapping.put("boolean", "bool");
+        typeMapping.put("date", "\\DateTime");
         typeMapping.put("Date", "\\DateTime");
         typeMapping.put("DateTime", "\\DateTime");
         typeMapping.put("file", "\\SplFileObject");
@@ -626,6 +627,8 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                 example = "2013-10-20T19:20:30+01:00";
             }
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
+        } else if ("object".equals(type)) {
+            example = "new \\stdClass";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
             example = "new " + getTypeDeclaration(type) + "()";

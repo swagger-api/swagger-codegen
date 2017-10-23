@@ -36,10 +36,12 @@ public class FakeClassnameTags123ApiController extends Controller {
     public Result testClassname() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Client body;
-
-        body = mapper.readValue(nodebody.toString(), Client.class);
-        body.validate();
-
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), Client.class);
+            body.validate();
+        } else {
+            throw new IllegalArgumentException("'body' parameter is required");
+        }
         Client obj = imp.testClassname(body);
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);

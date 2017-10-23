@@ -7,7 +7,7 @@ info:
   contact:
     email: apiteam@swagger.io
   license:
-    name: Apache 2.0
+    name: Apache-2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 host: petstore.swagger.io:80
 basePath: /v2
@@ -898,6 +898,50 @@ paths:
       responses:
         '200':
           description: successful operation
+  /fake/inline-additionalProperties:
+    post:
+      tags:
+        - fake
+      summary: test inline additionalProperties
+      description: ''
+      operationId: testInlineAdditionalProperties
+      consumes:
+        - application/json
+      parameters:
+        - name: param
+          in: body
+          description: request body
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: successful operation
+  /another-fake/dummy:
+    patch:
+      tags:
+        - "$another-fake?"
+      summary: To test special tags
+      description: To test special tags
+      operationId: test_special_tags
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: client model
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Client'
 securityDefinitions:
   petstore_auth:
     type: oauth2
@@ -1379,12 +1423,6 @@ definitions:
     - "placed"
     - "approved"
     - "delivered"
-  OuterNumber:
-    type: number
-  OuterString:
-    type: string
-  OuterBoolean:
-    type: boolean
   OuterComposite:
     type: object
     properties:
@@ -1394,6 +1432,12 @@ definitions:
         $ref: '#/definitions/OuterString'
       my_boolean:
         $ref: '#/definitions/OuterBoolean'
+  OuterNumber:
+    type: number
+  OuterString:
+    type: string
+  OuterBoolean:
+    type: boolean
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'

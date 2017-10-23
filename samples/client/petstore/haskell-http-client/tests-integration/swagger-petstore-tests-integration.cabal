@@ -40,9 +40,11 @@ test-suite tests
     , text >=0.11 && <1.3
     , time >=1.5 && <1.9
     , vector >=0.10.9 && <0.13
+    , exceptions >= 0.4
     , case-insensitive
+    , safe-exceptions <0.2
+    , microlens >= 0.4.3 && <0.5
     , swagger-petstore
-    , microlens
     , swagger-petstore
     , bytestring >=0.10.0 && <0.11
     , containers

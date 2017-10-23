@@ -30,7 +30,6 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(HaskellHttpClientOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
-
             clientCodegen.setAllowFromJsonNulls(Boolean.valueOf(HaskellHttpClientOptionsProvider.ALLOW_FROMJSON_NULLS));
             times = 1;
             clientCodegen.setAllowToJsonNulls(Boolean.valueOf(HaskellHttpClientOptionsProvider.ALLOW_TOJSON_NULLS));
@@ -41,11 +40,17 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setGenerateLenses(Boolean.valueOf(HaskellHttpClientOptionsProvider.GENERATE_LENSES));
             times = 1;
+            clientCodegen.setInlineConsumesContentTypes(Boolean.valueOf(HaskellHttpClientOptionsProvider.INLINE_CONSUMES_CONTENT_TYPES));
+            times = 1;
             clientCodegen.setModelDeriving(HaskellHttpClientOptionsProvider.MODEL_DERIVING);
             times = 1;
             clientCodegen.setDateTimeFormat(HaskellHttpClientOptionsProvider.DATETIME_FORMAT);
             times = 1;
             clientCodegen.setDateFormat(HaskellHttpClientOptionsProvider.DATE_FORMAT);
+            times = 1;
+            clientCodegen.setStrictFields(Boolean.valueOf(HaskellHttpClientOptionsProvider.STRICT_FIELDS));
+            times = 1;
+            clientCodegen.setUseMonadLogger(Boolean.valueOf(HaskellHttpClientOptionsProvider.USE_MONAD_LOGGER));
             times = 1;
 
         }};
