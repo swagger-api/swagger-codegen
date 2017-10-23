@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-
 import { Category } from './category';
 import { Tag } from './tag';
 
@@ -31,5 +30,3 @@ export interface Pet {
 export namespace Pet {
     export type StatusEnum = 'available' | 'pending' | 'sold';
 }
-
-

@@ -11,7 +11,6 @@
  */
 
 
-
 /**
  * A User who is purchasing from the pet store
  */
@@ -28,5 +27,3 @@ export interface User {
      */
     userStatus?: number;
 }
-
-

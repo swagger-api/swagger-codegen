@@ -11,7 +11,6 @@
  */
 
 
-
 /**
  * An order for a pets from the pet store
  */
@@ -29,5 +28,3 @@ export interface Order {
 export namespace Order {
     export type StatusEnum = 'placed' | 'approved' | 'delivered';
 }
-
-
