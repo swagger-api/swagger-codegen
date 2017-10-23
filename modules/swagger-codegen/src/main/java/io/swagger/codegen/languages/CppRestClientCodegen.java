@@ -143,7 +143,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         typeMapping.put("array", "std::vector");
         typeMapping.put("map", "std::map");
         typeMapping.put("file", "HttpContent");
-        typeMapping.put("object", "Object");
+        typeMapping.put("object", "ModelBase");
         typeMapping.put("binary", "std::string");
         typeMapping.put("number", "double");
         typeMapping.put("UUID", "utility::string_t");
@@ -153,7 +153,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         importMapping.put("std::map", "#include <map>");
         importMapping.put("std::string", "#include <string>");
         importMapping.put("HttpContent", "#include \"HttpContent.h\"");
-        importMapping.put("Object", "#include \"Object.h\"");
+        importMapping.put("ModelBase", "#include \"ModelBase.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
         importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
     }
