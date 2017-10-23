@@ -1,3 +1,4 @@
+// tslint:disable
 {{>licenseInfo}}
 import $request = require('request');
 import http = require('http');
@@ -33,15 +34,18 @@ class ObjectSerializer {
         } else if (expectedType === "Date") {
             return expectedType;
         } else {
+            // @ts-ignore
             if (enumsMap[expectedType]) {
                 return expectedType;
             }
 
+            // @ts-ignore
             if (!typeMap[expectedType]) {
                 return expectedType; // w/e we don't know the type
             }
 
             // Check the discriminator
+            // @ts-ignore
             let discriminatorProperty = typeMap[expectedType].discriminator;
             if (discriminatorProperty == null) {
                 return expectedType; // the type does not have a discriminator. use it.
@@ -55,6 +59,7 @@ class ObjectSerializer {
         }
     }
 
+    // @ts-ignore
     public static serialize(data: any, type: string) {
         if (data == undefined) {
             return data;
@@ -72,18 +77,22 @@ class ObjectSerializer {
         } else if (type === "Date") {
             return data.toString();
         } else {
+            // @ts-ignore
             if (enumsMap[type]) {
                 return data;
             }
+            // @ts-ignore
             if (!typeMap[type]) { // in case we dont know the type
                 return data;
             }
 
             // get the map for the correct type.
+            // @ts-ignore
             let attributeTypes = typeMap[type].getAttributeTypeMap();
             let instance = {};
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
+                // @ts-ignore
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
             }
             return instance;
@@ -109,14 +118,18 @@ class ObjectSerializer {
         } else if (type === "Date") {
             return new Date(data);
         } else {
+            // @ts-ignore
             if (enumsMap[type]) {// is Enum
                 return data;
             }
 
+            // @ts-ignore
             if (!typeMap[type]) { // dont know the type
                 return data;
             }
+            // @ts-ignore
             let instance = new typeMap[type]();
+            // @ts-ignore
             let attributeTypes = typeMap[type].getAttributeTypeMap();
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
@@ -339,6 +352,7 @@ export class {{classname}} {
     }
 
     public setApiKey(key: {{classname}}ApiKeys, value: string) {
+        // @ts-ignore
         this.authentications[{{classname}}ApiKeys[key]].apiKey = value;
     }
 {{#authMethods}}
@@ -448,7 +462,7 @@ export class {{classname}} {
                     {{#returnType}}
                     body = ObjectSerializer.deserialize(body, "{{{returnType}}}");
                     {{/returnType}}
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode! >= 200 && response.statusCode! <= 299) {
                         resolve({ response: response, body: body });
                     } else {
                         reject({ response: response, body: body });
