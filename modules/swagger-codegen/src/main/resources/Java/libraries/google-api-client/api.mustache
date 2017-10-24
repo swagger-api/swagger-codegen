@@ -15,6 +15,8 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 {{>generatedAnnotation}}
 {{#operations}}
@@ -54,7 +56,7 @@ public class {{classname}} {
         HttpResponse response = {{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
         {{#returnType}}
-        TypeReference typeRef = new TypeReference<{{{returnType}}}> {};
+        TypeReference typeRef = new TypeReference<{{{returnType}}}>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
         {{/returnType}}
         {{^returnType}}
@@ -69,18 +71,18 @@ public class {{classname}} {
         if ({{paramName}} == null) {
             throw new IllegalArgumentException("Missing the required parameter '{{paramName}}' when calling {{operationId}}");
         }
-        {{/required}}{{/allParams}}{{#hasPathParams}}
-
+        {{/required}}{{/allParams}}
+        {{#hasPathParams}}
         // create a map of path variables
         final Map<String, Object> uriVariables = new HashMap<>();{{#pathParams}}
-        uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}{{/hasPathParams}}
-
+        uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}
+        {{/hasPathParams}}
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");{{#hasQueryParams}}
         {{#queryParams}}if ({{paramName}} != null) {
             uriBuilder = uriBuilder.queryParam("{{baseName}}", {{paramName}});
         }{{#hasMore}}{{/hasMore}}{{/queryParams}}{{/hasQueryParams}}
 
-        String url = uriBuilder.buildFromMap(uriVariables).toString();
+        String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
         HttpContent content = postBody == null ? null : new ApiClient.JacksonJsonHttpContent(postBody);
