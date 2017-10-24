@@ -4,6 +4,8 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,5 +133,16 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
         }
 
         return codegenModel;
+    }
+
+    @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof MapProperty) {
+            // API-2916 default values for Map properties cause unexpected issues for PUT requests
+            return "null";
+        } else {
+            String defaultValue = super.toDefaultValue(p);
+            return defaultValue;
+        }
     }
 }
