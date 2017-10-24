@@ -34,6 +34,8 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 {{/java8}}
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class JSON {
     private Gson gson;
@@ -48,20 +50,30 @@ public class JSON {
     private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     {{/jsr310}}
+    private Map<Type, Object> typeAdapters = new LinkedHashMap<>();
 
     public JSON() {
-        gson = new GsonBuilder()
+        initializeGsonInstance();
+    }
+
+    private void initializeGsonInstance() {
+        GsonBuilder gsonBuilder = new GsonBuilder()
             .registerTypeAdapter(Date.class, dateTypeAdapter)
             .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
             {{#joda}}
             .registerTypeAdapter(DateTime.class, dateTimeTypeAdapter)
-            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
+            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter);
             {{/joda}}
             {{#jsr310}}
             .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
-            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
+            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter);
             {{/jsr310}}
-            .create();
+        if (typeAdapters != null) {
+            for (Map.Entry<Type, Object> typeAdapterEntry : typeAdapters.entrySet()) {
+                gsonBuilder.registerTypeAdapter(typeAdapterEntry.getKey(), typeAdapterEntry.getValue());
+            }
+        }
+        gson = gsonBuilder.create();
     }
 
     /**
@@ -82,6 +94,16 @@ public class JSON {
     public JSON setGson(Gson gson) {
         this.gson = gson;
         return this;
+    }
+
+    /**
+     * Registers type adapters.
+     *
+     * @param typeAdapters type adapters
+     */
+    public void registerTypeAdapters(Map<Type, Object> typeAdapters) {
+        this.typeAdapters = typeAdapters;
+        initializeGsonInstance();
     }
 
     public JSON setLenientOnJson(boolean lenientOnJson) {
