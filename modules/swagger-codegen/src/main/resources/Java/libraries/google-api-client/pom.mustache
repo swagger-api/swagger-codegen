@@ -189,14 +189,18 @@
       <artifactId>swagger-annotations</artifactId>
       <version>${swagger-annotations-version}</version>
     </dependency>
-
     <!-- HTTP client: google-api-client -->
-      <dependency>
-        <groupId>com.google.api-client</groupId>
-        <artifactId>google-api-client</artifactId>
-        <version>${google-api-client-version}</version>
-      </dependency>
-    
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>${google-api-client-version}</version>
+    </dependency>
+    <!-- Jersey common to get an implementation of javax.ws.rs.core.UriBuilder for building URLs from templates -->
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <version>${jersey-common-version}</version>
+    </dependency>
     <!-- JSON processing: jackson -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -219,14 +223,12 @@
       <version>${jackson-version}</version>
     </dependency>
     {{#withXml}}
-
     <!-- XML processing: Jackson -->
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>
       <version>${jackson-version}</version>
     </dependency>
-
     {{/withXml}}
     {{#java8}}
     <dependency>
@@ -267,6 +269,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <swagger-annotations-version>1.5.15</swagger-annotations-version>
     <google-api-client-version>1.23.0</google-api-client-version>
+    <jersey-common-version>2.25.1</jersey-common-version>
     <jackson-version>2.8.9</jackson-version>
     {{#joda}}
     <jodatime-version>2.9.9</jodatime-version>

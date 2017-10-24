@@ -5,6 +5,7 @@ import {{invokerPackage}}.ApiClient;
 {{#imports}}import {{import}};
 {{/imports}}
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpContent;
 import com.google.api.client.http.HttpMethods;
@@ -53,7 +54,8 @@ public class {{classname}} {
         HttpResponse response = {{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
         {{#returnType}}
-        return apiClient.getObjectMapper().readValue(response.getContent(), {{{returnType}}}.class);
+        TypeReference typeRef = new TypeReference<{{{returnType}}}> {};
+        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
         {{/returnType}}
         {{^returnType}}
         return;
