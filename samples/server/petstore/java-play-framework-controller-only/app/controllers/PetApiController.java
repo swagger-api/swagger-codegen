@@ -42,7 +42,7 @@ public class PetApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
@@ -104,7 +104,7 @@ public class PetApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");

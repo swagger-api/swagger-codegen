@@ -56,7 +56,7 @@ public class StoreApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Order.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");

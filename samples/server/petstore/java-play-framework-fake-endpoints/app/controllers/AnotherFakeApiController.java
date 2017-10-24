@@ -42,14 +42,14 @@ public class AnotherFakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Client.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         Client obj = imp.testSpecialTags(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);

@@ -65,16 +65,16 @@ public class {{classname}}Controller extends Controller {
             if (configuration.getBoolean("useInputBeanValidation")) {
                 {{#isListContainer}}
                 for ({{{baseType}}} curItem : {{paramName}}) {
-                    curItem.validate();
+                    SwaggerUtils.validate(curItem);
                 }
                 {{/isListContainer}}
                 {{#isMapContainer}}
                 for (Map.Entry<String, {{{baseType}}}> entry : {{paramName}}.entrySet()) {
-                    entry.getValue().validate();
+                    SwaggerUtils.validate(entry.getValue());
                 }
                 {{/isMapContainer}}
                 {{^isContainer}}
-                {{paramName}}.validate();
+                SwaggerUtils.validate({{paramName}});
                 {{/isContainer}}
             }
             {{/useBeanValidation}}
@@ -197,16 +197,16 @@ public class {{classname}}Controller extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             {{#isListContainer}}
             for ({{{returnType}}} curItem : obj) {
-                curItem.validate();
+                SwaggerUtils.validate(curItem);
             }
             {{/isListContainer}}
             {{#isMapContainer}}
             for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
-                entry.getValue().validate();
+                SwaggerUtils.validate(entry.getValue());
             }
             {{/isMapContainer}}
             {{^returnContainer}}
-            obj.validate();
+            SwaggerUtils.validate(obj);
             {{/returnContainer}}
         }
         {{/useBeanValidation}}

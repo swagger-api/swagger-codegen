@@ -44,7 +44,7 @@ public class UserApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), User.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
@@ -61,7 +61,7 @@ public class UserApiController extends Controller {
             body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
             if (configuration.getBoolean("useInputBeanValidation")) {
                 for (User curItem : body) {
-                    curItem.validate();
+                    SwaggerUtils.validate(curItem);
                 }
             }
         } else {
@@ -79,7 +79,7 @@ public class UserApiController extends Controller {
             body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
             if (configuration.getBoolean("useInputBeanValidation")) {
                 for (User curItem : body) {
-                    curItem.validate();
+                    SwaggerUtils.validate(curItem);
                 }
             }
         } else {
@@ -99,7 +99,7 @@ public class UserApiController extends Controller {
     public Result getUserByName(String username)  {
         User obj = imp.getUserByName(username);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -139,7 +139,7 @@ public class UserApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), User.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");

@@ -44,7 +44,7 @@ public class PetApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
@@ -81,7 +81,7 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByStatus(status);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
-                curItem.validate();
+                SwaggerUtils.validate(curItem);
             }
         }
         JsonNode result = mapper.valueToTree(obj);
@@ -103,7 +103,7 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByTags(tags);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
-                curItem.validate();
+                SwaggerUtils.validate(curItem);
             }
         }
         JsonNode result = mapper.valueToTree(obj);
@@ -114,7 +114,7 @@ public class PetApiController extends Controller {
     public Result getPetById(Long petId) throws Exception {
         Pet obj = imp.getPetById(petId);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -127,7 +127,7 @@ public class PetApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
@@ -168,7 +168,7 @@ public class PetApiController extends Controller {
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);

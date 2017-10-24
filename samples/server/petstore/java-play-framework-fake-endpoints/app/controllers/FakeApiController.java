@@ -46,7 +46,7 @@ public class FakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Boolean.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             body = null;
@@ -63,14 +63,14 @@ public class FakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), OuterComposite.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             body = null;
         }
         OuterComposite obj = imp.fakeOuterCompositeSerialize(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -83,14 +83,14 @@ public class FakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), BigDecimal.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             body = null;
         }
         BigDecimal obj = imp.fakeOuterNumberSerialize(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -103,7 +103,7 @@ public class FakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), String.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             body = null;
@@ -120,14 +120,14 @@ public class FakeApiController extends Controller {
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Client.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                body.validate();
+                SwaggerUtils.validate(body);
             }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         Client obj = imp.testClientModel(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
-            obj.validate();
+            SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -201,14 +201,14 @@ public class FakeApiController extends Controller {
         String valuebinary = (request().body().asMultipartFormData().asFormUrlEncoded().get("binary"))[0];
         byte[] binary;
         if (valuebinary != null) {
-            binary = valuebinary;
+            binary = valuebinary.getBytes();
         } else {
             binary = null;
         }
         String valuedate = (request().body().asMultipartFormData().asFormUrlEncoded().get("date"))[0];
         LocalDate date;
         if (valuedate != null) {
-            date = valuedate;
+            date = LocalDate.parse(valuedate);
         } else {
             date = null;
         }
@@ -306,7 +306,7 @@ public class FakeApiController extends Controller {
         if (nodeparam != null) {
             param = mapper.readValue(nodeparam.toString(), Object.class);
             if (configuration.getBoolean("useInputBeanValidation")) {
-                param.validate();
+                SwaggerUtils.validate(param);
             }
         } else {
             throw new IllegalArgumentException("'param' parameter is required");
