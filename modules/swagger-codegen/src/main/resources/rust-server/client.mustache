@@ -1,6 +1,7 @@
 #![allow(unused_extern_crates)]
 extern crate hyper_openssl;
 extern crate chrono;
+extern crate url;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 
 {{#apiHasFile}}use multipart::client::lazy::Multipart;{{/apiHasFile}}
@@ -11,6 +12,7 @@ use hyper::header::{Headers, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::Url;
 use self::hyper_openssl::openssl;
+use self::url::percent_encoding::{utf8_percent_encode, PATH_SEGMENT_ENCODE_SET, QUERY_ENCODE_SET};
 use futures;
 use futures::{Future, Stream};
 use futures::{future, stream};
@@ -174,7 +176,11 @@ impl Api for Client {
 {{/required}}{{^required}}        let query_{{paramName}} = param_{{paramName}}.map_or_else(String::new, |query| format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=query{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}}));
 {{/required}}{{/queryParams}}
 
-        let url = format!("{}{{basePathWithoutHost}}{{path}}?{{#queryParams}}{{=<% %>=}}{<% paramName %>}<%={{ }}=%>{{/queryParams}}", self.base_path{{#pathParams}}, {{baseName}}=param_{{paramName}}.to_string(){{/pathParams}}{{#queryParams}}, {{paramName}}=query_{{paramName}}{{/queryParams}});
+        let url = format!(
+            "{}{{basePathWithoutHost}}{{path}}{{#queryParams}}{{#-first}}?{{/-first}}{{=<% %>=}}{<% paramName %>}<%={{ }}=%>{{/queryParams}}",
+            self.base_path{{#pathParams}}, {{baseName}}=utf8_percent_encode(&param_{{paramName}}.to_string(), PATH_SEGMENT_ENCODE_SET){{/pathParams}}{{#queryParams}},
+            {{paramName}}=utf8_percent_encode(&query_{{paramName}}, QUERY_ENCODE_SET){{/queryParams}}
+        );
 
 {{#vendorExtensions}}{{#hasFile}}        // Form data body
         let mut multipart = Multipart::new();{{/hasFile}}{{/vendorExtensions}}{{#formParams}}{{#isFile}}
