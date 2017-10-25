@@ -38,12 +38,13 @@ import javax.validation.Valid;
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
+{{^isDelegate}}
     private final ObjectMapper objectMapper;
 
     public {{classname}}Controller(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
+{{/isDelegate}}
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
 

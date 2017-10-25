@@ -24,6 +24,7 @@ import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-10-19T13:22:52.503+03:00")
 
 @Api(value = "user", description = "the user API")
 public interface UserApi {
@@ -62,7 +63,8 @@ public interface UserApi {
     @RequestMapping(value = "/user/{username}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true ) @PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
+    ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true )
+@PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
 
     @ApiOperation(value = "Get user by user name", nickname = "getUserByName", notes = "", response = User.class, tags={ "user", })
@@ -73,7 +75,8 @@ public interface UserApi {
     @RequestMapping(value = "/user/{username}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true ) @PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
+    ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true )
+@PathVariable("username") String username, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
 
     @ApiOperation(value = "Logs user into the system", nickname = "loginUser", notes = "", response = String.class, tags={ "user", })
@@ -102,6 +105,7 @@ public interface UserApi {
     @RequestMapping(value = "/user/{username}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true ) @PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
+    ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true )
+@PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body, @RequestHeader(value = "Accept", required = false) String accept) throws Exception;
 
 }
