@@ -17,19 +17,16 @@ import { {{classname}} } from './{{importPath}}';
 @NgModule({
   imports:      [ CommonModule, {{#useHttpClient}}HttpClientModule{{/useHttpClient}}{{^useHttpClient}}HttpModule{{/useHttpClient}} ],
   declarations: [],
-  exports:      []
+  exports:      [],
+  providers: [ 
+    {{#apiInfo}}{{#apis}}{{classname}}{{#hasMore}},
+    {{/hasMore}}{{/apis}}{{/apiInfo}} ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
         return {
             ngModule: ApiModule,
-            providers: [ 
-            { provide: Configuration, useFactory: configurationFactory}, 
-            {{#apiInfo}}
-            {{#apis}}
-            {{classname}}{{#hasMore}},{{/hasMore}}
-            {{/apis}}
-            {{/apiInfo}}]
+            providers: [ { provide: Configuration, useFactory: configurationFactory } ]
         }
     }
 
