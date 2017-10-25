@@ -32,6 +32,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
@@ -116,7 +117,11 @@ class AnotherFakeApi
         try {
 
             try {
-                $response = $this->client->send($request);
+                $options = [];
+                if ($this->config->getDebug()) {
+                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+                }
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
