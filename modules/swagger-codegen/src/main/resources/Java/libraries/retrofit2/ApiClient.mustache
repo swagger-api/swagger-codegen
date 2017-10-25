@@ -23,6 +23,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 {{#useRxJava2}}
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 {{/useRxJava2}}
+{{#useCompletableFuture}}
+import retrofit2.adapter.java8.Java8CallAdapterFactory;
+{{/useCompletableFuture}}
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import {{invokerPackage}}.auth.HttpBasicAuth;
@@ -142,7 +145,9 @@ public class ApiClient {
       .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
       {{/useRxJava}}{{#useRxJava2}}
       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      {{/useRxJava2}}
+      {{/useRxJava2}}{{#useCompletableFuture}}
+      .addCallAdapterFactory(Java8CallAdapterFactory.create())
+      {{/useCompletableFuture}}
       .addConverterFactory(ScalarsConverterFactory.create())
       .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
   }

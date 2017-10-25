@@ -237,6 +237,13 @@
       <version>${retrofit-version}</version>
     </dependency>
     {{/useRxJava2}}
+    {{#useCompletableFuture}}
+    <dependency>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>adapter-java8</artifactId>
+      <version>${retrofit-version}</version>
+    </dependency>
+    {{/useCompletableFuture}}
 
     {{#usePlayWS}}
     <!-- JSON processing: jackson -->

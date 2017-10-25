@@ -4,7 +4,7 @@ import {{invokerPackage}}.CollectionFormats.*;
 
 {{#useRxJava}}import rx.Observable;{{/useRxJava}}
 {{#useRxJava2}}import io.reactivex.Observable;{{/useRxJava2}}
-{{#doNotUseRx}}import retrofit2.Call;{{/doNotUseRx}}
+{{#useRetrofitCall}}import retrofit2.Call;{{/useRetrofitCall}}
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;

@@ -8,15 +8,19 @@ import rx.Observable;
 {{#useRxJava2}}
 import io.reactivex.Observable;
 {{/useRxJava2}}
-{{#doNotUseRx}}
+{{#useRetrofitCall}}
 import retrofit2.Call;
-{{/doNotUseRx}}
+{{/useRetrofitCall}}
+{{#useCompletableFuture}}
+import java.util.concurrent.CompletableFuture;
+{{/useCompletableFuture}}
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-{{#imports}}import {{import}};
+{{#imports}}
+import {{import}};
 {{/imports}}
 
 {{^fullJavaUtil}}
@@ -56,7 +60,7 @@ public interface {{classname}} {
   {{/prioritizedContentTypes}}
   {{/formParams}}  
   @{{httpMethod}}("{{{path}}}")
-  {{^doNotUseRx}}Observable{{/doNotUseRx}}{{#doNotUseRx}}Call{{/doNotUseRx}}<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}{{/isResponseFile}}> {{operationId}}({{^allParams}});{{/allParams}}
+  {{#useRetrofitCall}}Call{{/useRetrofitCall}}{{#useRxJava}}Observable{{/useRxJava}}{{#useRxJava2}}Observable{{/useRxJava2}}{{#useCompletableFuture}}CompletableFuture{{/useCompletableFuture}}<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}{{/isResponseFile}}> {{operationId}}({{^allParams}});{{/allParams}}
     {{#allParams}}{{>libraries/retrofit2/queryParams}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}}{{#hasMore}}, {{/hasMore}}{{^hasMore}}
   );{{/hasMore}}{{/allParams}}
 
