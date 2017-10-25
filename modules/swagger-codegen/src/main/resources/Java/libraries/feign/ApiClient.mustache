@@ -216,7 +216,7 @@ public class ApiClient {
    *   JSON will be used.
    */
   public String selectHeaderContentType(String[] contentTypes) {
-    if (contentTypes.length == 0) return "application/json";
+    if (contentTypes.length == 0) return "application/octet-stream";
     if (StringUtil.containsIgnoreCase(contentTypes, "application/json")) return "application/json";
     return contentTypes[0];
   }
