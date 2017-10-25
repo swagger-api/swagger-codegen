@@ -5,6 +5,7 @@ import http = require('http');
 {{^supportsES6}}
 import Promise = require('bluebird');
 {{/supportsES6}}
+import moment = require('moment');
 
 let defaultBasePath = '{{{basePath}}}';
 
@@ -75,7 +76,7 @@ class ObjectSerializer {
             }
             return transformedData;
         } else if (type === "Date") {
-            return data.toString();
+            return moment(data).format();
         } else {
             // @ts-ignore
             if (enumsMap[type]) {
