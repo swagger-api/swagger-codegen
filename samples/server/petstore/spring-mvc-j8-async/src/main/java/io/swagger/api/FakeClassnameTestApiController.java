@@ -10,6 +10,7 @@ import javax.validation.Valid;
 public class FakeClassnameTestApiController implements FakeClassnameTestApi {
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public FakeClassnameTestApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }

@@ -25,15 +25,12 @@ import javax.validation.Valid;
 public class UserApiController implements UserApi {
     private final ObjectMapper objectMapper;
 
-    public UserApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final UserApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public UserApiController(UserApiDelegate delegate) {
+    public UserApiController(UserApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body,

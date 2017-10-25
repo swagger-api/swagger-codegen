@@ -24,15 +24,12 @@ import javax.validation.Valid;
 public class AnotherFakeApiController implements AnotherFakeApi {
     private final ObjectMapper objectMapper;
 
-    public AnotherFakeApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final AnotherFakeApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public AnotherFakeApiController(AnotherFakeApiDelegate delegate) {
+    public AnotherFakeApiController(AnotherFakeApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Client> testSpecialTags(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body,

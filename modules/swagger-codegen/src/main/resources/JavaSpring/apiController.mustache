@@ -40,19 +40,22 @@ import javax.validation.Valid;
 public class {{classname}}Controller implements {{classname}} {
     private final ObjectMapper objectMapper;
 
+{{^isDelegate}}
+    @org.springframework.beans.factory.annotation.Autowired
     public {{classname}}Controller(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
+{{/isDelegate}}
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public {{classname}}Controller({{classname}}Delegate delegate) {
+    public {{classname}}Controller({{classname}}Delegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
-
 {{/isDelegate}}
+
 {{^jdk8-no-delegate}}
 {{#operation}}
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}},

@@ -26,15 +26,12 @@ import javax.validation.Valid;
 public class PetApiController implements PetApi {
     private final ObjectMapper objectMapper;
 
-    public PetApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final PetApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public PetApiController(PetApiDelegate delegate) {
+    public PetApiController(PetApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body,

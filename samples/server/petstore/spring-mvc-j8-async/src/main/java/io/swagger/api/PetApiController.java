@@ -10,6 +10,7 @@ import javax.validation.Valid;
 public class PetApiController implements PetApi {
     private final ObjectMapper objectMapper;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public PetApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }

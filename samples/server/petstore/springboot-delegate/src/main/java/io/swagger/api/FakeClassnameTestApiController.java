@@ -24,15 +24,12 @@ import javax.validation.Valid;
 public class FakeClassnameTestApiController implements FakeClassnameTestApi {
     private final ObjectMapper objectMapper;
 
-    public FakeClassnameTestApiController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     private final FakeClassnameTestApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public FakeClassnameTestApiController(FakeClassnameTestApiDelegate delegate) {
+    public FakeClassnameTestApiController(FakeClassnameTestApiDelegate delegate, ObjectMapper objectMapper) {
         this.delegate = delegate;
+        this.objectMapper = objectMapper;
     }
 
     public ResponseEntity<Client> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body,
