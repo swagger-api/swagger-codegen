@@ -1,0 +1,35 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}};
+
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+
+/**
+ * Factory for network Interceptor(s).
+ */
+public class InterceptorFactory {
+    /**
+     * Generates interceptor instance for progress listener.
+     *
+     * @param progressListener progress listener
+     * @return new instance if progress listener is not null
+     */
+    public static Interceptor newInstance(final ProgressResponseBody.ProgressListener progressListener) {
+        if (progressListener != null) {
+            return new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                            .build();
+                }
+            };
+        } else {
+            return null;
+        }
+    }
+}

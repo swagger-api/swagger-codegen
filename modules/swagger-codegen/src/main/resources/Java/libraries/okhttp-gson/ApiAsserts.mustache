@@ -1,0 +1,22 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}};
+
+/**
+ * Api-related assert logic.
+ */
+public class ApiAsserts {
+    /**
+     * Checks the assertion the supplied parameter is not null.
+     *
+     * @param apiMethod api method this parameter is being used in
+     * @param parameter parameter name
+     * @param value     value supplied to api method
+     * @throws ApiException when assertion fails
+     */
+    public static void notNull(String apiMethod, String parameter, Object value) throws ApiException {
+        if (value == null) {
+            throw new ApiException(String.format("Missing the required parameter '%s' when calling %s", parameter, apiMethod));
+        }
+    }
+}

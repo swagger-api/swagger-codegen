@@ -164,6 +164,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         writeOptional(outputFolder, new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
+        supportingFiles.add(new SupportingFile("ApiClientHolder.mustache", invokerFolder, "ApiClientHolder.java"));
         if(!"resttemplate".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
         }
@@ -171,6 +172,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
         supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
         supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
+        if (getLibrary() == null || !Arrays.asList("feign", "resttemplate", "retrofit", "retrofit2", "vertx").contains(getLibrary())) {
+            supportingFiles.add(new SupportingFile("auth/OAuthBearerProvider.mustache", authFolder, "OAuthBearerProvider.java"));
+        }
         supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
         supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew") );
         supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat") );
@@ -205,10 +209,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("EncodingUtils.mustache", invokerFolder, "EncodingUtils.java"));
         } else if ("okhttp-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
             // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call
+            supportingFiles.add(new SupportingFile("ApiAsserts.mustache", invokerFolder, "ApiAsserts.java"));
             supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
+            supportingFiles.add(new SupportingFile("ApiClientRequestDecorator.mustache", invokerFolder, "ApiClientRequestDecorator.java"));
             supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
+            supportingFiles.add(new SupportingFile("InterceptorFactory.mustache", invokerFolder, "InterceptorFactory.java"));
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+            supportingFiles.add(new SupportingFile("ProgressListenerFactory.mustache", invokerFolder, "ProgressListenerFactory.java"));
             supportingFiles.add(new SupportingFile("ProgressRequestBody.mustache", invokerFolder, "ProgressRequestBody.java"));
+            supportingFiles.add(new SupportingFile("ProgressRequestListenerFactory.mustache", invokerFolder, "ProgressRequestListenerFactory.java"));
             supportingFiles.add(new SupportingFile("ProgressResponseBody.mustache", invokerFolder, "ProgressResponseBody.java"));
             supportingFiles.add(new SupportingFile("GzipRequestInterceptor.mustache", invokerFolder, "GzipRequestInterceptor.java"));
             additionalProperties.put("gson", "true");
