@@ -114,12 +114,8 @@ class PetApi
         $request = $this->addPetRequest($body);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -189,7 +185,7 @@ class PetApi
         $request = $this->addPetRequest($body);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -343,12 +339,8 @@ class PetApi
         $request = $this->deletePetRequest($pet_id, $api_key);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -420,7 +412,7 @@ class PetApi
         $request = $this->deletePetRequest($pet_id, $api_key);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -583,12 +575,8 @@ class PetApi
         $request = $this->findPetsByStatusRequest($status);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -680,7 +668,7 @@ class PetApi
         $request = $this->findPetsByStatusRequest($status);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
@@ -851,12 +839,8 @@ class PetApi
         $request = $this->findPetsByTagsRequest($tags);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -948,7 +932,7 @@ class PetApi
         $request = $this->findPetsByTagsRequest($tags);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
@@ -1119,12 +1103,8 @@ class PetApi
         $request = $this->getPetByIdRequest($pet_id);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1216,7 +1196,7 @@ class PetApi
         $request = $this->getPetByIdRequest($pet_id);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
@@ -1388,12 +1368,8 @@ class PetApi
         $request = $this->updatePetRequest($body);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1463,7 +1439,7 @@ class PetApi
         $request = $this->updatePetRequest($body);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -1619,12 +1595,8 @@ class PetApi
         $request = $this->updatePetWithFormRequest($pet_id, $name, $status);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1698,7 +1670,7 @@ class PetApi
         $request = $this->updatePetWithFormRequest($pet_id, $name, $status);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
@@ -1870,12 +1842,8 @@ class PetApi
         $request = $this->uploadFileRequest($pet_id, $additional_metadata, $file);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1971,7 +1939,7 @@ class PetApi
         $request = $this->uploadFileRequest($pet_id, $additional_metadata, $file);
 
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
@@ -2120,4 +2088,22 @@ class PetApi
         );
     }
 
+    /**
+     * Create http client option
+     *
+     * @throws \RuntimeException on file opening failure
+     * @return array of http client options
+     */
+    protected function createHttpClientOption()
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
+    }
 }
