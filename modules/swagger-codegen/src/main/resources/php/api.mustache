@@ -243,8 +243,16 @@ use {{invokerPackage}}\ObjectSerializer;
         $returnType = '{{returnType}}';
         $request = $this->{{operationId}}Request({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
         return $this->client
-            ->sendAsync($request)
+            ->sendAsync($request, $options)
             ->then(
                 function ($response) use ($returnType) {
                     {{#returnType}}
