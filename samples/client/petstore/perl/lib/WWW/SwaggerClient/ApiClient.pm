@@ -2,7 +2,7 @@
 
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -346,19 +346,6 @@ sub update_params_for_auth {
             my $api_key = $self->get_api_key_with_prefix('api_key');
             if ($api_key) {
                 $header_params->{'api_key'} = $api_key;
-            }
-        }
-elsif ($auth eq 'api_key_query') {
-            
-            my $api_key = $self->get_api_key_with_prefix('api_key_query');
-            if ($api_key) {
-                $query_params->{'api_key_query'} = $api_key;
-            }
-        }
-elsif ($auth eq 'http_basic_test') {
-            
-            if ($self->{config}{username} || $self->{config}{password}) {
-                $header_params->{'Authorization'} = 'Basic ' . encode_base64($self->{config}{username} . ":" . $self->{config}{password});
             }
         }
 elsif ($auth eq 'petstore_auth') {

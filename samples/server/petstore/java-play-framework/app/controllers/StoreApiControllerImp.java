@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.FileInputStream;
 import javax.validation.constraints.*;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:45:42.975+02:00")
 
 public class StoreApiControllerImp implements StoreApiControllerImpInterface {
     @Override

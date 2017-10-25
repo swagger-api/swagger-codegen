@@ -1,6 +1,6 @@
-# Petstore::PetApi
+# SwaggerClient::PetApi
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -24,22 +24,22 @@ Add a new pet to the store
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
-body = Petstore::Pet.new # Pet | Pet object that needs to be added to the store
+body = SwaggerClient::Pet.new # Pet | Pet object that needs to be added to the store
 
 
 begin
   #Add a new pet to the store
   api_instance.add_pet(body)
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->add_pet: #{e}"
 end
 ```
@@ -75,14 +75,14 @@ Deletes a pet
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 pet_id = 789 # Integer | Pet id to delete
 
@@ -93,7 +93,7 @@ opts = {
 begin
   #Deletes a pet
   api_instance.delete_pet(pet_id, opts)
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->delete_pet: #{e}"
 end
 ```
@@ -130,14 +130,14 @@ Multiple status values can be provided with comma separated strings
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 status = ["status_example"] # Array<String> | Status values that need to be considered for filter
 
@@ -146,7 +146,7 @@ begin
   #Finds Pets by status
   result = api_instance.find_pets_by_status(status)
   p result
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->find_pets_by_status: #{e}"
 end
 ```
@@ -182,14 +182,14 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 tags = ["tags_example"] # Array<String> | Tags to filter by
 
@@ -198,7 +198,7 @@ begin
   #Finds Pets by tags
   result = api_instance.find_pets_by_tags(tags)
   p result
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->find_pets_by_tags: #{e}"
 end
 ```
@@ -234,16 +234,16 @@ Returns a single pet
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure API key authorization: api_key
   config.api_key['api_key'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
   #config.api_key_prefix['api_key'] = 'Bearer'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 pet_id = 789 # Integer | ID of pet to return
 
@@ -252,7 +252,7 @@ begin
   #Find pet by ID
   result = api_instance.get_pet_by_id(pet_id)
   p result
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->get_pet_by_id: #{e}"
 end
 ```
@@ -288,22 +288,22 @@ Update an existing pet
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
-body = Petstore::Pet.new # Pet | Pet object that needs to be added to the store
+body = SwaggerClient::Pet.new # Pet | Pet object that needs to be added to the store
 
 
 begin
   #Update an existing pet
   api_instance.update_pet(body)
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->update_pet: #{e}"
 end
 ```
@@ -339,14 +339,14 @@ Updates a pet in the store with form data
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 pet_id = 789 # Integer | ID of pet that needs to be updated
 
@@ -358,7 +358,7 @@ opts = {
 begin
   #Updates a pet in the store with form data
   api_instance.update_pet_with_form(pet_id, opts)
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->update_pet_with_form: #{e}"
 end
 ```
@@ -396,14 +396,14 @@ uploads an image
 ### Example
 ```ruby
 # load the gem
-require 'petstore'
+require 'swagger_client'
 # setup authorization
-Petstore.configure do |config|
+SwaggerClient.configure do |config|
   # Configure OAuth2 access token for authorization: petstore_auth
   config.access_token = 'YOUR ACCESS TOKEN'
 end
 
-api_instance = Petstore::PetApi.new
+api_instance = SwaggerClient::PetApi.new
 
 pet_id = 789 # Integer | ID of pet to update
 
@@ -416,7 +416,7 @@ begin
   #uploads an image
   result = api_instance.upload_file(pet_id, opts)
   p result
-rescue Petstore::ApiError => e
+rescue SwaggerClient::ApiError => e
   puts "Exception when calling PetApi->upload_file: #{e}"
 end
 ```

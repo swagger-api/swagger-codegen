@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 /**
  * A pet for sale in the pet store
  */
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:45:42.975+02:00")
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class Pet   {

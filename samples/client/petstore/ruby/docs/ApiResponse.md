@@ -1,4 +1,4 @@
-# Petstore::ApiResponse
+# SwaggerClient::ApiResponse
 
 ## Properties
 Name | Type | Description | Notes

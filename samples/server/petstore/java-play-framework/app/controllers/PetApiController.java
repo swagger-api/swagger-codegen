@@ -21,6 +21,7 @@ import javax.validation.constraints.*;
 
 import swagger.SwaggerUtils.ApiAction;
 
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:45:42.975+02:00")
 
 public class PetApiController extends Controller {
 
@@ -38,12 +39,10 @@ public class PetApiController extends Controller {
     public Result addPet() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Pet body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), Pet.class);
-            body.validate();
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
-        }
+
+        body = mapper.readValue(nodebody.toString(), Pet.class);
+        body.validate();
+
         imp.addPet(body);
         return ok();
     }
@@ -54,6 +53,7 @@ public class PetApiController extends Controller {
         String apiKey;
         if (valueapiKey != null) {
             apiKey = valueapiKey;
+        
         } else {
             apiKey = null;
         }
@@ -63,11 +63,7 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByStatus() throws Exception {
-        String[] statusArray = request().queryString().get("status");
-        if (statusArray == null) {
-            throw new IllegalArgumentException("'status' parameter is required");
-        }
-        List<String> statusList = SwaggerUtils.parametersToList("csv", statusArray);
+        List<String> statusList = SwaggerUtils.parametersToList("csv", request().queryString().get("status"));
         List<String> status = new ArrayList<String>();
         for (String curParam : statusList) {
             //noinspection UseBulkOperation
@@ -83,11 +79,7 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByTags() throws Exception {
-        String[] tagsArray = request().queryString().get("tags");
-        if (tagsArray == null) {
-            throw new IllegalArgumentException("'tags' parameter is required");
-        }
-        List<String> tagsList = SwaggerUtils.parametersToList("csv", tagsArray);
+        List<String> tagsList = SwaggerUtils.parametersToList("csv", request().queryString().get("tags"));
         List<String> tags = new ArrayList<String>();
         for (String curParam : tagsList) {
             //noinspection UseBulkOperation
@@ -113,12 +105,10 @@ public class PetApiController extends Controller {
     public Result updatePet() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Pet body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), Pet.class);
-            body.validate();
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
-        }
+
+        body = mapper.readValue(nodebody.toString(), Pet.class);
+        body.validate();
+
         imp.updatePet(body);
         return ok();
     }
@@ -129,6 +119,7 @@ public class PetApiController extends Controller {
         String name;
         if (valuename != null) {
             name = valuename;
+        
         } else {
             name = null;
         }
@@ -136,6 +127,7 @@ public class PetApiController extends Controller {
         String status;
         if (valuestatus != null) {
             status = valuestatus;
+        
         } else {
             status = null;
         }
@@ -149,6 +141,7 @@ public class PetApiController extends Controller {
         String additionalMetadata;
         if (valueadditionalMetadata != null) {
             additionalMetadata = valueadditionalMetadata;
+        
         } else {
             additionalMetadata = null;
         }

@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
 
 import swagger.SwaggerUtils.ApiAction;
 
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:45:42.975+02:00")
 
 public class StoreApiController extends Controller {
 
@@ -58,12 +59,10 @@ public class StoreApiController extends Controller {
     public Result placeOrder() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Order body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), Order.class);
-            body.validate();
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
-        }
+
+        body = mapper.readValue(nodebody.toString(), Order.class);
+        body.validate();
+
         Order obj = imp.placeOrder(body);
         obj.validate();
         JsonNode result = mapper.valueToTree(obj);

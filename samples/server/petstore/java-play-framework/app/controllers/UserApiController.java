@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
 
 import swagger.SwaggerUtils.ApiAction;
 
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaPlayFrameworkCodegen", date = "2017-10-16T17:45:42.975+02:00")
 
 public class UserApiController extends Controller {
 
@@ -37,12 +38,10 @@ public class UserApiController extends Controller {
     public Result createUser() throws Exception {
         JsonNode nodebody = request().body().asJson();
         User body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), User.class);
-            body.validate();
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
-        }
+
+        body = mapper.readValue(nodebody.toString(), User.class);
+        body.validate();
+
         imp.createUser(body);
         return ok();
     }
@@ -51,14 +50,12 @@ public class UserApiController extends Controller {
     public Result createUsersWithArrayInput() throws Exception {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
-            for (User curItem : body) {
-                curItem.validate();
-            }
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
+
+        body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
+        for (User curItem : body) {
+            curItem.validate();
         }
+
         imp.createUsersWithArrayInput(body);
         return ok();
     }
@@ -67,14 +64,12 @@ public class UserApiController extends Controller {
     public Result createUsersWithListInput() throws Exception {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
-            for (User curItem : body) {
-                curItem.validate();
-            }
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
+
+        body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
+        for (User curItem : body) {
+            curItem.validate();
         }
+
         imp.createUsersWithListInput(body);
         return ok();
     }
@@ -97,18 +92,14 @@ public class UserApiController extends Controller {
     public Result loginUser() throws Exception {
         String valueusername = request().getQueryString("username");
         String username;
-        if (valueusername != null) {
-            username = valueusername;
-        } else {
-            throw new IllegalArgumentException("'username' parameter is required");
-        }
+
+        username = valueusername;
+
         String valuepassword = request().getQueryString("password");
         String password;
-        if (valuepassword != null) {
-            password = valuepassword;
-        } else {
-            throw new IllegalArgumentException("'password' parameter is required");
-        }
+
+        password = valuepassword;
+
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -124,12 +115,10 @@ public class UserApiController extends Controller {
     public Result updateUser(String username) throws Exception {
         JsonNode nodebody = request().body().asJson();
         User body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), User.class);
-            body.validate();
-        } else {
-            throw new IllegalArgumentException("'body' parameter is required");
-        }
+
+        body = mapper.readValue(nodebody.toString(), User.class);
+        body.validate();
+
         imp.updateUser(username, body);
         return ok();
     }

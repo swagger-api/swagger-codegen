@@ -2,7 +2,7 @@
 
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -79,7 +79,7 @@ sub delete_order {
     }
 
     # parse inputs
-    my $_resource_path = '/store/order/{order_id}';
+    my $_resource_path = '/store/order/{orderId}';
 
     my $_method = 'DELETE';
     my $query_params = {};
@@ -95,7 +95,7 @@ sub delete_order {
 
     # path params
     if ( exists $args{'order_id'}) {
-        my $_base_variable = "{" . "order_id" . "}";
+        my $_base_variable = "{" . "orderId" . "}";
         my $_base_value = $self->{api_client}->to_path_value($args{'order_id'});
         $_resource_path =~ s/$_base_variable/$_base_value/g;
     }
@@ -191,7 +191,7 @@ sub get_order_by_id {
     }
 
     # parse inputs
-    my $_resource_path = '/store/order/{order_id}';
+    my $_resource_path = '/store/order/{orderId}';
 
     my $_method = 'GET';
     my $query_params = {};
@@ -207,7 +207,7 @@ sub get_order_by_id {
 
     # path params
     if ( exists $args{'order_id'}) {
-        my $_base_variable = "{" . "order_id" . "}";
+        my $_base_variable = "{" . "orderId" . "}";
         my $_base_value = $self->{api_client}->to_path_value($args{'order_id'});
         $_resource_path =~ s/$_base_variable/$_base_value/g;
     }

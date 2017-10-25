@@ -4,9 +4,9 @@ synopsis:       Auto-generated swagger-petstore API Client
 description:    .
                 Client library for calling the swagger-petstore API based on http-client.
                 .
-                host: petstore.swagger.io:80
+                host: petstore.swagger.io
                 .
-                base path: http://petstore.swagger.io:80/v2
+                base path: http://petstore.swagger.io/v2
                 .
                 Swagger Petstore API version: 1.0.0
                 .

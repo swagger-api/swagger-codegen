@@ -89,6 +89,8 @@ instance ApproxEq TI.Day where
 
 -- * Models
  
+<<<<<<< HEAD
+=======
 instance Arbitrary AdditionalPropertiesClass where
   arbitrary =
     AdditionalPropertiesClass
@@ -109,43 +111,13 @@ instance Arbitrary AnimalFarm where
     pure AnimalFarm
      
 
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary ApiResponse where
   arbitrary =
     ApiResponse
       <$> arbitrary -- apiResponseCode :: Maybe Int
       <*> arbitrary -- apiResponseType :: Maybe Text
       <*> arbitrary -- apiResponseMessage :: Maybe Text
-    
-
-instance Arbitrary ArrayOfArrayOfNumberOnly where
-  arbitrary =
-    ArrayOfArrayOfNumberOnly
-      <$> arbitrary -- arrayOfArrayOfNumberOnlyArrayArrayNumber :: Maybe [[Double]]
-    
-
-instance Arbitrary ArrayOfNumberOnly where
-  arbitrary =
-    ArrayOfNumberOnly
-      <$> arbitrary -- arrayOfNumberOnlyArrayNumber :: Maybe [Double]
-    
-
-instance Arbitrary ArrayTest where
-  arbitrary =
-    ArrayTest
-      <$> arbitrary -- arrayTestArrayOfString :: Maybe [Text]
-      <*> arbitrary -- arrayTestArrayArrayOfInteger :: Maybe [[Integer]]
-      <*> arbitrary -- arrayTestArrayArrayOfModel :: Maybe [[ReadOnlyFirst]]
-    
-
-instance Arbitrary Capitalization where
-  arbitrary =
-    Capitalization
-      <$> arbitrary -- capitalizationSmallCamel :: Maybe Text
-      <*> arbitrary -- capitalizationCapitalCamel :: Maybe Text
-      <*> arbitrary -- capitalizationSmallSnake :: Maybe Text
-      <*> arbitrary -- capitalizationCapitalSnake :: Maybe Text
-      <*> arbitrary -- capitalizationScaEthFlowPoints :: Maybe Text
-      <*> arbitrary -- capitalizationAttName :: Maybe Text
     
 
 instance Arbitrary Category where
@@ -155,6 +127,8 @@ instance Arbitrary Category where
       <*> arbitrary -- categoryName :: Maybe Text
     
 
+<<<<<<< HEAD
+=======
 instance Arbitrary ClassModel where
   arbitrary =
     ClassModel
@@ -263,6 +237,7 @@ instance Arbitrary NumberOnly where
       <$> arbitrary -- numberOnlyJustNumber :: Maybe Double
     
 
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary Order where
   arbitrary =
     Order
@@ -274,6 +249,8 @@ instance Arbitrary Order where
       <*> arbitrary -- orderComplete :: Maybe Bool
     
 
+<<<<<<< HEAD
+=======
 instance Arbitrary OuterBoolean where
   arbitrary =
     OuterBoolean <$> arbitrary
@@ -300,6 +277,7 @@ instance Arbitrary OuterString where
   arbitrary =
     OuterString <$> arbitrary
 
+>>>>>>> c71aa9da496d2fcb056fa175d600fcea4f4d262a
 instance Arbitrary Pet where
   arbitrary =
     Pet
@@ -309,19 +287,6 @@ instance Arbitrary Pet where
       <*> arbitrary -- petPhotoUrls :: [Text]
       <*> arbitrary -- petTags :: Maybe [Tag]
       <*> arbitrary -- petStatus :: Maybe Text
-    
-
-instance Arbitrary ReadOnlyFirst where
-  arbitrary =
-    ReadOnlyFirst
-      <$> arbitrary -- readOnlyFirstBar :: Maybe Text
-      <*> arbitrary -- readOnlyFirstBaz :: Maybe Text
-    
-
-instance Arbitrary SpecialModelName where
-  arbitrary =
-    SpecialModelName
-      <$> arbitrary -- specialModelNameSpecialPropertyName :: Maybe Integer
     
 
 instance Arbitrary Tag where
@@ -342,22 +307,6 @@ instance Arbitrary User where
       <*> arbitrary -- userPassword :: Maybe Text
       <*> arbitrary -- userPhone :: Maybe Text
       <*> arbitrary -- userUserStatus :: Maybe Int
-    
-
-instance Arbitrary Cat where
-  arbitrary =
-    Cat
-      <$> arbitrary -- catClassName :: Text
-      <*> arbitrary -- catColor :: Maybe Text
-      <*> arbitrary -- catDeclawed :: Maybe Bool
-    
-
-instance Arbitrary Dog where
-  arbitrary =
-    Dog
-      <$> arbitrary -- dogClassName :: Text
-      <*> arbitrary -- dogColor :: Maybe Text
-      <*> arbitrary -- dogBreed :: Maybe Text
     
 
 

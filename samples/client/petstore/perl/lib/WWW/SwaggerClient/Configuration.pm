@@ -2,7 +2,7 @@
 
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -84,7 +84,7 @@ String. The OAuth access token.
 
 String. The base URL of the API
 
-default: http://petstore.swagger.io:80/v2
+default: http://petstore.swagger.io/v2
 
 =back
 
@@ -110,7 +110,7 @@ sub new {
 	$p{access_token} //= '';
 
 	# base_url
-        $p{base_url} //= 'http://petstore.swagger.io:80/v2';
+        $p{base_url} //= 'http://petstore.swagger.io/v2';
 
 	return bless \%p => $self;
 }

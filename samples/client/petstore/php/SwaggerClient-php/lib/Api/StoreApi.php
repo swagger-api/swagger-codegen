@@ -12,7 +12,7 @@
 /**
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -223,7 +223,7 @@ class StoreApi
             );
         }
 
-        $resourcePath = '/store/order/{order_id}';
+        $resourcePath = '/store/order/{orderId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -234,7 +234,7 @@ class StoreApi
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'order_id' . '}',
+                '{' . 'orderId' . '}',
                 ObjectSerializer::toPathValue($order_id),
                 $resourcePath
             );
@@ -738,7 +738,7 @@ class StoreApi
         }
 
 
-        $resourcePath = '/store/order/{order_id}';
+        $resourcePath = '/store/order/{orderId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -749,7 +749,7 @@ class StoreApi
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'order_id' . '}',
+                '{' . 'orderId' . '}',
                 ObjectSerializer::toPathValue($order_id),
                 $resourcePath
             );
