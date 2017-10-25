@@ -123,15 +123,8 @@ use {{invokerPackage}}\ObjectSerializer;
         $request = $this->{{operationId}}Request({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $options = [];
-                if ($this->config->getDebug()) {
-                    $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-                    if (!$options[RequestOptions::DEBUG]) {
-                        throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-                    }
-                }
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -243,16 +236,8 @@ use {{invokerPackage}}\ObjectSerializer;
         $returnType = '{{returnType}}';
         $request = $this->{{operationId}}Request({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
         return $this->client
-            ->sendAsync($request, $options)
+            ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
                     {{#returnType}}
@@ -503,5 +488,23 @@ use {{invokerPackage}}\ObjectSerializer;
     }
 
     {{/operation}}
+    /**
+     * Create http client option
+     *
+     * @throws \RuntimeException on file opening failure
+     * @return array of http client options
+     */
+    protected function createHttpClientOption()
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
+    }
 }
 {{/operations}}
