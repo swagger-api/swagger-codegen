@@ -374,7 +374,7 @@ public class ApiClient {
      */
     protected String selectHeaderContentType(String[] contentTypes) {
         if (contentTypes.length == 0) {
-            return "application/json";
+            return "application/octet-stream";
         }
         for (String contentType : contentTypes) {
             if (isJsonMime(contentType)) {

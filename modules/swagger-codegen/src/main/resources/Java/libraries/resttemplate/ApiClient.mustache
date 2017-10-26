@@ -480,7 +480,7 @@ public class ApiClient {
      */
     public MediaType selectHeaderContentType(String[] contentTypes) {
         if (contentTypes.length == 0) {
-            return MediaType.APPLICATION_JSON;
+            return MediaType.APPLICATION_OCTET_STREAM;
         }
         for (String contentType : contentTypes) {
             MediaType mediaType = MediaType.parseMediaType(contentType);
