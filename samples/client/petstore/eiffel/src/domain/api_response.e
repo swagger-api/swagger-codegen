@@ -12,7 +12,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"Eiffel swagger codegen", "src=https://github.com/swagger-api/swagger-codegen.git", "protocol=uri"
-
 class API_RESPONSE 
 
 inherit
@@ -67,19 +66,21 @@ feature -- Change Element
         create Result.make_empty
         Result.append("%Nclass API_RESPONSE%N")
         if attached code as l_code then
-          Result.append ("%N")
+          Result.append ("%Ncode:")
           Result.append (l_code.out)
           Result.append ("%N")    
         end  
         if attached type as l_type then
-          Result.append ("%N")
+          Result.append ("%Ntype:")
           Result.append (l_type.out)
           Result.append ("%N")    
         end  
         if attached message as l_message then
-          Result.append ("%N")
+          Result.append ("%Nmessage:")
           Result.append (l_message.out)
           Result.append ("%N")    
         end  
       end
 end
+
+

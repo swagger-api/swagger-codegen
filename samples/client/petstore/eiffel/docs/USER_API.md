@@ -205,7 +205,7 @@ This can only be done by the logged in user.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **STRING_32**| name that need to be updated | 
+ **username** | **STRING_32**| name that need to be deleted | 
  **body** | [**USER**](USER.md)| Updated user object | 
 
 ### Return type

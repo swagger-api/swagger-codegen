@@ -9,7 +9,7 @@
       "email": "apiteam@wordnik.com"
     },
     "license": {
-      "name": "Apache 2.0",
+      "name": "Apache-2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
@@ -213,7 +213,8 @@
               "read:pets"
             ]
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/pet/{petId}": {

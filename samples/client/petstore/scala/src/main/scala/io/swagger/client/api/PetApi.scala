@@ -43,8 +43,10 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
-class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
-                        defApiInvoker: ApiInvoker = ApiInvoker) {
+class PetApi(
+  val defBasePath: String = "http://petstore.swagger.io/v2",
+  defApiInvoker: ApiInvoker = ApiInvoker
+) {
 
   implicit val formats = new org.json4s.DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
@@ -56,10 +58,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   implicit val stringWriter = RequestWriters.StringWriter
   implicit val jsonWriter = JsonFormatsWriter
 
-  var basePath = defBasePath
-  var apiInvoker = defApiInvoker
+  var basePath: String = defBasePath
+  var apiInvoker: ApiInvoker = defApiInvoker
 
-  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
+  def addHeader(key: String, value: String): mutable.HashMap[String, String] = {
+    apiInvoker.defaultHeaders += key -> value
+  }
 
   val config = SwaggerConfig.forUrl(new URI(defBasePath))
   val client = new RestClient(config)
@@ -77,7 +81,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -89,7 +92,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def addPetAsync(body: Pet) = {
       helper.addPet(body)
   }
-
 
   /**
    * Deletes a pet
@@ -104,7 +106,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -118,7 +119,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       helper.deletePet(petId, apiKey)
   }
 
-
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
@@ -131,7 +131,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -143,7 +142,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def findPetsByStatusAsync(status: List[String]): Future[List[Pet]] = {
       helper.findPetsByStatus(status)
   }
-
 
   /**
    * Finds Pets by tags
@@ -157,7 +155,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -169,7 +166,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def findPetsByTagsAsync(tags: List[String]): Future[List[Pet]] = {
       helper.findPetsByTags(tags)
   }
-
 
   /**
    * Find pet by ID
@@ -183,7 +179,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -195,7 +190,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def getPetByIdAsync(petId: Long): Future[Pet] = {
       helper.getPetById(petId)
   }
-
 
   /**
    * Update an existing pet
@@ -209,7 +203,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -221,7 +214,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def updatePetAsync(body: Pet) = {
       helper.updatePet(body)
   }
-
 
   /**
    * Updates a pet in the store with form data
@@ -237,7 +229,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -251,7 +242,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def updatePetWithFormAsync(petId: Long, name: Option[String] = None, status: Option[String] = None) = {
       helper.updatePetWithForm(petId, name, status)
   }
-
 
   /**
    * uploads an image
@@ -267,7 +257,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -281,7 +270,6 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def uploadFileAsync(petId: Long, additionalMetadata: Option[String] = None, file: Option[File] = None): Future[ApiResponse] = {
       helper.uploadFile(petId, additionalMetadata, file)
   }
-
 
 }
 

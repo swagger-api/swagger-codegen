@@ -1,9 +1,9 @@
+io.swagger.codegen.languages.AdaCodegen
 io.swagger.codegen.languages.AkkaScalaClientCodegen
 io.swagger.codegen.languages.AndroidClientCodegen
 io.swagger.codegen.languages.Apache2ConfigCodegen
 io.swagger.codegen.languages.ApexClientCodegen
 io.swagger.codegen.languages.AspNetCoreServerCodegen
-io.swagger.codegen.languages.AsyncScalaClientCodegen
 io.swagger.codegen.languages.BashClientCodegen
 io.swagger.codegen.languages.CSharpClientCodegen
 io.swagger.codegen.languages.ClojureClientCodegen
@@ -20,6 +20,7 @@ io.swagger.codegen.languages.FlaskConnexionCodegen
 io.swagger.codegen.languages.GoClientCodegen
 io.swagger.codegen.languages.GoServerCodegen
 io.swagger.codegen.languages.GroovyClientCodegen
+io.swagger.codegen.languages.HaskellHttpClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
 io.swagger.codegen.languages.JMeterCodegen
 io.swagger.codegen.languages.JavaCXFClientCodegen
@@ -38,6 +39,7 @@ io.swagger.codegen.languages.JavascriptClientCodegen
 io.swagger.codegen.languages.JavascriptClosureAngularClientCodegen
 io.swagger.codegen.languages.JavaVertXServerCodegen
 io.swagger.codegen.languages.KotlinClientCodegen
+io.swagger.codegen.languages.LuaClientCodegen
 io.swagger.codegen.languages.LumenServerCodegen
 io.swagger.codegen.languages.NancyFXServerCodegen
 io.swagger.codegen.languages.NodeJSServerCodegen
@@ -49,11 +51,15 @@ io.swagger.codegen.languages.PowerShellClientCodegen
 io.swagger.codegen.languages.PistacheServerCodegen
 io.swagger.codegen.languages.PythonClientCodegen
 io.swagger.codegen.languages.Qt5CPPGenerator
+io.swagger.codegen.languages.RClientCodegen
 io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.RestbedCodegen
 io.swagger.codegen.languages.RubyClientCodegen
+io.swagger.codegen.languages.RustClientCodegen
+io.swagger.codegen.languages.RustServerCodegen
 io.swagger.codegen.languages.ScalaClientCodegen
 io.swagger.codegen.languages.ScalatraServerCodegen
+io.swagger.codegen.languages.ScalazClientCodegen
 io.swagger.codegen.languages.SilexServerCodegen
 io.swagger.codegen.languages.SinatraServerCodegen
 io.swagger.codegen.languages.SlimFrameworkServerCodegen
@@ -67,8 +73,9 @@ io.swagger.codegen.languages.Swift4Codegen
 io.swagger.codegen.languages.Swift3Codegen
 io.swagger.codegen.languages.SwiftCodegen
 io.swagger.codegen.languages.TizenClientCodegen
-io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen
+io.swagger.codegen.languages.TypeScriptAureliaClientCodegen
 io.swagger.codegen.languages.TypeScriptAngularClientCodegen
+io.swagger.codegen.languages.TypeScriptAngularJsClientCodegen
 io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen

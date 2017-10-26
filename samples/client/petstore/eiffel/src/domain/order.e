@@ -12,7 +12,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"Eiffel swagger codegen", "src=https://github.com/swagger-api/swagger-codegen.git", "protocol=uri"
-
 class ORDER 
 
 inherit
@@ -97,34 +96,36 @@ feature -- Change Element
         create Result.make_empty
         Result.append("%Nclass ORDER%N")
         if attached id as l_id then
-          Result.append ("%N")
+          Result.append ("%Nid:")
           Result.append (l_id.out)
           Result.append ("%N")    
         end  
         if attached pet_id as l_pet_id then
-          Result.append ("%N")
+          Result.append ("%Npet_id:")
           Result.append (l_pet_id.out)
           Result.append ("%N")    
         end  
         if attached quantity as l_quantity then
-          Result.append ("%N")
+          Result.append ("%Nquantity:")
           Result.append (l_quantity.out)
           Result.append ("%N")    
         end  
         if attached ship_date as l_ship_date then
-          Result.append ("%N")
+          Result.append ("%Nship_date:")
           Result.append (l_ship_date.out)
           Result.append ("%N")    
         end  
         if attached status as l_status then
-          Result.append ("%N")
+          Result.append ("%Nstatus:")
           Result.append (l_status.out)
           Result.append ("%N")    
         end  
         if attached complete as l_complete then
-          Result.append ("%N")
+          Result.append ("%Ncomplete:")
           Result.append (l_complete.out)
           Result.append ("%N")    
         end  
       end
 end
+
+

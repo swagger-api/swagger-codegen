@@ -41,8 +41,10 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
-class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
-                        defApiInvoker: ApiInvoker = ApiInvoker) {
+class StoreApi(
+  val defBasePath: String = "http://petstore.swagger.io/v2",
+  defApiInvoker: ApiInvoker = ApiInvoker
+) {
 
   implicit val formats = new org.json4s.DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
@@ -54,10 +56,12 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   implicit val stringWriter = RequestWriters.StringWriter
   implicit val jsonWriter = JsonFormatsWriter
 
-  var basePath = defBasePath
-  var apiInvoker = defApiInvoker
+  var basePath: String = defBasePath
+  var apiInvoker: ApiInvoker = defApiInvoker
 
-  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
+  def addHeader(key: String, value: String): mutable.HashMap[String, String] = {
+    apiInvoker.defaultHeaders += key -> value
+  }
 
   val config = SwaggerConfig.forUrl(new URI(defBasePath))
   val client = new RestClient(config)
@@ -75,7 +79,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -88,7 +91,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       helper.deleteOrder(orderId)
   }
 
-
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
@@ -100,7 +102,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -111,7 +112,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def getInventoryAsync(): Future[Map[String, Integer]] = {
       helper.getInventory()
   }
-
 
   /**
    * Find purchase order by ID
@@ -125,7 +125,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -137,7 +136,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def getOrderByIdAsync(orderId: Long): Future[Order] = {
       helper.getOrderById(orderId)
   }
-
 
   /**
    * Place an order for a pet
@@ -151,7 +149,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
@@ -163,7 +160,6 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def placeOrderAsync(body: Order): Future[Order] = {
       helper.placeOrder(body)
   }
-
 
 }
 

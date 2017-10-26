@@ -23,30 +23,31 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Api(value = "store", description = "the store API")
 public interface StoreApi {
 
-    @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class, tags={ "store", })
+    @ApiOperation(value = "Delete purchase order by ID", nickname = "deleteOrder", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied"),
+        @ApiResponse(code = 404, message = "Order not found") })
     @RequestMapping(value = "/store/order/{order_id}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathVariable("order_id") String orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));
     }
 
 
-    @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
+    @ApiOperation(value = "Returns pet inventories by status", nickname = "getInventory", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
         @Authorization(value = "api_key")
     }, tags={ "store", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
+        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
     @RequestMapping(value = "/store/inventory",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
@@ -56,24 +57,24 @@ public interface StoreApi {
     }
 
 
-    @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, tags={ "store", })
+    @ApiOperation(value = "Find purchase order by ID", nickname = "getOrderById", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied"),
+        @ApiResponse(code = 404, message = "Order not found") })
     @RequestMapping(value = "/store/order/{order_id}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathVariable("order_id") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Order>(HttpStatus.OK));
     }
 
 
-    @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
+    @ApiOperation(value = "Place an order for a pet", nickname = "placeOrder", notes = "", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid Order", response = Void.class) })
+        @ApiResponse(code = 400, message = "Invalid Order") })
     @RequestMapping(value = "/store/order",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)

@@ -90,6 +90,11 @@ samples/client/petstore/silex/SwaggerServer/venodr/
 **/vendor/
 **/composer.lock
 
+#PHP-Symfony
+samples/server/petstore/php-symfony/SymfonyBundle-php/Tests/cache/
+samples/server/petstore/php-symfony/SymfonyBundle-php/Tests/logs/
+
+
 # Perl
 samples/client/petstore/perl/deep_module_test/
 
@@ -160,7 +165,25 @@ samples/client/petstore/typescript-fetch/**/dist/
 samples/client/petstore/typescript-fetch/**/typings
 samples/client/petstore/typescript-angular2/npm/npm-debug.log
 samples/client/petstore/typescript-node/npm/npm-debug.log
+samples/client/petstore/typescript-aurelia/**/dist/
+samples/client/petstore/typescript-angular/tsd-debug.log
 
 # aspnetcore
 samples/server/petstore/aspnetcore/.vs/
 effective.pom
+# kotlin
+samples/client/petstore/kotlin/src/main/kotlin/test/
+\?
+
+# haskell
+.stack-work
+.cabal-sandbox
+cabal.project.local
+
+# R
+.Rproj.user
+
+# elixir
+samples/client/petstore/elixir/_build/
+samples/client/petstore/elixir/deps/
+samples/client/petstore/elixir/mix.lock

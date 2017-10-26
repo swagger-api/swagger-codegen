@@ -20,6 +20,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected boolean returnICollection = false;
     protected boolean netCoreProjectFileFlag = false;
 
+    protected String modelPropertyNaming = "PascalCase";
+
     protected String packageVersion = "1.0.0";
     protected String packageName = "IO.Swagger";
     protected String packageTitle = "Swagger Library";
@@ -44,6 +46,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     public AbstractCSharpCodegen() {
         super();
+
+        supportsInheritance = true;
 
         // C# does not use import mapping
         importMapping.clear();
@@ -551,6 +555,12 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type;
+
+        if (swaggerType == null) {
+            swaggerType = ""; // set swagger type to empty string if null
+        }
+
+        // TODO avoid using toLowerCase as typeMapping should be case-sensitive
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
             type = typeMapping.get(swaggerType.toLowerCase());
             if (languageSpecificPrimitives.contains(type)) {
@@ -579,6 +589,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toModelName(String name) {
+        // We need to check if import-mapping has a different model for this class, so we use it
+        // instead of the auto-generated one.
+        if (importMapping.containsKey(name)) {
+            return importMapping.get(name);
+        }
         if (!StringUtils.isEmpty(modelNamePrefix)) {
             name = modelNamePrefix + "_" + name;
         }

@@ -57,6 +57,7 @@
      */
     this.authentications = {
       'api_key': {type: 'apiKey', 'in': 'header', name: 'api_key'},
+      'api_key_query': {type: 'apiKey', 'in': 'query', name: 'api_key_query'},
       'http_basic_test': {type: 'basic'},
       'petstore_auth': {type: 'oauth2'}
     };
@@ -97,6 +98,10 @@
       this.agent = new superagent.agent();
     }
 
+    /*
+     * Allow user to override superagent agent
+     */
+    this.requestAgent = null;
   };
 
   /**
@@ -404,6 +409,12 @@
 
     // set header parameters
     request.set(this.defaultHeaders).set(this.normalizeParams(headerParams));
+
+
+    // set requestAgent if it is set by user
+    if (this.requestAgent) {
+      request.agent(this.requestAgent);
+    }
 
     // set request timeout
     request.timeout(this.timeout);

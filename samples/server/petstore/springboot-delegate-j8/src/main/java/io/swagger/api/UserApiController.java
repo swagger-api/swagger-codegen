@@ -54,20 +54,20 @@ public class UserApiController implements UserApi {
         return delegate.createUsersWithListInput(body);
     }
 
-    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true ) @PathVariable("username") String username,
+    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("username") String username,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return delegate.deleteUser(username);
     }
 
-    public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true ) @PathVariable("username") String username,
+    public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathVariable("username") String username,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return delegate.getUserByName(username);
     }
 
-    public ResponseEntity<String> loginUser( @NotNull@ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
-         @NotNull@ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password,
+    public ResponseEntity<String> loginUser( @NotNull@ApiParam(value = "The user name for login", required = true) @Valid @RequestParam(value = "username", required = true) String username,
+         @NotNull@ApiParam(value = "The password for login in clear text", required = true) @Valid @RequestParam(value = "password", required = true) String password,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return delegate.loginUser(username, password);
@@ -78,7 +78,7 @@ public class UserApiController implements UserApi {
         return delegate.logoutUser();
     }
 
-    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true ) @PathVariable("username") String username,
+    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true) @PathVariable("username") String username,
         @ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!

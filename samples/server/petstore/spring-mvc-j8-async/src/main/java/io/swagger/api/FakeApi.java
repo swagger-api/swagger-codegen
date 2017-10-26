@@ -26,13 +26,14 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Api(value = "fake", description = "the fake API")
 public interface FakeApi {
 
-    @ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
+    @ApiOperation(value = "", nickname = "fakeOuterBooleanSerialize", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
     @RequestMapping(value = "/fake/outer/boolean",
@@ -43,7 +44,7 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
+    @ApiOperation(value = "", nickname = "fakeOuterCompositeSerialize", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
     @RequestMapping(value = "/fake/outer/composite",
@@ -54,7 +55,7 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
+    @ApiOperation(value = "", nickname = "fakeOuterNumberSerialize", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
     @RequestMapping(value = "/fake/outer/number",
@@ -65,7 +66,7 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
+    @ApiOperation(value = "", nickname = "fakeOuterStringSerialize", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output string", response = String.class) })
     @RequestMapping(value = "/fake/outer/string",
@@ -76,7 +77,7 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
+    @ApiOperation(value = "To test \"client\" model", nickname = "testClientModel", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     @RequestMapping(value = "/fake",
@@ -89,12 +90,12 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = Void.class, authorizations = {
+    @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", nickname = "testEndpointParameters", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", authorizations = {
         @Authorization(value = "http_basic_test")
     }, tags={ "fake", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "User not found", response = Void.class) })
+        @ApiResponse(code = 400, message = "Invalid username supplied"),
+        @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/fake",
         produces = { "application/xml; charset=utf-8", "application/json; charset=utf-8" }, 
         consumes = { "application/xml; charset=utf-8", "application/json; charset=utf-8" },
@@ -105,23 +106,35 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = Void.class, tags={ "fake", })
+    @ApiOperation(value = "To test enum parameters", nickname = "testEnumParameters", notes = "To test enum parameters", tags={ "fake", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
-        @ApiResponse(code = 404, message = "Not found", response = Void.class) })
+        @ApiResponse(code = 400, message = "Invalid request"),
+        @ApiResponse(code = 404, message = "Not found") })
     @RequestMapping(value = "/fake",
         produces = { "*/*" }, 
         consumes = { "*/*" },
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Void>> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,@ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray,@ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString,@ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+    default CompletableFuture<ResponseEntity<Void>> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,@ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @Valid @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray,@ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @Valid @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString,@ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @Valid @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));
     }
 
 
-    @ApiOperation(value = "test json serialization of form data", notes = "", response = Void.class, tags={ "fake", })
+    @ApiOperation(value = "test inline additionalProperties", nickname = "testInlineAdditionalProperties", notes = "", tags={ "fake", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
+        @ApiResponse(code = 200, message = "successful operation") })
+    @RequestMapping(value = "/fake/inline-additionalProperties",
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default CompletableFuture<ResponseEntity<Void>> testInlineAdditionalProperties(@ApiParam(value = "request body" ,required=true )  @Valid @RequestBody Object param, @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
+        // do some magic!
+        return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));
+    }
+
+
+    @ApiOperation(value = "test json serialization of form data", nickname = "testJsonFormData", notes = "", tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/fake/jsonFormData",
         consumes = { "application/json" },
         method = RequestMethod.GET)

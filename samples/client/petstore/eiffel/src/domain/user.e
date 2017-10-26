@@ -12,7 +12,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"Eiffel swagger codegen", "src=https://github.com/swagger-api/swagger-codegen.git", "protocol=uri"
-
 class USER 
 
 inherit
@@ -117,44 +116,46 @@ feature -- Change Element
         create Result.make_empty
         Result.append("%Nclass USER%N")
         if attached id as l_id then
-          Result.append ("%N")
+          Result.append ("%Nid:")
           Result.append (l_id.out)
           Result.append ("%N")    
         end  
         if attached username as l_username then
-          Result.append ("%N")
+          Result.append ("%Nusername:")
           Result.append (l_username.out)
           Result.append ("%N")    
         end  
         if attached first_name as l_first_name then
-          Result.append ("%N")
+          Result.append ("%Nfirst_name:")
           Result.append (l_first_name.out)
           Result.append ("%N")    
         end  
         if attached last_name as l_last_name then
-          Result.append ("%N")
+          Result.append ("%Nlast_name:")
           Result.append (l_last_name.out)
           Result.append ("%N")    
         end  
         if attached email as l_email then
-          Result.append ("%N")
+          Result.append ("%Nemail:")
           Result.append (l_email.out)
           Result.append ("%N")    
         end  
         if attached password as l_password then
-          Result.append ("%N")
+          Result.append ("%Npassword:")
           Result.append (l_password.out)
           Result.append ("%N")    
         end  
         if attached phone as l_phone then
-          Result.append ("%N")
+          Result.append ("%Nphone:")
           Result.append (l_phone.out)
           Result.append ("%N")    
         end  
         if attached user_status as l_user_status then
-          Result.append ("%N")
+          Result.append ("%Nuser_status:")
           Result.append (l_user_status.out)
           Result.append ("%N")    
         end  
       end
 end
+
+

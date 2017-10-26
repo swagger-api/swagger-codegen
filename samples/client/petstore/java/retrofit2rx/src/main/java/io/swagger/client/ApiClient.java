@@ -2,6 +2,7 @@ package io.swagger.client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonElement;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -26,6 +27,7 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.HashMap;
 
 public class ApiClient {
 
@@ -45,6 +47,8 @@ public class ApiClient {
       Interceptor auth;
       if ("api_key".equals(authName)) {
         auth = new ApiKeyAuth("header", "api_key");
+      } else if ("api_key_query".equals(authName)) {
+        auth = new ApiKeyAuth("query", "api_key_query");
       } else if ("http_basic_test".equals(authName)) {
         auth = new HttpBasicAuth();
       } else if ("petstore_auth".equals(authName)) {

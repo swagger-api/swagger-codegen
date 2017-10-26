@@ -88,37 +88,37 @@ you are accessing. Usually `prefix` and `in` will be determined by the code gene
 the spec and you will not need to set them at run time. If not, `in` will
 default to 'head' and `prefix` to the empty string.
 
-The tokens will be placed in the `WWW::SwaggerClient::Configuration` namespace
+The tokens will be placed in a L<WWW::SwaggerClient::Configuration> instance
 as follows, but you don't need to know about this.
 
-- `$WWW::SwaggerClient::Configuration::username`
+- `$cfg->{username}`
 
     String. The username for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::password`
+- `$cfg->{password}`
 
     String. The password for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::api_key`
+- `$cfg->{api_key}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens).
 
-            $WWW::SwaggerClient::Configuration::api_key = {
+            $cfg->{api_key} = {
                     secretKey => 'aaaabbbbccccdddd',
                     anotherKey => '1111222233334444',
                     };
 
-- `$WWW::SwaggerClient::Configuration::api_key_prefix`
+- `$cfg->{api_key_prefix}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens). Note not
     all api keys require a prefix.
 
-            $WWW::SwaggerClient::Configuration::api_key_prefix = {
+            $cfg->{api_key_prefix} = {
                     secretKey => 'string',
                     anotherKey => 'same or some other string',
                     };
 
-- `$WWW::SwaggerClient::Configuration::access_token`
+- `$cfg->{access_token}`
 
     String. The OAuth access token.
 
@@ -127,8 +127,7 @@ as follows, but you don't need to know about this.
 ## `base_url`
 
 The generated code has the `base_url` already set as a default value. This method
-returns (and optionally sets, but only if the API client has not been
-created yet) the current value of `base_url`.
+returns the current value of `base_url`.
 
 ## `api_factory`
 
@@ -247,14 +246,15 @@ use WWW::SwaggerClient::Object::ModelReturn;
 
 # for displaying the API response data
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::;
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
-my $test code inject */ &#39; &quot; &#x3D;end __ \r\n \n \r = 'test code inject */ ' " =end __ \r\n \n \r_example'; # string | To test code injection */ ' \" =_end -- \\r\\n \\n \\r
+my $api_instance = WWW::SwaggerClient::->new(
+);
+
+my $test_code_inject_*/_&#39;_&quot;_&#x3D;end____\r\n_\n_\r = 'test_code_inject_*/_'_"_=end____\r\n_\n_\r_example'; # string | To test code injection */ ' \" =_end -- \\r\\n \\n \\r
 
 eval {
-    $api_instance->test_code_inject____end__rn_n_r(test code inject */ &#39; &quot; &#x3D;end __ \r\n \n \r => $test code inject */ &#39; &quot; &#x3D;end __ \r\n \n \r);
+    $api_instance->test_code_inject____end__rn_n_r(test_code_inject_*/_&#39;_&quot;_&#x3D;end____\r\n_\n_\r => $test_code_inject_*/_&#39;_&quot;_&#x3D;end____\r\n_\n_\r);
 };
 if ($@) {
     warn "Exception when calling FakeApi->test_code_inject____end__rn_n_r: $@\n";

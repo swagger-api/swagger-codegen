@@ -31,6 +31,7 @@ feature -- API Access
 			-- argument: body Created user object (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -40,6 +41,7 @@ feature -- API Access
 			create l_request
 			l_request.set_body(body)
 			l_path := "/user"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -59,6 +61,7 @@ feature -- API Access
 			-- argument: body List of user object (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -68,6 +71,7 @@ feature -- API Access
 			create l_request
 			l_request.set_body(body)
 			l_path := "/user/createWithArray"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -87,6 +91,7 @@ feature -- API Access
 			-- argument: body List of user object (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -96,6 +101,7 @@ feature -- API Access
 			create l_request
 			l_request.set_body(body)
 			l_path := "/user/createWithList"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -115,6 +121,7 @@ feature -- API Access
 			-- argument: username The name that needs to be deleted (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -125,6 +132,7 @@ feature -- API Access
 			
 			l_path := "/user/{username}"
 			l_path.replace_substring_all ("{"+"username"+"}", api_client.url_encode (username.out))
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -147,6 +155,7 @@ feature -- API Access
 			-- 
 			-- 
 			-- Result STRING_32
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -158,6 +167,7 @@ feature -- API Access
 			l_path := "/user/login"
 			l_request.fill_query_params(api_client.parameter_to_tuple("", "username", username));
 			l_request.fill_query_params(api_client.parameter_to_tuple("", "password", password));
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -179,6 +189,7 @@ feature -- API Access
 			-- 
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -188,6 +199,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/user/logout"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -204,11 +216,12 @@ feature -- API Access
 			-- Updated user
 			-- This can only be done by the logged in user.
 			-- 
-			-- argument: username name that need to be updated (required)
+			-- argument: username name that need to be deleted (required)
 			-- 
 			-- argument: body Updated user object (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -219,6 +232,7 @@ feature -- API Access
 			l_request.set_body(body)
 			l_path := "/user/{username}"
 			l_path.replace_substring_all ("{"+"username"+"}", api_client.url_encode (username.out))
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -239,6 +253,7 @@ feature -- API Access
 			-- 
 			-- 
 			-- Result USER
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -249,6 +264,7 @@ feature -- API Access
 			
 			l_path := "/user/{username}"
 			l_path.replace_substring_all ("{"+"username"+"}", api_client.url_encode (username.out))
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");

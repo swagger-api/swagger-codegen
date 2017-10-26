@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Strings;
 
 import io.swagger.codegen.CliOption;
@@ -42,6 +45,7 @@ import io.swagger.models.properties.StringProperty;
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
 
+    static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaCodegen.class);
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
@@ -150,7 +154,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 .SERIALIZE_BIG_DECIMAL_AS_STRING_DESC));
         cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util. This option only works for Java API client"));
         cliOptions.add(new CliOption("hideGenerationTimestamp", "hides the timestamp when files were generated"));
-        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type. This option only works for Java API client (resttemplate)"));
+        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
@@ -493,6 +497,19 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     @Override
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "DefaultApi";
+        }
+        return camelize(name) + "Api";
+    }
+
+    @Override
+    public String toApiFilename(String name) {
+        return toApiName(name);
+    }
+
+    @Override
     public String toVarName(String name) {
         // sanitize name
         name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
@@ -619,7 +636,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String getAlias(String name) {
-        if (typeAliases.containsKey(name)) {
+        if (typeAliases != null && typeAliases.containsKey(name)) {
             return typeAliases.get(name);
         }
         return name;
@@ -638,19 +655,39 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (ap.getItems() == null) {
                 return null;
             }
-            return String.format(pattern, getTypeDeclaration(ap.getItems()));
+
+            String typeDeclaration = getTypeDeclaration(ap.getItems());
+            Object java8obj = additionalProperties.get("java8");
+            if (java8obj != null) {
+                Boolean java8 = Boolean.valueOf(java8obj.toString());
+                if (java8 != null && java8) {
+                    typeDeclaration = "";
+                }
+            }
+
+            return String.format(pattern, typeDeclaration);
         } else if (p instanceof MapProperty) {
             final MapProperty ap = (MapProperty) p;
             final String pattern;
             if (fullJavaUtil) {
-                pattern = "new java.util.HashMap<String, %s>()";
+                pattern = "new java.util.HashMap<%s>()";
             } else {
-                pattern = "new HashMap<String, %s>()";
+                pattern = "new HashMap<%s>()";
             }
             if (ap.getAdditionalProperties() == null) {
                 return null;
             }
-            return String.format(pattern, getTypeDeclaration(ap.getAdditionalProperties()));
+
+            String typeDeclaration = String.format("String, %s", getTypeDeclaration(ap.getAdditionalProperties()));
+            Object java8obj = additionalProperties.get("java8");
+            if (java8obj != null) {
+                Boolean java8 = Boolean.valueOf(java8obj.toString());
+                if (java8 != null && java8) {
+                    typeDeclaration = "";
+                }
+            }
+
+            return String.format(pattern, typeDeclaration);
         } else if (p instanceof IntegerProperty) {
             IntegerProperty dp = (IntegerProperty) p;
             if (dp.getDefault() != null) {
@@ -837,10 +874,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         }
 
-        if ("array".equals(property.containerType)) {
-          model.imports.add("ArrayList");
-        } else if ("map".equals(property.containerType)) {
-          model.imports.add("HashMap");
+        if (!fullJavaUtil) {
+            if ("array".equals(property.containerType)) {
+                model.imports.add("ArrayList");
+            } else if ("map".equals(property.containerType)) {
+                model.imports.add("HashMap");
+            }
         }
 
         if(!BooleanUtils.toBoolean(model.isEnum)) {
@@ -996,9 +1035,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Double".equals(datatype)) {
             return value;
+        } else if ("Long".equals(datatype)) {
+            // add l to number, e.g. 2048 => 2048l
+            return value + "l";
         } else if ("Float".equals(datatype)) {
             // add f to number, e.g. 3.14 => 3.14f
             return value + "f";
@@ -1223,9 +1264,25 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         additionalProperties.put(propertyKey, value);
     }
 
+    /**
+     * Output the Getter name for boolean property, e.g. isActive
+     *
+     * @param name the name of the property
+     * @return getter name based on naming convention
+     */
+    public String toBooleanGetter(String name) {
+        return "is" + getterAndSetterCapitalize(name);
+    }
+
     @Override
     public String sanitizeTag(String tag) {
-        return camelize(sanitizeName(tag));
+        tag = camelize(underscore(sanitizeName(tag)));
+
+        // tag starts with numbers
+        if (tag.matches("^\\d.*")) {
+            tag = "Class" + tag;
+        }
+        return tag;
     }
 
 }

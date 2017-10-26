@@ -1,7 +1,3 @@
-{{>noteinfo}}
-{{#models}}
-{{#model}}
-
 class {{classname}} 
 
 inherit
@@ -18,7 +14,12 @@ inherit
 {{#parent}}
   {{{parent}}} 
       rename
-          out as out_{{{parentSchema}}} 
+          out as out_{{{parentSchema}}},
+          is_equal as is_equal_{{{parentSchema}}},
+          copy as copy_{{{parentSchema}}}
+      select
+          is_equal_{{{parentSchema}}},
+          copy_{{{parentSchema}}}     
       end   
 {{/parent}}
 
@@ -73,7 +74,7 @@ feature -- Change Element
         {{#isListContainer}}
         if attached {{name}} as l_{{name}} then
           across l_{{name}} as ic loop
-            Result.append ("%N")
+            Result.append ("%N {{name}}:")
             Result.append (ic.item.out)
             Result.append ("%N")
           end
@@ -81,6 +82,7 @@ feature -- Change Element
         {{/isListContainer}}
         {{#isMapContainer}}
         if attached {{name}} as l_{{name}} then
+          Result.append ("%N{{name}}:")
           across l_{{name}} as ic loop
             Result.append ("%N")
             Result.append ("key:")
@@ -94,7 +96,7 @@ feature -- Change Element
         {{/isMapContainer}}
         {{^isContainer}}
         if attached {{name}} as l_{{name}} then
-          Result.append ("%N")
+          Result.append ("%N{{name}}:")
           Result.append (l_{{name}}.out)
           Result.append ("%N")    
         end  
@@ -103,5 +105,3 @@ feature -- Change Element
         {{/vars}}
       end
 end
-{{/model}}
-{{/models}}

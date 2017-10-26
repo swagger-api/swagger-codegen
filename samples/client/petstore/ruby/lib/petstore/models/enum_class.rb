@@ -18,6 +18,15 @@ module Petstore
     ABC = "_abc".freeze
     EFG = "-efg".freeze
     XYZ = "(xyz)".freeze
+
+    # Builds the enum from string
+    # @param [String] The enum value in the form of the string
+    # @return [String] The enum value
+    def build_from_hash(value)
+      consantValues = EnumClass.constants.select{|c| c.to_s == value}
+      raise "Invalid ENUM value #{value} for class #EnumClass" if consantValues.empty?
+      value
+    end
   end
 
 end

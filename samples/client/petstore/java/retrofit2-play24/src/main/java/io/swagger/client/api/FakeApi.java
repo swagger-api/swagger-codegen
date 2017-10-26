@@ -2,6 +2,8 @@ package io.swagger.client.api;
 
 import io.swagger.client.CollectionFormats.*;
 
+
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -9,8 +11,8 @@ import okhttp3.RequestBody;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -122,6 +124,20 @@ public interface FakeApi {
   @GET("fake")
   F.Promise<Response<Void>> testEnumParameters(
     @retrofit2.http.Field("enum_form_string_array") List<String> enumFormStringArray, @retrofit2.http.Field("enum_form_string") String enumFormString, @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit2.http.Header("enum_header_string") String enumHeaderString, @retrofit2.http.Query("enum_query_string_array") CSVParams enumQueryStringArray, @retrofit2.http.Query("enum_query_string") String enumQueryString, @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger, @retrofit2.http.Field("enum_query_double") Double enumQueryDouble
+  );
+
+  /**
+   * test inline additionalProperties
+   * 
+   * @param param request body (required)
+   * @return Call&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("fake/inline-additionalProperties")
+  F.Promise<Response<Void>> testInlineAdditionalProperties(
+    @retrofit2.http.Body Object param
   );
 
   /**

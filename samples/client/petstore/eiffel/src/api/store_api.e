@@ -24,13 +24,14 @@ inherit
 feature -- API Access
 
 
-	delete_order (order_id: INTEGER_64)
+	delete_order (order_id: STRING_32)
 			-- Delete purchase order by ID
-			-- For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+			-- For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
 			-- 
 			-- argument: order_id ID of the order that needs to be deleted (required)
 			-- 
 			-- 
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -41,6 +42,7 @@ feature -- API Access
 			
 			l_path := "/store/order/{orderId}"
 			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (order_id.out))
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -59,6 +61,7 @@ feature -- API Access
 			-- 
 			-- 
 			-- Result STRING_TABLE[INTEGER_32]
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -68,6 +71,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/store/inventory"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -86,12 +90,15 @@ feature -- API Access
 
 	order_by_id (order_id: INTEGER_64): detachable ORDER
 			-- Find purchase order by ID
-			-- For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
+			-- For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
 			-- 
 			-- argument: order_id ID of pet that needs to be fetched (required)
 			-- 
 			-- 
 			-- Result ORDER
+		require
+			order_id_is_less_or_equal_than: order_id <= 5 
+     		order_id_is_greater_or_equal_than: order_id >= 1 
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -102,6 +109,7 @@ feature -- API Access
 			
 			l_path := "/store/order/{orderId}"
 			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (order_id.out))
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -126,6 +134,7 @@ feature -- API Access
 			-- 
 			-- 
 			-- Result ORDER
+		require
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
@@ -135,6 +144,7 @@ feature -- API Access
 			create l_request
 			l_request.set_body(body)
 			l_path := "/store/order"
+
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
