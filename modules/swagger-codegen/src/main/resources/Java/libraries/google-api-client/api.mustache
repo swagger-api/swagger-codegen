@@ -85,7 +85,7 @@ public class {{classname}} {
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = postBody == null ? null : new ApiClient.JacksonJsonHttpContent(postBody);
+        HttpContent content = postBody == null ? null : apiClient.new JacksonJsonHttpContent(postBody);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }
     {{/operation}}

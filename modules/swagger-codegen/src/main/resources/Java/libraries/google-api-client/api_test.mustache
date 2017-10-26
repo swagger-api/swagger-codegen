@@ -7,6 +7,7 @@ package {{package}};
 import org.junit.Test;
 import org.junit.Ignore;
 
+import java.io.IOException;
 {{^fullJavaUtil}}
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,11 +29,11 @@ public class {{classname}}Test {
      *
      * {{notes}}
      *
-     * @throws ApiException
+     * @throws IOException
      *          if the Api call fails
      */
     @Test
-    public void {{operationId}}Test() {
+    public void {{operationId}}Test() throws IOException {
         {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
         {{/allParams}}
