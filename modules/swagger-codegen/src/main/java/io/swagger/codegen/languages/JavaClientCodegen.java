@@ -125,6 +125,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             if (useRxJava || useRxJava2) {
                 LOGGER.warn("You specified both RxJava and Java8 adapter but they are mutually exclusive. Defaulting to RxJava.");
             } else {
+                additionalProperties.put("java8", true);
+                additionalProperties.put("threetenbp", false);
+                setJava8Mode(true);
                 this.setCompletableFuture(Boolean.valueOf(additionalProperties.get(USE_COMPLETABLE_FUTURES).toString()));
             }
         }

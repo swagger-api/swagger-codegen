@@ -1,0 +1,5 @@
+{
+  "library": "retrofit2",
+  "artifactId": "swagger-petstore-retrofit2-completable-future",
+  "dateLibrary": "java8"
+}
