@@ -33,7 +33,7 @@ fn main() {
         .arg(Arg::with_name("host")
             .long("host")
             .takes_value(true)
-            .default_value("localhost")
+            .default_value("{{serverHost}}")
             .help("Hostname to contact"))
         .arg(Arg::with_name("port")
             .long("port")

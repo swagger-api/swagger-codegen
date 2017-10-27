@@ -34,6 +34,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
     private HashMap<String, String> modelXmlNames = new HashMap<String, String>();
 
     protected String apiVersion = "1.0.0";
+    protected String serverHost = "localhost";
     protected int serverPort = 8080;
     protected String projectName = "swagger-server";
     protected String apiPath = "rust-server";
@@ -148,7 +149,6 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("apiPath", apiPath);
 
         /*
@@ -257,6 +257,23 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             versionComponents.add("0");
         }
         info.setVersion(StringUtils.join(versionComponents, "."));
+
+        String host = swagger.getHost();
+        if (host != null) {
+            String[] parts = host.split(":");
+            if (parts.length > 1) {
+                serverHost = parts[0];
+                try {
+                    serverPort = Integer.valueOf(parts[1]);
+                } catch (NumberFormatException e) {
+                    LOGGER.warn("Port of Swagger host is not an integer : " + host, e);
+                }
+            } else {
+                serverHost = host;
+            }
+        }
+        additionalProperties.put("serverHost", serverHost);
+        additionalProperties.put("serverPort", serverPort);
     }
 
     @Override

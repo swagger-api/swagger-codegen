@@ -50,9 +50,9 @@ fn main() {
 
     if matches.is_present("https") {
         // Using Simple HTTPS
-        Iron::new(chain).https("localhost:8080", ssl().expect("Failed to load SSL keys")).expect("Failed to start HTTPS server");
+        Iron::new(chain).https("localhost:80", ssl().expect("Failed to load SSL keys")).expect("Failed to start HTTPS server");
     } else {
         // Using HTTP
-        Iron::new(chain).http("localhost:8080").expect("Failed to start HTTP server");
+        Iron::new(chain).http("localhost:80").expect("Failed to start HTTP server");
     }
 }

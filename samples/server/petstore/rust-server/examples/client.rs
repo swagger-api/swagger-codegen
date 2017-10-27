@@ -84,12 +84,12 @@ fn main() {
         .arg(Arg::with_name("host")
             .long("host")
             .takes_value(true)
-            .default_value("localhost")
+            .default_value("petstore.swagger.io")
             .help("Hostname to contact"))
         .arg(Arg::with_name("port")
             .long("port")
             .takes_value(true)
-            .default_value("8080")
+            .default_value("80")
             .help("Port to contact"))
         .get_matches();
 
