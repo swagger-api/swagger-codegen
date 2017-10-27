@@ -168,6 +168,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("example-server.mustache", "examples", "server.rs"));
         supportingFiles.add(new SupportingFile("example-client.mustache", "examples", "client.rs"));
         supportingFiles.add(new SupportingFile("example-server_lib.mustache", "examples/server_lib", "mod.rs"));
+        supportingFiles.add(new SupportingFile("example-server_server.mustache", "examples/server_lib", "server.rs"));
         supportingFiles.add(new SupportingFile("example-ca.pem", "examples", "ca.pem"));
         supportingFiles.add(new SupportingFile("example-server-chain.pem", "examples", "server-chain.pem"));
         supportingFiles.add(new SupportingFile("example-server-key.pem", "examples", "server-key.pem"));
