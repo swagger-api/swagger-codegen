@@ -85,4 +85,124 @@ package body {{package}}.Servers is
 
    end Skeleton;
 
+   package body Shared_Instance is
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+      --  {{summary}}
+      procedure {{operationId}}
+         (Req : in out Swagger.Servers.Request'Class;
+          Reply : in out Swagger.Servers.Response'Class;
+          Stream : in out Swagger.Servers.Output_Stream'Class) is
+         {{#hasBodyParam}}
+         Input   : Swagger.Value_Type;
+         {{/hasBodyParam}}
+         {{#allParams}}
+         {{paramName}} : {{dataType}};
+         {{/allParams}}
+         {{#returnType}}
+         Result : {{returnType}};
+         {{/returnType}}
+      begin
+         {{#queryParams}}
+         Swagger.Servers.Get_Query_Parameter (Req, "{{baseName}}", {{paramName}});
+         {{/queryParams}}
+         {{#pathParams}}
+         Swagger.Servers.Get_Path_Parameter (Req, {{vendorExtensions.x-path-index}}, {{paramName}});
+         {{/pathParams}}
+         {{#hasParams}}
+         {{#hasBodyParam}}
+         Swagger.Servers.Read (Req, Input);
+         {{#bodyParams}}{{#vendorExtensions.x-is-model-type}}
+         {{package}}.Models.Deserialize (Input, "{{baseName}}", {{paramName}});{{/vendorExtensions.x-is-model-type}}{{^vendorExtensions.x-is-model-type}}{{#isFile}}
+         --  TODO: Serialize (Input.Stream, "{{basename}}", {{paramName}});{{/isFile}}{{^isFile}}{{^isLong}}
+         Deserialize (Input, "{{baseName}}", {{paramName}});{{/isLong}}{{#isLong}}
+         Deserialize (Input, "{{baseName}}", {{paramName}});{{/isLong}}{{/isFile}}{{/vendorExtensions.x-is-model-type}}{{/bodyParams}}
+         {{/hasBodyParam}}
+         Server.{{operationId}}
+            ({{#allParams}}{{paramName}}{{#hasMore}},
+             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result{{/returnType}});
+         {{/hasParams}}
+         {{^hasParams}}
+         {{#returnType}}
+         Server.{{operationId}} (Result);
+         {{/returnType}}
+         {{^returnType}}
+         Server.{{operationId}};
+         {{/returnType}}
+         {{/hasParams}}
+         {{#returnType}}
+         Stream.Start_Document;{{#vendorExtensions.x-codegen-response.isString}}
+         Swagger.Streams.Serialize (Stream, "", Result);{{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}{{#returnTypeIsPrimitive}}
+         Swagger.Streams.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}
+         {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
+         Stream.End_Document;{{/returnType}}
+      end {{operationId}};
+
+      package API_{{operationId}} is
+         new ASF.Rest.Operation (Handler => {{operationId}}'Access,
+                                 Method  => ASF.Rest.{{httpMethod}},
+                                 URI     => "{{path}}");
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+      procedure Register (Server : in out Swagger.Servers.Application_Type'Class) is
+      begin
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+         ASF.Rest.Register (Server, API_{{operationId}}.Definition);
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+      end Register;
+
+      protected body Server is
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+         --  {{summary}}
+         {{#hasParams}}
+         procedure {{operationId}}
+            ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
+       {{/hasMore}}{{/allParams}}{{#returnType}};
+       Result : out {{returnType}}{{/returnType}}) is
+         begin
+            Impl.{{operationId}}
+               ({{#allParams}}{{paramName}}{{#hasMore}},
+                      {{/hasMore}}{{/allParams}}{{#returnType}},
+                      Result{{/returnType}});
+         end {{operationId}};
+         {{/hasParams}}
+         {{^hasParams}}
+         {{#returnType}}
+         procedure {{operationId}} (Result : out {{returnType}}) is
+         begin
+            Impl.{{operationId}} (Result);
+         end {{operationId}};
+         {{/returnType}}
+         {{^returnType}}
+         procedure {{operationId}} is
+         begin
+            Impl.{{operationId}};
+         end {{operationId}};
+         {{/returnType}}
+         {{/hasParams}}
+
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+      end Server;
+
+   end Shared_Instance;
+
 end {{package}}.Servers;

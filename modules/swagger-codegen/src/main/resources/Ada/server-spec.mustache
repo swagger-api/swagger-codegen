@@ -47,4 +47,58 @@ package {{package}}.Servers is
 {{/apiInfo}}
    end Skeleton;
 
+   generic
+      type Implementation_Type is limited new Server_Type with private;
+   package Shared_Instance is
+
+      procedure Register (Server : in out Swagger.Servers.Application_Type'Class);
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+      --  {{summary}}
+      procedure {{operationId}}
+         (Req : in out Swagger.Servers.Request'Class;
+          Reply : in out Swagger.Servers.Response'Class;
+          Stream : in out Swagger.Servers.Output_Stream'Class);
+
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+   private
+      protected Server is
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+         --  {{summary}}
+         {{#hasParams}}
+         procedure {{operationId}}
+            ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
+       {{/hasMore}}{{/allParams}}{{#returnType}};
+       Result : out {{returnType}}{{/returnType}});
+         {{/hasParams}}
+         {{^hasParams}}
+         {{#returnType}}
+         procedure {{operationId}} (Result : out {{returnType}});
+         {{/returnType}}
+         {{^returnType}}
+         procedure {{operationId}};
+         {{/returnType}}
+         {{/hasParams}}
+
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+      private
+         Impl : Implementation_Type;
+      end Server;
+   end Shared_Instance;
+
 end {{package}}.Servers;
