@@ -104,7 +104,7 @@ public class {{classname}} {
         {{/required}}{{/allParams}}
         {{#hasPathParams}}
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();{{#pathParams}}
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();{{#pathParams}}
         uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}
         {{/hasPathParams}}
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");{{#hasQueryParams}}
@@ -129,7 +129,7 @@ public class {{classname}} {
         {{/required}}{{/allParams}}
         {{#hasPathParams}}
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();{{#pathParams}}
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();{{#pathParams}}
         uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}
         {{/hasPathParams}}
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");

@@ -315,7 +315,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
@@ -335,7 +335,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
@@ -407,7 +407,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
@@ -427,7 +427,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
@@ -675,7 +675,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
@@ -700,7 +700,7 @@ public class UserApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 

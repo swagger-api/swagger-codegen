@@ -156,7 +156,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -176,7 +176,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -430,7 +430,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -450,7 +450,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -598,7 +598,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -618,7 +618,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
@@ -688,7 +688,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}/uploadImage");
 
@@ -708,7 +708,7 @@ public class PetApi {
         }
         
         // create a map of path variables
-        final Map<String, Object> uriVariables = new HashMap<>();
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}/uploadImage");
 
