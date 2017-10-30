@@ -134,20 +134,26 @@ public class {{classname}} {
         {{/hasPathParams}}
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }{{#queryParams}}{{#required}}
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        // Add the required query param '{{paramName}}' to the map of query params
+        params.put("{{paramName}}", {{paramName}});{{/required}}{{/queryParams}}
+
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);

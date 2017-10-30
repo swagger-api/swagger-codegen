@@ -94,20 +94,23 @@ public class PetApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -177,20 +180,23 @@ public class PetApi {
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -262,20 +268,26 @@ public class PetApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/findByStatus");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        // Add the required query param 'status' to the map of query params
+        params.put("status", status);
+
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -347,20 +359,26 @@ public class PetApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/findByTags");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        // Add the required query param 'tags' to the map of query params
+        params.put("tags", tags);
+
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -436,20 +454,23 @@ public class PetApi {
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -515,20 +536,23 @@ public class PetApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -598,20 +622,23 @@ public class PetApi {
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -685,20 +712,23 @@ public class PetApi {
         uriVariables.put("petId", petId);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/pet/{petId}/uploadImage");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);

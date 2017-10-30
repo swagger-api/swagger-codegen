@@ -92,20 +92,23 @@ public class UserApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -169,20 +172,23 @@ public class UserApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/createWithArray");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -246,20 +252,23 @@ public class UserApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/createWithList");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -330,20 +339,23 @@ public class UserApi {
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -419,20 +431,23 @@ public class UserApi {
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -516,20 +531,29 @@ public class UserApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/login");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        // Add the required query param 'username' to the map of query params
+        params.put("username", username);
+
+        // Add the required query param 'password' to the map of query params
+        params.put("password", password);
+
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -583,20 +607,23 @@ public class UserApi {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/logout");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -677,20 +704,23 @@ public class UserApi {
         uriVariables.put("username", username);
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/user/{username}");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);

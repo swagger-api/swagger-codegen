@@ -96,20 +96,23 @@ public class FakeClassnameTags123Api {
         
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake_classname_test");
 
-        if (params != null) {
-            for (Map.Entry<String, Object> entry: params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
+        if (params == null) {
+            params = new HashMap<String, Object>();
+        }
 
-                if (key != null && value != null) {
-                    if (value instanceof Collection) {
-                        uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
-                    } else {
-                        uriBuilder = uriBuilder.queryParam(key, value);
-                    }
+        for (Map.Entry<String, Object> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
                 }
             }
         }
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
