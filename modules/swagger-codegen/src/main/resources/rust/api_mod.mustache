@@ -5,6 +5,7 @@ use serde_json;
 pub enum Error {
     Hyper(hyper::Error),
     Serde(serde_json::Error),
+    ErrorStatus(hyper::StatusCode),
 }
 
 impl From<hyper::Error> for Error {

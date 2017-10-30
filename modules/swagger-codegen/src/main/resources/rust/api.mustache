@@ -77,8 +77,25 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
 
         // send request
         Box::new(
-            configuration.client.request(req).and_then(|res| { res.body().concat2() })
-            .map_err(|e| Error::from(e))
+            configuration.client.request(req)
+            .then(|result| {
+                // Even if the result is 'ok', it still might be an error
+                // status
+                match result {
+                    Ok(resp) => {
+                        if resp.status().is_success() {
+                            Ok(resp)
+                        } else {
+                            Err(Error::ErrorStatus(resp.status()))
+                        }
+                    }
+                    Err(e) => Err(Error::from(e))
+                }
+            })
+            .and_then(|resp| {
+                resp.body().concat2()
+                    .map_err(|e| Error::from(e))
+            })
             {{^returnType}}
             .and_then(|_| futures::future::ok(()))
             {{/returnType}}
