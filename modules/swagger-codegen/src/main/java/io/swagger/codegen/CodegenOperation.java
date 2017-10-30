@@ -28,7 +28,7 @@ public class CodegenOperation {
     public List<CodegenParameter> queryParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
-    public List<CodegenParameter> requiredParams = new ArrayList<>();
+    public List<CodegenParameter> requiredParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
     public List<Tag> tags;
     public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
