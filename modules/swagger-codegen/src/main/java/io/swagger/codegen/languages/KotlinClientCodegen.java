@@ -57,17 +57,26 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         ));
 
         // this includes hard reserved words defined by https://github.com/JetBrains/kotlin/blob/master/core/descriptors/src/org/jetbrains/kotlin/renderer/KeywordStringsGenerated.java
-        // as well as select soft (contextual) keywords
+        // as well as keywords from https://kotlinlang.org/docs/reference/keyword-reference.html
         reservedWords = new HashSet<String>(Arrays.asList(
                 "abstract",
+                "annotation",
                 "as",
                 "break",
                 "case",
                 "catch",
                 "class",
+                "companion",
+                "const",
+                "constructor",
                 "continue",
+                "crossinline",
+                "data",
+                "delegate",
                 "do",
                 "else",
+                "enum",
+                "external",
                 "false",
                 "final",
                 "finally",
@@ -75,20 +84,33 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
                 "fun",
                 "if",
                 "in",
+                "infix",
+                "init",
+                "inline",
+                "inner",
                 "interface",
+                "internal",
                 "is",
                 "it",
+                "lateinit",
                 "lazy",
+                "noinline",
                 "null",
                 "object",
+                "open",
+                "operator",
+                "out",
                 "override",
                 "package",
                 "private",
                 "protected",
                 "public",
+                "reified",
                 "return",
                 "sealed",
                 "super",
+                "suspend",
+                "tailrec",
                 "this",
                 "throw",
                 "true",
@@ -97,6 +119,7 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
                 "typeof",
                 "val",
                 "var",
+                "vararg",
                 "when",
                 "while"
         ));
@@ -149,6 +172,8 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         importMapping.put("LocalDateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
         importMapping.put("LocalTime", "java.time.LocalTime");
+
+        specialCharReplacements.put(";", "Semicolon");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC).defaultValue(sourceFolder));
@@ -425,23 +450,36 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
      */
     @Override
     public String toEnumVarName(String value, String datatype) {
+        String modified;
         if (value.length() == 0) {
-            return "EMPTY";
-        }
+            modified = "EMPTY";
+        } else {
+            modified = value;
 
-        // for symbol, e.g. $, #
-        if (getSymbolName(value) != null) {
-            return getSymbolName(value).toUpperCase();
-        }
+            for (Map.Entry<String, String> specialCharacters : specialCharReplacements.entrySet()) {
+                // Underscore is the only special character we'll allow
+                if (!specialCharacters.getKey().equals("_")) {
+                    modified = modified.replaceAll("\\Q" + specialCharacters.getKey() + "\\E", specialCharacters.getValue());
+                }
+            }
 
-        String modified = value.replaceAll("\\W+", "_");
-        if (modified.matches("\\d.*")) {
-            modified = "_" + modified;
+            // Fallback, replace unknowns with underscore.
+            modified = modified.replaceAll("\\W+", "_");
+            if (modified.matches("\\d.*")) {
+                modified = "_" + modified;
+            }
+
+            // _, __, and ___ are reserved in Kotlin. Treat all names with only underscores consistently, regardless of count.
+            if (modified.matches("^_*$")) {
+                modified = modified.replaceAll("\\Q_\\E", "Underscore");
+            }
         }
 
         switch (getEnumPropertyNaming()) {
             case original:
-                return value;
+                // NOTE: This is provided as a last-case allowance, but will still result in reserved words being escaped.
+                modified =  value;
+                break;
             case camelCase:
                 // NOTE: Removes hyphens and underscores
                 modified =  camelize(modified, true);
@@ -458,6 +496,11 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
             case UPPERCASE:
                 modified = modified.toUpperCase();
                 break;
+        }
+
+        if (reservedWords.contains(modified)) {
+            // TODO: Allow enum escaping as an option (e.g. backticks vs append/prepend underscore vs match model property escaping).
+            return String.format("`%s`", modified);
         }
 
         return modified;
