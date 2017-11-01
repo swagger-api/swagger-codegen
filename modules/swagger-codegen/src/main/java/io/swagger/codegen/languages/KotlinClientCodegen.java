@@ -23,6 +23,7 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String packageName = "io.swagger.client";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
 
     /**
      * Constructs an instance of `KotlinClientCodegen`.
@@ -155,6 +156,9 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, "Client package's organization (i.e. maven groupId).").defaultValue(groupId));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, "Client artifact id (name of generated jar).").defaultValue(artifactId));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, "Client package version.").defaultValue(artifactVersion));
+
+        CliOption enumPropertyNamingOpt = new CliOption(CodegenConstants.ENUM_PROPERTY_NAMING, CodegenConstants.ENUM_PROPERTY_NAMING_DESC);
+        cliOptions.add(enumPropertyNamingOpt.defaultValue(enumPropertyNaming.name()));
     }
 
     public CodegenType getTag() {
@@ -192,6 +196,10 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public void processOpts() {
         super.processOpts();
+
+        if (additionalProperties.containsKey(CodegenConstants.ENUM_PROPERTY_NAMING)) {
+            setEnumPropertyNaming((String) additionalProperties.get(CodegenConstants.ENUM_PROPERTY_NAMING));
+        }
 
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
             this.setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
@@ -253,6 +261,27 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("infrastructure/ResponseExtensions.kt.mustache", infrastructureFolder, "ResponseExtensions.kt"));
         supportingFiles.add(new SupportingFile("infrastructure/Serializer.kt.mustache", infrastructureFolder, "Serializer.kt"));
         supportingFiles.add(new SupportingFile("infrastructure/Errors.kt.mustache", infrastructureFolder, "Errors.kt"));
+    }
+
+    /**
+     * Sets the naming convention for Kotlin enum properties
+     *
+     * @param enumPropertyNamingType The string representation of the naming convention, as defined by {@link CodegenConstants.ENUM_PROPERTY_NAMING_TYPE}
+     */
+    public void setEnumPropertyNaming(final String enumPropertyNamingType) {
+        try {
+            this.enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.valueOf(enumPropertyNamingType);
+        } catch (IllegalArgumentException ex) {
+            StringBuilder sb = new StringBuilder(enumPropertyNamingType + " is an invalid enum property naming option. Please choose from:");
+            for (CodegenConstants.ENUM_PROPERTY_NAMING_TYPE t : CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.values()) {
+                sb.append("\n  ").append(t.name());
+            }
+            throw new RuntimeException(sb.toString());
+        }
+    }
+
+    public CodegenConstants.ENUM_PROPERTY_NAMING_TYPE getEnumPropertyNaming() {
+        return this.enumPropertyNaming;
     }
 
     @Override
@@ -385,5 +414,52 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         return postProcessModelsEnum(super.postProcessModels(objs));
+    }
+
+    /**
+     * Return the sanitized variable name for enum
+     *
+     * @param value    enum variable name
+     * @param datatype data type
+     * @return the sanitized variable name for enum
+     */
+    @Override
+    public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "EMPTY";
+        }
+
+        // for symbol, e.g. $, #
+        if (getSymbolName(value) != null) {
+            return getSymbolName(value).toUpperCase();
+        }
+
+        String modified = value.replaceAll("\\W+", "_");
+        if (modified.matches("\\d.*")) {
+            modified = "_" + modified;
+        }
+
+        switch (getEnumPropertyNaming()) {
+            case original:
+                return value;
+            case camelCase:
+                // NOTE: Removes hyphens and underscores
+                modified =  camelize(modified, true);
+                break;
+            case PascalCase:
+                // NOTE: Removes hyphens and underscores
+                String result = camelize(modified);
+                modified =  result.substring(0, 1).toUpperCase() + result.substring(1);
+                break;
+            case snake_case:
+                // NOTE: Removes hyphens
+                modified = underscore(modified);
+                break;
+            case UPPERCASE:
+                modified = modified.toUpperCase();
+                break;
+        }
+
+        return modified;
     }
 }
