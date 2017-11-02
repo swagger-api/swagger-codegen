@@ -46,9 +46,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUser(User body) throws IOException {
-        HttpResponse response = createUserForHttpResponse(body);
+        createUserForHttpResponse(body);
 
-        return;
     }
 
     /**
@@ -60,9 +59,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUser(User body, Map<String, Object> params) throws IOException {
-        HttpResponse response = createUserForHttpResponse(body, params);
+        createUserForHttpResponse(body, params);
 
-        return;
     }
 
     public HttpResponse createUserForHttpResponse(User body) throws IOException {
@@ -126,9 +124,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUsersWithArrayInput(List<User> body) throws IOException {
-        HttpResponse response = createUsersWithArrayInputForHttpResponse(body);
+        createUsersWithArrayInputForHttpResponse(body);
 
-        return;
     }
 
     /**
@@ -140,9 +137,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUsersWithArrayInput(List<User> body, Map<String, Object> params) throws IOException {
-        HttpResponse response = createUsersWithArrayInputForHttpResponse(body, params);
+        createUsersWithArrayInputForHttpResponse(body, params);
 
-        return;
     }
 
     public HttpResponse createUsersWithArrayInputForHttpResponse(List<User> body) throws IOException {
@@ -206,9 +202,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUsersWithListInput(List<User> body) throws IOException {
-        HttpResponse response = createUsersWithListInputForHttpResponse(body);
+        createUsersWithListInputForHttpResponse(body);
 
-        return;
     }
 
     /**
@@ -220,9 +215,8 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void createUsersWithListInput(List<User> body, Map<String, Object> params) throws IOException {
-        HttpResponse response = createUsersWithListInputForHttpResponse(body, params);
+        createUsersWithListInputForHttpResponse(body, params);
 
-        return;
     }
 
     public HttpResponse createUsersWithListInputForHttpResponse(List<User> body) throws IOException {
@@ -287,23 +281,22 @@ public class UserApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deleteUser(String username) throws IOException {
-        HttpResponse response = deleteUserForHttpResponse(username);
+        deleteUserForHttpResponse(username);
 
-        return;
     }
 
     /**
     * Delete user
     * This can only be done by the logged in user.
-    * <p><b>400</b> - Invalid username supplied* <p><b>404</b> - User not found
+    * <p><b>400</b> - Invalid username supplied
+    * <p><b>404</b> - User not found
     * @param username The name that needs to be deleted
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deleteUser(String username, Map<String, Object> params) throws IOException {
-        HttpResponse response = deleteUserForHttpResponse(username, params);
+        deleteUserForHttpResponse(username, params);
 
-        return;
     }
 
     public HttpResponse deleteUserForHttpResponse(String username) throws IOException {
@@ -377,7 +370,6 @@ public class UserApi {
     **/
     public User getUserByName(String username) throws IOException {
         HttpResponse response = getUserByNameForHttpResponse(username);
-
         TypeReference typeRef = new TypeReference<User>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -385,7 +377,9 @@ public class UserApi {
     /**
     * Get user by user name
     * 
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid username supplied* <p><b>404</b> - User not found
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid username supplied
+    * <p><b>404</b> - User not found
     * @param username The name that needs to be fetched. Use user1 for testing. 
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return User
@@ -393,7 +387,6 @@ public class UserApi {
     **/
     public User getUserByName(String username, Map<String, Object> params) throws IOException {
         HttpResponse response = getUserByNameForHttpResponse(username, params);
-
         TypeReference typeRef = new TypeReference<User>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -462,13 +455,13 @@ public class UserApi {
     * 
     * <p><b>200</b> - successful operation
     * <p><b>400</b> - Invalid username/password supplied
-    * @param username The user name for login    * @param password The password for login in clear text
+    * @param username The user name for login
+    * @param password The password for login in clear text
     * @return String
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public String loginUser(String username, String password) throws IOException {
         HttpResponse response = loginUserForHttpResponse(username, password);
-
         TypeReference typeRef = new TypeReference<String>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -476,15 +469,16 @@ public class UserApi {
     /**
     * Logs user into the system
     * 
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid username/password supplied
-    * @param username The user name for login    * @param password The password for login in clear text
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid username/password supplied
+    * @param username The user name for login
+    * @param password The password for login in clear text
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return String
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public String loginUser(String username, String password, Map<String, Object> params) throws IOException {
         HttpResponse response = loginUserForHttpResponse(username, password, params);
-
         TypeReference typeRef = new TypeReference<String>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -567,27 +561,23 @@ public class UserApi {
     * Logs out current logged in user session
     * 
     * <p><b>0</b> - successful operation
-
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void logoutUser() throws IOException {
-        HttpResponse response = logoutUserForHttpResponse();
+        logoutUserForHttpResponse();
 
-        return;
     }
 
     /**
     * Logs out current logged in user session
     * 
     * <p><b>0</b> - successful operation
-
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void logoutUser(Map<String, Object> params) throws IOException {
-        HttpResponse response = logoutUserForHttpResponse(params);
+        logoutUserForHttpResponse(params);
 
-        return;
     }
 
     public HttpResponse logoutUserForHttpResponse() throws IOException {
@@ -638,27 +628,28 @@ public class UserApi {
     * This can only be done by the logged in user.
     * <p><b>400</b> - Invalid user supplied
     * <p><b>404</b> - User not found
-    * @param username name that need to be deleted    * @param body Updated user object
+    * @param username name that need to be deleted
+    * @param body Updated user object
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updateUser(String username, User body) throws IOException {
-        HttpResponse response = updateUserForHttpResponse(username, body);
+        updateUserForHttpResponse(username, body);
 
-        return;
     }
 
     /**
     * Updated user
     * This can only be done by the logged in user.
-    * <p><b>400</b> - Invalid user supplied* <p><b>404</b> - User not found
-    * @param username name that need to be deleted    * @param body Updated user object
+    * <p><b>400</b> - Invalid user supplied
+    * <p><b>404</b> - User not found
+    * @param username name that need to be deleted
+    * @param body Updated user object
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updateUser(String username, User body, Map<String, Object> params) throws IOException {
-        HttpResponse response = updateUserForHttpResponse(username, body, params);
+        updateUserForHttpResponse(username, body, params);
 
-        return;
     }
 
     public HttpResponse updateUserForHttpResponse(String username, User body) throws IOException {

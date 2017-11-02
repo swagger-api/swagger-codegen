@@ -52,7 +52,6 @@ public class FakeApi {
     **/
     public Boolean fakeOuterBooleanSerialize(Boolean body) throws IOException {
         HttpResponse response = fakeOuterBooleanSerializeForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<Boolean>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -68,7 +67,6 @@ public class FakeApi {
     **/
     public Boolean fakeOuterBooleanSerialize(Boolean body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterBooleanSerializeForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<Boolean>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -126,7 +124,6 @@ public class FakeApi {
     **/
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws IOException {
         HttpResponse response = fakeOuterCompositeSerializeForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<OuterComposite>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -142,7 +139,6 @@ public class FakeApi {
     **/
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterCompositeSerializeForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<OuterComposite>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -200,7 +196,6 @@ public class FakeApi {
     **/
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws IOException {
         HttpResponse response = fakeOuterNumberSerializeForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<BigDecimal>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -216,7 +211,6 @@ public class FakeApi {
     **/
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterNumberSerializeForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<BigDecimal>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -274,7 +268,6 @@ public class FakeApi {
     **/
     public String fakeOuterStringSerialize(String body) throws IOException {
         HttpResponse response = fakeOuterStringSerializeForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<String>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -290,7 +283,6 @@ public class FakeApi {
     **/
     public String fakeOuterStringSerialize(String body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterStringSerializeForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<String>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -348,7 +340,6 @@ public class FakeApi {
     **/
     public Client testClientModel(Client body) throws IOException {
         HttpResponse response = testClientModelForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<Client>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -364,7 +355,6 @@ public class FakeApi {
     **/
     public Client testClientModel(Client body, Map<String, Object> params) throws IOException {
         HttpResponse response = testClientModelForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<Client>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -427,27 +417,42 @@ public class FakeApi {
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * <p><b>400</b> - Invalid username supplied
     * <p><b>404</b> - User not found
-    * @param number None    * @param _double None    * @param patternWithoutDelimiter None    * @param _byte None    * @param integer None    * @param int32 None    * @param int64 None    * @param _float None    * @param string None    * @param binary None    * @param date None    * @param dateTime None    * @param password None    * @param paramCallback None
+    * @param number None
+    * @param _double None
+    * @param patternWithoutDelimiter None
+    * @param _byte None
+    * @param integer None
+    * @param int32 None
+    * @param int64 None
+    * @param _float None
+    * @param string None
+    * @param binary None
+    * @param date None
+    * @param dateTime None
+    * @param password None
+    * @param paramCallback None
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws IOException {
-        HttpResponse response = testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+        testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
 
-        return;
     }
 
     /**
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-    * <p><b>400</b> - Invalid username supplied* <p><b>404</b> - User not found
-    * @param number None    * @param _double None    * @param patternWithoutDelimiter None    * @param _byte None
+    * <p><b>400</b> - Invalid username supplied
+    * <p><b>404</b> - User not found
+    * @param number None
+    * @param _double None
+    * @param patternWithoutDelimiter None
+    * @param _byte None
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Map<String, Object> params) throws IOException {
-        HttpResponse response = testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, params);
+        testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, params);
 
-        return;
     }
 
     public HttpResponse testEndpointParametersForHttpResponse(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws IOException {
@@ -538,27 +543,32 @@ public class FakeApi {
     * To test enum parameters
     * <p><b>400</b> - Invalid request
     * <p><b>404</b> - Not found
-    * @param enumFormStringArray Form parameter enum test (string array)    * @param enumFormString Form parameter enum test (string)    * @param enumHeaderStringArray Header parameter enum test (string array)    * @param enumHeaderString Header parameter enum test (string)    * @param enumQueryStringArray Query parameter enum test (string array)    * @param enumQueryString Query parameter enum test (string)    * @param enumQueryInteger Query parameter enum test (double)    * @param enumQueryDouble Query parameter enum test (double)
+    * @param enumFormStringArray Form parameter enum test (string array)
+    * @param enumFormString Form parameter enum test (string)
+    * @param enumHeaderStringArray Header parameter enum test (string array)
+    * @param enumHeaderString Header parameter enum test (string)
+    * @param enumQueryStringArray Query parameter enum test (string array)
+    * @param enumQueryString Query parameter enum test (string)
+    * @param enumQueryInteger Query parameter enum test (double)
+    * @param enumQueryDouble Query parameter enum test (double)
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws IOException {
-        HttpResponse response = testEnumParametersForHttpResponse(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+        testEnumParametersForHttpResponse(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
 
-        return;
     }
 
     /**
     * To test enum parameters
     * To test enum parameters
-    * <p><b>400</b> - Invalid request* <p><b>404</b> - Not found
-
+    * <p><b>400</b> - Invalid request
+    * <p><b>404</b> - Not found
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testEnumParameters(Map<String, Object> params) throws IOException {
-        HttpResponse response = testEnumParametersForHttpResponse(params);
+        testEnumParametersForHttpResponse(params);
 
-        return;
     }
 
     public HttpResponse testEnumParametersForHttpResponse(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws IOException {
@@ -619,9 +629,8 @@ public class FakeApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testInlineAdditionalProperties(Object param) throws IOException {
-        HttpResponse response = testInlineAdditionalPropertiesForHttpResponse(param);
+        testInlineAdditionalPropertiesForHttpResponse(param);
 
-        return;
     }
 
     /**
@@ -633,9 +642,8 @@ public class FakeApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testInlineAdditionalProperties(Object param, Map<String, Object> params) throws IOException {
-        HttpResponse response = testInlineAdditionalPropertiesForHttpResponse(param, params);
+        testInlineAdditionalPropertiesForHttpResponse(param, params);
 
-        return;
     }
 
     public HttpResponse testInlineAdditionalPropertiesForHttpResponse(Object param) throws IOException {
@@ -695,27 +703,27 @@ public class FakeApi {
     * test json serialization of form data
     * 
     * <p><b>200</b> - successful operation
-    * @param param field1    * @param param2 field2
+    * @param param field1
+    * @param param2 field2
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testJsonFormData(String param, String param2) throws IOException {
-        HttpResponse response = testJsonFormDataForHttpResponse(param, param2);
+        testJsonFormDataForHttpResponse(param, param2);
 
-        return;
     }
 
     /**
     * test json serialization of form data
     * 
     * <p><b>200</b> - successful operation
-    * @param param field1    * @param param2 field2
+    * @param param field1
+    * @param param2 field2
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void testJsonFormData(String param, String param2, Map<String, Object> params) throws IOException {
-        HttpResponse response = testJsonFormDataForHttpResponse(param, param2, params);
+        testJsonFormDataForHttpResponse(param, param2, params);
 
-        return;
     }
 
     public HttpResponse testJsonFormDataForHttpResponse(String param, String param2) throws IOException {

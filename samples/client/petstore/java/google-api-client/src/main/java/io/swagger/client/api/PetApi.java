@@ -48,9 +48,8 @@ public class PetApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void addPet(Pet body) throws IOException {
-        HttpResponse response = addPetForHttpResponse(body);
+        addPetForHttpResponse(body);
 
-        return;
     }
 
     /**
@@ -62,9 +61,8 @@ public class PetApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void addPet(Pet body, Map<String, Object> params) throws IOException {
-        HttpResponse response = addPetForHttpResponse(body, params);
+        addPetForHttpResponse(body, params);
 
-        return;
     }
 
     public HttpResponse addPetForHttpResponse(Pet body) throws IOException {
@@ -124,13 +122,13 @@ public class PetApi {
     * Deletes a pet
     * 
     * <p><b>400</b> - Invalid pet value
-    * @param petId Pet id to delete    * @param apiKey The apiKey parameter
+    * @param petId Pet id to delete
+    * @param apiKey The apiKey parameter
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deletePet(Long petId, String apiKey) throws IOException {
-        HttpResponse response = deletePetForHttpResponse(petId, apiKey);
+        deletePetForHttpResponse(petId, apiKey);
 
-        return;
     }
 
     /**
@@ -142,9 +140,8 @@ public class PetApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deletePet(Long petId, Map<String, Object> params) throws IOException {
-        HttpResponse response = deletePetForHttpResponse(petId, params);
+        deletePetForHttpResponse(petId, params);
 
-        return;
     }
 
     public HttpResponse deletePetForHttpResponse(Long petId, String apiKey) throws IOException {
@@ -217,7 +214,6 @@ public class PetApi {
     **/
     public List<Pet> findPetsByStatus(List<String> status) throws IOException {
         HttpResponse response = findPetsByStatusForHttpResponse(status);
-
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -225,7 +221,8 @@ public class PetApi {
     /**
     * Finds Pets by status
     * Multiple status values can be provided with comma separated strings
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid status value
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid status value
     * @param status Status values that need to be considered for filter
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return List&lt;Pet&gt;
@@ -233,7 +230,6 @@ public class PetApi {
     **/
     public List<Pet> findPetsByStatus(List<String> status, Map<String, Object> params) throws IOException {
         HttpResponse response = findPetsByStatusForHttpResponse(status, params);
-
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -308,7 +304,6 @@ public class PetApi {
     **/
     public List<Pet> findPetsByTags(List<String> tags) throws IOException {
         HttpResponse response = findPetsByTagsForHttpResponse(tags);
-
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -316,7 +311,8 @@ public class PetApi {
     /**
     * Finds Pets by tags
     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid tag value
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid tag value
     * @param tags Tags to filter by
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return List&lt;Pet&gt;
@@ -324,7 +320,6 @@ public class PetApi {
     **/
     public List<Pet> findPetsByTags(List<String> tags, Map<String, Object> params) throws IOException {
         HttpResponse response = findPetsByTagsForHttpResponse(tags, params);
-
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -400,7 +395,6 @@ public class PetApi {
     **/
     public Pet getPetById(Long petId) throws IOException {
         HttpResponse response = getPetByIdForHttpResponse(petId);
-
         TypeReference typeRef = new TypeReference<Pet>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -408,7 +402,9 @@ public class PetApi {
     /**
     * Find pet by ID
     * Returns a single pet
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid ID supplied* <p><b>404</b> - Pet not found
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid ID supplied
+    * <p><b>404</b> - Pet not found
     * @param petId ID of pet to return
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return Pet
@@ -416,7 +412,6 @@ public class PetApi {
     **/
     public Pet getPetById(Long petId, Map<String, Object> params) throws IOException {
         HttpResponse response = getPetByIdForHttpResponse(petId, params);
-
         TypeReference typeRef = new TypeReference<Pet>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -490,23 +485,23 @@ public class PetApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updatePet(Pet body) throws IOException {
-        HttpResponse response = updatePetForHttpResponse(body);
+        updatePetForHttpResponse(body);
 
-        return;
     }
 
     /**
     * Update an existing pet
     * 
-    * <p><b>400</b> - Invalid ID supplied* <p><b>404</b> - Pet not found* <p><b>405</b> - Validation exception
+    * <p><b>400</b> - Invalid ID supplied
+    * <p><b>404</b> - Pet not found
+    * <p><b>405</b> - Validation exception
     * @param body Pet object that needs to be added to the store
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updatePet(Pet body, Map<String, Object> params) throws IOException {
-        HttpResponse response = updatePetForHttpResponse(body, params);
+        updatePetForHttpResponse(body, params);
 
-        return;
     }
 
     public HttpResponse updatePetForHttpResponse(Pet body) throws IOException {
@@ -566,13 +561,14 @@ public class PetApi {
     * Updates a pet in the store with form data
     * 
     * <p><b>405</b> - Invalid input
-    * @param petId ID of pet that needs to be updated    * @param name Updated name of the pet    * @param status Updated status of the pet
+    * @param petId ID of pet that needs to be updated
+    * @param name Updated name of the pet
+    * @param status Updated status of the pet
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updatePetWithForm(Long petId, String name, String status) throws IOException {
-        HttpResponse response = updatePetWithFormForHttpResponse(petId, name, status);
+        updatePetWithFormForHttpResponse(petId, name, status);
 
-        return;
     }
 
     /**
@@ -584,9 +580,8 @@ public class PetApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void updatePetWithForm(Long petId, Map<String, Object> params) throws IOException {
-        HttpResponse response = updatePetWithFormForHttpResponse(petId, params);
+        updatePetWithFormForHttpResponse(petId, params);
 
-        return;
     }
 
     public HttpResponse updatePetWithFormForHttpResponse(Long petId, String name, String status) throws IOException {
@@ -652,13 +647,14 @@ public class PetApi {
     * uploads an image
     * 
     * <p><b>200</b> - successful operation
-    * @param petId ID of pet to update    * @param additionalMetadata Additional data to pass to server    * @param file file to upload
+    * @param petId ID of pet to update
+    * @param additionalMetadata Additional data to pass to server
+    * @param file file to upload
     * @return ModelApiResponse
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws IOException {
         HttpResponse response = uploadFileForHttpResponse(petId, additionalMetadata, file);
-
         TypeReference typeRef = new TypeReference<ModelApiResponse>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -674,7 +670,6 @@ public class PetApi {
     **/
     public ModelApiResponse uploadFile(Long petId, Map<String, Object> params) throws IOException {
         HttpResponse response = uploadFileForHttpResponse(petId, params);
-
         TypeReference typeRef = new TypeReference<ModelApiResponse>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }

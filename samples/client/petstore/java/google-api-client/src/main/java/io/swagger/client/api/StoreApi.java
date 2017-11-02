@@ -47,23 +47,22 @@ public class StoreApi {
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deleteOrder(String orderId) throws IOException {
-        HttpResponse response = deleteOrderForHttpResponse(orderId);
+        deleteOrderForHttpResponse(orderId);
 
-        return;
     }
 
     /**
     * Delete purchase order by ID
     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-    * <p><b>400</b> - Invalid ID supplied* <p><b>404</b> - Order not found
+    * <p><b>400</b> - Invalid ID supplied
+    * <p><b>404</b> - Order not found
     * @param orderId ID of the order that needs to be deleted
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public void deleteOrder(String orderId, Map<String, Object> params) throws IOException {
-        HttpResponse response = deleteOrderForHttpResponse(orderId, params);
+        deleteOrderForHttpResponse(orderId, params);
 
-        return;
     }
 
     public HttpResponse deleteOrderForHttpResponse(String orderId) throws IOException {
@@ -129,13 +128,11 @@ public class StoreApi {
     * Returns pet inventories by status
     * Returns a map of status codes to quantities
     * <p><b>200</b> - successful operation
-
     * @return Map&lt;String, Integer&gt;
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public Map<String, Integer> getInventory() throws IOException {
         HttpResponse response = getInventoryForHttpResponse();
-
         TypeReference typeRef = new TypeReference<Map<String, Integer>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -144,14 +141,12 @@ public class StoreApi {
     * Returns pet inventories by status
     * Returns a map of status codes to quantities
     * <p><b>200</b> - successful operation
-
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return Map&lt;String, Integer&gt;
     * @throws IOException if an error occurs while attempting to invoke the API
     **/
     public Map<String, Integer> getInventory(Map<String, Object> params) throws IOException {
         HttpResponse response = getInventoryForHttpResponse(params);
-
         TypeReference typeRef = new TypeReference<Map<String, Integer>>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -211,7 +206,6 @@ public class StoreApi {
     **/
     public Order getOrderById(Long orderId) throws IOException {
         HttpResponse response = getOrderByIdForHttpResponse(orderId);
-
         TypeReference typeRef = new TypeReference<Order>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -219,7 +213,9 @@ public class StoreApi {
     /**
     * Find purchase order by ID
     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid ID supplied* <p><b>404</b> - Order not found
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid ID supplied
+    * <p><b>404</b> - Order not found
     * @param orderId ID of pet that needs to be fetched
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return Order
@@ -227,7 +223,6 @@ public class StoreApi {
     **/
     public Order getOrderById(Long orderId, Map<String, Object> params) throws IOException {
         HttpResponse response = getOrderByIdForHttpResponse(orderId, params);
-
         TypeReference typeRef = new TypeReference<Order>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -302,7 +297,6 @@ public class StoreApi {
     **/
     public Order placeOrder(Order body) throws IOException {
         HttpResponse response = placeOrderForHttpResponse(body);
-
         TypeReference typeRef = new TypeReference<Order>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
@@ -310,7 +304,8 @@ public class StoreApi {
     /**
     * Place an order for a pet
     * 
-    * <p><b>200</b> - successful operation* <p><b>400</b> - Invalid Order
+    * <p><b>200</b> - successful operation
+    * <p><b>400</b> - Invalid Order
     * @param body order placed for purchasing the pet
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
     * @return Order
@@ -318,7 +313,6 @@ public class StoreApi {
     **/
     public Order placeOrder(Order body, Map<String, Object> params) throws IOException {
         HttpResponse response = placeOrderForHttpResponse(body, params);
-
         TypeReference typeRef = new TypeReference<Order>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
