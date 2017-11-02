@@ -40,7 +40,7 @@ public class PetApi {
         this.apiClient = apiClient;
     }
 
-    /**
+  /**
     * Add a new pet to the store
     * 
     * <p><b>405</b> - Invalid input
@@ -49,10 +49,9 @@ public class PetApi {
     **/
     public void addPet(Pet body) throws IOException {
         addPetForHttpResponse(body);
-
     }
 
-    /**
+  /**
     * Add a new pet to the store
     * 
     * <p><b>405</b> - Invalid input
@@ -62,7 +61,6 @@ public class PetApi {
     **/
     public void addPet(Pet body, Map<String, Object> params) throws IOException {
         addPetForHttpResponse(body, params);
-
     }
 
     public HttpResponse addPetForHttpResponse(Pet body) throws IOException {
@@ -118,7 +116,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Deletes a pet
     * 
     * <p><b>400</b> - Invalid pet value
@@ -128,10 +126,9 @@ public class PetApi {
     **/
     public void deletePet(Long petId, String apiKey) throws IOException {
         deletePetForHttpResponse(petId, apiKey);
-
     }
 
-    /**
+  /**
     * Deletes a pet
     * 
     * <p><b>400</b> - Invalid pet value
@@ -141,7 +138,6 @@ public class PetApi {
     **/
     public void deletePet(Long petId, Map<String, Object> params) throws IOException {
         deletePetForHttpResponse(petId, params);
-
     }
 
     public HttpResponse deletePetForHttpResponse(Long petId, String apiKey) throws IOException {
@@ -203,7 +199,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Finds Pets by status
     * Multiple status values can be provided with comma separated strings
     * <p><b>200</b> - successful operation
@@ -218,7 +214,7 @@ public class PetApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Finds Pets by status
     * Multiple status values can be provided with comma separated strings
     * <p><b>200</b> - successful operation
@@ -293,7 +289,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Finds Pets by tags
     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
     * <p><b>200</b> - successful operation
@@ -308,7 +304,7 @@ public class PetApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Finds Pets by tags
     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
     * <p><b>200</b> - successful operation
@@ -383,7 +379,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Find pet by ID
     * Returns a single pet
     * <p><b>200</b> - successful operation
@@ -399,7 +395,7 @@ public class PetApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Find pet by ID
     * Returns a single pet
     * <p><b>200</b> - successful operation
@@ -475,7 +471,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Update an existing pet
     * 
     * <p><b>400</b> - Invalid ID supplied
@@ -486,10 +482,9 @@ public class PetApi {
     **/
     public void updatePet(Pet body) throws IOException {
         updatePetForHttpResponse(body);
-
     }
 
-    /**
+  /**
     * Update an existing pet
     * 
     * <p><b>400</b> - Invalid ID supplied
@@ -501,7 +496,6 @@ public class PetApi {
     **/
     public void updatePet(Pet body, Map<String, Object> params) throws IOException {
         updatePetForHttpResponse(body, params);
-
     }
 
     public HttpResponse updatePetForHttpResponse(Pet body) throws IOException {
@@ -557,7 +551,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * Updates a pet in the store with form data
     * 
     * <p><b>405</b> - Invalid input
@@ -568,10 +562,9 @@ public class PetApi {
     **/
     public void updatePetWithForm(Long petId, String name, String status) throws IOException {
         updatePetWithFormForHttpResponse(petId, name, status);
-
     }
 
-    /**
+  /**
     * Updates a pet in the store with form data
     * 
     * <p><b>405</b> - Invalid input
@@ -581,7 +574,6 @@ public class PetApi {
     **/
     public void updatePetWithForm(Long petId, Map<String, Object> params) throws IOException {
         updatePetWithFormForHttpResponse(petId, params);
-
     }
 
     public HttpResponse updatePetWithFormForHttpResponse(Long petId, String name, String status) throws IOException {
@@ -643,7 +635,7 @@ public class PetApi {
     }
 
 
-    /**
+  /**
     * uploads an image
     * 
     * <p><b>200</b> - successful operation
@@ -659,7 +651,7 @@ public class PetApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * uploads an image
     * 
     * <p><b>200</b> - successful operation

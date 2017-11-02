@@ -42,8 +42,7 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
-    /**
-    * 
+  /**
     * Test serialization of outer boolean types
     * <p><b>200</b> - Output boolean
     * @param body Input boolean as post body
@@ -56,8 +55,7 @@ public class FakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
-    * 
+  /**
     * Test serialization of outer boolean types
     * <p><b>200</b> - Output boolean
     * @param body Input boolean as post body
@@ -114,8 +112,7 @@ public class FakeApi {
     }
 
 
-    /**
-    * 
+  /**
     * Test serialization of object with outer number type
     * <p><b>200</b> - Output composite
     * @param body Input composite as post body
@@ -128,8 +125,7 @@ public class FakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
-    * 
+  /**
     * Test serialization of object with outer number type
     * <p><b>200</b> - Output composite
     * @param body Input composite as post body
@@ -186,8 +182,7 @@ public class FakeApi {
     }
 
 
-    /**
-    * 
+  /**
     * Test serialization of outer number types
     * <p><b>200</b> - Output number
     * @param body Input number as post body
@@ -200,8 +195,7 @@ public class FakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
-    * 
+  /**
     * Test serialization of outer number types
     * <p><b>200</b> - Output number
     * @param body Input number as post body
@@ -258,8 +252,7 @@ public class FakeApi {
     }
 
 
-    /**
-    * 
+  /**
     * Test serialization of outer string types
     * <p><b>200</b> - Output string
     * @param body Input string as post body
@@ -272,8 +265,7 @@ public class FakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
-    * 
+  /**
     * Test serialization of outer string types
     * <p><b>200</b> - Output string
     * @param body Input string as post body
@@ -330,7 +322,7 @@ public class FakeApi {
     }
 
 
-    /**
+  /**
     * To test \&quot;client\&quot; model
     * To test \&quot;client\&quot; model
     * <p><b>200</b> - successful operation
@@ -344,7 +336,7 @@ public class FakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * To test \&quot;client\&quot; model
     * To test \&quot;client\&quot; model
     * <p><b>200</b> - successful operation
@@ -412,7 +404,7 @@ public class FakeApi {
     }
 
 
-    /**
+  /**
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * <p><b>400</b> - Invalid username supplied
@@ -435,10 +427,9 @@ public class FakeApi {
     **/
     public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws IOException {
         testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-
     }
 
-    /**
+  /**
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     * <p><b>400</b> - Invalid username supplied
@@ -452,7 +443,6 @@ public class FakeApi {
     **/
     public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Map<String, Object> params) throws IOException {
         testEndpointParametersForHttpResponse(number, _double, patternWithoutDelimiter, _byte, params);
-
     }
 
     public HttpResponse testEndpointParametersForHttpResponse(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws IOException {
@@ -538,7 +528,7 @@ public class FakeApi {
     }
 
 
-    /**
+  /**
     * To test enum parameters
     * To test enum parameters
     * <p><b>400</b> - Invalid request
@@ -555,10 +545,9 @@ public class FakeApi {
     **/
     public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws IOException {
         testEnumParametersForHttpResponse(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-
     }
 
-    /**
+  /**
     * To test enum parameters
     * To test enum parameters
     * <p><b>400</b> - Invalid request
@@ -568,7 +557,6 @@ public class FakeApi {
     **/
     public void testEnumParameters(Map<String, Object> params) throws IOException {
         testEnumParametersForHttpResponse(params);
-
     }
 
     public HttpResponse testEnumParametersForHttpResponse(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws IOException {
@@ -621,7 +609,7 @@ public class FakeApi {
     }
 
 
-    /**
+  /**
     * test inline additionalProperties
     * 
     * <p><b>200</b> - successful operation
@@ -630,10 +618,9 @@ public class FakeApi {
     **/
     public void testInlineAdditionalProperties(Object param) throws IOException {
         testInlineAdditionalPropertiesForHttpResponse(param);
-
     }
 
-    /**
+  /**
     * test inline additionalProperties
     * 
     * <p><b>200</b> - successful operation
@@ -643,7 +630,6 @@ public class FakeApi {
     **/
     public void testInlineAdditionalProperties(Object param, Map<String, Object> params) throws IOException {
         testInlineAdditionalPropertiesForHttpResponse(param, params);
-
     }
 
     public HttpResponse testInlineAdditionalPropertiesForHttpResponse(Object param) throws IOException {
@@ -699,7 +685,7 @@ public class FakeApi {
     }
 
 
-    /**
+  /**
     * test json serialization of form data
     * 
     * <p><b>200</b> - successful operation
@@ -709,10 +695,9 @@ public class FakeApi {
     **/
     public void testJsonFormData(String param, String param2) throws IOException {
         testJsonFormDataForHttpResponse(param, param2);
-
     }
 
-    /**
+  /**
     * test json serialization of form data
     * 
     * <p><b>200</b> - successful operation
@@ -723,7 +708,6 @@ public class FakeApi {
     **/
     public void testJsonFormData(String param, String param2, Map<String, Object> params) throws IOException {
         testJsonFormDataForHttpResponse(param, param2, params);
-
     }
 
     public HttpResponse testJsonFormDataForHttpResponse(String param, String param2) throws IOException {

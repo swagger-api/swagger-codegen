@@ -38,9 +38,8 @@ public class FakeClassnameTags123Api {
         this.apiClient = apiClient;
     }
 
-    /**
+  /**
     * To test class name in snake case
-    * 
     * <p><b>200</b> - successful operation
     * @param body client model
     * @return Client
@@ -52,9 +51,8 @@ public class FakeClassnameTags123Api {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * To test class name in snake case
-    * 
     * <p><b>200</b> - successful operation
     * @param body client model
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.

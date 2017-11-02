@@ -38,7 +38,7 @@ public class UserApi {
         this.apiClient = apiClient;
     }
 
-    /**
+  /**
     * Create user
     * This can only be done by the logged in user.
     * <p><b>0</b> - successful operation
@@ -47,10 +47,9 @@ public class UserApi {
     **/
     public void createUser(User body) throws IOException {
         createUserForHttpResponse(body);
-
     }
 
-    /**
+  /**
     * Create user
     * This can only be done by the logged in user.
     * <p><b>0</b> - successful operation
@@ -60,7 +59,6 @@ public class UserApi {
     **/
     public void createUser(User body, Map<String, Object> params) throws IOException {
         createUserForHttpResponse(body, params);
-
     }
 
     public HttpResponse createUserForHttpResponse(User body) throws IOException {
@@ -116,7 +114,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Creates list of users with given input array
     * 
     * <p><b>0</b> - successful operation
@@ -125,10 +123,9 @@ public class UserApi {
     **/
     public void createUsersWithArrayInput(List<User> body) throws IOException {
         createUsersWithArrayInputForHttpResponse(body);
-
     }
 
-    /**
+  /**
     * Creates list of users with given input array
     * 
     * <p><b>0</b> - successful operation
@@ -138,7 +135,6 @@ public class UserApi {
     **/
     public void createUsersWithArrayInput(List<User> body, Map<String, Object> params) throws IOException {
         createUsersWithArrayInputForHttpResponse(body, params);
-
     }
 
     public HttpResponse createUsersWithArrayInputForHttpResponse(List<User> body) throws IOException {
@@ -194,7 +190,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Creates list of users with given input array
     * 
     * <p><b>0</b> - successful operation
@@ -203,10 +199,9 @@ public class UserApi {
     **/
     public void createUsersWithListInput(List<User> body) throws IOException {
         createUsersWithListInputForHttpResponse(body);
-
     }
 
-    /**
+  /**
     * Creates list of users with given input array
     * 
     * <p><b>0</b> - successful operation
@@ -216,7 +211,6 @@ public class UserApi {
     **/
     public void createUsersWithListInput(List<User> body, Map<String, Object> params) throws IOException {
         createUsersWithListInputForHttpResponse(body, params);
-
     }
 
     public HttpResponse createUsersWithListInputForHttpResponse(List<User> body) throws IOException {
@@ -272,7 +266,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Delete user
     * This can only be done by the logged in user.
     * <p><b>400</b> - Invalid username supplied
@@ -282,10 +276,9 @@ public class UserApi {
     **/
     public void deleteUser(String username) throws IOException {
         deleteUserForHttpResponse(username);
-
     }
 
-    /**
+  /**
     * Delete user
     * This can only be done by the logged in user.
     * <p><b>400</b> - Invalid username supplied
@@ -296,7 +289,6 @@ public class UserApi {
     **/
     public void deleteUser(String username, Map<String, Object> params) throws IOException {
         deleteUserForHttpResponse(username, params);
-
     }
 
     public HttpResponse deleteUserForHttpResponse(String username) throws IOException {
@@ -358,7 +350,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Get user by user name
     * 
     * <p><b>200</b> - successful operation
@@ -374,7 +366,7 @@ public class UserApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Get user by user name
     * 
     * <p><b>200</b> - successful operation
@@ -450,7 +442,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Logs user into the system
     * 
     * <p><b>200</b> - successful operation
@@ -466,7 +458,7 @@ public class UserApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Logs user into the system
     * 
     * <p><b>200</b> - successful operation
@@ -557,7 +549,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Logs out current logged in user session
     * 
     * <p><b>0</b> - successful operation
@@ -565,10 +557,9 @@ public class UserApi {
     **/
     public void logoutUser() throws IOException {
         logoutUserForHttpResponse();
-
     }
 
-    /**
+  /**
     * Logs out current logged in user session
     * 
     * <p><b>0</b> - successful operation
@@ -577,7 +568,6 @@ public class UserApi {
     **/
     public void logoutUser(Map<String, Object> params) throws IOException {
         logoutUserForHttpResponse(params);
-
     }
 
     public HttpResponse logoutUserForHttpResponse() throws IOException {
@@ -623,7 +613,7 @@ public class UserApi {
     }
 
 
-    /**
+  /**
     * Updated user
     * This can only be done by the logged in user.
     * <p><b>400</b> - Invalid user supplied
@@ -634,10 +624,9 @@ public class UserApi {
     **/
     public void updateUser(String username, User body) throws IOException {
         updateUserForHttpResponse(username, body);
-
     }
 
-    /**
+  /**
     * Updated user
     * This can only be done by the logged in user.
     * <p><b>400</b> - Invalid user supplied
@@ -649,7 +638,6 @@ public class UserApi {
     **/
     public void updateUser(String username, User body, Map<String, Object> params) throws IOException {
         updateUserForHttpResponse(username, body, params);
-
     }
 
     public HttpResponse updateUserForHttpResponse(String username, User body) throws IOException {

@@ -38,7 +38,7 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
-    /**
+  /**
     * To test special tags
     * To test special tags
     * <p><b>200</b> - successful operation
@@ -52,7 +52,7 @@ public class AnotherFakeApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * To test special tags
     * To test special tags
     * <p><b>200</b> - successful operation

@@ -41,9 +41,9 @@ public class {{classname}} {
     }
 
     {{#operation}}
-    /**
-    * {{summary}}
-    * {{notes}}{{#responses}}
+  /**{{#summary}}
+    * {{summary}}{{/summary}}{{#notes}}
+    * {{notes}}{{/notes}}{{#responses}}
     * <p><b>{{code}}</b>{{#message}} - {{message}}{{/message}}{{/responses}}{{#allParams}}
     * @param {{paramName}} {{description}}{{^description}}The {{paramName}} parameter{{/description}}{{/allParams}}{{#returnType}}
     * @return {{returnType}}{{/returnType}}
@@ -54,15 +54,14 @@ public class {{classname}} {
 
     **/
     public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
-        {{#returnType}}HttpResponse response = {{/returnType}}{{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-{{#returnType}}
+        {{#returnType}}HttpResponse response = {{/returnType}}{{operationId}}ForHttpResponse({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
         TypeReference typeRef = new TypeReference<{{{returnType}}}>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);{{/returnType}}
     }
 
-    /**
-    * {{summary}}
-    * {{notes}}{{#responses}}
+  /**{{#summary}}
+    * {{summary}}{{/summary}}{{#notes}}
+    * {{notes}}{{/notes}}{{#responses}}
     * <p><b>{{code}}</b>{{#message}} - {{message}}{{/message}}{{/responses}}{{#requiredParams}}
     * @param {{paramName}} {{description}}{{^description}}The {{paramName}} parameter{{/description}}{{/requiredParams}}
     * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.{{#returnType}}
@@ -74,8 +73,7 @@ public class {{classname}} {
 
     **/
     public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}Map<String, Object> params) throws IOException {
-        {{#returnType}}HttpResponse response = {{/returnType}}{{operationId}}ForHttpResponse({{#requiredParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}params);
-{{#returnType}}
+        {{#returnType}}HttpResponse response = {{/returnType}}{{operationId}}ForHttpResponse({{#requiredParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}params);{{#returnType}}
         TypeReference typeRef = new TypeReference<{{{returnType}}}>() {};
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);{{/returnType}}
     }

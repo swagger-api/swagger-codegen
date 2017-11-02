@@ -38,7 +38,7 @@ public class StoreApi {
         this.apiClient = apiClient;
     }
 
-    /**
+  /**
     * Delete purchase order by ID
     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
     * <p><b>400</b> - Invalid ID supplied
@@ -48,10 +48,9 @@ public class StoreApi {
     **/
     public void deleteOrder(String orderId) throws IOException {
         deleteOrderForHttpResponse(orderId);
-
     }
 
-    /**
+  /**
     * Delete purchase order by ID
     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
     * <p><b>400</b> - Invalid ID supplied
@@ -62,7 +61,6 @@ public class StoreApi {
     **/
     public void deleteOrder(String orderId, Map<String, Object> params) throws IOException {
         deleteOrderForHttpResponse(orderId, params);
-
     }
 
     public HttpResponse deleteOrderForHttpResponse(String orderId) throws IOException {
@@ -124,7 +122,7 @@ public class StoreApi {
     }
 
 
-    /**
+  /**
     * Returns pet inventories by status
     * Returns a map of status codes to quantities
     * <p><b>200</b> - successful operation
@@ -137,7 +135,7 @@ public class StoreApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Returns pet inventories by status
     * Returns a map of status codes to quantities
     * <p><b>200</b> - successful operation
@@ -194,7 +192,7 @@ public class StoreApi {
     }
 
 
-    /**
+  /**
     * Find purchase order by ID
     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
     * <p><b>200</b> - successful operation
@@ -210,7 +208,7 @@ public class StoreApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Find purchase order by ID
     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
     * <p><b>200</b> - successful operation
@@ -286,7 +284,7 @@ public class StoreApi {
     }
 
 
-    /**
+  /**
     * Place an order for a pet
     * 
     * <p><b>200</b> - successful operation
@@ -301,7 +299,7 @@ public class StoreApi {
         return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
-    /**
+  /**
     * Place an order for a pet
     * 
     * <p><b>200</b> - successful operation
