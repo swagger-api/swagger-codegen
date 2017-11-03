@@ -3,6 +3,7 @@ package io.swagger
 // TODO: properly handle custom imports
 import java.io._
 import java.util.Date
+import java.util.UUID
 
 import io.swagger.models._
 
@@ -20,7 +21,7 @@ trait DataAccessor {
         * 
         * @return A Unit
         */
-        def Pet_deletePet(petId: Long, apiKey: String): Unit = ???
+        def Pet_deletePet(petId: Long, apiKey: Option[String]): Unit = ???
 
         /**
         * 
@@ -38,7 +39,7 @@ trait DataAccessor {
         * 
         * @return A Pet
         */
-        def Pet_getPetById(petId: Long): Pet = ???
+        def Pet_getPetById(petId: Long, authParamapi_key: String): Pet = ???
 
         /**
         * 
@@ -50,13 +51,13 @@ trait DataAccessor {
         * 
         * @return A Unit
         */
-        def Pet_updatePetWithForm(petId: Long, name: String, status: String): Unit = ???
+        def Pet_updatePetWithForm(petId: Long, name: Option[String], status: Option[String]): Unit = ???
 
         /**
         * 
         * @return A ApiResponse
         */
-        def Pet_uploadFile(petId: Long, additionalMetadata: String, file: File): ApiResponse = ???
+        def Pet_uploadFile(petId: Long, additionalMetadata: Option[String], file: FileUpload): ApiResponse = ???
 
         /**
         * 
@@ -68,7 +69,7 @@ trait DataAccessor {
         * 
         * @return A Map[String, Int]
         */
-        def Store_getInventory(): Map[String, Int] = ???
+        def Store_getInventory(authParamapi_key: String): Map[String, Int] = ???
 
         /**
         * 

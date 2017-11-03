@@ -15,10 +15,8 @@ import com.twitter.util.{Await, Future}
 class Server {
 
   // Loads implementation defined in resources/META-INF/services/io.swagger.DataAccessor
-  val db = LoadService[DataAccessor]() match {
-    case accessor :: _ => accessor
-    case _ => new DataAccessor { }
-  }
+  val impls: Seq[DataAccessor] = LoadService[DataAccessor]()
+  val db = if (impls.isEmpty) new DataAccessor { } else impls.head
 
   val service = endpoint.makeService(db)
 
