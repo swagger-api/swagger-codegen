@@ -39,8 +39,8 @@ object PetApi {
         * @return And endpoint representing a Unit
         */
         private def addPet(da: DataAccessor): Endpoint[Unit] =
-        post("pet"  :: jsonBody[Pet]) { (body: Pet) => 
-                da.Pet_addPet(body)
+        post("pet"  :: jsonBody[Pet]) { (body:Pet, authParampetstore_auth: String) => 
+                da.Pet_addPet(body:Pet, authParampetstore_auth: String)
                 NoContent[Unit]
         } handle {
           case e: Exception => BadRequest(e)
@@ -51,8 +51,8 @@ object PetApi {
         * @return And endpoint representing a Unit
         */
         private def deletePet(da: DataAccessor): Endpoint[Unit] =
-        delete("pet" :: long  :: headerOption("api_key")) { (petId: Long, apiKey: Option[String]) => 
-                da.Pet_deletePet(petId, apiKey)
+        delete("pet" :: long  :: headerOption("api_key")) { (petId:Long, apiKey:Option[String], authParampetstore_auth: String) => 
+                da.Pet_deletePet(petId:Long, apiKey:Option[String], authParampetstore_auth: String)
                 NoContent[Unit]
         } handle {
           case e: Exception => BadRequest(e)
@@ -63,8 +63,10 @@ object PetApi {
         * @return And endpoint representing a Seq[Pet]
         */
         private def findPetsByStatus(da: DataAccessor): Endpoint[Seq[Pet]] =
-        get("pet" :: "findByStatus"  :: params("status")) { (status: Seq[String]) => 
-                Ok(da.Pet_findPetsByStatus(status))
+        get("pet" :: "findByStatus"  :: params("status")) { (status:Seq[String], authParampetstore_auth: String) => 
+                Ok(
+                da.Pet_findPetsByStatus(status:Seq[String], authParampetstore_auth: String)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
@@ -74,8 +76,10 @@ object PetApi {
         * @return And endpoint representing a Seq[Pet]
         */
         private def findPetsByTags(da: DataAccessor): Endpoint[Seq[Pet]] =
-        get("pet" :: "findByTags"  :: params("tags")) { (tags: Seq[String]) => 
-                Ok(da.Pet_findPetsByTags(tags))
+        get("pet" :: "findByTags"  :: params("tags")) { (tags:Seq[String], authParampetstore_auth: String) => 
+                Ok(
+                da.Pet_findPetsByTags(tags:Seq[String], authParampetstore_auth: String)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
@@ -85,8 +89,10 @@ object PetApi {
         * @return And endpoint representing a Pet
         */
         private def getPetById(da: DataAccessor): Endpoint[Pet] =
-        get("pet" :: long ) { (petId: Long) => 
-                Ok(da.Pet_getPetById(petId))
+        get("pet" :: long  :: header("api_key")) { (petId:Long, authParamapi_key: String) => 
+                Ok(
+                da.Pet_getPetById(petId:Long, authParamapi_key: String)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
@@ -96,8 +102,8 @@ object PetApi {
         * @return And endpoint representing a Unit
         */
         private def updatePet(da: DataAccessor): Endpoint[Unit] =
-        put("pet"  :: jsonBody[Pet]) { (body: Pet) => 
-                da.Pet_updatePet(body)
+        put("pet"  :: jsonBody[Pet]) { (body:Pet, authParampetstore_auth: String) => 
+                da.Pet_updatePet(body:Pet, authParampetstore_auth: String)
                 NoContent[Unit]
         } handle {
           case e: Exception => BadRequest(e)
@@ -108,8 +114,8 @@ object PetApi {
         * @return And endpoint representing a Unit
         */
         private def updatePetWithForm(da: DataAccessor): Endpoint[Unit] =
-        post("pet" :: long  :: String :: String) { (petId: Long, name: String, status: String) => 
-                da.Pet_updatePetWithForm(petId, name, status)
+        post("pet" :: long  :: string :: string) { (petId:Long, name:Option[String], status:Option[String], authParampetstore_auth: String) => 
+                da.Pet_updatePetWithForm(petId:Long, name:Option[String], status:Option[String], authParampetstore_auth: String)
                 NoContent[Unit]
         } handle {
           case e: Exception => BadRequest(e)
@@ -120,8 +126,10 @@ object PetApi {
         * @return And endpoint representing a ApiResponse
         */
         private def uploadFile(da: DataAccessor): Endpoint[ApiResponse] =
-        post("pet" :: long :: "uploadImage"  :: String :: fileUpload("file")) { (petId: Long, additionalMetadata: String, file: FileUpload) => 
-                Ok(da.Pet_uploadFile(petId, additionalMetadata, file))
+        post("pet" :: long :: "uploadImage"  :: string :: fileUpload("file")) { (petId:Long, additionalMetadata:Option[String], file:FileUpload, authParampetstore_auth: String) => 
+                Ok(
+                da.Pet_uploadFile(petId:Long, additionalMetadata:Option[String], file:FileUpload, authParampetstore_auth: String)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }

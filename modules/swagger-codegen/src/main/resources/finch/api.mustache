@@ -37,12 +37,15 @@ object {{classname}} {
         * @return And endpoint representing a {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}
         */
         private def {{operationId}}(da: DataAccessor): Endpoint[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}] =
-        {{httpMethod}}({{{vendorExtensions.x-codegen-path}}} {{#allParams}}{{^isPathParam}} :: {{& vendorExtensions.x-codegen-normalized-path-type}}{{/isPathParam}}{{/allParams}}) { {{#hasParams}}({{#allParams}}{{paramName}}: {{{vendorExtensions.x-codegen-normalized-input-type}}}{{^-last}}, {{/-last}}{{/allParams}}) => {{/hasParams}}
+        {{httpMethod}}({{{vendorExtensions.x-codegen-path}}} {{#allParams}}{{^isPathParam}} :: {{{ vendorExtensions.x-codegen-normalized-path-type}}}{{/isPathParam}}{{/allParams}}{{{vendorExtensions.x-codegen-authParams}}}) { {{#hasParams}}({{{vendorExtensions.x-codegen-inputParams}}}{{{vendorExtensions.x-codegen-authInputParams}}}) => {{/hasParams}}
             {{#returnType}}
-                Ok(da.{{baseName}}_{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
+                Ok(
+            {{/returnType}}
+                da.{{baseName}}_{{operationId}}({{{vendorExtensions.x-codegen-inputParams}}}{{{vendorExtensions.x-codegen-authInputParams}}})
+            {{#returnType}}
+                )
             {{/returnType}}
             {{^returnType}}
-                da.{{baseName}}_{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}})
                 NoContent[Unit]
             {{/returnType}}
         } handle {
