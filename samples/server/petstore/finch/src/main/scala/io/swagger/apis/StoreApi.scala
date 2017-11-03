@@ -33,8 +33,8 @@ object StoreApi {
         * @return And endpoint representing a Unit
         */
         private def deleteOrder(da: DataAccessor): Endpoint[Unit] =
-        delete("store" :: "order" :: string ) { (orderId: String) => 
-                da.Store_deleteOrder(orderId)
+        delete("store" :: "order" :: string ) { (orderId:String) => 
+                da.Store_deleteOrder(orderId:String)
                 NoContent[Unit]
         } handle {
           case e: Exception => BadRequest(e)
@@ -45,8 +45,10 @@ object StoreApi {
         * @return And endpoint representing a Map[String, Int]
         */
         private def getInventory(da: DataAccessor): Endpoint[Map[String, Int]] =
-        get("store" :: "inventory" ) { 
-                Ok(da.Store_getInventory())
+        get("store" :: "inventory"  :: header("api_key")) { 
+                Ok(
+                da.Store_getInventory(, authParamapi_key: String)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
@@ -56,8 +58,10 @@ object StoreApi {
         * @return And endpoint representing a Order
         */
         private def getOrderById(da: DataAccessor): Endpoint[Order] =
-        get("store" :: "order" :: long ) { (orderId: Long) => 
-                Ok(da.Store_getOrderById(orderId))
+        get("store" :: "order" :: long ) { (orderId:Long) => 
+                Ok(
+                da.Store_getOrderById(orderId:Long)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
@@ -67,8 +71,10 @@ object StoreApi {
         * @return And endpoint representing a Order
         */
         private def placeOrder(da: DataAccessor): Endpoint[Order] =
-        post("store" :: "order"  :: jsonBody[Order]) { (body: Order) => 
-                Ok(da.Store_placeOrder(body))
+        post("store" :: "order"  :: jsonBody[Order]) { (body:Order) => 
+                Ok(
+                da.Store_placeOrder(body:Order)
+                )
         } handle {
           case e: Exception => BadRequest(e)
         }
