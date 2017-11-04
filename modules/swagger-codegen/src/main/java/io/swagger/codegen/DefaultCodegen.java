@@ -2227,17 +2227,7 @@ public class DefaultCodegen {
                     }
                 }
 
-                // set isPrimitiveType and baseType for allParams
-                /*if (languageSpecificPrimitives.contains(p.baseType)) {
-                    p.isPrimitiveType = true;
-                    p.baseType = getSwaggerType(p);
-                }*/
-
-
                 allParams.add(p);
-                if (p.required || p.isBodyParam) {
-                    requiredParams.add(p.copy());
-                }
                 // Issue #2561 (neilotoole) : Moved setting of is<Type>Param flags
                 // from here to fromParameter().
                 if (param instanceof QueryParameter) {
@@ -2257,8 +2247,11 @@ public class DefaultCodegen {
                 } else if (param instanceof FormParameter) {
                     formParams.add(p.copy());
                 }
-                if (!p.required) {
+
+                if (!p.required) { //optional parameters
                     op.hasOptionalParams = true;
+                } else { // reuqired parameters
+                    requiredParams.add(p.copy());
                 }
             }
         }
