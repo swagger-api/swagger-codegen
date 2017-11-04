@@ -2248,10 +2248,10 @@ public class DefaultCodegen {
                     formParams.add(p.copy());
                 }
 
-                if (!p.required) { //optional parameters
-                    op.hasOptionalParams = true;
-                } else { // reuqired parameters
+                if (p.required) { //required parameters
                     requiredParams.add(p.copy());
+                } else { // optional parameters
+                    op.hasOptionalParams = true;
                 }
             }
         }
