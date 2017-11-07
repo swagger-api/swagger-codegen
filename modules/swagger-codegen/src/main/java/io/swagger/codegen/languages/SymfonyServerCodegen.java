@@ -144,6 +144,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "array");
+        typeMapping.put(null, "object");
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");

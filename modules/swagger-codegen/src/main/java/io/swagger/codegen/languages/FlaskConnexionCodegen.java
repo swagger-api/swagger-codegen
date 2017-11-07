@@ -66,6 +66,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("date", "date");
         typeMapping.put("DateTime", "datetime");
         typeMapping.put("object", "object");
+        typeMapping.put(null, "object");
         typeMapping.put("file", "file");
         typeMapping.put("UUID", "str");
 

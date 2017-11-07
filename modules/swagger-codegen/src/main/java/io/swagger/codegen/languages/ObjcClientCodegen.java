@@ -112,6 +112,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("bigdecimal", "NSNumber");
         typeMapping.put("List", "NSArray");
         typeMapping.put("object", "NSObject");
+        typeMapping.put(null, "NSObject");
         typeMapping.put("file", "NSURL");
         typeMapping.put("binary", "NSData");
         typeMapping.put("bytearray", "NSData");

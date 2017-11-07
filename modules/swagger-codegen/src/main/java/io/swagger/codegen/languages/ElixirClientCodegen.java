@@ -145,6 +145,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("array", "List");
         typeMapping.put("list", "List");
         // typeMapping.put("object", "Map");
+        // typeMapping.put(null, "Map");
         typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "String");
         typeMapping.put("UUID", "String");

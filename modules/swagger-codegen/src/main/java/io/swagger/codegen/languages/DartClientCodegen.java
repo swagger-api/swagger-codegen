@@ -92,6 +92,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("float", "double");
         typeMapping.put("double", "double");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("integer", "int");
         typeMapping.put("Date", "DateTime");
         typeMapping.put("date", "DateTime");

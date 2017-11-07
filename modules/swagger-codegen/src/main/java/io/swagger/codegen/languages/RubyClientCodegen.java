@@ -125,6 +125,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "Array");
         typeMapping.put("map", "Hash");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("file", "File");
         typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "String");

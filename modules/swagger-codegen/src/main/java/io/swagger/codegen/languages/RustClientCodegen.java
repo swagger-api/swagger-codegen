@@ -103,6 +103,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("binary", "Vec<u8>");
         typeMapping.put("ByteArray", "String");
         typeMapping.put("object", "Value");
+        typeMapping.put(null, "Value");
 
         // no need for rust
         //importMapping = new HashMap<String, String>();

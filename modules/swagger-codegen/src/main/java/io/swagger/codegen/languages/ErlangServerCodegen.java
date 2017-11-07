@@ -94,6 +94,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("bigdecimal", "float");
         typeMapping.put("List", "list");
         typeMapping.put("object", "object");
+        typeMapping.put(null, "object");
         typeMapping.put("file", "file");
         typeMapping.put("binary", "binary");
         typeMapping.put("bytearray", "binary");

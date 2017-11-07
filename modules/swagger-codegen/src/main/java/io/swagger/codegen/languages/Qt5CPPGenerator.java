@@ -134,6 +134,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         typeMapping.put("map", "QMap");
         typeMapping.put("file", "SWGHttpRequestInputFileElement");
         typeMapping.put("object", PREFIX + "Object");
+        typeMapping.put(null, PREFIX + "Object");
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "QString");

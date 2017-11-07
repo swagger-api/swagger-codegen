@@ -132,6 +132,7 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         typeMapping.put("long", "Long");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
+        typeMapping.put(null, "Any");
         typeMapping.put("file", "File");
         typeMapping.put("number", "Double");
 

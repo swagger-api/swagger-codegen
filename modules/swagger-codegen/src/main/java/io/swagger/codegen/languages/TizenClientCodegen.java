@@ -89,6 +89,7 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("map", "std::map");
         typeMapping.put("number", "long long");
         typeMapping.put("object", "std::string");
+        typeMapping.put(null, "std::string");
         typeMapping.put("binary", "std::string");
         typeMapping.put("password", "std::string");
         //TODO:Maybe use better formats for dateTime?

@@ -128,6 +128,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
+        typeMapping.put(null, "object");
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");
