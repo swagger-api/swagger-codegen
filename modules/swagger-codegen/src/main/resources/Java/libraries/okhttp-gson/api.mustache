@@ -78,16 +78,10 @@ public class {{classname}} implements ApiClientHolder {
         {{/externalDocs}}
      */
     public com.squareup.okhttp.Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        {{#queryParams}}{{^collectionFormat}}{{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}queryParams = new {{javaUtilPrefix}}ArrayList<{{^java8}}Pair{{/java8}}>();
-        if ({{paramName}} != null) {
-            {{localVariablePrefix}}queryParams.addAll({{localVariablePrefix}}apiClient.parameterToPair("{{baseName}}", {{paramName}}));
-        }{{/collectionFormat}}{{#collectionFormat}}
-            {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}collectionQueryParams = new {{javaUtilPrefix}}ArrayList<{{^java8}}Pair{{/java8}}>();
-        if ({{paramName}} != null) {
-            {{localVariablePrefix}}collectionQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{{collectionFormat}}}", "{{baseName}}", {{paramName}}));
-        }{{/collectionFormat}}
-        {{/queryParams}}{{#headerParams}}
-        {{javaUtilPrefix}}Map<String, String> {{localVariablePrefix}}headerParams = new {{javaUtilPrefix}}HashMap<{{^java8}}String, String{{/java8}}>();
+        {{^queryParams.isEmpty}}{{^collectionFormat}}{{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}queryParams = new {{javaUtilPrefix}}ArrayList<{{^java8}}Pair{{/java8}}>();{{/collectionFormat}}{{#collectionFormat}}{{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}collectionQueryParams = new {{javaUtilPrefix}}ArrayList<{{^java8}}Pair{{/java8}}>();{{/collectionFormat}}{{/queryParams.isEmpty}}{{#queryParams}}{{^collectionFormat}}
+        {{localVariablePrefix}}queryParams.addAll({{localVariablePrefix}}apiClient.parameterToPair("{{baseName}}", {{paramName}}));{{/collectionFormat}}{{#collectionFormat}}
+        {{localVariablePrefix}}collectionQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{{collectionFormat}}}", "{{baseName}}", {{paramName}}));{{/collectionFormat}}{{/queryParams}}{{#headerParams}}{{^queryParams.isEmpty}}
+        {{/queryParams.isEmpty}}{{javaUtilPrefix}}Map<String, String> {{localVariablePrefix}}headerParams = new {{javaUtilPrefix}}HashMap<{{^java8}}String, String{{/java8}}>();
         if ({{paramName}} != null) {
             {{localVariablePrefix}}headerParams.put("{{baseName}}", {{localVariablePrefix}}apiClient.parameterToString({{paramName}}));
         }
@@ -99,7 +93,7 @@ public class {{classname}} implements ApiClientHolder {
         {{/formParams}}return {{localVariablePrefix}}apiClient.buildCall(
             "{{{path}}}"{{#pathParams}}
             .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}}, "{{httpMethod}}",
-            {{#queryParams}}{{^collectionFormat}}{{localVariablePrefix}}queryParams{{/collectionFormat}}{{#collectionFormat}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/collectionFormat}}{{/queryParams}}{{^queryParams}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/queryParams}},{{#queryParams}}{{#collectionFormat}}{{localVariablePrefix}}collectionQueryParams{{/collectionFormat}}{{^collectionFormat}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/collectionFormat}}{{/queryParams}}{{^queryParams}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/queryParams}}, {{localVariablePrefix}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, {{#headerParams}}{{localVariablePrefix}}headerParams{{/headerParams}}{{^headerParams}}new {{javaUtilPrefix}}HashMap<String, String>(){{/headerParams}}, {{#formParams}}{{localVariablePrefix}}formParams{{/formParams}}{{^formParams}}new {{javaUtilPrefix}}HashMap<String, Object>(){{/formParams}},
+            {{^queryParams.isEmpty}}{{^collectionFormat}}{{localVariablePrefix}}queryParams{{/collectionFormat}}{{#collectionFormat}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/collectionFormat}}{{/queryParams.isEmpty}}{{^queryParams}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/queryParams}}, {{^queryParams.isEmpty}}{{#collectionFormat}}{{localVariablePrefix}}collectionQueryParams{{/collectionFormat}}{{^collectionFormat}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/collectionFormat}}{{/queryParams.isEmpty}}{{^queryParams}}new {{javaUtilPrefix}}ArrayList<Pair>(){{/queryParams}}, {{localVariablePrefix}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, {{#headerParams}}{{localVariablePrefix}}headerParams{{/headerParams}}{{^headerParams}}new {{javaUtilPrefix}}HashMap<String, String>(){{/headerParams}}, {{#formParams}}{{localVariablePrefix}}formParams{{/formParams}}{{^formParams}}new {{javaUtilPrefix}}HashMap<String, Object>(){{/formParams}},
             new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} }, new String[]{ {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, new String[]{ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },
             progressListener, progressRequestListener
         );
@@ -108,8 +102,7 @@ public class {{classname}} implements ApiClientHolder {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         {{^performBeanValidation}}{{#allParams}}{{#required}}ApiAsserts.notNull("{{operationId}}(Async)", "{{paramName}}", {{paramName}});{{#hasMore}}
-        {{/hasMore}}{{/required}}
-        {{/allParams}}return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}progressListener, progressRequestListener);
+        {{/hasMore}}{{/required}}{{/allParams}}return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}progressListener, progressRequestListener);
         {{/performBeanValidation}}
         {{#performBeanValidation}}
         try {
