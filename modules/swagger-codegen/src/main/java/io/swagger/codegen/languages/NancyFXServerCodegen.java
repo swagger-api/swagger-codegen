@@ -134,7 +134,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         }
 
         if (additionalProperties.containsKey(ASYNC_SERVER)) {
-            setAsyncServer(Boolean.valueOf(additionalProperties.get(ASYNC_SERVER).toString()));
+            setAsyncServer(convertPropertyToBooleanAndWriteBack(ASYNC_SERVER));
         }
 
         additionalProperties.put("packageGuid", packageGuid);
