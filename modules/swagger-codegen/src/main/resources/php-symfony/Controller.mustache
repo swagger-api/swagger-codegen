@@ -136,7 +136,7 @@ class Controller
             return null;
         }
         
-        if ($this->container->get('kernel')->getEnvironment() === 'prod') {
+        if (!$this->container->get('kernel')->isDebug()) {
             return [
                 'message'  => $exception->getMessage(),
             ];
