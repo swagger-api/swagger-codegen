@@ -20,7 +20,7 @@
 #define UserApi_H_
 
 
-#include "ApiClient.h"
+#include "../ApiClient.h"
 
 #include "User.h"
 #include <vector>
