@@ -95,7 +95,7 @@ class PetApiTests(AsyncTestCase):
 
     @gen_test
     def test_async_with_result(self):
-        yield self.pet_api.add_pet(body=self.pet, async=False)
+        yield self.pet_api.add_pet(body=self.pet)
 
         thread = self.pet_api.get_pet_by_id(self.pet.id, async=True)
         thread2 = self.pet_api.get_pet_by_id(self.pet.id, async=True)
@@ -184,7 +184,7 @@ class PetApiTests(AsyncTestCase):
         self.assertEqual(name, fetched.name)
         self.assertEqual(status, fetched.status)
 
-    @gen_test
+    @gen_test(timeout=10)
     def test_upload_file(self):
         # upload file with form parameter
         try:
