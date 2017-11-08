@@ -8,14 +8,18 @@ netfx=${frameworkVersion#net}
 
 echo "[INFO] Target framework: ${frameworkVersion}"
 
-echo "[INFO] Download nuget and packages"
-wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
+if [ ! type nuget &>/dev/null ]; then
+    echo "[INFO] Download nuget and packages"
+    wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
+    cp nuget.exe nuget
+fi
+
 mozroots --import --sync
-mono nuget.exe install src/IO.Swagger/packages.config -o packages;
+mono nuget install src/IO.Swagger/packages.config -o packages;
 
 echo "[INFO] Copy DLLs to the 'bin' folder"
 mkdir -p bin;
-cp packages/Newtonsoft.Json.4.5.11/lib/net40/Newtonsoft.Json.dll bin/Newtonsoft.Json.dll;
+cp packages/Newtonsoft.Json.10.0.3/lib/net40/Newtonsoft.Json.dll bin/Newtonsoft.Json.dll;
 cp packages/RestSharp.105.1.0/lib/net4/RestSharp.dll bin/RestSharp.dll;
 
 echo "[INFO] Run 'mcs' to build bin/IO.Swagger.dll"
