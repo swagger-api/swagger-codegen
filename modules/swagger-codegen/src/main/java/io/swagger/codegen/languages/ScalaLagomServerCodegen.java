@@ -5,17 +5,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
-public class LagomScalaApiCodegen extends AbstractScalaLagomCodegen implements CodegenConfig {
+public class ScalaLagomServerCodegen extends AbstractScalaCodegen implements CodegenConfig {
 
   private String authScheme = "";
   private boolean authPreemptive=false;
   protected String groupId = "io.swagger";
-  protected String artifactId = "lagomScalaApi";
+  protected String artifactId = "scala-lagomApi";
   protected String artifactVersion = "1.0.0";
 
-  public LagomScalaApiCodegen() {
+  public ScalaLagomServerCodegen() {
     super();
-    outputFolder = "generated-code/lagomScalaApi";
+    outputFolder = "generated-code/scala-lagomApi";
     modelTemplateFiles.put("model.mustache", ".scala");
     apiTemplateFiles.put("api.mustache", ".scala");
     embeddedTemplateDir = templateDir = "lagomScalaApi";
@@ -161,12 +161,12 @@ public class LagomScalaApiCodegen extends AbstractScalaLagomCodegen implements C
 
   @Override
   public CodegenType getTag() {
-    return CodegenType.CLIENT;
+    return CodegenType.SERVER;
   }
 
   @Override
   public String getName() {
-    return "lagomScalaApi";
+    return "scala-lagomApi";
   }
 
   @Override
@@ -261,6 +261,18 @@ public class LagomScalaApiCodegen extends AbstractScalaLagomCodegen implements C
       }
     }
 
+    return objs;
+  }
+
+  @Override
+  public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+    ArrayList<CodegenOperation> oplist = (ArrayList<CodegenOperation>) operations.get("operation");
+
+    for (CodegenOperation codegenOperation : oplist) {
+      String path = codegenOperation.path;
+      codegenOperation.path = path.replaceAll("\\{", ":").replaceAll("}", "");
+    }
     return objs;
   }
 

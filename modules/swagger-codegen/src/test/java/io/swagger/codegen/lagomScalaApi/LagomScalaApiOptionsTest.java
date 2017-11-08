@@ -2,7 +2,7 @@ package io.swagger.codegen.lagomScalaApi;
 
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.languages.LagomScalaApiCodegen;
+import io.swagger.codegen.languages.ScalaLagomServerCodegen;
 import io.swagger.codegen.options.ScalaClientOptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -10,7 +10,7 @@ import mockit.Tested;
 public class LagomScalaApiOptionsTest extends AbstractOptionsTest {
 
   @Tested
-  private LagomScalaApiCodegen clientCodegen;
+  private ScalaLagomServerCodegen clientCodegen;
 
   public LagomScalaApiOptionsTest() {
     super(new ScalaClientOptionsProvider());

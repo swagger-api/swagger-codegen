@@ -5,6 +5,6 @@ If Not Exist %executable% (
 )
 
 REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M
-set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l lagomScalaApi -o samples\client\petstore\lagomScalaApi
+set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l scala-lagomApi -o samples\client\petstore\scala-lagomApi
 
 java %JAVA_OPTS% -jar %executable% %ags%

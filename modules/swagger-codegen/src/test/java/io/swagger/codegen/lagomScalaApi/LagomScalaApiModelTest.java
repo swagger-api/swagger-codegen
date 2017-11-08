@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.languages.LagomScalaApiCodegen;
+import io.swagger.codegen.languages.ScalaLagomServerCodegen;
 import io.swagger.codegen.languages.ScalaClientCodegen;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.Model;
@@ -30,7 +30,7 @@ public class LagomScalaApiModelTest {
         .property("createdAt", new DateTimeProperty())
         .required("id")
         .required("name");
-    final DefaultCodegen codegen = new LagomScalaApiCodegen();
+    final DefaultCodegen codegen = new ScalaLagomServerCodegen();
     final CodegenModel cm = codegen.fromModel("sample", model);
 
     Assert.assertEquals(cm.name, "sample");
