@@ -347,6 +347,12 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("JsonSubTypes.mustache",
                 clientPackageDir, "JsonSubTypes.cs"));
 
+        if (NET40.equals(this.targetFramework)) {
+            // .net 4.0 doesn't include ReadOnlyDictionary…
+            supportingFiles.add(new SupportingFile("ReadOnlyDictionary.mustache",
+                    clientPackageDir, "ReadOnlyDictionary.cs"));
+        }
+
         if (Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
@@ -374,6 +380,13 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
             if (Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
                 supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+            }
+
+            if (NET40.equals(this.targetFramework)) {
+                // Include minimal tests for modifications made to JsonSubTypes, since code is quite different for .net 4.0 from original implementation
+                supportingFiles.add(new SupportingFile("JsonSubTypesTests.mustache",
+                        testPackageFolder + File.separator + "Client",
+                        "JsonSubTypesTests.cs"));
             }
         }
 
