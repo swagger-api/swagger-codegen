@@ -18,8 +18,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final String NET45 = "v4.5";
     private static final String NET40 = "v4.0";
     private static final String NET35 = "v3.5";
+    // TODO: v5.0 is PCL, not netstandard version 1.3, and not a specific .NET Framework. This needs to be updated,
+    // especially because it will conflict with .NET Framework 5.0 when released, and PCL 5 refers to Framework 4.0.
+    // We should support either NETSTANDARD, PCL, or Both… but the concepts shouldn't be mixed.
     private static final String NETSTANDARD = "v5.0";
     private static final String UWP = "uwp";
+
+    // Defines the sdk option for targeted frameworks, which differs from targetFramework and targetFrameworkNuget
+    private static final String MCS_NET_VERSION_KEY = "x-mcs-sdk";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String clientPackage = "IO.Swagger.Client";
@@ -27,7 +33,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
 
+    // Defines TargetFrameworkVersion in csproj files
     protected String targetFramework = NET45;
+
+    // Defines nuget identifiers for target framework
     protected String targetFrameworkNuget = "net45";
     protected boolean supportsAsync = Boolean.TRUE;
     protected boolean supportsUWP = Boolean.FALSE;
@@ -212,6 +221,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         if (NET35.equals(this.targetFramework)) {
+            // This is correct, mono will require you build .NET 3.5 sources using 4.0 SDK
+            additionalProperties.put(MCS_NET_VERSION_KEY, "4");
             additionalProperties.put("net35", true);
             if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ASYNC)) {
                 LOGGER.warn(".NET 3.5 generator does not support async.");
@@ -222,6 +233,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             setValidatable(Boolean.FALSE);
             setSupportsAsync(Boolean.FALSE);
         } else if (NETSTANDARD.equals(this.targetFramework)) {
+            // TODO: NETSTANDARD here is misrepresenting a PCL v5.0 which supports .NET Framework 4.6+, .NET Core 1.0, and Windows Universal 10.0
+            additionalProperties.put(MCS_NET_VERSION_KEY, "4.6-api");
             if (additionalProperties.containsKey("supportsUWP")) {
                 LOGGER.warn(".NET " + NETSTANDARD + " generator does not support UWP.");
                 additionalProperties.remove("supportsUWP");
@@ -241,6 +254,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             setSupportsAsync(Boolean.TRUE);
             setSupportsUWP(Boolean.TRUE);
         } else if (NET40.equals(this.targetFramework)) {
+            additionalProperties.put(MCS_NET_VERSION_KEY, "4");
             additionalProperties.put("isNet40", true);
 
             if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ASYNC)) {
@@ -251,6 +265,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             setTargetFrameworkNuget("net40");
             setSupportsAsync(Boolean.FALSE);
         } else {
+            additionalProperties.put(MCS_NET_VERSION_KEY, "4.5.2-api");
             setTargetFrameworkNuget("net45");
             setSupportsAsync(Boolean.TRUE);
         }

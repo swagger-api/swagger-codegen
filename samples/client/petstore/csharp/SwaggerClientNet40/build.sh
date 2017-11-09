@@ -4,7 +4,31 @@
 #
 
 frameworkVersion=net40
-netfx=${frameworkVersion#net}
+
+# sdk must match installed framworks under PREFIX/lib/mono/[value]
+sdk=4
+
+# langversion refers to C# language features. see man mcs for details.
+langversion=${sdk}
+
+# Match against our known SDK possibilities
+case "${sdk}" in
+  4)
+    langversion=4
+    ;;
+  4.5*)
+    langversion=5
+    ;;
+  4.6*)
+    langversion=6
+    ;;
+  4.7*)
+    langversion=7 # ignoring 7.1 for now.
+    ;;
+  *)
+    langversion=6
+    ;;
+esac
 
 echo "[INFO] Target framework: ${frameworkVersion}"
 
@@ -23,7 +47,7 @@ cp packages/Newtonsoft.Json.10.0.3/lib/net40/Newtonsoft.Json.dll bin/Newtonsoft.
 cp packages/RestSharp.105.1.0/lib/net4/RestSharp.dll bin/RestSharp.dll;
 
 echo "[INFO] Run 'mcs' to build bin/IO.Swagger.dll"
-mcs -sdk:${netfx} -r:bin/Newtonsoft.Json.dll,\
+mcs -langversion:${langversion} -sdk:${sdk} -r:bin/Newtonsoft.Json.dll,\
 bin/RestSharp.dll,\
 System.ComponentModel.DataAnnotations.dll,\
 System.Runtime.Serialization.dll \

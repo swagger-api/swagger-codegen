@@ -30,7 +30,7 @@ namespace IO.Swagger.Client
 
         public ReadOnlyDictionary(IDictionary<T, K> dictionaryImplementation)
         {
-            if (dictionaryImplementation == null) throw new ArgumentNullException(nameof(dictionaryImplementation));
+            if (dictionaryImplementation == null) throw new ArgumentNullException("dictionaryImplementation");
             _dictionaryImplementation = dictionaryImplementation;
         }
 
