@@ -36,7 +36,7 @@ open class StoreAPI {
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 observer.on(.completed)
             }

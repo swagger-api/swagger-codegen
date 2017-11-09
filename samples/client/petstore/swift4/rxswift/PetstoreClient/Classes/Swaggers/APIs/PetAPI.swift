@@ -36,7 +36,7 @@ open class PetAPI {
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 observer.on(.completed)
             }
@@ -95,7 +95,7 @@ open class PetAPI {
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 observer.on(.completed)
             }
@@ -565,7 +565,7 @@ open class PetAPI {
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 observer.on(.completed)
             }
@@ -626,7 +626,7 @@ open class PetAPI {
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
-                    observer.on(.next())
+                    observer.on(.next(()))
                 }
                 observer.on(.completed)
             }
