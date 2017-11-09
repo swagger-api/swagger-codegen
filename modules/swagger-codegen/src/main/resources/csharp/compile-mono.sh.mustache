@@ -10,6 +10,7 @@ sdk={{x-mcs-sdk}}
 
 # langversion refers to C# language features. see man mcs for details.
 langversion=${sdk}
+nuget_cmd=nuget
 
 # Match against our known SDK possibilities
 case "${sdk}" in
@@ -35,11 +36,11 @@ echo "[INFO] Target framework: ${frameworkVersion}"
 if [ ! type nuget &>/dev/null ]; then
     echo "[INFO] Download nuget and packages"
     wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
-    cp nuget.exe nuget
+    nuget_cmd="mono nuget"
 fi
 
 mozroots --import --sync
-mono nuget install src/{{packageName}}/packages.config -o packages;
+${nuget_cmd} install src/{{packageName}}/packages.config -o packages;
 
 echo "[INFO] Copy DLLs to the 'bin' folder"
 mkdir -p bin;
