@@ -1,20 +1,16 @@
--- This file has been generated from package.yaml by hpack version 0.17.1.
---
--- see: https://github.com/sol/hpack
-
 name:           swagger-petstore
 version:        0.1.0.0
 synopsis:       Auto-generated swagger-petstore API Client
 description:    .
                 Client library for calling the swagger-petstore API based on http-client.
                 .
-                host: petstore.swagger.io
+                host: petstore.swagger.io:80
                 .
-                base path: http://petstore.swagger.io/v2
+                base path: http://petstore.swagger.io:80/v2
                 .
-                apiVersion: 0.0.1
+                Swagger Petstore API version: 1.0.0
                 .
-                swagger version: 2.0
+                OpenAPI spec version: 2.0
                 .
                 OpenAPI-Specification: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
                 .
@@ -29,7 +25,7 @@ cabal-version:  >= 1.10
 
 extra-source-files:
     README.md
-    swagger.json
+    swagger.yaml
 
 library
   hs-source-dirs:
@@ -42,8 +38,9 @@ library
     , unordered-containers
     , aeson >=1.0 && <2.0
     , bytestring >=0.10.0 && <0.11
+    , base64-bytestring >1.0 && <2.0
     , containers >=0.5.0.0 && <0.6
-    , http-types >=0.8 && <0.10
+    , http-types >=0.8 && <0.11
     , http-client >=0.5 && <0.6
     , http-client-tls
     , http-api-data >= 0.3.4 && <0.4
@@ -59,14 +56,16 @@ library
     , safe-exceptions <0.2
     , case-insensitive
     , microlens >= 0.4.3 && <0.5
+    , deepseq >= 1.4 && <1.6
   exposed-modules:
       SwaggerPetstore
       SwaggerPetstore.API
       SwaggerPetstore.Client
-      SwaggerPetstore.Model
-      SwaggerPetstore.MimeTypes
-      SwaggerPetstore.Lens
+      SwaggerPetstore.Core
       SwaggerPetstore.Logging
+      SwaggerPetstore.MimeTypes
+      SwaggerPetstore.Model
+      SwaggerPetstore.ModelLens
   other-modules:
       Paths_swagger_petstore
   default-language: Haskell2010
@@ -90,6 +89,7 @@ test-suite tests
     , time
     , iso8601-time
     , aeson
+    , vector
     , semigroups
     , QuickCheck
   other-modules:

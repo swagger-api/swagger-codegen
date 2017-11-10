@@ -1,9 +1,9 @@
+io.swagger.codegen.languages.AdaCodegen
 io.swagger.codegen.languages.AkkaScalaClientCodegen
 io.swagger.codegen.languages.AndroidClientCodegen
 io.swagger.codegen.languages.Apache2ConfigCodegen
 io.swagger.codegen.languages.ApexClientCodegen
 io.swagger.codegen.languages.AspNetCoreServerCodegen
-io.swagger.codegen.languages.AsyncScalaClientCodegen
 io.swagger.codegen.languages.BashClientCodegen
 io.swagger.codegen.languages.CSharpClientCodegen
 io.swagger.codegen.languages.ClojureClientCodegen
@@ -56,8 +56,10 @@ io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.RestbedCodegen
 io.swagger.codegen.languages.RubyClientCodegen
 io.swagger.codegen.languages.RustClientCodegen
+io.swagger.codegen.languages.RustServerCodegen
 io.swagger.codegen.languages.ScalaClientCodegen
 io.swagger.codegen.languages.ScalatraServerCodegen
+io.swagger.codegen.languages.ScalazClientCodegen
 io.swagger.codegen.languages.SilexServerCodegen
 io.swagger.codegen.languages.SinatraServerCodegen
 io.swagger.codegen.languages.SlimFrameworkServerCodegen
