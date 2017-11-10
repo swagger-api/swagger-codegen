@@ -15,10 +15,10 @@ case class {{classname}} (
 {{/vars}}
 )
 object {{classname}} {
-    def toStringBody({{#vars}}_{{name}}: {{^required}}{{/required}}Object{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) =
+    def toStringBody({{#vars}}var_{{name}}: {{^required}}{{/required}}Object{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) =
         s"""
         | {
-        | {{#vars}}"{{{name}}}":$_{{{name}}}{{#hasMore}},{{/hasMore}}{{/vars}}
+        | {{#vars}}"{{{name}}}":$var_{{{name}}}{{#hasMore}},{{/hasMore}}{{/vars}}
         | }
         """.stripMargin
 }
