@@ -160,14 +160,14 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Gatling does not need the models to have escaped words as it builds models dynamically instead of through
+     * an instance of the object.
      *
      * @return the escaped term
      */
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name;  // add an underscore to the name
+        return name;  // add an underscore to the name
     }
 
     /**
