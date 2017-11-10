@@ -1,0 +1,26 @@
+{{>licenseInfo}}
+package {{package}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#models}}
+{{#model}}
+case class {{classname}} (
+{{#vars}}
+{{#description}}
+    /* {{{description}}} */
+{{/description}}
+    {{{name}}}: {{^required}}Option[{{/required}}{{datatype}}{{^required}}]{{/required}}{{#hasMore}},{{/hasMore}}
+{{/vars}}
+)
+object {{classname}} {
+    def toStringBody({{#vars}}{{name}}: {{^required}}{{/required}}Object{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) =
+        s"""
+        | {
+        | {{#vars}}"{{{name}}}":${{{name}}}{{#hasMore}},{{/hasMore}}{{/vars}}
+        | }
+        """.stripMargin
+}
+{{/model}}
+{{/models}}
