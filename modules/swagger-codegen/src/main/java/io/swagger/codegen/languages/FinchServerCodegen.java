@@ -80,7 +80,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("long", "Long");
         typeMapping.put("double", "Double");
         typeMapping.put("number", "BigDecimal");
-        typeMapping.put("date-time", "LocalDateTime");
+        typeMapping.put("date-time", "ZonedDateTime");
         typeMapping.put("date", "LocalDateTime");
         typeMapping.put("file", "File");
         typeMapping.put("array", "Seq");
@@ -88,8 +88,8 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("map", "Map");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "Array[Byte]");
-        typeMapping.put("Date", "LocalDateTime");
-        typeMapping.put("DateTime", "LocalDateTime");
+//        typeMapping.put("Date", "Date");
+        typeMapping.put("DateTime", "ZonedDateTime");
 
         additionalProperties.put("modelPackage", modelPackage());
         additionalProperties.put("apiPackage", apiPackage());
@@ -153,6 +153,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping.put("LocalDateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
         importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("ZonedDateTime", "java.time.ZonedDateTime");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Finch package name (e.g. io.swagger).")
