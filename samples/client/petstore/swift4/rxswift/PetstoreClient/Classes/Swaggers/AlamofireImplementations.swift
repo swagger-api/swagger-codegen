@@ -211,7 +211,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
             validatedRequest.responseData(completionHandler: { (dataResponse) in
                 cleanupRequest()
 
-                if (dataResponse.result.isFailure) {
+                if dataResponse.result.isFailure {
                     completion(
                         nil,
                         ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
@@ -363,7 +363,7 @@ open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilde
             validatedRequest.responseData(completionHandler: { (dataResponse) in
                 cleanupRequest()
 
-                if (dataResponse.result.isFailure) {
+                if dataResponse.result.isFailure {
                     completion(
                         nil,
                         ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
