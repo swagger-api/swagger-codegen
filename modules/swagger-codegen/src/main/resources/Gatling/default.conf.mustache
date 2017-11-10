@@ -1,0 +1,18 @@
+performance {
+    authorizationHeader = "~MANUAL_ENTRY~"
+    warmUpSeconds = 60
+    durationSeconds = 360
+    contentType = "application/json"
+    acceptType = "application/json"
+    operationsPerSecond {
+    {{#apiInfo}}
+    {{#apis}}
+    {{#operations}}
+    {{#operation}}
+        {{operationId}} = 1
+    {{/operation}}
+    {{/operations}}
+    {{/apis}}
+    {{/apiInfo}}
+    }
+}
