@@ -88,7 +88,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("map", "Map");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "Array[Byte]");
-//        typeMapping.put("Date", "Date");
+        typeMapping.put("Date", "LocalDateTime");
         typeMapping.put("DateTime", "ZonedDateTime");
 
         additionalProperties.put("modelPackage", modelPackage());
@@ -350,24 +350,15 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         op.httpMethod = op.httpMethod.toLowerCase();
 
         String path = new String(op.path);
+
         // remove first /
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
+
         // remove last /
         if (path.endsWith("/")) {
             path = path.substring(0, path.length()-1);
-        }
-
-        for(CodegenResponse resp : op.responses) {
-            System.out.println(resp.code);
-            if(resp.code != "200") {
-                System.out.println(resp.baseType);
-                System.out.println(resp.dataType);
-                System.out.println(resp.examples);
-                System.out.println(resp.containerType);
-                System.out.println(resp.jsonSchema);
-            }
         }
 
         String[] items = path.split("/", -1);
@@ -386,7 +377,6 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                 pathParamIndex++;
             } else {
                 scalaPath = colConcat(scalaPath, "\"" + items[i] + "\"");
-
             }
         }
 
