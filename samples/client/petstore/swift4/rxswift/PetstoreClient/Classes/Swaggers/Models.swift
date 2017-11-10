@@ -11,7 +11,7 @@ protocol JSONEncodable {
 }
 
 public enum ErrorResponse : Error {
-    case Error(Int, Data?, Error)
+    case error(Int, Data?, Error)
 }
 
 open class Response<T> {
