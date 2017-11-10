@@ -1,7 +1,6 @@
 package io.swagger.apis
 
 import java.io._
-import java.util.Date
 import io.swagger._
 import io.swagger.models._
 import io.swagger.models.Order
@@ -16,8 +15,7 @@ import com.twitter.util.Future
 import com.twitter.io.Buf
 import io.finch._, items._
 import java.io.File
-import java.util.UUID
-import java.util.Date
+import java.time._
 
 object StoreApi {
     /**
@@ -38,6 +36,19 @@ object StoreApi {
       case _ => InternalServerError(e)
     }
 
+    implicit class StringOps(s: String) {
+
+      import java.time.format.DateTimeFormatter
+
+      lazy val localformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+      lazy val datetimeformatter: DateTimeFormatter =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+      def toLocalDateTime: LocalDateTime = LocalDateTime.parse(s,localformatter)
+      def toZonedDateTime: ZonedDateTime = ZonedDateTime.parse(s, datetimeformatter)
+
+    }
+
         /**
         * 
         * @return An endpoint representing a Unit
@@ -51,6 +62,7 @@ object StoreApi {
         } handle {
           case e: Exception => BadRequest(e)
         }
+
         /**
         * 
         * @return An endpoint representing a Map[String, Int]
@@ -64,6 +76,7 @@ object StoreApi {
         } handle {
           case e: Exception => BadRequest(e)
         }
+
         /**
         * 
         * @return An endpoint representing a Order
@@ -77,6 +90,7 @@ object StoreApi {
         } handle {
           case e: Exception => BadRequest(e)
         }
+
         /**
         * 
         * @return An endpoint representing a Order
@@ -90,6 +104,7 @@ object StoreApi {
         } handle {
           case e: Exception => BadRequest(e)
         }
+
 
     implicit private def fileUploadToFile(fileUpload: FileUpload) : File = {
       fileUpload match {

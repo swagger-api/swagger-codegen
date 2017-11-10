@@ -2,8 +2,9 @@ package io.swagger
 
 // TODO: properly handle custom imports
 import java.io._
-import java.util.Date
 import java.util.UUID
+import java.time._
+
 
 import io.swagger.models._
 
