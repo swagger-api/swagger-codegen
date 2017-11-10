@@ -86,6 +86,9 @@ class {{classname}}Simulation extends Simulation {
     {{#vendorExtensions.x-gatling-body-feeder}}
         .feed({{vendorExtensions.x-gatling-body-feeder}})
     {{/vendorExtensions.x-gatling-body-feeder}}
+    {{#vendorExtensions.x-gatling-path-feeder}}
+        .feed({{vendorExtensions.x-gatling-path-feeder}})
+    {{/vendorExtensions.x-gatling-path-feeder}}
         .exec(http("{{operationId}}")
         .httpRequest("{{httpMethod}}","{{{vendorExtensions.x-gatling-path}}}")
         {{#vendorExtensions.x-gatling-query-params}}
