@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.*;
 import java.io.File;
 
-public class GatlingCodegen extends DefaultCodegen implements CodegenConfig {
+public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfig {
 
     // source folder where to write the files
     protected String sourceFolder = "src" + File.separator + "gatling" + File.separator + "scala";
