@@ -35,100 +35,118 @@ object UserApi {
         logoutUser(da) :+:
         updateUser(da)
 
+
+    private def checkError(e: CommonError) = e match {
+      case InvalidInput(_) => BadRequest(e)
+      case MissingIdentifier(_) => BadRequest(e)
+      case RecordNotFound(_) => NotFound(e)
+      case _ => InternalServerError(e)
+    }
+
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def createUser(da: DataAccessor): Endpoint[Unit] =
         post("user" :: jsonBody[User]) { (body: User) => 
-          da.User_createUser(body)
-          NoContent[Unit]
+          da.User_createUser(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def createUsersWithArrayInput(da: DataAccessor): Endpoint[Unit] =
         post("user" :: "createWithArray" :: jsonBody[Seq[User]]) { (body: Seq[User]) => 
-          da.User_createUsersWithArrayInput(body)
-          NoContent[Unit]
+          da.User_createUsersWithArrayInput(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def createUsersWithListInput(da: DataAccessor): Endpoint[Unit] =
         post("user" :: "createWithList" :: jsonBody[Seq[User]]) { (body: Seq[User]) => 
-          da.User_createUsersWithListInput(body)
-          NoContent[Unit]
+          da.User_createUsersWithListInput(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def deleteUser(da: DataAccessor): Endpoint[Unit] =
         delete("user" :: string) { (username: String) => 
-          da.User_deleteUser(username)
-          NoContent[Unit]
+          da.User_deleteUser(username) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a User
         */
         private def getUserByName(da: DataAccessor): Endpoint[User] =
         get("user" :: string) { (username: String) => 
-          Ok(da.User_getUserByName(username))
+          da.User_getUserByName(username) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a String
         */
         private def loginUser(da: DataAccessor): Endpoint[String] =
         get("user" :: "login" :: param("username") :: param("password")) { (username: String, password: String) => 
-          Ok(da.User_loginUser(username, password))
+          da.User_loginUser(username, password) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def logoutUser(da: DataAccessor): Endpoint[Unit] =
         get("user" :: "logout") { 
-          da.User_logoutUser()
-          NoContent[Unit]
+          da.User_logoutUser() match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def updateUser(da: DataAccessor): Endpoint[Unit] =
         put("user" :: string :: jsonBody[User]) { (username: String, body: User) => 
-          da.User_updateUser(username, body)
-          NoContent[Unit]
+          da.User_updateUser(username, body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
 
     implicit private def fileUploadToFile(fileUpload: FileUpload) : File = {
       fileUpload match {

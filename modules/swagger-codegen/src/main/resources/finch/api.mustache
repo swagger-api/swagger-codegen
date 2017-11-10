@@ -32,6 +32,14 @@ object {{classname}} {
         {{/operation}}
     {{/operations}}
 
+
+    private def checkError(e: CommonError) = e match {
+      case InvalidInput(_) => BadRequest(e)
+      case MissingIdentifier(_) => BadRequest(e)
+      case RecordNotFound(_) => NotFound(e)
+      case _ => InternalServerError(e)
+    }
+
     {{#operations}}
         {{#operation}}
         /**
@@ -40,10 +48,10 @@ object {{classname}} {
         */
         private def {{operationId}}(da: DataAccessor): Endpoint[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}] =
         {{httpMethod}}({{{vendorExtensions.x-codegen-paths}}}) { {{#hasParams}}({{{vendorExtensions.x-codegen-typedParams}}}) => {{/hasParams}}
-          {{#returnType}}Ok({{/returnType}}da.{{baseName}}_{{operationId}}({{{vendorExtensions.x-codegen-params}}}){{#returnType}}){{/returnType}}
-          {{^returnType}}
-          NoContent[Unit]
-          {{/returnType}}
+          da.{{baseName}}_{{operationId}}({{{vendorExtensions.x-codegen-params}}}) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }

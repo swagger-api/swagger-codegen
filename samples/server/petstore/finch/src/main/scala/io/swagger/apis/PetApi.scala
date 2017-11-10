@@ -36,98 +36,118 @@ object PetApi {
         updatePetWithForm(da) :+:
         uploadFile(da)
 
+
+    private def checkError(e: CommonError) = e match {
+      case InvalidInput(_) => BadRequest(e)
+      case MissingIdentifier(_) => BadRequest(e)
+      case RecordNotFound(_) => NotFound(e)
+      case _ => InternalServerError(e)
+    }
+
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def addPet(da: DataAccessor): Endpoint[Unit] =
         post("pet" :: jsonBody[Pet]) { (body: Pet) => 
-          da.Pet_addPet(body)
-          NoContent[Unit]
+          da.Pet_addPet(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def deletePet(da: DataAccessor): Endpoint[Unit] =
         delete("pet" :: long :: headerOption("api_key")) { (petId: Long, apiKey: Option[String]) => 
-          da.Pet_deletePet(petId, apiKey)
-          NoContent[Unit]
+          da.Pet_deletePet(petId, apiKey) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Seq[Pet]
         */
         private def findPetsByStatus(da: DataAccessor): Endpoint[Seq[Pet]] =
         get("pet" :: "findByStatus" :: params("status")) { (status: Seq[String]) => 
-          Ok(da.Pet_findPetsByStatus(status))
+          da.Pet_findPetsByStatus(status) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Seq[Pet]
         */
         private def findPetsByTags(da: DataAccessor): Endpoint[Seq[Pet]] =
         get("pet" :: "findByTags" :: params("tags")) { (tags: Seq[String]) => 
-          Ok(da.Pet_findPetsByTags(tags))
+          da.Pet_findPetsByTags(tags) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Pet
         */
         private def getPetById(da: DataAccessor): Endpoint[Pet] =
         get("pet" :: long :: header("api_key")) { (petId: Long, authParamapi_key: String) => 
-          Ok(da.Pet_getPetById(petId, authParamapi_key))
+          da.Pet_getPetById(petId, authParamapi_key) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def updatePet(da: DataAccessor): Endpoint[Unit] =
         put("pet" :: jsonBody[Pet]) { (body: Pet) => 
-          da.Pet_updatePet(body)
-          NoContent[Unit]
+          da.Pet_updatePet(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def updatePetWithForm(da: DataAccessor): Endpoint[Unit] =
         post("pet" :: long :: string :: string) { (petId: Long, name: Option[String], status: Option[String]) => 
-          da.Pet_updatePetWithForm(petId, name, status)
-          NoContent[Unit]
+          da.Pet_updatePetWithForm(petId, name, status) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a ApiResponse
         */
         private def uploadFile(da: DataAccessor): Endpoint[ApiResponse] =
         post("pet" :: long :: "uploadImage" :: string :: fileUpload("file")) { (petId: Long, additionalMetadata: Option[String], file: FileUpload) => 
-          Ok(da.Pet_uploadFile(petId, additionalMetadata, file))
+          da.Pet_uploadFile(petId, additionalMetadata, file) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
 
     implicit private def fileUploadToFile(fileUpload: FileUpload) : File = {
       fileUpload match {

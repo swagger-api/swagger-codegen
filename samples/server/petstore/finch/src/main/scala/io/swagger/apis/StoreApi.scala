@@ -30,51 +30,66 @@ object StoreApi {
         getOrderById(da) :+:
         placeOrder(da)
 
+
+    private def checkError(e: CommonError) = e match {
+      case InvalidInput(_) => BadRequest(e)
+      case MissingIdentifier(_) => BadRequest(e)
+      case RecordNotFound(_) => NotFound(e)
+      case _ => InternalServerError(e)
+    }
+
         /**
         * 
         * @return An endpoint representing a Unit
         */
         private def deleteOrder(da: DataAccessor): Endpoint[Unit] =
         delete("store" :: "order" :: string) { (orderId: String) => 
-          da.Store_deleteOrder(orderId)
-          NoContent[Unit]
+          da.Store_deleteOrder(orderId) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Map[String, Int]
         */
         private def getInventory(da: DataAccessor): Endpoint[Map[String, Int]] =
         get("store" :: "inventory" :: header("api_key")) { 
-          Ok(da.Store_getInventory(authParamapi_key))
+          da.Store_getInventory(authParamapi_key) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Order
         */
         private def getOrderById(da: DataAccessor): Endpoint[Order] =
         get("store" :: "order" :: long) { (orderId: Long) => 
-          Ok(da.Store_getOrderById(orderId))
+          da.Store_getOrderById(orderId) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
         /**
         * 
         * @return An endpoint representing a Order
         */
         private def placeOrder(da: DataAccessor): Endpoint[Order] =
         post("store" :: "order" :: jsonBody[Order]) { (body: Order) => 
-          Ok(da.Store_placeOrder(body))
+          da.Store_placeOrder(body) match {
+            case Left(error) => checkError(error)
+            case Right(data) => Ok(data)
+          }
         } handle {
           case e: Exception => BadRequest(e)
         }
-
 
     implicit private def fileUploadToFile(fileUpload: FileUpload) : File = {
       fileUpload match {

@@ -358,6 +358,17 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
             path = path.substring(0, path.length()-1);
         }
 
+        for(CodegenResponse resp : op.responses) {
+            System.out.println(resp.code);
+            if(resp.code != "200") {
+                System.out.println(resp.baseType);
+                System.out.println(resp.dataType);
+                System.out.println(resp.examples);
+                System.out.println(resp.containerType);
+                System.out.println(resp.jsonSchema);
+            }
+        }
+
         String[] items = path.split("/", -1);
         String scalaPath = "";
         Integer pathParamIndex = 0;

@@ -28,7 +28,7 @@ class Server {
 }
 
 /**
- * Launches the PetstoreAPI service when the system is ready.
+ * Launches the API service when the system is ready.
  */
 object Server extends Server with App {
   Await.ready(server)

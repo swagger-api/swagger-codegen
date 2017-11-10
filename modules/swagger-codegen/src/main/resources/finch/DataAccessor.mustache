@@ -19,7 +19,7 @@ trait DataAccessor {
         * {{{description}}}
         * @return A {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}
         */
-        def {{baseName}}_{{operationId}}({{{vendorExtensions.x-codegen-typedParams}}}): {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}} = ???
+        def {{baseName}}_{{operationId}}({{{vendorExtensions.x-codegen-typedParams}}}): Either[CommonError,{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}] = ???
 
     {{/operation}}
 {{/operations}}
