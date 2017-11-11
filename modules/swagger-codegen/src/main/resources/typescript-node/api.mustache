@@ -339,7 +339,7 @@ export class {{classname}} {
     }
 
     public setApiKey(key: {{classname}}ApiKeys, value: string) {
-        this.authentications[{{classname}}ApiKeys[key]].apiKey = value;
+        (this.authentications as any)[{{classname}}ApiKeys[key]].apiKey = value;
     }
 {{#authMethods}}
 {{#isBasic}}
