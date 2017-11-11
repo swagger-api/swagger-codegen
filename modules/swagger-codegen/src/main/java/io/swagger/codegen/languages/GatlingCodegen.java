@@ -112,6 +112,21 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("default.conf.mustache",
                 confFolder,
                 "default.conf"));
+        supportingFiles.add(new SupportingFile("default.conf.mustache",
+                confFolder,
+                "CI.conf"));
+        supportingFiles.add(new SupportingFile("default.conf.mustache",
+                confFolder,
+                "CD.conf"));
+        supportingFiles.add(new SupportingFile("default.conf.mustache",
+                confFolder,
+                "stress.conf"));
+        supportingFiles.add(new SupportingFile("default.conf.mustache",
+                confFolder,
+                "baseline.conf"));
+        supportingFiles.add(new SupportingFile("default.conf.mustache",
+                confFolder,
+                "longevity.conf"));
 
 
         importMapping.remove("List");
