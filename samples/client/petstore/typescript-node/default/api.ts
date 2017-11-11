@@ -515,7 +515,7 @@ export class PetApi {
     }
 
     public setApiKey(key: PetApiApiKeys, value: string) {
-        this.authentications[PetApiApiKeys[key]].apiKey = value;
+        (this.authentications as any)[PetApiApiKeys[key]].apiKey = value;
     }
 
     set accessToken(token: string) {
@@ -1032,7 +1032,7 @@ export class StoreApi {
     }
 
     public setApiKey(key: StoreApiApiKeys, value: string) {
-        this.authentications[StoreApiApiKeys[key]].apiKey = value;
+        (this.authentications as any)[StoreApiApiKeys[key]].apiKey = value;
     }
 
     set accessToken(token: string) {
@@ -1290,7 +1290,7 @@ export class UserApi {
     }
 
     public setApiKey(key: UserApiApiKeys, value: string) {
-        this.authentications[UserApiApiKeys[key]].apiKey = value;
+        (this.authentications as any)[UserApiApiKeys[key]].apiKey = value;
     }
 
     set accessToken(token: string) {
