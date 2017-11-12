@@ -33,7 +33,11 @@ require_once(__DIR__ . '/vendor/autoload.php');
 {{{invokerPackage}}}\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');{{/isOAuth}}{{/authMethods}}
 {{/hasAuthMethods}}
 
-$api_instance = new {{invokerPackage}}\Api\{{classname}}(new \Http\Adapter\Guzzle6\Client());
+$api_instance = new {{invokerPackage}}\Api\{{classname}}(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client()
+);
 {{#allParams}}${{paramName}} = {{{example}}}; // {{{dataType}}} | {{{description}}}
 {{/allParams}}
 
