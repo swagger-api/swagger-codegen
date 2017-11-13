@@ -84,15 +84,6 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
         modelPackage = "io.swagger.client.model";
 
         /**
-         * Reserved words.  Override this with reserved words specific to your language
-         */
-        reservedWords = new HashSet<String>(
-                Arrays.asList(
-                        "sample1",  // replace with static values
-                        "sample2")
-        );
-
-        /**
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
          */
@@ -209,9 +200,6 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
      */
     @Override
     public void preprocessSwagger(Swagger swagger) {
-        if (swagger == null || swagger.getPaths() == null) {
-            return;
-        }
         for (String pathname : swagger.getPaths().keySet()) {
             Path path = swagger.getPath(pathname);
             if (path.getOperations() == null) {
@@ -266,8 +254,7 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
                             try {
                                 FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "BodyParams.csv"), StringUtils.join(bodyFeederParams, ","));
                             } catch (IOException ioe) {
-                                LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
-                                System.exit(1);
+                                LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe)
                             }
 
                         } else if (model instanceof ArrayModel) {
@@ -312,7 +299,6 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
                 FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + parameterType.toLowerCase() + "Params.csv"), StringUtils.join(parameterNames, ","));
             } catch (IOException ioe) {
                 LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
-                System.exit(1);
             }
         }
     }
