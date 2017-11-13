@@ -12,18 +12,13 @@ import io.swagger.annotations.*;
 import java.util.Map;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 @Path("/pet")
-
 @Api(description = "the pet API")
-
-
-
-
-public class PetApi  {
+public class PetApi {
 
     @POST
-    
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Add a new pet to the store", notes = "", response = Void.class, authorizations = {
@@ -34,13 +29,12 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(Pet body) {
+    public Response addPet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
 
     @DELETE
     @Path("/{petId}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -50,13 +44,12 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value", response = Void.class) })
-    public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key") String apiKey) {
+    public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Long petId,@HeaderParam("api_key")   String apiKey) {
         return Response.ok().entity("magic!").build();
     }
 
     @GET
     @Path("/findByStatus")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -67,13 +60,12 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    public Response findPetsByStatus(@QueryParam("status") @NotNull  List<String> status) {
+    public Response findPetsByStatus(@QueryParam("status") @NotNull   @ApiParam("Status values that need to be considered for filter")  List<String> status) {
         return Response.ok().entity("magic!").build();
     }
 
     @GET
     @Path("/findByTags")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
         @Authorization(value = "petstore_auth", scopes = {
@@ -84,13 +76,12 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
-    public Response findPetsByTags(@QueryParam("tags") @NotNull  List<String> tags) {
+    public Response findPetsByTags(@QueryParam("tags") @NotNull   @ApiParam("Tags to filter by")  List<String> tags) {
         return Response.ok().entity("magic!").build();
     }
 
     @GET
     @Path("/{petId}")
-    
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, authorizations = {
         @Authorization(value = "api_key")
@@ -104,7 +95,6 @@ public class PetApi  {
     }
 
     @PUT
-    
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, authorizations = {
@@ -117,7 +107,7 @@ public class PetApi  {
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Pet not found", response = Void.class),
         @ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(Pet body) {
+    public Response updatePet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
 
@@ -154,4 +144,3 @@ public class PetApi  {
         return Response.ok().entity("magic!").build();
     }
 }
-

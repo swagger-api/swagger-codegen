@@ -40,6 +40,7 @@ export class PetApi {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
+
         let httpRequestParams: ng.IRequestConfig = {
             method: 'POST',
             url: localVarPath,
@@ -62,7 +63,7 @@ export class PetApi {
      */
     public deletePet (petId: number, apiKey?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
         const localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
 
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -70,6 +71,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
+
         headerParams['api_key'] = apiKey;
 
         let httpRequestParams: ng.IRequestConfig = {
@@ -99,6 +101,7 @@ export class PetApi {
         if (status === null || status === undefined) {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
+
         if (status !== undefined) {
             queryParameters['status'] = status;
         }
@@ -130,6 +133,7 @@ export class PetApi {
         if (tags === null || tags === undefined) {
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
+
         if (tags !== undefined) {
             queryParameters['tags'] = tags;
         }
@@ -154,7 +158,7 @@ export class PetApi {
      */
     public getPetById (petId: number, extraHttpRequestParams?: any ) : ng.IHttpPromise<models.Pet> {
         const localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
 
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -162,6 +166,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
+
         let httpRequestParams: ng.IRequestConfig = {
             method: 'GET',
             url: localVarPath,
@@ -189,6 +194,7 @@ export class PetApi {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
+
         let httpRequestParams: ng.IRequestConfig = {
             method: 'PUT',
             url: localVarPath,
@@ -212,7 +218,7 @@ export class PetApi {
      */
     public updatePetWithForm (petId: number, name?: string, status?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
         const localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
 
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -222,6 +228,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
+
         headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
 
         formParams['name'] = name;
@@ -251,7 +258,7 @@ export class PetApi {
      */
     public uploadFile (petId: number, additionalMetadata?: string, file?: any, extraHttpRequestParams?: any ) : ng.IHttpPromise<models.ApiResponse> {
         const localVarPath = this.basePath + '/pet/{petId}/uploadImage'
-            .replace('{' + 'petId' + '}', String(petId));
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
 
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -261,6 +268,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
+
         headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
 
         formParams['additionalMetadata'] = additionalMetadata;

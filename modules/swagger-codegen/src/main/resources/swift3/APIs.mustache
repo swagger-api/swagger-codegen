@@ -32,15 +32,15 @@ open class APIBase {
 open class RequestBuilder<T> {
     var credential: URLCredential?
     var headers: [String:String]
-    let parameters: [String:Any]?
-    let isBody: Bool
-    let method: String
-    let URLString: String
+    public let parameters: Any?
+    public let isBody: Bool
+    public let method: String
+    public let URLString: String
 
     /// Optional block to obtain a reference to the request's progress instance when available.
     public var onProgressReady: ((Progress) -> ())?
 
-    required public init(method: String, URLString: String, parameters: [String:Any]?, isBody: Bool, headers: [String:String] = [:]) {
+    required public init(method: String, URLString: String, parameters: Any?, isBody: Bool, headers: [String:String] = [:]) {
         self.method = method
         self.URLString = URLString
         self.parameters = parameters

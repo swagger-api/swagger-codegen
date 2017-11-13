@@ -2,22 +2,28 @@
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
     [DataContract]
+    {{#discriminator}}
+    [JsonConverter(typeof(JsonSubtypes), "{{discriminator}}")]{{#children}}
+    [JsonSubtypes.KnownSubType(typeof({{classname}}), "{{^vendorExtensions.x-discriminator-value}}{{name}}{{/vendorExtensions.x-discriminator-value}}{{#vendorExtensions.x-discriminator-value}}{{{vendorExtensions.x-discriminator-value}}}{{/vendorExtensions.x-discriminator-value}}")]{{/children}}
+    {{/discriminator}}
     {{#generatePropertyChanged}}
     [ImplementPropertyChanged]
     {{/generatePropertyChanged}}
     {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}
     {
         {{#vars}}
-        {{#isEnum}}
-{{>modelInnerEnum}}
-        {{/isEnum}}
         {{#items.isEnum}}
         {{#items}}
+        {{^complexType}}
 {{>modelInnerEnum}}
+        {{/complexType}}
         {{/items}}
         {{/items.isEnum}}
-        {{/vars}}
-        {{#vars}}
+        {{#isEnum}}
+        {{^complexType}}
+{{>modelInnerEnum}}
+        {{/complexType}}
+        {{/isEnum}}
         {{#isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
@@ -26,7 +32,7 @@
         /// <value>{{description}}</value>
         {{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]
-        public {{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} { get; set; }
+        public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }
         {{/isEnum}}
         {{/vars}}
     {{#hasRequired}}
@@ -49,9 +55,10 @@
     {{#hasOnlyReadOnly}}
         [JsonConstructorAttribute]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}})
+        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}} {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
+            {{^isInherited}}
             {{^isReadOnly}}
             {{#required}}
             // to ensure "{{name}}" is required (not null)
@@ -65,8 +72,10 @@
             }
             {{/required}}
             {{/isReadOnly}}
+            {{/isInherited}}
             {{/vars}}
             {{#vars}}
+            {{^isInherited}}
             {{^isReadOnly}}
             {{^required}}
             {{#defaultValue}}// use default value if no "{{name}}" provided
@@ -84,10 +93,12 @@ this.{{name}} = {{name}};
             {{/defaultValue}}
             {{/required}}
             {{/isReadOnly}}
+            {{/isInherited}}
             {{/vars}}
         }
         
         {{#vars}}
+        {{^isInherited}}
         {{^isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
@@ -97,6 +108,7 @@ this.{{name}} = {{name}};
         [JsonConverter(typeof(SwaggerDateConverter))]{{/isDate}}
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
         {{/isEnum}}
+        {{/isInherited}}
 
         {{/vars}}
         /// <summary>
@@ -107,6 +119,9 @@ this.{{name}} = {{name}};
         {
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
+            {{#parent}}
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
+            {{/parent}}
             {{#vars}}
             sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
             {{/vars}}
@@ -118,7 +133,7 @@ this.{{name}} = {{name}};
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public {{#parent}} new {{/parent}}string ToJson()
+        public {{#parent}}{{^isArrayModel}}override {{/isArrayModel}}{{/parent}}{{^parent}}{{#discriminator}}virtual {{/discriminator}}{{/parent}}string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -143,7 +158,7 @@ this.{{name}} = {{name}};
             if (input == null)
                 return false;
 
-            return {{#vars}}{{#isNotContainer}}
+            return {{#vars}}{{#parent}}base.Equals(input) && {{/parent}}{{#isNotContainer}}
                 (
                     this.{{name}} == input.{{name}} ||
                     (this.{{name}} != null &&
@@ -151,9 +166,9 @@ this.{{name}} = {{name}};
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
                 (
                     this.{{name}} == input.{{name}} ||
-                    (this.{{name}} != null &&
-                    this.{{name}}.SequenceEqual(input.{{name}}))
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+                    this.{{name}} != null &&
+                    this.{{name}}.SequenceEqual(input.{{name}})
+                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(input){{/parent}}{{^parent}}false{{/parent}}{{/vars}};
         }
 
         /// <summary>
@@ -164,7 +179,12 @@ this.{{name}} = {{name}};
         {
             unchecked // Overflow is fine, just wrap
             {
+                {{#parent}}
+                int hashCode = base.GetHashCode();
+                {{/parent}}
+                {{^parent}}
                 int hashCode = 41;
+                {{/parent}}
                 {{#vars}}
                 if (this.{{name}} != null)
                     hashCode = hashCode * 59 + this.{{name}}.GetHashCode();
@@ -197,6 +217,7 @@ this.{{name}} = {{name}};
 
 {{/generatePropertyChanged}}
 {{#validatable}}
+{{#discriminator}}
         /// <summary>
         /// To validate all properties of the instance
         /// </summary>
@@ -204,6 +225,31 @@ this.{{name}} = {{name}};
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            return this.BaseValidate(validationContext);
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
+        {
+{{/discriminator}}
+{{^discriminator}}
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+{{/discriminator}}
+            {{#parent}}
+            {{^isArrayModel}}
+            foreach(var x in BaseValidate(validationContext)) yield return x;
+            {{/isArrayModel}}
+            {{/parent}}
             {{#vars}}
             {{#hasValidation}}
             {{#maxLength}}

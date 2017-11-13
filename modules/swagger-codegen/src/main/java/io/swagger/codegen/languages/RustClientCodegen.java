@@ -99,8 +99,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("file", "File");
         typeMapping.put("binary", "Vec<u8>");
         typeMapping.put("ByteArray", "String");
-        // TODO  what should 'object' mapped to
-        typeMapping.put("object", "Object");
+        typeMapping.put("object", "Value");
 
         // no need for rust
         //importMapping = new HashMap<String, String>();
@@ -325,11 +324,11 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(sanitizedOperationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize("call_" + operationId));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore("call_" + operationId));
             sanitizedOperationId = "call_" + sanitizedOperationId;
         }
 
-        return camelize(sanitizedOperationId);
+        return underscore(sanitizedOperationId);
     }
 
     @Override

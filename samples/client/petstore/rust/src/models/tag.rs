@@ -10,10 +10,15 @@
 
 /// Tag : A tag for a pet
 
+#[allow(unused_imports)]
+use serde_json::Value;
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Tag {
-  #[serde(rename = "id")] id: Option<i64>,
-  #[serde(rename = "name")] name: Option<String>
+  #[serde(rename = "id")]
+  id: Option<i64>,
+  #[serde(rename = "name")]
+  name: Option<String>
 }
 
 impl Tag {
@@ -34,8 +39,12 @@ impl Tag {
     self
   }
 
-  pub fn id(&self) -> &i64 {
-    &self.id
+  pub fn id(&self) -> Option<&i64> {
+    self.id.as_ref()
+  }
+
+  pub fn reset_id(&mut self) {
+    self.id = None;
   }
 
   pub fn set_name(&mut self, name: String) {
@@ -47,8 +56,12 @@ impl Tag {
     self
   }
 
-  pub fn name(&self) -> &String {
-    &self.name
+  pub fn name(&self) -> Option<&String> {
+    self.name.as_ref()
+  }
+
+  pub fn reset_name(&mut self) {
+    self.name = None;
   }
 
 }

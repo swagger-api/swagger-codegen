@@ -1,9 +1,13 @@
 package io.swagger.codegen.languages;
 
+import static java.util.Collections.sort;
+
+import com.google.common.collect.LinkedListMultimap;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,9 +29,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String USE_RX_JAVA = "useRxJava";
     public static final String USE_RX_JAVA2 = "useRxJava2";
     public static final String DO_NOT_USE_RX = "doNotUseRx";
-    public static final String USE_PLAY24_WS = "usePlay24WS";
+    public static final String USE_PLAY_WS = "usePlayWS";
+    public static final String PLAY_VERSION = "playVersion";
     public static final String PARCELABLE_MODEL = "parcelableModel";
     public static final String USE_RUNTIME_EXCEPTION = "useRuntimeException";
+
+    public static final String PLAY_24 = "play24";
+    public static final String PLAY_25 = "play25";
 
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
@@ -36,12 +44,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean useRxJava = false;
     protected boolean useRxJava2 = false;
     protected boolean doNotUseRx = true; // backwards compatibility for swagger configs that specify neither rx1 nor rx2 (mustache does not allow for boolean operators so we need this extra field)
-    protected boolean usePlay24WS = false;
+    protected boolean usePlayWS = false;
+    protected String playVersion = PLAY_25;
     protected boolean parcelableModel = false;
     protected boolean useBeanValidation = false;
     protected boolean performBeanValidation = false;
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
+
 
     public JavaClientCodegen() {
         super();
@@ -55,7 +65,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
-        cliOptions.add(CliOption.newBoolean(USE_PLAY24_WS, "Use Play! 2.4 Async HTTP client (Play WS API)"));
+        cliOptions.add(CliOption.newBoolean(USE_PLAY_WS, "Use Play! Async HTTP client (Play WS API)"));
+        cliOptions.add(CliOption.newString(PLAY_VERSION, "Version of Play! Framework (possible values \"play24\", \"play25\")"));
         cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6, "Whether to support Java6 with the Jersey1 library."));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
@@ -71,6 +82,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         supportedLibraries.put("resttemplate", "HTTP client: Spring RestTemplate 4.3.9-RELEASE. JSON processing: Jackson 2.8.9");
         supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.8.9");
         supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.8.9");
+        supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.8.9");
 
         CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
         libraryOption.setEnum(supportedLibraries);
@@ -111,10 +123,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (!useRxJava && !useRxJava2) {
             additionalProperties.put(DO_NOT_USE_RX, true);
         }
-        if (additionalProperties.containsKey(USE_PLAY24_WS)) {
-            this.setUsePlay24WS(Boolean.valueOf(additionalProperties.get(USE_PLAY24_WS).toString()));
+        if (additionalProperties.containsKey(USE_PLAY_WS)) {
+            this.setUsePlayWS(Boolean.valueOf(additionalProperties.get(USE_PLAY_WS).toString()));
         }
-        additionalProperties.put(USE_PLAY24_WS, usePlay24WS);
+        additionalProperties.put(USE_PLAY_WS, usePlayWS);
+        
+        if (additionalProperties.containsKey(PLAY_VERSION)) {
+            this.setPlayVersion(additionalProperties.get(PLAY_VERSION).toString());
+        }
+        additionalProperties.put(PLAY_VERSION, playVersion);
 
         if (additionalProperties.containsKey(PARCELABLE_MODEL)) {
             this.setParcelableModel(Boolean.valueOf(additionalProperties.get(PARCELABLE_MODEL).toString()));
@@ -156,10 +173,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
         }
 
-        supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
+        // google-api-client doesn't use the Swagger auth, because it uses Google Credential directly (HttpRequestInitializer)
+        if (!"google-api-client".equals(getLibrary())) {
+            supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
+        }
         supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew") );
         supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat") );
         supportingFiles.add(new SupportingFile( "gradle-wrapper.properties.mustache",
@@ -180,7 +200,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             apiDocTemplateFiles.remove("api_doc.mustache");
         }
 
-        if (!("feign".equals(getLibrary()) || "resttemplate".equals(getLibrary()) || usesAnyRetrofitLibrary())) {
+        if (!("feign".equals(getLibrary()) || "resttemplate".equals(getLibrary()) || usesAnyRetrofitLibrary() || "google-api-client".equals(getLibrary()))) {
             supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
             supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
@@ -204,7 +224,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
             additionalProperties.put("gson", "true");
-            if ("retrofit2".equals(getLibrary()) && !usePlay24WS) {
+            if ("retrofit2".equals(getLibrary()) && !usePlayWS) {
                 supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             }
         } else if ("jersey2".equals(getLibrary()) || "resteasy".equals(getLibrary()))  {
@@ -224,12 +244,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             apiTemplateFiles.put("apiImpl.mustache", "Impl.java");
             apiTemplateFiles.put("rxApiImpl.mustache", ".java");
             supportingFiles.remove(new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
+        } else if ("google-api-client".equals(getLibrary())) {
+            additionalProperties.put("jackson", "true");
         } else {
             LOGGER.error("Unknown library option (-l/--library): " + getLibrary());
         }
 
-        if (usePlay24WS) {
-            // remove unsupported auth
+        if (usePlayWS) {
+            // remove unsupported auth 
             Iterator<SupportingFile> iter = supportingFiles.iterator();
             while (iter.hasNext()) {
                 SupportingFile sf = iter.next();
@@ -238,26 +260,38 @@ public class JavaClientCodegen extends AbstractJavaCodegen
                 }
             }
 
-            // auth
-            supportingFiles.add(new SupportingFile("play24/auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+            apiTemplateFiles.remove("api.mustache");
+            
+            if (PLAY_24.equals(playVersion)) {
+                additionalProperties.put(PLAY_24, true);
+                apiTemplateFiles.put("play24/api.mustache", ".java");
+                
+                supportingFiles.add(new SupportingFile("play24/ApiClient.mustache", invokerFolder, "ApiClient.java"));
+                supportingFiles.add(new SupportingFile("play24/Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
+                supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache", invokerFolder,
+                        "Play24CallAdapterFactory.java"));
+            } else {
+                additionalProperties.put(PLAY_25, true);
+                apiTemplateFiles.put("play25/api.mustache", ".java");
+                
+                supportingFiles.add(new SupportingFile("play25/ApiClient.mustache", invokerFolder, "ApiClient.java"));
+                supportingFiles.add(new SupportingFile("play25/Play25CallFactory.mustache", invokerFolder, "Play25CallFactory.java"));
+                supportingFiles.add(new SupportingFile("play25/Play25CallAdapterFactory.mustache", invokerFolder,
+                        "Play25CallAdapterFactory.java"));
+                additionalProperties.put("java8", "true");
+            }
+
+            supportingFiles.add(new SupportingFile("play-common/auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
             supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
-
-            // api client
-            supportingFiles.add(new SupportingFile("play24/ApiClient.mustache", invokerFolder, "ApiClient.java"));
-
-            // adapters
-            supportingFiles
-                    .add(new SupportingFile("play24/Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
-            supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache", invokerFolder,
-                    "Play24CallAdapterFactory.java"));
+            
             additionalProperties.put("jackson", "true");
             additionalProperties.remove("gson");
         }
 
-        if (additionalProperties.containsKey("jackson") ) {
+        if (additionalProperties.containsKey("jackson")) {
             supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", invokerFolder, "RFC3339DateFormat.java"));
-            if ("threetenbp".equals(dateLibrary)) {
+            if ("threetenbp".equals(dateLibrary) && !usePlayWS) {
                 supportingFiles.add(new SupportingFile("CustomInstantDeserializer.mustache", invokerFolder, "CustomInstantDeserializer.java"));
             }
         }
@@ -292,10 +326,34 @@ public class JavaClientCodegen extends AbstractJavaCodegen
                     if (operation.returnType == null) {
                         operation.returnType = "Void";
                     }
-                    if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
+                    if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/")){
                         operation.path = operation.path.substring(1);
+                    }
+
+                    // sorting operation parameters to make sure path params are parsed before query params
+                    if (operation.allParams != null) {
+                        sort(operation.allParams, new Comparator<CodegenParameter>() {
+                            @Override
+                            public int compare(CodegenParameter one, CodegenParameter another) {
+                                if (one.isPathParam && another.isQueryParam) {
+                                    return -1;
+                                }
+                                if (one.isQueryParam && another.isPathParam){
+                                    return 1;
+                                }
+
+                                return 0;
+                            }
+                        });
+                        Iterator<CodegenParameter> iterator = operation.allParams.iterator();
+                        while (iterator.hasNext()){
+                            CodegenParameter param = iterator.next();
+                            param.hasMore = iterator.hasNext();
+                        }
+                    }
                 }
             }
+
         }
 
         // camelize path variables for Feign client
@@ -410,6 +468,24 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     @SuppressWarnings("unchecked")
     @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        Map<String, Object> allProcessedModels = super.postProcessAllModels(objs);
+        if(!additionalProperties.containsKey("gsonFactoryMethod")) {
+            List<Object> allModels = new ArrayList<Object>();
+            for (String name: allProcessedModels.keySet()) {
+                Map<String, Object> models = (Map<String, Object>)allProcessedModels.get(name);
+                try {
+                    allModels.add(((List<Object>) models.get("models")).get(0));
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            additionalProperties.put("parent", modelInheritanceSupportInGson(allModels));
+        }
+        return allProcessedModels;
+    }
+
+    @Override
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
         //Needed import for Gson based libraries
@@ -431,6 +507,34 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         return objs;
     }
 
+    private List<Map<String, Object>> modelInheritanceSupportInGson(List<?> allModels) {
+        LinkedListMultimap<CodegenModel, CodegenModel> byParent = LinkedListMultimap.create();
+        for (Object m : allModels) {
+            Map entry = (Map) m;
+            CodegenModel parent = ((CodegenModel)entry.get("model")).parentModel;
+            if(null!= parent) {
+                byParent.put(parent, ((CodegenModel)entry.get("model")));
+            }
+        }
+        List<Map<String, Object>> parentsList = new ArrayList<>();
+        for (CodegenModel parentModel : byParent.keySet()) {
+            List<Map<String, Object>> childrenList = new ArrayList<>();
+            Map<String, Object> parent = new HashMap<>();
+            parent.put("classname", parentModel.classname);
+            List<CodegenModel> childrenModels = byParent.get(parentModel);
+            for (CodegenModel model : childrenModels) {
+                Map<String, Object> child = new HashMap<>();
+                child.put("name", model.name);
+                child.put("classname", model.classname);
+                childrenList.add(child);
+            }
+            parent.put("children", childrenList);
+            parent.put("discriminator", parentModel.discriminator);
+            parentsList.add(parent);
+        }
+        return parentsList;
+    }
+
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
         doNotUseRx = false;
@@ -445,10 +549,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         this.doNotUseRx = doNotUseRx;
     }
 
-    public void setUsePlay24WS(boolean usePlay24WS) {
-        this.usePlay24WS = usePlay24WS;
+    public void setUsePlayWS(boolean usePlayWS) {
+        this.usePlayWS = usePlayWS;
     }
 
+    public void setPlayVersion(String playVersion) {
+        this.playVersion = playVersion;
+    }
 
     public void setParcelableModel(boolean parcelableModel) {
         this.parcelableModel = parcelableModel;
