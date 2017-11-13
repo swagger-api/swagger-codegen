@@ -309,7 +309,7 @@ export class FakeApi {
                 if (error) {
                     reject(error);
                 } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
                         reject({ response: response, body: body });
