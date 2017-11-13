@@ -38,5 +38,4 @@ public interface FakeClassnameTestApi {
         method = RequestMethod.PATCH)
     ResponseEntity<Client> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body);
 
-    
 }
