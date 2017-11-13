@@ -487,7 +487,7 @@ var PetApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -532,7 +532,7 @@ var PetApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -579,7 +579,7 @@ var PetApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Array<Pet>");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -626,7 +626,7 @@ var PetApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Array<Pet>");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -671,7 +671,7 @@ var PetApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Pet");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -715,7 +715,7 @@ var PetApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -765,7 +765,7 @@ var PetApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -918,7 +918,7 @@ var StoreApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -959,7 +959,7 @@ var StoreApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "{ [key: string]: number; }");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1003,7 +1003,7 @@ var StoreApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Order");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1047,7 +1047,7 @@ var StoreApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Order");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1148,7 +1148,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1191,7 +1191,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1234,7 +1234,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1277,7 +1277,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1321,7 +1321,7 @@ var UserApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "User");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1373,7 +1373,7 @@ var UserApi = (function () {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1412,7 +1412,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1459,7 +1459,7 @@ var UserApi = (function () {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
