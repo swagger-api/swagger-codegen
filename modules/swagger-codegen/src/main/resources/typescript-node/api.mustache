@@ -81,7 +81,7 @@ class ObjectSerializer {
 
             // get the map for the correct type.
             let attributeTypes = typeMap[type].getAttributeTypeMap();
-            let instance = {};
+            let instance: {[index: string]: any} = {};
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
@@ -190,7 +190,7 @@ export namespace {{classname}} {
 {{/model}}
 {{/models}}
 
-let enumsMap = {
+let enumsMap: {[index: string]: any} = {
     {{#models}}
         {{#model}}
             {{#hasEnums}}
@@ -204,7 +204,7 @@ let enumsMap = {
     {{/models}}
 }
 
-let typeMap = {
+let typeMap: {[index: string]: any} = {
     {{#models}}
         {{#model}}
     "{{classname}}": {{classname}},
