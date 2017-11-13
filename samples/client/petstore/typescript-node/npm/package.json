@@ -12,10 +12,11 @@
     "author": "Swagger Codegen Contributors",
     "license": "Unlicense",
     "dependencies": {
-        "bluebird": "^3.5.0",
-        "request": "^2.81.0",
         "@types/bluebird": "*",
         "@types/request": "*",
+        "@types/rewire": "^2.5.28",
+        "bluebird": "^3.5.0",
+        "request": "^2.81.0",
         "rewire": "^2.5.2"
     },
     "devDependencies": {
