@@ -254,7 +254,7 @@ public class GatlingCodegen extends AbstractScalaCodegen implements CodegenConfi
                             try {
                                 FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "BodyParams.csv"), StringUtils.join(bodyFeederParams, ","));
                             } catch (IOException ioe) {
-                                LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe)
+                                LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
                             }
 
                         } else if (model instanceof ArrayModel) {
