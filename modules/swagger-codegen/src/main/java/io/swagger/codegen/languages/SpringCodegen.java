@@ -282,7 +282,7 @@ public class SpringCodegen extends AbstractJavaCodegen
             }
         }
         
-        if (!this.delegatePattern && this.java8) {
+        if ((!this.delegatePattern && this.java8) || this.delegateMethod) {
             additionalProperties.put("jdk8-no-delegate", true);
         }
 
