@@ -33,7 +33,6 @@ trait StoreApi extends Service {
     ).withAutoAcl(true)
   }
 
-    
 
   /**
     * Delete purchase order by ID
@@ -42,16 +41,16 @@ trait StoreApi extends Service {
     * @param orderId ID of the order that needs to be deleted 
     * @return void
     */
-  def deleteOrder(orderId: String): ServiceCall[NotUsed ,Done]    
-
+  def deleteOrder(orderId: String): ServiceCall[NotUsed ,Done]
+  
   /**
     * Returns pet inventories by status
     * Returns a map of status codes to quantities
     * 
     * @return Map[String, Int]
     */
-  def getInventory(): ServiceCall[NotUsed ,Map[String, Int]]    
-
+  def getInventory(): ServiceCall[NotUsed ,Map[String, Int]]
+  
   /**
     * Find purchase order by ID
     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -59,8 +58,8 @@ trait StoreApi extends Service {
     * @param orderId ID of pet that needs to be fetched 
     * @return Order
     */
-  def getOrderById(orderId: Long): ServiceCall[NotUsed ,Order]    
-
+  def getOrderById(orderId: Long): ServiceCall[NotUsed ,Order]
+  
   /**
     * Place an order for a pet
     * 
@@ -68,6 +67,7 @@ trait StoreApi extends Service {
     * @return Order Body Parameter  order placed for purchasing the pet 
     */
   def placeOrder(): ServiceCall[Order ,Order]
+  
 
   }
 

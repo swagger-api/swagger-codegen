@@ -37,7 +37,6 @@ trait UserApi extends Service {
     ).withAutoAcl(true)
   }
 
-    
 
   /**
     * Create user
@@ -45,24 +44,24 @@ trait UserApi extends Service {
     *  
     * @return void Body Parameter  Created user object 
     */
-  def createUser(): ServiceCall[User ,Done]    
-
+  def createUser(): ServiceCall[User ,Done]
+  
   /**
     * Creates list of users with given input array
     * 
     *  
     * @return void Body Parameter  List of user object 
     */
-  def createUsersWithArrayInput(): ServiceCall[Seq[User] ,Done]    
-
+  def createUsersWithArrayInput(): ServiceCall[Seq[User] ,Done]
+  
   /**
     * Creates list of users with given input array
     * 
     *  
     * @return void Body Parameter  List of user object 
     */
-  def createUsersWithListInput(): ServiceCall[Seq[User] ,Done]    
-
+  def createUsersWithListInput(): ServiceCall[Seq[User] ,Done]
+  
   /**
     * Delete user
     * This can only be done by the logged in user.
@@ -70,8 +69,8 @@ trait UserApi extends Service {
     * @param username The name that needs to be deleted 
     * @return void
     */
-  def deleteUser(username: String): ServiceCall[NotUsed ,Done]    
-
+  def deleteUser(username: String): ServiceCall[NotUsed ,Done]
+  
   /**
     * Get user by user name
     * 
@@ -79,9 +78,8 @@ trait UserApi extends Service {
     * @param username The name that needs to be fetched. Use user1 for testing.  
     * @return User
     */
-  def getUserByName(username: String): ServiceCall[NotUsed ,User]      
-    
-
+  def getUserByName(username: String): ServiceCall[NotUsed ,User]
+        
   /**
     * Logs user into the system
     * 
@@ -90,16 +88,16 @@ trait UserApi extends Service {
     * @param password The password for login in clear text 
     * @return String
     */
-  def loginUser(username:String          ,password:String          ): ServiceCall[NotUsed ,String]    
-
+  def loginUser(username:String          ,password:String          ): ServiceCall[NotUsed ,String]
+  
   /**
     * Logs out current logged in user session
     * 
     * 
     * @return void
     */
-  def logoutUser(): ServiceCall[NotUsed ,Done]    
-
+  def logoutUser(): ServiceCall[NotUsed ,Done]
+  
   /**
     * Updated user
     * This can only be done by the logged in user.
@@ -108,6 +106,7 @@ trait UserApi extends Service {
     * @return void Body Parameter  Updated user object 
     */
   def updateUser(username: String): ServiceCall[User ,Done]
+  
 
   }
 

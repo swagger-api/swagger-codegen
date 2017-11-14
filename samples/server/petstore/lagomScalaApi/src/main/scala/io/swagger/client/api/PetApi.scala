@@ -39,7 +39,6 @@ trait PetApi extends Service {
     ).withAutoAcl(true)
   }
 
-    
 
   /**
     * Add a new pet to the store
@@ -47,8 +46,10 @@ trait PetApi extends Service {
     *  
     * @return void Body Parameter  Pet object that needs to be added to the store 
     */
-  def addPet(): ServiceCall[Pet ,Done]    
+  def addPet(): ServiceCall[Pet ,Done]
+  
 
+  // apiKey:String  -- not yet supported heder params
   /**
     * Deletes a pet
     * 
@@ -57,12 +58,10 @@ trait PetApi extends Service {
     * @param apiKey  (optional)
     * @return void
     */
-  def deletePet(petId: Long): ServiceCall[NotUsed ,Done]      
-
+  def deletePet(petId: Long): ServiceCall[NotUsed ,Done]
+        
   // status:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
       
-    
-
   /**
     * Finds Pets by status
     * Multiple status values can be provided with comma separated strings
@@ -70,12 +69,10 @@ trait PetApi extends Service {
     * @param status Status values that need to be considered for filter 
     * @return Seq[Pet]
     */
-  def findPetsByStatus(status: Option[PetApiStatusEnum.PetApiStatusEnum]): ServiceCall[NotUsed ,Seq[Pet]]      
-
+  def findPetsByStatus(status: Option[PetApiStatusEnum.PetApiStatusEnum]): ServiceCall[NotUsed ,Seq[Pet]]
+        
   // tags:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
       
-    
-
   /**
     * Finds Pets by tags
     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -83,8 +80,8 @@ trait PetApi extends Service {
     * @param tags Tags to filter by 
     * @return Seq[Pet]
     */
-  def findPetsByTags(): ServiceCall[NotUsed ,Seq[Pet]]    
-
+  def findPetsByTags(): ServiceCall[NotUsed ,Seq[Pet]]
+  
   /**
     * Find pet by ID
     * Returns a single pet
@@ -92,23 +89,19 @@ trait PetApi extends Service {
     * @param petId ID of pet to return 
     * @return Pet
     */
-  def getPetById(petId: Long): ServiceCall[NotUsed ,Pet]    
-
+  def getPetById(petId: Long): ServiceCall[NotUsed ,Pet]
+  
   /**
     * Update an existing pet
     * 
     *  
     * @return void Body Parameter  Pet object that needs to be added to the store 
     */
-  def updatePet(): ServiceCall[Pet ,Done]    
-
+  def updatePet(): ServiceCall[Pet ,Done]
+  
 
   // name:String  -- not yet supported x-www-form-urlencoded
-      
-
   // status:String  -- not yet supported x-www-form-urlencoded
-      
-
   /**
     * Updates a pet in the store with form data
     * 
@@ -118,15 +111,11 @@ trait PetApi extends Service {
     * @param status Updated status of the pet (optional)
     * @return void
     */
-  def updatePetWithForm(petId: Long): ServiceCall[NotUsed ,Done]    
-
+  def updatePetWithForm(petId: Long): ServiceCall[NotUsed ,Done]
+  
 
   // additionalMetadata:String  -- not yet supported x-www-form-urlencoded
-      
-
   // file:File  -- not yet supported x-www-form-urlencoded
-      
-
   /**
     * uploads an image
     * 
@@ -137,6 +126,7 @@ trait PetApi extends Service {
     * @return ApiResponse
     */
   def uploadFile(petId: Long): ServiceCall[NotUsed ,ApiResponse]
+  
 
         object PetApiStatusEnum extends Enumeration {
         val   available, pending, sold = Value     
