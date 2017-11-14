@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.*;
 import io.swagger.api.PetApiService;
-import io.swagger.api.factories.PetApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
@@ -21,6 +20,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.inject.Inject;
+
 import javax.validation.constraints.*;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -30,7 +31,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @io.swagger.annotations.Api(description = "the pet API")
 
 public class PetApi  {
-   private final PetApiService delegate = PetApiServiceFactory.getPetApi();
+
+   @Inject PetApiService delegate;
 
     @POST
     

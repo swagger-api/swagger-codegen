@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.*;
 import io.swagger.api.StoreApiService;
-import io.swagger.api.factories.StoreApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
@@ -20,6 +19,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.inject.Inject;
+
 import javax.validation.constraints.*;
 
 @Path("/store")
@@ -28,7 +29,8 @@ import javax.validation.constraints.*;
 @io.swagger.annotations.Api(description = "the store API")
 
 public class StoreApi  {
-   private final StoreApiService delegate = StoreApiServiceFactory.getStoreApi();
+
+   @Inject StoreApiService delegate;
 
     @DELETE
     @Path("/order/{orderId}")

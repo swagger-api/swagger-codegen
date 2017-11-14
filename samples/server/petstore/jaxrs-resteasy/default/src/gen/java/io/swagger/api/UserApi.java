@@ -2,7 +2,6 @@ package io.swagger.api;
 
 import io.swagger.model.*;
 import io.swagger.api.UserApiService;
-import io.swagger.api.factories.UserApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
@@ -20,6 +19,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.inject.Inject;
+
 import javax.validation.constraints.*;
 
 @Path("/user")
@@ -28,7 +29,8 @@ import javax.validation.constraints.*;
 @io.swagger.annotations.Api(description = "the user API")
 
 public class UserApi  {
-   private final UserApiService delegate = UserApiServiceFactory.getUserApi();
+
+   @Inject UserApiService delegate;
 
     @POST
     
