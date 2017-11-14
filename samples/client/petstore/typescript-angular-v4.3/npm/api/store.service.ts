@@ -104,10 +104,10 @@ export class StoreService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getInventory(, observe?: 'body', reportProgress?: boolean): Observable<{ [key: string]: number; }>;
-    public getInventory(, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: number; }>>;
-    public getInventory(, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: number; }>>;
-    public getInventory(, observe: 'body' | 'response' | 'events' = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getInventory(observe?: 'body', reportProgress?: boolean): Observable<{ [key: string]: number; }>;
+    public getInventory(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: number; }>>;
+    public getInventory(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: number; }>>;
+    public getInventory(observe: 'body' | 'response' | 'events' = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 

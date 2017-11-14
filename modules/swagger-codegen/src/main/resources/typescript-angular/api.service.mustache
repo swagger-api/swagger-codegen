@@ -71,8 +71,8 @@ export class {{classname}} {
     }
 
 {{^useHttpClient}}
-{{! not sure why we used to generate a second method here rather than inlining those few lines of code,
-    but let's keep it for now for the sake of backwards compatiblity. }}
+{{! Before HttpClient implementation or method overloading we relied on 2 functions, 1 to return the straight body as json
+    and another to get the full response.}}
 {{#operation}}
     /**
      * {{&notes}}
@@ -110,13 +110,13 @@ export class {{classname}} {
      * @param reportProgress flag to report request and response progress.{{/useHttpClient}}
      */
     {{#useHttpClient}}
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}, observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}, observe: 'body' | 'response' | 'events' = 'body', reportProgress: boolean = false ): Observable<any> {
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe: 'body' | 'response' | 'events' = 'body', reportProgress: boolean = false ): Observable<any> {
     {{/useHttpClient}}
     {{^useHttpClient}}
-    public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#hasParams}}, {{/hasParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
     {{/useHttpClient}}
 {{#allParams}}
 {{#required}}
