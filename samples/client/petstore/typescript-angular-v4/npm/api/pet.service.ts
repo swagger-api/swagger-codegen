@@ -235,7 +235,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers,
+            headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
@@ -288,7 +288,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
-            headers,
+            headers: headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -341,7 +341,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers,
+            headers: headers,
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -395,7 +395,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers,
+            headers: headers,
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -441,7 +441,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers,
+            headers: headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -495,7 +495,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
-            headers,
+            headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
@@ -569,7 +569,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers,
+            headers: headers,
             body: convertFormParamsToString ? formParams.toString() : formParams,
             withCredentials:this.configuration.withCredentials
         });
@@ -645,7 +645,7 @@ export class PetService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers,
+            headers: headers,
             body: convertFormParamsToString ? formParams.toString() : formParams,
             withCredentials:this.configuration.withCredentials
         });
