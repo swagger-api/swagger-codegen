@@ -11,7 +11,7 @@
  */
 
 export { Api } from './Api';
-export { AuthStorage } from './AuthStorage';
+export { TokenStorage } from './TokenStorage';
 export { PetApi } from './PetApi';
 export { StoreApi } from './StoreApi';
 export { UserApi } from './UserApi';

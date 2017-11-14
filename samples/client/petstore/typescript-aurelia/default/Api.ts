@@ -11,19 +11,19 @@
  */
 
 import { HttpClient } from 'aurelia-http-client';
-import { AuthStorage } from './AuthStorage';
+import { TokenStorage } from './TokenStorage';
 
 const BASE_PATH = 'http://petstore.swagger.io/v2'.replace(/\/+$/, '');
 
 export class Api {
   basePath: string;
   httpClient: HttpClient;
-  authStorage: AuthStorage;
+  tokenStorage: TokenStorage;
 
-  constructor(httpClient: HttpClient, authStorage: AuthStorage, basePath: string = BASE_PATH) {
+  constructor(httpClient: HttpClient, tokenStorage: TokenStorage, basePath: string = BASE_PATH) {
     this.basePath = basePath;
     this.httpClient = httpClient;
-    this.authStorage = authStorage;
+    this.tokenStorage = tokenStorage;
   }
 
   /**

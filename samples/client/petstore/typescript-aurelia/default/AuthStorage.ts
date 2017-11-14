@@ -13,7 +13,7 @@
 /**
  * Class to storage authentication data
  */
-export class AuthStorage {
+export class TokenStorage {
   private storage: Map<string, string>;
 
   constructor() {

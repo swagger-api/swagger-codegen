@@ -13,10 +13,9 @@
 import { autoinject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-http-client';
 import { Api } from './Api';
-import { AuthStorage } from './AuthStorage';
+import { TokenStorage } from './TokenStorage';
 import {
   User,
-  Array&lt;User&gt;,
 } from './models';
 
 /**
@@ -87,8 +86,8 @@ export class UserApi extends Api {
    *
    * @param httpClient The Aurelia HTTP client to be injected.
    */
-  constructor(httpClient: HttpClient, authStorage: AuthStorage) {
-    super(httpClient, authStorage);
+  constructor(httpClient: HttpClient, tokenStorage: TokenStorage) {
+    super(httpClient, tokenStorage);
   }
 
   /**

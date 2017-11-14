@@ -13,7 +13,7 @@
 import { autoinject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-http-client';
 import { Api } from './Api';
-import { AuthStorage } from './AuthStorage';
+import { TokenStorage } from './TokenStorage';
 import {
   Order,
 } from './models';
@@ -56,8 +56,8 @@ export class StoreApi extends Api {
    *
    * @param httpClient The Aurelia HTTP client to be injected.
    */
-  constructor(httpClient: HttpClient, authStorage: AuthStorage) {
-    super(httpClient, authStorage);
+  constructor(httpClient: HttpClient, tokenStorage: TokenStorage) {
+    super(httpClient, tokenStorage);
   }
 
   /**
@@ -105,7 +105,7 @@ export class StoreApi extends Api {
       .asGet()
 
       // Authentication 'api_key' required
-      .withHeader('api_key', this.authStorage.getapi_key())
+      .withHeader('api_key', this.tokenStorage.getapi_key())
       // Send the request
       .send();
 
