@@ -27,31 +27,25 @@ trait {{classname}} extends Service {
 {{#operations}}
     {{#operation}}
 {{#hasQueryParams}}
-{{#queryParams}}{{#isCollectionFormatMulti}}// {{{paramName}}}:{{dataType}}  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
+{{#queryParams}}{{#isCollectionFormatMulti}}
+
+  // {{{paramName}}}:{{dataType}}  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
 {{/isCollectionFormatMulti}}{{/queryParams}}
 {{/hasQueryParams}}
 {{#hasFormParams}}{{#allParams}}
-{{#isFormParam}}// {{{paramName}}}:{{dataType}}  -- not yet supported x-www-form-urlencoded
+{{#isFormParam}}
+
+  // {{{paramName}}}:{{dataType}}  -- not yet supported x-www-form-urlencoded
 {{/isFormParam}}{{/allParams}}{{/hasFormParams}}
 
   /**
     * {{summary}}
     * {{notes}}
-        {{#allParams}} {{^isBodyParam}}
-    * @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}  {{/isBodyParam}}
-        {{/allParams}}
-    * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
-        {{#bodyParams}} Body Parameter  {{description}} {{/bodyParams}}
+    * {{#allParams}} {{^isBodyParam}}
+    * @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{/isBodyParam}}{{/allParams}}
+    * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{#bodyParams}} Body Parameter  {{description}} {{/bodyParams}}
     */
-  def {{operationId}}({{#queryParams}}{{^isCollectionFormatMulti}}{{^isEnum}}
-            {{paramName}}:{{#required}}{{dataType}}{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{/required}}
-            {{^required}} Option[{{dataType}}]{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{^defaultValue}} = None{{/defaultValue}}{{/required}}{{#hasMore}},{{/hasMore}}{{/isEnum}}{{/isCollectionFormatMulti}}
-        {{#isEnum}}{{{paramName}}}: Option[{{classname}}{{enumName}}.{{classname}}{{enumName}}]{{/isEnum}}
-        {{/queryParams}}
-        {{#pathParams}}{{^isEnum}}{{paramName}}: {{#required}}{{dataType}}{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{/required}}{{^required}}Option[{{dataType}}]{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{^defaultValue}} = None{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/isEnum}}{{#isEnum}}{{{paramName}}}:  Option[{{classname}}{{enumName}}.{{classname}}{{enumName}}]{{/isEnum}}
-        {{/pathParams}}): ServiceCall[{{#bodyParams}}{{dataType}}{{/bodyParams}}{{^hasBodyParam}}NotUsed{{/hasBodyParam}} ,{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Done{{/returnType}}]
-    {{/operation}}
-    {{/operations}}
+  def {{operationId}}({{#queryParams}}{{^isCollectionFormatMulti}}{{^isEnum}}{{paramName}}:{{#required}}{{dataType}}{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{/required}}          {{^required}} Option[{{dataType}}]{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{^defaultValue}} = None{{/defaultValue}}{{/required}}{{#hasMore}},{{/hasMore}}{{/isEnum}}{{/isCollectionFormatMulti}}{{#isEnum}}{{{paramName}}}: Option[{{classname}}{{enumName}}.{{classname}}{{enumName}}]{{/isEnum}}{{/queryParams}}{{#pathParams}}{{^isEnum}}{{paramName}}: {{#required}}{{dataType}}{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{/required}}{{^required}}Option[{{dataType}}]{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{^defaultValue}} = None{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/isEnum}}{{#isEnum}}{{{paramName}}}:  Option[{{classname}}{{enumName}}.{{classname}}{{enumName}}]{{/isEnum}}{{/pathParams}}): ServiceCall[{{#bodyParams}}{{dataType}}{{/bodyParams}}{{^hasBodyParam}}NotUsed{{/hasBodyParam}} ,{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Done{{/returnType}}]{{/operation}}{{/operations}}
 
 {{#operations}}
     {{#operation}}
