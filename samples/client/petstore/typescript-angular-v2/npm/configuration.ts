@@ -28,15 +28,15 @@ export class Configuration {
      * Select the correct content-type to use for a request.
      * Uses {@link Configuration#isJsonMime} to determine the correct content-type.
      * If no content type is found return the first found type if the contentTypes is not empty
-     * @param {string[]} contentTypes - the array of content types that are available for selection
+     * @param {Array<string>} contentTypes - the array of content types that are available for selection
      * @returns {string} the selected content-type or <code>undefined</code> if no selection could be made.
      */
-    public selectHeaderContentType (contentTypes: string[]): string {
-        if (contentTypes.length == 0) {
+    selectHeaderContentType(contentTypes: Array<string>): string {
+        if (contentTypes.length === 0) {
             return undefined;
         }
 
-        let type = contentTypes.find(x => this.isJsonMime(x));
+        const type = contentTypes.find(x => this.isJsonMime(x));
         if (type === undefined) {
             return contentTypes[0];
         }
@@ -47,15 +47,15 @@ export class Configuration {
      * Select the correct accept content-type to use for a request.
      * Uses {@link Configuration#isJsonMime} to determine the correct accept content-type.
      * If no content type is found return the first found type if the contentTypes is not empty
-     * @param {string[]} accepts - the array of content types that are available for selection.
+     * @param {Array<string>} accepts - the array of content types that are available for selection.
      * @returns {string} the selected content-type or <code>undefined</code> if no selection could be made.
      */
-    public selectHeaderAccept(accepts: string[]): string  {
-        if (accepts.length == 0) {
+    selectHeaderAccept(accepts: Array<string>): string  {
+        if (accepts.length === 0) {
             return undefined;
         }
 
-        let type = accepts.find(x => this.isJsonMime(x));
+        const type = accepts.find(x => this.isJsonMime(x));
         if (type === undefined) {
             return accepts[0];
         }
@@ -72,7 +72,7 @@ export class Configuration {
      * @param {string} mime - MIME (Multipurpose Internet Mail Extensions)
      * @return {boolean} True if the given MIME is JSON, false otherwise.
      */
-    public isJsonMime(mime: string): boolean {
+    isJsonMime(mime: string): boolean {
         const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
         return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
     }
