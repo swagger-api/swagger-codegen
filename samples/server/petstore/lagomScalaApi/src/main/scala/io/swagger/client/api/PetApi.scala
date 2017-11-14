@@ -39,130 +39,110 @@ trait PetApi extends Service {
     ).withAutoAcl(true)
   }
 
-
+    
 
   /**
     * Add a new pet to the store
     * 
-         
-    * @return void
-         Body Parameter  Pet object that needs to be added to the store 
+    *  
+    * @return void Body Parameter  Pet object that needs to be added to the store 
     */
-  def addPet(        ): ServiceCall[Pet ,Done]
-
+  def addPet(): ServiceCall[Pet ,Done]    
 
   /**
     * Deletes a pet
     * 
-         
-    * @param petId Pet id to delete   
- 
-    * @param apiKey  (optional)  
+    *  
+    * @param petId Pet id to delete  
+    * @param apiKey  (optional)
     * @return void
-        
     */
-  def deletePet(        petId: Long
-        ): ServiceCall[NotUsed ,Done]
-// status:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
+  def deletePet(petId: Long): ServiceCall[NotUsed ,Done]      
 
-
+  // status:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
+      
+    
 
   /**
     * Finds Pets by status
     * Multiple status values can be provided with comma separated strings
-         
-    * @param status Status values that need to be considered for filter   
+    *  
+    * @param status Status values that need to be considered for filter 
     * @return Seq[Pet]
-        
     */
-  def findPetsByStatus(
-        status: Option[PetApiStatusEnum.PetApiStatusEnum]
-        ): ServiceCall[NotUsed ,Seq[Pet]]
-// tags:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
+  def findPetsByStatus(status: Option[PetApiStatusEnum.PetApiStatusEnum]): ServiceCall[NotUsed ,Seq[Pet]]      
 
-
+  // tags:Seq[String]  -- not yet supported Seq PathParamSerializers for multi value query parameters https://github.com/lagom/lagom/issues/643
+      
+    
 
   /**
     * Finds Pets by tags
-    * Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-         
-    * @param tags Tags to filter by   
+    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+    *  
+    * @param tags Tags to filter by 
     * @return Seq[Pet]
-        
     */
-  def findPetsByTags(
-        
-        ): ServiceCall[NotUsed ,Seq[Pet]]
-
+  def findPetsByTags(): ServiceCall[NotUsed ,Seq[Pet]]    
 
   /**
     * Find pet by ID
     * Returns a single pet
-         
-    * @param petId ID of pet to return   
+    *  
+    * @param petId ID of pet to return 
     * @return Pet
-        
     */
-  def getPetById(        petId: Long
-        ): ServiceCall[NotUsed ,Pet]
-
+  def getPetById(petId: Long): ServiceCall[NotUsed ,Pet]    
 
   /**
     * Update an existing pet
     * 
-         
-    * @return void
-         Body Parameter  Pet object that needs to be added to the store 
+    *  
+    * @return void Body Parameter  Pet object that needs to be added to the store 
     */
-  def updatePet(        ): ServiceCall[Pet ,Done]
+  def updatePet(): ServiceCall[Pet ,Done]    
 
 
-// name:String  -- not yet supported x-www-form-urlencoded
+  // name:String  -- not yet supported x-www-form-urlencoded
+      
 
-// status:String  -- not yet supported x-www-form-urlencoded
-
+  // status:String  -- not yet supported x-www-form-urlencoded
+      
 
   /**
     * Updates a pet in the store with form data
     * 
-         
-    * @param petId ID of pet that needs to be updated   
- 
-    * @param name Updated name of the pet (optional)  
- 
-    * @param status Updated status of the pet (optional)  
+    *  
+    * @param petId ID of pet that needs to be updated  
+    * @param name Updated name of the pet (optional) 
+    * @param status Updated status of the pet (optional)
     * @return void
-        
     */
-  def updatePetWithForm(        petId: Long
-        ): ServiceCall[NotUsed ,Done]
+  def updatePetWithForm(petId: Long): ServiceCall[NotUsed ,Done]    
 
 
-// additionalMetadata:String  -- not yet supported x-www-form-urlencoded
+  // additionalMetadata:String  -- not yet supported x-www-form-urlencoded
+      
 
-// file:File  -- not yet supported x-www-form-urlencoded
-
+  // file:File  -- not yet supported x-www-form-urlencoded
+      
 
   /**
     * uploads an image
     * 
-         
-    * @param petId ID of pet to update   
- 
-    * @param additionalMetadata Additional data to pass to server (optional)  
- 
-    * @param file file to upload (optional)  
+    *  
+    * @param petId ID of pet to update  
+    * @param additionalMetadata Additional data to pass to server (optional) 
+    * @param file file to upload (optional)
     * @return ApiResponse
-        
     */
-  def uploadFile(        petId: Long
-        ): ServiceCall[NotUsed ,ApiResponse]
+  def uploadFile(petId: Long): ServiceCall[NotUsed ,ApiResponse]
 
-  object PetApiStatusEnum extends Enumeration {
-    val   available, pending, sold = Value     
-    type PetApiStatusEnum = Value
-    implicit val format: Format[Value] = Format(Reads.enumNameReads(this), Writes.enumNameWrites[PetApiStatusEnum.type])
-    implicit val pathParamSerializer: PathParamSerializer[PetApiStatusEnum] = PathParamSerializer.required("PetApiStatusEnum")(withName)(_.toString)
+        object PetApiStatusEnum extends Enumeration {
+        val   available, pending, sold = Value     
+        type PetApiStatusEnum = Value
+        implicit val format: Format[Value] = Format(Reads.enumNameReads(this), Writes.enumNameWrites[PetApiStatusEnum.type])
+        implicit val pathParamSerializer: PathParamSerializer[PetApiStatusEnum] = PathParamSerializer.required("PetApiStatusEnum")(withName)(_.toString)
+        }
   }
-}
 
