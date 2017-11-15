@@ -32,7 +32,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             fakeOuterBooleanSerialize(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
@@ -84,7 +84,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             fakeOuterCompositeSerialize(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
@@ -140,7 +140,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             fakeOuterNumberSerialize(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
@@ -192,7 +192,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             fakeOuterStringSerialize(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
@@ -246,7 +246,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             testClientModel(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
@@ -329,7 +329,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             testEndpointParameters(number: number, double: double, patternWithoutDelimiter: patternWithoutDelimiter, byte: byte, integer: integer, int32: int32, int64: int64, float: float, string: string, binary: binary, date: date, dateTime: dateTime, password: password, callback: callback) { error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(()))
                 }
@@ -498,7 +498,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             testEnumParameters(enumFormStringArray: enumFormStringArray, enumFormString: enumFormString, enumHeaderStringArray: enumHeaderStringArray, enumHeaderString: enumHeaderString, enumQueryStringArray: enumQueryStringArray, enumQueryString: enumQueryString, enumQueryInteger: enumQueryInteger, enumQueryDouble: enumQueryDouble) { error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(()))
                 }
@@ -576,7 +576,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             testInlineAdditionalProperties(param: param) { error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(()))
                 }
@@ -632,7 +632,7 @@ open class FakeAPI {
         return Observable.create { observer -> Disposable in
             testJsonFormData(param: param, param2: param2) { error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(()))
                 }

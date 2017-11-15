@@ -34,7 +34,7 @@ open class AnotherFakeAPI {
         return Observable.create { observer -> Disposable in
             testSpecialTags(body: body) { data, error in
                 if let error = error {
-                    observer.on(.error(error as Error))
+                    observer.on(.error(error))
                 } else {
                     observer.on(.next(data!))
                 }
