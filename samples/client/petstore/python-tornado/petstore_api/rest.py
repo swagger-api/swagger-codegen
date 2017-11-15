@@ -15,14 +15,7 @@ import io
 import json
 import logging
 import re
-
 import ssl
-try:
-    from ssl import create_default_context
-except ImportError:
-    # backward capability create_default_context is on Python 3.4+, 2.7.9+
-    def create_default_context():
-        return ssl.SSLContext(ssl.PROTOCOL_SSLv23)
 
 import certifi
 # python 2 and python 3 compatibility library
@@ -67,12 +60,20 @@ class RESTClientObject(object):
             # if not set certificate file, use Mozilla's root certificates.
             ca_certs = certifi.where()
 
-        self.ssl_context = create_default_context()
-        self.ssl_context.load_verify_locations(cafile=ca_certs)
-        if configuration.cert_file:
-            self.ssl_context.load_cert_chain(
-                configuration.cert_file, keyfile=configuration.key_file
-            )
+        if hasattr(ssl, 'create_default_context'):
+            # require Python 2.7.9+, 3.4+
+            self.ssl_context = ssl.create_default_context()
+            self.ssl_context.load_verify_locations(cafile=ca_certs)
+            if configuration.cert_file:
+                self.ssl_context.load_cert_chain(
+                    configuration.cert_file, keyfile=configuration.key_file
+                )
+
+        elif configuration.cert_file or configuration.ssl_ca_cert:
+            raise NotImplementedError('SSL requires Python 2.7.9+, 3.4+')
+
+        else:
+            self.ssl_context = None
 
         self.proxy_port = self.proxy_host = None
 
