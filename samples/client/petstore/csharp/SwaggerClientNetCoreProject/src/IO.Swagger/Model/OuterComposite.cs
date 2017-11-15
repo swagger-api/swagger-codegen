@@ -23,41 +23,41 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// ApiResponse
+    /// OuterComposite
     /// </summary>
     [DataContract]
-    public partial class ApiResponse :  IEquatable<ApiResponse>
+    public partial class OuterComposite :  IEquatable<OuterComposite>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApiResponse" /> class.
+        /// Initializes a new instance of the <see cref="OuterComposite" /> class.
         /// </summary>
-        /// <param name="Code">Code.</param>
-        /// <param name="Type">Type.</param>
-        /// <param name="Message">Message.</param>
-        public ApiResponse(int? Code = default(int?), string Type = default(string), string Message = default(string))
+        /// <param name="MyNumber">MyNumber.</param>
+        /// <param name="MyString">MyString.</param>
+        /// <param name="MyBoolean">MyBoolean.</param>
+        public OuterComposite(OuterNumber MyNumber = default(OuterNumber), OuterString MyString = default(OuterString), OuterBoolean MyBoolean = default(OuterBoolean))
         {
-            this.Code = Code;
-            this.Type = Type;
-            this.Message = Message;
+            this.MyNumber = MyNumber;
+            this.MyString = MyString;
+            this.MyBoolean = MyBoolean;
         }
         
         /// <summary>
-        /// Gets or Sets Code
+        /// Gets or Sets MyNumber
         /// </summary>
-        [DataMember(Name="code", EmitDefaultValue=false)]
-        public int? Code { get; set; }
+        [DataMember(Name="my_number", EmitDefaultValue=false)]
+        public OuterNumber MyNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets Type
+        /// Gets or Sets MyString
         /// </summary>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public string Type { get; set; }
+        [DataMember(Name="my_string", EmitDefaultValue=false)]
+        public OuterString MyString { get; set; }
 
         /// <summary>
-        /// Gets or Sets Message
+        /// Gets or Sets MyBoolean
         /// </summary>
-        [DataMember(Name="message", EmitDefaultValue=false)]
-        public string Message { get; set; }
+        [DataMember(Name="my_boolean", EmitDefaultValue=false)]
+        public OuterBoolean MyBoolean { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -66,10 +66,10 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ApiResponse {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("class OuterComposite {\n");
+            sb.Append("  MyNumber: ").Append(MyNumber).Append("\n");
+            sb.Append("  MyString: ").Append(MyString).Append("\n");
+            sb.Append("  MyBoolean: ").Append(MyBoolean).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -90,34 +90,34 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as ApiResponse);
+            return this.Equals(input as OuterComposite);
         }
 
         /// <summary>
-        /// Returns true if ApiResponse instances are equal
+        /// Returns true if OuterComposite instances are equal
         /// </summary>
-        /// <param name="input">Instance of ApiResponse to be compared</param>
+        /// <param name="input">Instance of OuterComposite to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ApiResponse input)
+        public bool Equals(OuterComposite input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Code == input.Code ||
-                    (this.Code != null &&
-                    this.Code.Equals(input.Code))
+                    this.MyNumber == input.MyNumber ||
+                    (this.MyNumber != null &&
+                    this.MyNumber.Equals(input.MyNumber))
                 ) && 
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.MyString == input.MyString ||
+                    (this.MyString != null &&
+                    this.MyString.Equals(input.MyString))
                 ) && 
                 (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
+                    this.MyBoolean == input.MyBoolean ||
+                    (this.MyBoolean != null &&
+                    this.MyBoolean.Equals(input.MyBoolean))
                 );
         }
 
@@ -130,12 +130,12 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Code != null)
-                    hashCode = hashCode * 59 + this.Code.GetHashCode();
-                if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
-                if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                if (this.MyNumber != null)
+                    hashCode = hashCode * 59 + this.MyNumber.GetHashCode();
+                if (this.MyString != null)
+                    hashCode = hashCode * 59 + this.MyString.GetHashCode();
+                if (this.MyBoolean != null)
+                    hashCode = hashCode * 59 + this.MyBoolean.GetHashCode();
                 return hashCode;
             }
         }

@@ -23,26 +23,19 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// ArrayOfArrayOfNumberOnly
+    /// OuterNumber
     /// </summary>
     [DataContract]
-    public partial class ArrayOfArrayOfNumberOnly :  IEquatable<ArrayOfArrayOfNumberOnly>
+    public partial class OuterNumber :  IEquatable<OuterNumber>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArrayOfArrayOfNumberOnly" /> class.
+        /// Initializes a new instance of the <see cref="OuterNumber" /> class.
         /// </summary>
-        /// <param name="ArrayArrayNumber">ArrayArrayNumber.</param>
-        public ArrayOfArrayOfNumberOnly(List<List<decimal?>> ArrayArrayNumber = default(List<List<decimal?>>))
+        [JsonConstructorAttribute]
+        public OuterNumber()
         {
-            this.ArrayArrayNumber = ArrayArrayNumber;
         }
         
-        /// <summary>
-        /// Gets or Sets ArrayArrayNumber
-        /// </summary>
-        [DataMember(Name="ArrayArrayNumber", EmitDefaultValue=false)]
-        public List<List<decimal?>> ArrayArrayNumber { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -50,8 +43,7 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ArrayOfArrayOfNumberOnly {\n");
-            sb.Append("  ArrayArrayNumber: ").Append(ArrayArrayNumber).Append("\n");
+            sb.Append("class OuterNumber {\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -72,25 +64,20 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as ArrayOfArrayOfNumberOnly);
+            return this.Equals(input as OuterNumber);
         }
 
         /// <summary>
-        /// Returns true if ArrayOfArrayOfNumberOnly instances are equal
+        /// Returns true if OuterNumber instances are equal
         /// </summary>
-        /// <param name="input">Instance of ArrayOfArrayOfNumberOnly to be compared</param>
+        /// <param name="input">Instance of OuterNumber to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ArrayOfArrayOfNumberOnly input)
+        public bool Equals(OuterNumber input)
         {
             if (input == null)
                 return false;
 
-            return 
-                (
-                    this.ArrayArrayNumber == input.ArrayArrayNumber ||
-                    this.ArrayArrayNumber != null &&
-                    this.ArrayArrayNumber.SequenceEqual(input.ArrayArrayNumber)
-                );
+            return false;
         }
 
         /// <summary>
@@ -102,8 +89,6 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.ArrayArrayNumber != null)
-                    hashCode = hashCode * 59 + this.ArrayArrayNumber.GetHashCode();
                 return hashCode;
             }
         }
