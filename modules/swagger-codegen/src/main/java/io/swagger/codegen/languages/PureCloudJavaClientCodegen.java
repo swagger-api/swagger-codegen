@@ -1,6 +1,8 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
@@ -35,6 +37,37 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
     }
 
 
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        if (objs == null) return super.postProcessOperations(objs);
+
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+                //System.out.println("op: " + operation.getRequestClassname());
+                for (CodegenParameter param : operation.allParams) {
+                    //System.out.println("  param: " + param.paramName);
+                    Map<String, Object> allowableValues = param.getAllowableValues();
+                    if (allowableValues != null) {
+                        param.allowableValuesForEnum = new HashMap<>();
+                        for (Map.Entry<String, Object> value : allowableValues.entrySet()) {
+                            //System.out.println("    av: " + value.getKey() + "->" + value.getValue());
+                            List<CodegenParameter.Tuple<String, String>> formattedValues = new ArrayList<>();
+                            for (String val : (ArrayList<String>)value.getValue()) {
+                                //System.out.println("      val: " + this.toEnumVarName(val, "String") + "->" + val);
+                                formattedValues.add(new CodegenParameter.Tuple<>(this.toEnumVarName(val, "String"), val));
+                            }
+                            param.allowableValuesForEnum.put("values", formattedValues);
+                        }
+                    }
+                }
+            }
+        }
+
+        return super.postProcessOperations(objs);
+    }
 
     @Override
     public String getName() { return "purecloudjava"; }

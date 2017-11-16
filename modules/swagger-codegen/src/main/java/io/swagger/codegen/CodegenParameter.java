@@ -18,6 +18,7 @@ public class CodegenParameter {
     public boolean isEnum;
     public List<String> _enum;
     public Map<String, Object> allowableValues;
+    public Map<String, List<Tuple<String, String>>> allowableValuesForEnum;
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
@@ -31,6 +32,15 @@ public class CodegenParameter {
             return this.items.allowableValues;
         else
             return null;
+    }
+
+    public static class Tuple<X, Y> {
+        public final X Item1;
+        public final Y Item2;
+        public Tuple(X item1, Y item2) {
+            this.Item1 = item1;
+            this.Item2 = item2;
+        }
     }
 
     /**
