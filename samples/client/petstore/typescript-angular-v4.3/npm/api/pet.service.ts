@@ -15,7 +15,6 @@ import { Inject, Injectable, Optional }                      from '@angular/core
 import { HttpClient, HttpHeaders, HttpParams }               from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
-import '../rxjs-operators';
 
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
