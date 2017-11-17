@@ -12,7 +12,9 @@ import { Response, ResponseContentType }                     from '@angular/http
 {{/useHttpClient}}
 
 import { Observable }                                        from 'rxjs/Observable';
+{{^useHttpClient}}
 import '../rxjs-operators';
+{{/useHttpClient}}
 
 {{#imports}}
 import { {{classname}} } from '../{{filename}}';
