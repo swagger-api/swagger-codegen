@@ -98,6 +98,8 @@ wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagge
 java -jar swagger-codegen-cli.jar help
 ```
 
+For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar`
+
 On a mac, it's even easier with `brew`:
 ```sh
 brew install swagger-codegen
@@ -847,6 +849,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Svenska Spel AB](https://www.svenskaspel.se/)
 - [Switch Database](https://www.switchdatabase.com/)
 - [TaskData](http://www.taskdata.com/)
+- [ThirdWatch.ai](https://www.thirdwatch.ai/)
 - [ThoughtWorks](https://www.thoughtworks.com)
 - [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
@@ -1079,7 +1082,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Dart      | @ircecho (2017/07) |
 | Eiffel    | @jvelilla (2017/09) |
 | Elixir    |  |
-| Erlang    |  |
+| Erlang    | @tsloughter (2017/11) |
 | Groovy    |  |
 | Go        |  |
 | Haskell   |  |
