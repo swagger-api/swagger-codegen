@@ -10,7 +10,7 @@ import javax.validation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
 /**
- * A pet for sale in the pet store
+ * Pet
  */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})

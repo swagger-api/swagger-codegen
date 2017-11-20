@@ -31,7 +31,7 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for deleteOrder
         vertx.eventBus().<JsonObject> consumer(DELETEORDER_SERVICE_ID).handler(message -> {
             try {
-                String orderId = message.body().getString("orderId");
+                String orderId = message.body().getString("order_id");
                 service.deleteOrder(orderId).subscribe(
                     () -> {
                         message.reply(null);
@@ -64,7 +64,7 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for getOrderById
         vertx.eventBus().<JsonObject> consumer(GETORDERBYID_SERVICE_ID).handler(message -> {
             try {
-                Long orderId = Json.mapper.readValue(message.body().getString("orderId"), Long.class);
+                Long orderId = Json.mapper.readValue(message.body().getString("order_id"), Long.class);
                 service.getOrderById(orderId).subscribe(
                     result -> {
                         message.reply(new JsonObject(Json.encode(result)).encodePrettily());

@@ -4,9 +4,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Describes the result of uploading an image resource
- **/
 @JsonInclude(JsonInclude.Include.NON_NULL) 
 public class ModelApiResponse   {
   

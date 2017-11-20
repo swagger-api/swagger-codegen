@@ -4,9 +4,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * A User who is purchasing from the pet store
- **/
 @JsonInclude(JsonInclude.Include.NON_NULL) 
 public class User   {
   

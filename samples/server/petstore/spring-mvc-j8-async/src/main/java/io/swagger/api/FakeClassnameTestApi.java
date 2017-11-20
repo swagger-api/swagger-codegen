@@ -56,7 +56,8 @@ public interface FakeClassnameTestApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default CompletableFuture<ResponseEntity<Client>> testClassname(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
+    default CompletableFuture<ResponseEntity<Client>> testClassname(
+@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {

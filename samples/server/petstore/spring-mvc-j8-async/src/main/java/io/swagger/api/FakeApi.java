@@ -56,7 +56,8 @@ public interface FakeApi {
         @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
     @RequestMapping(value = "/fake/outer/boolean",
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<Boolean>> fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body) {
+    default CompletableFuture<ResponseEntity<Boolean>> fakeOuterBooleanSerialize(
+@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -78,7 +79,8 @@ public interface FakeApi {
         @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
     @RequestMapping(value = "/fake/outer/composite",
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<OuterComposite>> fakeOuterCompositeSerialize(@ApiParam(value = "Input composite as post body"  )  @Valid @RequestBody OuterComposite body) {
+    default CompletableFuture<ResponseEntity<OuterComposite>> fakeOuterCompositeSerialize(
+@ApiParam(value = "Input composite as post body"  )  @Valid @RequestBody OuterComposite body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -100,7 +102,8 @@ public interface FakeApi {
         @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
     @RequestMapping(value = "/fake/outer/number",
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<BigDecimal>> fakeOuterNumberSerialize(@ApiParam(value = "Input number as post body"  )  @Valid @RequestBody BigDecimal body) {
+    default CompletableFuture<ResponseEntity<BigDecimal>> fakeOuterNumberSerialize(
+@ApiParam(value = "Input number as post body"  )  @Valid @RequestBody BigDecimal body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -122,7 +125,8 @@ public interface FakeApi {
         @ApiResponse(code = 200, message = "Output string", response = String.class) })
     @RequestMapping(value = "/fake/outer/string",
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<String>> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
+    default CompletableFuture<ResponseEntity<String>> fakeOuterStringSerialize(
+@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -146,7 +150,8 @@ public interface FakeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default CompletableFuture<ResponseEntity<Client>> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
+    default CompletableFuture<ResponseEntity<Client>> testClientModel(
+@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -173,7 +178,21 @@ public interface FakeApi {
         produces = { "application/xml; charset=utf-8", "application/json; charset=utf-8" }, 
         consumes = { "application/xml; charset=utf-8", "application/json; charset=utf-8" },
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<Void>> testEndpointParameters(@ApiParam(value = "None", required=true) @RequestPart(value="number", required=true)  BigDecimal number,@ApiParam(value = "None", required=true) @RequestPart(value="double", required=true)  Double _double,@ApiParam(value = "None", required=true) @RequestPart(value="pattern_without_delimiter", required=true)  String patternWithoutDelimiter,@ApiParam(value = "None", required=true) @RequestPart(value="byte", required=true)  byte[] _byte,@ApiParam(value = "None") @RequestPart(value="integer", required=false)  Integer integer,@ApiParam(value = "None") @RequestPart(value="int32", required=false)  Integer int32,@ApiParam(value = "None") @RequestPart(value="int64", required=false)  Long int64,@ApiParam(value = "None") @RequestPart(value="float", required=false)  Float _float,@ApiParam(value = "None") @RequestPart(value="string", required=false)  String string,@ApiParam(value = "None") @RequestPart(value="binary", required=false)  byte[] binary,@ApiParam(value = "None") @RequestPart(value="date", required=false)  LocalDate date,@ApiParam(value = "None") @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,@ApiParam(value = "None") @RequestPart(value="password", required=false)  String password,@ApiParam(value = "None") @RequestPart(value="callback", required=false)  String paramCallback) {
+    default CompletableFuture<ResponseEntity<Void>> testEndpointParameters(
+@ApiParam(value = "None", required=true) @RequestPart(value="number", required=true)  BigDecimal number,
+@ApiParam(value = "None", required=true) @RequestPart(value="double", required=true)  Double _double,
+@ApiParam(value = "None", required=true) @RequestPart(value="pattern_without_delimiter", required=true)  String patternWithoutDelimiter,
+@ApiParam(value = "None", required=true) @RequestPart(value="byte", required=true)  byte[] _byte,
+@ApiParam(value = "None") @RequestPart(value="integer", required=false)  Integer integer,
+@ApiParam(value = "None") @RequestPart(value="int32", required=false)  Integer int32,
+@ApiParam(value = "None") @RequestPart(value="int64", required=false)  Long int64,
+@ApiParam(value = "None") @RequestPart(value="float", required=false)  Float _float,
+@ApiParam(value = "None") @RequestPart(value="string", required=false)  String string,
+@ApiParam(value = "None") @RequestPart(value="binary", required=false)  byte[] binary,
+@ApiParam(value = "None") @RequestPart(value="date", required=false)  LocalDate date,
+@ApiParam(value = "None") @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,
+@ApiParam(value = "None") @RequestPart(value="password", required=false)  String password,
+@ApiParam(value = "None") @RequestPart(value="callback", required=false)  String paramCallback) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -190,7 +209,15 @@ public interface FakeApi {
         produces = { "*/*" }, 
         consumes = { "*/*" },
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Void>> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,@ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @Valid @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray,@ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @Valid @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString,@ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @Valid @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble) {
+    default CompletableFuture<ResponseEntity<Void>> testEnumParameters(
+@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,
+@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,
+@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,
+@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,@ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @Valid @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray
+,@ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @Valid @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString
+,@ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @Valid @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger
+,
+@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -205,7 +232,8 @@ public interface FakeApi {
     @RequestMapping(value = "/fake/inline-additionalProperties",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<Void>> testInlineAdditionalProperties(@ApiParam(value = "request body" ,required=true )  @Valid @RequestBody Object param) {
+    default CompletableFuture<ResponseEntity<Void>> testInlineAdditionalProperties(
+@ApiParam(value = "request body" ,required=true )  @Valid @RequestBody Object param) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -220,7 +248,9 @@ public interface FakeApi {
     @RequestMapping(value = "/fake/jsonFormData",
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Void>> testJsonFormData(@ApiParam(value = "field1", required=true) @RequestPart(value="param", required=true)  String param,@ApiParam(value = "field2", required=true) @RequestPart(value="param2", required=true)  String param2) {
+    default CompletableFuture<ResponseEntity<Void>> testJsonFormData(
+@ApiParam(value = "field1", required=true) @RequestPart(value="param", required=true)  String param,
+@ApiParam(value = "field2", required=true) @RequestPart(value="param2", required=true)  String param2) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");

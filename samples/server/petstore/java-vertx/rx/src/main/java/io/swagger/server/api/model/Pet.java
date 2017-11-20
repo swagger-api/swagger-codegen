@@ -9,9 +9,6 @@ import io.swagger.server.api.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A pet for sale in the pet store
- **/
 @JsonInclude(JsonInclude.Include.NON_NULL) 
 public class Pet   {
   

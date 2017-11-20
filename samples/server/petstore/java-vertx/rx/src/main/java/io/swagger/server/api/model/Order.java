@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.time.OffsetDateTime;
 
-/**
- * An order for a pets from the pet store
- **/
 @JsonInclude(JsonInclude.Include.NON_NULL) 
 public class Order   {
   

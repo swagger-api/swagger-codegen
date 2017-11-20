@@ -34,7 +34,7 @@ public class MainApiVerticle extends AbstractVerticle {
                 
                 vertx.createHttpServer() 
                     .requestHandler(swaggerRouter::accept) 
-                    .listen(8080);
+                    .listen(80);
                 startFuture.complete();
             } else {
             	startFuture.fail(readFile.cause());
@@ -43,6 +43,33 @@ public class MainApiVerticle extends AbstractVerticle {
     }
       
     public void deployVerticles(Future<Void> startFuture) {
+        
+        vertx.deployVerticle("io.swagger.server.api.verticle.AnotherFakeApiVerticle", res -> {
+            if (res.succeeded()) {
+                LOGGER.info("AnotherFakeApiVerticle : Deployed");
+            } else {
+                startFuture.fail(res.cause());
+                LOGGER.error("AnotherFakeApiVerticle : Deployement failed");
+            }
+        });
+        
+        vertx.deployVerticle("io.swagger.server.api.verticle.FakeApiVerticle", res -> {
+            if (res.succeeded()) {
+                LOGGER.info("FakeApiVerticle : Deployed");
+            } else {
+                startFuture.fail(res.cause());
+                LOGGER.error("FakeApiVerticle : Deployement failed");
+            }
+        });
+        
+        vertx.deployVerticle("io.swagger.server.api.verticle.FakeClassnameTags123ApiVerticle", res -> {
+            if (res.succeeded()) {
+                LOGGER.info("FakeClassnameTags123ApiVerticle : Deployed");
+            } else {
+                startFuture.fail(res.cause());
+                LOGGER.error("FakeClassnameTags123ApiVerticle : Deployement failed");
+            }
+        });
         
         vertx.deployVerticle("io.swagger.server.api.verticle.PetApiVerticle", res -> {
             if (res.succeeded()) {

@@ -6,7 +6,7 @@ import javax.validation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
 /**
- * Describes the result of uploading an image resource
+ * ModelApiResponse
  */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
