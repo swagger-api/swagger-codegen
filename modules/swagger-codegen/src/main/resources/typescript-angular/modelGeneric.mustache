@@ -5,7 +5,8 @@ import {
     prepareFormGroup, 
     ApaleoEnumPropertyMetaData, 
     ApaleoPropertyMetaData, 
-    BuildFormOptions
+    BuildFormOptions,
+    BuildFormAdditionalControlsBase
 } from '@apaleo/angular-api-proxy-common';
 
 export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
@@ -49,7 +50,7 @@ export namespace {{classname}} {
         } as {{^isEnum}}ApaleoPropertyMetaData{{/isEnum}}{{#isEnum}}ApaleoEnumPropertyMetaData<{{enumName}}>{{/isEnum}}),{{/vars}}
     };
 
-    export function $buildForm<TAdditionalControls extends { [name: string]: PossibleAdditionalControlWithOptionalMetaData; } = {}>(fb: FormBuilder, options?: BuildFormOptions<{{classname}}, TAdditionalControls>): FormGroup {
+    export function $buildForm<TAdditionalControls extends BuildFormAdditionalControlsBase = {}>(fb: FormBuilder, options?: BuildFormOptions<{{classname}}, TAdditionalControls>): FormGroup {
         const defaultControls = { {{#vars}}{{^isListContainer}}{{^isMapContainer}}
             {{name}}: {{#isPrimitiveType}}getControl($metaData.{{name}}, options, '{{name}}'){{/isPrimitiveType}}{{^isPrimitiveType}}{{datatype}}.$buildForm(fb){{/isPrimitiveType}},{{/isMapContainer}}{{/isListContainer}}{{/vars}}
         };
