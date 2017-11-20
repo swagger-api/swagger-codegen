@@ -270,7 +270,7 @@ public class ApiClient {
     public ApiClient addDefaultHeader(String name, String value) {
         if (defaultHeaders.containsKey(name)) {
             defaultHeaders.remove(name);
-		}
+	    }
         defaultHeaders.add(name, value);
         return this;
     }
