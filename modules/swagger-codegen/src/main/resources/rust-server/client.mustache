@@ -205,13 +205,13 @@ impl Api for Client {
         let boundary = fields.boundary();
         let multipart_header = Mime(TopLevel::Multipart, SubLevel::FormData, vec![(Attr::Boundary, Value::Ext(boundary.to_string()))]);{{/hasFile}}{{/vendorExtensions}}{{#bodyParam}}{{#-first}}
         // Body parameter
-{{/-first}}{{#required}}{{#vendorExtensions}}{{#consumesXml}}
+{{/-first}}{{#required}}{{#vendorExtensions}}{{#consumesPlainText}}        let body = param_{{paramName}};{{/consumesPlainText}}{{^consumesPlainText}}{{#consumesXml}}
 {{^has_namespace}}        let body = serde_xml_rs::to_string(&param_{{paramName}}).expect("impossible to fail to serialize");{{/has_namespace}}{{#has_namespace}}
         let mut namespaces = BTreeMap::new();
         // An empty string is used to indicate a global namespace in xmltree.
         namespaces.insert("".to_string(), models::namespaces::{{uppercase_data_type}}.clone());
         let body = serde_xml_rs::to_string_with_namespaces(&param_{{paramName}}, namespaces).expect("impossible to fail to serialize");{{/has_namespace}}{{/consumesXml}}{{^consumesXml}}
-        let body = serde_json::to_string(&param_{{paramName}}).expect("impossible to fail to serialize");{{/consumesXml}}{{/vendorExtensions}}
+        let body = serde_json::to_string(&param_{{paramName}}).expect("impossible to fail to serialize");{{/consumesXml}}{{/consumesPlainText}}{{/vendorExtensions}}
 {{/required}}{{^required}}        let body = param_{{paramName}}.map(|ref body| {
 {{#vendorExtensions}}{{#consumesXml}}
 {{^has_namespace}}        serde_xml_rs::to_string(body).expect("impossible to fail to serialize"){{/has_namespace}}{{#has_namespace}}
@@ -258,13 +258,12 @@ impl Api for Client {
                     // ToDo: this will move to swagger-rs and become a standard From conversion trait
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<{{{dataType}}}>(&buf)
-                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;{{/producesXml}}{{^producesXml}}
-                    let body = serde_json::from_str::<{{{dataType}}}>(&buf)?;
-{{/producesXml}}{{/vendorExtensions}}{{/isFile}}{{#isFile}}                    let mut buf = Vec::new();
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;{{/producesXml}}{{^producesXml}}{{#producesPlainText}}
+                    let body = buf;{{/producesPlainText}}{{^producesPlainText}}
+                    let body = serde_json::from_str::<{{{dataType}}}>(&buf)?;{{/producesPlainText}}{{/producesXml}}{{/vendorExtensions}}{{/isFile}}{{#isFile}}
+                    let mut buf = Vec::new();
                     response.read_to_end(&mut buf).map_err(|e| ApiError(format!("Received error reading response: {}", e)))?;
-                    let body = Box::new(stream::once(Ok(buf)));{{/isFile}}
-{{/dataType}}
-
+                    let body = Box::new(stream::once(Ok(buf)));{{/isFile}}{{/dataType}}
 {{#headers}}                    header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }
                     let response_{{name}} = response.headers.get::<Response{{nameInCamelCase}}>().ok_or_else(|| "Required response header {{baseName}} for response {{code}} was not found.")?;
 {{/headers}}

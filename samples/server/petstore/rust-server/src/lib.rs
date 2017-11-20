@@ -39,6 +39,24 @@ pub enum TestSpecialTagsResponse {
 }
 
 #[derive(Debug, PartialEq)]
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/lib.rs
+=======
+pub enum GetXmlFeaturesResponse {
+    Success ( models::XmlObject ) ,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum PostPlainTextResponse {
+    Success ( String ) ,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum PostXmlFeaturesResponse {
+    Success ,
+}
+
+#[derive(Debug, PartialEq)]
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/lib.rs
 pub enum FakeOuterBooleanSerializeResponse {
     OutputBoolean ( models::OuterBoolean ) ,
 }
@@ -212,6 +230,18 @@ pub trait Api {
     /// To test special tags
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send>;
 
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/lib.rs
+=======
+    /// Get some XML
+    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
+
+    /// Post some plaintext
+    fn post_plain_text(&self, message: String, context: &Context) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send>;
+
+    /// Post some xml
+    fn post_xml_features(&self, xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send>;
+
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/lib.rs
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
 
@@ -310,6 +340,18 @@ pub trait ApiNoContext {
     /// To test special tags
     fn test_special_tags(&self, body: models::Client) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send>;
 
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/lib.rs
+=======
+    /// Get some XML
+    fn get_xml_features(&self) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
+
+    /// Post some plaintext
+    fn post_plain_text(&self, message: String) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send>;
+
+    /// Post some xml
+    fn post_xml_features(&self, xml_object: models::XmlObject) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send>;
+
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/lib.rs
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
 
@@ -421,6 +463,24 @@ impl<'a, T: Api> ApiNoContext for ContextWrapper<'a, T> {
         self.api().test_special_tags(body, &self.context())
     }
 
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/lib.rs
+=======
+    /// Get some XML
+    fn get_xml_features(&self) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
+        self.api().get_xml_features(&self.context())
+    }
+
+    /// Post some plaintext
+    fn post_plain_text(&self, message: String) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send> {
+        self.api().post_plain_text(message, &self.context())
+    }
+
+    /// Post some xml
+    fn post_xml_features(&self, xml_object: models::XmlObject) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
+        self.api().post_xml_features(xml_object, &self.context())
+    }
+
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/lib.rs
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send> {
         self.api().fake_outer_boolean_serialize(body, &self.context())

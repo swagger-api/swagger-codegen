@@ -12,6 +12,7 @@ use swagger;
 use petstore_api::{Api, ApiError, Context,
                       TestSpecialTagsResponse,
                       GetXmlFeaturesResponse,
+                      PostPlainTextResponse,
                       PostXmlFeaturesResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
@@ -61,6 +62,13 @@ impl Api for Server {
     fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
         let context = context.clone();
         println!("get_xml_features() - X-Span-ID: {:?}", context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        Box::new(futures::failed("Generic failure".into()))
+    }
+
+    /// Post some plaintext
+    fn post_plain_text(&self, message: String, context: &Context) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send> {
+        let context = context.clone();
+        println!("post_plain_text(\"{}\") - X-Span-ID: {:?}", message, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 

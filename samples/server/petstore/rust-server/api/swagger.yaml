@@ -1382,6 +1382,42 @@ paths:
       HttpMethod: "Post"
       httpmethod: "post"
       noClientExample: true
+  /fake/plaintext':
+    post:
+      summary: "Post some plaintext"
+      operationId: "postPlainText"
+      consumes:
+      - "text/plain"
+      produces:
+      - "text/plain"
+      parameters:
+      - in: "body"
+        name: "message"
+        required: true
+        schema:
+          type: "string"
+          description: "Plaintext message"
+          upperCaseName: "MESSAGE"
+        refName: null
+        formatString: "\\\"{}\\\""
+        example: "\"message_example\".to_string()"
+        model_key: "itemList"
+        uppercase_operation_id: "POST_PLAIN_TEXT"
+        consumesPlainText: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "string"
+          uppercase_operation_id: "POST_PLAIN_TEXT"
+          uppercase_message: "SUCCESS"
+          uppercase_data_type: "STRING"
+          producesPlainText: true
+      operation_id: "post_plain_text"
+      uppercase_operation_id: "POST_PLAIN_TEXT"
+      path: "/fake/plaintext'"
+      HttpMethod: "Post"
+      httpmethod: "post"
   /another-fake/dummy:
     patch:
       tags:

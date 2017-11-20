@@ -39,6 +39,12 @@ use swagger::{ApiError, Context, XSpanId};
 
 use {Api,
      TestSpecialTagsResponse,
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/server.rs
+=======
+     GetXmlFeaturesResponse,
+     PostPlainTextResponse,
+     PostXmlFeaturesResponse,
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/server.rs
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -130,10 +136,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
@@ -180,6 +187,182 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
         "TestSpecialTags");
 
     let api_clone = api.clone();
+<<<<<<< HEAD:samples/server/petstore/rust-server/src/server.rs
+=======
+    router.get(
+        "/v2/fake/xmlFeatures",
+        move |req: &mut Request| {
+            let mut context = Context::default();
+
+            // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+            fn handle_request<T>(req: &mut Request, api: &T, context: &mut Context) -> Result<Response, Response> where T: Api {
+
+                context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                context.auth_data = req.extensions.remove::<AuthData>();
+                context.authorization = req.extensions.remove::<Authorization>();
+
+
+
+
+
+                match api.get_xml_features(context).wait() {
+                    Ok(rsp) => match rsp {
+                        GetXmlFeaturesResponse::Success(body) => {
+
+
+                            let mut namespaces = BTreeMap::new();
+                            // An empty string is used to indicate a global namespace in xmltree.
+                            namespaces.insert("".to_string(), models::namespaces::XMLOBJECT.clone());
+                            let body_string = serde_xml_rs::to_string_with_namespaces(&body, namespaces).expect("impossible to fail to serialize");
+
+                            let mut response = Response::with((status::Status::from_u16(200), body_string));    
+                            response.headers.set(ContentType(mimetypes::responses::GET_XML_FEATURES_SUCCESS.clone()));
+
+                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
+                            Ok(response)
+                        },
+                    },
+                    Err(_) => {
+                        // Application code returned an error. This should not happen, as the implementation should
+                        // return a valid response.
+                        Err(Response::with((status::InternalServerError, "An internal error occurred".to_string())))
+                    }
+                }
+            }
+
+            handle_request(req, &api_clone, &mut context).or_else(|mut response| {
+                context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                Ok(response)
+            })
+        },
+        "GetXmlFeatures");
+
+    let api_clone = api.clone();
+    router.post(
+        "/v2/fake/plaintext&#39;",
+        move |req: &mut Request| {
+            let mut context = Context::default();
+
+            // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+            fn handle_request<T>(req: &mut Request, api: &T, context: &mut Context) -> Result<Response, Response> where T: Api {
+
+                context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                context.auth_data = req.extensions.remove::<AuthData>();
+                context.authorization = req.extensions.remove::<Authorization>();
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+
+                let param_message = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter message - not valid UTF-8: {}", e))))?;
+
+                let param_message = param_message.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter message".to_string())))?;
+
+
+                match api.post_plain_text(param_message, context).wait() {
+                    Ok(rsp) => match rsp {
+                        PostPlainTextResponse::Success(body) => {
+                            let body_string = body;
+
+
+                            let mut response = Response::with((status::Status::from_u16(200), body_string));    
+                            response.headers.set(ContentType(mimetypes::responses::POST_PLAIN_TEXT_SUCCESS.clone()));
+
+                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+
+                            Ok(response)
+                        },
+                    },
+                    Err(_) => {
+                        // Application code returned an error. This should not happen, as the implementation should
+                        // return a valid response.
+                        Err(Response::with((status::InternalServerError, "An internal error occurred".to_string())))
+                    }
+                }
+            }
+
+            handle_request(req, &api_clone, &mut context).or_else(|mut response| {
+                context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                Ok(response)
+            })
+        },
+        "PostPlainText");
+
+    let api_clone = api.clone();
+    router.post(
+        "/v2/fake/xmlFeatures",
+        move |req: &mut Request| {
+            let mut context = Context::default();
+
+            // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
+            fn handle_request<T>(req: &mut Request, api: &T, context: &mut Context) -> Result<Response, Response> where T: Api {
+
+                context.x_span_id = Some(req.headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                context.auth_data = req.extensions.remove::<AuthData>();
+                context.authorization = req.extensions.remove::<Authorization>();
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+
+                let param_xml_object = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter xmlObject - not valid UTF-8: {}", e))))?;
+
+                let mut unused_elements = Vec::new();
+
+                let param_xml_object = if let Some(param_xml_object_raw) = param_xml_object { 
+                    let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_xml_object_raw.as_bytes());
+
+                    let param_xml_object: Option<models::XmlObject> = serde_ignored::deserialize(deserializer, |path| {
+                            warn!("Ignoring unknown field in body: {}", path);
+                            unused_elements.push(path.to_string());
+                        }).map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter xmlObject - doesn't match schema: {}", e))))?;
+
+                    param_xml_object
+                } else {
+                    None
+                };
+                let param_xml_object = param_xml_object.ok_or_else(|| Response::with((status::BadRequest, "Missing required body parameter xmlObject".to_string())))?;
+
+
+                match api.post_xml_features(param_xml_object, context).wait() {
+                    Ok(rsp) => match rsp {
+                        PostXmlFeaturesResponse::Success => {
+
+
+                            let mut response = Response::with((status::Status::from_u16(200)));    
+
+
+                            context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                            if !unused_elements.is_empty() {
+                                response.headers.set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                            }
+                            Ok(response)
+                        },
+                    },
+                    Err(_) => {
+                        // Application code returned an error. This should not happen, as the implementation should
+                        // return a valid response.
+                        Err(Response::with((status::InternalServerError, "An internal error occurred".to_string())))
+                    }
+                }
+            }
+
+            handle_request(req, &api_clone, &mut context).or_else(|mut response| {
+                context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
+                Ok(response)
+            })
+        },
+        "PostXmlFeatures");
+
+    let api_clone = api.clone();
+>>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/server.rs
     router.post(
         "/v2/fake/outer/boolean",
         move |req: &mut Request| {
@@ -199,10 +382,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterBoolean> = serde_ignored::deserialize(deserializer, |path| {
@@ -265,10 +449,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterComposite> = serde_ignored::deserialize(deserializer, |path| {
@@ -331,10 +516,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterNumber> = serde_ignored::deserialize(deserializer, |path| {
@@ -397,10 +583,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().unwrap_or(None);
+                let param_body = req.get::<bodyparser::Raw>().unwrap_or(None);
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterString> = serde_ignored::deserialize(deserializer, |path| {
@@ -463,10 +650,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
@@ -802,10 +990,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
@@ -896,10 +1085,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_body_raw.as_bytes());
 
                     let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
@@ -1328,10 +1518,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_body_raw.as_bytes());
 
                     let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
@@ -1811,10 +2002,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Order> = serde_ignored::deserialize(deserializer, |path| {
@@ -1892,10 +2084,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {
@@ -1960,10 +2153,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
@@ -2028,10 +2222,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
@@ -2360,10 +2555,11 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
 
-                let param_body_raw = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+                let param_body = req.get::<bodyparser::Raw>().map_err(|e| Response::with((status::BadRequest, format!("Couldn't parse body parameter body - not valid UTF-8: {}", e))))?;
+
                 let mut unused_elements = Vec::new();
 
-                let param_body = if let Some(param_body_raw) = param_body_raw { 
+                let param_body = if let Some(param_body_raw) = param_body { 
                     let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {

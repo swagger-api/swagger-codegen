@@ -530,6 +530,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
         }
 
+        boolean consumesPlainText = false;
         boolean consumesXml = false;
         // if "consumes" is defined (per operation or using global definition)
         if (consumes != null && !consumes.isEmpty()) {
@@ -541,6 +542,8 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 if (mimeType.startsWith("Application/Xml")) {
                     additionalProperties.put("usesXml", true);
                     consumesXml = true;
+                } else if (mimeType.startsWith("Text/Plain")) {
+                    consumesPlainText = true;
                 }
 
                 mediaType.put("mediaType", mimeType);
@@ -563,6 +566,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         boolean producesXml = false;
+        boolean producesPlainText = false;
         if (produces != null && !produces.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
             for (String key : produces) {
@@ -572,6 +576,8 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 if (mimeType.startsWith("Application/Xml")) {
                     additionalProperties.put("usesXml", true);
                     producesXml = true;
+                } else if (mimeType.startsWith("Text/Plain")) {
+                    producesPlainText = true;
                 }
 
                 mediaType.put("mediaType", mimeType);
@@ -594,6 +600,9 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             if (consumesXml) {
                 op.bodyParam.vendorExtensions.put("consumesXml", true);
             }
+            if (consumesPlainText) {
+                op.bodyParam.vendorExtensions.put("consumesPlainText", true);
+            }
 
         }
         for (CodegenParameter param : op.bodyParams) {
@@ -606,6 +615,10 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
             if (consumesXml) {
                 param.vendorExtensions.put("consumesXml", true);
+            }
+
+            if (consumesPlainText) {
+                param.vendorExtensions.put("consumesPlainText", true);
             }
         }
         for (CodegenParameter param : op.headerParams) {
@@ -621,6 +634,10 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
                 if (producesXml) {
                     rsp.vendorExtensions.put("producesXml", true);
+                }
+
+                if (producesPlainText) {
+                    rsp.vendorExtensions.put("producesPlainText", true);
                 }
 
                 // Check whether we're returning an object with a defined XML namespace.
