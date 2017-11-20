@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	sw "./go-petstore"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -80,7 +81,7 @@ func TestUpdatePetWithForm(t *testing.T) {
 }
 
 func TestFindPetsByTag(t *testing.T) {
-	var found bool = false
+	var found = false
 	resp, r, err := client.PetApi.FindPetsByTags(nil, []string{"tag2"})
 	if err != nil {
 		t.Errorf("Error while getting pet by tag")
