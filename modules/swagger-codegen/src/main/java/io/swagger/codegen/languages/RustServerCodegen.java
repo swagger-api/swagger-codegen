@@ -596,11 +596,14 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 op.bodyParam.vendorExtensions.put("model_key", key);
             }
 
+            // Default to consuming json
             op.bodyParam.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
             if (consumesXml) {
                 op.bodyParam.vendorExtensions.put("consumesXml", true);
             } else if (consumesPlainText) {
                 op.bodyParam.vendorExtensions.put("consumesPlainText", true);
+            } else {
+                op.bodyParam.vendorExtensions.put("consumesJson", true);
             }
 
         }
@@ -612,10 +615,13 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
             param.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
 
+            // Default to producing json if nothing else is specified
             if (consumesXml) {
                 param.vendorExtensions.put("consumesXml", true);
             } else if (consumesPlainText) {
                 param.vendorExtensions.put("consumesPlainText", true);
+            } else {
+                param.vendorExtensions.put("consumesJson", true);
             }
         }
         for (CodegenParameter param : op.headerParams) {
@@ -629,10 +635,13 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             if (rsp.dataType != null) {
                 rsp.vendorExtensions.put("uppercase_data_type", (rsp.dataType.replace("models::", "")).toUpperCase());
 
+                // Default to producing json if nothing else is specified
                 if (producesXml) {
                     rsp.vendorExtensions.put("producesXml", true);
                 } else if (producesPlainText) {
                     rsp.vendorExtensions.put("producesPlainText", true);
+                } else {
+                    rsp.vendorExtensions.put("producesJson", true);
                 }
 
                 // Check whether we're returning an object with a defined XML namespace.
