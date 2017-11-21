@@ -6,7 +6,7 @@ import javax.validation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
 /**
- * User
+ * A User who is purchasing from the pet store
  */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})

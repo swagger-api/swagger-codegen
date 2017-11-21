@@ -6,7 +6,7 @@ import javax.validation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
 /**
- * Category
+ * A category for a pet
  */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})

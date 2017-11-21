@@ -6,7 +6,7 @@ import javax.validation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
 /**
- * Tag
+ * A tag for a pet
  */
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
