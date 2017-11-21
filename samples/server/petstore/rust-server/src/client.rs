@@ -38,12 +38,6 @@ use swagger::{Context, ApiError, XSpanId};
 
 use {Api,
      TestSpecialTagsResponse,
-<<<<<<< HEAD:samples/server/petstore/rust-server/src/client.rs
-=======
-     GetXmlFeaturesResponse,
-     PostPlainTextResponse,
-     PostXmlFeaturesResponse,
->>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/client.rs
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -259,170 +253,6 @@ impl Api for Client {
         Box::new(futures::done(result))
     }
 
-<<<<<<< HEAD:samples/server/petstore/rust-server/src/client.rs
-=======
-    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
-
-
-        let url = format!(
-            "{}/v2/fake/xmlFeatures",
-            self.base_path
-        );
-
-
-        let hyper_client = (self.hyper_client)();
-        let request = hyper_client.request(hyper::method::Method::Get, &url);
-        let mut custom_headers = hyper::header::Headers::new();
-
-        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
-
-
-        let request = request.headers(custom_headers);
-
-        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
-        fn parse_response(mut response: hyper::client::response::Response) -> Result<GetXmlFeaturesResponse, ApiError> {
-            match response.status.to_u16() {
-                200 => {
-                    let mut buf = String::new();
-                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
-                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
-                    let body = serde_xml_rs::from_str::<models::XmlObject>(&buf)
-                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
-                    Ok(GetXmlFeaturesResponse::Success(body))
-                },
-                code => {
-                    let mut buf = [0; 100];
-                    let debug_body = match response.read(&mut buf) {
-                        Ok(len) => match str::from_utf8(&buf[..len]) {
-                            Ok(body) => Cow::from(body),
-                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
-                        },
-                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                    };
-                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                         code,
-                                         response.headers,
-                                         debug_body)))
-                }
-            }
-        }
-
-        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        Box::new(futures::done(result))
-    }
-
-    fn post_plain_text(&self, param_message: String, context: &Context) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send> {
-
-
-        let url = format!(
-            "{}/v2/fake/plaintext&#39;",
-            self.base_path
-        );
-
-        let body = param_message;
-
-        let hyper_client = (self.hyper_client)();
-        let request = hyper_client.request(hyper::method::Method::Post, &url);
-        let mut custom_headers = hyper::header::Headers::new();
-
-        let request = request.body(&body);
-
-        custom_headers.set(ContentType(mimetypes::requests::POST_PLAIN_TEXT.clone()));
-        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
-
-
-        let request = request.headers(custom_headers);
-
-        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
-        fn parse_response(mut response: hyper::client::response::Response) -> Result<PostPlainTextResponse, ApiError> {
-            match response.status.to_u16() {
-                200 => {
-                    let mut buf = String::new();
-                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = buf;
-
-                    Ok(PostPlainTextResponse::Success(body))
-                },
-                code => {
-                    let mut buf = [0; 100];
-                    let debug_body = match response.read(&mut buf) {
-                        Ok(len) => match str::from_utf8(&buf[..len]) {
-                            Ok(body) => Cow::from(body),
-                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
-                        },
-                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                    };
-                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                         code,
-                                         response.headers,
-                                         debug_body)))
-                }
-            }
-        }
-
-        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        Box::new(futures::done(result))
-    }
-
-    fn post_xml_features(&self, param_xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
-
-
-        let url = format!(
-            "{}/v2/fake/xmlFeatures",
-            self.base_path
-        );
-
-
-
-        let mut namespaces = BTreeMap::new();
-        // An empty string is used to indicate a global namespace in xmltree.
-        namespaces.insert("".to_string(), models::namespaces::XMLOBJECT.clone());
-        let body = serde_xml_rs::to_string_with_namespaces(&param_xml_object, namespaces).expect("impossible to fail to serialize");
-
-        let hyper_client = (self.hyper_client)();
-        let request = hyper_client.request(hyper::method::Method::Post, &url);
-        let mut custom_headers = hyper::header::Headers::new();
-
-        let request = request.body(&body);
-
-        custom_headers.set(ContentType(mimetypes::requests::POST_XML_FEATURES.clone()));
-        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
-
-
-        let request = request.headers(custom_headers);
-
-        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
-        fn parse_response(mut response: hyper::client::response::Response) -> Result<PostXmlFeaturesResponse, ApiError> {
-            match response.status.to_u16() {
-                200 => {
-
-
-                    Ok(PostXmlFeaturesResponse::Success)
-                },
-                code => {
-                    let mut buf = [0; 100];
-                    let debug_body = match response.read(&mut buf) {
-                        Ok(len) => match str::from_utf8(&buf[..len]) {
-                            Ok(body) => Cow::from(body),
-                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
-                        },
-                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                    };
-                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                         code,
-                                         response.headers,
-                                         debug_body)))
-                }
-            }
-        }
-
-        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        Box::new(futures::done(result))
-    }
-
->>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/src/client.rs
     fn fake_outer_boolean_serialize(&self, param_body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send> {
 
 
@@ -830,7 +660,10 @@ impl Api for Client {
     fn test_inline_additional_properties(&self, param_param: object, context: &Context) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/inline-additionalProperties?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/inline-additionalProperties",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_param).expect("impossible to fail to serialize");
@@ -1384,7 +1217,7 @@ impl Api for Client {
         // Form data body
         let mut multipart = Multipart::new();
 
-        if let Ok(Some(param_file)) = param_file.wait() {
+        if let Ok(Some(param_file)) = param_file.wait() { 
             match convert_stream_to_string(param_file) {
                 Ok(param_file) => {
                     // Add file to multipart form.

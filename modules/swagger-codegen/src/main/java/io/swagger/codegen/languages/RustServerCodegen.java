@@ -599,8 +599,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             op.bodyParam.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
             if (consumesXml) {
                 op.bodyParam.vendorExtensions.put("consumesXml", true);
-            }
-            if (consumesPlainText) {
+            } else if (consumesPlainText) {
                 op.bodyParam.vendorExtensions.put("consumesPlainText", true);
             }
 
@@ -615,9 +614,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
             if (consumesXml) {
                 param.vendorExtensions.put("consumesXml", true);
-            }
-
-            if (consumesPlainText) {
+            } else if (consumesPlainText) {
                 param.vendorExtensions.put("consumesPlainText", true);
             }
         }
@@ -634,9 +631,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
                 if (producesXml) {
                     rsp.vendorExtensions.put("producesXml", true);
-                }
-
-                if (producesPlainText) {
+                } else if (producesPlainText) {
                     rsp.vendorExtensions.put("producesPlainText", true);
                 }
 

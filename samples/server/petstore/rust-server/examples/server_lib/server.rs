@@ -11,10 +11,6 @@ use swagger;
 
 use petstore_api::{Api, ApiError, Context,
                       TestSpecialTagsResponse,
-                      GetXmlFeaturesResponse,
-                      PostPlainTextResponse,
-                      PostXmlFeaturesResponse,
-                      PutPlainTextResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
@@ -22,6 +18,7 @@ use petstore_api::{Api, ApiError, Context,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
+                      TestInlineAdditionalPropertiesResponse,
                       TestJsonFormDataResponse,
                       TestClassnameResponse,
                       AddPetResponse,
@@ -56,34 +53,6 @@ impl Api for Server {
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send> {
         let context = context.clone();
         println!("test_special_tags({:?}) - X-Span-ID: {:?}", body, context.x_span_id.unwrap_or(String::from("<none>")).clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-    /// Get some XML
-    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
-        let context = context.clone();
-        println!("get_xml_features() - X-Span-ID: {:?}", context.x_span_id.unwrap_or(String::from("<none>")).clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-    /// Post some plaintext
-    fn post_plain_text(&self, message: String, context: &Context) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError> + Send> {
-        let context = context.clone();
-        println!("post_plain_text(\"{}\") - X-Span-ID: {:?}", message, context.x_span_id.unwrap_or(String::from("<none>")).clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-    /// Post some xml
-    fn post_xml_features(&self, xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
-        let context = context.clone();
-        println!("post_xml_features({:?}) - X-Span-ID: {:?}", xml_object, context.x_span_id.unwrap_or(String::from("<none>")).clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-    /// Put some optional plaintext
-    fn put_plain_text(&self, message: Option<String>, context: &Context) -> Box<Future<Item=PutPlainTextResponse, Error=ApiError> + Send> {
-        let context = context.clone();
-        println!("put_plain_text({:?}) - X-Span-ID: {:?}", message, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 
@@ -125,7 +94,7 @@ impl Api for Server {
     /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
     fn test_endpoint_parameters(&self, number: f64, double: f64, pattern_without_delimiter: String, byte: swagger::ByteArray, integer: Option<i32>, int32: Option<i32>, int64: Option<i64>, float: Option<f32>, string: Option<String>, binary: Option<swagger::ByteArray>, date: Option<chrono::DateTime<chrono::Utc>>, date_time: Option<chrono::DateTime<chrono::Utc>>, password: Option<String>, callback: Option<String>, context: &Context) -> Box<Future<Item=TestEndpointParametersResponse, Error=ApiError> + Send> {
         let context = context.clone();
-        println!("test_endpoint_parameters({}, {}, \"{}\", \"{:?}\", {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}) - X-Span-ID: {:?}", number, double, pattern_without_delimiter, byte, integer, int32, int64, float, string, binary, date, date_time, password, callback, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        println!("test_endpoint_parameters({}, {}, \"{}\", {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}) - X-Span-ID: {:?}", number, double, pattern_without_delimiter, byte, integer, int32, int64, float, string, binary, date, date_time, password, callback, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 
@@ -133,6 +102,13 @@ impl Api for Server {
     fn test_enum_parameters(&self, enum_form_string_array: Option<&Vec<String>>, enum_form_string: Option<String>, enum_header_string_array: Option<&Vec<String>>, enum_header_string: Option<String>, enum_query_string_array: Option<&Vec<String>>, enum_query_string: Option<String>, enum_query_integer: Option<i32>, enum_query_double: Option<f64>, context: &Context) -> Box<Future<Item=TestEnumParametersResponse, Error=ApiError> + Send> {
         let context = context.clone();
         println!("test_enum_parameters({:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}) - X-Span-ID: {:?}", enum_form_string_array, enum_form_string, enum_header_string_array, enum_header_string, enum_query_string_array, enum_query_string, enum_query_integer, enum_query_double, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        Box::new(futures::failed("Generic failure".into()))
+    }
+
+    /// test inline additionalProperties
+    fn test_inline_additional_properties(&self, param: object, context: &Context) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError> + Send> {
+        let context = context.clone();
+        println!("test_inline_additional_properties({:?}) - X-Span-ID: {:?}", param, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 

@@ -15,12 +15,6 @@ use futures::{Future, future, Stream, stream};
 use petstore_api::{ApiNoContext, ContextWrapperExt,
                       ApiError,
                       TestSpecialTagsResponse,
-<<<<<<< HEAD:samples/server/petstore/rust-server/examples/client.rs
-=======
-                      GetXmlFeaturesResponse,
-                      PostPlainTextResponse,
-                      PostXmlFeaturesResponse,
->>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/examples/client.rs
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
@@ -59,11 +53,6 @@ fn main() {
         .arg(Arg::with_name("operation")
             .help("Sets the operation to run")
             .possible_values(&[
-<<<<<<< HEAD:samples/server/petstore/rust-server/examples/client.rs
-=======
-    "GetXmlFeatures",
-    "PostPlainText",
->>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/examples/client.rs
     "FakeOuterBooleanSerialize",
     "FakeOuterCompositeSerialize",
     "FakeOuterNumberSerialize",
@@ -130,25 +119,6 @@ fn main() {
         //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
-<<<<<<< HEAD:samples/server/petstore/rust-server/examples/client.rs
-=======
-        Some("GetXmlFeatures") => {
-            let result = client.get_xml_features().wait();
-            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
-         },
-
-        Some("PostPlainText") => {
-            let result = client.post_plain_text("message_example".to_string()).wait();
-            println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
-         },
-
-        // Disabled because there's no example.
-        // Some("PostXmlFeatures") => {
-        //     let result = client.post_xml_features(???).wait();
-        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
-        //  },
-
->>>>>>> 531e283... Added plaintext support:samples/client/petstore/rust2/examples/client.rs
         Some("FakeOuterBooleanSerialize") => {
             let result = client.fake_outer_boolean_serialize(None).wait();
             println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
@@ -176,7 +146,7 @@ fn main() {
         //  },
 
         Some("TestEndpointParameters") => {
-            let result = client.test_endpoint_parameters(3.4, 1.2, "pattern_without_delimiter_example".to_string(), swagger::ByteArray("byte_example".to_string().into_bytes()), Some(56), Some(56), Some(789), Some(3.4), Some("string_example".to_string()), Some(swagger::ByteArray(Vec::from("B"))), None, None, Some("password_example".to_string()), Some("callback_example".to_string())).wait();
+            let result = client.test_endpoint_parameters(8.14, 1.2, "pattern_without_delimiter_example".to_string(), swagger::ByteArray(Vec::from("B")), Some(56), Some(56), Some(789), Some(3.4), Some("string_example".to_string()), Some(swagger::ByteArray(Vec::from("B"))), None, None, Some("password_example".to_string()), Some("callback_example".to_string())).wait();
             println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
 
