@@ -122,7 +122,11 @@ public class JSON {
                 return (T) body;
             else if (returnType.equals(Date.class))
                 return (T) apiClient.parseDateOrDatetime(body);
-            else throw(e);
+            else {
+                System.out.println(">>>>> Error deserializing JSON for return type " + returnType);
+                System.out.println(body);
+                throw(e);
+            }
         }
     }
 }
