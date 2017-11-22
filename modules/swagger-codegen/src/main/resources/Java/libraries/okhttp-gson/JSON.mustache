@@ -51,6 +51,11 @@ public class JSON {
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     {{/jsr310}}
     private Map<Type, Object> typeAdapters = new LinkedHashMap<>();
+    private Boolean serializeNulls;
+    private Boolean complexMapKeySerialization;
+    private Boolean serializeSpecialFloatingPointValues;
+    private Boolean escapeHtmlChars;
+    private Boolean prettyPrinting;
 
     public JSON() {
         initializeGsonInstance();
@@ -72,6 +77,21 @@ public class JSON {
             for (Map.Entry<Type, Object> typeAdapterEntry : typeAdapters.entrySet()) {
                 gsonBuilder.registerTypeAdapter(typeAdapterEntry.getKey(), typeAdapterEntry.getValue());
             }
+        }
+        if (serializeNulls != null && serializeNulls) {
+            gsonBuilder.serializeNulls();
+        }
+        if (complexMapKeySerialization != null && complexMapKeySerialization) {
+            gsonBuilder.enableComplexMapKeySerialization();
+        }
+        if (serializeSpecialFloatingPointValues != null && serializeSpecialFloatingPointValues) {
+            gsonBuilder.serializeSpecialFloatingPointValues();
+        }
+        if (escapeHtmlChars != null && !escapeHtmlChars) {
+            gsonBuilder.disableHtmlEscaping();
+        }
+        if (prettyPrinting != null && prettyPrinting) {
+            gsonBuilder.setPrettyPrinting();
         }
         gson = gsonBuilder.create();
     }
@@ -103,6 +123,56 @@ public class JSON {
      */
     public void registerTypeAdapters(Map<Type, Object> typeAdapters) {
         this.typeAdapters = typeAdapters;
+        initializeGsonInstance();
+    }
+
+    /**
+     * Sets Gson null serialization option.
+     *
+     * @param serializeNulls set to true if nulls are serialized
+     */
+    public void setSerializeNulls(Boolean serializeNulls) {
+        this.serializeNulls = serializeNulls;
+        initializeGsonInstance();
+    }
+
+    /**
+     * Sets Gson complex map serialization option.
+     *
+     * @param complexMapKeySerialization set to true if complex maps are serialized
+     */
+    public void setComplexMapKeySerialization(Boolean complexMapKeySerialization) {
+        this.complexMapKeySerialization = complexMapKeySerialization;
+        initializeGsonInstance();
+    }
+
+    /**
+     * Sets Gson special floating point values serialization option.
+     *
+     * @param serializeSpecialFloatingPointValues set to true if special floating point values are serialized
+     */
+    public void setSerializeSpecialFloatingPointValues(Boolean serializeSpecialFloatingPointValues) {
+        this.serializeSpecialFloatingPointValues = serializeSpecialFloatingPointValues;
+        initializeGsonInstance();
+    }
+
+    /**
+     * Sets Gson html characters escaping option.
+     *
+     * @param escapeHtmlChars set to true if special html characters are escaped (set to true by Gson by default)
+     */
+    public void setEscapeHtmlChars(Boolean escapeHtmlChars) {
+        this.escapeHtmlChars = escapeHtmlChars;
+        initializeGsonInstance();
+    }
+
+    /**
+     * Sets Gson pretty printing option.
+     *
+     * @param prettyPrinting set to true if the serialization output is to be pretty-printed
+     */
+    public void setPrettyPrinting(Boolean prettyPrinting) {
+        this.prettyPrinting = prettyPrinting;
         initializeGsonInstance();
     }
 
