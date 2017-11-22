@@ -128,7 +128,7 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle
      * escaping those terms here. This logic is only called if a variable
-     * matches the reseved words
+     * matches the reserved words
      *
      * @return the escaped term
      */
@@ -165,5 +165,15 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         }
         property.nameInCamelCase = nameInCamelCase;
         return property;
+    }
+    
+    /**
+     * Output the Getter name for boolean property, e.g. isActive
+     *
+     * @param name the name of the property
+     * @return getter name based on naming convention
+     */
+    public String toBooleanGetter(String name) {
+        return "is" + getterAndSetterCapitalize(name);
     }
 }

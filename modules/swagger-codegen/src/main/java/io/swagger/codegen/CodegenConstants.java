@@ -4,6 +4,14 @@ package io.swagger.codegen;
  * A class for storing constants that are used throughout the project.
  */
 public class CodegenConstants {
+    public static final String APIS = "apis";
+    public static final String MODELS = "models";
+    public static final String SUPPORTING_FILES = "supportingFiles";
+    public static final String MODEL_TESTS = "modelTests";
+    public static final String MODEL_DOCS = "modelDocs";
+    public static final String API_TESTS = "apiTests";
+    public static final String API_DOCS = "apiDocs";
+
     public static final String API_PACKAGE = "apiPackage";
     public static final String API_PACKAGE_DESC = "package for generated api classes";
 
@@ -146,6 +154,10 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
     public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
+    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
+
+    public static final String ENUM_PROPERTY_NAMING = "enumPropertyNaming";
+    public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
 
     public static final String MODEL_NAME_PREFIX = "modelNamePrefix";
     public static final String MODEL_NAME_PREFIX_DESC = "Prefix that will be prepended to all model names. Default is the empty string.";
@@ -171,6 +183,9 @@ public class CodegenConstants {
     public static final String SUPPORTS_ES6 = "supportsES6";
     public static final String SUPPORTS_ES6_DESC = "Generate code that conforms to ES6.";
 
+    public static final String SUPPORTS_ASYNC = "supportsAsync";
+    public static final String SUPPORTS_ASYNC_DESC = "Generate code that supports async operations.";
+
     public static final String EXCLUDE_TESTS = "excludeTests";
     public static final String EXCLUDE_TESTS_DESC = "Specifies that no tests are to be generated.";
 
@@ -194,6 +209,9 @@ public class CodegenConstants {
 
     public static final String NON_PUBLIC_API = "nonPublicApi";
     public static final String NON_PUBLIC_API_DESC = "Generates code with reduced access modifiers; allows embedding elsewhere without exposing non-public API calls to consumers.";
+
+    public static final String VALIDATABLE = "validatable";
+    public static final String VALIDATABLE_DESC = "Generates self-validatable models.";
 
     public static final String IGNORE_FILE_OVERRIDE = "ignoreFileOverride";
     public static final String IGNORE_FILE_OVERRIDE_DESC = "Specifies an override location for the .swagger-codegen-ignore file. Most useful on initial generation.";

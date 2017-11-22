@@ -525,7 +525,7 @@ class ApiClient(object):
                                  content_disposition).group(1)
             path = os.path.join(os.path.dirname(path), filename)
 
-        with open(path, "w") as f:
+        with open(path, "wb") as f:
             f.write(response.data)
 
         return path
@@ -541,7 +541,7 @@ class ApiClient(object):
         try:
             return klass(data)
         except UnicodeEncodeError:
-            return unicode(data)  # noqa: F821
+            return six.u(data)
         except TypeError:
             return data
 
