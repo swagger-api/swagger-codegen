@@ -18,7 +18,7 @@ defmodule SwaggerPetstore.Api.Store do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - order_id (String): ID of the order that needs to be deleted
+  - order_id (String.t): ID of the order that needs to be deleted
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -67,7 +67,7 @@ defmodule SwaggerPetstore.Api.Store do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - order_id (Integer): ID of pet that needs to be fetched
+  - order_id (integer()): ID of pet that needs to be fetched
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -75,7 +75,7 @@ defmodule SwaggerPetstore.Api.Store do
   {:ok, %SwaggerPetstore.Model.Order{}} on success
   {:error, info} on failure
   """
-  @spec get_order_by_id(Tesla.Env.client, Integer.t, keyword()) :: {:ok, SwaggerPetstore.Model.Order.t} | {:error, Tesla.Env.t}
+  @spec get_order_by_id(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.Order.t} | {:error, Tesla.Env.t}
   def get_order_by_id(connection, order_id, _opts \\ []) do
     %{}
     |> method(:get)

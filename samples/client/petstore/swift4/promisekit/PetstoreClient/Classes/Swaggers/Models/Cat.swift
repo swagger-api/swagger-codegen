@@ -8,15 +8,30 @@
 import Foundation
 
 
+
 open class Cat: Animal {
 
     public var declawed: Bool?
 
+
     
 
+    // Encodable protocol methods
 
-    private enum CodingKeys: String, CodingKey { 
-        case declawed = "declawed"
+    public override func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(declawed, forKey: "declawed")
     }
 
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        declawed = try container.decodeIfPresent(Bool.self, forKey: "declawed")
+        try super.init(from: decoder)
+    }
 }
+

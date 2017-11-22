@@ -46,16 +46,7 @@ haskell-http-client
 
 ### Unsupported Swagger Features
 
-* Auth Methods (https://swagger.io/docs/specification/2-0/authentication/)
-    
-    - use `setHeader` to add any required headers to requests
-
 * Model Inheritance
-
-* Default Parameter Values
-
-* Enum Parameters
-
 
 This is beta software; other cases may not be supported.
 
@@ -71,9 +62,11 @@ These options allow some customization of the code generation process.
 | allowToJsonNulls                | allow emitting JSON Null during model encoding to JSON                                                                        | false    | false                |
 | dateFormat                      | format string used to parse/render a date                                                                                     | %Y-%m-%d | %Y-%m-%d                      |
 | dateTimeFormat                  | format string used to parse/render a datetime. (Defaults to [formatISO8601Millis][1] when not provided)                       |          |                   |
+| generateEnums                   | Generate specific datatypes for swagger enums                                                                                 | true     | true                   |
 | generateFormUrlEncodedInstances | Generate FromForm/ToForm instances for models used by x-www-form-urlencoded operations (model fields must be primitive types) | true     | true |
 | generateLenses                  | Generate Lens optics for Models                                                                                               | true     | true                  |
 | generateModelConstructors       | Generate smart constructors (only supply required fields) for models                                                          | true     | true       |
+| inlineMimeTypes                 | Inline (hardcode) the content-type and accept parameters on operations, when there is only 1 option                           | false    | false                 |
 | modelDeriving                   | Additional classes to include in the deriving() clause of Models                                                              |          |                    |
 | strictFields                    | Add strictness annotations to all model fields                                                                                | true     | true                  |
 | useMonadLogger                  | Use the monad-logger package to provide logging (if instead false, use the katip logging package)                             | false    | false                |
@@ -92,6 +85,7 @@ View the full list of Codegen "config option" parameters with the command:
 java -jar swagger-codegen-cli.jar config-help -l haskell-http-client
 ```
 
+## Usage Notes
 
 ### Example SwaggerPetstore Haddock documentation 
 
@@ -103,20 +97,24 @@ An example of the generated haddock documentation targeting the server http://pe
 
 An example application using the auto-generated haskell-http-client bindings for the server http://petstore.swagger.io/ can be found [here][3]
 
-[3]: https://github.com/swagger-api/swagger-codegen/tree/c7d145a4ba3c0627e04ece9eb97e354ac91be821/samples/client/petstore/haskell-http-client/example-app
-
-### Usage Notes
+[3]: https://github.com/swagger-api/swagger-codegen/tree/master/samples/client/petstore/haskell-http-client/example-app
 
 This library is intended to be imported qualified.
+
+### Modules
 
 | MODULE              | NOTES                                               |
 | ------------------- | --------------------------------------------------- |
 | SwaggerPetstore.Client    | use the "dispatch" functions to send requests       |
-| SwaggerPetstore.API       | construct requetss                                  |
-| SwaggerPetstore.Model     | describes models                                    |
+| SwaggerPetstore.Core      | core funcions, config and request types             |
+| SwaggerPetstore.API       | construct api requests                              |
+| SwaggerPetstore.Model     | describes api models                                |
 | SwaggerPetstore.MimeTypes | encoding/decoding MIME types (content-types/accept) |
-| SwaggerPetstore.Lens      | lenses for model fields                             |
+| SwaggerPetstore.ModelLens | lenses for model fields                             |
 | SwaggerPetstore.Logging   | logging functions and utils                         |
+
+
+### MimeTypes
 
 This library adds type safety around what swagger specifies as
 Produces and Consumes for each Operation (e.g. the list of MIME types an
@@ -151,16 +149,6 @@ this would indicate that:
 * the _addFoo_ operation can set it's body param of _FooModel_ via `setBodyParam`
 * the _addFoo_ operation can set 2 different optional parameters via `applyOptionalParam`
 
-putting this together:
-
-```haskell
-let addFooRequest = addFoo MimeJSON foomodel requiredparam1 requiredparam2
-  `applyOptionalParam` FooId 1
-  `applyOptionalParam` FooName "name"
-  `setHeader` [("api_key","xxyy")]
-addFooResult <- dispatchMime mgr config addFooRequest MimeXML
-```
-
 If the swagger spec doesn't declare it can accept or produce a certain
 MIME type for a given Operation, you should either add a Produces or
 Consumes instance for the desired MIME types (assuming the server
@@ -173,5 +161,36 @@ Only JSON instances are generated by default, and in some case
 x-www-form-urlencoded instances (FromFrom, ToForm) will also be
 generated if the model fields are primitive types, and there are
 Operations using x-www-form-urlencoded which use those models.
+
+### Authentication
+
+A haskell data type will be generated for each swagger authentication type.
+
+If for example the AuthMethod `AuthOAuthFoo` is generated for OAuth operations, then
+`addAuthMethod` should be used to add the AuthMethod config.
+
+When a request is dispatched, if a matching auth method is found in
+the config, it will be applied to the request.
+
+### Example
+
+```haskell
+mgr <- newManager defaultManagerSettings
+config0 <- withStdoutLogging =<< newConfig 
+let config = config0
+    `addAuthMethod` AuthOAuthFoo "secret-key"
+
+let addFooRequest = 
+  addFoo 
+    (ContentType MimeJSON) 
+    (Accept MimeXML) 
+    (ParamBar paramBar)
+    (ParamQux paramQux)
+    modelBaz
+  `applyOptionalParam` FooId 1
+  `applyOptionalParam` FooName "name"
+  `setHeader` [("qux_header","xxyy")]
+addFooResult <- dispatchMime mgr config addFooRequest
+```
 
 See the example app and the haddocks for details.

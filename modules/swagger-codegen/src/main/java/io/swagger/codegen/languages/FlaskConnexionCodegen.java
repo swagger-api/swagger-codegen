@@ -249,7 +249,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * those terms here.  This logic is only called if a variable matches the reserved words
      *
      * @return the escaped term
      */
@@ -660,6 +660,12 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             addImport(model, "import re");
         }
         postProcessPattern(property.pattern, property.vendorExtensions);
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        // process enum in models
+        return postProcessModelsEnum(objs);
     }
 
     @Override

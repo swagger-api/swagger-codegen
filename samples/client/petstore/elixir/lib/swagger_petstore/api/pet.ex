@@ -44,16 +44,16 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (Integer): Pet id to delete
+  - pet_id (integer()): Pet id to delete
   - opts (KeywordList): [optional] Optional parameters
-    - :api_key (String): 
+    - :api_key (String.t): 
 
   ## Returns
 
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec delete_pet(Tesla.Env.client, Integer.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec delete_pet(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def delete_pet(connection, pet_id, opts \\ []) do
     optional_params = %{
       :"api_key" => :headers
@@ -74,7 +74,7 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - status (List[String]): Status values that need to be considered for filter
+  - status ([String.t]): Status values that need to be considered for filter
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -100,7 +100,7 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - tags (List[String]): Tags to filter by
+  - tags ([String.t]): Tags to filter by
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -126,7 +126,7 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (Integer): ID of pet to return
+  - pet_id (integer()): ID of pet to return
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -134,7 +134,7 @@ defmodule SwaggerPetstore.Api.Pet do
   {:ok, %SwaggerPetstore.Model.Pet{}} on success
   {:error, info} on failure
   """
-  @spec get_pet_by_id(Tesla.Env.client, Integer.t, keyword()) :: {:ok, SwaggerPetstore.Model.Pet.t} | {:error, Tesla.Env.t}
+  @spec get_pet_by_id(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.Pet.t} | {:error, Tesla.Env.t}
   def get_pet_by_id(connection, pet_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -177,17 +177,17 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (Integer): ID of pet that needs to be updated
+  - pet_id (integer()): ID of pet that needs to be updated
   - opts (KeywordList): [optional] Optional parameters
-    - :name (String): Updated name of the pet
-    - :status (String): Updated status of the pet
+    - :name (String.t): Updated name of the pet
+    - :status (String.t): Updated status of the pet
 
   ## Returns
 
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec update_pet_with_form(Tesla.Env.client, Integer.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec update_pet_with_form(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def update_pet_with_form(connection, pet_id, opts \\ []) do
     optional_params = %{
       :"name" => :form,
@@ -209,17 +209,17 @@ defmodule SwaggerPetstore.Api.Pet do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (Integer): ID of pet to update
+  - pet_id (integer()): ID of pet to update
   - opts (KeywordList): [optional] Optional parameters
-    - :additional_metadata (String): Additional data to pass to server
-    - :file (String): file to upload
+    - :additional_metadata (String.t): Additional data to pass to server
+    - :file (String.t): file to upload
 
   ## Returns
 
   {:ok, %SwaggerPetstore.Model.ApiResponse{}} on success
   {:error, info} on failure
   """
-  @spec upload_file(Tesla.Env.client, Integer.t, keyword()) :: {:ok, SwaggerPetstore.Model.ApiResponse.t} | {:error, Tesla.Env.t}
+  @spec upload_file(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.ApiResponse.t} | {:error, Tesla.Env.t}
   def upload_file(connection, pet_id, opts \\ []) do
     optional_params = %{
       :"additionalMetadata" => :form,
