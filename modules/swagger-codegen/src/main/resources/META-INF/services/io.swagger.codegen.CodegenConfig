@@ -82,3 +82,4 @@ io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
 io.swagger.codegen.languages.UndertowCodegen
 io.swagger.codegen.languages.ZendExpressivePathHandlerServerCodegen
+io.swagger.codegen.languages.PkmstServerCodegen
