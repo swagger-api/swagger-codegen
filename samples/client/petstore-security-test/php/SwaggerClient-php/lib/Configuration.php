@@ -76,11 +76,25 @@ class Configuration
     protected $password = '';
 
     /**
+     * The scheme
+     *
+     * @var string
+     */
+    protected $scheme = 'https';
+
+    /**
      * The host
      *
      * @var string
      */
-    protected $host = 'https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r';
+    protected $host = 'petstore.swagger.io */ &#39; &quot; &#x3D;end -- \r\n \n \r';
+
+    /**
+     * The basePath
+     *
+     * @var string
+     */
+    protected $basePath = '/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
@@ -240,6 +254,29 @@ class Configuration
     }
 
     /**
+     * Sets the Scheme
+     *
+     * @param string $scheme Scheme
+     *
+     * @return $this
+     */
+    public function setScheme($scheme)
+    {
+        $this->scheme = $scheme;
+        return $this;
+    }
+
+    /**
+     * Gets the Scheme
+     *
+     * @return string Scheme
+     */
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    /**
      * Sets the host
      *
      * @param string $host Host
@@ -260,6 +297,44 @@ class Configuration
     public function getHost()
     {
         return $this->host;
+    }
+
+    /**
+     * Sets the Base Path
+     *
+     * @param string $basePath Base Path
+     *
+     * @return $this
+     */
+    public function setBasePath($basePath)
+    {
+        $this->basePath = $basePath;
+        return $this;
+    }
+
+    /**
+     * Gets the Base Path
+     *
+     * @return string Base Path
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+    /**
+     * Gets the Base URL
+     *
+     * @return string Base URL
+     */
+    public function getBaseUrl()
+    {
+        return sprintf(
+            '%s://%s/%s',
+            $this->scheme,
+            trim($this->host, '/'),
+            trim($this->basePath, '/')
+        );
     }
 
     /**
