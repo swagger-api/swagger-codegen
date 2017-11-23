@@ -146,7 +146,7 @@ class ApiClient
             $postData = json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($postData));
         }
 
-        $url = $this->config->getHost() . $resourcePath;
+        $url = $this->config->getBaseUrl() . $resourcePath;
 
         $curl = curl_init();
         // set timeout, if needed

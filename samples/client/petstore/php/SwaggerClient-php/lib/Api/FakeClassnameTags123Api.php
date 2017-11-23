@@ -337,7 +337,7 @@ class FakeClassnameTags123Api
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             'PATCH',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $this->config->getBaseUrl() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );

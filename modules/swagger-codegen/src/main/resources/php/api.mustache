@@ -482,7 +482,7 @@ use {{invokerPackage}}\ObjectSerializer;
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
             '{{httpMethod}}',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $this->config->getBaseUrl() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
