@@ -323,6 +323,21 @@ class Configuration
     }
 
     /**
+     * Gets the Base URL
+     *
+     * @return string Base URL
+     */
+    public function getBaseUrl()
+    {
+        return sprintf(
+            '%s://%s/%s',
+            $this->scheme,
+            trim($this->host, '/'),
+            trim($this->basePath, '/')
+        );
+    }
+
+    /**
      * Sets the user agent of the api client
      *
      * @param string $userAgent the user agent of the api client
