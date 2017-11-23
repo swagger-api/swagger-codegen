@@ -308,7 +308,7 @@ export class PetApi extends Api {
       .asPost()
       // Encode form parameters
       .withHeader('content-type', 'application/x-www-form-urlencoded')
-      .withContent(this.queryString({ 
+      .withContent(this.queryString({
         'name': params['name'],
         'status': params['status'],
       }))

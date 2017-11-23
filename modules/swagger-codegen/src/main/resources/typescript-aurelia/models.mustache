@@ -7,10 +7,10 @@
  */
 {{/description}}
 {{^isEnum}}
-export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+export interface I{{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{/isEnum}}
 {{#isEnum}}
-export type {{{classname}}} = {{#allowableValues}}{{#values}}'{{{.}}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}};
+export type I{{{classname}}} = {{#allowableValues}}{{#values}}'{{{.}}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}};
 {{/isEnum}}
 {{#vars}}
 {{#description}}

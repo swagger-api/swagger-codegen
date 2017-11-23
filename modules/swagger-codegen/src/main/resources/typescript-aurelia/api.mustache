@@ -4,7 +4,7 @@ import { HttpClient } from 'aurelia-http-client';
 import { Api } from './Api';
 import { TokenStorage } from './TokenStorage';
 import {
-{{#modelImports}}  {{this}},
+{{#modelImports}}  I{{this}},
 {{/modelImports}}
 } from './models';
 
@@ -14,11 +14,12 @@ import {
  * {{operationId}} - parameters interface
  */
 export interface I{{operationIdCamelCase}}Params {
-{{#allParams}}  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+{{#allParams}}  {{paramName}}{{^required}}?{{/required}}: {{^isPrimitiveType}}I{{/isPrimitiveType}}{{{dataType}}};
 {{/allParams}}
 }
 
 {{/operation}}
+
 /**
  * {{classname}} - API class{{#description}}
  * {{&description}}{{/description}}
@@ -66,8 +67,9 @@ export class {{classname}} extends Api {
 {{#hasFormParams}}
       // Encode form parameters
       .withHeader('content-type', 'application/x-www-form-urlencoded')
-      .withContent(this.queryString({ {{#formParams}}
-        '{{baseName}}': params['{{paramName}}'],{{/formParams}}
+      .withContent(this.queryString({
+        {{#formParams}}'{{baseName}}': params['{{paramName}}'],
+        {{/formParams}}
       }))
 {{/hasFormParams}}
 {{#hasBodyParam}}

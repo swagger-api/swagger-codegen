@@ -1,6 +1,11 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +33,15 @@ public class TypeScriptAureliaClientCodegen extends AbstractTypeScriptClientCode
         embeddedTemplateDir = templateDir = "typescript-aurelia";
         this.cliOptions.add(new CliOption(NPM_NAME, "The name under which you want to publish generated npm package"));
         this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package"));
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path,
+                                          String httpMethod,
+                                          Operation operation,
+                                          Map<String, Model> definitions,
+                                          Swagger swagger) {
+        return super.fromOperation(path, httpMethod, operation, definitions, swagger);
     }
 
     @Override
@@ -79,6 +93,14 @@ public class TypeScriptAureliaClientCodegen extends AbstractTypeScriptClientCode
 
     public void setNpmVersion(String npmVersion) {
         this.npmVersion = npmVersion;
+    }
+
+    @Override
+    public String getTypeDeclaration(Property p) {
+        if (p instanceof RefProperty) {
+            return "I" + super.getTypeDeclaration(p);
+        }
+        return super.getTypeDeclaration(p);
     }
 
     @Override
