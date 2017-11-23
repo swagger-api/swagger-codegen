@@ -1,13 +1,13 @@
 -module(swagger_user_api).
 
--export([create_user/1,
-         create_users_with_array_input/1,
-         create_users_with_list_input/1,
-         delete_user/1,
-         get_user_by_name/1,
-         login_user/2,
-         logout_user/0,
-         update_user/2]).
+-export([create_user/1, create_user/2,
+         create_users_with_array_input/1, create_users_with_array_input/2,
+         create_users_with_list_input/1, create_users_with_list_input/2,
+         delete_user/1, delete_user/2,
+         get_user_by_name/1, get_user_by_name/2,
+         login_user/2, login_user/3,
+         logout_user/0, logout_user/1,
+         update_user/2, update_user/3]).
 
 -define(BASE_URL, <<"http://petstore.swagger.io/v2">>).
 
@@ -15,6 +15,10 @@
 %% This can only be done by the logged in user.
 -spec create_user(swagger_user:swagger_user()) -> ok | {error, integer()}.
 create_user(Body) ->
+    create_user(Body, #{}).
+
+-spec create_user(swagger_user:swagger_user(), maps:map()) -> ok | {error, integer()}.
+create_user(Body, _Optional) ->
     Method = post,
     Path = ["/user"],
     QS = [],
@@ -33,6 +37,10 @@ create_user(Body) ->
 %% @doc Creates list of users with given input array
 -spec create_users_with_array_input(list()) -> ok | {error, integer()}.
 create_users_with_array_input(Body) ->
+    create_users_with_array_input(Body, #{}).
+
+-spec create_users_with_array_input(list(), maps:map()) -> ok | {error, integer()}.
+create_users_with_array_input(Body, _Optional) ->
     Method = post,
     Path = ["/user/createWithArray"],
     QS = [],
@@ -51,6 +59,10 @@ create_users_with_array_input(Body) ->
 %% @doc Creates list of users with given input array
 -spec create_users_with_list_input(list()) -> ok | {error, integer()}.
 create_users_with_list_input(Body) ->
+    create_users_with_list_input(Body, #{}).
+
+-spec create_users_with_list_input(list(), maps:map()) -> ok | {error, integer()}.
+create_users_with_list_input(Body, _Optional) ->
     Method = post,
     Path = ["/user/createWithList"],
     QS = [],
@@ -70,6 +82,10 @@ create_users_with_list_input(Body) ->
 %% This can only be done by the logged in user.
 -spec delete_user(binary()) -> ok | {error, integer()}.
 delete_user(Username) ->
+    delete_user(Username, #{}).
+
+-spec delete_user(binary(), maps:map()) -> ok | {error, integer()}.
+delete_user(Username, _Optional) ->
     Method = delete,
     Path = ["/user/", Username, ""],
     QS = [],
@@ -88,6 +104,10 @@ delete_user(Username) ->
 %% @doc Get user by user name
 -spec get_user_by_name(binary()) -> {ok, list(), swagger_user:swagger_user()} | {error, string()}.
 get_user_by_name(Username) ->
+    get_user_by_name(Username, #{}).
+
+-spec get_user_by_name(binary(), maps:map()) -> {ok, list(), swagger_user:swagger_user()} | {error, string()}.
+get_user_by_name(Username, _Optional) ->
     Method = get,
     Path = ["/user/", Username, ""],
     QS = [],
@@ -99,7 +119,7 @@ get_user_by_name(Username) ->
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
             {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [returns_maps, {labels, attempt_atom}])}; 
+            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid username supplied"}; 
         {ok, 404, _RespHeaders, _ClientRef} ->
@@ -109,9 +129,13 @@ get_user_by_name(Username) ->
 %% @doc Logs user into the system
 -spec login_user(binary(), binary()) -> {ok, list(), binary()} | {error, string()}.
 login_user(Username, Password) ->
+    login_user(Username, Password, #{}).
+
+-spec login_user(binary(), binary(), maps:map()) -> {ok, list(), binary()} | {error, string()}.
+login_user(Username, Password, _Optional) ->
     Method = get,
     Path = ["/user/login"],
-    QS = lists:flatten([{<<"username">>, Username}, {<<"password">>, Password}]),
+    QS = lists:flatten([{<<"username">>, Username}, {<<"password">>, Password}])++[{X, maps:get(X, _Optional)} || X <- [], maps:is_key(X, _Optional)],
     Headers = [],
     Body1 = [],
     Opts = [],
@@ -120,7 +144,7 @@ login_user(Username, Password) ->
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
             {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [returns_maps, {labels, attempt_atom}])}; 
+            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid username/password supplied"}
     end.
@@ -128,6 +152,10 @@ login_user(Username, Password) ->
 %% @doc Logs out current logged in user session
 -spec logout_user() -> ok | {error, integer()}.
 logout_user() ->
+    logout_user(#{}).
+
+-spec logout_user(maps:map()) -> ok | {error, integer()}.
+logout_user(_Optional) ->
     Method = get,
     Path = ["/user/logout"],
     QS = [],
@@ -147,6 +175,10 @@ logout_user() ->
 %% This can only be done by the logged in user.
 -spec update_user(binary(), swagger_user:swagger_user()) -> ok | {error, integer()}.
 update_user(Username, Body) ->
+    update_user(Username, Body, #{}).
+
+-spec update_user(binary(), swagger_user:swagger_user(), maps:map()) -> ok | {error, integer()}.
+update_user(Username, Body, _Optional) ->
     Method = put,
     Path = ["/user/", Username, ""],
     QS = [],

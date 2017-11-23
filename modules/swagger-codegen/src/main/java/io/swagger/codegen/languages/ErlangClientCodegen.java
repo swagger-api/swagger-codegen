@@ -163,10 +163,12 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     public String qsEncode(Object o) {
         String r = new String();
         CodegenParameter q = (CodegenParameter) o;
-        if (q.isListContainer) {
-            r += "[{<<\"" + q.baseName + "\">>, X} || X <- " + q.paramName + "]";
-        } else {
-            r += "{<<\"" + q.baseName + "\">>, " + q.paramName + "}";
+        if (q.required) {
+            if (q.isListContainer) {
+                r += "[{<<\"" + q.baseName + "\">>, X} || X <- " + q.paramName + "]";
+            } else {
+                r += "{<<\"" + q.baseName + "\">>, " + q.paramName + "}";
+            }
         }
         return r;
     }
@@ -295,8 +297,26 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         this.packageVersion = packageVersion;
     }
 
-    String length(Object o) {
-        return Integer.toString((((ExtendedCodegenOperation) o).allParams).size());
+    String length(Object os) {
+        int l = 1;
+        for (CodegenParameter o : ((ExtendedCodegenOperation) os).allParams) {
+            CodegenParameter q = (CodegenParameter) o;
+            if (q.required)
+                l++;
+        }
+
+        return Integer.toString(l);
+    }
+
+    int lengthRequired(List<CodegenParameter> allParams) {
+        int l = 0;
+        for (CodegenParameter o : allParams) {
+            CodegenParameter q = (CodegenParameter) o;
+            if (q.required)
+                l++;
+        }
+
+        return l;
     }
 
     @Override
@@ -313,6 +333,8 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     class ExtendedCodegenOperation extends CodegenOperation {
         private List<String> pathTemplateNames = new ArrayList<String>();
         private String replacedPathName;
+        String arityRequired;
+        String arityOptional;
 
         public ExtendedCodegenOperation(CodegenOperation o) {
             super();
@@ -355,6 +377,8 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             this.produces = o.produces;
             this.bodyParam = o.bodyParam;
             this.allParams = o.allParams;
+            this.arityRequired = Integer.toString(lengthRequired(o.allParams));
+            this.arityOptional = Integer.toString(lengthRequired(o.allParams)+1);
             this.bodyParams = o.bodyParams;
             this.pathParams = o.pathParams;
             this.queryParams = o.queryParams;
