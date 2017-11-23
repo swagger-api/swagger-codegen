@@ -76,11 +76,25 @@ class Configuration
     protected $password = '';
 
     /**
+     * The scheme
+     *
+     * @var string
+     */
+    protected $scheme = 'http';
+
+    /**
      * The host
      *
      * @var string
      */
-    protected $host = 'http://petstore.swagger.io:80/v2';
+    protected $host = 'petstore.swagger.io:80';
+
+    /**
+     * The basePath
+     *
+     * @var string
+     */
+    protected $basePath = '/v2';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
@@ -240,6 +254,29 @@ class Configuration
     }
 
     /**
+     * Sets the Scheme
+     *
+     * @param string $scheme Scheme
+     *
+     * @return $this
+     */
+    public function setScheme($scheme)
+    {
+        $this->scheme = $scheme;
+        return $this;
+    }
+
+    /**
+     * Gets the Scheme
+     *
+     * @return string Scheme
+     */
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    /**
      * Sets the host
      *
      * @param string $host Host
@@ -260,6 +297,29 @@ class Configuration
     public function getHost()
     {
         return $this->host;
+    }
+
+    /**
+     * Sets the Base Path
+     *
+     * @param string $basePath Base Path
+     *
+     * @return $this
+     */
+    public function setBasePath($basePath)
+    {
+        $this->basePath = $basePath;
+        return $this;
+    }
+
+    /**
+     * Gets the Base Path
+     *
+     * @return string Base Path
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 
     /**
