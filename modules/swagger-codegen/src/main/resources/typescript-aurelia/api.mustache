@@ -21,11 +21,29 @@ export interface I{{operationIdCamelCase}}Params {
 {{/operation}}
 
 /**
+ * {{classname}} - API interface{{#description}}
+ * {{&description}}{{/description}}
+ */
+export interface I{{classname}} {
+
+{{#operation}}
+  /**{{#summary}}
+   * {{summary}}
+   *{{/summary}}{{#notes}}
+   * {{notes}}{{/notes}}{{#allParams}}
+   * @param params.{{paramName}} {{description}}{{/allParams}}
+   */
+  {{nickname}}({{#hasParams}}params: I{{operationIdCamelCase}}Params{{/hasParams}});
+
+{{/operation}}
+}
+
+/**
  * {{classname}} - API class{{#description}}
  * {{&description}}{{/description}}
  */
 @autoinject()
-export class {{classname}} extends Api {
+export class {{classname}} extends Api implements I{{classname}} {
 
   /**
    * Creates a new {{classname}} class.
@@ -60,8 +78,9 @@ export class {{classname}} extends Api {
       .as{{httpMethod}}()
 {{#hasQueryParams}}
       // Set query parameters
-      .withParams({ {{#queryParams}}
-        '{{baseName}}': params['{{paramName}}'],{{/queryParams}}
+      .withParams({
+        {{#queryParams}}'{{baseName}}': params['{{paramName}}'],
+        {{/queryParams}}
       })
 {{/hasQueryParams}}
 {{#hasFormParams}}
