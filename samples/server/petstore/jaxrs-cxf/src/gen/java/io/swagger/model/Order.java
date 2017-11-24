@@ -16,13 +16,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Order  {
   
   @ApiModelProperty(value = "")
+  
   private Long id = null;
+
   @ApiModelProperty(value = "")
+  
   private Long petId = null;
+
   @ApiModelProperty(value = "")
+  
   private Integer quantity = null;
+
   @ApiModelProperty(value = "")
+  
   private Date shipDate = null;
+
 
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
@@ -60,8 +68,11 @@ public enum StatusEnum {
  /**
    * Order Status  
   **/
+  
   private StatusEnum status = null;
+
   @ApiModelProperty(value = "")
+  
   private Boolean complete = false;
 
  /**
