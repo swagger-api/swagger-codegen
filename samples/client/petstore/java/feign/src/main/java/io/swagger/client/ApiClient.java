@@ -22,7 +22,7 @@ import io.swagger.client.auth.*;
 import io.swagger.client.auth.OAuth.AccessTokenListener;
 
 
-public class ApiClient {
+public class ApiClient implements io.swagger.codegen.common.feign.SwaggerFeignApiClient {
   public interface Api {}
 
   protected ObjectMapper objectMapper;
