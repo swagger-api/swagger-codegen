@@ -18,7 +18,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MapTest  {
   
   @ApiModelProperty(value = "")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
+  
+
 
 @XmlType(name="InnerEnum")
 @XmlEnum(String.class)
@@ -53,7 +55,8 @@ public enum InnerEnum {
 }
 
   @ApiModelProperty(value = "")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private Map<String, InnerEnum> mapOfEnumString = null;
+  
 
  /**
    * Get mapMapOfString

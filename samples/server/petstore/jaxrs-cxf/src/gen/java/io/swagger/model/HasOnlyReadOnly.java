@@ -15,8 +15,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class HasOnlyReadOnly  {
   
   @ApiModelProperty(value = "")
+  
   private String bar = null;
+
   @ApiModelProperty(value = "")
+  
   private String foo = null;
 
  /**

@@ -15,8 +15,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Category  {
   
   @ApiModelProperty(value = "")
+  
   private Long id = null;
+
   @ApiModelProperty(value = "")
+  
   private String name = null;
 
  /**

@@ -20,12 +20,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Name  {
   
   @ApiModelProperty(required = true, value = "")
+  
   private Integer name = null;
+
   @ApiModelProperty(value = "")
+  
   private Integer snakeCase = null;
+
   @ApiModelProperty(value = "")
+  
   private String property = null;
+
   @ApiModelProperty(value = "")
+  
   private Integer _123Number = null;
 
  /**
