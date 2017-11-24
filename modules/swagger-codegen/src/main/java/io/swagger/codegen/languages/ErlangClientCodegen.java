@@ -259,7 +259,7 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         List<CodegenOperation> os = (List<CodegenOperation>) operations.get("operation");
         List<ExtendedCodegenOperation> newOs = new ArrayList<ExtendedCodegenOperation>();
-        Pattern pattern = Pattern.compile("(.*)\\{([^\\}]+)\\}(.*)");
+        Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}");
         for (CodegenOperation o : os) {
             // force http method to lower case
             o.httpMethod = o.httpMethod.toLowerCase();
@@ -272,10 +272,12 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             Matcher matcher = pattern.matcher(o.path);
             StringBuffer buffer = new StringBuffer();
             while (matcher.find()) {
-                String pathTemplateName = matcher.group(2);
-                matcher.appendReplacement(buffer, "$1" + "\", " + camelize(pathTemplateName) + ", \"" + "$3");
+                String pathTemplateName = matcher.group(1);
+                matcher.appendReplacement(buffer, "\", " + camelize(pathTemplateName) + ", \"");
                 pathTemplateNames.add(pathTemplateName);
             }
+            matcher.appendTail(buffer);
+
             ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
             if (buffer.toString().isEmpty()) {
                 eco.setReplacedPathName(o.path);
@@ -312,7 +314,7 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         int l = 0;
         for (CodegenParameter o : allParams) {
             CodegenParameter q = (CodegenParameter) o;
-            if (q.required)
+            if (q.required || q.isBodyParam)
                 l++;
         }
 

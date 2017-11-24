@@ -12,12 +12,12 @@
 -define(BASE_URL, <<"http://petstore.swagger.io/v2">>).
 
 %% @doc Add a new pet to the store
--spec add_pet(swagger_pet:swagger_pet()) -> ok | {error, integer()}.
+-spec add_pet(swagger_pet:swagger_pet(), term()) -> ok | {error, integer()}.
 add_pet(Body) ->
-    add_pet(Body, #{}).
+    add_pet(Body, Body, #{}).
 
--spec add_pet(swagger_pet:swagger_pet(), maps:map()) -> ok | {error, integer()}.
-add_pet(Body, _Optional) ->
+-spec add_pet(swagger_pet:swagger_pet(), term(), maps:map()) -> ok | {error, integer()}.
+add_pet(Body, Body, _Optional) ->
     Method = post,
     Path = ["/pet"],
     QS = [],
@@ -36,7 +36,7 @@ add_pet(Body, _Optional) ->
 %% @doc Deletes a pet
 -spec delete_pet(integer()) -> ok | {error, integer()}.
 delete_pet(PetId) ->
-    delete_pet(PetId, #{}).
+    delete_pet(PetId, , #{}).
 
 -spec delete_pet(integer(), maps:map()) -> ok | {error, integer()}.
 delete_pet(PetId, _Optional) ->
@@ -59,7 +59,7 @@ delete_pet(PetId, _Optional) ->
 %% Multiple status values can be provided with comma separated strings
 -spec find_pets_by_status(list()) -> {ok, list(), [swagger_pet:swagger_pet()]} | {error, string()}.
 find_pets_by_status(Status) ->
-    find_pets_by_status(Status, #{}).
+    find_pets_by_status(Status, , #{}).
 
 -spec find_pets_by_status(list(), maps:map()) -> {ok, list(), [swagger_pet:swagger_pet()]} | {error, string()}.
 find_pets_by_status(Status, _Optional) ->
@@ -73,8 +73,8 @@ find_pets_by_status(Status, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid status value"}
     end.
@@ -83,7 +83,7 @@ find_pets_by_status(Status, _Optional) ->
 %% Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
 -spec find_pets_by_tags(list()) -> {ok, list(), [swagger_pet:swagger_pet()]} | {error, string()}.
 find_pets_by_tags(Tags) ->
-    find_pets_by_tags(Tags, #{}).
+    find_pets_by_tags(Tags, , #{}).
 
 -spec find_pets_by_tags(list(), maps:map()) -> {ok, list(), [swagger_pet:swagger_pet()]} | {error, string()}.
 find_pets_by_tags(Tags, _Optional) ->
@@ -97,8 +97,8 @@ find_pets_by_tags(Tags, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid tag value"}
     end.
@@ -107,7 +107,7 @@ find_pets_by_tags(Tags, _Optional) ->
 %% Returns a single pet
 -spec get_pet_by_id(integer()) -> {ok, list(), swagger_pet:swagger_pet()} | {error, string()}.
 get_pet_by_id(PetId) ->
-    get_pet_by_id(PetId, #{}).
+    get_pet_by_id(PetId, , #{}).
 
 -spec get_pet_by_id(integer(), maps:map()) -> {ok, list(), swagger_pet:swagger_pet()} | {error, string()}.
 get_pet_by_id(PetId, _Optional) ->
@@ -121,8 +121,8 @@ get_pet_by_id(PetId, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid ID supplied"}; 
         {ok, 404, _RespHeaders, _ClientRef} ->
@@ -130,12 +130,12 @@ get_pet_by_id(PetId, _Optional) ->
     end.
 
 %% @doc Update an existing pet
--spec update_pet(swagger_pet:swagger_pet()) -> ok | {error, integer()}.
+-spec update_pet(swagger_pet:swagger_pet(), term()) -> ok | {error, integer()}.
 update_pet(Body) ->
-    update_pet(Body, #{}).
+    update_pet(Body, Body, #{}).
 
--spec update_pet(swagger_pet:swagger_pet(), maps:map()) -> ok | {error, integer()}.
-update_pet(Body, _Optional) ->
+-spec update_pet(swagger_pet:swagger_pet(), term(), maps:map()) -> ok | {error, integer()}.
+update_pet(Body, Body, _Optional) ->
     Method = put,
     Path = ["/pet"],
     QS = [],
@@ -154,7 +154,7 @@ update_pet(Body, _Optional) ->
 %% @doc Updates a pet in the store with form data
 -spec update_pet_with_form(integer()) -> ok | {error, integer()}.
 update_pet_with_form(PetId) ->
-    update_pet_with_form(PetId, #{}).
+    update_pet_with_form(PetId, , #{}).
 
 -spec update_pet_with_form(integer(), maps:map()) -> ok | {error, integer()}.
 update_pet_with_form(PetId, _Optional) ->
@@ -176,7 +176,7 @@ update_pet_with_form(PetId, _Optional) ->
 %% @doc uploads an image
 -spec upload_file(integer()) -> {ok, list(), swagger_api_response:swagger_api_response()} | {error, string()}.
 upload_file(PetId) ->
-    upload_file(PetId, #{}).
+    upload_file(PetId, , #{}).
 
 -spec upload_file(integer(), maps:map()) -> {ok, list(), swagger_api_response:swagger_api_response()} | {error, string()}.
 upload_file(PetId, _Optional) ->
@@ -190,8 +190,8 @@ upload_file(PetId, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}
     end.
 
 

@@ -11,7 +11,7 @@
 %% For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
 -spec delete_order(binary()) -> ok | {error, integer()}.
 delete_order(OrderId) ->
-    delete_order(OrderId, #{}).
+    delete_order(OrderId, , #{}).
 
 -spec delete_order(binary(), maps:map()) -> ok | {error, integer()}.
 delete_order(OrderId, _Optional) ->
@@ -34,7 +34,7 @@ delete_order(OrderId, _Optional) ->
 %% Returns a map of status codes to quantities
 -spec get_inventory() -> {ok, list(), maps:map()} | {error, string()}.
 get_inventory() ->
-    get_inventory(#{}).
+    get_inventory(, #{}).
 
 -spec get_inventory(maps:map()) -> {ok, list(), maps:map()} | {error, string()}.
 get_inventory(_Optional) ->
@@ -48,15 +48,15 @@ get_inventory(_Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}
     end.
 
 %% @doc Find purchase order by ID
 %% For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
 -spec get_order_by_id(integer()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
 get_order_by_id(OrderId) ->
-    get_order_by_id(OrderId, #{}).
+    get_order_by_id(OrderId, , #{}).
 
 -spec get_order_by_id(integer(), maps:map()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
 get_order_by_id(OrderId, _Optional) ->
@@ -70,8 +70,8 @@ get_order_by_id(OrderId, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid ID supplied"}; 
         {ok, 404, _RespHeaders, _ClientRef} ->
@@ -79,12 +79,12 @@ get_order_by_id(OrderId, _Optional) ->
     end.
 
 %% @doc Place an order for a pet
--spec place_order(swagger_order:swagger_order()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
+-spec place_order(swagger_order:swagger_order(), term()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
 place_order(Body) ->
-    place_order(Body, #{}).
+    place_order(Body, Body, #{}).
 
--spec place_order(swagger_order:swagger_order(), maps:map()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
-place_order(Body, _Optional) ->
+-spec place_order(swagger_order:swagger_order(), term(), maps:map()) -> {ok, list(), swagger_order:swagger_order()} | {error, string()}.
+place_order(Body, Body, _Optional) ->
     Method = post,
     Path = ["/store/order"],
     QS = [],
@@ -95,8 +95,8 @@ place_order(Body, _Optional) ->
 
     case hackney:request(Method, Url, Headers, Body1, Opts) of
         {ok, 200, RespHeaders, ClientRef} ->
-            {ok, Body} = hackney:body(ClientRef),
-            {ok, RespHeaders, jsx:decode(Body, [return_maps])}; 
+            {ok, ResponseBody} = hackney:body(ClientRef),
+            {ok, RespHeaders, jsx:decode(ResponseBody, [return_maps])}; 
         {ok, 400, _RespHeaders, _ClientRef} ->
             {error, "Invalid Order"}
     end.
