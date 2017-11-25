@@ -16,6 +16,8 @@ import java.util.Map;
 public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
+    public static final String DATE_LIBRARY = "dateLibrary";
+
     protected String groupId = "io.swagger";
     protected String artifactId = "kotlin-client";
     protected String artifactVersion = "1.0.0";
@@ -24,6 +26,20 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
+
+    protected String dateLibrary = DateLibrary.JAVA8.value;
+
+    public enum DateLibrary {
+        STRING("string"),
+        THREETENBP("threetenbp"),
+        JAVA8("java8");
+
+        public final String value;
+
+        DateLibrary(String value) {
+            this.value = value;
+        }
+    }
 
     /**
      * Constructs an instance of `KotlinClientCodegen`.
@@ -181,6 +197,13 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, "Client package's organization (i.e. maven groupId).").defaultValue(groupId));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, "Client artifact id (name of generated jar).").defaultValue(artifactId));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, "Client package version.").defaultValue(artifactVersion));
+        CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
+        Map<String, String> dateOptions = new HashMap<>();
+        dateOptions.put(DateLibrary.THREETENBP.value, "Threetenbp");
+        dateOptions.put(DateLibrary.STRING.value, "String");
+        dateOptions.put(DateLibrary.JAVA8.value, "Java 8 native JSR310");
+        dateLibrary.setEnum(dateOptions);
+        cliOptions.add(dateLibrary);
 
         CliOption enumPropertyNamingOpt = new CliOption(CodegenConstants.ENUM_PROPERTY_NAMING, CodegenConstants.ENUM_PROPERTY_NAMING_DESC);
         cliOptions.add(enumPropertyNamingOpt.defaultValue(enumPropertyNaming.name()));
@@ -218,6 +241,10 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         this.sourceFolder = sourceFolder;
     }
 
+    public void setDateLibrary(String library) {
+        this.dateLibrary = library;
+    }
+
     @Override
     public void processOpts() {
         super.processOpts();
@@ -242,19 +269,19 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
 
-        if(additionalProperties.containsKey(CodegenConstants.ARTIFACT_ID)) {
+        if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_ID)) {
             this.setArtifactId((String) additionalProperties.get(CodegenConstants.ARTIFACT_ID));
         } else {
             additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
         }
 
-        if(additionalProperties.containsKey(CodegenConstants.GROUP_ID)) {
+        if (additionalProperties.containsKey(CodegenConstants.GROUP_ID)) {
             this.setGroupId((String) additionalProperties.get(CodegenConstants.GROUP_ID));
         } else {
             additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
         }
 
-        if(additionalProperties.containsKey(CodegenConstants.ARTIFACT_VERSION)) {
+        if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_VERSION)) {
             this.setArtifactVersion((String) additionalProperties.get(CodegenConstants.ARTIFACT_VERSION));
         } else {
             additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
@@ -262,6 +289,26 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             LOGGER.warn(CodegenConstants.INVOKER_PACKAGE + " with " + this.getName() + " generator is ignored. Use " + CodegenConstants.PACKAGE_NAME + ".");
+        }
+
+        if (additionalProperties.containsKey(DATE_LIBRARY)) {
+            setDateLibrary(additionalProperties.get(DATE_LIBRARY).toString());
+        }
+
+        if (DateLibrary.THREETENBP.value.equals(dateLibrary)) {
+            additionalProperties.put(DateLibrary.THREETENBP.value, "true");
+            typeMapping.put("date", "LocalDate");
+            typeMapping.put("DateTime", "LocalDateTime");
+            importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
+            importMapping.put("LocalDateTime", "org.threeten.bp.LocalDateTime");
+        } else if (DateLibrary.STRING.value.equals(dateLibrary)) {
+            additionalProperties.put(DateLibrary.STRING.value, "true");
+            typeMapping.put("date-time", "kotlin.String");
+            typeMapping.put("date", "kotlin.String");
+            typeMapping.put("Date", "kotlin.String");
+            typeMapping.put("DateTime", "kotlin.String");
+        } else if (DateLibrary.JAVA8.value.equals(dateLibrary)) {
+            additionalProperties.put(DateLibrary.JAVA8.value, "true");
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage());
@@ -443,7 +490,7 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
     public String toModelImport(String name) {
         // toModelImport is called while processing operations, but DefaultCodegen doesn't
         // define imports correctly with fully qualified primitives and models as defined in this generator.
-        if(needToImport(name)) {
+        if (needToImport(name)) {
             return super.toModelImport(name);
         }
 
@@ -475,16 +522,16 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         switch (getEnumPropertyNaming()) {
             case original:
                 // NOTE: This is provided as a last-case allowance, but will still result in reserved words being escaped.
-                modified =  value;
+                modified = value;
                 break;
             case camelCase:
                 // NOTE: Removes hyphens and underscores
-                modified =  camelize(modified, true);
+                modified = camelize(modified, true);
                 break;
             case PascalCase:
                 // NOTE: Removes hyphens and underscores
                 String result = camelize(modified);
-                modified =  titleCase(result);
+                modified = titleCase(result);
                 break;
             case snake_case:
                 // NOTE: Removes hyphens
