@@ -1438,6 +1438,9 @@ public class DefaultCodegen {
             if (impl.getType() != null) {
                 Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
                 m.dataType = getSwaggerType(p);
+                if(m.dataType.equals("Integer")) {
+                    m.isInteger = true;
+                }
             }
             if(impl.getEnum() != null && impl.getEnum().size() > 0) {
                 m.isEnum = true;
