@@ -27,7 +27,6 @@
 
 #include "SWGObject.h"
 
-
 namespace Swagger {
 
 class SWGOrder: public SWGObject {
@@ -58,7 +57,7 @@ public:
     QString* getStatus();
     void setStatus(QString* status);
 
-    bool getComplete();
+    bool isComplete();
     void setComplete(bool complete);
 
 

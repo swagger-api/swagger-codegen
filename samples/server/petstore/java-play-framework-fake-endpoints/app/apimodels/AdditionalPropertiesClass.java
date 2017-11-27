@@ -27,7 +27,7 @@ public class AdditionalPropertiesClass   {
 
   public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
     if (this.mapProperty == null) {
-      this.mapProperty = new HashMap<>();
+      this.mapProperty = new HashMap<String, String>();
     }
     this.mapProperty.put(key, mapPropertyItem);
     return this;
@@ -52,7 +52,7 @@ public class AdditionalPropertiesClass   {
 
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     if (this.mapOfMapProperty == null) {
-      this.mapOfMapProperty = new HashMap<>();
+      this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
     }
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
@@ -111,22 +111,6 @@ public class AdditionalPropertiesClass   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
-
-  public void validate() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<AdditionalPropertiesClass>> constraintViolations = validator.validate(this);
-    if (constraintViolations.size() > 0) {
-      StringBuilder errors = new StringBuilder();
-      for (ConstraintViolation<AdditionalPropertiesClass> contraintes : constraintViolations) {
-        errors.append(String.format("%s.%s %s\n",
-            contraintes.getRootBeanClass().getSimpleName(),
-            contraintes.getPropertyPath(),
-            contraintes.getMessage()));
-      }
-      throw new RuntimeException("Bean validation : " + errors);
-    }
   }
 }
 
