@@ -12,12 +12,37 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
     }
 }
 
+public struct SynchronizedDictionary<K: Hashable, V> {
+
+    private var dictionary = [K: V]()
+    private let queue = dispatch_queue_create("SynchronizedDictionary", DISPATCH_QUEUE_CONCURRENT)
+
+    public subscript(key: K) -> V? {
+        get {
+            var value: V?
+
+            dispatch_sync(queue) {
+                value = self.dictionary[key]
+            }
+
+            return value
+        }
+
+        set {
+            dispatch_barrier_sync(queue) {
+                self.dictionary[key] = newValue
+            }
+        }
+    }
+
+}
+
 // Store manager to retain its reference
-private var managerStore: [String: Alamofire.Manager] = [:]
+private var managerStore = SynchronizedDictionary<String, Alamofire.Manager>()
 
 class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
+    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool, headers: [String : String] = [:]) {
+        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
     override func execute(completion: (response: Response<T>?, error: ErrorType?) -> Void) {
@@ -41,16 +66,12 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                         switch v {
                         case let fileURL as NSURL:
                             mpForm.appendBodyPart(fileURL: fileURL, name: k)
-                            break
                         case let string as NSString:
                             mpForm.appendBodyPart(data: string.dataUsingEncoding(NSUTF8StringEncoding)!, name: k)
-                            break
                         case let number as NSNumber:
                             mpForm.appendBodyPart(data: number.stringValue.dataUsingEncoding(NSUTF8StringEncoding)!, name: k)
-                            break
                         default:
                             fatalError("Unprocessable value \(v) with key \(k)")
-                            break
                         }
                     }
                 },
@@ -63,7 +84,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                         }
                         self.processRequest(uploadRequest, managerId, completion)
                     case .Failure(let encodingError):
-                        completion(response: nil, error: encodingError)
+                        completion(response: nil, error: ErrorResponse.error(415, nil, encodingError))
                     }
                 }
             )
@@ -83,20 +104,60 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
 
         let cleanupRequest = {
-            managerStore.removeValueForKey(managerId)
+            managerStore[managerId] = nil
         }
 
         let validatedRequest = request.validate()
 
         switch T.self {
-        case is NSData.Type:
-            validatedRequest.responseData({ (dataResponse) in
+        case is String.Type:
+            validatedRequest.responseString(completionHandler: { (stringResponse) in
                 cleanupRequest()
 
-                if (dataResponse.result.isFailure) {
+                if stringResponse.result.isFailure {
                     completion(
                         response: nil,
-                        error: dataResponse.result.error
+                        error: ErrorResponse.error(stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error!)
+                    )
+                    return
+                }
+
+                completion(
+                    response: Response(
+                        response: stringResponse.response!,
+                        body: (stringResponse.result.value ?? "") as! T
+                    ),
+                    error: nil
+                )
+            })
+        case is Void.Type:
+            validatedRequest.responseData(completionHandler: { (voidResponse) in
+                cleanupRequest()
+
+                if voidResponse.result.isFailure {
+                    completion(
+                        response: nil,
+                        error: ErrorResponse.error(voidResponse.response?.statusCode ?? 500, voidResponse.data, voidResponse.result.error!)
+                    )
+                    return
+                }
+
+                completion(
+                    response: Response(
+                        response: voidResponse.response!,
+                        body: nil
+                    ),
+                    error: nil
+                )
+            })
+        case is NSData.Type:
+            validatedRequest.responseData(completionHandler: { (dataResponse) in
+                cleanupRequest()
+
+                if dataResponse.result.isFailure {
+                    completion(
+                        response: nil,
+                        error: ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
                     )
                     return
                 }
@@ -114,7 +175,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 cleanupRequest()
 
                 if response.result.isFailure {
-                    completion(response: nil, error: response.result.error)
+                    completion(response: nil, error: ErrorResponse.error(response.response?.statusCode ?? 500, response.data, response.result.error!))
                     return
                 }
 
@@ -133,7 +194,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
 
-                completion(response: nil, error: NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"]))
+                completion(response: nil, error: ErrorResponse.error(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
             }
         }
     }

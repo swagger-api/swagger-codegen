@@ -16,38 +16,19 @@ class ApiClient {
   Map<String, Authentication> _authentications = {};
 
   final dson = new Dartson.JSON()
-                   ..addTransformer(new DateTimeParser(), DateTime);
-  final DateFormat _dateFormatter = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+      ..addTransformer(new DateTimeParser(), DateTime);
 
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
   ApiClient({this.basePath: "http://petstore.swagger.io/v2"}) {
     // Setup authentications (key: authentication name, value: authentication).
-    _authentications['petstore_auth'] = new OAuth();
     _authentications['api_key'] = new ApiKeyAuth("header", "api_key");
+    _authentications['petstore_auth'] = new OAuth();
   }
 
   void addDefaultHeader(String key, String value) {
      _defaultHeaderMap[key] = value;
-  }
-
-  /// Format the given Date object into string.
-  String formatDate(DateTime date) {
-    return _dateFormatter.format(date);
-  }
-
-  /// Format the given parameter object into string.
-  String parameterToString(Object param) {
-    if (param == null) {
-      return '';
-    } else if (param is DateTime) {
-      return formatDate(param);
-    } else if (param is List) {
-      return (param).join(',');
-    } else {
-      return param.toString();
-    }
   }
 
   dynamic _deserialize(dynamic value, String targetType) {
@@ -140,7 +121,7 @@ class ApiClient {
     headerParams['Content-Type'] = contentType;
 
     if(body is MultipartRequest) {
-      var request = new MultipartRequest(method, Uri.parse(url));      
+      var request = new MultipartRequest(method, Uri.parse(url));
       request.fields.addAll(body.fields);
       request.files.addAll(body.files);
       request.headers.addAll(body.headers);
@@ -165,7 +146,7 @@ class ApiClient {
   }
 
   /// Update query and header parameters based on authentication settings.
-  /// @param authNames The authentications to apply  
+  /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames, List<QueryParam> queryParams, Map<String, String> headerParams) {
     authNames.forEach((authName) {
       Authentication auth = _authentications[authName];

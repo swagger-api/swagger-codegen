@@ -43,15 +43,20 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        templateDir = "go";
+        embeddedTemplateDir = templateDir = "go";
 
         setReservedWordsLowerCase(
             Arrays.asList(
+                // data type
+                "string", "bool", "uint", "uint8", "uint16", "uint32", "uint64",
+                "int", "int8", "int16", "int32", "int64", "float32", "float64",
+                "complex64", "complex128", "rune", "byte", "uintptr",
+
                 "break", "default", "func", "interface", "select",
                 "case", "defer", "go", "map", "struct",
                 "chan", "else", "goto", "package", "switch",
                 "const", "fallthrough", "if", "range", "type",
-                "continue", "for", "import", "return", "var", "error", "ApiResponse")
+                "continue", "for", "import", "return", "var", "error", "ApiResponse", "nil")
                 // Added "error" as it's used so frequently that it may as well be a keyword
         );
 
@@ -91,7 +96,8 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("double", "float64");
         typeMapping.put("boolean", "bool");
         typeMapping.put("string", "string");
-        typeMapping.put("date", "time.Time");
+        typeMapping.put("UUID", "string");
+        typeMapping.put("date", "string");
         typeMapping.put("DateTime", "time.Time");
         typeMapping.put("password", "string");
         typeMapping.put("File", "*os.File");
@@ -100,6 +106,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         // the correct solution is to use []byte
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
+        typeMapping.put("object", "interface{}");
 
         importMapping = new HashMap<String, String>();
         importMapping.put("time.Time", "time");
@@ -111,11 +118,22 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
                 .defaultValue("swagger"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Go package version.")
                 .defaultValue("1.0.0"));
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
+                .defaultValue(Boolean.TRUE.toString()));
+
     }
 
     @Override
     public void processOpts() {
-        //super.processOpts();
+        super.processOpts();
+
+        // default HIDE_GENERATION_TIMESTAMP to true
+        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+        }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
@@ -133,7 +151,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
-        
+
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
 
@@ -147,8 +165,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.go"));
         supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.go"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     }
 
     @Override
@@ -165,8 +181,9 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         // - X_Name
         // ... or maybe a suffix?
         // - Name_ ... think this will work.
-
-        // FIXME: This should also really be a customizable option
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return camelize(name) + '_';
     }
 
@@ -193,8 +210,12 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = camelize(name);
 
         // for reserved word or word starting with number, append _
-        if(isReservedWord(name) || name.matches("^\\d.*"))
+        if (isReservedWord(name))
             name = escapeReservedWord(name);
+
+        // for reserved word or word starting with number, append _
+        if (name.matches("^\\d.*"))
+            name = "Var" + name;
 
         return name;
     }
@@ -231,8 +252,14 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + ("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + ("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
         return underscore(name);
@@ -246,8 +273,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         // e.g. PetApi.go => pet_api.go
         return underscore(name) + "_api";
     }
-
-
 
     /**
      * Overrides postProcessParameter to add a vendor extension "x-exportParamName".
@@ -275,7 +300,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         sb.setCharAt(0, Character.toUpperCase(firstChar));
         parameter.vendorExtensions.put("x-exportParamName", sb.toString());
     }
-
 
     @Override
     public String apiDocFileFolder() {
@@ -346,7 +370,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toOperationId(String operationId) {
-        String sanitizedOperationId = new String(sanitizeName(operationId));
+        String sanitizedOperationId = sanitizeName(operationId);
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(sanitizedOperationId)) {
@@ -379,17 +403,24 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             if (_import.startsWith(apiPackage()))
                 iterator.remove();
         }
-        // if the return type is not primitive, import encoding/json
+
+        // if their is a return type, import encoding/json
         for (CodegenOperation operation : operations) {
-            if(operation.returnBaseType != null && needToImport(operation.returnBaseType)) {
-                Map<String, String> customImport = new HashMap<String, String>();
-                customImport.put("import", "encoding/json");
-                imports.add(customImport);
+            if(operation.returnBaseType != null ) {
+                imports.add(createMapping("import", "encoding/json"));
                 break; //just need to import once
             }
         }
 
-        // recursivly add import for mapping one type to multipe imports
+        // this will only import "fmt" if there are items in pathParams
+        for (CodegenOperation operation : operations) {
+            if(operation.pathParams != null && operation.pathParams.size() > 0) {
+                imports.add(createMapping("import", "fmt"));
+                break; //just need to import once
+            }
+        }
+
+        // recursively add import for mapping one type to multiple imports
         List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
         if (recursiveImports == null)
             return objs;
@@ -400,9 +431,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             // if the import package happens to be found in the importMapping (key)
             // add the corresponding import package to the list
             if (importMapping.containsKey(_import)) {
-                Map<String, String> newImportMap= new HashMap<String, String>();
-                newImportMap.put("import", importMapping.get(_import));
-                listIterator.add(newImportMap);
+                listIterator.add(createMapping("import", importMapping.get(_import)));
             }
         }
 
@@ -421,7 +450,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
                 iterator.remove();
         }
 
-        // recursivly add import for mapping one type to multipe imports
+        // recursively add import for mapping one type to multiple imports
         List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
         if (recursiveImports == null)
             return objs;
@@ -432,13 +461,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             // if the import package happens to be found in the importMapping (key)
             // add the corresponding import package to the list
             if (importMapping.containsKey(_import)) {
-                Map<String, String> newImportMap= new HashMap<String, String>();
-                newImportMap.put("import", importMapping.get(_import));
-                listIterator.add(newImportMap);
+                listIterator.add(createMapping("import", importMapping.get(_import)));
             }
         }
 
-        return objs;
+        return postProcessModelsEnum(objs);
     }
 
     @Override
@@ -464,5 +491,73 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    public Map<String, String> createMapping(String key, String value){
+        Map<String, String> customImport = new HashMap<String, String>();
+        customImport.put(key, value);
+
+        return customImport;
+    }
+
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            return value;
+        } else {
+            return escapeText(value);
+        }
+    }
+
+    @Override
+    public String toEnumDefaultValue(String value, String datatype) {
+        return datatype + "_" + value;
+    }
+
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        if (name.length() == 0) {
+            return "EMPTY";
+        }
+
+        // number
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            String varName = name;
+            varName = varName.replaceAll("-", "MINUS_");
+            varName = varName.replaceAll("\\+", "PLUS_");
+            varName = varName.replaceAll("\\.", "_DOT_");
+            return varName;
+        }
+
+        // for symbol, e.g. $, #
+        if (getSymbolName(name) != null) {
+            return getSymbolName(name).toUpperCase();
+        }
+
+        // string
+        String enumName = sanitizeName(underscore(name).toUpperCase());
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        if (isReservedWord(enumName) || enumName.matches("\\d.*")) { // reserved word or starts with number
+            return escapeReservedWord(enumName);
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        String enumName = underscore(toModelName(property.name)).toUpperCase();
+
+        // remove [] for array or map of enum
+        enumName = enumName.replace("[]", "");
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
     }
 }

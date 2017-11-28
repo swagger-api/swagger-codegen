@@ -6,7 +6,7 @@
  * @category Class
  * @package  Swagger\Client
  * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -51,7 +51,7 @@ use \Swagger\Client\ObjectSerializer;
  * @category Class
  * @package  Swagger\Client
  * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class UserApiTest extends \PHPUnit_Framework_TestCase
@@ -136,10 +136,7 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginUser()
     {
-        // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
-        $user_api = new UserApi($api_client);
+        $user_api = new UserApi();
         // login
         $response = $user_api->loginUser("xxxxx", "yyyyyyyy");
         

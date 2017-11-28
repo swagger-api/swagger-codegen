@@ -8,7 +8,7 @@ package io.swagger.client.model
 
 import io.swagger.client.core.ApiModel
 import org.joda.time.DateTime
-
+import java.util.UUID
 
 case class Order (
   id: Option[Long],
@@ -17,19 +17,17 @@ case class Order (
   shipDate: Option[DateTime],
   /* Order Status */
   status: Option[OrderEnums.Status],
-  complete: Option[Boolean])
-   extends ApiModel
+  complete: Option[Boolean]
+) extends ApiModel
 
 object OrderEnums {
 
   type Status = Status.Value
-  
   object Status extends Enumeration {
     val Placed = Value("placed")
     val Approved = Value("approved")
     val Delivered = Value("delivered")
   }
 
-  
 }
 

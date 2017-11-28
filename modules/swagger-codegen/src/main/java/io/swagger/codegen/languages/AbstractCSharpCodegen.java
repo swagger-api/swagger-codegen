@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +19,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected boolean useDateTimeOffsetFlag = false;
     protected boolean useCollection = false;
     protected boolean returnICollection = false;
+    protected boolean netCoreProjectFileFlag = false;
+
+    protected String modelPropertyNaming = "PascalCase";
 
     protected String packageVersion = "1.0.0";
     protected String packageName = "IO.Swagger";
@@ -26,6 +30,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected String packageDescription = "A library generated from a Swagger doc";
     protected String packageCompany = "Swagger";
     protected String packageCopyright = "No Copyright";
+    protected String packageAuthors = "Swagger";
+
+    protected String interfacePrefix = "I";
 
     protected String sourceFolder = "src";
 
@@ -40,6 +47,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     public AbstractCSharpCodegen() {
         super();
+
+        supportsInheritance = true;
 
         // C# does not use import mapping
         importMapping.clear();
@@ -60,10 +69,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                        // set client as a reserved word to avoid conflicts with IO.Swagger.Client
+                        // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
                         // this is a workaround and can be removed if c# api client is updated to use
                         // fully qualified name
-                        "client",
+                        "client", "parameter",
                         // local variable names in API methods (endpoints)
                         "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
@@ -159,6 +168,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         this.optionalMethodArgumentFlag = flag;
     }
 
+    public void setNetCoreProjectFileFlag(boolean flag) {
+        this.netCoreProjectFileFlag = flag;
+    }
+
     protected void addOption(String key, String description, String defaultValue) {
         CliOption option = new CliOption(key, description);
         if (defaultValue != null) option.defaultValue(defaultValue);
@@ -201,6 +214,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+            LOGGER.warn(String.format("%s is not used by C# generators. Please use %s", CodegenConstants.INVOKER_PACKAGE, CodegenConstants.PACKAGE_NAME));
+        }
         
         // {{packageTitle}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
@@ -236,24 +253,62 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
         }
+
+        // {{packageAuthors}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_AUTHORS)) {
+            setPackageAuthors((String) additionalProperties.get(CodegenConstants.PACKAGE_AUTHORS));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_AUTHORS, packageAuthors);
+        }
         
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
-            useDateTimeOffset(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_DATETIME_OFFSET).toString()));
+            useDateTimeOffset(convertPropertyToBooleanAndWriteBack(CodegenConstants.USE_DATETIME_OFFSET));
+        } else {
+            additionalProperties.put(CodegenConstants.USE_DATETIME_OFFSET, useDateTimeOffsetFlag);
         }
-        additionalProperties.put(CodegenConstants.USE_DATETIME_OFFSET, useDateTimeOffsetFlag);
 
         if (additionalProperties.containsKey(CodegenConstants.USE_COLLECTION)) {
-            setUseCollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_COLLECTION).toString()));
+            setUseCollection(convertPropertyToBooleanAndWriteBack(CodegenConstants.USE_COLLECTION));
+        } else {
+            additionalProperties.put(CodegenConstants.USE_COLLECTION, useCollection);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.RETURN_ICOLLECTION)) {
-            setReturnICollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.RETURN_ICOLLECTION).toString()));
+            setReturnICollection(convertPropertyToBooleanAndWriteBack(CodegenConstants.RETURN_ICOLLECTION));
+        } else {
+            additionalProperties.put(CodegenConstants.RETURN_ICOLLECTION, returnICollection);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
-            setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
+            setOptionalEmitDefaultValue(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES));
+        } else {
+            additionalProperties.put(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES, optionalEmitDefaultValue);
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.NETCORE_PROJECT_FILE)) {
+            setNetCoreProjectFileFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.NETCORE_PROJECT_FILE));
+        } else {
+            additionalProperties.put(CodegenConstants.NETCORE_PROJECT_FILE, netCoreProjectFileFlag);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.INTERFACE_PREFIX)) {
+            String useInterfacePrefix = additionalProperties.get(CodegenConstants.INTERFACE_PREFIX).toString();
+            if("false".equals(useInterfacePrefix.toLowerCase())) {
+                setInterfacePrefix("");
+            } else if(!"true".equals(useInterfacePrefix.toLowerCase())) {
+                // NOTE: if user passes "true" explicitly, we use the default I- prefix. The other supported case here is a custom prefix.
+                setInterfacePrefix(sanitizeName(useInterfacePrefix));
+            }
+        }
+
+        // This either updates additionalProperties with the above fixes, or sets the default if the option was not specified.
+        additionalProperties.put(CodegenConstants.INTERFACE_PREFIX, interfacePrefix);
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
     }
 
     @Override
@@ -273,6 +328,61 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
         // process enum in models
         return postProcessModelsEnum(objs);
+    }
+
+    /**
+     * Invoked by {@link DefaultGenerator} after all models have been post-processed, allowing for a last pass of codegen-specific model cleanup.
+     *
+     * @param objs Current state of codegen object model.
+     * @return An in-place modified state of the codegen object model.
+     */
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        final Map<String, Object> processed =  super.postProcessAllModels(objs);
+        postProcessEnumRefs(processed);
+        return processed;
+    }
+
+    /**
+     * C# differs from other languages in that Enums are not _true_ objects; enums are compiled to integral types.
+     * So, in C#, an enum is considers more like a user-defined primitive.
+     *
+     * When working with enums, we can't always assume a RefModel is a nullable type (where default(YourType) == null),
+     * so this post processing runs through all models to find RefModel'd enums. Then, it runs through all vars and modifies
+     * those vars referencing RefModel'd enums to work the same as inlined enums rather than as objects.
+     * @param models
+     */
+    private void postProcessEnumRefs(final Map<String, Object> models) {
+        Map<String, CodegenModel> enumRefs = new HashMap<String, CodegenModel>();
+        for (Map.Entry<String, Object> entry : models.entrySet()) {
+            CodegenModel model = ModelUtils.getModelByName(entry.getKey(), models);
+            if (model.isEnum) {
+                enumRefs.put(entry.getKey(), model);
+            }
+        }
+
+        for (Map.Entry<String, Object> entry : models.entrySet()) {
+            String swaggerName = entry.getKey();
+            CodegenModel model = ModelUtils.getModelByName(swaggerName, models);
+            if (model != null) {
+                for (CodegenProperty var : model.allVars) {
+                    if (enumRefs.containsKey(var.datatype)) {
+                        // Handle any enum properties referred to by $ref.
+                        // This is different in C# than most other generators, because enums in C# are compiled to integral types,
+                        // while enums in many other languages are true objects.
+                        CodegenModel refModel = enumRefs.get(var.datatype);
+                        var.allowableValues = refModel.allowableValues;
+                        updateCodegenPropertyEnum(var);
+
+                        // We do these after updateCodegenPropertyEnum to avoid generalities that don't mesh with C#.
+                        var.isPrimitiveType = true;
+                        var.isEnum = true;
+                    }
+                }
+            } else {
+                LOGGER.warn("Expected to retrieve model %s by name, but no model was found. Check your -Dmodels inclusions.", swaggerName);
+            }
+        }
     }
 
     @Override
@@ -401,10 +511,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
 
         return name;
-    }
+    }   
 
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return "_" + name;
     }
 
@@ -466,7 +579,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (p instanceof StringProperty) {
             StringProperty dp = (StringProperty) p;
             if (dp.getDefault() != null) {
-                return "\"" + dp.getDefault().toString() + "\"";
+               String _default = dp.getDefault();
+               if (dp.getEnum() == null) {
+                   return "\"" + _default + "\"";
+               } else {
+                   // convert to enum var name later in postProcessModels
+                   return _default;
+               }
             }
         } else if (p instanceof BooleanProperty) {
             BooleanProperty dp = (BooleanProperty) p;
@@ -506,6 +625,12 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type;
+
+        if (swaggerType == null) {
+            swaggerType = ""; // set swagger type to empty string if null
+        }
+
+        // TODO avoid using toLowerCase as typeMapping should be case-sensitive
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
             type = typeMapping.get(swaggerType.toLowerCase());
             if (languageSpecificPrimitives.contains(type)) {
@@ -534,6 +659,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toModelName(String name) {
+        // We need to check if import-mapping has a different model for this class, so we use it
+        // instead of the auto-generated one.
+        if (importMapping.containsKey(name)) {
+            return importMapping.get(name);
+        }
         if (!StringUtils.isEmpty(modelNamePrefix)) {
             name = modelNamePrefix + "_" + name;
         }
@@ -590,31 +720,52 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     }
     
     public void setPackageTitle(String packageTitle) {
-		this.packageTitle = packageTitle;
-	}
+        this.packageTitle = packageTitle;
+    }
     
     public void setPackageProductName(String packageProductName) {
-		this.packageProductName = packageProductName;
-	}
+        this.packageProductName = packageProductName;
+    }
 
-	public void setPackageDescription(String packageDescription) {
-		this.packageDescription = packageDescription;
-	}
-	
+    public void setPackageDescription(String packageDescription) {
+        this.packageDescription = packageDescription;
+    }
+    
     public void setPackageCompany(String packageCompany) {
-		this.packageCompany = packageCompany;
-	}
+        this.packageCompany = packageCompany;
+    }
     
     public void setPackageCopyright(String packageCopyright) {
-		this.packageCopyright = packageCopyright;
-	}
+        this.packageCopyright = packageCopyright;
+    }
+
+    public void setPackageAuthors(String packageAuthors) {
+        this.packageAuthors = packageAuthors;
+    }
     
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
 
+    public String getInterfacePrefix() {
+        return interfacePrefix;
+    }
+
+    public void setInterfacePrefix(final String interfacePrefix) {
+        this.interfacePrefix = interfacePrefix;
+    }
+
     @Override
     public String toEnumVarName(String name, String datatype) {
+        if (name.length() == 0) {
+            return "Empty";
+        }
+
+        // for symbol, e.g. $, #
+        if (getSymbolName(name) != null) {
+            return camelize(getSymbolName(name));
+        }
+
         String enumName = sanitizeName(name);
 
         enumName = enumName.replaceFirst("^_", "");

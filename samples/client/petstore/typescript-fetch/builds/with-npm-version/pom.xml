@@ -4,7 +4,7 @@
     <artifactId>TypeScriptAngularBuildWithNPMVersionPestoreClientTests</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>TS Angular Build With NPM Version Petstore Client</name>
+    <name>TS Fetch Petstore Client (with npm)</name>
     <build>
         <plugins>
             <plugin>
@@ -36,6 +36,19 @@
                             <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>test</argument>
                             </arguments>
                         </configuration>
                     </execution>

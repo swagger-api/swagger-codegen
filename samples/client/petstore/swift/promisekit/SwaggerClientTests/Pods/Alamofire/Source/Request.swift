@@ -1,29 +1,31 @@
-// Request.swift
 //
-// Copyright (c) 2014–2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Request.swift
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 import Foundation
 
 /**
-    Responsible for sending a request and receiving the response and associated data from the server, as well as 
+    Responsible for sending a request and receiving the response and associated data from the server, as well as
     managing its underlying `NSURLSessionTask`.
 */
 public class Request {
@@ -48,6 +50,9 @@ public class Request {
     /// The progress of the request lifecycle.
     public var progress: NSProgress { return delegate.progress }
 
+    var startTime: CFAbsoluteTime?
+    var endTime: CFAbsoluteTime?
+
     // MARK: - Lifecycle
 
     init(session: NSURLSession, task: NSURLSessionTask) {
@@ -55,14 +60,16 @@ public class Request {
 
         switch task {
         case is NSURLSessionUploadTask:
-            self.delegate = UploadTaskDelegate(task: task)
+            delegate = UploadTaskDelegate(task: task)
         case is NSURLSessionDataTask:
-            self.delegate = DataTaskDelegate(task: task)
+            delegate = DataTaskDelegate(task: task)
         case is NSURLSessionDownloadTask:
-            self.delegate = DownloadTaskDelegate(task: task)
+            delegate = DownloadTaskDelegate(task: task)
         default:
-            self.delegate = TaskDelegate(task: task)
+            delegate = TaskDelegate(task: task)
         }
+
+        delegate.queue.addOperationWithBlock { self.endTime = CFAbsoluteTimeGetCurrent() }
     }
 
     // MARK: - Authentication
@@ -100,15 +107,31 @@ public class Request {
         return self
     }
 
+    /**
+        Returns a base64 encoded basic authentication credential as an authorization header dictionary.
+
+        - parameter user:     The user.
+        - parameter password: The password.
+
+        - returns: A dictionary with Authorization key and credential value or empty dictionary if encoding fails.
+    */
+    public static func authorizationHeader(user user: String, password: String) -> [String: String] {
+        guard let data = "\(user):\(password)".dataUsingEncoding(NSUTF8StringEncoding) else { return [:] }
+
+        let credential = data.base64EncodedStringWithOptions([])
+
+        return ["Authorization": "Basic \(credential)"]
+    }
+
     // MARK: - Progress
 
     /**
-        Sets a closure to be called periodically during the lifecycle of the request as data is written to or read 
+        Sets a closure to be called periodically during the lifecycle of the request as data is written to or read
         from the server.
 
-        - For uploads, the progress closure returns the bytes written, total bytes written, and total bytes expected 
+        - For uploads, the progress closure returns the bytes written, total bytes written, and total bytes expected
           to write.
-        - For downloads and data tasks, the progress closure returns the bytes read, total bytes read, and total bytes 
+        - For downloads and data tasks, the progress closure returns the bytes read, total bytes read, and total bytes
           expected to read.
 
         - parameter closure: The code to be executed periodically during the lifecycle of the request.
@@ -130,8 +153,8 @@ public class Request {
     /**
         Sets a closure to be called periodically during the lifecycle of the request as data is read from the server.
 
-        This closure returns the bytes most recently received from the server, not including data from previous calls. 
-        If this closure is set, data will only be available within this closure, and will not be saved elsewhere. It is 
+        This closure returns the bytes most recently received from the server, not including data from previous calls.
+        If this closure is set, data will only be available within this closure, and will not be saved elsewhere. It is
         also important to note that the `response` closure will be called with nil `responseData`.
 
         - parameter closure: The code to be executed periodically during the lifecycle of the request.
@@ -149,17 +172,21 @@ public class Request {
     // MARK: - State
 
     /**
+        Resumes the request.
+    */
+    public func resume() {
+        if startTime == nil { startTime = CFAbsoluteTimeGetCurrent() }
+
+        task.resume()
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.Task.DidResume, object: task)
+    }
+
+    /**
         Suspends the request.
     */
     public func suspend() {
         task.suspend()
-    }
-
-    /**
-        Resumes the request.
-    */
-    public func resume() {
-        task.resume()
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.Task.DidSuspend, object: task)
     }
 
     /**
@@ -176,12 +203,14 @@ public class Request {
         } else {
             task.cancel()
         }
+
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.Task.DidCancel, object: task)
     }
 
     // MARK: - TaskDelegate
 
     /**
-        The task delegate is responsible for handling all delegate callbacks for the underlying task as well as 
+        The task delegate is responsible for handling all delegate callbacks for the underlying task as well as
         executing all operations attached to the serial operation queue upon task completion.
     */
     public class TaskDelegate: NSObject {
@@ -195,6 +224,7 @@ public class Request {
         var data: NSData? { return nil }
         var error: NSError?
 
+        var initialResponseTime: CFAbsoluteTime?
         var credential: NSURLCredential?
 
         init(task: NSURLSessionTask) {
@@ -272,7 +302,7 @@ public class Request {
                 }
             } else {
                 if challenge.previousFailureCount > 0 {
-                    disposition = .CancelAuthenticationChallenge
+                    disposition = .RejectProtectionSpace
                 } else {
                     credential = self.credential ?? session.configuration.URLCredentialStorage?.defaultCredentialForProtectionSpace(challenge.protectionSpace)
 
@@ -381,6 +411,8 @@ public class Request {
         }
 
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+            if initialResponseTime == nil { initialResponseTime = CFAbsoluteTimeGetCurrent() }
+
             if let dataTaskDidReceiveData = dataTaskDidReceiveData {
                 dataTaskDidReceiveData(session, dataTask, data)
             } else {
@@ -426,7 +458,7 @@ public class Request {
 extension Request: CustomStringConvertible {
 
     /**
-        The textual representation used when written to an output stream, which includes the HTTP method and URL, as 
+        The textual representation used when written to an output stream, which includes the HTTP method and URL, as
         well as the response status code if a response has been received.
     */
     public var description: String {
@@ -470,7 +502,7 @@ extension Request: CustomDebugStringConvertible {
             let protectionSpace = NSURLProtectionSpace(
                 host: host,
                 port: URL.port?.integerValue ?? 0,
-                `protocol`: URL.scheme,
+                protocol: URL.scheme,
                 realm: host,
                 authenticationMethod: NSURLAuthenticationMethodHTTPBasic
             )
@@ -496,33 +528,31 @@ extension Request: CustomDebugStringConvertible {
             }
         }
 
-        if let headerFields = request.allHTTPHeaderFields {
-            for (field, value) in headerFields {
-                switch field {
-                case "Cookie":
-                    continue
-                default:
-                    components.append("-H \"\(field): \(value)\"")
-                }
+        var headers: [NSObject: AnyObject] = [:]
+
+        if let additionalHeaders = session.configuration.HTTPAdditionalHeaders {
+            for (field, value) in additionalHeaders where field != "Cookie" {
+                headers[field] = value
             }
         }
 
-        if let additionalHeaders = session.configuration.HTTPAdditionalHeaders {
-            for (field, value) in additionalHeaders {
-                switch field {
-                case "Cookie":
-                    continue
-                default:
-                    components.append("-H \"\(field): \(value)\"")
-                }
+        if let headerFields = request.allHTTPHeaderFields {
+            for (field, value) in headerFields where field != "Cookie" {
+                headers[field] = value
             }
+        }
+
+        for (field, value) in headers {
+            components.append("-H \"\(field): \(value)\"")
         }
 
         if let
             HTTPBodyData = request.HTTPBody,
             HTTPBody = String(data: HTTPBodyData, encoding: NSUTF8StringEncoding)
         {
-            let escapedBody = HTTPBody.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+            var escapedBody = HTTPBody.stringByReplacingOccurrencesOfString("\\\"", withString: "\\\\\"")
+            escapedBody = escapedBody.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+
             components.append("-d \"\(escapedBody)\"")
         }
 

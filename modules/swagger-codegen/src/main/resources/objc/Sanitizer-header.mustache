@@ -4,6 +4,8 @@
 
 extern NSString * {{classPrefix}}PercentEscapedStringFromString(NSString *string);
 
+extern NSString * const k{{classPrefix}}ApplicationJSONType;
+
 @protocol {{classPrefix}}Sanitizer <NSObject>
 
 /**
@@ -17,6 +19,11 @@ extern NSString * {{classPrefix}}PercentEscapedStringFromString(NSString *string
  * Convert parameter to NSString
  */
 - (NSString *) parameterToString: (id) param;
+
+/**
+ * Convert date to NSString
+ */
++ (NSString *)dateToString:(id)date;
 
 /**
  * Detects Accept header from accepts NSArray

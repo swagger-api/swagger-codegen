@@ -2,7 +2,6 @@ package io.swagger.codegen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -26,9 +25,9 @@ import io.swagger.parser.SwaggerParser;
  */
 @Deprecated
 public class Codegen extends DefaultGenerator {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Codegen.class);
-	
+
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
     static String debugInfoOptions = "\nThe following additional debug options are available for all codegen targets:" +
@@ -124,9 +123,8 @@ public class Codegen extends DefaultGenerator {
     public static List<CodegenConfig> getExtensions() {
         ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
         List<CodegenConfig> output = new ArrayList<CodegenConfig>();
-        Iterator<CodegenConfig> itr = loader.iterator();
-        while (itr.hasNext()) {
-            output.add(itr.next());
+        for (CodegenConfig aLoader : loader) {
+            output.add(aLoader);
         }
         return output;
     }

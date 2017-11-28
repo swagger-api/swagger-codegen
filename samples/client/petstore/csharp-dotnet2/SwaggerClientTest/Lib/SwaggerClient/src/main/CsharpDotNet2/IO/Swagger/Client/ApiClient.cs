@@ -257,13 +257,13 @@ namespace IO.Swagger.Client
                 // determine which one to use
                 switch(auth)
                 {
-                    case "petstore_auth":
-                        
-                        //TODO support oauth
-                        break;
                     case "api_key":
                         headerParams["api_key"] = GetApiKeyWithPrefix("api_key");
                         
+                        break;
+                    case "petstore_auth":
+                        
+                        //TODO support oauth
                         break;
                     default:
                         //TODO show warning about security definition not found
@@ -285,13 +285,12 @@ namespace IO.Swagger.Client
     
         /// <summary>
         /// Dynamically cast the object into target type.
-        /// Ref: http://stackoverflow.com/questions/4925718/c-dynamic-runtime-cast
         /// </summary>
-        /// <param name="source">Object to be casted</param>
-        /// <param name="dest">Target type</param>
+        /// <param name="fromObject">Object to be casted</param>
+        /// <param name="toObject">Target type</param>
         /// <returns>Casted object</returns>
-        public static Object ConvertType(Object source, Type dest) {
-            return Convert.ChangeType(source, dest);
+        public static Object ConvertType(Object fromObject, Type toObject) {
+            return Convert.ChangeType(fromObject, toObject);
         }
   
     }

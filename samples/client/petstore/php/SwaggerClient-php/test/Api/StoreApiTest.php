@@ -6,7 +6,7 @@
  * @category Class
  * @package  Swagger\Client
  * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -51,7 +51,7 @@ use \Swagger\Client\ObjectSerializer;
  * @category Class
  * @package  Swagger\Client
  * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class StoreApiTest extends \PHPUnit_Framework_TestCase
@@ -86,7 +86,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
         $new_pet->setTags(array($tag));
         $new_pet->setCategory($category);
 
-        $pet_api = new PetAPI();
+        $pet_api = new PetApi();
         // add a new pet (model)
         $add_response = $pet_api->addPet($new_pet);
     }
@@ -119,9 +119,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
     public function testGetInventory()
     {
         // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
-        $store_api = new StoreApi($api_client);
+        $store_api = new StoreApi();
         // get inventory
         $get_response = $store_api->getInventory();
 

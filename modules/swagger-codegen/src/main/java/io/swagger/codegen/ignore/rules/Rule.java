@@ -26,10 +26,8 @@ public abstract class Rule {
         if(syntax == null) return this.definition;
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < syntax.size(); i++) {
-            Part current = syntax.get(i);
-
-            switch(current.getToken()){
+        for (Part current : syntax) {
+            switch (current.getToken()) {
                 case MATCH_ALL:
                 case MATCH_ANY:
                 case ESCAPED_EXCLAMATION:
@@ -53,6 +51,8 @@ public abstract class Rule {
      * Example: **\/*.bak excludes all backup. Adding !/test.bak will include test.bak in the project root.
      * <p>
      * NOTE: It is not possible to re-include a file if a parent directory of that file is excluded.
+     *
+     * @return {@code true} if the rule is negated (inverse), otherwise {@code false} (normal).
      */
     public Boolean getNegated() {
         return this.syntax != null && this.syntax.size() > 0 && this.syntax.get(0).getToken() == IgnoreLineParser.Token.NEGATE;

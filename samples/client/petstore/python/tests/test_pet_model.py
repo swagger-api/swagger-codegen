@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# flake8: noqa
+
 """
 Run the tests.
 $ pip install nose (optional)
@@ -17,10 +19,8 @@ import petstore_api
 class PetModelTests(unittest.TestCase):
 
     def setUp(self):
-        self.pet = petstore_api.Pet()
-        self.pet.name = "test name"
+        self.pet = petstore_api.Pet(name="test name", photo_urls=["string"])
         self.pet.id = 1
-        self.pet.photo_urls = ["string"]
         self.pet.status = "available"
         cate = petstore_api.Category()
         cate.id = 1
@@ -40,10 +40,8 @@ class PetModelTests(unittest.TestCase):
         self.assertEqual(data, self.pet.to_str())
 
     def test_equal(self):
-        self.pet1 = petstore_api.Pet()
-        self.pet1.name = "test name"
+        self.pet1 = petstore_api.Pet(name="test name", photo_urls=["string"])
         self.pet1.id = 1
-        self.pet1.photo_urls = ["string"]
         self.pet1.status = "available"
         cate1 = petstore_api.Category()
         cate1.id = 1
@@ -53,10 +51,8 @@ class PetModelTests(unittest.TestCase):
         tag1.id = 1
         self.pet1.tags = [tag1]
 
-        self.pet2 = petstore_api.Pet()
-        self.pet2.name = "test name"
+        self.pet2 = petstore_api.Pet(name="test name", photo_urls=["string"])
         self.pet2.id = 1
-        self.pet2.photo_urls = ["string"]
         self.pet2.status = "available"
         cate2 = petstore_api.Category()
         cate2.id = 1

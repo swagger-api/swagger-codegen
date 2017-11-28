@@ -3,12 +3,12 @@ require 'json'
 {{#operations}}
 {{#operation}}
 
-MyApp.add_route('{{httpMethod}}', '{{basePathWithoutHost}}{{path}}', {
-  "resourcePath" => "/{{baseName}}",
+MyApp.add_route('{{httpMethod}}', '{{{basePathWithoutHost}}}{{{path}}}', {
+  "resourcePath" => "/{{{baseName}}}",
   "summary" => "{{{summary}}}",
   "nickname" => "{{nickname}}", 
   "responseClass" => "{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}", 
-  "endpoint" => "{{path}}", 
+  "endpoint" => "{{{path}}}", 
   "notes" => "{{{notes}}}",
   "parameters" => [
     {{#queryParams}}
@@ -18,7 +18,7 @@ MyApp.add_route('{{httpMethod}}', '{{basePathWithoutHost}}{{path}}', {
       "dataType" => "{{dataType}}",
       "paramType" => "query",
       {{#collectionFormat}}"collectionFormat" => "{{collectionFormat}}",{{/collectionFormat}}
-      "allowableValues" => "{{allowableValues}}",
+      "allowableValues" => "{{^isContainer}}{{{allowableValues.values}}}{{/isContainer}}",
       {{#defaultValue}}"defaultValue" => "{{{defaultValue}}}"{{/defaultValue}}
     },
     {{/queryParams}}

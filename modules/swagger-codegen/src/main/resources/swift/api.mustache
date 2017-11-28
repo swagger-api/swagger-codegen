@@ -6,7 +6,8 @@
 //
 
 import Alamofire{{#usePromiseKit}}
-import PromiseKit{{/usePromiseKit}}
+import PromiseKit{{/usePromiseKit}}{{#useRxSwift}}
+import RxSwift{{/useRxSwift}}
 
 {{#swiftUseApiNamespace}}
 extension {{projectName}}API {
@@ -62,12 +63,34 @@ public class {{classname}}: APIBase {
         return deferred.promise
     }
 {{/usePromiseKit}}
+{{#useRxSwift}}
+    /**
+     {{#summary}}
+     {{{summary}}}
+     {{/summary}}{{#allParams}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{/allParams}}
+     - returns: Observable<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>
+     */
+    public class func {{operationId}}({{#allParams}}{{^secondaryParam}}{{paramName}} {{/secondaryParam}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}? = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Observable<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
+        return Observable.create { observer -> Disposable in
+            {{operationId}}({{#allParams}}{{paramName}}: {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) { {{#returnType}}data, {{/returnType}}error in
+                if let error = error {
+                    observer.on(.Error(error as ErrorType))
+                } else {
+                    observer.on(.Next({{#returnType}}data!{{/returnType}}))
+                }
+                observer.on(.Completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+{{/useRxSwift}}
 
     /**
      {{#summary}}
      {{{summary}}}
      {{/summary}}
-     - {{httpMethod}} {{path}}{{#notes}}
+     - {{httpMethod}} {{{path}}}{{#notes}}
      - {{{notes}}}{{/notes}}{{#subresourceOperation}}
      - subresourceOperation: {{subresourceOperation}}{{/subresourceOperation}}{{#defaultResponse}}
      - defaultResponse: {{defaultResponse}}{{/defaultResponse}}{{#authMethods}}
@@ -83,8 +106,8 @@ public class {{classname}}: APIBase {
      - returns: RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{description}}
      */
     public class func {{operationId}}WithRequestBuilder({{#allParams}}{{^secondaryParam}}{{paramName}} {{/secondaryParam}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}? = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
-        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{path}}"{{#pathParams}}
-        path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", withString: "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})", options: .LiteralSearch, range: nil){{/pathParams}}
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
+        path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", withString: "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})", options: .LiteralSearch, range: nil){{/pathParams}}
         let URLString = {{projectName}}API.basePath + path
         {{#bodyParam}}
         let parameters = {{paramName}}{{^required}}?{{/required}}.encodeToJSON() as? [String:AnyObject]{{/bodyParam}}{{^bodyParam}}
@@ -96,11 +119,15 @@ public class {{classname}}: APIBase {
  
         let parameters = APIHelper.rejectNil(nillableParameters){{/bodyParam}}
  
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
+        let convertedParameters = APIHelper.convertBoolToString(parameters){{#headerParams}}{{^secondaryParam}}
+        let nillableHeaders: [String: AnyObject?] = [{{/secondaryParam}}
+            {{> _param}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders){{/hasMore}}{{/headerParams}}
  
         let requestBuilder: RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>.Type = {{projectName}}API.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "{{httpMethod}}", URLString: URLString, parameters: convertedParameters, isBody: {{^queryParams}}{{^formParams}}true{{/formParams}}{{/queryParams}}{{#queryParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/queryParams}}{{#formParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/formParams}})
+        return requestBuilder.init(method: "{{httpMethod}}", URLString: URLString, parameters: convertedParameters, isBody: {{^queryParams}}{{^formParams}}true{{/formParams}}{{/queryParams}}{{#queryParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/queryParams}}{{#formParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/formParams}}{{#headerParams}}{{^secondaryParam}}, headers: headerParameters{{/secondaryParam}}{{/headerParams}})
     }
 
 {{/operation}}

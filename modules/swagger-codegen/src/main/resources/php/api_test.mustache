@@ -5,8 +5,7 @@
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -20,7 +19,6 @@
 namespace {{invokerPackage}};
 
 use \{{invokerPackage}}\Configuration;
-use \{{invokerPackage}}\ApiClient;
 use \{{invokerPackage}}\ApiException;
 use \{{invokerPackage}}\ObjectSerializer;
 
@@ -29,8 +27,7 @@ use \{{invokerPackage}}\ObjectSerializer;
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 {{#operations}}class {{classname}}Test extends \PHPUnit_Framework_TestCase
@@ -41,7 +38,6 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public static function setUpBeforeClass()
     {
-
     }
 
     /**
@@ -49,7 +45,6 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public function setUp()
     {
-
     }
 
     /**
@@ -57,7 +52,6 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public function tearDown()
     {
-
     }
 
     /**
@@ -65,10 +59,9 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public static function tearDownAfterClass()
     {
-
     }
-
     {{#operation}}
+
     /**
      * Test case for {{{operationId}}}
      *
@@ -77,9 +70,7 @@ use \{{invokerPackage}}\ObjectSerializer;
      */
     public function test{{vendorExtensions.x-testOperationId}}()
     {
-
     }
-
     {{/operation}}
 }
 {{/operations}}

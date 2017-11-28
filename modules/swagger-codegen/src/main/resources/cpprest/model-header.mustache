@@ -1,15 +1,17 @@
 {{>licenseInfo}}
 {{#models}}{{#model}}/*
  * {{classname}}.h
- * 
+ *
  * {{description}}
  */
 
-#ifndef {{classname}}_H_
-#define {{classname}}_H_
+#ifndef {{modelHeaderGuardPrefix}}_{{classname}}_H_
+#define {{modelHeaderGuardPrefix}}_{{classname}}_H_
 
+{{^parent}}
 {{{defaultInclude}}}
-#include "ModelBase.h"
+#include "../ModelBase.h"
+{{/parent}}
 
 {{#imports}}{{{this}}}
 {{/imports}}
@@ -22,15 +24,15 @@ namespace {{this}} {
 /// {{description}}
 /// </summary>
 class {{declspec}} {{classname}}
-	: public ModelBase
+    : public {{#parent}}{{{parent}}}{{/parent}}{{^parent}}ModelBase{{/parent}}
 {
 public:
     {{classname}}();
     virtual ~{{classname}}();
 
-	/////////////////////////////////////////////
-	/// ModelBase overrides
-	
+    /////////////////////////////////////////////
+    /// ModelBase overrides
+
     void validate() override;
 
     web::json::value toJson() const override;
@@ -38,26 +40,31 @@ public:
 
     void toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) const override;
     void fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) override;
-    
- 	/////////////////////////////////////////////
-	/// {{classname}} members
-	   
+
+    /////////////////////////////////////////////
+    /// {{classname}} members
+
     {{#vars}}
+    {{^isInherited}}
     /// <summary>
     /// {{description}}
     /// </summary>
     {{^isNotContainer}}{{{datatype}}}& {{getter}}();
     {{/isNotContainer}}{{#isNotContainer}}{{{datatype}}} {{getter}}() const;
-    void {{setter}}({{{datatype}}} value);
-    {{/isNotContainer}}{{^required}}bool {{baseName}}IsSet() const;
+    {{/isNotContainer}}{{^required}}bool {{nameInCamelCase}}IsSet() const;
     void unset{{name}}();
     {{/required}}
+    void {{setter}}({{{datatype}}} value);
+    {{/isInherited}}
     {{/vars}}
-    
+
 protected:
-    {{#vars}}{{{datatype}}} m_{{name}};
+    {{#vars}}
+    {{^isInherited}}
+    {{{datatype}}} m_{{name}};
     {{^required}}bool m_{{name}}IsSet;
     {{/required}}
+    {{/isInherited}}
     {{/vars}}
 };
 
@@ -65,6 +72,6 @@ protected:
 }
 {{/modelNamespaceDeclarations}}
 
-#endif /* {{classname}}_H_ */
+#endif /* {{modelHeaderGuardPrefix}}_{{classname}}_H_ */
 {{/model}}
 {{/models}}

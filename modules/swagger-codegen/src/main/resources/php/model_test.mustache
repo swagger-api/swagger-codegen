@@ -8,8 +8,7 @@
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -29,8 +28,7 @@ namespace {{invokerPackage}};
 // * @description {{#description}}{{description}}{{/description}}{{^description}}{{classname}}{{/description}}
 /**
  * @package     {{invokerPackage}}
- * @author      http://github.com/swagger-api/swagger-codegen
- * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
+ * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
 class {{classname}}Test extends \PHPUnit_Framework_TestCase
@@ -41,7 +39,6 @@ class {{classname}}Test extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-
     }
 
     /**
@@ -49,7 +46,6 @@ class {{classname}}Test extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-
     }
 
     /**
@@ -57,7 +53,6 @@ class {{classname}}Test extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-
     }
 
     /**
@@ -65,7 +60,6 @@ class {{classname}}Test extends \PHPUnit_Framework_TestCase
      */
     public static function tearDownAfterClass()
     {
-
     }
 
     /**
@@ -73,18 +67,15 @@ class {{classname}}Test extends \PHPUnit_Framework_TestCase
      */
     public function test{{classname}}()
     {
-
     }
-
 {{#vars}}
+
     /**
      * Test attribute "{{name}}"
      */
     public function testProperty{{nameInCamelCase}}()
     {
-
     }
-
 {{/vars}}
 }
 {{/model}}

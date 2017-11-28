@@ -3,13 +3,15 @@ package io.swagger.model;
 import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
 import org.joda.time.DateTime;
+import javax.validation.constraints.*;
+import io.swagger.annotations.*;
 
+@ApiModel(description="An order for a pets from the pet store")
 
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-07-01T21:32:16.906+08:00")
 public class Order   {
   
   private Long id = null;
@@ -45,6 +47,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -56,6 +59,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -67,6 +71,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -78,6 +83,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
   public DateTime getShipDate() {
     return shipDate;
@@ -90,6 +96,7 @@ public class Order   {
    * Order Status
    **/
   
+  @ApiModelProperty(value = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -101,8 +108,9 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("complete")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
@@ -111,7 +119,7 @@ public class Order   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -151,7 +159,7 @@ public class Order   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
