@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ModelReturn  {
   
   @ApiModelProperty(value = "")
+  
   private Integer _return = null;
 
  /**
