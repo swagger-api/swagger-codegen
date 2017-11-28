@@ -19,11 +19,9 @@ public class AdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
   private Map<String, String> mapProperty = null;
-  
 
   @ApiModelProperty(value = "")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
-  
 
  /**
    * Get mapProperty

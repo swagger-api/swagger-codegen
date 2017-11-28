@@ -49,7 +49,6 @@ public enum EnumStringEnum {
 }
 
   @ApiModelProperty(value = "")
-  
   private EnumStringEnum enumString = null;
 
 
@@ -86,7 +85,6 @@ public enum EnumIntegerEnum {
 }
 
   @ApiModelProperty(value = "")
-  
   private EnumIntegerEnum enumInteger = null;
 
 
@@ -123,11 +121,9 @@ public enum EnumNumberEnum {
 }
 
   @ApiModelProperty(value = "")
-  
   private EnumNumberEnum enumNumber = null;
 
   @ApiModelProperty(value = "")
-  
   private OuterEnum outerEnum = null;
 
  /**

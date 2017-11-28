@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NumberOnly  {
   
   @ApiModelProperty(value = "")
-  
   private BigDecimal justNumber = null;
 
  /**

@@ -19,15 +19,12 @@ public class ArrayTest  {
   
   @ApiModelProperty(value = "")
   private List<String> arrayOfString = null;
-  
 
   @ApiModelProperty(value = "")
   private List<List<Long>> arrayArrayOfInteger = null;
-  
 
   @ApiModelProperty(value = "")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-  
 
  /**
    * Get arrayOfString

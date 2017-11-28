@@ -37,8 +37,12 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
    * {{{description}}}  
   **/
 {{/description}}
-  {{#isContainer}}private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};{{/isContainer}}
-  {{^isContainer}}private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/isContainer}}
+  {{#isContainer}}
+  private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};
+  {{/isContainer}}
+  {{^isContainer}}
+  private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
+  {{/isContainer}}
   {{/vars}}
 
   {{#vars}}

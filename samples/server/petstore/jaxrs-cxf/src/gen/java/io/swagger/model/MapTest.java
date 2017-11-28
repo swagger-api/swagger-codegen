@@ -19,7 +19,6 @@ public class MapTest  {
   
   @ApiModelProperty(value = "")
   private Map<String, Map<String, String>> mapMapOfString = null;
-  
 
 
 @XmlType(name="InnerEnum")
@@ -56,7 +55,6 @@ public enum InnerEnum {
 
   @ApiModelProperty(value = "")
   private Map<String, InnerEnum> mapOfEnumString = null;
-  
 
  /**
    * Get mapMapOfString

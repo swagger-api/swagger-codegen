@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ClassModel  {
   
   @ApiModelProperty(value = "")
-  
   private String propertyClass = null;
 
  /**

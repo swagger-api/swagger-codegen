@@ -21,16 +21,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
-  
   private UUID uuid = null;
 
   @ApiModelProperty(value = "")
-  
   private Date dateTime = null;
 
   @ApiModelProperty(value = "")
   private Map<String, Animal> map = null;
-  
 
  /**
    * Get uuid

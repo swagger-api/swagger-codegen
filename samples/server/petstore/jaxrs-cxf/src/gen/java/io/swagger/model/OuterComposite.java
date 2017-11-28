@@ -16,15 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class OuterComposite  {
   
   @ApiModelProperty(value = "")
-  
   private BigDecimal myNumber = null;
 
   @ApiModelProperty(value = "")
-  
   private String myString = null;
 
   @ApiModelProperty(value = "")
-  
   private Boolean myBoolean = null;
 
  /**
