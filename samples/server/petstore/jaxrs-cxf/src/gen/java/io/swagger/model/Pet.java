@@ -71,7 +71,6 @@ public enum StatusEnum {
    * pet status in the store  
   **/
   private StatusEnum status = null;
-
  /**
    * Get id
    * @return id

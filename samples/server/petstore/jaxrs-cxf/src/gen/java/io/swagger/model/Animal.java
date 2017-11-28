@@ -21,7 +21,6 @@ public class Animal  {
 
   @ApiModelProperty(value = "")
   private String color = "red";
-
  /**
    * Get className
    * @return className

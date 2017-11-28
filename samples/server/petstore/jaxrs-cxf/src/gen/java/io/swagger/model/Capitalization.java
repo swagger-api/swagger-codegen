@@ -34,7 +34,6 @@ public class Capitalization  {
    * Name of the pet   
   **/
   private String ATT_NAME = null;
-
  /**
    * Get smallCamel
    * @return smallCamel

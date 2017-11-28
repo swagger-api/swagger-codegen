@@ -55,7 +55,6 @@ public enum InnerEnum {
 
   @ApiModelProperty(value = "")
   private Map<String, InnerEnum> mapOfEnumString = null;
-
  /**
    * Get mapMapOfString
    * @return mapMapOfString

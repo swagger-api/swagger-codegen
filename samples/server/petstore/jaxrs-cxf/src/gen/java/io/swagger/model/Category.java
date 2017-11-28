@@ -19,7 +19,6 @@ public class Category  {
 
   @ApiModelProperty(value = "")
   private String name = null;
-
  /**
    * Get id
    * @return id

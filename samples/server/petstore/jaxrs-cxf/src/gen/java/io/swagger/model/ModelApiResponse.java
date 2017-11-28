@@ -22,7 +22,6 @@ public class ModelApiResponse  {
 
   @ApiModelProperty(value = "")
   private String message = null;
-
  /**
    * Get code
    * @return code

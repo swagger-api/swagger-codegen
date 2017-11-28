@@ -87,7 +87,6 @@ public enum ArrayEnumEnum {
 
   @ApiModelProperty(value = "")
   private List<ArrayEnumEnum> arrayEnum = null;
-
  /**
    * Get justSymbol
    * @return justSymbol

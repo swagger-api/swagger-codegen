@@ -56,7 +56,6 @@ public class FormatTest  {
 
   @ApiModelProperty(required = true, value = "")
   private String password = null;
-
  /**
    * Get integer
    * minimum: 10

@@ -23,7 +23,6 @@ public class OuterComposite  {
 
   @ApiModelProperty(value = "")
   private Boolean myBoolean = null;
-
  /**
    * Get myNumber
    * @return myNumber

@@ -28,7 +28,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
 
   @ApiModelProperty(value = "")
   private Map<String, Animal> map = null;
-
  /**
    * Get uuid
    * @return uuid

@@ -40,7 +40,6 @@ public class User  {
    * User Status  
   **/
   private Integer userStatus = null;
-
  /**
    * Get id
    * @return id

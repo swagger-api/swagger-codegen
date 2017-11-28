@@ -30,7 +30,6 @@ public class Name  {
 
   @ApiModelProperty(value = "")
   private Integer _123Number = null;
-
  /**
    * Get name
    * @return name

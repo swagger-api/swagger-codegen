@@ -19,7 +19,6 @@ public class HasOnlyReadOnly  {
 
   @ApiModelProperty(value = "")
   private String foo = null;
-
  /**
    * Get bar
    * @return bar

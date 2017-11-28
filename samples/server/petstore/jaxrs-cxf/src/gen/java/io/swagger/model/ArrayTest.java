@@ -25,7 +25,6 @@ public class ArrayTest  {
 
   @ApiModelProperty(value = "")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-
  /**
    * Get arrayOfString
    * @return arrayOfString

@@ -19,7 +19,6 @@ public class ArrayOfArrayOfNumberOnly  {
   
   @ApiModelProperty(value = "")
   private List<List<BigDecimal>> arrayArrayNumber = null;
-
  /**
    * Get arrayArrayNumber
    * @return arrayArrayNumber

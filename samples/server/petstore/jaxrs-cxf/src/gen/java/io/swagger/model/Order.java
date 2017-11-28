@@ -68,7 +68,6 @@ public enum StatusEnum {
 
   @ApiModelProperty(value = "")
   private Boolean complete = false;
-
  /**
    * Get id
    * @return id
