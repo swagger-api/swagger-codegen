@@ -32,42 +32,43 @@ public class FormatTest {
   @JsonProperty("integer")
   private Integer integer = null;
 
-  @JsonProperty("int32")
+    @JsonProperty("int32")
   private Integer int32 = null;
 
-  @JsonProperty("int64")
+    @JsonProperty("int64")
   private Long int64 = null;
 
-  @JsonProperty("number")
+    @JsonProperty("number")
   private BigDecimal number = null;
 
-  @JsonProperty("float")
+    @JsonProperty("float")
   private Float _float = null;
 
-  @JsonProperty("double")
+    @JsonProperty("double")
   private Double _double = null;
 
-  @JsonProperty("string")
+    @JsonProperty("string")
   private String string = null;
 
-  @JsonProperty("byte")
+    @JsonProperty("byte")
   private byte[] _byte = null;
 
-  @JsonProperty("binary")
+    @JsonProperty("binary")
   private byte[] binary = null;
 
-  @JsonProperty("date")
+    @JsonProperty("date")
   private LocalDate date = null;
 
-  @JsonProperty("dateTime")
+    @JsonProperty("dateTime")
   private OffsetDateTime dateTime = null;
 
-  @JsonProperty("uuid")
+    @JsonProperty("uuid")
   private UUID uuid = null;
 
-  @JsonProperty("password")
+    @JsonProperty("password")
   private String password = null;
 
+  
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;

@@ -65,7 +65,7 @@ public class EnumArrays {
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
 
-  /**
+    /**
    * Gets or Sets arrayEnum
    */
   public enum ArrayEnumEnum {
@@ -103,6 +103,7 @@ public class EnumArrays {
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
 
+  
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;

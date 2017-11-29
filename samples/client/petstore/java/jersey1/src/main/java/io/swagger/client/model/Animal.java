@@ -35,9 +35,10 @@ public class Animal {
   @JsonProperty("className")
   private String className = null;
 
-  @JsonProperty("color")
+    @JsonProperty("color")
   private String color = "red";
 
+  
   public Animal className(String className) {
     this.className = className;
     return this;

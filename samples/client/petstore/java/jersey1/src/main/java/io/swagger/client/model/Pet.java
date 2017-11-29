@@ -32,19 +32,19 @@ public class Pet {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("category")
+    @JsonProperty("category")
   private Category category = null;
 
-  @JsonProperty("name")
+    @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("photoUrls")
+    @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
 
-  @JsonProperty("tags")
+    @JsonProperty("tags")
   private List<Tag> tags = null;
 
-  /**
+    /**
    * pet status in the store
    */
   public enum StatusEnum {
@@ -84,6 +84,7 @@ public class Pet {
   @JsonProperty("status")
   private StatusEnum status = null;
 
+  
   public Pet id(Long id) {
     this.id = id;
     return this;

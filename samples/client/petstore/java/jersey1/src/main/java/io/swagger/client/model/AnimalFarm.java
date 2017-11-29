@@ -24,6 +24,7 @@ import java.util.List;
 
 public class AnimalFarm extends ArrayList<Animal> {
 
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
