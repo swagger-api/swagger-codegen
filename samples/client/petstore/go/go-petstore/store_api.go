@@ -90,7 +90,7 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) ( *ht
  Returns a map of status codes to quantities
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @return map[string]int32*/
-func (a *StoreApiService) GetInventory(ctx context.Context, ) (map[string]int32,  *http.Response, error) {
+func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}

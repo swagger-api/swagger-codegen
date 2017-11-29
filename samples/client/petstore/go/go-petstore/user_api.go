@@ -402,7 +402,7 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
  
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @return */
-func (a *UserApiService) LogoutUser(ctx context.Context, ) ( *http.Response, error) {
+func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
