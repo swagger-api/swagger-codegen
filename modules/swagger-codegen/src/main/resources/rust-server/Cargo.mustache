@@ -2,6 +2,12 @@
 name = "{{packageName}}"
 version = "{{appVersion}}"
 authors = [{{#infoEmail}}"{{infoEmail}}"{{/infoEmail}}]
+{{#appDescription}}
+description = "{{{appDescription}}}"
+{{/appDescription}}
+{{#licenseName}}
+license = "{{{licenseName}}}"
+{{/licenseName}}
 
 [features]
 default = ["client", "server"]

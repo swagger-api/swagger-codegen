@@ -150,6 +150,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put("apiVersion", apiVersion);
         additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("apiPath", apiPath);
+        additionalProperties.put(CodegenConstants.LICENSE_NAME, licenseName);
 
         /*
          * Supporting Files.  You can write single files for the generator with the
@@ -257,6 +258,12 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             versionComponents.add("0");
         }
         info.setVersion(StringUtils.join(versionComponents, "."));
+
+        if (info.getLicense() != null) {
+            License license = info.getLicense();
+            licenseName = license.getName();
+            additionalProperties.put(CodegenConstants.LICENSE_NAME, licenseName);
+        }
     }
 
     @Override
