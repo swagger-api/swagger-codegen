@@ -113,6 +113,8 @@ public interface CodegenConfig {
 
     Map<String, String> modelTestTemplateFiles();
 
+    Map<String, String> modelTestResourceTemplateFiles();
+
     Map<String, String> apiDocTemplateFiles();
 
     Map<String, String> modelDocTemplateFiles();
@@ -134,6 +136,8 @@ public interface CodegenConfig {
     String toModelFilename(String name);
 
     String toApiTestFilename(String name);
+
+    String toModelTestResourceFilename(String name);
 
     String toModelTestFilename(String name);
 

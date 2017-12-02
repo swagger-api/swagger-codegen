@@ -10,6 +10,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.7.0</springfox-version>
+        <junit-version>4.12</junit-version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -95,5 +96,11 @@
         <scope>provided</scope>
     </dependency>
 {{/useBeanValidation}}        
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit-version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
 </project>

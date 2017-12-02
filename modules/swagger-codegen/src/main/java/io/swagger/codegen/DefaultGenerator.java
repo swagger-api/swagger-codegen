@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.MustacheException;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
 import io.swagger.codegen.languages.AbstractJavaCodegen;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -249,6 +251,28 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
     }
 
+    /**
+     * Add resource files (either java or any other type) for test model.
+     */
+    private void generateModelTestsResourceFiles(List<File> files) {
+        Map<String, String> templates = config.modelTestResourceTemplateFiles();
+        if (templates != null && !templates.isEmpty()) {
+            Map<String, Object> properties = new HashMap<>(config.additionalProperties());
+            properties.put("package", config.modelPackage());
+            for (String templateName : templates.keySet()) {
+                String suffix = templates.get(templateName);
+                String templateFile = getFullTemplateFile(config, templateName);
+                String outputFileName = config.modelTestFileFolder() + File.separator + config.toModelTestResourceFilename(templateName) + suffix;
+                outputFileName = outputFileName.replaceAll("[/|\\\\]", Matcher.quoteReplacement(File.separator));
+                try {
+                    processTemplateResourceFile(files, properties, templateFile , outputFileName);
+                } catch (Exception e) {
+                    LOGGER.error("Could not generate model test resource file: '" + templateName + "'", e);
+                }
+            }
+        }
+    }
+
     private void generateModelDocumentation(List<File> files, Map<String, Object> models, String modelName) throws IOException {
         for (String templateName : config.modelDocTemplateFiles().keySet()) {
             String suffix = config.modelDocTemplateFiles().get(templateName);
@@ -409,6 +433,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not generate model '" + modelName + "'", e);
             }
         }
+        
+        if (generateModelTests) {
+            generateModelTestsResourceFiles(files);
+        }
+
         if (System.getProperty("debugModels") != null) {
             LOGGER.info("############ Model info ############");
             Json.prettyPrint(allModels);
@@ -578,44 +607,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
 
                 if (ignoreProcessor.allowsFile(new File(outputFilename))) {
-                    if (templateFile.endsWith("mustache")) {
-                        String template = readTemplate(templateFile);
-                        Mustache.Compiler compiler = Mustache.compiler();
-                        compiler = config.processCompiler(compiler);
-                        Template tmpl = compiler
-                                .withLoader(new Mustache.TemplateLoader() {
-                                    @Override
-                                    public Reader getTemplate(String name) {
-                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
-                                    }
-                                })
-                                .defaultValue("")
-                                .compile(template);
-
-                        writeToFile(outputFilename, tmpl.execute(bundle));
-                        files.add(new File(outputFilename));
-                    } else {
-                        InputStream in = null;
-
-                        try {
-                            in = new FileInputStream(templateFile);
-                        } catch (Exception e) {
-                            // continue
-                        }
-                        if (in == null) {
-                            in = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(templateFile));
-                        }
-                        File outputFile = new File(outputFilename);
-                        OutputStream out = new FileOutputStream(outputFile, false);
-                        if (in != null) {
-                            LOGGER.info("writing file " + outputFile);
-                            IOUtils.copy(in, out);
-                            out.close();
-                        } else {
-                            LOGGER.error("can't open " + templateFile + " for input");
-                        }
-                        files.add(outputFile);
-                    }
+                    processTemplateResourceFile(files, bundle, templateFile, outputFilename);
                 } else {
                     LOGGER.info("Skipped generation of " + outputFilename + " due to rule in .swagger-codegen-ignore");
                 }
@@ -671,6 +663,47 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     }
 
+    private void processTemplateResourceFile(List<File> files, Map<String, Object> bundle, String templateFile, String outputFilename) throws MustacheException, IOException {
+        if (templateFile.endsWith("mustache")) {
+            String template = readTemplate(templateFile);
+            Mustache.Compiler compiler = Mustache.compiler();
+            compiler = config.processCompiler(compiler);
+            Template tmpl = compiler
+                    .withLoader(new Mustache.TemplateLoader() {
+                        @Override
+                        public Reader getTemplate(String name) {
+                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                        }
+                    })
+                    .defaultValue("")
+                    .compile(template);
+
+            writeToFile(outputFilename, tmpl.execute(bundle));
+            files.add(new File(outputFilename));
+        } else {
+            InputStream in = null;
+
+            try {
+                in = new FileInputStream(templateFile);
+            } catch (Exception e) {
+                // continue
+            }
+            if (in == null) {
+                in = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(templateFile));
+            }
+            File outputFile = new File(outputFilename);
+            OutputStream out = new FileOutputStream(outputFile, false);
+            if (in != null) {
+                LOGGER.info("writing file " + outputFile);
+                IOUtils.copy(in, out);
+                out.close();
+            } else {
+                LOGGER.error("can't open " + templateFile + " for input");
+            }
+            files.add(outputFile);
+        }
+    }
+    
     private Map<String, Object> buildSupportFileBundle(List<Object> allOperations, List<Object> allModels) {
 
         Map<String, Object> bundle = new HashMap<String, Object>();

@@ -80,6 +80,7 @@ public class DefaultCodegen {
     protected Map<String, String> modelTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> apiTestTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelTestTemplateFiles = new HashMap<String, String>();
+    protected Map<String, String> modelTestResourceTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> apiDocTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelDocTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> reservedWordsMappings = new HashMap<String, String>();
@@ -499,6 +500,10 @@ public class DefaultCodegen {
         return modelTestTemplateFiles;
     }
 
+    public Map<String, String> modelTestResourceTemplateFiles() {
+        return modelTestResourceTemplateFiles;
+    }
+
     public Map<String, String> apiTemplateFiles() {
         return apiTemplateFiles;
     }
@@ -663,6 +668,13 @@ public class DefaultCodegen {
      */
     public String toModelTestFilename(String name) {
         return initialCaps(name) + "Test";
+    }
+
+    /**
+     * Return the name of static resource for model test
+     */
+    public String toModelTestResourceFilename(String name) {
+        return name;
     }
 
     /**

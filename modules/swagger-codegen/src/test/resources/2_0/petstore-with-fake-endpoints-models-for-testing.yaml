@@ -1015,6 +1015,7 @@ definitions:
         type: string
       password:
         type: string
+        x-obfuscated: true
       phone:
         type: string
       userStatus:
