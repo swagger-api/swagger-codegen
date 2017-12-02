@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "available", "pending", "sold" ],
-            "default" : "available"
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
           },
           "collectionFormat" : "csv"
         } ],
@@ -680,8 +680,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_form_string",
@@ -699,8 +699,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_header_string",
@@ -718,8 +718,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_query_string",
@@ -757,8 +757,8 @@
       },
       "post" : {
         "tags" : [ "fake" ],
-        "summary" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
-        "description" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
+        "summary" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
+        "description" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
         "operationId" : "testEndpointParameters",
         "consumes" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
         "produces" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
@@ -1030,6 +1030,32 @@
         }
       }
     },
+    "/fake/inline-additionalProperties" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "summary" : "test inline additionalProperties",
+        "description" : "",
+        "operationId" : "testInlineAdditionalProperties",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "param",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
     "/another-fake/dummy" : {
       "patch" : {
         "tags" : [ "$another-fake?" ],
@@ -1152,7 +1178,8 @@
           "type" : "string"
         },
         "password" : {
-          "type" : "string"
+          "type" : "string",
+          "x-obfuscated" : true
         },
         "phone" : {
           "type" : "string"

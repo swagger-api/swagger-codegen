@@ -128,7 +128,7 @@ public class EnumArrays {
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     if (this.arrayEnum == null) {
-      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+      this.arrayEnum = new ArrayList<>();
     }
     this.arrayEnum.add(arrayEnumItem);
     return this;
@@ -183,8 +183,19 @@ public class EnumArrays {
    * (except the first line).
    */
   private String toIndentedString(java.lang.Object o) {
+    return toIndentedString(o, false);
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line). Obfuscate the value, if required.
+   */
+  private String toIndentedString(java.lang.Object o, boolean isObfuscated) {
     if (o == null) {
       return "null";
+    }
+    if (isObfuscated) {
+      return "***";
     }
     return o.toString().replace("\n", "\n    ");
   }

@@ -168,6 +168,22 @@ public class FakeApiTest {
     }
     
     /**
+     * test inline additionalProperties
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest() {
+        Object param = null;
+        api.testInlineAdditionalProperties(param);
+
+        // TODO: test validations
+    }
+    
+    /**
      * test json serialization of form data
      *
      * 

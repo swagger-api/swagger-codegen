@@ -168,4 +168,33 @@ public class FakeApiTest {
     // TODO: test validations
     }
     
+    /**
+     * test inline additionalProperties
+     *
+     * 
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest() {
+        Object param = null;
+        // api.testInlineAdditionalProperties(param);
+
+        // TODO: test validations
+    }
+
+    
+    /**
+     * test json serialization of form data
+     *
+     * 
+     */
+    @Test
+    public void testJsonFormDataTest() {
+        String param = null;
+        String param2 = null;
+        // api.testJsonFormData(param, param2);
+
+        // TODO: test validations
+    }
+
+    
 }

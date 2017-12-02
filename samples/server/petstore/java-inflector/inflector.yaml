@@ -11,11 +11,9 @@ ArrayOfArrayOfNumberOnly : io.swagger.model.ArrayOfArrayOfNumberOnly
 ArrayOfNumberOnly : io.swagger.model.ArrayOfNumberOnly
 ArrayTest : io.swagger.model.ArrayTest
 Capitalization : io.swagger.model.Capitalization
-Cat : io.swagger.model.Cat
 Category : io.swagger.model.Category
 ClassModel : io.swagger.model.ClassModel
 Client : io.swagger.model.Client
-Dog : io.swagger.model.Dog
 EnumArrays : io.swagger.model.EnumArrays
 EnumClass : io.swagger.model.EnumClass
 EnumTest : io.swagger.model.EnumTest
@@ -29,12 +27,15 @@ ModelReturn : io.swagger.model.ModelReturn
 Name : io.swagger.model.Name
 NumberOnly : io.swagger.model.NumberOnly
 Order : io.swagger.model.Order
+OuterComposite : io.swagger.model.OuterComposite
 OuterEnum : io.swagger.model.OuterEnum
 Pet : io.swagger.model.Pet
 ReadOnlyFirst : io.swagger.model.ReadOnlyFirst
 SpecialModelName : io.swagger.model.SpecialModelName
 Tag : io.swagger.model.Tag
 User : io.swagger.model.User
+Cat : io.swagger.model.Cat
+Dog : io.swagger.model.Dog
 
 entityProcessors:
   - json

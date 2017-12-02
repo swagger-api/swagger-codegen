@@ -22,7 +22,6 @@ public class UserApiTest {
         api = new ApiClient().createService(UserApi.class);
     }
 
-    
     /**
      * Create user
      *
@@ -35,7 +34,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Creates list of users with given input array
      *
@@ -48,7 +46,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Creates list of users with given input array
      *
@@ -61,7 +58,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Delete user
      *
@@ -74,7 +70,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Get user by user name
      *
@@ -87,7 +82,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Logs user into the system
      *
@@ -101,7 +95,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Logs out current logged in user session
      *
@@ -113,7 +106,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Updated user
      *
@@ -127,5 +119,4 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
 }

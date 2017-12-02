@@ -24,7 +24,6 @@ public class PetApiTest {
         api = new ApiClient().createService(PetApi.class);
     }
 
-    
     /**
      * Add a new pet to the store
      *
@@ -37,7 +36,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Deletes a pet
      *
@@ -51,7 +49,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Finds Pets by status
      *
@@ -64,7 +61,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Finds Pets by tags
      *
@@ -77,7 +73,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Find pet by ID
      *
@@ -90,7 +85,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Update an existing pet
      *
@@ -103,7 +97,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Updates a pet in the store with form data
      *
@@ -118,7 +111,6 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * uploads an image
      *
@@ -133,5 +125,4 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
 }
