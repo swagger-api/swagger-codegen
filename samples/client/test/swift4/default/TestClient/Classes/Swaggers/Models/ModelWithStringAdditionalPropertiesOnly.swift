@@ -28,6 +28,8 @@ open class ModelWithStringAdditionalPropertiesOnly: Codable {
         }
     }
 
+    
+
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
@@ -38,7 +40,7 @@ open class ModelWithStringAdditionalPropertiesOnly: Codable {
     }
 
     // Decodable protocol methods
-    
+
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: String.self)
 

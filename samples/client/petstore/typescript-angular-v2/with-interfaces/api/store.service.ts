@@ -9,13 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-
 /* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import { Response, ResponseContentType }                     from '@angular/http';
+import { CustomQueryEncoderHelper }                          from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
@@ -24,7 +24,6 @@ import { Order } from '../model/order';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { CustomQueryEncoderHelper }                          from '../encoder';
 import { StoreServiceInterface }                            from './StoreServiceInterface';
 
 
@@ -57,12 +56,6 @@ export class StoreService implements StoreServiceInterface {
             }
         }
         return false;
-    }
-
-
-    public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
-        return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
     }
 
     /**
@@ -133,6 +126,7 @@ export class StoreService implements StoreServiceInterface {
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      * @param orderId ID of the order that needs to be deleted
+     
      */
     public deleteOrderWithHttpInfo(orderId: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
         if (orderId === null || orderId === undefined) {
@@ -140,6 +134,20 @@ export class StoreService implements StoreServiceInterface {
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/xml',
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
@@ -157,6 +165,7 @@ export class StoreService implements StoreServiceInterface {
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
+     
      */
     public getInventoryWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
@@ -166,6 +175,19 @@ export class StoreService implements StoreServiceInterface {
         if (this.configuration.apiKeys["api_key"]) {
             headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -184,6 +206,7 @@ export class StoreService implements StoreServiceInterface {
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      * @param orderId ID of pet that needs to be fetched
+     
      */
     public getOrderByIdWithHttpInfo(orderId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
         if (orderId === null || orderId === undefined) {
@@ -191,6 +214,20 @@ export class StoreService implements StoreServiceInterface {
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/xml',
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -209,6 +246,7 @@ export class StoreService implements StoreServiceInterface {
      * Place an order for a pet
      * 
      * @param body order placed for purchasing the pet
+     
      */
     public placeOrderWithHttpInfo(body: Order, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
         if (body === null || body === undefined) {
@@ -217,7 +255,23 @@ export class StoreService implements StoreServiceInterface {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
-        headers.set('Content-Type', 'application/json');
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/xml',
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers.set('Content-Type', httpContentTypeSelected);
+        }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,

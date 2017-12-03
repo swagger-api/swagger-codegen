@@ -105,7 +105,7 @@ public class EnumArrays   {
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     if (arrayEnum == null) {
-      arrayEnum = new ArrayList<>();
+      arrayEnum = new ArrayList<ArrayEnumEnum>();
     }
     arrayEnum.add(arrayEnumItem);
     return this;
@@ -163,22 +163,6 @@ public class EnumArrays   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
-
-  public void validate() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<EnumArrays>> constraintViolations = validator.validate(this);
-    if (constraintViolations.size() > 0) {
-      StringBuilder errors = new StringBuilder();
-      for (ConstraintViolation<EnumArrays> contraintes : constraintViolations) {
-        errors.append(String.format("%s.%s %s\n",
-            contraintes.getRootBeanClass().getSimpleName(),
-            contraintes.getPropertyPath(),
-            contraintes.getMessage()));
-      }
-      throw new RuntimeException("Bean validation : " + errors);
-    }
   }
 }
 

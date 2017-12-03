@@ -18,6 +18,13 @@ open class VariableNameTest: Codable {
     public var _for: String?
 
 
+    
+    public init(exampleName: String?, _for: String?) {
+        self.exampleName = exampleName
+        self._for = _for
+    }
+    
+
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
@@ -29,7 +36,7 @@ open class VariableNameTest: Codable {
     }
 
     // Decodable protocol methods
-    
+
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: String.self)
 

@@ -30,7 +30,7 @@ public class ArrayTest   {
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
     if (arrayOfString == null) {
-      arrayOfString = new ArrayList<>();
+      arrayOfString = new ArrayList<String>();
     }
     arrayOfString.add(arrayOfStringItem);
     return this;
@@ -55,7 +55,7 @@ public class ArrayTest   {
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
     if (arrayArrayOfInteger == null) {
-      arrayArrayOfInteger = new ArrayList<>();
+      arrayArrayOfInteger = new ArrayList<List<Long>>();
     }
     arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
@@ -81,7 +81,7 @@ public class ArrayTest   {
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
     if (arrayArrayOfModel == null) {
-      arrayArrayOfModel = new ArrayList<>();
+      arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
     }
     arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
@@ -142,22 +142,6 @@ public class ArrayTest   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
-
-  public void validate() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<ArrayTest>> constraintViolations = validator.validate(this);
-    if (constraintViolations.size() > 0) {
-      StringBuilder errors = new StringBuilder();
-      for (ConstraintViolation<ArrayTest> contraintes : constraintViolations) {
-        errors.append(String.format("%s.%s %s\n",
-            contraintes.getRootBeanClass().getSimpleName(),
-            contraintes.getPropertyPath(),
-            contraintes.getMessage()));
-      }
-      throw new RuntimeException("Bean validation : " + errors);
-    }
   }
 }
 
