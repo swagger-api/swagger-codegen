@@ -135,7 +135,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         if(complexType.startsWith("SWG")) {
             QList<SWGObject*>* output = new QList<SWGObject*>();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr) {
+            for (const QJsonValue & jval : arr) {
                 // it's an object
                 SWGObject * val = (SWGObject*)create(complexType);
                 QJsonObject t = jval.toObject();
@@ -144,7 +144,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
                 output->append(val);
             }
             QList<SWGObject*> **val = static_cast<QList<SWGObject*>**>(value);
-            foreach (auto item, **val) {
+            for (auto item : **val) {
                 delete item;
             }
             delete *val;
@@ -154,7 +154,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QList<qint32> **output = reinterpret_cast<QList<qint32> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 qint32 val;
                 setValue(&val, jval, QStringLiteral("qint32"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -164,7 +164,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QList<qint64> **output = reinterpret_cast<QList<qint64> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 qint64 val;
                 setValue(&val, jval, QStringLiteral("qint64"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -174,7 +174,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QList<bool> **output = reinterpret_cast<QList<bool> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 bool val;
                 setValue(&val, jval, QStringLiteral("bool"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -184,7 +184,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QList<float> **output = reinterpret_cast<QList<float> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 float val;
                 setValue(&val, jval, QStringLiteral("float"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -194,7 +194,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QList<double> **output = reinterpret_cast<QList<double> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 double val;
                 setValue(&val, jval, QStringLiteral("double"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -202,12 +202,12 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         }
         else if(QStringLiteral("QString").compare(complexType) == 0) {
             QList<QString*> **output = reinterpret_cast<QList<QString*> **> (value);
-            foreach (auto item, **output) {
+            for (auto item : **output) {
                 delete item;
             }
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 QString * val = new QString();
                 setValue(&val, jval, QStringLiteral("QString"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -215,12 +215,12 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         }
         else if(QStringLiteral("QDate").compare(complexType) == 0) {
             QList<QDate*> **output = reinterpret_cast<QList<QDate*> **> (value);
-            foreach (auto item, **output) {
+            for (auto item : **output) {
                 delete item;
             }
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 QDate * val = new QDate();
                 setValue(&val, jval, QStringLiteral("QDate"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -228,12 +228,12 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         }
         else if(QStringLiteral("QDateTime").compare(complexType) == 0) {
             QList<QDateTime*> **output = reinterpret_cast<QList<QDateTime*> **> (value);
-            foreach (auto item, **output) {
+            for (auto item : **output) {
                 delete item;
             }
             (*output)->clear();
             QJsonArray arr = obj.toArray();
-            foreach (const QJsonValue & jval, arr){
+            for (const QJsonValue & jval : arr){
                 QDateTime * val = new QDateTime();
                 setValue(&val, jval, QStringLiteral("QDateTime"), QStringLiteral(""));
                 (*output)->push_back(val);
@@ -257,7 +257,7 @@ toJsonValue(QString name, void* value, QJsonObject* output, QString type) {
             }
             else {
                 output->empty();
-                foreach(QString key, o->keys()) {
+                for(QString key : o->keys()) {
                     output->insert(key, o->value(key));
                 }
             }
@@ -304,7 +304,7 @@ toJsonValue(QString name, void* value, QJsonObject* output, QString type) {
 void
 toJsonArray(QList<void*>* value, QJsonArray* output, QString innerName, QString innerType) {
     if(innerType.startsWith("SWG")){
-        foreach(void* obj, *value) {
+        for(void* obj : *value) {
             SWGObject *swgObject = reinterpret_cast<SWGObject *>(obj);
             if(swgObject != nullptr) {
                 output->append(*(swgObject->asJsonObject()));
@@ -312,42 +312,42 @@ toJsonArray(QList<void*>* value, QJsonArray* output, QString innerName, QString 
         }
     }
     else if(QStringLiteral("QString").compare(innerType) == 0) {
-        foreach(QString* obj, *(reinterpret_cast<QList<QString*>*>(value))){
+        for(QString* obj : *(reinterpret_cast<QList<QString*>*>(value))){
             output->append(QJsonValue(*obj));
         }
     }
     else if(QStringLiteral("QDate").compare(innerType) == 0) {
-        foreach(QDate* obj, *(reinterpret_cast<QList<QDate*>*>(value))){
+        for(QDate* obj : *(reinterpret_cast<QList<QDate*>*>(value))){
             output->append(QJsonValue(obj->toString(Qt::ISODate)));
         }
     }
     else if(QStringLiteral("QDateTime").compare(innerType) == 0) {
-        foreach(QDateTime* obj, *(reinterpret_cast<QList<QDateTime*>*>(value))){
+        for(QDateTime* obj : *(reinterpret_cast<QList<QDateTime*>*>(value))){
             output->append(QJsonValue(obj->toString(Qt::ISODate)));        }
     }
     else if(QStringLiteral("QByteArray").compare(innerType) == 0) {
-        foreach(QByteArray* obj, *(reinterpret_cast<QList<QByteArray*>*>(value))){
+        for(QByteArray* obj : *(reinterpret_cast<QList<QByteArray*>*>(value))){
             output->append(QJsonValue(QString(obj->toBase64())));
         }
     }
     else if(QStringLiteral("qint32").compare(innerType) == 0) {
-        foreach(qint32 obj, *(reinterpret_cast<QList<qint32>*>(value)))
+        for(qint32 obj : *(reinterpret_cast<QList<qint32>*>(value)))
             output->append(QJsonValue(obj));
     }
     else if(QStringLiteral("qint64").compare(innerType) == 0) {
-        foreach(qint64 obj, *(reinterpret_cast<QList<qint64>*>(value)))
+        for(qint64 obj : *(reinterpret_cast<QList<qint64>*>(value)))
             output->append(QJsonValue(obj));
     }
     else if(QStringLiteral("bool").compare(innerType) == 0) {
-        foreach(bool obj, *(reinterpret_cast<QList<bool>*>(value)))
+        for(bool obj : *(reinterpret_cast<QList<bool>*>(value)))
             output->append(QJsonValue(obj));
     }
     else if(QStringLiteral("float").compare(innerType) == 0) {
-        foreach(float obj, *(reinterpret_cast<QList<float>*>(value)))
+        for(float obj : *(reinterpret_cast<QList<float>*>(value)))
             output->append(QJsonValue(obj));
     }
     else if(QStringLiteral("double").compare(innerType) == 0) {
-        foreach(double obj, *(reinterpret_cast<QList<double>*>(value)))
+        for(double obj : *(reinterpret_cast<QList<double>*>(value)))
             output->append(QJsonValue(obj));
     }
 }
