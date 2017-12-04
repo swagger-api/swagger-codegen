@@ -595,9 +595,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             param.vendorExtensions.put("typeName", toModelName(param.baseName));
         }
         for (CodegenResponse rsp : op.responses) {
-            rsp.message = camelize(rsp.message.split("[^A-Za-z ]")[0].replace(" ", "_"));
             rsp.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
-            rsp.vendorExtensions.put("uppercase_message", underscore(rsp.message).toUpperCase());
             if (rsp.dataType != null) {
                 rsp.vendorExtensions.put("uppercase_data_type", (rsp.dataType.replace("models::", "")).toUpperCase());
 

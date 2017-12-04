@@ -223,7 +223,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 match api.{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}param_{{paramName}}{{#isListContainer}}.as_ref(){{/isListContainer}}, {{/allParams}}context).wait() {
                     Ok(rsp) => match rsp {
 {{#responses}}
-                        {{operationId}}Response::{{message}}{{#dataType}}{{^headers}}(body){{/headers}}{{#headers}}{{#-first}}{ body{{/-first}}{{/headers}}{{/dataType}}{{#headers}}{{#-first}}{{^dataType}}{ {{/dataType}}{{#dataType}}, {{/dataType}}{{/-first}}{{^-first}}, {{/-first}}{{name}}{{#-last}} }{{/-last}}{{/headers}} => {
+                        {{operationId}}Response::Status{{code}}{{#dataType}}{{^headers}}(body){{/headers}}{{#headers}}{{#-first}}{ body{{/-first}}{{/headers}}{{/dataType}}{{#headers}}{{#-first}}{{^dataType}}{ {{/dataType}}{{#dataType}}, {{/dataType}}{{/-first}}{{^-first}}, {{/-first}}{{name}}{{#-last}} }{{/-last}}{{/headers}} => {
 {{^isFile}}
 {{#dataType}}{{#vendorExtensions}}{{#producesXml}}
 {{^has_namespace}}                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");{{/has_namespace}}{{#has_namespace}}
