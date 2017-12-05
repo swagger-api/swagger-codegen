@@ -405,6 +405,10 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 if (Boolean.TRUE.equals(var.isEnum)) {
                     var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + "." + var.enumName);
                 }
+
+                if (isReservedWord(var.name)) {
+                    var.name = escapeReservedWord(var.name);
+                }
             }
         } 
 
