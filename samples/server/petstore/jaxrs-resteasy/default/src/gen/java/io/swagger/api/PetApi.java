@@ -32,7 +32,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 public class PetApi  {
 
-   @Inject PetApiService delegate;
+    @Inject PetApiService service;
 
     @POST
     
@@ -48,7 +48,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.addPet(body,securityContext);
+        return service.addPet(body,securityContext);
     }
     @DELETE
     @Path("/{petId}")
@@ -64,7 +64,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid pet value", response = Void.class) })
     public Response deletePet( @PathParam("petId") Long petId,@ApiParam(value = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.deletePet(petId,apiKey,securityContext);
+        return service.deletePet(petId,apiKey,securityContext);
     }
     @GET
     @Path("/findByStatus")
@@ -82,7 +82,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
     public Response findPetsByStatus( @NotNull  @QueryParam("status") List<String> status,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.findPetsByStatus(status,securityContext);
+        return service.findPetsByStatus(status,securityContext);
     }
     @GET
     @Path("/findByTags")
@@ -100,7 +100,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
     public Response findPetsByTags( @NotNull  @QueryParam("tags") List<String> tags,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.findPetsByTags(tags,securityContext);
+        return service.findPetsByTags(tags,securityContext);
     }
     @GET
     @Path("/{petId}")
@@ -117,7 +117,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     public Response getPetById( @PathParam("petId") Long petId,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.getPetById(petId,securityContext);
+        return service.getPetById(petId,securityContext);
     }
     @PUT
     
@@ -137,7 +137,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
     public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updatePet(body,securityContext);
+        return service.updatePet(body,securityContext);
     }
     @POST
     @Path("/{petId}")
@@ -153,7 +153,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response updatePetWithForm( @PathParam("petId") Long petId,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updatePetWithForm(petId,name,status,securityContext);
+        return service.updatePetWithForm(petId,name,status,securityContext);
     }
     @POST
     @Path("/{petId}/uploadImage")
@@ -169,6 +169,6 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
     public Response uploadFile(MultipartFormDataInput input, @PathParam("petId") Long petId,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadFile(input,petId,securityContext);
+        return service.uploadFile(input,petId,securityContext);
     }
 }
