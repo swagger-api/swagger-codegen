@@ -137,6 +137,8 @@ namespace IO.Swagger.Controllers
             // return StatusCode(404);
 
             string exampleJson = null;
+            exampleJson = "<User>\n  <id>123456789</id>\n  <username>aeiou</username>\n  <firstName>aeiou</firstName>\n  <lastName>aeiou</lastName>\n  <email>aeiou</email>\n  <password>aeiou</password>\n  <phone>aeiou</phone>\n  <userStatus>123</userStatus>\n</User>";
+            exampleJson = "{\n  \"id\" : 0,\n  \"lastName\" : \"lastName\",\n  \"phone\" : \"phone\",\n  \"username\" : \"username\",\n  \"email\" : \"email\",\n  \"userStatus\" : 6,\n  \"firstName\" : \"firstName\",\n  \"password\" : \"password\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<User>(exampleJson)
@@ -168,6 +170,8 @@ namespace IO.Swagger.Controllers
             // return StatusCode(400);
 
             string exampleJson = null;
+            exampleJson = "aeiou";
+            exampleJson = "\"\"";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<string>(exampleJson)
