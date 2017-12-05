@@ -94,7 +94,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Place an order for a pet
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="body">order placed for purchasing the pet</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid Order</response>

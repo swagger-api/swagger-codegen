@@ -33,7 +33,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <response code="405">Invalid input</response>
         [HttpPost]
@@ -48,7 +48,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Deletes a pet
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         /// <response code="400">Invalid pet value</response>
@@ -135,7 +135,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Update an existing pet
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
@@ -152,7 +152,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="name">Updated name of the pet</param>
         /// <param name="status">Updated status of the pet</param>
@@ -169,7 +169,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// uploads an image
         /// </summary>
-        /// <remarks></remarks>
+        
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
         /// <param name="file">file to upload</param>
