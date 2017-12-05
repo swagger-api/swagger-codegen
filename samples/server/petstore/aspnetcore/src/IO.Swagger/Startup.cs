@@ -63,11 +63,11 @@ namespace IO.Swagger
             services
                 .AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new Info
+                    c.SwaggerDoc("1.0.0", new Info
                     {
-                        Version = "v1",
-                        Title = "IO.Swagger",
-                        Description = "IO.Swagger (ASP.NET Core 2.0)"
+                        Version = "1.0.0",
+                        Title = "Swagger Petstore",
+                        Description = "Swagger Petstore (ASP.NET Core 2.0)"
                     });
                     c.CustomSchemaIds(type => type.FriendlyId(true));
                     c.DescribeAllEnumsAsStrings();
@@ -94,7 +94,7 @@ namespace IO.Swagger
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "IO.Swagger");
+                    c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Swagger Petstore");
                 });
 
             if (env.IsDevelopment())
