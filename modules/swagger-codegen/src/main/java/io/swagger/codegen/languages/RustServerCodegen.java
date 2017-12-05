@@ -257,14 +257,6 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             versionComponents.add("0");
         }
         info.setVersion(StringUtils.join(versionComponents, "."));
-
-        if (info.getLicense() != null) {
-            additionalProperties.put(CodegenConstants.LICENSE_NAME,
-                                     info.getLicense().getName());
-        } else {
-            additionalProperties.put(CodegenConstants.LICENSE_NAME,
-                                     "Unlicense");
-        }
     }
 
     @Override
