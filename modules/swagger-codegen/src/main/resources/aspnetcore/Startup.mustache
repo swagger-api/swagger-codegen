@@ -10,6 +10,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using {{packageName}}.Extensions;
 
 namespace {{packageName}}
 {
@@ -62,6 +63,10 @@ namespace {{packageName}}
                     c.CustomSchemaIds(type => type.FriendlyId(true));
                     c.DescribeAllEnumsAsStrings();
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
+                    {{#basePathWithoutHost}}
+                    options.DocumentFilter<BasePathDocumentFilter>("{{{basePathWithoutHost}}}");
+                    {{/basePathWithoutHost}}
+                    options.OperationFilter<OperationValidationFilter>();
                 });
         }
 
