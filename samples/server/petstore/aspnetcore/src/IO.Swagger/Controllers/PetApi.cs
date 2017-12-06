@@ -41,11 +41,7 @@ namespace IO.Swagger.Controllers
         [Route("/v2/pet")]
         [ValidateModelState]
         [SwaggerOperation("AddPet")]
-        public virtual IActionResult AddPet(
-
-[FromBody]Pet body
-
-)
+        public virtual IActionResult AddPet([FromBody]Pet body)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -65,15 +61,7 @@ namespace IO.Swagger.Controllers
         [Route("/v2/pet/{petId}")]
         [ValidateModelState]
         [SwaggerOperation("DeletePet")]
-        public virtual IActionResult DeletePet([FromRoute][Required]long? petId
-
-
-
-, 
-
-
-[FromHeader]string apiKey
-)
+        public virtual IActionResult DeletePet([FromRoute][Required]long? petId, [FromHeader]string apiKey)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -95,11 +83,7 @@ namespace IO.Swagger.Controllers
         [SwaggerOperation("FindPetsByStatus")]
         [SwaggerResponse(200, typeof(List<Pet>), "successful operation")]
         [SwaggerResponse(400, typeof(List<Pet>), "Invalid status value")]
-        public virtual IActionResult FindPetsByStatus(
-[FromQuery][Required()]List<string> status
-
-
-)
+        public virtual IActionResult FindPetsByStatus([FromQuery][Required()]List<string> status)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<Pet>));
@@ -131,11 +115,7 @@ namespace IO.Swagger.Controllers
         [SwaggerOperation("FindPetsByTags")]
         [SwaggerResponse(200, typeof(List<Pet>), "successful operation")]
         [SwaggerResponse(400, typeof(List<Pet>), "Invalid tag value")]
-        public virtual IActionResult FindPetsByTags(
-[FromQuery][Required()]List<string> tags
-
-
-)
+        public virtual IActionResult FindPetsByTags([FromQuery][Required()]List<string> tags)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<Pet>));
@@ -169,11 +149,7 @@ namespace IO.Swagger.Controllers
         [SwaggerResponse(200, typeof(Pet), "successful operation")]
         [SwaggerResponse(400, typeof(Pet), "Invalid ID supplied")]
         [SwaggerResponse(404, typeof(Pet), "Pet not found")]
-        public virtual IActionResult GetPetById([FromRoute][Required]long? petId
-
-
-
-)
+        public virtual IActionResult GetPetById([FromRoute][Required]long? petId)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Pet));
@@ -207,11 +183,7 @@ namespace IO.Swagger.Controllers
         [Route("/v2/pet")]
         [ValidateModelState]
         [SwaggerOperation("UpdatePet")]
-        public virtual IActionResult UpdatePet(
-
-[FromBody]Pet body
-
-)
+        public virtual IActionResult UpdatePet([FromBody]Pet body)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -238,19 +210,7 @@ namespace IO.Swagger.Controllers
         [Route("/v2/pet/{petId}")]
         [ValidateModelState]
         [SwaggerOperation("UpdatePetWithForm")]
-        public virtual IActionResult UpdatePetWithForm([FromRoute][Required]long? petId
-
-
-
-, 
-
-[FromForm]string name
-
-, 
-
-[FromForm]string status
-
-)
+        public virtual IActionResult UpdatePetWithForm([FromRoute][Required]long? petId, [FromForm]string name, [FromForm]string status)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -272,19 +232,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("UploadFile")]
         [SwaggerResponse(200, typeof(ApiResponse), "successful operation")]
-        public virtual IActionResult UploadFile([FromRoute][Required]long? petId
-
-
-
-, 
-
-[FromForm]string additionalMetadata
-
-, 
-
-[FromForm]System.IO.Stream file
-
-)
+        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream file)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(ApiResponse));
