@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace {{packageName}}.Extensions
+namespace IO.Swagger.Filters
 {
     /// <summary>
-    /// Operation Validation Filter
+    /// Path Parameter Validation Filter
     /// </summary>
-    public class OperationValidationFilter : IOperationFilter
+    public class PathParameterValidationFilter : IOperationFilter
     {
         /// <summary>
-        /// Operation Validation Filter
+        /// Constructor
         /// </summary>
         /// <param name="operation">Operation</param>
         /// <param name="context">OperationFilterContext</param>

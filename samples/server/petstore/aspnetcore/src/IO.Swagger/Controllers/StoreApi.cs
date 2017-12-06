@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
 using IO.Swagger.Models;
 
@@ -41,7 +42,11 @@ namespace IO.Swagger.Controllers
         [Route("/v2/store/order/{orderId}")]
         [ValidateModelState]
         [SwaggerOperation("DeleteOrder")]
-        public virtual IActionResult DeleteOrder([FromRoute]string orderId)
+        public virtual IActionResult DeleteOrder([FromRoute][Required]string orderId
+
+
+
+)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -93,7 +98,11 @@ namespace IO.Swagger.Controllers
         [SwaggerResponse(200, typeof(Order), "successful operation")]
         [SwaggerResponse(400, typeof(Order), "Invalid ID supplied")]
         [SwaggerResponse(404, typeof(Order), "Order not found")]
-        public virtual IActionResult GetOrderById([FromRoute]long? orderId)
+        public virtual IActionResult GetOrderById([FromRoute][Required][Range(1, 5)]long? orderId
+
+
+
+)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Order));
@@ -128,7 +137,11 @@ namespace IO.Swagger.Controllers
         [SwaggerOperation("PlaceOrder")]
         [SwaggerResponse(200, typeof(Order), "successful operation")]
         [SwaggerResponse(400, typeof(Order), "Invalid Order")]
-        public virtual IActionResult PlaceOrder([FromBody]Order body)
+        public virtual IActionResult PlaceOrder(
+
+[FromBody]Order body
+
+)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Order));
