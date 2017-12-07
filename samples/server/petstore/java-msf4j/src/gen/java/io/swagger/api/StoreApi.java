@@ -49,11 +49,11 @@ public class StoreApi  {
     @Path("/inventory")
     
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Map<String, Integer>.class, responseContainer = "Map", authorizations = {
+    @io.swagger.annotations.ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
         @io.swagger.annotations.Authorization(value = "api_key")
     }, tags={ "store", })
     @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Map<String, Integer>.class, responseContainer = "Map") })
+        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
     public Response getInventory()
     throws NotFoundException {
         return delegate.getInventory();
