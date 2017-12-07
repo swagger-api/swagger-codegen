@@ -149,7 +149,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_special_tags(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestSpecialTagsResponse::SuccessfulOperation(body) => {
+                        TestSpecialTagsResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -217,7 +217,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_boolean_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterBooleanSerializeResponse::OutputBoolean(body) => {
+                        FakeOuterBooleanSerializeResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -283,7 +283,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_composite_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterCompositeSerializeResponse::OutputComposite(body) => {
+                        FakeOuterCompositeSerializeResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -349,7 +349,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_number_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterNumberSerializeResponse::OutputNumber(body) => {
+                        FakeOuterNumberSerializeResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -415,7 +415,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_string_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterStringSerializeResponse::OutputString(body) => {
+                        FakeOuterStringSerializeResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -482,7 +482,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_client_model(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestClientModelResponse::SuccessfulOperation(body) => {
+                        TestClientModelResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -535,10 +535,10 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
 
                 // Form parameters
-                let param_number = 3.4;
+                let param_number = 8.14;
                 let param_double = 1.2;
                 let param_pattern_without_delimiter = "pattern_without_delimiter_example".to_string();
-                let param_byte = swagger::ByteArray("byte_example".to_string().into_bytes());
+                let param_byte = swagger::ByteArray(Vec::from("B"));
                 let param_integer = Some(56);
                 let param_int32 = Some(56);
                 let param_int64 = Some(789);
@@ -552,7 +552,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_endpoint_parameters(param_number, param_double, param_pattern_without_delimiter, param_byte, param_integer, param_int32, param_int64, param_float, param_string, param_binary, param_date, param_date_time, param_password, param_callback, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestEndpointParametersResponse::InvalidUsernameSupplied => {
+                        TestEndpointParametersResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -562,7 +562,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        TestEndpointParametersResponse::UserNotFound => {
+                        TestEndpointParametersResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -626,7 +626,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_enum_parameters(param_enum_form_string_array.as_ref(), param_enum_form_string, param_enum_header_string_array.as_ref(), param_enum_header_string, param_enum_query_string_array.as_ref(), param_enum_query_string, param_enum_query_integer, param_enum_query_double, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestEnumParametersResponse::InvalidRequest => {
+                        TestEnumParametersResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -636,7 +636,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        TestEnumParametersResponse::NotFound => {
+                        TestEnumParametersResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -702,7 +702,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_inline_additional_properties(param_param, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestInlineAdditionalPropertiesResponse::SuccessfulOperation => {
+                        TestInlineAdditionalPropertiesResponse::Status200 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(200)));    
@@ -750,7 +750,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_json_form_data(param_param, param_param2, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestJsonFormDataResponse::SuccessfulOperation => {
+                        TestJsonFormDataResponse::Status200 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(200)));    
@@ -821,7 +821,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_classname(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestClassnameResponse::SuccessfulOperation(body) => {
+                        TestClassnameResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -915,7 +915,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.add_pet(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        AddPetResponse::InvalidInput => {
+                        AddPetResponse::Status405 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1000,7 +1000,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_pet(param_pet_id, param_api_key, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeletePetResponse::InvalidPetValue => {
+                        DeletePetResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1076,7 +1076,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.find_pets_by_status(param_status.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        FindPetsByStatusResponse::SuccessfulOperation(body) => {
+                        FindPetsByStatusResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1087,7 +1087,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        FindPetsByStatusResponse::InvalidStatusValue => {
+                        FindPetsByStatusResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1163,7 +1163,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.find_pets_by_tags(param_tags.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        FindPetsByTagsResponse::SuccessfulOperation(body) => {
+                        FindPetsByTagsResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1174,7 +1174,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        FindPetsByTagsResponse::InvalidTagValue => {
+                        FindPetsByTagsResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1235,7 +1235,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_pet_by_id(param_pet_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetPetByIdResponse::SuccessfulOperation(body) => {
+                        GetPetByIdResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1246,7 +1246,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetPetByIdResponse::InvalidIDSupplied => {
+                        GetPetByIdResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1256,7 +1256,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetPetByIdResponse::PetNotFound => {
+                        GetPetByIdResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1347,7 +1347,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_pet(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdatePetResponse::InvalidIDSupplied => {
+                        UpdatePetResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1359,7 +1359,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdatePetResponse::PetNotFound => {
+                        UpdatePetResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1371,7 +1371,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdatePetResponse::ValidationException => {
+                        UpdatePetResponse::Status405 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1455,7 +1455,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_pet_with_form(param_pet_id, param_name, param_status, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdatePetWithFormResponse::InvalidInput => {
+                        UpdatePetWithFormResponse::Status405 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1571,7 +1571,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.upload_file(param_pet_id, param_additional_metadata, param_file, context).wait() {
                     Ok(rsp) => match rsp {
-                        UploadFileResponse::SuccessfulOperation(body) => {
+                        UploadFileResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1626,7 +1626,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_order(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeleteOrderResponse::InvalidIDSupplied => {
+                        DeleteOrderResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1636,7 +1636,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        DeleteOrderResponse::OrderNotFound => {
+                        DeleteOrderResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1688,7 +1688,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_inventory(context).wait() {
                     Ok(rsp) => match rsp {
-                        GetInventoryResponse::SuccessfulOperation(body) => {
+                        GetInventoryResponse::Status200(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1743,7 +1743,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_order_by_id(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetOrderByIdResponse::SuccessfulOperation(body) => {
+                        GetOrderByIdResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1754,7 +1754,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetOrderByIdResponse::InvalidIDSupplied => {
+                        GetOrderByIdResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1764,7 +1764,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetOrderByIdResponse::OrderNotFound => {
+                        GetOrderByIdResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1830,7 +1830,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.place_order(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        PlaceOrderResponse::SuccessfulOperation(body) => {
+                        PlaceOrderResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -1843,7 +1843,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        PlaceOrderResponse::InvalidOrder => {
+                        PlaceOrderResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1911,7 +1911,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_user(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUserResponse::SuccessfulOperation => {
+                        CreateUserResponse::Status0 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -1979,7 +1979,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_users_with_array_input(param_body.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUsersWithArrayInputResponse::SuccessfulOperation => {
+                        CreateUsersWithArrayInputResponse::Status0 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2047,7 +2047,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_users_with_list_input(param_body.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUsersWithListInputResponse::SuccessfulOperation => {
+                        CreateUsersWithListInputResponse::Status0 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2103,7 +2103,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_user(param_username, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeleteUserResponse::InvalidUsernameSupplied => {
+                        DeleteUserResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2113,7 +2113,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        DeleteUserResponse::UserNotFound => {
+                        DeleteUserResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -2167,7 +2167,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_user_by_name(param_username, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetUserByNameResponse::SuccessfulOperation(body) => {
+                        GetUserByNameResponse::Status200(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -2178,7 +2178,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetUserByNameResponse::InvalidUsernameSupplied => {
+                        GetUserByNameResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2188,7 +2188,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetUserByNameResponse::UserNotFound => {
+                        GetUserByNameResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -2244,7 +2244,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.login_user(param_username, param_password, context).wait() {
                     Ok(rsp) => match rsp {
-                        LoginUserResponse::SuccessfulOperation{ body, x_rate_limit, x_expires_after } => {
+                        LoginUserResponse::Status200{ body, x_rate_limit, x_expires_after } => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -2259,7 +2259,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        LoginUserResponse::InvalidUsername => {
+                        LoginUserResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2304,7 +2304,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.logout_user(context).wait() {
                     Ok(rsp) => match rsp {
-                        LogoutUserResponse::SuccessfulOperation => {
+                        LogoutUserResponse::Status0 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2379,7 +2379,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_user(param_username, param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdateUserResponse::InvalidUserSupplied => {
+                        UpdateUserResponse::Status400 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2391,7 +2391,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdateUserResponse::UserNotFound => {
+                        UpdateUserResponse::Status404 => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    

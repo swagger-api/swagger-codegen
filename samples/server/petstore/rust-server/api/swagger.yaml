@@ -1047,7 +1047,7 @@ paths:
         maximum: 543.2
         minimum: 32.1
         formatString: "{}"
-        example: "3.4"
+        example: "8.14"
       - name: "float"
         in: "formData"
         description: "None"
@@ -1089,8 +1089,8 @@ paths:
         required: true
         type: "string"
         format: "byte"
-        formatString: "\\\"{:?}\\\""
-        example: "swagger::ByteArray(\"byte_example\".to_string().into_bytes())"
+        formatString: "{:?}"
+        example: "swagger::ByteArray(Vec::from(\"B\"))"
       - name: "binary"
         in: "formData"
         description: "None"

@@ -227,7 +227,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestSpecialTagsResponse::SuccessfulOperation(body))
+                    Ok(TestSpecialTagsResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -284,7 +284,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterBooleanSerializeResponse::OutputBoolean(body))
+                    Ok(FakeOuterBooleanSerializeResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -341,7 +341,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterCompositeSerializeResponse::OutputComposite(body))
+                    Ok(FakeOuterCompositeSerializeResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -398,7 +398,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterNumberSerializeResponse::OutputNumber(body))
+                    Ok(FakeOuterNumberSerializeResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -455,7 +455,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterStringSerializeResponse::OutputString(body))
+                    Ok(FakeOuterStringSerializeResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -508,7 +508,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestClientModelResponse::SuccessfulOperation(body))
+                    Ok(TestClientModelResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -552,12 +552,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(TestEndpointParametersResponse::InvalidUsernameSupplied)
+                    Ok(TestEndpointParametersResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(TestEndpointParametersResponse::UserNotFound)
+                    Ok(TestEndpointParametersResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -612,12 +612,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(TestEnumParametersResponse::InvalidRequest)
+                    Ok(TestEnumParametersResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(TestEnumParametersResponse::NotFound)
+                    Ok(TestEnumParametersResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -666,7 +666,7 @@ impl Api for Client {
                 200 => {
 
 
-                    Ok(TestInlineAdditionalPropertiesResponse::SuccessfulOperation)
+                    Ok(TestInlineAdditionalPropertiesResponse::Status200)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -710,7 +710,7 @@ impl Api for Client {
                 200 => {
 
 
-                    Ok(TestJsonFormDataResponse::SuccessfulOperation)
+                    Ok(TestJsonFormDataResponse::Status200)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -763,7 +763,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestClassnameResponse::SuccessfulOperation(body))
+                    Ok(TestClassnameResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -812,7 +812,7 @@ impl Api for Client {
                 405 => {
 
 
-                    Ok(AddPetResponse::InvalidInput)
+                    Ok(AddPetResponse::Status405)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -860,7 +860,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeletePetResponse::InvalidPetValue)
+                    Ok(DeletePetResponse::Status400)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -913,12 +913,12 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(FindPetsByStatusResponse::SuccessfulOperation(body))
+                    Ok(FindPetsByStatusResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(FindPetsByStatusResponse::InvalidStatusValue)
+                    Ok(FindPetsByStatusResponse::Status400)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -971,12 +971,12 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(FindPetsByTagsResponse::SuccessfulOperation(body))
+                    Ok(FindPetsByTagsResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(FindPetsByTagsResponse::InvalidTagValue)
+                    Ok(FindPetsByTagsResponse::Status400)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1026,17 +1026,17 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetPetByIdResponse::SuccessfulOperation(body))
+                    Ok(GetPetByIdResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(GetPetByIdResponse::InvalidIDSupplied)
+                    Ok(GetPetByIdResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(GetPetByIdResponse::PetNotFound)
+                    Ok(GetPetByIdResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1085,17 +1085,17 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(UpdatePetResponse::InvalidIDSupplied)
+                    Ok(UpdatePetResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(UpdatePetResponse::PetNotFound)
+                    Ok(UpdatePetResponse::Status404)
                 },
                 405 => {
 
 
-                    Ok(UpdatePetResponse::ValidationException)
+                    Ok(UpdatePetResponse::Status405)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1139,7 +1139,7 @@ impl Api for Client {
                 405 => {
 
 
-                    Ok(UpdatePetWithFormResponse::InvalidInput)
+                    Ok(UpdatePetWithFormResponse::Status405)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1211,7 +1211,7 @@ impl Api for Client {
 
 
 
-                    Ok(UploadFileResponse::SuccessfulOperation(body))
+                    Ok(UploadFileResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1267,12 +1267,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeleteOrderResponse::InvalidIDSupplied)
+                    Ok(DeleteOrderResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(DeleteOrderResponse::OrderNotFound)
+                    Ok(DeleteOrderResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1320,7 +1320,7 @@ impl Api for Client {
 
 
 
-                    Ok(GetInventoryResponse::SuccessfulOperation(body))
+                    Ok(GetInventoryResponse::Status200(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1370,17 +1370,17 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetOrderByIdResponse::SuccessfulOperation(body))
+                    Ok(GetOrderByIdResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(GetOrderByIdResponse::InvalidIDSupplied)
+                    Ok(GetOrderByIdResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(GetOrderByIdResponse::OrderNotFound)
+                    Ok(GetOrderByIdResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1435,12 +1435,12 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(PlaceOrderResponse::SuccessfulOperation(body))
+                    Ok(PlaceOrderResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(PlaceOrderResponse::InvalidOrder)
+                    Ok(PlaceOrderResponse::Status400)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1489,7 +1489,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUserResponse::SuccessfulOperation)
+                    Ok(CreateUserResponse::Status0)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1538,7 +1538,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUsersWithArrayInputResponse::SuccessfulOperation)
+                    Ok(CreateUsersWithArrayInputResponse::Status0)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1587,7 +1587,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUsersWithListInputResponse::SuccessfulOperation)
+                    Ok(CreateUsersWithListInputResponse::Status0)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1631,12 +1631,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeleteUserResponse::InvalidUsernameSupplied)
+                    Ok(DeleteUserResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(DeleteUserResponse::UserNotFound)
+                    Ok(DeleteUserResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1686,17 +1686,17 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetUserByNameResponse::SuccessfulOperation(body))
+                    Ok(GetUserByNameResponse::Status200(body))
                 },
                 400 => {
 
 
-                    Ok(GetUserByNameResponse::InvalidUsernameSupplied)
+                    Ok(GetUserByNameResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(GetUserByNameResponse::UserNotFound)
+                    Ok(GetUserByNameResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1754,12 +1754,12 @@ impl Api for Client {
                     header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
                     let response_x_expires_after = response.headers.get::<ResponseXExpiresAfter>().ok_or_else(|| "Required response header X-Expires-After for response 200 was not found.")?;
 
-                    Ok(LoginUserResponse::SuccessfulOperation{ body: body, x_rate_limit: response_x_rate_limit.0.clone(), x_expires_after: response_x_expires_after.0.clone() })
+                    Ok(LoginUserResponse::Status200{ body: body, x_rate_limit: response_x_rate_limit.0.clone(), x_expires_after: response_x_expires_after.0.clone() })
                 },
                 400 => {
 
 
-                    Ok(LoginUserResponse::InvalidUsername)
+                    Ok(LoginUserResponse::Status400)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1803,7 +1803,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(LogoutUserResponse::SuccessfulOperation)
+                    Ok(LogoutUserResponse::Status0)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1852,12 +1852,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(UpdateUserResponse::InvalidUserSupplied)
+                    Ok(UpdateUserResponse::Status400)
                 },
                 404 => {
 
 
-                    Ok(UpdateUserResponse::UserNotFound)
+                    Ok(UpdateUserResponse::Status404)
                 },
                 code => {
                     let mut buf = [0; 100];
