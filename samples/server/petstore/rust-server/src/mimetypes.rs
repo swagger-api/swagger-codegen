@@ -6,51 +6,51 @@ pub mod responses {
     // The macro is called per-operation to beat the recursion limit
     /// Create Mime objects for the response content types for TestSpecialTags
     lazy_static! {
-        pub static ref TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+        pub static ref TEST_SPECIAL_TAGS_200: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for TestClientModel
     lazy_static! {
-        pub static ref TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+        pub static ref TEST_CLIENT_MODEL_200: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for TestClassname
     lazy_static! {
-        pub static ref TEST_CLASSNAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+        pub static ref TEST_CLASSNAME_200: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for FindPetsByStatus
     lazy_static! {
-        pub static ref FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref FIND_PETS_BY_STATUS_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for FindPetsByTags
     lazy_static! {
-        pub static ref FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref FIND_PETS_BY_TAGS_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetPetById
     lazy_static! {
-        pub static ref GET_PET_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref GET_PET_BY_ID_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for UploadFile
     lazy_static! {
-        pub static ref UPLOAD_FILE_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+        pub static ref UPLOAD_FILE_200: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for GetInventory
     lazy_static! {
-        pub static ref GET_INVENTORY_SUCCESSFUL_OPERATION: Mime = mime!(Application/Json);
+        pub static ref GET_INVENTORY_200: Mime = mime!(Application/Json);
     }
     /// Create Mime objects for the response content types for GetOrderById
     lazy_static! {
-        pub static ref GET_ORDER_BY_ID_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref GET_ORDER_BY_ID_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for PlaceOrder
     lazy_static! {
-        pub static ref PLACE_ORDER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref PLACE_ORDER_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for GetUserByName
     lazy_static! {
-        pub static ref GET_USER_BY_NAME_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref GET_USER_BY_NAME_200: Mime = mime!(Application/Xml);
     }
     /// Create Mime objects for the response content types for LoginUser
     lazy_static! {
-        pub static ref LOGIN_USER_SUCCESSFUL_OPERATION: Mime = mime!(Application/Xml);
+        pub static ref LOGIN_USER_200: Mime = mime!(Application/Xml);
     }
 
 }
