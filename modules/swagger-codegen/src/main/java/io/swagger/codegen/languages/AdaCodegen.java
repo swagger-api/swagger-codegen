@@ -3,12 +3,14 @@ package io.swagger.codegen.languages;
 import java.io.File;
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.*;
+import io.swagger.util.Json;
 
 public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     protected String packageName = "swagger";
@@ -100,6 +102,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
 
         // String title = swagger.getInfo().getTitle();
         supportingFiles.add(new SupportingFile("gnat-project.mustache", "", "project.gpr"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "web" + File.separator + "swagger", "swagger.json"));
 
         if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
             projectName = (String) additionalProperties.get(CodegenConstants.PROJECT_NAME);
@@ -262,7 +265,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         for (CodegenOperation op1 : operationList) {
             op1.vendorExtensions.put("x-has-uniq-produces", postProcessMediaTypes(op1.produces) == 1);
             op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
-            op1.vendorExtensions.put("x-has-notes", op1.notes.length() > 0);
+            op1.vendorExtensions.put("x-has-notes", op1.notes != null && op1.notes.length() > 0);
 
             /*
              * Scan the path parameter to construct a x-path-index that tells the index of
@@ -385,6 +388,17 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         objs.put("orderedModels", orderedModels);
+        Swagger swagger = (Swagger)objs.get("swagger");
+         if(swagger != null) {
+             String host = swagger.getBasePath();
+             try {
+                 swagger.setHost("SWAGGER_HOST");
+                 objs.put("swagger-json", Json.pretty().writeValueAsString(swagger).replace("\r\n", "\n"));
+             } catch (JsonProcessingException e) {
+                 LOGGER.error(e.getMessage(), e);
+             }
+             swagger.setHost(host);
+         }
         return super.postProcessSupportingFileData(objs);
     }
 }

@@ -80,8 +80,8 @@ package {{package}}.Servers is
          {{#hasParams}}
          procedure {{operationId}}
             ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
-       {{/hasMore}}{{/allParams}}{{#returnType}};
-       Result : out {{returnType}}{{/returnType}});
+             {{/hasMore}}{{/allParams}}{{#returnType}};
+             Result : out {{returnType}}{{/returnType}});
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
