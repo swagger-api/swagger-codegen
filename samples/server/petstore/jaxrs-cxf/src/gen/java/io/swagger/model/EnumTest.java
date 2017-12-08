@@ -76,6 +76,7 @@ public enum EnumStringEnum {
   @ApiModelProperty(value = "")
   private EnumStringEnum enumString = null;
 
+
 @XmlType(name="EnumIntegerEnum")
 @XmlEnum(Integer.class)
 public enum EnumIntegerEnum {
@@ -111,6 +112,7 @@ public enum EnumIntegerEnum {
   @ApiModelProperty(value = "")
   private EnumIntegerEnum enumInteger = null;
 
+
 @XmlType(name="EnumNumberEnum")
 @XmlEnum(Double.class)
 public enum EnumNumberEnum {
@@ -145,9 +147,9 @@ public enum EnumNumberEnum {
 
   @ApiModelProperty(value = "")
   private EnumNumberEnum enumNumber = null;
+
   @ApiModelProperty(value = "")
   private OuterEnum outerEnum = null;
-
  /**
    * Get enumString
    * @return enumString

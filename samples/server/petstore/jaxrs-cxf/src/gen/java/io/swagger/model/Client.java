@@ -41,7 +41,6 @@ public class Client  {
   
   @ApiModelProperty(value = "")
   private String client = null;
-
  /**
    * Get client
    * @return client

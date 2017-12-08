@@ -41,11 +41,12 @@ public class ModelApiResponse  {
   
   @ApiModelProperty(value = "")
   private Integer code = null;
+
   @ApiModelProperty(value = "")
   private String type = null;
+
   @ApiModelProperty(value = "")
   private String message = null;
-
  /**
    * Get code
    * @return code

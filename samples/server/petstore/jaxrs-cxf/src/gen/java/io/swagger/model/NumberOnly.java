@@ -42,7 +42,6 @@ public class NumberOnly  {
   
   @ApiModelProperty(value = "")
   private BigDecimal justNumber = null;
-
  /**
    * Get justNumber
    * @return justNumber
