@@ -2,16 +2,15 @@ FROM openjdk:8-jdk-alpine
 
 ENV GEN_DIR /opt/swagger-codegen
 ENV MAVEN_HOME=/usr/share/maven
+WORKDIR ${GEN_DIR}
 VOLUME  ${MAVEN_HOME}/.m2/repository
 
 RUN set -x \
-    && apk add --no-cache bash curl jq nodejs-npm maven \
-    && mkdir /opt
+    && apk add --no-cache bash curl jq nodejs-npm maven
 
 # Required from a licensing standpoint
 COPY ./LICENSE ${GEN_DIR}
 
-WORKDIR ${GEN_DIR}
 # Required to compile swagger-codegen
 COPY ./google_checkstyle.xml ${GEN_DIR}
 
