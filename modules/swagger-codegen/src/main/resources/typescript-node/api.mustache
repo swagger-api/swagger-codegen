@@ -61,7 +61,7 @@ class ObjectSerializer {
     }
 
     // @ts-ignore
-    public static serialize(data: any, type: string) {
+    public static serialize(data: any, type: string, isQueyString = false) {
         if (data == undefined) {
             return data;
         } else if (primitives.indexOf(type.toLowerCase()) !== -1) {
@@ -74,7 +74,11 @@ class ObjectSerializer {
                 let date = data[index];
                 transformedData.push(ObjectSerializer.serialize(date, subType));
             }
-            return transformedData;
+            if (isQueyString) {
+                return transformedData.join(',');
+            } else {
+                return transformedData;
+            }
         } else if (type === "Date") {
             return moment(data).format();
         } else {
@@ -401,12 +405,12 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
-            localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+            localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}", /* isQueryString */ true);
         }
 
 {{/queryParams}}
 {{#headerParams}}
-        localVarHeaderParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+        localVarHeaderParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}", /* isQueryString */ true);
 {{/headerParams}}
 
         let localVarUseFormData = false;
