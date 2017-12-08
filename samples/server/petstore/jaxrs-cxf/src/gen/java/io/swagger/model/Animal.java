@@ -12,18 +12,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Animal  {
   
   @ApiModelProperty(required = true, value = "")
   private String className = null;
+
   @ApiModelProperty(value = "")
   private String color = "red";
-
  /**
    * Get className
    * @return className
   **/
+  @JsonProperty("className")
   @NotNull
   public String getClassName() {
     return className;
@@ -42,6 +44,7 @@ public class Animal  {
    * Get color
    * @return color
   **/
+  @JsonProperty("color")
   public String getColor() {
     return color;
   }

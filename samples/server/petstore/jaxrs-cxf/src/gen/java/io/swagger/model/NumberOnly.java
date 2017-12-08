@@ -11,16 +11,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NumberOnly  {
   
   @ApiModelProperty(value = "")
   private BigDecimal justNumber = null;
-
  /**
    * Get justNumber
    * @return justNumber
   **/
+  @JsonProperty("JustNumber")
   public BigDecimal getJustNumber() {
     return justNumber;
   }

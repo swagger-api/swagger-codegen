@@ -24,7 +24,7 @@ public class ArrayOfArrayOfNumberOnly   {
 
   public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
     if (arrayArrayNumber == null) {
-      arrayArrayNumber = new ArrayList<>();
+      arrayArrayNumber = new ArrayList<List<BigDecimal>>();
     }
     arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
@@ -81,22 +81,6 @@ public class ArrayOfArrayOfNumberOnly   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
-
-  public void validate() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<ArrayOfArrayOfNumberOnly>> constraintViolations = validator.validate(this);
-    if (constraintViolations.size() > 0) {
-      StringBuilder errors = new StringBuilder();
-      for (ConstraintViolation<ArrayOfArrayOfNumberOnly> contraintes : constraintViolations) {
-        errors.append(String.format("%s.%s %s\n",
-            contraintes.getRootBeanClass().getSimpleName(),
-            contraintes.getPropertyPath(),
-            contraintes.getMessage()));
-      }
-      throw new RuntimeException("Bean validation : " + errors);
-    }
   }
 }
 

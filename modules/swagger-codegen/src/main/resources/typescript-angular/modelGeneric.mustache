@@ -1,10 +1,10 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { 
-    adjustDefaultControls, 
-    getControl, 
-    prepareFormGroup, 
-    ApaleoEnumPropertyMetaData, 
-    ApaleoPropertyMetaData, 
+import {
+    adjustDefaultControls,
+    getControl,
+    prepareFormGroup,
+    ApaleoEnumPropertyMetaData,
+    ApaleoPropertyMetaData,
     BuildFormOptions,
     BuildFormAdditionalControlsBase
 } from '@apaleo/angular-api-proxy-common';
@@ -21,7 +21,6 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      */
     {{/description}}
     {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
-
 {{/vars}}
 }{{#hasEnums}}
 export namespace {{classname}} {

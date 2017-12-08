@@ -16,20 +16,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
   private UUID uuid = null;
+
   @ApiModelProperty(value = "")
   private Date dateTime = null;
-  @ApiModelProperty(value = "")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
 
+  @ApiModelProperty(value = "")
+  private Map<String, Animal> map = null;
  /**
    * Get uuid
    * @return uuid
   **/
+  @JsonProperty("uuid")
   public UUID getUuid() {
     return uuid;
   }
@@ -47,6 +50,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * Get dateTime
    * @return dateTime
   **/
+  @JsonProperty("dateTime")
   public Date getDateTime() {
     return dateTime;
   }
@@ -64,6 +68,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * Get map
    * @return map
   **/
+  @JsonProperty("map")
   public Map<String, Animal> getMap() {
     return map;
   }

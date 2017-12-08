@@ -13,20 +13,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ArrayTest  {
   
   @ApiModelProperty(value = "")
-  private List<String> arrayOfString = new ArrayList<String>();
-  @ApiModelProperty(value = "")
-  private List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
-  @ApiModelProperty(value = "")
-  private List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+  private List<String> arrayOfString = null;
 
+  @ApiModelProperty(value = "")
+  private List<List<Long>> arrayArrayOfInteger = null;
+
+  @ApiModelProperty(value = "")
+  private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
  /**
    * Get arrayOfString
    * @return arrayOfString
   **/
+  @JsonProperty("array_of_string")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -49,6 +52,7 @@ public class ArrayTest  {
    * Get arrayArrayOfInteger
    * @return arrayArrayOfInteger
   **/
+  @JsonProperty("array_array_of_integer")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -71,6 +75,7 @@ public class ArrayTest  {
    * Get arrayArrayOfModel
    * @return arrayArrayOfModel
   **/
+  @JsonProperty("array_array_of_model")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }

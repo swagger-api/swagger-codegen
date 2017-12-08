@@ -113,6 +113,8 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
+        supportingFiles.add(new SupportingFile("object-header.mustache", "", "Object.h"));
+        supportingFiles.add(new SupportingFile("object-source.mustache", "", "Object.cpp"));
         supportingFiles.add(new SupportingFile("apiclient-header.mustache", "", "ApiClient.h"));
         supportingFiles.add(new SupportingFile("apiclient-source.mustache", "", "ApiClient.cpp"));
         supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", "", "ApiConfiguration.h"));
@@ -179,8 +181,10 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         additionalProperties.put("modelNamespaceDeclarations", modelPackage.split("\\."));
         additionalProperties.put("modelNamespace", modelPackage.replaceAll("\\.", "::"));
+        additionalProperties.put("modelHeaderGuardPrefix", modelPackage.replaceAll("\\.", "_").toUpperCase());
         additionalProperties.put("apiNamespaceDeclarations", apiPackage.split("\\."));
         additionalProperties.put("apiNamespace", apiPackage.replaceAll("\\.", "::"));
+        additionalProperties.put("apiHeaderGuardPrefix", apiPackage.replaceAll("\\.", "_").toUpperCase());
         additionalProperties.put("declspec", declspec);
         additionalProperties.put("defaultInclude", defaultInclude);
     }
@@ -312,7 +316,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
-            return "U(\"\")";
+            return "utility::conversions::to_string_t(\"\")";
         } else if (p instanceof BooleanProperty) {
             return "false";
         } else if (p instanceof DateProperty) {

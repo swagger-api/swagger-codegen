@@ -13,11 +13,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MapTest  {
   
   @ApiModelProperty(value = "")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
+
 
 @XmlType(name="InnerEnum")
 @XmlEnum(String.class)
@@ -52,12 +54,12 @@ public enum InnerEnum {
 }
 
   @ApiModelProperty(value = "")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
-
+  private Map<String, InnerEnum> mapOfEnumString = null;
  /**
    * Get mapMapOfString
    * @return mapMapOfString
   **/
+  @JsonProperty("map_map_of_string")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -80,6 +82,7 @@ public enum InnerEnum {
    * Get mapOfEnumString
    * @return mapOfEnumString
   **/
+  @JsonProperty("map_of_enum_string")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

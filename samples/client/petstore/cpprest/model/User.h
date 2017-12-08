@@ -16,11 +16,11 @@
  * A User who is purchasing from the pet store
  */
 
-#ifndef User_H_
-#define User_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_User_H_
+#define IO_SWAGGER_CLIENT_MODEL_User_H_
 
 
-#include "ModelBase.h"
+#include "../ModelBase.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -134,4 +134,4 @@ protected:
 }
 }
 
-#endif /* User_H_ */
+#endif /* IO_SWAGGER_CLIENT_MODEL_User_H_ */

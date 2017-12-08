@@ -25,7 +25,7 @@ public class Pet   {
   private String name = null;
 
   @JsonProperty("photoUrls")
-  private List<String> photoUrls = new ArrayList<>();
+  private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
   private List<Tag> tags = null;
@@ -149,7 +149,7 @@ public class Pet   {
 
   public Pet addTagsItem(Tag tagsItem) {
     if (tags == null) {
-      tags = new ArrayList<>();
+      tags = new ArrayList<Tag>();
     }
     tags.add(tagsItem);
     return this;
@@ -233,22 +233,6 @@ public class Pet   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
-
-  public void validate() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    Validator validator = factory.getValidator();
-    Set<ConstraintViolation<Pet>> constraintViolations = validator.validate(this);
-    if (constraintViolations.size() > 0) {
-      StringBuilder errors = new StringBuilder();
-      for (ConstraintViolation<Pet> contraintes : constraintViolations) {
-        errors.append(String.format("%s.%s %s\n",
-            contraintes.getRootBeanClass().getSimpleName(),
-            contraintes.getPropertyPath(),
-            contraintes.getMessage()));
-      }
-      throw new RuntimeException("Bean validation : " + errors);
-    }
   }
 }
 

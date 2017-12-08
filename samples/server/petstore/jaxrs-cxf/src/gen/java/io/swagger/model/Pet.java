@@ -14,19 +14,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Pet  {
   
   @ApiModelProperty(value = "")
   private Long id = null;
+
   @ApiModelProperty(value = "")
   private Category category = null;
+
   @ApiModelProperty(example = "doggie", required = true, value = "")
   private String name = null;
+
   @ApiModelProperty(required = true, value = "")
   private List<String> photoUrls = new ArrayList<String>();
+
   @ApiModelProperty(value = "")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
+
 
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
@@ -61,12 +67,15 @@ public enum StatusEnum {
 }
 
   @ApiModelProperty(value = "pet status in the store")
+ /**
+   * pet status in the store  
+  **/
   private StatusEnum status = null;
-
  /**
    * Get id
    * @return id
   **/
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -84,6 +93,7 @@ public enum StatusEnum {
    * Get category
    * @return category
   **/
+  @JsonProperty("category")
   public Category getCategory() {
     return category;
   }
@@ -101,6 +111,7 @@ public enum StatusEnum {
    * Get name
    * @return name
   **/
+  @JsonProperty("name")
   @NotNull
   public String getName() {
     return name;
@@ -119,6 +130,7 @@ public enum StatusEnum {
    * Get photoUrls
    * @return photoUrls
   **/
+  @JsonProperty("photoUrls")
   @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -142,6 +154,7 @@ public enum StatusEnum {
    * Get tags
    * @return tags
   **/
+  @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
   }
@@ -164,8 +177,12 @@ public enum StatusEnum {
    * pet status in the store
    * @return status
   **/
-  public StatusEnum getStatus() {
-    return status;
+  @JsonProperty("status")
+  public String getStatus() {
+    if (status == null) {
+      return null;
+    }
+    return status.value();
   }
 
   public void setStatus(StatusEnum status) {
