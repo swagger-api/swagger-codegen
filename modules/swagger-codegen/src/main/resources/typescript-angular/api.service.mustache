@@ -3,13 +3,9 @@
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 {{#useHttpClient}}
-<<<<<<< HEAD
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-=======
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
->>>>>>> master
 {{/useHttpClient}}
 {{^useHttpClient}}
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
@@ -45,7 +41,7 @@ import { {{classname}}Interface }                            from './{{classname
         * {{{description}}}
         */
         {{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}};
-    {{/allParams}}  
+    {{/allParams}}
     }
     {{#allParams}}{{#isEnum}}
     export type {{enumName}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}} | {{/-last}}{{/enumVars}}{{/allowableValues}};
@@ -133,38 +129,19 @@ export class {{classname}} {
     /**
      * {{summary}}
      * {{notes}}
-<<<<<<< HEAD
      {{#allParams}}* @param $params.{{paramName}} {{description}}
-     {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options?: { observe?: 'body' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}>;
-    /**
-     * {{summary}}
-     * {{notes}}
-     {{#allParams}}* @param $params.{{paramName}} {{description}}
-     {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options: { observe: 'response' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<{{#useHttpClient}}HttpResponse<{{#returnType}}{{{returnType}}} | undefined{{/returnType}}{{^returnType}}void{{/returnType}}>{{/useHttpClient}}{{^useHttpClient}}Response{{/useHttpClient}}>;
-    /**
-     * {{summary}}
-     * {{notes}}
-     {{#allParams}}* @param $params.{{paramName}} {{description}}
-     {{/allParams}}*/
-    public {{nickname}}{{^useHttpClient}}WithHttpInfo{{/useHttpClient}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}{{#useHttpClient}}$options?: { observe?: 'body' | 'response' }{{/useHttpClient}}{{^useHttpClient}}extraHttpRequestParams?: RequestOptionsArgs{{/useHttpClient}}): Observable<any> {
-{{#allParams.0}}        $params = $params || {};{{/allParams.0}}
-=======
-     {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}{{#useHttpClient}}* @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.{{/useHttpClient}}
      */
     {{#useHttpClient}}
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public {{nickname}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
+    public {{nickname}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
     {{/useHttpClient}}
     {{^useHttpClient}}
-    public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public {{nickname}}WithHttpInfo({{#allParams.0}}$params: {{nickname}}.Params, {{/allParams.0}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
     {{/useHttpClient}}
->>>>>>> master
 {{#allParams}}
         const {{paramName}} = $params.{{paramName}};
 {{#required}}
@@ -337,31 +314,21 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 {{#useHttpClient}}
-<<<<<<< HEAD
-        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<any>{{/isResponseFile}}(`${this.basePath}{{{path}}}`, {{#isBodyAllowed}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}{{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams{{/hasFormParams}}{{^hasFormParams}}null{{/hasFormParams}}{{/bodyParam}}, {{/isBodyAllowed}}{
-=======
         return this.httpClient.{{httpMethod}}{{^isResponseFile}}<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>{{/isResponseFile}}(`${this.basePath}{{{path}}}`,{{#isBodyAllowed}}
             {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}{{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams{{/hasFormParams}}{{^hasFormParams}}null{{/hasFormParams}}{{/bodyParam}},{{/isBodyAllowed}}
             {
->>>>>>> master
 {{#hasQueryParams}}
                 params: queryParameters,
 {{/hasQueryParams}}
 {{#isResponseFile}}
                 responseType: "blob",
 {{/isResponseFile}}
-<<<<<<< HEAD
-            withCredentials: this.configuration.withCredentials,
-            observe: $options && $options.observe as any
-        });
-=======
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
                 reportProgress: reportProgress
             }
         );
->>>>>>> master
 {{/useHttpClient}}
 {{^useHttpClient}}
         let requestOptions: RequestOptionsArgs = new RequestOptions({
