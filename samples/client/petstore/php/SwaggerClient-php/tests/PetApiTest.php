@@ -374,25 +374,14 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test empty array response
+     * test invalid argument
      *
-     * Make sure empty arrays from a producer is actually returned as
-     * an empty array and not some other value. At some point it was
-     * returned as null because the code stumbled on PHP loose type
-     * checking (not on empty array is true, same thing could happen
-     * with careless use of empty()).
+     * @expectedException \InvalidArgumentException
      */
-    public function testEmptyArrayResponse()
+    public function testInvalidArgument()
     {
-        // this call returns and empty array
-        $response = $this->api->findPetsByStatus(array());
-
-        // make sure this is an array as we want it to be
-        $this->assertInternalType("array", $response);
-
-        // make sure the array is empty just in case the petstore
-        // server changes its output
-        $this->assertEmpty($response);
+        // the argument is required, and we must specify one or some from 'available', 'pending', 'sold'
+        $this->api->findPetsByStatus([]);
     }
 
 //    Disabled as currently we don't have any endpoint that would return file
