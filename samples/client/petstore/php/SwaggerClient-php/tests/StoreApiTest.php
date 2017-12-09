@@ -21,18 +21,4 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType("array", $result);
         $this->assertInternalType("int", $result['available']);
     }
-
-    /*
-     * comment out as we've removed invalid endpoints from the spec, we'll introduce something
-     * similar in the future when we've time to update the petstore server
-     *
-    // test get inventory
-    public function testGetInventoryInObject()
-    {
-        $result = $this->api->getInventoryInObject();
-
-        $this->assertInternalType("array", $result);
-        $this->assertInternalType("int", $result['available']);
-    }
-     */
 }
