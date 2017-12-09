@@ -29,7 +29,6 @@ public class Dog extends Animal {
   @JsonProperty("breed")
   private String breed = null;
 
-  
   public Dog breed(String breed) {
     this.breed = breed;
     return this;

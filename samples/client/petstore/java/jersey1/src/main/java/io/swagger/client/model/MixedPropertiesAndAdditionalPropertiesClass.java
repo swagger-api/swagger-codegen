@@ -34,13 +34,12 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
   private UUID uuid = null;
 
-    @JsonProperty("dateTime")
+  @JsonProperty("dateTime")
   private OffsetDateTime dateTime = null;
 
-    @JsonProperty("map")
+  @JsonProperty("map")
   private Map<String, Animal> map = null;
 
-  
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;

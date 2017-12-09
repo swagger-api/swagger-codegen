@@ -66,11 +66,14 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
   {{/isContainer}}
 
-  {{/vars}}{{#gson}}{{#discriminator}}
+  {{/vars}}
+  {{#gson}}
+  {{#discriminator}}
   public {{classname}}() {
     this.{{discriminator}} = this.getClass().getSimpleName();
   }
-  {{/discriminator}}{{/gson}}
+  {{/discriminator}}
+  {{/gson}}
   {{#vars}}
   {{^isReadOnly}}
   public {{classname}} {{name}}({{{datatypeWithEnum}}} {{name}}) {

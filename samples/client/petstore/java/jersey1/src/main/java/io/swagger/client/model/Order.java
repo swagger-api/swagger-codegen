@@ -29,16 +29,16 @@ public class Order {
   @JsonProperty("id")
   private Long id = null;
 
-    @JsonProperty("petId")
+  @JsonProperty("petId")
   private Long petId = null;
 
-    @JsonProperty("quantity")
+  @JsonProperty("quantity")
   private Integer quantity = null;
 
-    @JsonProperty("shipDate")
+  @JsonProperty("shipDate")
   private OffsetDateTime shipDate = null;
 
-    /**
+  /**
    * Order Status
    */
   public enum StatusEnum {
@@ -78,10 +78,9 @@ public class Order {
   @JsonProperty("status")
   private StatusEnum status = null;
 
-    @JsonProperty("complete")
+  @JsonProperty("complete")
   private Boolean complete = false;
 
-  
   public Order id(Long id) {
     this.id = id;
     return this;

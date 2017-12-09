@@ -28,28 +28,27 @@ public class User {
   @JsonProperty("id")
   private Long id = null;
 
-    @JsonProperty("username")
+  @JsonProperty("username")
   private String username = null;
 
-    @JsonProperty("firstName")
+  @JsonProperty("firstName")
   private String firstName = null;
 
-    @JsonProperty("lastName")
+  @JsonProperty("lastName")
   private String lastName = null;
 
-    @JsonProperty("email")
+  @JsonProperty("email")
   private String email = null;
 
-    @JsonProperty("password")
+  @JsonProperty("password")
   private String password = null;
 
-    @JsonProperty("phone")
+  @JsonProperty("phone")
   private String phone = null;
 
-    @JsonProperty("userStatus")
+  @JsonProperty("userStatus")
   private Integer userStatus = null;
 
-  
   public User id(Long id) {
     this.id = id;
     return this;

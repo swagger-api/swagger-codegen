@@ -28,10 +28,9 @@ public class HasOnlyReadOnly {
   @JsonProperty("bar")
   private String bar = null;
 
-    @JsonProperty("foo")
+  @JsonProperty("foo")
   private String foo = null;
 
-  
    /**
    * Get bar
    * @return bar

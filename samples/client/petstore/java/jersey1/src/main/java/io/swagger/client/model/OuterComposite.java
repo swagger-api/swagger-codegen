@@ -29,13 +29,12 @@ public class OuterComposite {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;
 
-    @JsonProperty("my_string")
+  @JsonProperty("my_string")
   private String myString = null;
 
-    @JsonProperty("my_boolean")
+  @JsonProperty("my_boolean")
   private Boolean myBoolean = null;
 
-  
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;

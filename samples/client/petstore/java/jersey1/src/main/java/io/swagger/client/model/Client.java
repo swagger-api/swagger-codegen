@@ -28,7 +28,6 @@ public class Client {
   @JsonProperty("client")
   private String client = null;
 
-  
   public Client client(String client) {
     this.client = client;
     return this;

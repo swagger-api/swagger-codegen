@@ -28,10 +28,9 @@ public class Tag {
   @JsonProperty("id")
   private Long id = null;
 
-    @JsonProperty("name")
+  @JsonProperty("name")
   private String name = null;
 
-  
   public Tag id(Long id) {
     this.id = id;
     return this;

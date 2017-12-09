@@ -28,10 +28,9 @@ public class ReadOnlyFirst {
   @JsonProperty("bar")
   private String bar = null;
 
-    @JsonProperty("baz")
+  @JsonProperty("baz")
   private String baz = null;
 
-  
    /**
    * Get bar
    * @return bar

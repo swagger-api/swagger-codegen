@@ -29,7 +29,6 @@ public class NumberOnly {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
 
-  
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
