@@ -18,7 +18,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->api->getInventory();
 
-        $this->assertInternalType("array", $result);
-        $this->assertInternalType("int", $result['available']);
+        $this->assertInternalType('array', $result);
+        $this->assertInternalType('int', $result['available']);
     }
 }
