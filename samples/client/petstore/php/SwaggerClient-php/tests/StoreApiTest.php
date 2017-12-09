@@ -35,26 +35,4 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType("int", $result['available']);
     }
      */
-
-    /**
-     * test empty array response
-     *
-     * Make sure empty arrays from a producer is actually returned as
-     * an empty array and not some other value. At some point it was
-     * returned as null because the code stumbled on PHP loose type
-     * checking (not on empty array is true, same thing could happen
-     * with careless use of empty()).
-     */
-//    public function testEmptyArrayResponse()
-//    {
-//        // this call returns and empty array
-//        $response = $this->api->findPetsByStatus(array());
-//
-//        // make sure this is an array as we want it to be
-//        $this->assertInternalType("array", $response);
-//
-//        // make sure the array is empty just in case the petstore
-//        // server changes its output
-//        $this->assertEmpty($response);
-//    }
 }
