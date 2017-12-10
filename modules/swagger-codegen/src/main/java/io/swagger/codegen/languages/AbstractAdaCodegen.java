@@ -152,12 +152,29 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         return toAdaIdentifier(super.toParamName(name), "P_");
     }
 
+    /**
+     * Output the proper model name (capitalized).
+     * In case the name belongs to the TypeSystem it won't be renamed.
+     *
+     * @param name the name of the model
+     * @return capitalized model name
+     */
+    public String toModelName(final String name) {
+        String result = super.toModelName(name);
+        if (result.matches("^\\d.*") || result.startsWith("_")) {
+            result = "Model_" + result;
+        }
+        return result.replaceAll("[\\.-]", "_").replaceAll("__+", "_");
+    }
+
     @Override
     public CodegenProperty fromProperty(String name, Property p) {
         CodegenProperty property = super.fromProperty(name, p);
-        String nameInCamelCase = property.nameInCamelCase;
-        nameInCamelCase = sanitizeName(nameInCamelCase);
-        property.nameInCamelCase = nameInCamelCase;
+        if (property != null) {
+            String nameInCamelCase = property.nameInCamelCase;
+            nameInCamelCase = sanitizeName(nameInCamelCase);
+            property.nameInCamelCase = nameInCamelCase;
+        }
         return property;
     }
 }
