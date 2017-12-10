@@ -1,6 +1,6 @@
 {{>licenseInfo}}
 with Swagger.Streams;
-with ASF.Rest.Operation;
+with Swagger.Servers.Operation;
 package body {{package}}.Servers is
 
    package body Skeleton is
@@ -12,9 +12,10 @@ package body {{package}}.Servers is
 
       --  {{summary}}
       procedure {{operationId}}
-         (Req : in out Swagger.Servers.Request'Class;
-          Reply : in out Swagger.Servers.Response'Class;
-          Stream : in out Swagger.Servers.Output_Stream'Class) is
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
          {{#hasBodyParam}}
          Input   : Swagger.Value_Type;
          {{/hasBodyParam}}
@@ -32,6 +33,11 @@ package body {{package}}.Servers is
          {{#pathParams}}
          Swagger.Servers.Get_Path_Parameter (Req, {{vendorExtensions.x-path-index}}, {{paramName}});
          {{/pathParams}}
+         {{#hasFormParams}}
+         {{#formParams}}
+         Swagger.Servers.Get_Parameter (Req, "{{baseName}}", {{paramName}});
+         {{/formParams}}
+         {{/hasFormParams}}
          {{#hasParams}}
          {{#hasBodyParam}}
          Swagger.Servers.Read (Req, Input);
@@ -43,14 +49,14 @@ package body {{package}}.Servers is
          {{/hasBodyParam}}
          Impl.{{operationId}}
             ({{#allParams}}{{paramName}}{{#hasMore}},
-             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result{{/returnType}});
+             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result, Context{{/returnType}});
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
-         Impl.{{operationId}} (Result);
+         Impl.{{operationId}} (Result, Context);
          {{/returnType}}
          {{^returnType}}
-         Impl.{{operationId}};
+         Impl.{{operationId}} (Context);
          {{/returnType}}
          {{/hasParams}}
          {{#returnType}}
@@ -62,9 +68,9 @@ package body {{package}}.Servers is
       end {{operationId}};
 
       package API_{{operationId}} is
-         new ASF.Rest.Operation (Handler => {{operationId}}'Access,
-                                 Method  => ASF.Rest.{{httpMethod}},
-                                 URI     => "{{path}}");
+         new Swagger.Servers.Operation (Handler => {{operationId}},
+                                        Method  => Swagger.Servers.{{httpMethod}},
+                                        URI     => "{{path}}");
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -76,7 +82,7 @@ package body {{package}}.Servers is
 {{#apis}}
 {{#operations}}
 {{#operation}}
-         ASF.Rest.Register (Server, API_{{operationId}}.Definition);
+         Swagger.Servers.Register (Server, API_{{operationId}}.Definition);
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -94,9 +100,10 @@ package body {{package}}.Servers is
 
       --  {{summary}}
       procedure {{operationId}}
-         (Req : in out Swagger.Servers.Request'Class;
-          Reply : in out Swagger.Servers.Response'Class;
-          Stream : in out Swagger.Servers.Output_Stream'Class) is
+         (Req     : in out Swagger.Servers.Request'Class;
+          Reply   : in out Swagger.Servers.Response'Class;
+          Stream  : in out Swagger.Servers.Output_Stream'Class;
+          Context : in out Swagger.Servers.Context_Type) is
          {{#hasBodyParam}}
          Input   : Swagger.Value_Type;
          {{/hasBodyParam}}
@@ -113,6 +120,11 @@ package body {{package}}.Servers is
          {{#pathParams}}
          Swagger.Servers.Get_Path_Parameter (Req, {{vendorExtensions.x-path-index}}, {{paramName}});
          {{/pathParams}}
+         {{#hasFormParams}}
+         {{#formParams}}
+         Swagger.Servers.Get_Parameter (Req, "{{baseName}}", {{paramName}});
+         {{/formParams}}
+         {{/hasFormParams}}
          {{#hasParams}}
          {{#hasBodyParam}}
          Swagger.Servers.Read (Req, Input);
@@ -124,14 +136,14 @@ package body {{package}}.Servers is
          {{/hasBodyParam}}
          Server.{{operationId}}
             ({{#allParams}}{{paramName}}{{#hasMore}},
-             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result{{/returnType}});
+             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result, Context{{/returnType}});
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
-         Server.{{operationId}} (Result);
+         Server.{{operationId}} (Result, Context);
          {{/returnType}}
          {{^returnType}}
-         Server.{{operationId}};
+         Server.{{operationId}} (Context);
          {{/returnType}}
          {{/hasParams}}
          {{#returnType}}
@@ -143,9 +155,9 @@ package body {{package}}.Servers is
       end {{operationId}};
 
       package API_{{operationId}} is
-         new ASF.Rest.Operation (Handler => {{operationId}}'Access,
-                                 Method  => ASF.Rest.{{httpMethod}},
-                                 URI     => "{{path}}");
+         new Swagger.Servers.Operation (Handler => {{operationId}},
+                                        Method  => Swagger.Servers.{{httpMethod}},
+                                        URI     => "{{path}}");
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -157,7 +169,7 @@ package body {{package}}.Servers is
 {{#apis}}
 {{#operations}}
 {{#operation}}
-         ASF.Rest.Register (Server, API_{{operationId}}.Definition);
+         Swagger.Servers.Register (Server, API_{{operationId}}.Definition);
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -173,26 +185,29 @@ package body {{package}}.Servers is
          {{#hasParams}}
          procedure {{operationId}}
             ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
-       {{/hasMore}}{{/allParams}}{{#returnType}};
-       Result : out {{returnType}}{{/returnType}}) is
+             {{/hasMore}}{{/allParams}}{{#returnType}};
+             Result : out {{returnType}}{{/returnType}};
+             Context : in out Swagger.Servers.Context_Type) is
          begin
             Impl.{{operationId}}
                ({{#allParams}}{{paramName}}{{#hasMore}},
-                      {{/hasMore}}{{/allParams}}{{#returnType}},
-                      Result{{/returnType}});
+                {{/hasMore}}{{/allParams}}{{#returnType}},
+                Result{{/returnType}},
+                Context);
          end {{operationId}};
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
-         procedure {{operationId}} (Result : out {{returnType}}) is
+         procedure {{operationId}} (Result : out {{returnType}};
+         Context : in out Swagger.Servers.Context_Type) is
          begin
-            Impl.{{operationId}} (Result);
+            Impl.{{operationId}} (Result, Context);
          end {{operationId}};
          {{/returnType}}
          {{^returnType}}
-         procedure {{operationId}} is
+         procedure {{operationId}} (Context : in out Swagger.Servers.Context_Type) is
          begin
-            Impl.{{operationId}};
+            Impl.{{operationId}} (Context);
          end {{operationId}};
          {{/returnType}}
          {{/hasParams}}
