@@ -1,9 +1,15 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
+import java.util.regex.Matcher;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.samskivert.mustache.Escapers;
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
@@ -17,6 +23,8 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     protected String projectName = "Swagger";
     protected List<Map<String, Object>> orderedModels;
     protected Map<String, List<String>> modelDepends;
+    protected int scopeIndex = 0;
+    protected HashMap<String, String> operationsScopes;
 
     public AdaCodegen() {
         super();
@@ -55,6 +63,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         typeMapping.put("binary", "Swagger.Binary");
 
         super.importMapping = new HashMap<String, String>();
+        operationsScopes = new HashMap<String, String>();
     }
 
     @Override
@@ -118,6 +127,16 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
          */
         additionalProperties.put("package", this.modelPackage);
         additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
+
+        // add lambda for mustache templates
+        additionalProperties.put("lambdaAdaComment", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                String content = fragment.execute();
+                content = content.trim().replaceAll("\n$", "");
+                writer.write(content.replaceAll("\n", "\n   --  "));
+            }
+        });
     }
 
     @Override
@@ -150,7 +169,23 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
+//        String result = input.replaceAll("`", "'");
+        return input.replace("*/", "*_/").replace("/*", "/_*").replace("-", "_");
+    }
+
+    /**
+     * Override the Mustache compiler configuration.
+     *
+     * We don't want to have special characters escaped
+     *
+     * @param compiler the compiler.
+     * @return the compiler to use.
+     */
+    @Override
+    public Mustache.Compiler processCompiler(Mustache.Compiler compiler) {
+        compiler = super.processCompiler(compiler).emptyStringIsFalse(true);
+
+        return compiler.withEscaper(Escapers.NONE);
     }
 
     /**
@@ -164,6 +199,10 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     @Override
     public String getTypeDeclaration(Property p) {
         String swaggerType = getSwaggerType(p);
+
+        if (swaggerType != null) {
+            swaggerType = swaggerType.replace("-", "_");
+        }
 
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
@@ -182,7 +221,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         if (languageSpecificPrimitives.contains(swaggerType)) {
             return swaggerType;
         }
-        String modelType = toModelName(swaggerType);
+        String modelType = toModelName(swaggerType).replace("-", "_");
         if (p instanceof StringProperty || p instanceof DateProperty
                 || p instanceof DateTimeProperty || p instanceof FileProperty
                 || languageSpecificPrimitives.contains(modelType)) {
@@ -266,6 +305,8 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             op1.vendorExtensions.put("x-has-uniq-produces", postProcessMediaTypes(op1.produces) == 1);
             op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
             op1.vendorExtensions.put("x-has-notes", op1.notes != null && op1.notes.length() > 0);
+
+            postProcessAuthMethod(op1.authMethods);
 
             /*
              * Scan the path parameter to construct a x-path-index that tells the index of
@@ -385,20 +426,63 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         return postProcessModelsEnum(objs);
     }
 
+    /**
+     * Collect the scopes to generate a unique identifier for each of them.
+     *
+     * @param authMethods the auth methods with their scopes.
+     */
+    private void postProcessAuthMethod(List<CodegenSecurity> authMethods) {
+        if (authMethods != null) {
+            for (CodegenSecurity authMethod : authMethods) {
+                if (authMethod.scopes != null) {
+                    for (Map<String, Object> scope : authMethod.scopes) {
+                        String name = (String) scope.get("scope");
+                        if (operationsScopes.containsKey(name)) {
+                            scope.put("ident", operationsScopes.get(name));
+                        } else {
+                            String ident;
+                            if (name.startsWith("https://")) {
+                                int pos = name.lastIndexOf('/');
+                                ident = name.substring(pos + 1);
+                            } else {
+                                ident = name;
+                            }
+                            scopeIndex++;
+                            ident = toAdaIdentifier(sanitizeName(ident.replaceAll(":", "_")), "S_");
+                            if (operationsScopes.containsValue(ident)) {
+                                ident = ident + "_" + scopeIndex;
+                            }
+                            operationsScopes.put(name, ident);
+                            scope.put("ident", ident);
+                        }
+                    }
+                }
+                authMethod.name = camelize(sanitizeName(authMethod.name), true);
+            }
+        }
+    }
+
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         objs.put("orderedModels", orderedModels);
         Swagger swagger = (Swagger)objs.get("swagger");
-         if(swagger != null) {
-             String host = swagger.getBasePath();
-             try {
-                 swagger.setHost("SWAGGER_HOST");
-                 objs.put("swagger-json", Json.pretty().writeValueAsString(swagger).replace("\r\n", "\n"));
-             } catch (JsonProcessingException e) {
-                 LOGGER.error(e.getMessage(), e);
-             }
-             swagger.setHost(host);
-         }
+        if(swagger != null) {
+            String host = swagger.getBasePath();
+            try {
+                swagger.setHost("SWAGGER_HOST");
+                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger).replace("\r\n", "\n"));
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+            swagger.setHost(host);
+        }
+
+        /**
+         * Collect the scopes to generate unique identifiers for each of them.
+         */
+        List<CodegenSecurity> authMethods = (List<CodegenSecurity>) objs.get("authMethods");
+        postProcessAuthMethod(authMethods);
+
         return super.postProcessSupportingFileData(objs);
     }
 }
