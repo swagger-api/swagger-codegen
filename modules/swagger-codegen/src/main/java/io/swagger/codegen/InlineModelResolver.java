@@ -48,7 +48,7 @@ public class InlineModelResolver {
                                     if (model instanceof ModelImpl) {
                                         ModelImpl obj = (ModelImpl) model;
                                         if (obj.getType() == null || "object".equals(obj.getType())) {
-                                            if (obj.getProperties() != null && obj.getProperties().size() > 0) {
+                                            if (obj.getProperties() != null) {
                                                 flattenProperties(obj.getProperties(), pathname);
                                                 String modelName = resolveModelName(obj.getTitle(), bp.getName());
                                                 bp.setSchema(new RefModel(modelName));
@@ -62,7 +62,7 @@ public class InlineModelResolver {
 
                                         if (inner instanceof ObjectProperty) {
                                             ObjectProperty op = (ObjectProperty) inner;
-                                            if (op.getProperties() != null && op.getProperties().size() > 0) {
+                                            if (op.getProperties() != null) {
                                                 flattenProperties(op.getProperties(), pathname);
                                                 String modelName = resolveModelName(op.getTitle(), bp.getName());
                                                 Model innerModel = modelFromProperty(op, modelName);
@@ -93,7 +93,7 @@ public class InlineModelResolver {
                                 Property property = response.getSchema();
                                 if (property instanceof ObjectProperty) {
                                     ObjectProperty op = (ObjectProperty) property;
-                                    if (op.getProperties() != null && op.getProperties().size() > 0) {
+                                    if (op.getProperties() != null) {
                                         String modelName = resolveModelName(op.getTitle(), "inline_response_" + key);
                                         Model model = modelFromProperty(op, modelName);
                                         String existing = matchGenerated(model);
@@ -115,7 +115,7 @@ public class InlineModelResolver {
 
                                     if (inner instanceof ObjectProperty) {
                                         ObjectProperty op = (ObjectProperty) inner;
-                                        if (op.getProperties() != null && op.getProperties().size() > 0) {
+                                        if (op.getProperties() != null) {
                                             flattenProperties(op.getProperties(), pathname);
                                             String modelName = resolveModelName(op.getTitle(),
                                                     "inline_response_" + key);
@@ -140,7 +140,7 @@ public class InlineModelResolver {
                                     Property innerProperty = mp.getAdditionalProperties();
                                     if (innerProperty instanceof ObjectProperty) {
                                         ObjectProperty op = (ObjectProperty) innerProperty;
-                                        if (op.getProperties() != null && op.getProperties().size() > 0) {
+                                        if (op.getProperties() != null) {
                                             flattenProperties(op.getProperties(), pathname);
                                             String modelName = resolveModelName(op.getTitle(),
                                                     "inline_response_" + key);
@@ -183,7 +183,7 @@ public class InlineModelResolver {
                     Property inner = m.getItems();
                     if (inner instanceof ObjectProperty) {
                         ObjectProperty op = (ObjectProperty) inner;
-                        if (op.getProperties() != null && op.getProperties().size() > 0) {
+                        if (op.getProperties() != null) {
                             String innerModelName = resolveModelName(op.getTitle(), modelName + "_inner");
                             Model innerModel = modelFromProperty(op, innerModelName);
                             String existing = matchGenerated(innerModel);
@@ -280,8 +280,7 @@ public class InlineModelResolver {
         Map<String, Model> modelsToAdd = new HashMap<String, Model>();
         for (String key : properties.keySet()) {
             Property property = properties.get(key);
-            if (property instanceof ObjectProperty && ((ObjectProperty) property).getProperties() != null
-                    && ((ObjectProperty) property).getProperties().size() > 0) {
+            if (property instanceof ObjectProperty && ((ObjectProperty) property).getProperties() != null) {
 
                 ObjectProperty op = (ObjectProperty) property;
 
@@ -308,7 +307,7 @@ public class InlineModelResolver {
 
                 if (inner instanceof ObjectProperty) {
                     ObjectProperty op = (ObjectProperty) inner;
-                    if (op.getProperties() != null && op.getProperties().size() > 0) {
+                    if (op.getProperties() != null) {
                         flattenProperties(op.getProperties(), path);
                         String modelName = resolveModelName(op.getTitle(), path + "_" + key);
                         Model innerModel = modelFromProperty(op, modelName);
@@ -332,7 +331,7 @@ public class InlineModelResolver {
 
                 if (inner instanceof ObjectProperty) {
                     ObjectProperty op = (ObjectProperty) inner;
-                    if (op.getProperties() != null && op.getProperties().size() > 0) {
+                    if (op.getProperties() != null) {
                         flattenProperties(op.getProperties(), path);
                         String modelName = resolveModelName(op.getTitle(), path + "_" + key);
                         Model innerModel = modelFromProperty(op, modelName);
