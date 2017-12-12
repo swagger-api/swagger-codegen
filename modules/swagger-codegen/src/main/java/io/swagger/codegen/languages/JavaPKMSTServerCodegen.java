@@ -69,6 +69,7 @@ public class JavaPKMSTServerCodegen extends AbstractJavaCodegen {
         apiPackage = "com.prokarma.pkmst.controller";
         modelPackage = "com.prokarma.pkmst.model";
         invokerPackage = "com.prokarma.pkmst.controller";
+        additionalProperties.put("jackson", "true");
         this.cliOptions.add(new CliOption("groupId", "groupId in generated pom.xml"));
         this.cliOptions.add(new CliOption("artifactId", "artifactId in generated pom.xml"));
         this.cliOptions.add(new CliOption("artifactVersion", "artifact version in generated pom.xml"));
