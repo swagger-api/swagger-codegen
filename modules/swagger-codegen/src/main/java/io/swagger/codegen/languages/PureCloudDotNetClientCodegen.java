@@ -23,14 +23,24 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         // Use C# templates
         embeddedTemplateDir = templateDir = "purecloud" + File.separator + "csharp";
 
-        // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
-        typeMapping.put("Attribute", "PureCloudPlatform.Client.V2.Model.Attribute");
-        // Prevent collision between base namespace and model PureCloud
-        typeMapping.put("PureCloud", "PureCloudPlatform.Client.V2.Model.PureCloud");
-        typeMapping.put("Action", "PureCloudPlatform.Client.V2.Model.Action");
-
         // Custom mappings for swagger type -> .NET type
         typeMapping.put("LocalDateTime", "DateTime?");
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
+        typeMapping.put("Attribute", this.packageName + ".Model.Attribute");
+
+        // `Configuration' is an ambiguous reference between `PureCloudPlatform.Client.V2.Client.Configuration' and `PureCloudPlatform.Client.V2.Model.Configuration'
+        typeMapping.put("Configuration", this.packageName + ".Model.Configuration");
+
+        // Prevent collision between base namespace and model PureCloud
+        typeMapping.put("PureCloud", this.packageName + ".Model.PureCloud");
+
+        typeMapping.put("Action", this.packageName + ".Model.Action");
     }
 
     @Override
