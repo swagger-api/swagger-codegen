@@ -70,6 +70,7 @@ namespace IO.Swagger
                         Description = "Swagger Petstore (ASP.NET Core 2.0)",
                         Contact = new Contact()
                         {
+                           Name = "",
                            Url = "",
                            Email = "apiteam@swagger.io"
                         },
