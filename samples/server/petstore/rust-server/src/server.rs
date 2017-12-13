@@ -149,12 +149,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_special_tags(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestSpecialTagsResponse::Status200(body) => {
+                        TestSpecialTagsResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_SPECIAL_TAGS_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -217,7 +217,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_boolean_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterBooleanSerializeResponse::Status200(body) => {
+                        FakeOuterBooleanSerializeResponse::OutputBoolean(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -283,7 +283,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_composite_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterCompositeSerializeResponse::Status200(body) => {
+                        FakeOuterCompositeSerializeResponse::OutputComposite(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -349,7 +349,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_number_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterNumberSerializeResponse::Status200(body) => {
+                        FakeOuterNumberSerializeResponse::OutputNumber(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -415,7 +415,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.fake_outer_string_serialize(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        FakeOuterStringSerializeResponse::Status200(body) => {
+                        FakeOuterStringSerializeResponse::OutputString(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
@@ -482,12 +482,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_client_model(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestClientModelResponse::Status200(body) => {
+                        TestClientModelResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_CLIENT_MODEL_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -552,7 +552,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_endpoint_parameters(param_number, param_double, param_pattern_without_delimiter, param_byte, param_integer, param_int32, param_int64, param_float, param_string, param_binary, param_date, param_date_time, param_password, param_callback, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestEndpointParametersResponse::Status400 => {
+                        TestEndpointParametersResponse::InvalidUsernameSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -562,7 +562,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        TestEndpointParametersResponse::Status404 => {
+                        TestEndpointParametersResponse::UserNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -626,7 +626,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_enum_parameters(param_enum_form_string_array.as_ref(), param_enum_form_string, param_enum_header_string_array.as_ref(), param_enum_header_string, param_enum_query_string_array.as_ref(), param_enum_query_string, param_enum_query_integer, param_enum_query_double, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestEnumParametersResponse::Status400 => {
+                        TestEnumParametersResponse::InvalidRequest => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -636,7 +636,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        TestEnumParametersResponse::Status404 => {
+                        TestEnumParametersResponse::NotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -702,7 +702,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_inline_additional_properties(param_param, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestInlineAdditionalPropertiesResponse::Status200 => {
+                        TestInlineAdditionalPropertiesResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(200)));    
@@ -750,7 +750,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_json_form_data(param_param, param_param2, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestJsonFormDataResponse::Status200 => {
+                        TestJsonFormDataResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(200)));    
@@ -821,12 +821,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.test_classname(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        TestClassnameResponse::Status200(body) => {
+                        TestClassnameResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::TEST_CLASSNAME_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -915,7 +915,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.add_pet(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        AddPetResponse::Status405 => {
+                        AddPetResponse::InvalidInput => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1000,7 +1000,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_pet(param_pet_id, param_api_key, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeletePetResponse::Status400 => {
+                        DeletePetResponse::InvalidPetValue => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1076,18 +1076,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.find_pets_by_status(param_status.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        FindPetsByStatusResponse::Status200(body) => {
+                        FindPetsByStatusResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_STATUS_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        FindPetsByStatusResponse::Status400 => {
+                        FindPetsByStatusResponse::InvalidStatusValue => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1163,18 +1163,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.find_pets_by_tags(param_tags.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        FindPetsByTagsResponse::Status200(body) => {
+                        FindPetsByTagsResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_TAGS_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        FindPetsByTagsResponse::Status400 => {
+                        FindPetsByTagsResponse::InvalidTagValue => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1235,18 +1235,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_pet_by_id(param_pet_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetPetByIdResponse::Status200(body) => {
+                        GetPetByIdResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_PET_BY_ID_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        GetPetByIdResponse::Status400 => {
+                        GetPetByIdResponse::InvalidIDSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1256,7 +1256,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetPetByIdResponse::Status404 => {
+                        GetPetByIdResponse::PetNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1347,7 +1347,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_pet(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdatePetResponse::Status400 => {
+                        UpdatePetResponse::InvalidIDSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1359,7 +1359,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdatePetResponse::Status404 => {
+                        UpdatePetResponse::PetNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1371,7 +1371,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdatePetResponse::Status405 => {
+                        UpdatePetResponse::ValidationException => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1455,7 +1455,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_pet_with_form(param_pet_id, param_name, param_status, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdatePetWithFormResponse::Status405 => {
+                        UpdatePetWithFormResponse::InvalidInput => {
 
 
                             let mut response = Response::with((status::Status::from_u16(405)));    
@@ -1571,12 +1571,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.upload_file(param_pet_id, param_additional_metadata, param_file, context).wait() {
                     Ok(rsp) => match rsp {
-                        UploadFileResponse::Status200(body) => {
+                        UploadFileResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::UPLOAD_FILE_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1626,7 +1626,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_order(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeleteOrderResponse::Status400 => {
+                        DeleteOrderResponse::InvalidIDSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1636,7 +1636,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        DeleteOrderResponse::Status404 => {
+                        DeleteOrderResponse::OrderNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1688,12 +1688,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_inventory(context).wait() {
                     Ok(rsp) => match rsp {
-                        GetInventoryResponse::Status200(body) => {
+                        GetInventoryResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_INVENTORY_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
@@ -1743,18 +1743,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_order_by_id(param_order_id, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetOrderByIdResponse::Status200(body) => {
+                        GetOrderByIdResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        GetOrderByIdResponse::Status400 => {
+                        GetOrderByIdResponse::InvalidIDSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1764,7 +1764,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetOrderByIdResponse::Status404 => {
+                        GetOrderByIdResponse::OrderNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -1830,12 +1830,12 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.place_order(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        PlaceOrderResponse::Status200(body) => {
+                        PlaceOrderResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::PLACE_ORDER_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
                             if !unused_elements.is_empty() {
@@ -1843,7 +1843,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        PlaceOrderResponse::Status400 => {
+                        PlaceOrderResponse::InvalidOrder => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -1911,7 +1911,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_user(param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUserResponse::Status0 => {
+                        CreateUserResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -1979,7 +1979,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_users_with_array_input(param_body.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUsersWithArrayInputResponse::Status0 => {
+                        CreateUsersWithArrayInputResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2047,7 +2047,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.create_users_with_list_input(param_body.as_ref(), context).wait() {
                     Ok(rsp) => match rsp {
-                        CreateUsersWithListInputResponse::Status0 => {
+                        CreateUsersWithListInputResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2103,7 +2103,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.delete_user(param_username, context).wait() {
                     Ok(rsp) => match rsp {
-                        DeleteUserResponse::Status400 => {
+                        DeleteUserResponse::InvalidUsernameSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2113,7 +2113,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        DeleteUserResponse::Status404 => {
+                        DeleteUserResponse::UserNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -2167,18 +2167,18 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.get_user_by_name(param_username, context).wait() {
                     Ok(rsp) => match rsp {
-                        GetUserByNameResponse::Status200(body) => {
+                        GetUserByNameResponse::SuccessfulOperation(body) => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
-                            response.headers.set(ContentType(mimetypes::responses::GET_USER_BY_NAME_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        GetUserByNameResponse::Status400 => {
+                        GetUserByNameResponse::InvalidUsernameSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2188,7 +2188,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                             Ok(response)
                         },
-                        GetUserByNameResponse::Status404 => {
+                        GetUserByNameResponse::UserNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    
@@ -2244,7 +2244,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.login_user(param_username, param_password, context).wait() {
                     Ok(rsp) => match rsp {
-                        LoginUserResponse::Status200{ body, x_rate_limit, x_expires_after } => {
+                        LoginUserResponse::SuccessfulOperation{ body, x_rate_limit, x_expires_after } => {
 
                             let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
@@ -2253,13 +2253,13 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
                             response.headers.set(ResponseXExpiresAfter(x_expires_after));
     
-                            response.headers.set(ContentType(mimetypes::responses::LOGIN_USER_.clone()));
+                            response.headers.set(ContentType(mimetypes::responses::LOGIN_USER_SUCCESSFUL_OPERATION.clone()));
 
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
 
                             Ok(response)
                         },
-                        LoginUserResponse::Status400 => {
+                        LoginUserResponse::InvalidUsername => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2304,7 +2304,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.logout_user(context).wait() {
                     Ok(rsp) => match rsp {
-                        LogoutUserResponse::Status0 => {
+                        LogoutUserResponse::SuccessfulOperation => {
 
 
                             let mut response = Response::with((status::Status::from_u16(0)));    
@@ -2379,7 +2379,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
 
                 match api.update_user(param_username, param_body, context).wait() {
                     Ok(rsp) => match rsp {
-                        UpdateUserResponse::Status400 => {
+                        UpdateUserResponse::InvalidUserSupplied => {
 
 
                             let mut response = Response::with((status::Status::from_u16(400)));    
@@ -2391,7 +2391,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                             }
                             Ok(response)
                         },
-                        UpdateUserResponse::Status404 => {
+                        UpdateUserResponse::UserNotFound => {
 
 
                             let mut response = Response::with((status::Status::from_u16(404)));    

@@ -227,7 +227,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestSpecialTagsResponse::Status200(body))
+                    Ok(TestSpecialTagsResponse::SuccessfulOperation(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -284,7 +284,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterBooleanSerializeResponse::Status200(body))
+                    Ok(FakeOuterBooleanSerializeResponse::OutputBoolean(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -341,7 +341,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterCompositeSerializeResponse::Status200(body))
+                    Ok(FakeOuterCompositeSerializeResponse::OutputComposite(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -398,7 +398,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterNumberSerializeResponse::Status200(body))
+                    Ok(FakeOuterNumberSerializeResponse::OutputNumber(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -455,7 +455,7 @@ impl Api for Client {
 
 
 
-                    Ok(FakeOuterStringSerializeResponse::Status200(body))
+                    Ok(FakeOuterStringSerializeResponse::OutputString(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -508,7 +508,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestClientModelResponse::Status200(body))
+                    Ok(TestClientModelResponse::SuccessfulOperation(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -763,7 +763,7 @@ impl Api for Client {
 
 
 
-                    Ok(TestClassnameResponse::Status200(body))
+                    Ok(TestClassnameResponse::SuccessfulOperation(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -913,7 +913,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(FindPetsByStatusResponse::Status200(body))
+                    Ok(FindPetsByStatusResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -971,7 +971,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(FindPetsByTagsResponse::Status200(body))
+                    Ok(FindPetsByTagsResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -1026,7 +1026,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetPetByIdResponse::Status200(body))
+                    Ok(GetPetByIdResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -1211,7 +1211,7 @@ impl Api for Client {
 
 
 
-                    Ok(UploadFileResponse::Status200(body))
+                    Ok(UploadFileResponse::SuccessfulOperation(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1320,7 +1320,7 @@ impl Api for Client {
 
 
 
-                    Ok(GetInventoryResponse::Status200(body))
+                    Ok(GetInventoryResponse::SuccessfulOperation(body))
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1370,7 +1370,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetOrderByIdResponse::Status200(body))
+                    Ok(GetOrderByIdResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -1435,7 +1435,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(PlaceOrderResponse::Status200(body))
+                    Ok(PlaceOrderResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -1686,7 +1686,7 @@ impl Api for Client {
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
 
-                    Ok(GetUserByNameResponse::Status200(body))
+                    Ok(GetUserByNameResponse::SuccessfulOperation(body))
                 },
                 400 => {
 
@@ -1754,7 +1754,7 @@ impl Api for Client {
                     header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
                     let response_x_expires_after = response.headers.get::<ResponseXExpiresAfter>().ok_or_else(|| "Required response header X-Expires-After for response 200 was not found.")?;
 
-                    Ok(LoginUserResponse::Status200{ body: body, x_rate_limit: response_x_rate_limit.0.clone(), x_expires_after: response_x_expires_after.0.clone() })
+                    Ok(LoginUserResponse::SuccessfulOperation{ body: body, x_rate_limit: response_x_rate_limit.0.clone(), x_expires_after: response_x_expires_after.0.clone() })
                 },
                 400 => {
 

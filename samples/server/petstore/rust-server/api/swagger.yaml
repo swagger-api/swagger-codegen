@@ -60,6 +60,8 @@ paths:
       responses:
         405:
           description: "Invalid input"
+          x-responseId: "InvalidInput"
+          x-uppercaseResponseId: "INVALID_INPUT"
           uppercase_operation_id: "ADD_PET"
       security:
       - petstore_auth:
@@ -100,12 +102,18 @@ paths:
       responses:
         400:
           description: "Invalid ID supplied"
+          x-responseId: "InvalidIDSupplied"
+          x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "UPDATE_PET"
         404:
           description: "Pet not found"
+          x-responseId: "PetNotFound"
+          x-uppercaseResponseId: "PET_NOT_FOUND"
           uppercase_operation_id: "UPDATE_PET"
         405:
           description: "Validation exception"
+          x-responseId: "ValidationException"
+          x-uppercaseResponseId: "VALIDATION_EXCEPTION"
           uppercase_operation_id: "UPDATE_PET"
       security:
       - petstore_auth:
@@ -150,11 +158,15 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Pet"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
           uppercase_data_type: "VEC<PET>"
           producesXml: true
         400:
           description: "Invalid status value"
+          x-responseId: "InvalidStatusValue"
+          x-uppercaseResponseId: "INVALID_STATUS_VALUE"
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
       security:
       - petstore_auth:
@@ -194,11 +206,15 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Pet"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
           uppercase_data_type: "VEC<PET>"
           producesXml: true
         400:
           description: "Invalid tag value"
+          x-responseId: "InvalidTagValue"
+          x-uppercaseResponseId: "INVALID_TAG_VALUE"
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
       security:
       - petstore_auth:
@@ -234,14 +250,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Pet"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_PET_BY_ID"
           uppercase_data_type: "PET"
           producesXml: true
         400:
           description: "Invalid ID supplied"
+          x-responseId: "InvalidIDSupplied"
+          x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "GET_PET_BY_ID"
         404:
           description: "Pet not found"
+          x-responseId: "PetNotFound"
+          x-uppercaseResponseId: "PET_NOT_FOUND"
           uppercase_operation_id: "GET_PET_BY_ID"
       security:
       - api_key: []
@@ -287,6 +309,8 @@ paths:
       responses:
         405:
           description: "Invalid input"
+          x-responseId: "InvalidInput"
+          x-uppercaseResponseId: "INVALID_INPUT"
           uppercase_operation_id: "UPDATE_PET_WITH_FORM"
       security:
       - petstore_auth:
@@ -324,6 +348,8 @@ paths:
       responses:
         400:
           description: "Invalid pet value"
+          x-responseId: "InvalidPetValue"
+          x-uppercaseResponseId: "INVALID_PET_VALUE"
           uppercase_operation_id: "DELETE_PET"
       security:
       - petstore_auth:
@@ -375,6 +401,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ApiResponse"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "UPLOAD_FILE"
           uppercase_data_type: "APIRESPONSE"
       security:
@@ -405,6 +433,8 @@ paths:
             additionalProperties:
               type: "integer"
               format: "int32"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_INVENTORY"
           uppercase_data_type: "HASHMAP<STRING, I32>"
       security:
@@ -442,11 +472,15 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Order"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "PLACE_ORDER"
           uppercase_data_type: "ORDER"
           producesXml: true
         400:
           description: "Invalid Order"
+          x-responseId: "InvalidOrder"
+          x-uppercaseResponseId: "INVALID_ORDER"
           uppercase_operation_id: "PLACE_ORDER"
       operation_id: "place_order"
       uppercase_operation_id: "PLACE_ORDER"
@@ -481,14 +515,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Order"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_ORDER_BY_ID"
           uppercase_data_type: "ORDER"
           producesXml: true
         400:
           description: "Invalid ID supplied"
+          x-responseId: "InvalidIDSupplied"
+          x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "GET_ORDER_BY_ID"
         404:
           description: "Order not found"
+          x-responseId: "OrderNotFound"
+          x-uppercaseResponseId: "ORDER_NOT_FOUND"
           uppercase_operation_id: "GET_ORDER_BY_ID"
       operation_id: "get_order_by_id"
       uppercase_operation_id: "GET_ORDER_BY_ID"
@@ -516,9 +556,13 @@ paths:
       responses:
         400:
           description: "Invalid ID supplied"
+          x-responseId: "InvalidIDSupplied"
+          x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "DELETE_ORDER"
         404:
           description: "Order not found"
+          x-responseId: "OrderNotFound"
+          x-uppercaseResponseId: "ORDER_NOT_FOUND"
           uppercase_operation_id: "DELETE_ORDER"
       operation_id: "delete_order"
       uppercase_operation_id: "DELETE_ORDER"
@@ -551,6 +595,8 @@ paths:
       responses:
         default:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USER"
       operation_id: "create_user"
       uppercase_operation_id: "CREATE_USER"
@@ -584,6 +630,8 @@ paths:
       responses:
         default:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
       operation_id: "create_users_with_array_input"
       uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
@@ -616,6 +664,8 @@ paths:
       responses:
         default:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
       operation_id: "create_users_with_list_input"
       uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
@@ -661,11 +711,15 @@ paths:
               type: "string"
               format: "date-time"
               description: "date in UTC when toekn expires"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "LOGIN_USER"
           uppercase_data_type: "STRING"
           producesXml: true
         400:
           description: "Invalid username/password supplied"
+          x-responseId: "InvalidUsername"
+          x-uppercaseResponseId: "INVALID_USERNAME"
           uppercase_operation_id: "LOGIN_USER"
       operation_id: "login_user"
       uppercase_operation_id: "LOGIN_USER"
@@ -686,6 +740,8 @@ paths:
       responses:
         default:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "LOGOUT_USER"
       operation_id: "logout_user"
       uppercase_operation_id: "LOGOUT_USER"
@@ -715,14 +771,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/User"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_USER_BY_NAME"
           uppercase_data_type: "USER"
           producesXml: true
         400:
           description: "Invalid username supplied"
+          x-responseId: "InvalidUsernameSupplied"
+          x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "GET_USER_BY_NAME"
         404:
           description: "User not found"
+          x-responseId: "UserNotFound"
+          x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "GET_USER_BY_NAME"
       operation_id: "get_user_by_name"
       uppercase_operation_id: "GET_USER_BY_NAME"
@@ -761,9 +823,13 @@ paths:
       responses:
         400:
           description: "Invalid user supplied"
+          x-responseId: "InvalidUserSupplied"
+          x-uppercaseResponseId: "INVALID_USER_SUPPLIED"
           uppercase_operation_id: "UPDATE_USER"
         404:
           description: "User not found"
+          x-responseId: "UserNotFound"
+          x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "UPDATE_USER"
       operation_id: "update_user"
       uppercase_operation_id: "UPDATE_USER"
@@ -791,9 +857,13 @@ paths:
       responses:
         400:
           description: "Invalid username supplied"
+          x-responseId: "InvalidUsernameSupplied"
+          x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "DELETE_USER"
         404:
           description: "User not found"
+          x-responseId: "UserNotFound"
+          x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "DELETE_USER"
       operation_id: "delete_user"
       uppercase_operation_id: "DELETE_USER"
@@ -828,6 +898,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_CLASSNAME"
           uppercase_data_type: "CLIENT"
       security:
@@ -950,9 +1022,13 @@ paths:
       responses:
         400:
           description: "Invalid request"
+          x-responseId: "InvalidRequest"
+          x-uppercaseResponseId: "INVALID_REQUEST"
           uppercase_operation_id: "TEST_ENUM_PARAMETERS"
         404:
           description: "Not found"
+          x-responseId: "NotFound"
+          x-uppercaseResponseId: "NOT_FOUND"
           uppercase_operation_id: "TEST_ENUM_PARAMETERS"
       operation_id: "test_enum_parameters"
       uppercase_operation_id: "TEST_ENUM_PARAMETERS"
@@ -1097,9 +1173,13 @@ paths:
       responses:
         400:
           description: "Invalid username supplied"
+          x-responseId: "InvalidUsernameSupplied"
+          x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
         404:
           description: "User not found"
+          x-responseId: "UserNotFound"
+          x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
       security:
       - http_basic_test: []
@@ -1136,6 +1216,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_CLIENT_MODEL"
           uppercase_data_type: "CLIENT"
       operation_id: "test_client_model"
@@ -1168,6 +1250,8 @@ paths:
           description: "Output number"
           schema:
             $ref: "#/definitions/OuterNumber"
+          x-responseId: "OutputNumber"
+          x-uppercaseResponseId: "OUTPUT_NUMBER"
           uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
           uppercase_data_type: "OUTERNUMBER"
       operation_id: "fake_outer_number_serialize"
@@ -1199,6 +1283,8 @@ paths:
           description: "Output string"
           schema:
             $ref: "#/definitions/OuterString"
+          x-responseId: "OutputString"
+          x-uppercaseResponseId: "OUTPUT_STRING"
           uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
           uppercase_data_type: "OUTERSTRING"
       operation_id: "fake_outer_string_serialize"
@@ -1230,6 +1316,8 @@ paths:
           description: "Output boolean"
           schema:
             $ref: "#/definitions/OuterBoolean"
+          x-responseId: "OutputBoolean"
+          x-uppercaseResponseId: "OUTPUT_BOOLEAN"
           uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
           uppercase_data_type: "OUTERBOOLEAN"
       operation_id: "fake_outer_boolean_serialize"
@@ -1261,6 +1349,8 @@ paths:
           description: "Output composite"
           schema:
             $ref: "#/definitions/OuterComposite"
+          x-responseId: "OutputComposite"
+          x-uppercaseResponseId: "OUTPUT_COMPOSITE"
           uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
           uppercase_data_type: "OUTERCOMPOSITE"
       operation_id: "fake_outer_composite_serialize"
@@ -1295,6 +1385,8 @@ paths:
       responses:
         200:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_JSON_FORM_DATA"
       operation_id: "test_json_form_data"
       uppercase_operation_id: "TEST_JSON_FORM_DATA"
@@ -1328,6 +1420,8 @@ paths:
       responses:
         200:
           description: "successful operation"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
       operation_id: "test_inline_additional_properties"
       uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
@@ -1364,6 +1458,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
+          x-responseId: "SuccessfulOperation"
+          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_SPECIAL_TAGS"
           uppercase_data_type: "CLIENT"
       operation_id: "test_special_tags"

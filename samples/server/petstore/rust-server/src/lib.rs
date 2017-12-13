@@ -36,221 +36,221 @@ pub use swagger::{ApiError, Context, ContextWrapper};
 #[derive(Debug, PartialEq)]
 pub enum TestSpecialTagsResponse {
     /// successful operation
-    Status200 ( models::Client ) ,
+    SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterBooleanSerializeResponse {
     /// Output boolean
-    Status200 ( models::OuterBoolean ) ,
+    OutputBoolean ( models::OuterBoolean ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterCompositeSerializeResponse {
     /// Output composite
-    Status200 ( models::OuterComposite ) ,
+    OutputComposite ( models::OuterComposite ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterNumberSerializeResponse {
     /// Output number
-    Status200 ( models::OuterNumber ) ,
+    OutputNumber ( models::OuterNumber ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterStringSerializeResponse {
     /// Output string
-    Status200 ( models::OuterString ) ,
+    OutputString ( models::OuterString ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestClientModelResponse {
     /// successful operation
-    Status200 ( models::Client ) ,
+    SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestEndpointParametersResponse {
     /// Invalid username supplied
-    Status400 ,
+    InvalidUsernameSupplied ,
     /// User not found
-    Status404 ,
+    UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestEnumParametersResponse {
     /// Invalid request
-    Status400 ,
+    InvalidRequest ,
     /// Not found
-    Status404 ,
+    NotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestInlineAdditionalPropertiesResponse {
     /// successful operation
-    Status200 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestJsonFormDataResponse {
     /// successful operation
-    Status200 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestClassnameResponse {
     /// successful operation
-    Status200 ( models::Client ) ,
+    SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum AddPetResponse {
     /// Invalid input
-    Status405 ,
+    InvalidInput ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeletePetResponse {
     /// Invalid pet value
-    Status400 ,
+    InvalidPetValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FindPetsByStatusResponse {
     /// successful operation
-    Status200 ( Vec<models::Pet> ) ,
+    SuccessfulOperation ( Vec<models::Pet> ) ,
     /// Invalid status value
-    Status400 ,
+    InvalidStatusValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FindPetsByTagsResponse {
     /// successful operation
-    Status200 ( Vec<models::Pet> ) ,
+    SuccessfulOperation ( Vec<models::Pet> ) ,
     /// Invalid tag value
-    Status400 ,
+    InvalidTagValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetPetByIdResponse {
     /// successful operation
-    Status200 ( models::Pet ) ,
+    SuccessfulOperation ( models::Pet ) ,
     /// Invalid ID supplied
-    Status400 ,
+    InvalidIDSupplied ,
     /// Pet not found
-    Status404 ,
+    PetNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdatePetResponse {
     /// Invalid ID supplied
-    Status400 ,
+    InvalidIDSupplied ,
     /// Pet not found
-    Status404 ,
+    PetNotFound ,
     /// Validation exception
-    Status405 ,
+    ValidationException ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdatePetWithFormResponse {
     /// Invalid input
-    Status405 ,
+    InvalidInput ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UploadFileResponse {
     /// successful operation
-    Status200 ( models::ApiResponse ) ,
+    SuccessfulOperation ( models::ApiResponse ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeleteOrderResponse {
     /// Invalid ID supplied
-    Status400 ,
+    InvalidIDSupplied ,
     /// Order not found
-    Status404 ,
+    OrderNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetInventoryResponse {
     /// successful operation
-    Status200 ( HashMap<String, i32> ) ,
+    SuccessfulOperation ( HashMap<String, i32> ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetOrderByIdResponse {
     /// successful operation
-    Status200 ( models::Order ) ,
+    SuccessfulOperation ( models::Order ) ,
     /// Invalid ID supplied
-    Status400 ,
+    InvalidIDSupplied ,
     /// Order not found
-    Status404 ,
+    OrderNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum PlaceOrderResponse {
     /// successful operation
-    Status200 ( models::Order ) ,
+    SuccessfulOperation ( models::Order ) ,
     /// Invalid Order
-    Status400 ,
+    InvalidOrder ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUserResponse {
     /// successful operation
-    Status0 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUsersWithArrayInputResponse {
     /// successful operation
-    Status0 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUsersWithListInputResponse {
     /// successful operation
-    Status0 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeleteUserResponse {
     /// Invalid username supplied
-    Status400 ,
+    InvalidUsernameSupplied ,
     /// User not found
-    Status404 ,
+    UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetUserByNameResponse {
     /// successful operation
-    Status200 ( models::User ) ,
+    SuccessfulOperation ( models::User ) ,
     /// Invalid username supplied
-    Status400 ,
+    InvalidUsernameSupplied ,
     /// User not found
-    Status404 ,
+    UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum LoginUserResponse {
     /// successful operation
-    Status200 { body: String, x_rate_limit: i32, x_expires_after: chrono::DateTime<chrono::Utc> } ,
+    SuccessfulOperation { body: String, x_rate_limit: i32, x_expires_after: chrono::DateTime<chrono::Utc> } ,
     /// Invalid username/password supplied
-    Status400 ,
+    InvalidUsername ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum LogoutUserResponse {
     /// successful operation
-    Status0 ,
+    SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdateUserResponse {
     /// Invalid user supplied
-    Status400 ,
+    InvalidUserSupplied ,
     /// User not found
-    Status404 ,
+    UserNotFound ,
 }
 
 
