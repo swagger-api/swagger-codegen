@@ -1,4 +1,4 @@
-package io.swagger.api;
+package io.swagger.resource;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 @Api(description = "the fake API")
-public class FakeApi {
+public class FakeResource {
 
     @POST
     @Path("/outer/boolean")
