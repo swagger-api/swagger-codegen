@@ -247,22 +247,22 @@ class ApiInvoker(formats: Formats)(implicit system: ActorSystem) extends Untrust
               case ResponseState.Success =>
                 ApiResponse(response.status.intValue, value, response.headers.map(header => (header.name, header.value)).toMap)
               case ResponseState.Error =>
-                throw new ApiError(response.status.intValue, "Error response received",
+                throw ApiError(response.status.intValue, "Error response received",
                   Some(value),
                   headers = response.headers.map(header => (header.name, header.value)).toMap)
             }
 
           case Left(MalformedContent(error, Some(cause))) ⇒
-            throw new ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString), cause)
+            throw ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString), cause)
 
           case Left(MalformedContent(error, None)) ⇒
-            throw new ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString))
+            throw ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString))
 
           case Left(ContentExpected) ⇒
-            throw new ApiError(response.status.intValue, s"Unable to unmarshall empty response to [$manifest]", Some(response.entity.toString))
+            throw ApiError(response.status.intValue, s"Unable to unmarshall empty response to [$manifest]", Some(response.entity.toString))
         }
 
-      case _ => throw new ApiError(response.status.intValue, "Unexpected response code", Some(response.entity.toString))
+      case _ => throw ApiError(response.status.intValue, "Unexpected response code", Some(response.entity.toString))
     }
   }
 
