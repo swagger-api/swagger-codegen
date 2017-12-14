@@ -135,6 +135,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -152,6 +153,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestSpecialTagsResponse::SuccessfulOperation(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION.clone()));
@@ -203,6 +205,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterBoolean> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -219,6 +222,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterBooleanSerializeResponse::OutputBoolean(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -268,6 +272,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterComposite> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -284,6 +289,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterCompositeSerializeResponse::OutputComposite(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -333,6 +339,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterNumber> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -349,6 +356,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterNumberSerializeResponse::OutputNumber(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -398,6 +406,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::OuterString> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -414,6 +423,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FakeOuterStringSerializeResponse::OutputString(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             context.x_span_id.as_ref().map(|header| response.headers.set(XSpanId(header.clone())));
@@ -463,6 +473,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -480,6 +491,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestClientModelResponse::SuccessfulOperation(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
@@ -682,6 +694,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_param = if let Some(param_param_raw) = param_param { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_param_raw);
 
                     let param_param: Option<object> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -801,6 +814,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Client> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -818,6 +832,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         TestClassnameResponse::SuccessfulOperation(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
@@ -1569,6 +1584,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         UploadFileResponse::SuccessfulOperation(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
@@ -1685,6 +1701,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         GetInventoryResponse::SuccessfulOperation(body) => {
 
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
@@ -1809,6 +1826,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Order> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -1890,6 +1908,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -1958,6 +1977,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -2026,6 +2046,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<Vec<models::User>> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -2358,6 +2379,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::User> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);

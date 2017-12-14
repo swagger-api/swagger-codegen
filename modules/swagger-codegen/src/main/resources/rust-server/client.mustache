@@ -270,7 +270,7 @@ impl Api for Client {
 {{/headers}}
 
 {{#dataType}}                    Ok({{operationId}}Response::{{#vendorExtensions}}{{x-responseId}}{{/vendorExtensions}}{{^headers}}(body){{/headers}}{{#headers}}{{#-first}}{ body: body, {{/-first}}{{name}}: response_{{name}}.0.clone(){{^-last}}, {{/-last}}{{#-last}} }{{/-last}}{{/headers}})
-{{/dataType}}{{^dataType}}                    Ok({{operationId}}Response::Status{{code}}{{#headers}}{{#-first}}{ {{/-first}}{{^-first}}, {{/-first}}{{name}}: response_{{name}}.0.clone(){{#-last}} }{{/-last}}{{/headers}})
+{{/dataType}}{{^dataType}}                    Ok({{operationId}}Response::{{#vendorExtensions}}{{x-responseId}}{{/vendorExtensions}}{{#headers}}{{#-first}}{ {{/-first}}{{^-first}}, {{/-first}}{{name}}: response_{{name}}.0.clone(){{#-last}} }{{/-last}}{{/headers}})
 {{/dataType}}
                 },
 {{/responses}}

@@ -208,6 +208,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Patch, &url);
@@ -227,6 +228,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::Client>(&buf)?;
 
                     Ok(TestSpecialTagsResponse::SuccessfulOperation(body))
                 },
@@ -261,6 +263,7 @@ impl Api for Client {
 
         let body = param_body.map(|ref body| {
 
+            serde_json::to_string(body).expect("impossible to fail to serialize")
         });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -283,6 +286,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::OuterBoolean>(&buf)?;
 
                     Ok(FakeOuterBooleanSerializeResponse::OutputBoolean(body))
                 },
@@ -317,6 +321,7 @@ impl Api for Client {
 
         let body = param_body.map(|ref body| {
 
+            serde_json::to_string(body).expect("impossible to fail to serialize")
         });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -339,6 +344,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::OuterComposite>(&buf)?;
 
                     Ok(FakeOuterCompositeSerializeResponse::OutputComposite(body))
                 },
@@ -373,6 +379,7 @@ impl Api for Client {
 
         let body = param_body.map(|ref body| {
 
+            serde_json::to_string(body).expect("impossible to fail to serialize")
         });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -395,6 +402,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::OuterNumber>(&buf)?;
 
                     Ok(FakeOuterNumberSerializeResponse::OutputNumber(body))
                 },
@@ -429,6 +437,7 @@ impl Api for Client {
 
         let body = param_body.map(|ref body| {
 
+            serde_json::to_string(body).expect("impossible to fail to serialize")
         });
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -451,6 +460,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::OuterString>(&buf)?;
 
                     Ok(FakeOuterStringSerializeResponse::OutputString(body))
                 },
@@ -484,6 +494,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Patch, &url);
@@ -503,6 +514,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::Client>(&buf)?;
 
                     Ok(TestClientModelResponse::SuccessfulOperation(body))
                 },
@@ -551,12 +563,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(TestEndpointParametersResponse::Status400)
+                    Ok(TestEndpointParametersResponse::InvalidUsernameSupplied)
                 },
                 404 => {
 
 
-                    Ok(TestEndpointParametersResponse::Status404)
+                    Ok(TestEndpointParametersResponse::UserNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -617,12 +629,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(TestEnumParametersResponse::Status400)
+                    Ok(TestEnumParametersResponse::InvalidRequest)
                 },
                 404 => {
 
 
-                    Ok(TestEnumParametersResponse::Status404)
+                    Ok(TestEnumParametersResponse::NotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -654,6 +666,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_param).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -673,7 +686,7 @@ impl Api for Client {
                 200 => {
 
 
-                    Ok(TestInlineAdditionalPropertiesResponse::Status200)
+                    Ok(TestInlineAdditionalPropertiesResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -720,7 +733,7 @@ impl Api for Client {
                 200 => {
 
 
-                    Ok(TestJsonFormDataResponse::Status200)
+                    Ok(TestJsonFormDataResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -752,6 +765,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Patch, &url);
@@ -771,6 +785,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::Client>(&buf)?;
 
                     Ok(TestClassnameResponse::SuccessfulOperation(body))
                 },
@@ -824,7 +839,7 @@ impl Api for Client {
                 405 => {
 
 
-                    Ok(AddPetResponse::Status405)
+                    Ok(AddPetResponse::InvalidInput)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -875,7 +890,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeletePetResponse::Status400)
+                    Ok(DeletePetResponse::InvalidPetValue)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -936,7 +951,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(FindPetsByStatusResponse::Status400)
+                    Ok(FindPetsByStatusResponse::InvalidStatusValue)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -997,7 +1012,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(FindPetsByTagsResponse::Status400)
+                    Ok(FindPetsByTagsResponse::InvalidTagValue)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1054,12 +1069,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(GetPetByIdResponse::Status400)
+                    Ok(GetPetByIdResponse::InvalidIDSupplied)
                 },
                 404 => {
 
 
-                    Ok(GetPetByIdResponse::Status404)
+                    Ok(GetPetByIdResponse::PetNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1111,17 +1126,17 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(UpdatePetResponse::Status400)
+                    Ok(UpdatePetResponse::InvalidIDSupplied)
                 },
                 404 => {
 
 
-                    Ok(UpdatePetResponse::Status404)
+                    Ok(UpdatePetResponse::PetNotFound)
                 },
                 405 => {
 
 
-                    Ok(UpdatePetResponse::Status405)
+                    Ok(UpdatePetResponse::ValidationException)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1168,7 +1183,7 @@ impl Api for Client {
                 405 => {
 
 
-                    Ok(UpdatePetWithFormResponse::Status405)
+                    Ok(UpdatePetWithFormResponse::InvalidInput)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1239,6 +1254,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<models::ApiResponse>(&buf)?;
 
                     Ok(UploadFileResponse::SuccessfulOperation(body))
                 },
@@ -1299,12 +1315,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeleteOrderResponse::Status400)
+                    Ok(DeleteOrderResponse::InvalidIDSupplied)
                 },
                 404 => {
 
 
-                    Ok(DeleteOrderResponse::Status404)
+                    Ok(DeleteOrderResponse::OrderNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1351,6 +1367,7 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
+                    let body = serde_json::from_str::<HashMap<String, i32>>(&buf)?;
 
                     Ok(GetInventoryResponse::SuccessfulOperation(body))
                 },
@@ -1409,12 +1426,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(GetOrderByIdResponse::Status400)
+                    Ok(GetOrderByIdResponse::InvalidIDSupplied)
                 },
                 404 => {
 
 
-                    Ok(GetOrderByIdResponse::Status404)
+                    Ok(GetOrderByIdResponse::OrderNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1446,6 +1463,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1475,7 +1493,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(PlaceOrderResponse::Status400)
+                    Ok(PlaceOrderResponse::InvalidOrder)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1507,6 +1525,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1526,7 +1545,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUserResponse::Status0)
+                    Ok(CreateUserResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1558,6 +1577,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1577,7 +1597,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUsersWithArrayInputResponse::Status0)
+                    Ok(CreateUsersWithArrayInputResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1609,6 +1629,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -1628,7 +1649,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(CreateUsersWithListInputResponse::Status0)
+                    Ok(CreateUsersWithListInputResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1675,12 +1696,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(DeleteUserResponse::Status400)
+                    Ok(DeleteUserResponse::InvalidUsernameSupplied)
                 },
                 404 => {
 
 
-                    Ok(DeleteUserResponse::Status404)
+                    Ok(DeleteUserResponse::UserNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1737,12 +1758,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(GetUserByNameResponse::Status400)
+                    Ok(GetUserByNameResponse::InvalidUsernameSupplied)
                 },
                 404 => {
 
 
-                    Ok(GetUserByNameResponse::Status404)
+                    Ok(GetUserByNameResponse::UserNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1809,7 +1830,7 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(LoginUserResponse::Status400)
+                    Ok(LoginUserResponse::InvalidUsername)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1856,7 +1877,7 @@ impl Api for Client {
                 0 => {
 
 
-                    Ok(LogoutUserResponse::Status0)
+                    Ok(LogoutUserResponse::SuccessfulOperation)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -1888,6 +1909,7 @@ impl Api for Client {
         );
 
 
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Put, &url);
@@ -1907,12 +1929,12 @@ impl Api for Client {
                 400 => {
 
 
-                    Ok(UpdateUserResponse::Status400)
+                    Ok(UpdateUserResponse::InvalidUserSupplied)
                 },
                 404 => {
 
 
-                    Ok(UpdateUserResponse::Status404)
+                    Ok(UpdateUserResponse::UserNotFound)
                 },
                 code => {
                     let mut buf = [0; 100];

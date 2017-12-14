@@ -405,6 +405,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "UPLOAD_FILE"
           uppercase_data_type: "APIRESPONSE"
+          producesJson: true
       security:
       - petstore_auth:
         - "write:pets"
@@ -437,6 +438,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_INVENTORY"
           uppercase_data_type: "HASHMAP<STRING, I32>"
+          producesJson: true
       security:
       - api_key: []
       operation_id: "get_inventory"
@@ -467,6 +469,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "PLACE_ORDER"
+        consumesJson: true
       responses:
         200:
           description: "successful operation"
@@ -592,6 +595,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "CREATE_USER"
+        consumesJson: true
       responses:
         default:
           description: "successful operation"
@@ -627,6 +631,7 @@ paths:
         example: "&Vec::new()"
         model_key: "OuterBoolean"
         uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
+        consumesJson: true
       responses:
         default:
           description: "successful operation"
@@ -661,6 +666,7 @@ paths:
         example: "&Vec::new()"
         model_key: "OuterBoolean"
         uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
+        consumesJson: true
       responses:
         default:
           description: "successful operation"
@@ -820,6 +826,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "UPDATE_USER"
+        consumesJson: true
       responses:
         400:
           description: "Invalid user supplied"
@@ -893,6 +900,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "TEST_CLASSNAME"
+        consumesJson: true
       responses:
         200:
           description: "successful operation"
@@ -902,6 +910,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_CLASSNAME"
           uppercase_data_type: "CLIENT"
+          producesJson: true
       security:
       - api_key_query: []
       operation_id: "test_classname"
@@ -1211,6 +1220,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "TEST_CLIENT_MODEL"
+        consumesJson: true
       responses:
         200:
           description: "successful operation"
@@ -1220,6 +1230,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_CLIENT_MODEL"
           uppercase_data_type: "CLIENT"
+          producesJson: true
       operation_id: "test_client_model"
       uppercase_operation_id: "TEST_CLIENT_MODEL"
       path: "/fake"
@@ -1245,6 +1256,7 @@ paths:
         example: "None"
         model_key: "OuterBoolean"
         uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
+        consumesJson: true
       responses:
         200:
           description: "Output number"
@@ -1254,6 +1266,7 @@ paths:
           x-uppercaseResponseId: "OUTPUT_NUMBER"
           uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
           uppercase_data_type: "OUTERNUMBER"
+          producesJson: true
       operation_id: "fake_outer_number_serialize"
       uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
       path: "/fake/outer/number"
@@ -1278,6 +1291,7 @@ paths:
         example: "None"
         model_key: "OuterBoolean"
         uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
+        consumesJson: true
       responses:
         200:
           description: "Output string"
@@ -1287,6 +1301,7 @@ paths:
           x-uppercaseResponseId: "OUTPUT_STRING"
           uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
           uppercase_data_type: "OUTERSTRING"
+          producesJson: true
       operation_id: "fake_outer_string_serialize"
       uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
       path: "/fake/outer/string"
@@ -1311,6 +1326,7 @@ paths:
         example: "None"
         model_key: "OuterBoolean"
         uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
+        consumesJson: true
       responses:
         200:
           description: "Output boolean"
@@ -1320,6 +1336,7 @@ paths:
           x-uppercaseResponseId: "OUTPUT_BOOLEAN"
           uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
           uppercase_data_type: "OUTERBOOLEAN"
+          producesJson: true
       operation_id: "fake_outer_boolean_serialize"
       uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
       path: "/fake/outer/boolean"
@@ -1344,6 +1361,7 @@ paths:
         example: "None"
         model_key: "OuterBoolean"
         uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
+        consumesJson: true
       responses:
         200:
           description: "Output composite"
@@ -1353,6 +1371,7 @@ paths:
           x-uppercaseResponseId: "OUTPUT_COMPOSITE"
           uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
           uppercase_data_type: "OUTERCOMPOSITE"
+          producesJson: true
       operation_id: "fake_outer_composite_serialize"
       uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
       path: "/fake/outer/composite"
@@ -1417,6 +1436,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
+        consumesJson: true
       responses:
         200:
           description: "successful operation"
@@ -1453,6 +1473,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "TEST_SPECIAL_TAGS"
+        consumesJson: true
       responses:
         200:
           description: "successful operation"
@@ -1462,6 +1483,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_SPECIAL_TAGS"
           uppercase_data_type: "CLIENT"
+          producesJson: true
       operation_id: "test_special_tags"
       uppercase_operation_id: "TEST_SPECIAL_TAGS"
       path: "/another-fake/dummy"
