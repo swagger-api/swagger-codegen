@@ -42,6 +42,9 @@ import java.util.List;
 import java.util.Map;
 
 public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
+    @SuppressWarnings("hiding")
+    protected Logger LOGGER = LoggerFactory.getLogger(AkkaScalaClientCodegen.class);
+
     protected String mainPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
@@ -60,9 +63,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
      * unmarshalling problems and any other RuntimeException will be considered as ApiErrors.
      */
     protected boolean onlyOneSuccess = true;
-
-    @SuppressWarnings("hiding")
-    protected Logger LOGGER = LoggerFactory.getLogger(AkkaScalaClientCodegen.class);
 
     public AkkaScalaClientCodegen() {
         super();
@@ -99,8 +99,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         additionalProperties.put("onlyOneSuccess", onlyOneSuccess);
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
         final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
@@ -137,6 +135,8 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
 
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "Map");
+
+        cliOptions.add(new CliOption(CodegenConstants.BUILD_TOOL, CodegenConstants.BUILD_TOOL_DESC).defaultValue("sbt"));
     }
 
     @Override
@@ -192,6 +192,30 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
             }
         }
         return super.postProcessOperations(objs);
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        BuildToolName buildToolName = BuildToolName.fromName((String) additionalProperties.get(CodegenConstants.BUILD_TOOL));
+
+        LOGGER.info("Processing options {}", buildToolName.name());
+
+        switch (buildToolName) {
+            case MAVEN: {
+                supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+                break;
+            }
+            case SBT: {
+                supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
+                break;
+            }
+            default: {
+                supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
+                break;
+            }
+        }
     }
 
     @Override
@@ -342,5 +366,18 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
         return input.replace("\"", "");
+    }
+
+    public static enum BuildToolName {
+        SBT, MAVEN, NONE;
+
+        public static BuildToolName fromName(String value) {
+            for (BuildToolName buildToolName: BuildToolName.values()) {
+                if(buildToolName.name().equalsIgnoreCase(value)) {
+                    return buildToolName;
+                }
+            }
+            return NONE;
+        }
     }
 }
