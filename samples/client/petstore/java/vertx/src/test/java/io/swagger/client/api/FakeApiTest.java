@@ -194,6 +194,22 @@ public class FakeApiTest {
     }
     
     /**
+     * test inline additionalProperties
+     * 
+     *
+     * @param context Vertx test context for doing assertions
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest(TestContext context) {
+        Async async = context.async();
+        Object param = null;
+        api.testInlineAdditionalProperties(param, result -> {
+            // TODO: test validations
+            async.complete();
+        });
+    }
+    
+    /**
      * test json serialization of form data
      * 
      *

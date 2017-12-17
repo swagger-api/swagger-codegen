@@ -39,7 +39,7 @@ public class Pet {
   private String name = null;
 
   @JsonProperty("photoUrls")
-  private List<String> photoUrls = new ArrayList<String>();
+  private List<String> photoUrls = new ArrayList<>();
 
   @JsonProperty("tags")
   private List<Tag> tags = null;
@@ -168,7 +168,7 @@ public class Pet {
 
   public Pet addTagsItem(Tag tagsItem) {
     if (this.tags == null) {
-      this.tags = new ArrayList<Tag>();
+      this.tags = new ArrayList<>();
     }
     this.tags.add(tagsItem);
     return this;
@@ -249,8 +249,19 @@ public class Pet {
    * (except the first line).
    */
   private String toIndentedString(java.lang.Object o) {
+    return toIndentedString(o, false);
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line). Obfuscate the value, if required.
+   */
+  private String toIndentedString(java.lang.Object o, boolean isObfuscated) {
     if (o == null) {
       return "null";
+    }
+    if (isObfuscated) {
+      return "***";
     }
     return o.toString().replace("\n", "\n    ");
   }

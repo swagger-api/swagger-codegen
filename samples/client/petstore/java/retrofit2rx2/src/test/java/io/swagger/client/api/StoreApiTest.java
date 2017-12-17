@@ -22,7 +22,6 @@ public class StoreApiTest {
         api = new ApiClient().createService(StoreApi.class);
     }
 
-    
     /**
      * Delete purchase order by ID
      *
@@ -35,7 +34,6 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Returns pet inventories by status
      *
@@ -47,7 +45,6 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Find purchase order by ID
      *
@@ -60,7 +57,6 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Place an order for a pet
      *
@@ -73,5 +69,4 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
 }

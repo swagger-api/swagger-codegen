@@ -131,6 +131,18 @@ public class FakeApiTest {
         // TODO: test validations
     }
     /**
+     * test inline additionalProperties
+     *
+     * 
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest() {
+        Object param = null;
+        // Void response = api.testInlineAdditionalProperties(param);
+
+        // TODO: test validations
+    }
+    /**
      * test json serialization of form data
      *
      * 

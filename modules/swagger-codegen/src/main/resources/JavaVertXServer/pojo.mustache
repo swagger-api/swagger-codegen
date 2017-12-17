@@ -53,7 +53,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
     StringBuilder sb = new StringBuilder();
     sb.append("class {{classname}} {\n");
     {{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
-    {{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
+    {{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}}{{#vendorExtensions.x-obfuscated}}, true{{/vendorExtensions.x-obfuscated}})).append("\n");
     {{/vars}}sb.append("}");
     return sb.toString();
   }
@@ -62,9 +62,20 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
+    return toIndentedString(o, false);
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line). Obfuscate the value, if required.
+   */
+  private String toIndentedString(java.lang.Object o, boolean isObfuscated) {
     if (o == null) {
       return "null";
+    }
+    if (isObfuscated) {
+      return "***";
     }
     return o.toString().replace("\n", "\n    ");
   }

@@ -18,6 +18,9 @@ public class GroovyClientCodegen extends AbstractJavaCodegen {
 
         sourceFolder = projectFolder + File.separator + "groovy";
         outputFolder = "generated-code/groovy";
+        // TODO: implement model tests for Groovy
+        modelTestTemplateFiles.clear(); //remove java model test templates 
+        modelTestResourceTemplateFiles.clear(); //remove java model test resource templates
         modelTemplateFiles.put("model.mustache", ".groovy");
         apiTemplateFiles.put("api.mustache", ".groovy");
         apiTestTemplateFiles.clear(); // TODO: add test template

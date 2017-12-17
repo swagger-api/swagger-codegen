@@ -4,6 +4,9 @@ package io.swagger.codegen;
  * A class for storing constants that are used throughout the project.
  */
 public class CodegenConstants {
+    public static final String TEMPLATE_EXTENSION = "mustache";
+    public static final String DOT_TEMPLATE_EXTENSION = "." + TEMPLATE_EXTENSION;
+    
     public static final String APIS = "apis";
     public static final String MODELS = "models";
     public static final String SUPPORTING_FILES = "supportingFiles";

@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import org.joda.time.LocalDate;
+import io.swagger.model.OuterComposite;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -50,7 +51,11 @@ import java.util.Map;
 
 
 /**
- * API tests for FakeApi
+ * Swagger Petstore
+ *
+ * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ *
+ * API tests for FakeApi 
  */
 public class FakeApiTest {
 
@@ -63,12 +68,68 @@ public class FakeApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", FakeApi.class, providers);
+        api = JAXRSClientFactory.create("http://petstore.swagger.io:80/v2", FakeApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
     }
 
+    
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void fakeOuterBooleanSerializeTest() {
+        Boolean body = null;
+        //Boolean response = api.fakeOuterBooleanSerialize(body);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void fakeOuterCompositeSerializeTest() {
+        OuterComposite body = null;
+        //OuterComposite response = api.fakeOuterCompositeSerialize(body);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void fakeOuterNumberSerializeTest() {
+        BigDecimal body = null;
+        //BigDecimal response = api.fakeOuterNumberSerialize(body);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void fakeOuterStringSerializeTest() {
+        String body = null;
+        //String response = api.fakeOuterStringSerialize(body);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
     
     /**
      * To test \&quot;client\&quot; model
@@ -138,6 +199,43 @@ public class FakeApiTest {
         Integer enumQueryInteger = null;
         Double enumQueryDouble = null;
         //api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+        
+        // TODO: test validations
+        
+        
+    }
+    
+    /**
+     * test inline additionalProperties
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest() {
+        Object param = null;
+        //api.testInlineAdditionalProperties(param);
+        
+        // TODO: test validations
+        
+        
+    }
+    
+    /**
+     * test json serialization of form data
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testJsonFormDataTest() {
+        String param = null;
+        String param2 = null;
+        //api.testJsonFormData(param, param2);
         
         // TODO: test validations
         

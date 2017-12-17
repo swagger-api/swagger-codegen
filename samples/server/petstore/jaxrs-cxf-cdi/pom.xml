@@ -5,11 +5,9 @@
     <packaging>war</packaging>
     <name>swagger-jaxrs-cxf-cdi-server</name>
     <version>1.0.0</version>
-
     <build>
         <!-- Main source directory -->
         <sourceDirectory>src/main/java</sourceDirectory>
-
         <plugins>
             <!-- Add src/gen/java to compilation -->
             <plugin>
@@ -31,7 +29,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <!-- Java EE 7 doesn't need a web.xml -->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -42,9 +39,7 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencies>
-
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
             <groupId>javax</groupId>
@@ -52,7 +47,6 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxrs -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -62,21 +56,18 @@
             <version>3.0.2</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider -->
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>[2.8.3,3)</version>
         </dependency>
-
         <!-- Swagger annotations -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>[1.5.3,1.5.16]</version>
         </dependency>
-        
        <!-- Bean Validation API support -->
        <dependency>
            <groupId>javax.validation</groupId>
@@ -84,7 +75,14 @@
            <version>1.1.0.Final</version>
            <scope>provided</scope>
        </dependency>
-
+       <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>${junit-version}</version>
+          <scope>test</scope>
+      </dependency>
     </dependencies>
-
+    <properties>
+      <junit-version>4.12</junit-version>
+    </properties>
 </project>

@@ -61,22 +61,22 @@ Please follow the [installation](#installation) instruction and execute the foll
 import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.FakeApi;
+import io.swagger.client.api.AnotherFakeApi;
 
 import java.io.File;
 import java.util.*;
 
-public class FakeApiExample {
+public class AnotherFakeApiExample {
 
     public static void main(String[] args) {
         
-        FakeApi apiInstance = new FakeApi();
-        Boolean body = true; // Boolean | Input boolean as post body
+        AnotherFakeApi apiInstance = new AnotherFakeApi();
+        Client body = new Client(); // Client | client model
         try {
-            Boolean result = apiInstance.fakeOuterBooleanSerialize(body);
+            Client result = apiInstance.testSpecialTags(body);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FakeApi#fakeOuterBooleanSerialize");
+            System.err.println("Exception when calling AnotherFakeApi#testSpecialTags");
             e.printStackTrace();
         }
     }
@@ -90,6 +90,7 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AnotherFakeApi* | [**testSpecialTags**](docs/AnotherFakeApi.md#testSpecialTags) | **PATCH** /another-fake/dummy | To test special tags
 *FakeApi* | [**fakeOuterBooleanSerialize**](docs/FakeApi.md#fakeOuterBooleanSerialize) | **POST** /fake/outer/boolean | 
 *FakeApi* | [**fakeOuterCompositeSerialize**](docs/FakeApi.md#fakeOuterCompositeSerialize) | **POST** /fake/outer/composite | 
 *FakeApi* | [**fakeOuterNumberSerialize**](docs/FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
@@ -97,6 +98,7 @@ Class | Method | HTTP request | Description
 *FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**testEnumParameters**](docs/FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
+*FakeApi* | [**testInlineAdditionalProperties**](docs/FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
 *FakeApi* | [**testJsonFormData**](docs/FakeApi.md#testJsonFormData) | **GET** /fake/jsonFormData | test json serialization of form data
 *FakeClassnameTags123Api* | [**testClassname**](docs/FakeClassnameTags123Api.md#testClassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**addPet**](docs/PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
@@ -165,6 +167,12 @@ Authentication schemes defined for the API:
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
+
+### api_key_query
+
+- **Type**: API key
+- **API key parameter name**: api_key_query
+- **Location**: URL query string
 
 ### http_basic_test
 

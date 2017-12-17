@@ -84,8 +84,19 @@ public class ArrayOfArrayOfNumberOnly   {
    * (except the first line).
    */
   private String toIndentedString(java.lang.Object o) {
+    return toIndentedString(o, false);
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line). Obfuscate the value, if required.
+   */
+  private String toIndentedString(java.lang.Object o, boolean isObfuscated) {
     if (o == null) {
       return "null";
+    }
+    if (isObfuscated) {
+      return "***";
     }
     return o.toString().replace("\n", "\n    ");
   }

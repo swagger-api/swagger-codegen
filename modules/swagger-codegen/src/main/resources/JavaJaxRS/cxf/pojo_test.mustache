@@ -1,0 +1,16 @@
+
+    @Test
+    public void testInstance() {
+        new {{classname}}();
+    }
+{{#vars}}{{#vendorExtensions.x-obfuscated}}
+    @Test
+    public void testObfuscation_{{name}}() {
+        {{classname}} model = new {{classname}}();
+        assertTrue("Unexpected toString() for null obfuscated property: " + model.toString(), model.toString().contains("{{name}}: null"));
+        {{datatypeWithEnum}} value = ModelTestUtils.getInstanceOf({{datatypeWithEnum}}.class);
+        model.{{setter}}(value);
+        assertTrue("Unexpected toString() for non-null obfuscated property: " + model.toString(), model.toString().contains("{{name}}: ***"));
+        assertTrue("Unexpected toString() for non-null obfuscated property: " + model.toString(), !model.toString().contains(Objects.toString(value)));
+    }
+{{/vendorExtensions.x-obfuscated}}{{/vars}}
