@@ -70,7 +70,8 @@ namespace IO.Swagger
                         Description = "Swagger Petstore (ASP.NET Core 2.0)",
                         Contact = new Contact()
                         {
-                           Url = "",
+                           Name = "Swagger Codegen Contributors",
+                           Url = "https://github.com/swagger-api/swagger-codegen",
                            Email = "apiteam@swagger.io"
                         },
                         TermsOfService = "http://swagger.io/terms/"
@@ -79,9 +80,11 @@ namespace IO.Swagger
                     c.DescribeAllEnumsAsStrings();
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
                     // Sets the basePath property in the Swagger document generated
-                    c.DocumentFilter<BasePathDocumentFilter>("/v2");
-                    // Do validation of path parameters w. DataAnnotation attributes
-                    c.OperationFilter<PathParameterValidationFilter>();
+                    c.DocumentFilter<BasePathFilter>("/v2");
+
+                    // Include DataAnnotation attributes on Controller Action parameters as Swagger validation rules (e.g required, pattern, ..)
+                    // Use [ValidateModelState] on Actions to actually validate it in C# as well!
+                    c.OperationFilter<GeneratePathParamsValidationFilter>();
                 });
         }
 
@@ -100,7 +103,11 @@ namespace IO.Swagger
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
+                    //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
                     c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Swagger Petstore");
+
+                    //TODO: Or alternatively use the original Swagger contract that's included in the static files
+                    // c.SwaggerEndpoint("/swagger-original.json", "Swagger Petstore Original");
                 });
 
             if (env.IsDevelopment())
