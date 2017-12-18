@@ -20,7 +20,7 @@ enum HttpRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
 namespace {{this}} {
 {{/cppNamespaceDeclarations}}
 
-class SWGHttpRequestInputFileElement {
+class {{prefix}}HttpRequestInputFileElement {
 
 public:
     QString variable_name;
@@ -39,7 +39,7 @@ public:
     HttpRequestVarLayout var_layout;
     QMap<QString, QString> vars;
     QMap<QString, QString> headers;
-    QList<SWGHttpRequestInputFileElement> files;
+    QList<{{prefix}}HttpRequestInputFileElement> files;
     QByteArray request_body;
 
     HttpRequestInput();

@@ -1,5 +1,5 @@
 {{>licenseInfo}}
-#include "SWGHttpRequest.h"
+#include "{{prefix}}HttpRequest.h"
 #include <QDateTime>
 #include <QUrl>
 #include <QFileInfo>
@@ -32,7 +32,7 @@ void HttpRequestInput::add_var(QString key, QString value) {
 }
 
 void HttpRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
-    SWGHttpRequestInputFileElement file;
+    {{prefix}}HttpRequestInputFileElement file;
     file.variable_name = variable_name;
     file.local_filename = local_filename;
     file.request_filename = request_filename;
@@ -181,7 +181,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         }
 
         // add files
-        for (QList<SWGHttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
+        for (QList<{{prefix}}HttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
             QFileInfo fi(file_info->local_filename);
 
             // ensure necessary variables are available

@@ -99,15 +99,16 @@ void
     {{#bodyParams}}
     {{#isContainer}}
     QJsonArray* {{paramName}}Array = new QJsonArray();
-    toJsonArray((QList<void*>*){{paramName}}, {{paramName}}Array, QString("body"), QString("SWGUser*"));
+    toJsonArray((QList<void*>*){{paramName}}, {{paramName}}Array, QString("body"), QString("{{prefix}}User*"));
 
     QJsonDocument doc(*{{paramName}}Array);
     QByteArray bytes = doc.toJson();
 
     input.request_body.append(bytes);
     {{/isContainer}}
-    {{^isContainer}}
-    QString output = {{paramName}}.asJson();
+    {{^isContainer}}{{#isString}}
+    QString output(*{{paramName}});{{/isString}}{{^isString}}
+    QString output = {{paramName}}.asJson();{{/isString}}
     input.request_body.append(output);
     {{/isContainer}}{{/bodyParams}}
 
