@@ -486,7 +486,6 @@ public class JavaPKMSTServerCodegen extends AbstractJavaCodegen {
             return;
         }
         if (swagger.getTags() != null) {
-            System.out.println("Tags are::" + swagger.getTags());
             List<ResourcePath> resourcePaths = new ArrayList<>();
             for (Tag tag : swagger.getTags()) {
                 ResourcePath resourcePath = new ResourcePath();
