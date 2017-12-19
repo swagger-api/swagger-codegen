@@ -25,7 +25,7 @@
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
 - **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 3.5 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Eiffel**, **Erlang**, **Go**, **Groovy**, **Haskell** (http-client, Servant), **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx, Google API Client Library for Java), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust** (rust, rust-server), **Scala** (akka, http4s, swagger-async-httpclient), **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
-- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Rust** (rust-server), **Scala** ([Finch](https://github.com/finagle/finch), [Lagom](https://github.com/lagom/lagom), Scalatra)
+- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework, [PKMST](https://github.com/ProKarma-Inc/pkmst-getting-started-examples)), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Rust** (rust-server), **Scala** ([Finch](https://github.com/finagle/finch), [Lagom](https://github.com/lagom/lagom), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki**
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
 - **Others**: **JMeter**
@@ -823,6 +823,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [PostAffiliatePro](https://www.postaffiliatepro.com/)
 - [PracticeBird](https://www.practicebird.com/)
 - [Prill Tecnologia](http://www.prill.com.br)
+- [Prokarma](https://www.prokarma.com)
 - [QAdept](http://qadept.com/)
 - [QuantiModo](https://quantimo.do/)
 - [QuickBlox](https://quickblox.com/)
@@ -853,6 +854,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [TaskData](http://www.taskdata.com/)
 - [ThirdWatch.ai](https://www.thirdwatch.ai/)
 - [ThoughtWorks](https://www.thoughtworks.com)
+- [Tpay](https://tpay.com)
 - [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
@@ -1031,6 +1033,7 @@ Here is a list of template creators:
    * Java Spring Boot: @diyfr
    * Java Undertow: @stevehu
    * Java Play Framework: @JFCote
+   * Java PKMST: @anshu2185 @sanshuman @rkumar-pk @ninodpillai
    * JAX-RS RestEasy: @chameleon82
    * JAX-RS CXF: @hiveship
    * JAX-RS CXF (CDI): @nickcmaynard
@@ -1103,7 +1106,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) @cbornet (2017/09) @kenjones-cisco (2017/11)|
 | R        |  |
 | Ruby      | @cliffano (2017/07) @zlx (2017/09) |
-| Rust      | @frol (2017/07) @farcaller (2017/08) |
+| Rust      | @frol (2017/07) @farcaller (2017/08) @bjgill (2017/12) |
 | Scala     | @clasnake (2017/07) @jimschubert (2017/09) |
 | Swift     | @jgavris (2017/07) @ehyche (2017/08) @Edubits (2017/09) @jaz-ah (2017/09) |
 | TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) |
