@@ -107,8 +107,8 @@ void
     input.request_body.append(bytes);
     {{/isContainer}}
     {{^isContainer}}{{#isString}}
-    QString output(*{{paramName}});{{/isString}}{{^isString}}
-    QString output = {{paramName}}.asJson();{{/isString}}
+    QString output(*{{paramName}});{{/isString}}{{#isByteArray}}QString output(*{{paramName}});{{/isByteArray}}{{^isString}}{{^isByteArray}}
+    QString output = {{paramName}}.asJson();{{/isByteArray}}{{/isString}}
     input.request_body.append(output);
     {{/isContainer}}{{/bodyParams}}
 

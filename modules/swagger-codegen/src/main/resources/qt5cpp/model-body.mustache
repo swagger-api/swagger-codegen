@@ -39,11 +39,20 @@ void
     {{#vars}}
     {{#complexType}}
     if({{name}} != nullptr) {
-        {{#isContainer}}{{#isListContainer}}QList<{{complexType}}*>* arr = {{name}};{{/isListContainer}}{{#isMapContainer}}QMap<QString, {{complexType}}*>* arr = {{name}};{{/isMapContainer}}
+        {{#isContainer}}{{^items.isContainer}}
+        {{#isListContainer}}QList<{{complexType}}*>* arr = {{name}};{{/isListContainer}}{{#isMapContainer}}QMap<QString, {{complexType}}*>* arr = {{name}};{{/isMapContainer}}
         foreach({{complexType}}* o, *arr) {
             delete o;
-        }
-        {{/isContainer}}delete {{name}};
+        }{{/items.isContainer}}
+        {{#items.isContainer}}{{#isListContainer}}{{#items.isListContainer}}QList<QList<{{items.items.baseType}}*>*>* arr = {{name}};{{/items.isListContainer}}
+        {{#items.isMapContainer}}QList<QMap<QString, {{items.items.baseType}}*>*>* arr = {{name}};{{/items.isMapContainer}}
+        for(auto o: *arr) {
+            for(auto o1: *o) {                
+                delete o1;
+            }
+            delete o;
+        }{{/isListContainer}}{{/items.isContainer}}{{/isContainer}}
+        delete {{name}};
     }{{/complexType}}
     {{/vars}}
 }
