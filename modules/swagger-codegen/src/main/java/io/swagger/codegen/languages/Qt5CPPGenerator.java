@@ -179,6 +179,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, modelNamePrefix + "Object.h"));
 
             typeMapping.put("object", modelNamePrefix + "Object");
+            typeMapping.put("file", modelNamePrefix + "HttpRequestInputFileElement");
             importMapping.put("SWGHttpRequestInputFileElement", "#include \"" + modelNamePrefix + "HttpRequest.h\"");
             additionalProperties().put("prefix", modelNamePrefix);
         }

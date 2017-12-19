@@ -108,9 +108,11 @@ QJsonObject*
     {{^isContainer}}
     {{#complexType}}
     {{^isString}}
+    {{^isDateTime}}
     if({{name}}->isSet()){
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }
+    {{/isDateTime}}
     {{/isString}}
     {{#isString}}
     if({{name}} != nullptr && *{{name}} != QString("")){
@@ -144,9 +146,11 @@ QJsonObject*
     {{^complexType}}
     {{^isContainer}}
     {{^isString}}
+    {{^isDateTime}}
     if(m_{{name}}_isSet){
         obj->insert("{{baseName}}", QJsonValue({{name}}));
     }
+    {{/isDateTime}}
     {{/isString}}
     {{#isString}}
     if({{name}} != nullptr && *{{name}} != QString("")) { 
@@ -194,7 +198,7 @@ bool
     bool isObjectUpdated = false;
     do{
     {{#vars}}
-        {{#isPrimitiveType}}if(m_{{name}}_isSet){ isObjectUpdated = true; break;}{{/isPrimitiveType}}{{#isContainer}}if({{name}}->size() > 0){ isObjectUpdated = true; break;}{{/isContainer}}{{^isContainer}}{{#complexType}}{{^isString}}if({{name}} != nullptr && {{name}}->isSet()){ isObjectUpdated = true; break;}{{/isString}}{{#isString}}if({{name}} != nullptr && *{{name}} != QString("")){ isObjectUpdated = true; break;}{{/isString}}{{/complexType}}{{/isContainer}}
+        {{#isPrimitiveType}}if(m_{{name}}_isSet){ isObjectUpdated = true; break;}{{/isPrimitiveType}}{{#isContainer}}if({{name}}->size() > 0){ isObjectUpdated = true; break;}{{/isContainer}}{{^isContainer}}{{#complexType}}{{^isString}}{{^isDateTime}}if({{name}} != nullptr && {{name}}->isSet()){ isObjectUpdated = true; break;}{{/isDateTime}}{{/isString}}{{#isString}}if({{name}} != nullptr && *{{name}} != QString("")){ isObjectUpdated = true; break;}{{/isString}}{{/complexType}}{{/isContainer}}
     {{/vars}}
     }while(false);
     return isObjectUpdated;
