@@ -56,7 +56,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "ADD_PET"
-        consumesXml: true
+        consumesJson: true
       responses:
         405:
           description: "Invalid input"
@@ -98,7 +98,7 @@ paths:
         example: "???"
         model_key: "OuterBoolean"
         uppercase_operation_id: "UPDATE_PET"
-        consumesXml: true
+        consumesJson: true
       responses:
         400:
           description: "Invalid ID supplied"
@@ -162,7 +162,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
           uppercase_data_type: "VEC<PET>"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid status value"
           x-responseId: "InvalidStatusValue"
@@ -210,7 +210,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
           uppercase_data_type: "VEC<PET>"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid tag value"
           x-responseId: "InvalidTagValue"
@@ -254,7 +254,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_PET_BY_ID"
           uppercase_data_type: "PET"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
@@ -479,7 +479,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "PLACE_ORDER"
           uppercase_data_type: "ORDER"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid Order"
           x-responseId: "InvalidOrder"
@@ -522,7 +522,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_ORDER_BY_ID"
           uppercase_data_type: "ORDER"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
@@ -721,7 +721,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "LOGIN_USER"
           uppercase_data_type: "STRING"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid username/password supplied"
           x-responseId: "InvalidUsername"
@@ -781,7 +781,7 @@ paths:
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "GET_USER_BY_NAME"
           uppercase_data_type: "USER"
-          producesXml: true
+          producesJson: true
         400:
           description: "Invalid username supplied"
           x-responseId: "InvalidUsernameSupplied"

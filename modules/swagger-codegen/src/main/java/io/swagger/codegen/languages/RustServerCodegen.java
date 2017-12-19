@@ -528,9 +528,8 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         // if "consumes" is defined (per operation or using global definition)
         if (consumes != null && !consumes.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
-            for (String key : consumes) {
+            for (String mimeType : consumes) {
                 Map<String, String> mediaType = new HashMap<String, String>();
-                String mimeType = processMimeType(key);
 
                 if (mimeType.startsWith("Application/Xml")) {
                     additionalProperties.put("usesXml", true);
@@ -562,9 +561,8 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         boolean producesPlainText = false;
         if (produces != null && !produces.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
-            for (String key : produces) {
+            for (String mimeType : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
-                String mimeType = processMimeType(key);
 
                 if (mimeType.startsWith("Application/Xml")) {
                     additionalProperties.put("usesXml", true);
@@ -1022,58 +1020,5 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             }
         }
         return false;
-    }
-
-    private String processMimeType(String mimeType){
-        // Transform mime type into a form that the hyper mime! macro can handle.
-        String result = "";
-
-        String[] split_attributes = mimeType.split(";");
-        String media = split_attributes[0];
-        String[] mediaTypes = media.split("/");
-
-        if (mediaTypes.length == 2) {
-
-            if (mediaTypes[0].equals("*")){
-                result += "Star";
-            } else {
-                result += escapeText(escapeQuotationMark(initialCaps(mediaTypes[0])));
-            }
-
-            result += "/";
-
-            if (mediaTypes[1].equals("*")) {
-                result += "Star";
-            } else {
-                result += escapeText(escapeQuotationMark(initialCaps(mediaTypes[1])));
-            }
-        } else {
-            LOGGER.error("Failed to parse media type: "
-                         + mimeType
-                         + ", media types should have exactly one /");
-        }
-
-        if (split_attributes.length == 2) {
-            String attributes = "";
-            String[] attrs = split_attributes[1].split(",");
-
-            for (String attr : attrs) {
-                String[] keyValuePair =attr.split("=");
-                if (keyValuePair.length == 2) {
-                    attributes += "(\""
-                                + escapeText(escapeQuotationMark(keyValuePair[0].trim()))
-                                + "\")=(\""
-                                + escapeText(escapeQuotationMark(keyValuePair[1].trim()))
-                                + "\")";
-                } else {
-                    LOGGER.error("Failed to parse parameter attributes: "
-                                 + split_attributes[1]
-                                 + ", attributes must be a comma separated list of 'key=value' pairs");
-                }
-            }
-            result += "; " + attributes;
-        }
-
-        return result;
     }
 }

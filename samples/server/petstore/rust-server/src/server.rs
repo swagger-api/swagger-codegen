@@ -22,7 +22,7 @@ use mimetypes;
 use multipart::server::{Multipart, SaveResult};
 
 use serde_json;
-use serde_xml_rs;
+
 
 #[allow(unused_imports)]
 use std::collections::{HashMap, BTreeMap};
@@ -909,7 +909,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
-                    let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_body_raw.as_bytes());
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -1088,7 +1088,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FindPetsByStatusResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
@@ -1175,7 +1175,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         FindPetsByTagsResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
@@ -1247,7 +1247,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         GetPetByIdResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
@@ -1342,7 +1342,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                 let mut unused_elements = Vec::new();
 
                 let param_body = if let Some(param_body_raw) = param_body { 
-                    let deserializer = &mut serde_xml_rs::de::Deserializer::new_from_reader(param_body_raw.as_bytes());
+                    let deserializer = &mut serde_json::Deserializer::from_str(&param_body_raw);
 
                     let param_body: Option<models::Pet> = serde_ignored::deserialize(deserializer, |path| {
                             warn!("Ignoring unknown field in body: {}", path);
@@ -1756,7 +1756,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         GetOrderByIdResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
@@ -1844,7 +1844,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         PlaceOrderResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
@@ -2184,7 +2184,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         GetUserByNameResponse::SuccessfulOperation(body) => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));    
                             response.headers.set(ContentType(mimetypes::responses::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
@@ -2261,7 +2261,7 @@ fn add_routes<T>(router: &mut Router, api: T) where T: Api + Send + Sync + Clone
                     Ok(rsp) => match rsp {
                         LoginUserResponse::SuccessfulOperation{ body, x_rate_limit, x_expires_after } => {
 
-                            let body_string = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
+                            let body_string = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                             let mut response = Response::with((status::Status::from_u16(200), body_string));                            header! { (ResponseXRateLimit, "X-Rate-Limit") => [i32] }
                             response.headers.set(ResponseXRateLimit(x_rate_limit));

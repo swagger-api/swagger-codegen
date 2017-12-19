@@ -2,7 +2,7 @@
 extern crate chrono;
 extern crate uuid;
 
-use serde_xml_rs;
+
 use serde::ser::Serializer;
 
 use std::collections::HashMap;
