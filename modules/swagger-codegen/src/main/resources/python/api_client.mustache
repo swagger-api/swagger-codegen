@@ -547,7 +547,12 @@ class ApiClient(object):
         try:
             return klass(data)
         except UnicodeEncodeError:
-            return six.u(data)
+            if isinstance(data, unicode):
+                # TODO: remove this case when handled by
+                # https://github.com/benjaminp/six/issues/45
+                return data
+            else:
+                return six.u(data)
         except TypeError:
             return data
 
