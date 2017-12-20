@@ -33,10 +33,10 @@ esac
 
 echo "[INFO] Target framework: ${frameworkVersion}"
 
-if [ ! type nuget &>/dev/null ]; then
+if ! type nuget &>/dev/null; then
     echo "[INFO] Download nuget and packages"
     wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
-    nuget_cmd="mono nuget"
+    nuget_cmd="mono nuget.exe"
 fi
 
 mozroots --import --sync
