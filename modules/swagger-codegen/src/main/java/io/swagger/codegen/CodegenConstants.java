@@ -152,6 +152,8 @@ public class CodegenConstants {
 
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
+    public static final String BUILD_TOOL = "buildTool";
+    public static final String BUILD_TOOL_DESC = "Specify the build tool you want to use to build your Scala project (Default: sbt)";
 
     public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
     public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
