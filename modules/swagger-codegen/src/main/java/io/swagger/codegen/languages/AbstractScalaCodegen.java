@@ -27,6 +27,7 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     protected String modelPropertyNaming = "camelCase";
     protected String invokerPackage = "io.swagger.client";
     protected String sourceFolder = "src/main/scala";
+    protected boolean stripPackageName = true;
 
     public AbstractScalaCodegen() {
         super();
@@ -56,6 +57,10 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
 
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
             this.setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
+        }
+        if (additionalProperties.containsKey(CodegenConstants.STRIP_PACKAGE_NAME) &&
+                "false".equalsIgnoreCase(additionalProperties.get(CodegenConstants.STRIP_PACKAGE_NAME).toString())) {
+            this.stripPackageName = false;
         }
     }
 
@@ -197,7 +202,7 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     }
 
     protected String stripPackageName(String input) {
-        if (StringUtils.isEmpty(input) || input.lastIndexOf(".") < 0)
+        if (!stripPackageName || StringUtils.isEmpty(input) || input.lastIndexOf(".") < 0)
             return input;
 
         int lastIndexOfDot = input.lastIndexOf(".");
