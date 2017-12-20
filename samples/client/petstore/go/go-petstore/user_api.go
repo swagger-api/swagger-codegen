@@ -27,7 +27,6 @@ var (
 
 type UserApiService service
 
-
 /* UserApiService Create user
  This can only be done by the logged in user.
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -47,7 +46,6 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Resp
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -85,7 +83,6 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Resp
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -109,7 +106,6 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
 
@@ -146,7 +142,6 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -170,7 +165,6 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
 
@@ -207,7 +201,6 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -232,7 +225,6 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *htt
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
 
@@ -267,7 +259,6 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *htt
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -292,7 +283,6 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -333,7 +323,6 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -358,7 +347,6 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	localVarQueryParams.Add("username", parameterToString(username, ""))
 	localVarQueryParams.Add("password", parameterToString(password, ""))
@@ -401,7 +389,6 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -423,7 +410,6 @@ func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -459,7 +445,6 @@ func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -484,7 +469,6 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -522,7 +506,5 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
-

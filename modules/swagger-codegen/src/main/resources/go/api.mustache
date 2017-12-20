@@ -18,7 +18,6 @@ var (
 )
 
 type {{classname}}Service service
-
 {{#operation}}
 
 /* {{{classname}}}Service {{summary}}{{#notes}}
@@ -46,7 +45,6 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	{{#allParams}}
 	{{^required}}
 	{{#isPrimitiveType}}
@@ -223,7 +221,6 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	}
 
 {{/returnType}}
-
 	return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
 }
 {{/operation}}{{/operations}}

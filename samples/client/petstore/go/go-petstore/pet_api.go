@@ -28,7 +28,6 @@ var (
 
 type PetApiService service
 
-
 /* PetApiService Add a new pet to the store
  
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -48,7 +47,6 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
@@ -86,7 +84,6 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, 
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -112,7 +109,6 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if err := typeCheckParameter(localVarOptionals["apiKey"], "string", "apiKey"); err != nil {
 		return nil, err
 	}
@@ -154,7 +150,6 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -178,7 +173,6 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	localVarQueryParams.Add("status", parameterToString(status, "csv"))
 	// to determine the Content-Type header
@@ -220,7 +214,6 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -244,7 +237,6 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	localVarQueryParams.Add("tags", parameterToString(tags, "csv"))
 	// to determine the Content-Type header
@@ -286,7 +278,6 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -311,7 +302,6 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *htt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -364,7 +354,6 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *htt
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -387,7 +376,6 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Respons
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
@@ -425,7 +413,6 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Respons
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -452,7 +439,6 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if err := typeCheckParameter(localVarOptionals["name"], "string", "name"); err != nil {
 		return nil, err
 	}
@@ -500,7 +486,6 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -528,7 +513,6 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if err := typeCheckParameter(localVarOptionals["additionalMetadata"], "string", "additionalMetadata"); err != nil {
 		return successPayload, nil, err
 	}
@@ -584,7 +568,5 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

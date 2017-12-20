@@ -27,7 +27,6 @@ var (
 
 type StoreApiService service
 
-
 /* StoreApiService Delete purchase order by ID
  For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -48,7 +47,6 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) ( *ht
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -84,7 +82,6 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) ( *ht
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -107,7 +104,6 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32,  
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -159,7 +155,6 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32,  
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -184,7 +179,6 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if orderId < 1 {
 		return successPayload, nil, reportError("orderId must be greater than 1")
 	}
@@ -231,7 +225,6 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -255,7 +248,6 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order,  *
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -298,7 +290,5 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order,  *
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

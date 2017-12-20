@@ -26,7 +26,6 @@ var (
 
 type FakeClassnameTags123ApiService service
 
-
 /* FakeClassnameTags123ApiService To test class name in snake case
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body client model
@@ -46,7 +45,6 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -100,7 +98,5 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

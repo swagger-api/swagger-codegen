@@ -26,7 +26,6 @@ var (
 
 type AnotherFakeApiService service
 
-
 /* AnotherFakeApiService To test special tags
  To test special tags
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -47,7 +46,6 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -89,7 +87,5 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-

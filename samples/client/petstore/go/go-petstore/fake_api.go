@@ -27,7 +27,6 @@ var (
 
 type FakeApiService service
 
-
 /* FakeApiService 
  Test serialization of outer boolean types
  * @param ctx context.Context for authentication, logging, tracing, etc.
@@ -49,7 +48,6 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -92,7 +90,6 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -117,7 +114,6 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -160,7 +156,6 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -185,7 +180,6 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -228,7 +222,6 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -253,7 +246,6 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -296,7 +288,6 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -320,7 +311,6 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -362,7 +352,6 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
@@ -399,7 +388,6 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if number < 32.1 {
 		return nil, reportError("number must be greater than 32.1")
 	}
@@ -511,7 +499,6 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -542,7 +529,6 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if err := typeCheckParameter(localVarOptionals["enumFormString"], "string", "enumFormString"); err != nil {
 		return nil, err
 	}
@@ -616,7 +602,6 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -639,7 +624,6 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -675,7 +659,6 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
 
@@ -699,7 +682,6 @@ func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, par
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -735,7 +717,5 @@ func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, par
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
-
