@@ -14,22 +14,23 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"errors"
+	"fmt"
 	"io"
 	"mime/multipart"
-    "golang.org/x/oauth2"
-    "golang.org/x/net/context"
 	"net/http"
 	"net/url"
-	"time"
 	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
-	"strings"
-	"unicode/utf8"
 	"strconv"
+	"strings"
+	"time"
+	"unicode/utf8"
+
+    "golang.org/x/oauth2"
+    "golang.org/x/net/context"
 )
 
 var (
@@ -81,7 +82,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 func atoi(in string) (int, error) {
 	return strconv.Atoi(in)
 }
-
 
 // selectHeaderContentType select a content type from the available list.
 func selectHeaderContentType(contentTypes []string) string {
@@ -273,7 +273,6 @@ func (c *APIClient) prepareRequest (
 	
 	// Add the user agent to the request.
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
-	
 
 	if ctx != nil {
 		// add context to the request
@@ -310,7 +309,6 @@ func (c *APIClient) prepareRequest (
 	return localVarRequest, nil
 }
 
-
 // Add a file to the multipart request
 func addFile(w *multipart.Writer, fieldName, path string) error {
 	file, err := os.Open(path)
@@ -329,7 +327,7 @@ func addFile(w *multipart.Writer, fieldName, path string) error {
 }
 
 // Prevent trying to import "fmt"
-func reportError(format string, a ...interface{}) (error) {
+func reportError(format string, a ...interface{}) error {
 	return fmt.Errorf(format, a...)
 }
 
@@ -383,7 +381,6 @@ func detectContentType(body interface{}) string {
 	return contentType
 }
 
-
 // Ripped from https://github.com/gregjones/httpcache/blob/master/httpcache.go
 type cacheControl map[string]string
 
@@ -406,7 +403,7 @@ func parseCacheControl(headers http.Header) cacheControl {
 }
 
 // CacheExpires helper function to determine remaining time before repeating a request.
-func CacheExpires(r *http.Response) (time.Time) {
+func CacheExpires(r *http.Response) time.Time {
 	// Figure out when the cache expires.
 	var expires time.Time
 	now, err := time.Parse(time.RFC1123, r.Header.Get("date"))
@@ -433,7 +430,6 @@ func CacheExpires(r *http.Response) (time.Time) {
 	return expires
 }
 
-func strlen(s string) (int) {
+func strlen(s string) int {
 	return utf8.RuneCountInString(s)
 }
-
