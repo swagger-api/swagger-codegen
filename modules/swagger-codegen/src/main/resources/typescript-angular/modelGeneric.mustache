@@ -40,7 +40,7 @@ export namespace {{classname}} {
             isRequired: true,{{/required}}{{#minLength}}
             minLength: {{minLength}},{{/minLength}}{{#maxLength}}
             maxLength: {{maxLength}},{{/maxLength}}
-            type: '{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}',{{#isEnum}}{{^isListContainer}}
+            type: '{{{datatype}}}',{{#isEnum}}{{^isListContainer}}
             isEnum: true,
             allowedEnumValues: {{enumName}}Values,{{/isListContainer}}{{/isEnum}}{{#isPrimitiveType}}
             isPrimitiveType: true,{{/isPrimitiveType}}{{#isListContainer}}
