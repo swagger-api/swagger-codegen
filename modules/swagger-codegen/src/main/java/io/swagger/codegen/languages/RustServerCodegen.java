@@ -440,6 +440,14 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
+    boolean isMimetypeXml(String mimetype) {
+        return mimetype.toLowerCase().startsWith("application/xml");
+    }
+
+    boolean isMimetypePlainText(String mimetype) {
+        return mimetype.toLowerCase().startsWith("text/plain");
+    }
+
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
@@ -531,10 +539,10 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             for (String mimeType : consumes) {
                 Map<String, String> mediaType = new HashMap<String, String>();
 
-                if (mimeType.startsWith("Application/Xml")) {
+                if (isMimetypeXml(mimeType)) {
                     additionalProperties.put("usesXml", true);
                     consumesXml = true;
-                } else if (mimeType.startsWith("Text/Plain")) {
+                } else if (isMimetypePlainText(mimeType)) {
                     consumesPlainText = true;
                 }
 
@@ -564,10 +572,10 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             for (String mimeType : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
 
-                if (mimeType.startsWith("Application/Xml")) {
+                if (isMimetypeXml(mimeType)) {
                     additionalProperties.put("usesXml", true);
                     producesXml = true;
-                } else if (mimeType.startsWith("Text/Plain")) {
+                } else if (isMimetypePlainText(mimeType)) {
                     producesPlainText = true;
                 }
 

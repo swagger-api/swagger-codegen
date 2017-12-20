@@ -27,7 +27,7 @@ use std::str;
 use mimetypes;
 
 use serde_json;
-
+use serde_xml_rs;
 
 #[allow(unused_imports)]
 use std::collections::{HashMap, BTreeMap};
@@ -819,7 +819,7 @@ impl Api for Client {
         );
 
 
-        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
+        let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Post, &url);
@@ -941,7 +941,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<Vec<models::Pet>>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(FindPetsByStatusResponse::SuccessfulOperation(body))
                 },
@@ -999,7 +1002,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<Vec<models::Pet>>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(FindPetsByTagsResponse::SuccessfulOperation(body))
                 },
@@ -1053,7 +1059,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Pet>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<models::Pet>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(GetPetByIdResponse::SuccessfulOperation(body))
                 },
@@ -1097,7 +1106,7 @@ impl Api for Client {
         );
 
 
-        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
+        let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
 
         let hyper_client = (self.hyper_client)();
         let request = hyper_client.request(hyper::method::Method::Put, &url);
@@ -1407,7 +1416,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Order>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<models::Order>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(GetOrderByIdResponse::SuccessfulOperation(body))
                 },
@@ -1471,7 +1483,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::Order>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<models::Order>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(PlaceOrderResponse::SuccessfulOperation(body))
                 },
@@ -1733,7 +1748,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<models::User>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<models::User>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
 
                     Ok(GetUserByNameResponse::SuccessfulOperation(body))
                 },
@@ -1798,7 +1816,10 @@ impl Api for Client {
                 200 => {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    let body = serde_json::from_str::<String>(&buf)?;
+                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
+                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
+                    let body = serde_xml_rs::from_str::<String>(&buf)
+                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
                     header! { (ResponseXRateLimit, "X-Rate-Limit") => [i32] }
                     let response_x_rate_limit = response.headers.get::<ResponseXRateLimit>().ok_or_else(|| "Required response header X-Rate-Limit for response 200 was not found.")?;
                     header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
