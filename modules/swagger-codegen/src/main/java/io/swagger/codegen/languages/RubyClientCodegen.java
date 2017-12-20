@@ -36,6 +36,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String GEM_DESCRIPTION = "gemDescription";
     public static final String GEM_AUTHOR = "gemAuthor";
     public static final String GEM_AUTHOR_EMAIL = "gemAuthorEmail";
+    public static final String SKIP_VALIDATION = "skipValidation";
 
     protected String gemName;
     protected String moduleName;
@@ -141,29 +142,22 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(MODULE_NAME, "top module name (convention: CamelCase, usually corresponding" +
                 " to gem name).").defaultValue("SwaggerClient"));
         cliOptions.add(new CliOption(GEM_VERSION, "gem version.").defaultValue("1.0.0"));
-
         cliOptions.add(new CliOption(GEM_LICENSE, "gem license. ").
                 defaultValue("proprietary"));
-
         cliOptions.add(new CliOption(GEM_REQUIRED_RUBY_VERSION, "gem required Ruby version. ").
                 defaultValue(">= 1.9"));
-
         cliOptions.add(new CliOption(GEM_HOMEPAGE, "gem homepage. ").
                 defaultValue("http://swagger.io"));
-
         cliOptions.add(new CliOption(GEM_SUMMARY, "gem summary. ").
                 defaultValue("A ruby wrapper for the swagger APIs"));
-
         cliOptions.add(new CliOption(GEM_DESCRIPTION, "gem description. ").
                 defaultValue("This gem maps to a swagger API"));
-
         cliOptions.add(new CliOption(GEM_AUTHOR, "gem author (only one is supported)."));
-
         cliOptions.add(new CliOption(GEM_AUTHOR_EMAIL, "gem author email (only one is supported)."));
-
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated").
                 defaultValue(Boolean.TRUE.toString()));
-
+        cliOptions.add(new CliOption(SKIP_VALIDATION, "skip client-side validation.").
+                defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
@@ -176,6 +170,13 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else {
             additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
                     Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+        }
+
+        if (!additionalProperties.containsKey(SKIP_VALIDATION)) {
+            additionalProperties.put(SKIP_VALIDATION, Boolean.FALSE);
+        } else {
+            additionalProperties.put(SKIP_VALIDATION,
+                    Boolean.valueOf(additionalProperties().get(SKIP_VALIDATION).toString()));
         }
 
         if (additionalProperties.containsKey(GEM_NAME)) {
