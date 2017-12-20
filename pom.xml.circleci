@@ -822,6 +822,7 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
+                <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/scala</module>
                 <module>samples/client/petstore/scalaz</module>
                 <module>samples/client/petstore/clojure</module>
@@ -841,9 +842,9 @@
                 <module>samples/client/petstore/kotlin/</module>
                 <!-- test non-java projects -->
                 <module>samples/client/petstore/go</module>
-                <module>samples/client/petstore/ruby</module>
                 <!-- servers -->
                 <module>samples/server/petstore/java-inflector</module>
+				<module>samples/server/petstore/java-pkmst</module>
                 <module>samples/server/petstore/java-play-framework</module>
                 <module>samples/server/petstore/undertow</module>
                 <module>samples/server/petstore/jaxrs/jersey1</module>
