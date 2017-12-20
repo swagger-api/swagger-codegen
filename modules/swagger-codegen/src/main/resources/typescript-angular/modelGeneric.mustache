@@ -40,13 +40,13 @@ export namespace {{classname}} {
             isRequired: true,{{/required}}{{#minLength}}
             minLength: {{minLength}},{{/minLength}}{{#maxLength}}
             maxLength: {{maxLength}},{{/maxLength}}
-            type: '{{{datatype}}}',{{#isEnum}}
+            type: '{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}',{{#isEnum}}{{^isListContainer}}
             isEnum: true,
-            allowedEnumValues: {{enumName}}Values,{{/isEnum}}{{#isPrimitiveType}}
+            allowedEnumValues: {{enumName}}Values,{{/isListContainer}}{{/isEnum}}{{#isPrimitiveType}}
             isPrimitiveType: true,{{/isPrimitiveType}}{{#isListContainer}}
             isListContainer: true,{{/isListContainer}}{{#isMapContainer}}
             isMapContainer: true,{{/isMapContainer}}
-        } as {{^isEnum}}ApaleoPropertyMetaData{{/isEnum}}{{#isEnum}}ApaleoEnumPropertyMetaData<{{enumName}}>{{/isEnum}}),{{/vars}}
+        } as {{^isEnum}}ApaleoPropertyMetaData{{/isEnum}}{{#isEnum}}{{^isListContainer}}ApaleoEnumPropertyMetaData<{{enumName}}>{{/isListContainer}}{{#isListContainer}}ApaleoPropertyMetaData{{/isListContainer}}{{/isEnum}}),{{/vars}}
     };
 
     export function $buildForm<TAdditionalControls extends BuildFormAdditionalControlsBase = {}>(fb: FormBuilder, options?: BuildFormOptions<{{classname}}, TAdditionalControls>): FormGroup {
