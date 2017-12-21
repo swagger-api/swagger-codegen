@@ -7,10 +7,10 @@ with Security.Permissions;
 package {{package}}.Servers is
    use {{package}}.Models;
    type Server_Type is limited interface;
-   {{#authMethods}}{{#scopes}}
+{{#authMethods}}{{#scopes}}
    --  {{description}}
    package ACL_{{ident}} is new Security.Permissions.Definition ("{{scope}}");
-   {{/scopes}}{{/authMethods}}
+{{/scopes}}{{/authMethods}}
 
 {{#apiInfo}}
 {{#apis}}
@@ -23,7 +23,7 @@ package {{package}}.Servers is
       (Server : in out Server_Type{{#hasParams}};{{/hasParams}}
        {{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
        {{/hasMore}}{{/allParams}}{{#returnType}};
-       Result : out {{returnType}}{{/returnType}};
+       Result  : out {{returnType}}{{/returnType}};
        Context : in out Swagger.Servers.Context_Type) is abstract;
 {{/operation}}
 {{/operations}}
@@ -89,15 +89,17 @@ package {{package}}.Servers is
          procedure {{operationId}}
             ({{#allParams}}{{paramName}} : in {{dataType}}{{#hasMore}};
              {{/hasMore}}{{/allParams}}{{#returnType}};
-             Result : out {{returnType}}{{/returnType}};
+             Result  : out {{returnType}}{{/returnType}};
              Context : in out Swagger.Servers.Context_Type);
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
-         procedure {{operationId}} (Result : out {{returnType}});
+         procedure {{operationId}}
+            (Result  : out {{returnType}};
+             Context : in out Swagger.Servers.Context_Type);
          {{/returnType}}
          {{^returnType}}
-         procedure {{operationId}};
+         procedure {{operationId}} (Context : in out Swagger.Servers.Context_Type);
          {{/returnType}}
          {{/hasParams}}
 

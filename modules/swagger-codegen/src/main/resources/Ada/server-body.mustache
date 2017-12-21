@@ -10,6 +10,11 @@ package body {{package}}.Servers is
 {{#operations}}
 {{#operation}}
 
+      package API_{{operationId}} is
+         new Swagger.Servers.Operation (Handler => {{operationId}},
+                                        Method  => Swagger.Servers.{{httpMethod}},
+                                        URI     => "{{path}}");
+
       --  {{summary}}
       procedure {{operationId}}
          (Req     : in out Swagger.Servers.Request'Class;
@@ -27,6 +32,14 @@ package body {{package}}.Servers is
          Result : {{returnType}};
          {{/returnType}}
       begin
+         {{#authMethods}}
+         {{#scopes}}
+         if not Context.Has_Permission (ACL_{{ident}}.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         {{/scopes}}
+         {{/authMethods}}
          {{#queryParams}}
          Swagger.Servers.Get_Query_Parameter (Req, "{{baseName}}", {{paramName}});
          {{/queryParams}}
@@ -49,7 +62,7 @@ package body {{package}}.Servers is
          {{/hasBodyParam}}
          Impl.{{operationId}}
             ({{#allParams}}{{paramName}}{{#hasMore}},
-             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result, Context{{/returnType}});
+             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result{{/returnType}}, Context);
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
@@ -66,11 +79,6 @@ package body {{package}}.Servers is
          {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
          Stream.End_Document;{{/returnType}}
       end {{operationId}};
-
-      package API_{{operationId}} is
-         new Swagger.Servers.Operation (Handler => {{operationId}},
-                                        Method  => Swagger.Servers.{{httpMethod}},
-                                        URI     => "{{path}}");
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -136,7 +144,7 @@ package body {{package}}.Servers is
          {{/hasBodyParam}}
          Server.{{operationId}}
             ({{#allParams}}{{paramName}}{{#hasMore}},
-             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result, Context{{/returnType}});
+             {{/hasMore}}{{/allParams}}{{#returnType}}{{#hasParams}}, {{/hasParams}}Result{{/returnType}}, Context);
          {{/hasParams}}
          {{^hasParams}}
          {{#returnType}}
