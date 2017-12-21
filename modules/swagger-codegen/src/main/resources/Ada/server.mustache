@@ -8,7 +8,7 @@ with {{package}}.Servers;
 procedure {{package}}.Server is
    procedure Configure (Config : in out AWS.Config.Object);
 
-   CONFIG_PATH  : constant String := "{{package}}.properties";
+   CONFIG_PATH  : constant String := "{{packageConfig}}.properties";
 
    procedure Configure (Config : in out AWS.Config.Object) is
    begin
@@ -29,9 +29,9 @@ begin
    {{package}}.Servers.Server_Impl.Register (App);
 
    WS.Configure (Configure'Access);
-   WS.Register_Application ("/v2", App'Unchecked_Access);
+   WS.Register_Application ("{{basePathWithoutHost}}", App'Unchecked_Access);
    App.Dump_Routes (Util.Log.INFO_LEVEL);
-   Log.Info ("Connect you browser to: http://localhost:8080/v2");
+   Log.Info ("Connect you browser to: http://localhost:8080{{basePathWithoutHost}}/ui/index.html");
 
    WS.Start;
 
