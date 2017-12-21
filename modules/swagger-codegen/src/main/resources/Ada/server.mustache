@@ -4,7 +4,7 @@ with Swagger.Servers.AWS;
 with Swagger.Servers.Applications;
 with Util.Log.Loggers;
 with Util.Properties;
-with Samples.Server;
+with {{package}}.Servers;
 procedure {{package}}.Server is
    procedure Configure (Config : in out AWS.Config.Object);
 
@@ -17,7 +17,7 @@ procedure {{package}}.Server is
       AWS.Config.Set.Accept_Queue_Size (Config, 512);
    end Configure;
 
-   App     : aliased Swagger.Servers.Applications.Application;
+   App     : aliased Swagger.Servers.Applications.Application_Type;
    WS      : Swagger.Servers.AWS.AWS_Container;
    Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("{{package}}.Server");
    Props   : Util.Properties.Manager;
@@ -25,8 +25,8 @@ begin
    Props.Load_Properties (CONFIG_PATH);
    Util.Log.Loggers.Initialize (Props);
 
-   App.Setup (Props);
-   Samples.Server.My_Server.Register (App);
+   App.Configure (Props);
+   {{package}}.Servers.Server_Impl.Register (App);
 
    WS.Configure (Configure'Access);
    WS.Register_Application ("/v2", App'Unchecked_Access);
