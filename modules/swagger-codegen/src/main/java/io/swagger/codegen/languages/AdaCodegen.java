@@ -110,7 +110,6 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("server-body.mustache", null, serverPrefix + "-servers.adb"));
 
         // String title = swagger.getInfo().getTitle();
-        supportingFiles.add(new SupportingFile("gnat-project.mustache", "", "project.gpr"));
         supportingFiles.add(new SupportingFile("swagger.mustache", "web" + File.separator + "swagger", "swagger.json"));
 
         if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
@@ -120,6 +119,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             // e.g. petstore.api (package name) => petstore_api (project name)
             projectName = packageName.replaceAll("\\.", "_");
         }
+        supportingFiles.add(new SupportingFile("gnat-project.mustache", "", projectName + ".gpr"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -127,6 +127,22 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
          */
         additionalProperties.put("package", this.modelPackage);
         additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
+
+        String names[] = this.modelPackage.split("\\.");
+        String pkgName = names[0];
+        additionalProperties.put("packageLevel1", pkgName);
+        supportingFiles.add(new SupportingFile("package-spec-level1.mustache", null,
+                            "src" + File.separator + names[0].toLowerCase() + ".ads"));
+        if (names.length > 1) {
+            String fileName = names[0].toLowerCase() + "-" + names[1].toLowerCase() + ".ads";
+            pkgName = names[0] + "." + names[1];
+            additionalProperties.put("packageLevel2", pkgName);
+            supportingFiles.add(new SupportingFile("package-spec-level2.mustache", null,
+                                "src" + File.separator + fileName));
+        }
+        pkgName = this.modelPackage;
+        supportingFiles.add(new SupportingFile("server.mustache", null,
+                            "src" + File.separator + pkgName.toLowerCase() + "-server.adb"));
 
         // add lambda for mustache templates
         additionalProperties.put("lambdaAdaComment", new Mustache.Lambda() {
@@ -302,6 +318,12 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
 
         for (CodegenOperation op1 : operationList) {
+            if (op1.summary != null) {
+                op1.summary = op1.summary.trim();
+            }
+            if (op1.notes != null) {
+                op1.notes = op1.notes.trim();
+            }
             op1.vendorExtensions.put("x-has-uniq-produces", postProcessMediaTypes(op1.produces) == 1);
             op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
             op1.vendorExtensions.put("x-has-notes", op1.notes != null && op1.notes.length() > 0);
