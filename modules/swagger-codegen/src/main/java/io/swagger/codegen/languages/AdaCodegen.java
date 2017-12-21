@@ -123,15 +123,18 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             // e.g. petstore.api (package name) => petstore_api (project name)
             projectName = packageName.replaceAll("\\.", "_");
         }
+        String configBaseName = modelPackage.toLowerCase();
         supportingFiles.add(new SupportingFile("gnat-project.mustache", "", projectName + ".gpr"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("config.gpr", "", "config.gpr"));
+        supportingFiles.add(new SupportingFile("server-properties.mustache", "", configBaseName + ".properties"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("package", this.modelPackage);
+        additionalProperties.put("packageConfig", configBaseName);
         additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
 
         String names[] = this.modelPackage.split("\\.");
