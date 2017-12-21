@@ -195,8 +195,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(USE_ES6,
-                "use JavaScript ES6 (ECMAScript 6)")
-                .defaultValue(Boolean.TRUE.toString()));
+                "use JavaScript ES6 (ECMAScript 6) (beta). Default is ES5.")
+                .defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
