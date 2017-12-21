@@ -98,16 +98,20 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             packageName = (String) additionalProperties.get(CodegenConstants.PACKAGE_NAME);
         }
-        String serverPrefix = "src" + File.separator + "server" + File.separator + toFilename(modelPackage);
-        String clientPrefix = "src" + File.separator + "client" + File.separator + toFilename(modelPackage);
+        String srcPrefix = "src" + File.separator;
+        String serverPrefix = srcPrefix + "server" + File.separator + toFilename(modelPackage);
+        String clientPrefix = srcPrefix + "client" + File.separator + toFilename(modelPackage);
+        String implPrefix = srcPrefix + toFilename(modelPackage);
         supportingFiles.add(new SupportingFile("model-spec.mustache", null, clientPrefix + "-models.ads"));
         supportingFiles.add(new SupportingFile("model-body.mustache", null, clientPrefix + "-models.adb"));
         supportingFiles.add(new SupportingFile("model-spec.mustache", null, serverPrefix + "-models.ads"));
         supportingFiles.add(new SupportingFile("model-body.mustache", null, serverPrefix + "-models.adb"));
         supportingFiles.add(new SupportingFile("client-spec.mustache", null, clientPrefix + "-clients.ads"));
         supportingFiles.add(new SupportingFile("client-body.mustache", null, clientPrefix + "-clients.adb"));
-        supportingFiles.add(new SupportingFile("server-spec.mustache", null, serverPrefix + "-servers.ads"));
-        supportingFiles.add(new SupportingFile("server-body.mustache", null, serverPrefix + "-servers.adb"));
+        supportingFiles.add(new SupportingFile("server-skeleton-spec.mustache", null, serverPrefix + "-skeletons.ads"));
+        supportingFiles.add(new SupportingFile("server-skeleton-body.mustache", null, serverPrefix + "-skeletons.adb"));
+        supportingFiles.add(new SupportingFile("server-spec.mustache", null, implPrefix + "-servers.ads"));
+        supportingFiles.add(new SupportingFile("server-body.mustache", null, implPrefix + "-servers.adb"));
 
         // String title = swagger.getInfo().getTitle();
         supportingFiles.add(new SupportingFile("swagger.mustache", "web" + File.separator + "swagger", "swagger.json"));
