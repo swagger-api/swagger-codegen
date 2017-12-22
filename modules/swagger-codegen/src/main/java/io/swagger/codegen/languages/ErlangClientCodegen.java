@@ -117,6 +117,24 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         return type;
     }
 
+    public static String underscore2(String word) {
+        String firstPattern = "([A-Z]+)([A-Z][a-z])";
+        String secondPattern = "([a-z\\d])([A-Z])";
+        String replacementPattern = "$1_$2";
+        // Replace package separator with slash.
+        word = word.replaceAll("\\.", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        // Replace $ with two underscores for inner classes.
+        word = word.replaceAll("\\$", "__");
+        // Replace capital letter with _ plus lowercase letter.
+        word = word.replaceAll(firstPattern, replacementPattern);
+        word = word.replaceAll(secondPattern, replacementPattern);
+        word = word.replace('-', '_');
+        // replace space with underscore
+        word = word.replace(' ', '_');
+        word = word.toLowerCase();
+        return word;
+    }
+
     @Override
     public void processOpts() {
         super.processOpts();
@@ -221,17 +239,17 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
-        return this.packageName + "_" + underscore(name.replaceAll("-", "_"));
+        return this.packageName + "_" + underscore2(name.replaceAll("-", "_"));
     }
 
     @Override
     public String toApiName(String name) {
-        return this.packageName + "_" + underscore(name.replaceAll("-", "_"));
+        return this.packageName + "_" + underscore2(name.replaceAll("-", "_"));
     }
 
     @Override
     public String toModelFilename(String name) {
-        return this.packageName + "_" + underscore(name);
+        return this.packageName + "_" + underscore2(name);
     }
 
     @Override
@@ -240,18 +258,18 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // e.g. PetApi.erl => pet_api.erl
-        return this.packageName + "_" + underscore(name) + "_api";
+        return this.packageName + "_" + underscore2(name) + "_api";
     }
 
     @Override
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore2(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
-        return underscore(operationId);
+        return underscore2(operationId);
     }
 
     @Override

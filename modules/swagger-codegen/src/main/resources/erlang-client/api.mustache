@@ -3,7 +3,7 @@
 -export([{{#operations}}{{#operation}}{{^-first}},
          {{/-first}}{{operationId}}/{{arityRequired}}, {{operationId}}/{{arityOptional}}{{/operation}}{{/operations}}]).
 
--define(BASE_URL, <<"{{{basePath}}}">>).
+-define(BASE_URL, <<"{{{basePathWithoutHost}}}">>).
 
 {{#operations}}
     {{#operation}}
@@ -11,12 +11,12 @@
 {{^notes.isEmpty}}
 %% {{{notes}}}
 {{/notes.isEmpty}}
--spec {{operationId}}({{#allParams}}{{#required}}{{^-first}}, {{/-first}}{{{dataType}}}{{/required}}{{/allParams}}{{^bodyParams.isEmpty}}{{#bodyParams}}, term(){{/bodyParams}}{{/bodyParams.isEmpty}}) -> {{#returnType}}{ok, list(), {{{returnType}}}} | {error, string()}{{/returnType}}{{^returnType}}ok | {error, integer()}{{/returnType}}.
-{{operationId}}({{#allParams}}{{#required}}{{^-first}}, {{/-first}}{{paramName}}{{/required}}{{/allParams}}{{^bodyParams.isEmpty}}{{#bodyParams}}, {{paramName}}{{/bodyParams}}{{/bodyParams.isEmpty}}) ->
-    {{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{^bodyParams.isEmpty}}{{#bodyParams}}{{paramName}}, {{/bodyParams}}{{/bodyParams.isEmpty}}#{}).
+-spec {{operationId}}({{#allParams}}{{#required}}{{^-first}}, {{/-first}}{{{dataType}}}{{/required}}{{/allParams}}) -> {{#returnType}}{ok, list(), {{{returnType}}}} | {error, string()}{{/returnType}}{{^returnType}}ok | {error, integer()}{{/returnType}}.
+{{operationId}}({{#allParams}}{{#required}}{{^-first}}, {{/-first}}{{paramName}}{{/required}}{{/allParams}}) ->
+    {{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}#{}).
 
--spec {{operationId}}({{#allParams}}{{#required}}{{{dataType}}}, {{/required}}{{/allParams}}{{^bodyParams.isEmpty}}{{#bodyParams}}term(), {{/bodyParams}}{{/bodyParams.isEmpty}}maps:map()) -> {{#returnType}}{ok, list(), {{{returnType}}}} | {error, string()}{{/returnType}}{{^returnType}}ok | {error, integer()}{{/returnType}}.
-{{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{^bodyParams.isEmpty}}{{#bodyParams}}{{paramName}}{{/bodyParams}}, {{/bodyParams.isEmpty}}_Optional) ->
+-spec {{operationId}}({{#allParams}}{{#required}}{{{dataType}}}, {{/required}}{{/allParams}}maps:map()) -> {{#returnType}}{ok, list(), {{{returnType}}}} | {error, string()}{{/returnType}}{{^returnType}}ok | {error, integer()}{{/returnType}}.
+{{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}_Optional) ->
     Method = {{httpMethod}},
     Path = ["{{{replacedPathName}}}"],
     QS = {{#queryParams.isEmpty}}[]{{/queryParams.isEmpty}}{{^queryParams.isEmpty}}lists:flatten([{{#queryParams}}{{#required}}{{^-first}}, {{/-first}}{{#qsEncode}}{{this}}{{/qsEncode}}{{/required}}{{/queryParams}}])++[{X, maps:get(X, _Optional)} || X <- [{{#queryParams}}{{^required}}{{^-first}}, {{/-first}}'{{baseName}}'{{/required}}{{/queryParams}}], maps:is_key(X, _Optional)]{{/queryParams.isEmpty}},
