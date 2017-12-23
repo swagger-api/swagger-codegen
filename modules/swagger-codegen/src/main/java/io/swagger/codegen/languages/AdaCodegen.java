@@ -23,6 +23,7 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
     protected String projectName = "Swagger";
     protected List<Map<String, Object>> orderedModels;
     protected Map<String, List<String>> modelDepends;
+    protected Map<String, String> nullableTypeMapping;
     protected int scopeIndex = 0;
     protected HashMap<String, String> operationsScopes;
 
@@ -61,6 +62,15 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
         typeMapping.put("UUID", "Swagger.UString");
         typeMapping.put("file", "Swagger.Http_Content_Type");
         typeMapping.put("binary", "Swagger.Binary");
+
+        nullableTypeMapping = new HashMap<String, String>();
+        nullableTypeMapping.put("date", "Swagger.Nullable_Date");
+        nullableTypeMapping.put("DateTime", "Swagger.Nullable_Date");
+        nullableTypeMapping.put("string", "Swagger.Nullable_UString");
+        nullableTypeMapping.put("integer", "Swagger.Nullable_Integer");
+        nullableTypeMapping.put("long", "Swagger.Nullable_Long");
+        nullableTypeMapping.put("boolean", "Swagger.Nullable_Boolean");
+        nullableTypeMapping.put("object", "Swagger.Object");
 
         super.importMapping = new HashMap<String, String>();
         operationsScopes = new HashMap<String, String>();
@@ -240,7 +250,11 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             return "Swagger." + getTypeDeclaration(inner) + "_Map";
         }
         if (typeMapping.containsKey(swaggerType)) {
-            return typeMapping.get(swaggerType);
+            if (p.getRequired()) {
+                return typeMapping.get(swaggerType);
+            } else {
+                return nullableTypeMapping.get(swaggerType);
+            }
         }
         //  LOGGER.info("Swagger type " + swaggerType);
         if (languageSpecificPrimitives.contains(swaggerType)) {
