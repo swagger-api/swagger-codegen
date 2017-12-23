@@ -15,7 +15,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->api = new Api\StoreApi();
+        $this->api = new StoreApi();
     }
 
     /**
