@@ -82,7 +82,7 @@ abstract project Config is
    end linker;        
  
    package Ide is
-      for VCS_Kind use "Subversion";
+      for VCS_Kind use "git";
    end Ide;
 
 end Config;

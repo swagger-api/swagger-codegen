@@ -54,8 +54,8 @@ public class AdaCodegen extends AbstractAdaCodegen implements CodegenConfig {
             projectName = packageName.replaceAll("\\.", "_");
         }
         String configBaseName = modelPackage.toLowerCase();
-        supportingFiles.add(new SupportingFile("gnat-project.mustache", "", projectName + ".gpr"));
-        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("gnat-project.mustache", "", toFilename(projectName) + ".gpr"));
+        // supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("config.gpr", "", "config.gpr"));
 
         /*
