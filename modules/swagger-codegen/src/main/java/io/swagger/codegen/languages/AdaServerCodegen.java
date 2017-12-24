@@ -67,15 +67,17 @@ public class AdaServerCodegen extends AbstractAdaCodegen implements CodegenConfi
          */
         additionalProperties.put("package", this.modelPackage);
         additionalProperties.put("packageConfig", configBaseName);
+        additionalProperties.put("packageDir", "server");
+        additionalProperties.put("mainName", "server");
         additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
 
         String names[] = this.modelPackage.split("\\.");
         String pkgName = names[0];
         additionalProperties.put("packageLevel1", pkgName);
         supportingFiles.add(new SupportingFile("package-spec-level1.mustache", null,
-                            "src" + File.separator + names[0].toLowerCase() + ".ads"));
+                            "src" + File.separator + toFilename(names[0]) + ".ads"));
         if (names.length > 1) {
-            String fileName = names[0].toLowerCase() + "-" + names[1].toLowerCase() + ".ads";
+            String fileName = toFilename(names[0]) + "-" + toFilename(names[1]) + ".ads";
             pkgName = names[0] + "." + names[1];
             additionalProperties.put("packageLevel2", pkgName);
             supportingFiles.add(new SupportingFile("package-spec-level2.mustache", null,
@@ -83,7 +85,8 @@ public class AdaServerCodegen extends AbstractAdaCodegen implements CodegenConfi
         }
         pkgName = this.modelPackage;
         supportingFiles.add(new SupportingFile("server.mustache", null,
-                            "src" + File.separator + pkgName.toLowerCase() + "-server.adb"));
+                            "src" + File.separator + toFilename(pkgName) + "-server.adb"));
+        additionalProperties.put("packageName", toFilename(pkgName));
 
         // add lambda for mustache templates
         additionalProperties.put("lambdaAdaComment", new Mustache.Lambda() {

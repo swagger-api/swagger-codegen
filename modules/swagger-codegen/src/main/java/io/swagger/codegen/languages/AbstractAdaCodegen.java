@@ -136,12 +136,6 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         // CLI options
         addOption(CodegenConstants.PROJECT_NAME, "GNAT project name",
                   this.projectName);
-        addOption(CodegenConstants.PACKAGE_NAME, "Ada package name (convention: name.space.model).",
-                  this.modelPackage);
-        addOption(CodegenConstants.MODEL_PACKAGE, "Ada package for models (convention: name.space.model).",
-                  this.modelPackage);
-        addOption(CodegenConstants.API_PACKAGE, "Ada package for apis (convention: name.space.api).",
-                  this.apiPackage);
 
         modelNameSuffix = "_Type";
         embeddedTemplateDir = templateDir = "Ada";
@@ -309,7 +303,12 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "Swagger." + getTypeDeclaration(inner) + "_Map";
+            String name = getTypeDeclaration(inner) + "_Map";
+            if (name.startsWith("Swagger.")) {
+                return name;
+            } else {
+                return "Swagger." + name;
+            }
         }
         if (typeMapping.containsKey(swaggerType)) {
             if (p.getRequired()) {
@@ -416,6 +415,17 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
             op1.vendorExtensions.put("x-has-uniq-consumes", postProcessMediaTypes(op1.consumes) == 1);
             op1.vendorExtensions.put("x-has-notes", op1.notes != null && op1.notes.length() > 0);
 
+            // Set the file parameter type for both allParams and formParams.
+            for (CodegenParameter p : op1.allParams) {
+                if (p.isFormParam && p.isFile) {
+                    p.dataType = "Swagger.File_Part_Type";
+                }
+            }
+            for (CodegenParameter p : op1.formParams) {
+                if (p.isFile) {
+                    p.dataType = "Swagger.File_Part_Type";
+                }
+            }
             postProcessAuthMethod(op1.authMethods);
 
             /*
