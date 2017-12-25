@@ -79,6 +79,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     static final String X_DATA_TYPE = "x-dataType";
     static final String X_ENUM_VALUES = "x-enumValues";
     static final String X_MEDIA_IS_JSON = "x-mediaIsJson";
+    static final String X_MEDIA_IS_WILDCARD = "x-mediaIsWildcard";
     static final String X_MIME_TYPES = "x-mimeTypes";
     static final String X_OPERATION_TYPE = "x-operationType";
     static final String X_PARAM_NAME_TYPE = "x-paramNameType";
@@ -721,7 +722,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         }
         if (op.hasProduces) {
             for (Map<String, String> m : op.produces) {
-                processMediaType(op,m);
+                processMediaType(op, m);
                 processInlineProducesContentType(op, m);
             }
         }
@@ -842,7 +843,9 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         if (isJsonMimeType(mediaType)) {
             m.put(X_MEDIA_IS_JSON, "true");
         }
-
+        if (isWildcardMimeType(mediaType)) {
+            m.put(X_MEDIA_IS_WILDCARD, "true");
+        }
         if (!knownMimeDataTypes.containsValue(mimeType) && !unknownMimeTypesContainsType(mimeType)) {
             unknownMimeTypes.add(m);
         }
@@ -1009,6 +1012,10 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     }
     static boolean isJsonMimeType(String mime) {
         return mime != null && JSON_MIME_PATTERN.matcher(mime).matches();
+    }
+
+    static boolean isWildcardMimeType(String mime) {
+        return mime != null && mime.equals("*/*");
     }
 
     @Override

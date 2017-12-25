@@ -24,6 +24,7 @@ Module : SwaggerPetstore.API
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE MonoLocalBinds #-}
 {-# OPTIONS_GHC -fno-warn-name-shadowing -fno-warn-unused-binds -fno-warn-unused-imports #-}
 
 module SwaggerPetstore.API where
@@ -361,10 +362,10 @@ instance HasOptionalParam TestEnumParameters EnumQueryDouble where
     req `addForm` toForm ("enum_query_double", xs)
 
 -- | @*/*@
-instance Consumes TestEnumParameters MimeAny
+instance MimeType mtype => Consumes TestEnumParameters mtype
 
 -- | @*/*@
-instance Produces TestEnumParameters MimeAny
+instance MimeType mtype => Produces TestEnumParameters mtype
 
 
 -- *** testInlineAdditionalProperties
@@ -1145,8 +1146,6 @@ instance MimeType MimeJsonCharsetutf8 where
   mimeType _ = Just $ P.fromString "application/json; charset=utf-8"
 instance A.ToJSON a => MimeRender MimeJsonCharsetutf8 a where mimeRender _ = A.encode
 instance A.FromJSON a => MimeUnrender MimeJsonCharsetutf8 a where mimeUnrender _ = A.eitherDecode
--- instance MimeRender MimeJsonCharsetutf8 T.Text where mimeRender _ = undefined
--- instance MimeUnrender MimeJsonCharsetutf8 T.Text where mimeUnrender _ = undefined
 
 -- ** MimeXmlCharsetutf8
 

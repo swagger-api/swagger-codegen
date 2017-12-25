@@ -2779,8 +2779,8 @@ instance SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.TestClassname Sw
 instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.TestJsonFormData SwaggerPetstore.MimeTypes.MimeJSON
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.TestInlineAdditionalProperties Data.Aeson.Types.Internal.Value
 instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.TestInlineAdditionalProperties SwaggerPetstore.MimeTypes.MimeJSON
-instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.TestEnumParameters SwaggerPetstore.MimeTypes.MimeAny
-instance SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.TestEnumParameters SwaggerPetstore.MimeTypes.MimeAny
+instance SwaggerPetstore.MimeTypes.MimeType mtype => SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.TestEnumParameters mtype
+instance SwaggerPetstore.MimeTypes.MimeType mtype => SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.TestEnumParameters mtype
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.TestClientModel SwaggerPetstore.Model.Client
 instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.TestClientModel SwaggerPetstore.MimeTypes.MimeJSON
 instance SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.TestClientModel SwaggerPetstore.MimeTypes.MimeJSON

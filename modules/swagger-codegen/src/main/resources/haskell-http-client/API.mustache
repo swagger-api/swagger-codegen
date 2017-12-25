@@ -14,6 +14,7 @@ Module : {{title}}.API
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE MonoLocalBinds #-}
 {-# OPTIONS_GHC -fno-warn-name-shadowing -fno-warn-unused-binds -fno-warn-unused-imports #-}
 
 module {{title}}.API where
@@ -100,11 +101,13 @@ instance HasOptionalParam {{{vendorExtensions.x-operationType}}} {{{vendorExtens
   applyOptionalParam req ({{{vendorExtensions.x-paramNameType}}} xs) =
     {{#isHeaderParam}}req `setHeader` {{>_headerColl}} ("{{{baseName}}}", xs){{/isHeaderParam}}{{#isQueryParam}}req `setQuery` {{>_queryColl}} ("{{{baseName}}}", Just xs){{/isQueryParam}}{{#isFormParam}}{{#isFile}}req `_addMultiFormPart` NH.partFileSource "{{{baseName}}}" xs{{/isFile}}{{^isFile}}{{#isMultipart}}req `_addMultiFormPart` NH.partLBS "{{{baseName}}}" (mimeRender' MimeMultipartFormData xs){{/isMultipart}}{{^isMultipart}}req `addForm` {{>_formColl}} ("{{{baseName}}}", xs){{/isMultipart}}{{/isFile}}{{/isFormParam}}{{/required}}{{/isBodyParam}}{{/allParams}}{{/vendorExtensions.x-hasOptionalParams}}{{#hasConsumes}}
 
-{{#consumes}}-- | @{{{mediaType}}}@
-instance Consumes {{{vendorExtensions.x-operationType}}} {{{x-mediaDataType}}}
+{{#consumes}}-- | @{{{mediaType}}}@{{^x-mediaIsWildcard}}
+instance Consumes {{{vendorExtensions.x-operationType}}} {{{x-mediaDataType}}}{{/x-mediaIsWildcard}}{{#x-mediaIsWildcard}}
+instance MimeType mtype => Consumes {{{vendorExtensions.x-operationType}}} mtype{{/x-mediaIsWildcard}}
 {{/consumes}}{{/hasConsumes}}{{#hasProduces}}
-{{#produces}}-- | @{{{mediaType}}}@
-instance Produces {{{vendorExtensions.x-operationType}}} {{{x-mediaDataType}}}
+{{#produces}}-- | @{{{mediaType}}}@{{^x-mediaIsWildcard}}
+instance Produces {{{vendorExtensions.x-operationType}}} {{{x-mediaDataType}}}{{/x-mediaIsWildcard}}{{#x-mediaIsWildcard}}
+instance MimeType mtype => Produces {{{vendorExtensions.x-operationType}}} mtype{{/x-mediaIsWildcard}}
 {{/produces}}{{/hasProduces}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 
@@ -167,8 +170,8 @@ data {{{x-mediaDataType}}} = {{{x-mediaDataType}}} deriving (P.Typeable)
 instance MimeType {{{x-mediaDataType}}} where
   mimeType _ = Just $ P.fromString "{{{mediaType}}}"{{#x-mediaIsJson}}
 instance A.ToJSON a => MimeRender {{{x-mediaDataType}}} a where mimeRender _ = A.encode
-instance A.FromJSON a => MimeUnrender {{{x-mediaDataType}}} a where mimeUnrender _ = A.eitherDecode{{/x-mediaIsJson}}
+instance A.FromJSON a => MimeUnrender {{{x-mediaDataType}}} a where mimeUnrender _ = A.eitherDecode{{/x-mediaIsJson}}{{^x-mediaIsJson}}
 -- instance MimeRender {{{x-mediaDataType}}} T.Text where mimeRender _ = undefined
--- instance MimeUnrender {{{x-mediaDataType}}} T.Text where mimeUnrender _ = undefined
+-- instance MimeUnrender {{{x-mediaDataType}}} T.Text where mimeUnrender _ = undefined{{/x-mediaIsJson}}
 
 {{/x-unknownMimeTypes}}{{/x-hasUnknownMimeTypes}}
