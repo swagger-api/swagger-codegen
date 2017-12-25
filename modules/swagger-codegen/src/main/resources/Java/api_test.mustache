@@ -1,45 +1,65 @@
 {{>licenseInfo}}
 
-package {{package}};
+package {{invokerPackage}}.action;
 
 import {{invokerPackage}}.ApiException;
 {{#imports}}import {{import}};
 {{/imports}}
-import org.junit.Test;
-import org.junit.Ignore;
+import com.microstrategy.yati.*;
+import com.microstrategy.yatilibrary.*;
+import com.microstrategy.yatiactions.rest.*;
 
-{{^fullJavaUtil}}
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-{{/fullJavaUtil}}
+//import java.util.ArrayList;
 
+{{#operations}}{{#operation}}
 /**
- * API tests for {{classname}}
+ * API tests for {{operationId}} in {{classname}}
  */
-@Ignore
-public class {{classname}}Test {
-
+public class {{operationIdCamelCase}}Action extends Action{
+	
+	{{#allParams}}
+    private {{{dataType}}} {{paramName}};
+    {{/allParams}}
+	{{/operation}}{{/operations}}
+	private StateContainer initialization;
+	
     private final {{classname}} api = new {{classname}}();
 
-    {{#operations}}{{#operation}}
-    /**
-     * {{summary}}
-     *
-     * {{notes}}
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void {{operationId}}Test() throws ApiException {
-        {{#allParams}}
-        {{{dataType}}} {{paramName}} = null;
-        {{/allParams}}
-        {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
-        // TODO: test validations
+    @Override
+	public int initialize(StateContainer parameters, ActionContextInterface actionContext) throws Exception {
+        initialization = parameters;
+        return EnumYatiTestResults.Ok;
     }
-    {{/operation}}{{/operations}}
+    
+	
+    @Override
+	public int execute(StateContainer state, ActionContextInterface actionContext) throws Exception {
+	
+		ApiClient apiClient = (ApiClient)state.get("apiClient");
+		api.setApiClient(apiClient);
+		
+	{{#operations}}{{#operation}}
+        {{#allParams}}
+        {{{dataType}}} {{paramName}} = ({{{dataType}}})Utils.getParameter("{{paramName}}", initialization, state, ({{{dataType}}})({{defaultTestValue}}));
+        {{#required}}
+  		if ({{paramName}} == null){
+	  		Utils.logMessage("Abort", "{{paramName}} not provided", actionContext);
+	 		 return EnumYatiTestResults.Abort;
+  		}
+  		{{/required}}
+        {{/allParams}}
+        {{#returnType}}{{{returnType}}} response{{/returnType}};
+        try{
+        	{{#returnType}}response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+		}catch(ApiException e){
+			Utils.logMessage("Fail", e.getMessage(), actionContext);
+			return EnumYatiTestResults.Fail;
+		}
+		{{#responses}}{{#isDefault}}
+		{{#returnType}}state.put("rest{{returnType}}", response);{{/returnType}}
+		Utils.logMessage("Info", "{{message}}", actionContext);
+		return EnumYatiTestResults.Ok;
+		{{/isDefault}}{{/responses}}
+     {{/operation}}{{/operations}}    
+    }    
 }
