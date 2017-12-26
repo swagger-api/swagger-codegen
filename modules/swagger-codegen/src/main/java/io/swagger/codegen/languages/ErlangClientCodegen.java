@@ -175,6 +175,7 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
 
         supportingFiles.add(new SupportingFile("rebar.config.mustache","", "rebar.config"));
         supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator + this.packageName + ".app.src"));
+        supportingFiles.add(new SupportingFile("utils.mustache", "", "src" + File.separator + this.packageName + "_utils.erl"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
 
@@ -397,8 +398,8 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             this.produces = o.produces;
             this.bodyParam = o.bodyParam;
             this.allParams = o.allParams;
-            this.arityRequired = Integer.toString(lengthRequired(o.allParams));
-            this.arityOptional = Integer.toString(lengthRequired(o.allParams)+1);
+            this.arityRequired = Integer.toString(lengthRequired(o.allParams)+1);
+            this.arityOptional = Integer.toString(lengthRequired(o.allParams)+2);
             this.bodyParams = o.bodyParams;
             this.pathParams = o.pathParams;
             this.queryParams = o.queryParams;

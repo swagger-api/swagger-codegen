@@ -1,0 +1,77 @@
+-module(petstore_store_api).
+
+-export([delete_order/2, delete_order/3,
+         get_inventory/1, get_inventory/2,
+         get_order_by_id/2, get_order_by_id/3,
+         place_order/2, place_order/3]).
+
+-define(BASE_URL, <<"/v2">>).
+
+%% @doc Delete purchase order by ID
+%% For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+-spec delete_order(ctx:ctx(), binary()) -> ok | {error, integer()}.
+delete_order(Ctx, OrderId) ->
+    delete_order(Ctx, OrderId, #{}).
+
+-spec delete_order(ctx:ctx(), binary(), maps:map()) -> ok | {error, integer()}.
+delete_order(Ctx, OrderId, _Optional) ->
+    Method = delete,
+    Path = ["/store/order/", OrderId, ""],
+    QS = [],
+    Headers = [],
+    Body1 = [],
+    Opts = [],
+
+    petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
+
+%% @doc Returns pet inventories by status
+%% Returns a map of status codes to quantities
+-spec get_inventory(ctx:ctx()) -> {ok, list(), maps:map()} | {error, string()}.
+get_inventory(Ctx) ->
+    get_inventory(Ctx, #{}).
+
+-spec get_inventory(ctx:ctx(), maps:map()) -> {ok, list(), maps:map()} | {error, string()}.
+get_inventory(Ctx, _Optional) ->
+    Method = get,
+    Path = ["/store/inventory"],
+    QS = [],
+    Headers = [],
+    Body1 = [],
+    Opts = [],
+
+    petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
+
+%% @doc Find purchase order by ID
+%% For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+-spec get_order_by_id(ctx:ctx(), integer()) -> {ok, list(), petstore_order:petstore_order()} | {error, string()}.
+get_order_by_id(Ctx, OrderId) ->
+    get_order_by_id(Ctx, OrderId, #{}).
+
+-spec get_order_by_id(ctx:ctx(), integer(), maps:map()) -> {ok, list(), petstore_order:petstore_order()} | {error, string()}.
+get_order_by_id(Ctx, OrderId, _Optional) ->
+    Method = get,
+    Path = ["/store/order/", OrderId, ""],
+    QS = [],
+    Headers = [],
+    Body1 = [],
+    Opts = [],
+
+    petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
+
+%% @doc Place an order for a pet
+-spec place_order(ctx:ctx(), petstore_order:petstore_order()) -> {ok, list(), petstore_order:petstore_order()} | {error, string()}.
+place_order(Ctx, Body) ->
+    place_order(Ctx, Body, #{}).
+
+-spec place_order(ctx:ctx(), petstore_order:petstore_order(), maps:map()) -> {ok, list(), petstore_order:petstore_order()} | {error, string()}.
+place_order(Ctx, Body, _Optional) ->
+    Method = post,
+    Path = ["/store/order"],
+    QS = [],
+    Headers = [],
+    Body1 = Body,
+    Opts = [],
+
+    petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
+
+
