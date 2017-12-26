@@ -1,4 +1,4 @@
--module(petstore_utils).
+-module({{packageName}}_utils).
 
 -export([request/7,
          optional_params/2]).
@@ -8,7 +8,7 @@
 -export_type([response_info/0]).
 
 request(_Ctx, Method, Path, QS, Headers, Body, Opts) ->
-    Url = hackney_url:make_url(application:get_env(petstore, host, "localhost"), Path, QS),
+    Url = hackney_url:make_url(application:get_env({{packageName}}, host, "localhost"), Path, QS),
 
     Body1 = case lists:keyfind(<<"Content-Type">>, 1, Headers) of
                 {_, <<"application/json", _/binary>>} ->

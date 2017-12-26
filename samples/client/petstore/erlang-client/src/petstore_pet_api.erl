@@ -12,133 +12,149 @@
 -define(BASE_URL, <<"/v2">>).
 
 %% @doc Add a new pet to the store
--spec add_pet(ctx:ctx(), petstore_pet:petstore_pet()) -> ok | {error, integer()}.
+-spec add_pet(ctx:ctx(), petstore_pet:petstore_pet()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 add_pet(Ctx, Body) ->
     add_pet(Ctx, Body, #{}).
 
--spec add_pet(ctx:ctx(), petstore_pet:petstore_pet(), maps:map()) -> ok | {error, integer()}.
-add_pet(Ctx, Body, _Optional) ->
+-spec add_pet(ctx:ctx(), petstore_pet:petstore_pet(), maps:map()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+add_pet(Ctx, Body, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = post,
     Path = ["/pet"],
     QS = [],
     Headers = [],
     Body1 = Body,
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Deletes a pet
--spec delete_pet(ctx:ctx(), integer()) -> ok | {error, integer()}.
+-spec delete_pet(ctx:ctx(), integer()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 delete_pet(Ctx, PetId) ->
     delete_pet(Ctx, PetId, #{}).
 
--spec delete_pet(ctx:ctx(), integer(), maps:map()) -> ok | {error, integer()}.
-delete_pet(Ctx, PetId, _Optional) ->
+-spec delete_pet(ctx:ctx(), integer(), maps:map()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+delete_pet(Ctx, PetId, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = delete,
     Path = ["/pet/", PetId, ""],
     QS = [],
-    Headers = []++[{X, maps:get(X, _Optional)} || X <- ['api_key'], maps:is_key(X, _Optional)],
+    Headers = []++petstore_utils:optional_params(['api_key'], _OptionalParams),
     Body1 = [],
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Finds Pets by status
 %% Multiple status values can be provided with comma separated strings
--spec find_pets_by_status(ctx:ctx(), list()) -> {ok, list(), [petstore_pet:petstore_pet()]} | {error, string()}.
+-spec find_pets_by_status(ctx:ctx(), list()) -> {ok, [petstore_pet:petstore_pet()], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 find_pets_by_status(Ctx, Status) ->
     find_pets_by_status(Ctx, Status, #{}).
 
--spec find_pets_by_status(ctx:ctx(), list(), maps:map()) -> {ok, list(), [petstore_pet:petstore_pet()]} | {error, string()}.
-find_pets_by_status(Ctx, Status, _Optional) ->
+-spec find_pets_by_status(ctx:ctx(), list(), maps:map()) -> {ok, [petstore_pet:petstore_pet()], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+find_pets_by_status(Ctx, Status, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = get,
     Path = ["/pet/findByStatus"],
-    QS = lists:flatten([[{<<"status">>, X} || X <- Status]])++[{X, maps:get(X, _Optional)} || X <- [], maps:is_key(X, _Optional)],
+    QS = lists:flatten([[{<<"status">>, X} || X <- Status]])++petstore_utils:optional_params([], _OptionalParams),
     Headers = [],
     Body1 = [],
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Finds Pets by tags
 %% Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
--spec find_pets_by_tags(ctx:ctx(), list()) -> {ok, list(), [petstore_pet:petstore_pet()]} | {error, string()}.
+-spec find_pets_by_tags(ctx:ctx(), list()) -> {ok, [petstore_pet:petstore_pet()], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 find_pets_by_tags(Ctx, Tags) ->
     find_pets_by_tags(Ctx, Tags, #{}).
 
--spec find_pets_by_tags(ctx:ctx(), list(), maps:map()) -> {ok, list(), [petstore_pet:petstore_pet()]} | {error, string()}.
-find_pets_by_tags(Ctx, Tags, _Optional) ->
+-spec find_pets_by_tags(ctx:ctx(), list(), maps:map()) -> {ok, [petstore_pet:petstore_pet()], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+find_pets_by_tags(Ctx, Tags, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = get,
     Path = ["/pet/findByTags"],
-    QS = lists:flatten([[{<<"tags">>, X} || X <- Tags]])++[{X, maps:get(X, _Optional)} || X <- [], maps:is_key(X, _Optional)],
+    QS = lists:flatten([[{<<"tags">>, X} || X <- Tags]])++petstore_utils:optional_params([], _OptionalParams),
     Headers = [],
     Body1 = [],
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Find pet by ID
 %% Returns a single pet
--spec get_pet_by_id(ctx:ctx(), integer()) -> {ok, list(), petstore_pet:petstore_pet()} | {error, string()}.
+-spec get_pet_by_id(ctx:ctx(), integer()) -> {ok, petstore_pet:petstore_pet(), petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 get_pet_by_id(Ctx, PetId) ->
     get_pet_by_id(Ctx, PetId, #{}).
 
--spec get_pet_by_id(ctx:ctx(), integer(), maps:map()) -> {ok, list(), petstore_pet:petstore_pet()} | {error, string()}.
-get_pet_by_id(Ctx, PetId, _Optional) ->
+-spec get_pet_by_id(ctx:ctx(), integer(), maps:map()) -> {ok, petstore_pet:petstore_pet(), petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+get_pet_by_id(Ctx, PetId, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = get,
     Path = ["/pet/", PetId, ""],
     QS = [],
     Headers = [],
     Body1 = [],
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Update an existing pet
--spec update_pet(ctx:ctx(), petstore_pet:petstore_pet()) -> ok | {error, integer()}.
+-spec update_pet(ctx:ctx(), petstore_pet:petstore_pet()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 update_pet(Ctx, Body) ->
     update_pet(Ctx, Body, #{}).
 
--spec update_pet(ctx:ctx(), petstore_pet:petstore_pet(), maps:map()) -> ok | {error, integer()}.
-update_pet(Ctx, Body, _Optional) ->
+-spec update_pet(ctx:ctx(), petstore_pet:petstore_pet(), maps:map()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+update_pet(Ctx, Body, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = put,
     Path = ["/pet"],
     QS = [],
     Headers = [],
     Body1 = Body,
-    Opts = [],
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc Updates a pet in the store with form data
--spec update_pet_with_form(ctx:ctx(), integer()) -> ok | {error, integer()}.
+-spec update_pet_with_form(ctx:ctx(), integer()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 update_pet_with_form(Ctx, PetId) ->
     update_pet_with_form(Ctx, PetId, #{}).
 
--spec update_pet_with_form(ctx:ctx(), integer(), maps:map()) -> ok | {error, integer()}.
-update_pet_with_form(Ctx, PetId, _Optional) ->
+-spec update_pet_with_form(ctx:ctx(), integer(), maps:map()) -> {ok, [], petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+update_pet_with_form(Ctx, PetId, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = post,
     Path = ["/pet/", PetId, ""],
     QS = [],
     Headers = [],
-    Body1 = {form, []++[{X, maps:get(X, _Optional)} || X <- ['name', 'status'], maps:is_key(X, _Optional)]},
-    Opts = [],
+    Body1 = {form, []++petstore_utils:optional_params(['name', 'status'], _OptionalParams)},
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
 %% @doc uploads an image
--spec upload_file(ctx:ctx(), integer()) -> {ok, list(), petstore_api_response:petstore_api_response()} | {error, string()}.
+-spec upload_file(ctx:ctx(), integer()) -> {ok, petstore_api_response:petstore_api_response(), petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
 upload_file(Ctx, PetId) ->
     upload_file(Ctx, PetId, #{}).
 
--spec upload_file(ctx:ctx(), integer(), maps:map()) -> {ok, list(), petstore_api_response:petstore_api_response()} | {error, string()}.
-upload_file(Ctx, PetId, _Optional) ->
+-spec upload_file(ctx:ctx(), integer(), maps:map()) -> {ok, petstore_api_response:petstore_api_response(), petstore_utils:response_info()} | {ok, hackney:client_ref()} | {error, term(), petstore_utils:response_info()}.
+upload_file(Ctx, PetId, Optional) ->
+    _OptionalParams = maps:get(params, Optional, #{}),
+
     Method = post,
     Path = ["/pet/", PetId, "/uploadImage"],
     QS = [],
     Headers = [],
-    Body1 = {form, []++[{X, maps:get(X, _Optional)} || X <- ['additionalMetadata', 'file'], maps:is_key(X, _Optional)]},
-    Opts = [],
+    Body1 = {form, []++petstore_utils:optional_params(['additionalMetadata', 'file'], _OptionalParams)},
+    Opts = maps:get(hackney_opts, Optional, []),
 
     petstore_utils:request(Ctx, Method, [?BASE_URL, Path], QS, Headers, Body1, Opts).
 
