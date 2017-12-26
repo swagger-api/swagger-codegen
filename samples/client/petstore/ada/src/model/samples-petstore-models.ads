@@ -46,7 +46,7 @@ package Samples.Petstore.Models is
 
 
    --  ------------------------------
-   --  Pet catehgry
+   --  Pet category
    --  A category for a pet
    --  ------------------------------
    type Category_Type is
