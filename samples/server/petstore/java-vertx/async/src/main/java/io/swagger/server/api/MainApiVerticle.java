@@ -25,14 +25,14 @@ public class MainApiVerticle extends AbstractVerticle {
 
     @Override
     public void init(Vertx vertx, Context context) {
-      super.init(vertx, context);
-      router = Router.router(vertx);
+        super.init(vertx, context);
+        router = Router.router(vertx);
     }
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
         Json.mapper.registerModule(new JavaTimeModule());
-    	FileSystem vertxFileSystem = vertx.fileSystem();
+        FileSystem vertxFileSystem = vertx.fileSystem();
         vertxFileSystem.readFile("swagger.json", readFile -> {
             if (readFile.succeeded()) {
                 Swagger swagger = new SwaggerParser().parse(readFile.result().toString(Charset.forName("utf-8")));
