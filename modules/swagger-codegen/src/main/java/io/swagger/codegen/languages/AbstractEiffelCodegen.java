@@ -584,7 +584,7 @@ public abstract class AbstractEiffelCodegen extends DefaultCodegen implements Co
             property.complexType = innerProperty.baseType;
         } else {
             property.isPrimitiveType = true;
-			property.isBoolean = innerProperty.isBoolean;
+            property.isBoolean = innerProperty.isBoolean;
             property.isLong = innerProperty.isLong;
             property.isInteger = innerProperty.isInteger;
             property.isDouble = innerProperty.isDouble;
