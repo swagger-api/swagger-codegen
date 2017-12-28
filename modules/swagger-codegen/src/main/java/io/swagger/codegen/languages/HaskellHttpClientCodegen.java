@@ -8,6 +8,7 @@ import io.swagger.models.properties.*;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import java.io.File;
 
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.codegen.CliOption;
@@ -28,7 +29,7 @@ import java.util.regex.Matcher;
 public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     // source folder where to write the files
-    protected String sourceFolder = "src";
+    protected String sourceFolder = "lib";
 
     protected String artifactId = "swagger-haskell-http-client";
     protected String artifactVersion = "1.0.0";
@@ -129,8 +130,8 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         outputFolder = "generated-code/haskell-http-client";
 
         embeddedTemplateDir = templateDir = "haskell-http-client";
-        apiPackage = "API";
-        modelPackage = "Model";
+        //apiPackage = "API";
+        //modelPackage = "Model";
 
         // Haskell keywords and reserved function names, taken mostly from https://wiki.haskell.org/Keywords
         setReservedWordsLowerCase(
@@ -409,7 +410,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         for (String word : words) {
             wordsCaps.add(firstLetterToUpper(word));
         }
-        String apiName = StringUtils.join(wordsCaps, "");
+        apiPackage = StringUtils.join(wordsCaps, "");
 
         // Set the filenames to write for the API
 
@@ -418,31 +419,31 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         supportingFiles.add(new SupportingFile("swagger.mustache", "", "swagger.yaml"));
 
         // lib
-        supportingFiles.add(new SupportingFile("TopLevel.mustache", "lib/", apiName + ".hs"));
-        supportingFiles.add(new SupportingFile("Client.mustache", "lib/" + apiName, "Client.hs"));
+        supportingFiles.add(new SupportingFile("TopLevel.mustache", sourceFolder + File.separator, apiPackage + ".hs"));
+        supportingFiles.add(new SupportingFile("Client.mustache", sourceFolder + File.separator + apiPackage, "Client.hs"));
 
-        supportingFiles.add(new SupportingFile("API.mustache", "lib/" + apiName, "API.hs"));
-        supportingFiles.add(new SupportingFile("Core.mustache", "lib/" + apiName, "Core.hs"));
-        supportingFiles.add(new SupportingFile("Model.mustache", "lib/" + apiName, "Model.hs"));
-        supportingFiles.add(new SupportingFile("MimeTypes.mustache", "lib/" + apiName, "MimeTypes.hs"));
+        supportingFiles.add(new SupportingFile("APIS.mustache", sourceFolder + File.separator + apiPackage, "API.hs"));
+        supportingFiles.add(new SupportingFile("Core.mustache", sourceFolder + File.separator + apiPackage, "Core.hs"));
+        supportingFiles.add(new SupportingFile("Model.mustache", sourceFolder + File.separator + apiPackage, "Model.hs"));
+        supportingFiles.add(new SupportingFile("MimeTypes.mustache", sourceFolder + File.separator + apiPackage, "MimeTypes.hs"));
 
         // logger
-        supportingFiles.add(new SupportingFile(useMonadLogger ? "LoggingMonadLogger.mustache" : "LoggingKatip.mustache", "lib/" + apiName, "Logging.hs"));
+        supportingFiles.add(new SupportingFile(useMonadLogger ? "LoggingMonadLogger.mustache" : "LoggingKatip.mustache", sourceFolder + File.separator + apiPackage, "Logging.hs"));
 
-        // modelTemplateFiles.put("API.mustache", ".hs");
-        // apiTemplateFiles.put("Model.mustache", ".hs");
+        apiTemplateFiles.put("API.mustache", ".hs");
+        // modelTemplateFiles.put("Model.mustache", ".hs");
 
         // lens
         if ((boolean)additionalProperties.get(PROP_GENERATE_LENSES)) {
-            supportingFiles.add(new SupportingFile("ModelLens.mustache", "lib/" + apiName, "ModelLens.hs"));
+            supportingFiles.add(new SupportingFile("ModelLens.mustache", sourceFolder + File.separator + apiPackage, "ModelLens.hs"));
         }
 
-        additionalProperties.put("title", apiName);
-        additionalProperties.put("titleLower", firstLetterToLower(apiName));
+        additionalProperties.put("title", apiPackage);
+        additionalProperties.put("titleLower", firstLetterToLower(apiPackage));
         additionalProperties.put("package", cabalName);
         additionalProperties.put("pathsName", pathsName);
-        additionalProperties.put("requestType", apiName + "Request");
-        additionalProperties.put("configType", apiName + "Config");
+        additionalProperties.put("requestType", apiPackage + "Request");
+        additionalProperties.put("configType", apiPackage + "Config");
         additionalProperties.put("swaggerVersion", swagger.getSwagger());
 
         super.preprocessSwagger(swagger);
@@ -970,6 +971,20 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     @Override
     public String toModelFilename(String name) {
         return toTypeName("Model", name);
+    }
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "Default";
+        }
+        return toTypeName("Api", name);
+    }
+    @Override
+    public String toApiFilename(String name) {
+        return toTypeName("Api", name);
+    }
+    @Override
+    public String apiFileFolder() {
+        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar) + File.separator + "API";
     }
     public String toTypeName(String prefix, String name) {
         name =  escapeIdentifier(prefix, camelize(sanitizeName(name)));

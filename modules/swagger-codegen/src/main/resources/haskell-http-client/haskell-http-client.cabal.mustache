@@ -63,7 +63,8 @@ library
     , {{^x-useMonadLogger}}katip >=0.4 && < 0.6{{/x-useMonadLogger}}{{#x-useMonadLogger}}monad-logger >=0.3 && <0.4{{/x-useMonadLogger}}
   exposed-modules:
       {{title}}
-      {{title}}.API
+      {{title}}.API{{#apiInfo}}{{#apis}}
+      {{title}}.API.{{classname}}{{/apis}}{{/apiInfo}}
       {{title}}.Client
       {{title}}.Core
       {{title}}.Logging

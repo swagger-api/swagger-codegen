@@ -60,6 +60,12 @@ library
   exposed-modules:
       SwaggerPetstore
       SwaggerPetstore.API
+      SwaggerPetstore.API.AnotherFake
+      SwaggerPetstore.API.Fake
+      SwaggerPetstore.API.FakeClassnameTags123
+      SwaggerPetstore.API.Pet
+      SwaggerPetstore.API.Store
+      SwaggerPetstore.API.User
       SwaggerPetstore.Client
       SwaggerPetstore.Core
       SwaggerPetstore.Logging
