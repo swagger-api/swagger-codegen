@@ -431,7 +431,7 @@ toJsonValue(QString name, void* value, QJsonObject* output, QString type) {
 
 void
 toJsonArray(QList<void*>* value, QJsonObject* output, QString innerName, QString innerType) {
-    if((value == nullptr) || (output == nullptr) || (value->size() == 0) ){
+    if((value == nullptr) || (output == nullptr)) {
         return;
     }
     QJsonArray outputrray;
@@ -487,7 +487,7 @@ toJsonArray(QList<void*>* value, QJsonObject* output, QString innerName, QString
 
 void
 toJsonMap(QMap<QString, void*>* value, QJsonObject* output, QString innerName, QString innerType) {
-    if((value == nullptr) || (output == nullptr) || (value->size() == 0) ){
+    if((value == nullptr) || (output == nullptr)) {
         return;
     }
     QJsonObject mapobj;
