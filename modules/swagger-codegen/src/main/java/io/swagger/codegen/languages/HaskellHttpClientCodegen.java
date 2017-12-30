@@ -37,11 +37,13 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     protected String defaultDateFormat = "%Y-%m-%d";
 
     protected Boolean useMonadLogger = false;
+    protected Boolean allowNonUniqueOperationIds = false;
     protected Boolean genEnums = true;
 
     // CLI PROPS
     public static final String PROP_ALLOW_FROMJSON_NULLS = "allowFromJsonNulls";
     public static final String PROP_ALLOW_TOJSON_NULLS = "allowToJsonNulls";
+    public static final String PROP_ALLOW_NONUNIQUE_OPERATION_IDS = "allowNonUniqueOperationIds";
     public static final String PROP_DATETIME_FORMAT = "dateTimeFormat";
     public static final String PROP_DATE_FORMAT = "dateFormat";
     public static final String PROP_GENERATE_ENUMS = "generateEnums";
@@ -89,6 +91,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     static final String X_STRICT_FIELDS = "x-strictFields";
     static final String X_UNKNOWN_MIME_TYPES = "x-unknownMimeTypes";
     static final String X_USE_MONAD_LOGGER = "x-useMonadLogger";
+    static final String X_ALLOW_NONUNIQUE_OPERATION_IDS  = "x-allowNonUniqueOperationIds";
     static final String X_NEWTYPE = "x-newtype";
     static final String X_ENUM = "x-enum";
 
@@ -98,6 +101,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
     protected Map<String, Set<String>> modelMimeTypes = new HashMap<>();
     protected Map<String, String> knownMimeDataTypes = new HashMap<>();
     protected Set<String> typeNames = new HashSet<String>();
+    protected Set<String> modelTypeNames = new HashSet<String>();
 
     public CodegenType getTag() {
         return CodegenType.CLIENT;
@@ -219,6 +223,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
 
         cliOptions.add(CliOption.newBoolean(PROP_ALLOW_FROMJSON_NULLS, "allow JSON Null during model decoding from JSON").defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(PROP_ALLOW_TOJSON_NULLS, "allow emitting JSON Null during model encoding to JSON").defaultValue(Boolean.FALSE.toString()));
+        cliOptions.add(CliOption.newBoolean(PROP_ALLOW_NONUNIQUE_OPERATION_IDS, "allow different API modules to contain the same operationId. Each API must be imported qualified").defaultValue(Boolean.FALSE.toString()));
         cliOptions.add(CliOption.newBoolean(PROP_GENERATE_LENSES, "Generate Lens optics for Models").defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(PROP_GENERATE_MODEL_CONSTRUCTORS, "Generate smart constructors (only supply required fields) for models").defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(PROP_GENERATE_ENUMS, "Generate specific datatypes for swagger enums").defaultValue(Boolean.TRUE.toString()));
@@ -237,6 +242,10 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
 
     }
 
+    public void setAllowNonUniqueOperationIds(Boolean value) {
+        additionalProperties.put(X_ALLOW_NONUNIQUE_OPERATION_IDS, value);
+        this.allowNonUniqueOperationIds = value;
+    }
     public void setAllowFromJsonNulls(Boolean value) {
         additionalProperties.put(PROP_ALLOW_FROMJSON_NULLS, value);
     }
@@ -317,6 +326,12 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
             setAllowToJsonNulls(convertPropertyToBoolean(PROP_ALLOW_TOJSON_NULLS));
         } else {
             setAllowToJsonNulls(false);
+        }
+
+        if (additionalProperties.containsKey(PROP_ALLOW_NONUNIQUE_OPERATION_IDS)) {
+            setAllowNonUniqueOperationIds(convertPropertyToBoolean(PROP_ALLOW_NONUNIQUE_OPERATION_IDS));
+        } else {
+            setAllowNonUniqueOperationIds(false);
         }
 
         if (additionalProperties.containsKey(PROP_GENERATE_MODEL_CONSTRUCTORS)) {
@@ -422,7 +437,10 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         supportingFiles.add(new SupportingFile("TopLevel.mustache", sourceFolder + File.separator, apiPackage + ".hs"));
         supportingFiles.add(new SupportingFile("Client.mustache", sourceFolder + File.separator + apiPackage, "Client.hs"));
 
-        supportingFiles.add(new SupportingFile("APIS.mustache", sourceFolder + File.separator + apiPackage, "API.hs"));
+
+        if(!allowNonUniqueOperationIds) {
+            supportingFiles.add(new SupportingFile("APIS.mustache", sourceFolder + File.separator + apiPackage, "API.hs"));
+        }
         supportingFiles.add(new SupportingFile("Core.mustache", sourceFolder + File.separator + apiPackage, "Core.hs"));
         supportingFiles.add(new SupportingFile("Model.mustache", sourceFolder + File.separator + apiPackage, "Model.hs"));
         supportingFiles.add(new SupportingFile("MimeTypes.mustache", sourceFolder + File.separator + apiPackage, "MimeTypes.hs"));
@@ -510,9 +528,41 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
             return null;
         }
     }
+
     @Override
-    public CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        CodegenOperation op = super.fromOperation(resourcePath, httpMethod, operation, definitions, swagger);
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation op, Map<String, List<CodegenOperation>> operations) {
+
+        List<CodegenOperation> opList = operations.get(tag);
+        if (opList == null) {
+            opList = new ArrayList<CodegenOperation>();
+            operations.put(tag, opList);
+        }
+        // check for operationId uniqueness
+        String uniqueName = op.operationId;
+        String uniqueNameType = toTypeName("Op", uniqueName);
+        int counter = 0;
+
+        HashSet<String> opIds = new HashSet<>();
+        for (CodegenOperation o : opList) {
+            opIds.add(o.operationId);
+        }
+        while (opIds.contains(uniqueName) ||
+                (allowNonUniqueOperationIds
+                        ? modelTypeNames.contains(uniqueNameType) // only check for model conflicts
+                        : typeNames.contains(uniqueNameType))) {  // check globally across all types
+            uniqueName = op.operationId + counter;
+            uniqueNameType = toTypeName("Op", uniqueName);
+            counter++;
+        }
+        if (!op.operationId.equals(uniqueName)) {
+            LOGGER.warn("generated unique operationId `" + uniqueName + "`");
+        }
+        op.operationId = uniqueName;
+        op.operationIdLowerCase = uniqueName.toLowerCase();
+        op.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
+        op.operationIdSnakeCase = DefaultCodegen.underscore(uniqueName);
+        opList.add(op);
+        op.baseName = tag;
 
         // prevent aliasing/sharing of operation.vendorExtensions reference
         op.vendorExtensions = new LinkedHashMap();
@@ -541,7 +591,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
 
                 String dataType = genEnums && param.isEnum ? param.datatypeWithEnum : param.dataType;
 
-                String paramNameType = toDedupedName(toTypeName("Param", param.paramName), dataType, !param.isEnum);
+                String paramNameType = toDedupedModelName(toTypeName("Param", param.paramName), dataType, !param.isEnum);
                 param.vendorExtensions.put(X_PARAM_NAME_TYPE, paramNameType);
 
                 HashMap<String, Object> props = new HashMap<>();
@@ -556,7 +606,6 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
 
         processReturnType(op);
 
-        return op;
     }
 
     @Override
@@ -649,6 +698,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
             model.classname = generateNextName(model.classname);
         }
         typeNames.add(model.classname);
+        modelTypeNames.add(model.classname);
 
         // From the model name, compute the prefix for the fields.
         String prefix = StringUtils.uncapitalize(model.classname);
@@ -755,7 +805,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         op.vendorExtensions.put(inlineExtentionName, m);
     }
 
-    private String toDedupedName(String paramNameType, String dataType, Boolean appendDataType) {
+    private String toDedupedModelName(String paramNameType, String dataType, Boolean appendDataType) {
         if (appendDataType
                 && uniqueParamNameTypes.containsKey(paramNameType)
                 && !isDuplicate(paramNameType, dataType)) {
@@ -770,6 +820,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         }
 
         typeNames.add(paramNameType);
+        modelTypeNames.add(paramNameType);
         return paramNameType;
     }
 
@@ -996,17 +1047,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
             throw new RuntimeException("Empty method/operation name (operationId) not allowed");
         }
         operationId = escapeIdentifier("op",camelize(sanitizeName(operationId), true));
-        String uniqueName = operationId;
-        String uniqueNameType = toTypeName("Op", operationId);
-        while (typeNames.contains(uniqueNameType)) {
-            uniqueName = generateNextName(uniqueName);
-            uniqueNameType = toTypeName("Op", uniqueName);
-        }
-        typeNames.add(uniqueNameType);
-        if(!operationId.equals(uniqueName)) {
-            LOGGER.warn("generated unique operationId `" + uniqueName + "`");
-        }
-        return uniqueName;
+        return operationId;
     }
     public String escapeIdentifier(String prefix, String name) {
         if(StringUtils.isBlank(prefix)) return name;
@@ -1122,7 +1163,7 @@ public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenC
         if (duplicateEnum.getLeft()) {
             paramNameType = duplicateEnum.getRight();
         } else {
-            paramNameType = toDedupedName(paramNameType, enumValues, false);
+            paramNameType = toDedupedModelName(paramNameType, enumValues, false);
             var.datatypeWithEnum = paramNameType;
             updateCodegenPropertyEnum(var);
             addEnumToUniques(paramNameType, var.datatype, enumValues, var.allowableValues, var.description);
