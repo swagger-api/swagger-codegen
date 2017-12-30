@@ -43,11 +43,12 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
+import org.json4s._
+
 class PetApi(
   val defBasePath: String = "http://petstore.swagger.io/v2",
   defApiInvoker: ApiInvoker = ApiInvoker
 ) {
-
   implicit val formats = new org.json4s.DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
   }
