@@ -61,6 +61,9 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.STRIP_PACKAGE_NAME) &&
                 "false".equalsIgnoreCase(additionalProperties.get(CodegenConstants.STRIP_PACKAGE_NAME).toString())) {
             this.stripPackageName = false;
+            additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, false);
+            LOGGER.warn("stripPackageName=false. Compilation errors may occur if API type names clash with types " +
+                    "in the default imports");
         }
     }
 
