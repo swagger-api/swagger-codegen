@@ -9,9 +9,9 @@ pub struct APIClient<C: hyper::client::Connect> {
 {{#apis}}
 {{#operations}}
 {{#operation}}
-  {{#-last}}
+  {{#@last}}
   {{classFilename}}: Box<::apis::{{classname}}>,
-  {{/-last}}
+  {{/@last}}
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -28,9 +28,9 @@ impl<C: hyper::client::Connect> APIClient<C> {
 {{#apis}}
 {{#operations}}
 {{#operation}}
-      {{#-last}}
+      {{#@last}}
       {{classFilename}}: Box::new(::apis::{{classname}}Client::new(rc.clone())),
-      {{/-last}}
+      {{/@last}}
 {{/operation}}
 {{/operations}}
 {{/apis}}
@@ -42,12 +42,12 @@ impl<C: hyper::client::Connect> APIClient<C> {
 {{#apis}}
 {{#operations}}
 {{#operation}}
-{{#-last}}
+{{#@last}}
   pub fn {{classFilename}}(&self) -> &::apis::{{classname}}{
     self.{{classFilename}}.as_ref()
   }
 
-{{/-last}}
+{{/@last}}
 {{/operation}}
 {{/operations}}
 {{/apis}}
