@@ -1108,7 +1108,7 @@ public class DefaultCodegen implements CodegenConfig {
 
         if (schema instanceof ArraySchema) {
             codegenModel.getVendorExtensions().put(IS_ARRAY_MODEL_EXT_NAME, Boolean.TRUE);
-            codegenModel.arrayModelType = fromProperty(name, schema).complexType;
+            codegenModel.arrayModelType = fromProperty(name, schema).items.baseType;
             addParentContainer(codegenModel, name, schema);
             //} else if (schema instanceof RefModel) {
             // TODO
