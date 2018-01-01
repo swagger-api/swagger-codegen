@@ -30,7 +30,7 @@ type StoreApiService service
 
 /* StoreApiService Delete purchase order by ID
 For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param orderId ID of the order that needs to be deleted
 @return */
 func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*http.Response, error) {
@@ -59,10 +59,7 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -88,7 +85,7 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 
 /* StoreApiService Returns pet inventories by status
 Returns a map of status codes to quantities
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @return map[string]int32*/
 func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *http.Response, error) {
 	var (
@@ -116,9 +113,7 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -161,7 +156,7 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 
 /* StoreApiService Find purchase order by ID
 For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param orderId ID of pet that needs to be fetched
 @return Order*/
 func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Order, *http.Response, error) {
@@ -197,10 +192,7 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -231,7 +223,7 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 
 /* StoreApiService Place an order for a pet
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body order placed for purchasing the pet
 @return Order*/
 func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *http.Response, error) {
@@ -260,10 +252,7 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

@@ -29,7 +29,7 @@ type AnotherFakeApiService service
 
 /* AnotherFakeApiService To test special tags
 To test special tags
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body client model
 @return Client*/
 func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client) (Client, *http.Response, error) {
@@ -58,9 +58,7 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

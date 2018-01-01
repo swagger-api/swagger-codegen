@@ -28,7 +28,7 @@ var (
 type FakeClassnameTags123ApiService service
 
 /* FakeClassnameTags123ApiService To test class name in snake case
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body client model
 @return Client*/
 func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body Client) (Client, *http.Response, error) {
@@ -57,9 +57,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

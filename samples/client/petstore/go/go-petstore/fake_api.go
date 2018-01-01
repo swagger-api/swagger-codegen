@@ -30,7 +30,7 @@ type FakeApiService service
 
 /* FakeApiService
 Test serialization of outer boolean types
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterBoolean) Input boolean as post body
 @return OuterBoolean*/
@@ -95,7 +95,7 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 
 /* FakeApiService
 Test serialization of object with outer number type
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterComposite) Input composite as post body
 @return OuterComposite*/
@@ -160,7 +160,7 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 
 /* FakeApiService
 Test serialization of outer number types
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterNumber) Input number as post body
 @return OuterNumber*/
@@ -225,7 +225,7 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 
 /* FakeApiService
 Test serialization of outer string types
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterString) Input string as post body
 @return OuterString*/
@@ -290,7 +290,7 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 
 /* FakeApiService To test \&quot;client\&quot; model
 To test \&quot;client\&quot; model
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body client model
 @return Client*/
 func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Client, *http.Response, error) {
@@ -319,9 +319,7 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -354,7 +352,7 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 
 /* FakeApiService Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param number None
 @param double None
 @param patternWithoutDelimiter None
@@ -438,10 +436,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml; charset=utf-8",
-		"application/json; charset=utf-8",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml; charset=utf-8", "application/json; charset=utf-8"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -501,7 +496,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 
 /* FakeApiService To test enum parameters
 To test enum parameters
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "enumFormStringArray" ([]string) Form parameter enum test (string array)
     @param "enumFormString" (string) Form parameter enum test (string)
@@ -561,9 +556,7 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"*/*",
-	}
+	localVarHttpHeaderAccepts := []string{"*/*"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -604,7 +597,7 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 
 /* FakeApiService test inline additionalProperties
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param param request body
 @return */
 func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, param interface{}) (*http.Response, error) {
@@ -660,7 +653,7 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 
 /* FakeApiService test json serialization of form data
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param param field1
 @param param2 field2
 @return */

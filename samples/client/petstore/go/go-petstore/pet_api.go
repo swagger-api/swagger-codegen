@@ -31,7 +31,7 @@ type PetApiService service
 
 /* PetApiService Add a new pet to the store
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body Pet object that needs to be added to the store
 @return */
 func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, error) {
@@ -59,10 +59,7 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -90,7 +87,7 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 
 /* PetApiService Deletes a pet
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param petId Pet id to delete
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "apiKey" (string)
@@ -124,10 +121,7 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -156,7 +150,7 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 
 /* PetApiService Finds Pets by status
 Multiple status values can be provided with comma separated strings
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param status Status values that need to be considered for filter
 @return []Pet*/
 func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) ([]Pet, *http.Response, error) {
@@ -186,10 +180,7 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -220,7 +211,7 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 
 /* PetApiService Finds Pets by tags
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param tags Tags to filter by
 @return []Pet*/
 func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pet, *http.Response, error) {
@@ -250,10 +241,7 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -284,7 +272,7 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 
 /* PetApiService Find pet by ID
 Returns a single pet
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param petId ID of pet to return
 @return Pet*/
 func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http.Response, error) {
@@ -314,10 +302,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -360,7 +345,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 
 /* PetApiService Update an existing pet
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param body Pet object that needs to be added to the store
 @return */
 func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response, error) {
@@ -388,10 +373,7 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -419,7 +401,7 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
 
 /* PetApiService Updates a pet in the store with form data
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param petId ID of pet that needs to be updated
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "name" (string) Updated name of the pet
@@ -457,10 +439,7 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/xml",
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -492,7 +471,7 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 
 /* PetApiService uploads an image
 
-* @param ctx context.Context for authentication, logging, tracing, etc.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
 @param petId ID of pet to update
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "additionalMetadata" (string) Additional data to pass to server
@@ -528,9 +507,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-	}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
