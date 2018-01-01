@@ -8,6 +8,11 @@
 #[allow(unused_imports)]
 use serde_json::Value;
 
+{{#vendorExtensions.x-is-array-model}}
+#[derive(Debug, Serialize, Deserialize)]
+pub struct {{classname}}(Vec<{{{arrayModelType}}}>);
+{{/vendorExtensions.x-is-array-model}}
+{{^vendorExtensions.x-is-array-model}}
 #[derive(Debug, Serialize, Deserialize)]
 pub struct {{classname}} {
 {{#vars}}
@@ -18,17 +23,23 @@ pub struct {{classname}} {
   {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{^@last}},{{/@last}}
 {{/vars}}
 }
+{{/vendorExtensions.x-is-array-model}}
 
 impl {{classname}} {
   {{#description}}
   /// {{{description}}}
   {{/description}}
   pub fn new({{#requiredVars}}{{name}}: {{{datatype}}}{{^@last}}, {{/@last}}{{/requiredVars}}) -> {{classname}} {
+    {{#vendorExtensions.x-is-array-model}}
+    {{classname}}(Vec::new())
+    {{/vendorExtensions.x-is-array-model}}
+    {{^vendorExtensions.x-is-array-model}}
     {{classname}} {
       {{#vars}}
       {{name}}: {{#required}}{{name}}{{/required}}{{^required}}{{#vendorExtensions.x-is-list-container}}None{{/vendorExtensions.x-is-list-container}}{{#vendorExtensions.x-is-map-container}}None{{/vendorExtensions.x-is-map-container}}{{^vendorExtensions.x-is-container}}None{{/vendorExtensions.x-is-container}}{{/required}}{{^@last}},{{/@last}}
       {{/vars}}
     }
+    {{/vendorExtensions.x-is-array-model}}
   }
 
   {{#vars}}
