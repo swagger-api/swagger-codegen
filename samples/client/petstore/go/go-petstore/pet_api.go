@@ -11,15 +11,14 @@
 package petstore
 
 import (
-	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
-
 	"golang.org/x/net/context"
+	"os"
+	"encoding/json"
+	"fmt"
 )
 
 // Linger please

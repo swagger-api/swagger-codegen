@@ -11,14 +11,13 @@
 package petstore
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
-
 	"golang.org/x/net/context"
+	"time"
+	"encoding/json"
 )
 
 // Linger please
@@ -350,8 +349,8 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	return successPayload, localVarHttpResponse, err
 }
 
-/* FakeApiService Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
-Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+/* FakeApiService Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
  * @param ctx context.Context for authentication, logging, tracing, etc.
 @param number None
 @param double None
