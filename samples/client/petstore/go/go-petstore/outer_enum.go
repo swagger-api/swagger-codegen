@@ -14,7 +14,7 @@ type OuterEnum string
 
 // List of OuterEnum
 const (
-	PLACED OuterEnum = "placed"
-	APPROVED OuterEnum = "approved"
+	PLACED    OuterEnum = "placed"
+	APPROVED  OuterEnum = "approved"
 	DELIVERED OuterEnum = "delivered"
 )

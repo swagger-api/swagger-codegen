@@ -11,7 +11,6 @@
 package petstore
 
 type Capitalization struct {
-
 	SmallCamel string `json:"smallCamel,omitempty"`
 
 	CapitalCamel string `json:"CapitalCamel,omitempty"`
@@ -22,6 +21,6 @@ type Capitalization struct {
 
 	SCAETHFlowPoints string `json:"SCA_ETH_Flow_Points,omitempty"`
 
-	// Name of the pet 
+	// Name of the pet
 	ATT_NAME string `json:"ATT_NAME,omitempty"`
 }

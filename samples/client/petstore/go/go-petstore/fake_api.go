@@ -11,13 +11,14 @@
 package petstore
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
-	"time"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -27,19 +28,19 @@ var (
 
 type FakeApiService service
 
-/* FakeApiService 
- Test serialization of outer boolean types
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (OuterBoolean) Input boolean as post body
- @return OuterBoolean*/
-func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterBoolean,  *http.Response, error) {
+/* FakeApiService
+Test serialization of outer boolean types
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (OuterBoolean) Input boolean as post body
+@return OuterBoolean*/
+func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterBoolean, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  OuterBoolean
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     OuterBoolean
 	)
 
 	// create path and map variables
@@ -50,7 +51,7 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -59,8 +60,7 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -93,19 +93,19 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 	return successPayload, localVarHttpResponse, err
 }
 
-/* FakeApiService 
- Test serialization of object with outer number type
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (OuterComposite) Input composite as post body
- @return OuterComposite*/
-func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterComposite,  *http.Response, error) {
+/* FakeApiService
+Test serialization of object with outer number type
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (OuterComposite) Input composite as post body
+@return OuterComposite*/
+func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterComposite, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  OuterComposite
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     OuterComposite
 	)
 
 	// create path and map variables
@@ -116,7 +116,7 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -125,8 +125,7 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -159,19 +158,19 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 	return successPayload, localVarHttpResponse, err
 }
 
-/* FakeApiService 
- Test serialization of outer number types
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (OuterNumber) Input number as post body
- @return OuterNumber*/
-func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterNumber,  *http.Response, error) {
+/* FakeApiService
+Test serialization of outer number types
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (OuterNumber) Input number as post body
+@return OuterNumber*/
+func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterNumber, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  OuterNumber
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     OuterNumber
 	)
 
 	// create path and map variables
@@ -182,7 +181,7 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -191,8 +190,7 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -225,19 +223,19 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 	return successPayload, localVarHttpResponse, err
 }
 
-/* FakeApiService 
- Test serialization of outer string types
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (OuterString) Input string as post body
- @return OuterString*/
-func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterString,  *http.Response, error) {
+/* FakeApiService
+Test serialization of outer string types
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (OuterString) Input string as post body
+@return OuterString*/
+func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterString, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  OuterString
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     OuterString
 	)
 
 	// create path and map variables
@@ -248,7 +246,7 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -257,8 +255,7 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -292,17 +289,17 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 }
 
 /* FakeApiService To test \&quot;client\&quot; model
- To test \&quot;client\&quot; model
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body client model
- @return Client*/
-func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Client,  *http.Response, error) {
+To test \&quot;client\&quot; model
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body client model
+@return Client*/
+func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Client, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Client
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Client
 	)
 
 	// create path and map variables
@@ -313,7 +310,7 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -324,7 +321,7 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -355,31 +352,31 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 	return successPayload, localVarHttpResponse, err
 }
 
-/* FakeApiService Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
- Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param number None
- @param double None
- @param patternWithoutDelimiter None
- @param byte_ None
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "integer" (int32) None
-     @param "int32_" (int32) None
-     @param "int64_" (int64) None
-     @param "float" (float32) None
-     @param "string_" (string) None
-     @param "binary" (string) None
-     @param "date" (string) None
-     @param "dateTime" (time.Time) None
-     @param "password" (string) None
-     @param "callback" (string) None
- @return */
-func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number float32, double float64, patternWithoutDelimiter string, byte_ string, localVarOptionals map[string]interface{}) ( *http.Response, error) {
+/* FakeApiService Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param number None
+@param double None
+@param patternWithoutDelimiter None
+@param byte_ None
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "integer" (int32) None
+    @param "int32_" (int32) None
+    @param "int64_" (int64) None
+    @param "float" (float32) None
+    @param "string_" (string) None
+    @param "binary" (string) None
+    @param "date" (string) None
+    @param "dateTime" (time.Time) None
+    @param "password" (string) None
+    @param "callback" (string) None
+@return */
+func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number float32, double float64, patternWithoutDelimiter string, byte_ string, localVarOptionals map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -432,7 +429,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/xml; charset=utf-8", "application/json; charset=utf-8",  }
+	localVarHttpContentTypes := []string{"application/xml; charset=utf-8", "application/json; charset=utf-8"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -444,7 +441,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	localVarHttpHeaderAccepts := []string{
 		"application/xml; charset=utf-8",
 		"application/json; charset=utf-8",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -503,24 +500,24 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 }
 
 /* FakeApiService To test enum parameters
- To test enum parameters
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "enumFormStringArray" ([]string) Form parameter enum test (string array)
-     @param "enumFormString" (string) Form parameter enum test (string)
-     @param "enumHeaderStringArray" ([]string) Header parameter enum test (string array)
-     @param "enumHeaderString" (string) Header parameter enum test (string)
-     @param "enumQueryStringArray" ([]string) Query parameter enum test (string array)
-     @param "enumQueryString" (string) Query parameter enum test (string)
-     @param "enumQueryInteger" (int32) Query parameter enum test (double)
-     @param "enumQueryDouble" (float64) Query parameter enum test (double)
- @return */
-func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptionals map[string]interface{}) ( *http.Response, error) {
+To test enum parameters
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "enumFormStringArray" ([]string) Form parameter enum test (string array)
+    @param "enumFormString" (string) Form parameter enum test (string)
+    @param "enumHeaderStringArray" ([]string) Header parameter enum test (string array)
+    @param "enumHeaderString" (string) Header parameter enum test (string)
+    @param "enumQueryStringArray" ([]string) Query parameter enum test (string array)
+    @param "enumQueryString" (string) Query parameter enum test (string)
+    @param "enumQueryInteger" (int32) Query parameter enum test (double)
+    @param "enumQueryDouble" (float64) Query parameter enum test (double)
+@return */
+func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptionals map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -555,7 +552,7 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 		localVarQueryParams.Add("enum_query_integer", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "*/*",  }
+	localVarHttpContentTypes := []string{"*/*"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -566,7 +563,7 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"*/*",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -606,16 +603,16 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 }
 
 /* FakeApiService test inline additionalProperties
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param param request body
- @return */
-func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, param interface{}) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param param request body
+@return */
+func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, param interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -626,7 +623,7 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -635,8 +632,7 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -663,17 +659,17 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 }
 
 /* FakeApiService test json serialization of form data
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param param field1
- @param param2 field2
- @return */
-func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, param2 string) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param param field1
+@param param2 field2
+@return */
+func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, param2 string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -684,7 +680,7 @@ func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, par
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -693,8 +689,7 @@ func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, par
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		}
+	localVarHttpHeaderAccepts := []string{}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

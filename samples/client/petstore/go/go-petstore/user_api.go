@@ -11,13 +11,14 @@
 package petstore
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -28,16 +29,16 @@ var (
 type UserApiService service
 
 /* UserApiService Create user
- This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body Created user object
- @return */
-func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Response, error) {
+This can only be done by the logged in user.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body Created user object
+@return */
+func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -48,7 +49,7 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Resp
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -60,7 +61,7 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Resp
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -87,16 +88,16 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Resp
 }
 
 /* UserApiService Creates list of users with given input array
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body List of user object
- @return */
-func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []User) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body List of user object
+@return */
+func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -107,7 +108,7 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -119,7 +120,7 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -146,16 +147,16 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 }
 
 /* UserApiService Creates list of users with given input array
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body List of user object
- @return */
-func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []User) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body List of user object
+@return */
+func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -166,7 +167,7 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -178,7 +179,7 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -205,16 +206,16 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 }
 
 /* UserApiService Delete user
- This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The name that needs to be deleted
- @return */
-func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *http.Response, error) {
+This can only be done by the logged in user.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username The name that needs to be deleted
+@return */
+func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -226,7 +227,7 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *htt
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -238,7 +239,7 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *htt
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -263,17 +264,17 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *htt
 }
 
 /* UserApiService Get user by user name
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The name that needs to be fetched. Use user1 for testing. 
- @return User*/
-func (a *UserApiService) GetUserByName(ctx context.Context, username string) (User,  *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username The name that needs to be fetched. Use user1 for testing.
+@return User*/
+func (a *UserApiService) GetUserByName(ctx context.Context, username string) (User, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  User
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     User
 	)
 
 	// create path and map variables
@@ -285,7 +286,7 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -297,7 +298,7 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -327,18 +328,18 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 }
 
 /* UserApiService Logs user into the system
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The user name for login
- @param password The password for login in clear text
- @return string*/
-func (a *UserApiService) LoginUser(ctx context.Context, username string, password string) (string,  *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username The user name for login
+@param password The password for login in clear text
+@return string*/
+func (a *UserApiService) LoginUser(ctx context.Context, username string, password string) (string, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  string
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     string
 	)
 
 	// create path and map variables
@@ -351,7 +352,7 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	localVarQueryParams.Add("username", parameterToString(username, ""))
 	localVarQueryParams.Add("password", parameterToString(password, ""))
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -363,7 +364,7 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -393,15 +394,15 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 }
 
 /* UserApiService Logs out current logged in user session
- 
+
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @return */
-func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error) {
+func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -412,7 +413,7 @@ func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -424,7 +425,7 @@ func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -449,17 +450,17 @@ func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error
 }
 
 /* UserApiService Updated user
- This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username name that need to be deleted
- @param body Updated user object
- @return */
-func (a *UserApiService) UpdateUser(ctx context.Context, username string, body User) ( *http.Response, error) {
+This can only be done by the logged in user.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username name that need to be deleted
+@param body Updated user object
+@return */
+func (a *UserApiService) UpdateUser(ctx context.Context, username string, body User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -471,7 +472,7 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -483,7 +484,7 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

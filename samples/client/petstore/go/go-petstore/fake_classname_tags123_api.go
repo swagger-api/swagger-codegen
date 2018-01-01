@@ -11,12 +11,13 @@
 package petstore
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -27,16 +28,16 @@ var (
 type FakeClassnameTags123ApiService service
 
 /* FakeClassnameTags123ApiService To test class name in snake case
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body client model
- @return Client*/
-func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body Client) (Client,  *http.Response, error) {
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body client model
+@return Client*/
+func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body Client) (Client, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Client
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Client
 	)
 
 	// create path and map variables
@@ -47,7 +48,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -58,7 +59,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

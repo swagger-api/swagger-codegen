@@ -11,14 +11,15 @@
 package petstore
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
-	"os"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"os"
+	"strings"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -29,16 +30,16 @@ var (
 type PetApiService service
 
 /* PetApiService Add a new pet to the store
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body Pet object that needs to be added to the store
- @return */
-func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body Pet object that needs to be added to the store
+@return */
+func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -49,7 +50,7 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, 
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
+	localVarHttpContentTypes := []string{"application/json", "application/xml"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -61,7 +62,7 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, 
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -88,18 +89,18 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) ( *http.Response, 
 }
 
 /* PetApiService Deletes a pet
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param petId Pet id to delete
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "apiKey" (string) 
- @return */
-func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param petId Pet id to delete
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "apiKey" (string)
+@return */
+func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -114,7 +115,7 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -126,7 +127,7 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -154,17 +155,17 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 }
 
 /* PetApiService Finds Pets by status
- Multiple status values can be provided with comma separated strings
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param status Status values that need to be considered for filter
- @return []Pet*/
-func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) ([]Pet,  *http.Response, error) {
+Multiple status values can be provided with comma separated strings
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param status Status values that need to be considered for filter
+@return []Pet*/
+func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) ([]Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Pet
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Pet
 	)
 
 	// create path and map variables
@@ -176,7 +177,7 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 
 	localVarQueryParams.Add("status", parameterToString(status, "csv"))
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -188,7 +189,7 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -218,17 +219,17 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 }
 
 /* PetApiService Finds Pets by tags
- Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param tags Tags to filter by
- @return []Pet*/
-func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pet,  *http.Response, error) {
+Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param tags Tags to filter by
+@return []Pet*/
+func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []Pet
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     []Pet
 	)
 
 	// create path and map variables
@@ -240,7 +241,7 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 
 	localVarQueryParams.Add("tags", parameterToString(tags, "csv"))
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -252,7 +253,7 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -282,17 +283,17 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 }
 
 /* PetApiService Find pet by ID
- Returns a single pet
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param petId ID of pet to return
- @return Pet*/
-func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *http.Response, error) {
+Returns a single pet
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param petId ID of pet to return
+@return Pet*/
+func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Pet
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Pet
 	)
 
 	// create path and map variables
@@ -304,7 +305,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *htt
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{  }
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -316,7 +317,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *htt
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -358,16 +359,16 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet,  *htt
 }
 
 /* PetApiService Update an existing pet
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param body Pet object that needs to be added to the store
- @return */
-func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param body Pet object that needs to be added to the store
+@return */
+func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -378,7 +379,7 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Respons
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
+	localVarHttpContentTypes := []string{"application/json", "application/xml"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -390,7 +391,7 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Respons
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -417,19 +418,19 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) ( *http.Respons
 }
 
 /* PetApiService Updates a pet in the store with form data
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param petId ID of pet that needs to be updated
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "name" (string) Updated name of the pet
-     @param "status" (string) Updated status of the pet
- @return */
-func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) ( *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param petId ID of pet that needs to be updated
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "name" (string) Updated name of the pet
+    @param "status" (string) Updated status of the pet
+@return */
+func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -447,7 +448,7 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/x-www-form-urlencoded",  }
+	localVarHttpContentTypes := []string{"application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -459,7 +460,7 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	localVarHttpHeaderAccepts := []string{
 		"application/xml",
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -490,20 +491,20 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 }
 
 /* PetApiService uploads an image
- 
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param petId ID of pet to update
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "additionalMetadata" (string) Additional data to pass to server
-     @param "file" (*os.File) file to upload
- @return ModelApiResponse*/
-func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (ModelApiResponse,  *http.Response, error) {
+
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param petId ID of pet to update
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "additionalMetadata" (string) Additional data to pass to server
+    @param "file" (*os.File) file to upload
+@return ModelApiResponse*/
+func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (ModelApiResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  ModelApiResponse
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     ModelApiResponse
 	)
 
 	// create path and map variables
@@ -518,7 +519,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "multipart/form-data",  }
+	localVarHttpContentTypes := []string{"multipart/form-data"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -529,7 +530,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
