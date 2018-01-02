@@ -273,7 +273,7 @@ export class FakeApi {
      * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      */
-    public testCodeInjectEndRnNR (test code inject * &#39; &quot; &#x3D;end  rn n r?: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public testCodeInjectEndRnNRRequestOptions (test code inject * &#39; &quot; &#x3D;end  rn n r?: string) : localVarRequest.Options {
         const localVarPath = this.basePath + '/fake';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -304,6 +304,16 @@ export class FakeApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
+	return localVarRequestOptions;
+    }
+
+    /**
+     * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+     */
+    public testCodeInjectEndRnNR (test code inject * &#39; &quot; &#x3D;end  rn n r?: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+        var localVarRequestOptions = this.testCodeInjectEndRnNRRequestOptions(test code inject * &#39; &quot; &#x3D;end  rn n r);
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
