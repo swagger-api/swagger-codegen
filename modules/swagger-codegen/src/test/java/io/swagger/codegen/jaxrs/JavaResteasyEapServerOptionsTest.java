@@ -4,6 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.JavaResteasyEapServerCodegen;
 import io.swagger.codegen.options.JavaResteasyEapServerOptionsProvider;
+import io.swagger.codegen.options.JaxRSServerOptionsProvider;
 import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -69,6 +70,9 @@ public class JavaResteasyEapServerOptionsTest extends AbstractOptionsTest {
                 clientCodegen
                         .setUseSwaggerFeature(
                                 Boolean.valueOf(JavaResteasyEapServerOptionsProvider.USE_SWAGGER_FEATURE));
+                times = 1;
+                
+                clientCodegen.setUseAnnotatedBasePath(Boolean.valueOf(JaxRSServerOptionsProvider.USE_ANNOTATED_BASE_PATH));
                 times = 1;
 
             }

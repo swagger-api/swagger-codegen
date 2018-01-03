@@ -16,7 +16,6 @@ import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -31,13 +30,16 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     protected String testResourcesFolder = "src/test/resources";
     protected String title = "Swagger Server";
 
+    public static final String USE_ANNOTATED_BASE_PATH = "useAnnotatedBasePath";
+    
     protected boolean useBeanValidation = true;
+    protected boolean useAnnotatedBasePath = false;
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
     public AbstractJavaJAXRSServerCodegen() {
         super();
-
+        
         sourceFolder = "src/gen/java";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
@@ -55,6 +57,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(new CliOption("serverPort", "The port on which the server should be started"));
+        cliOptions.add(CliOption.newBoolean(USE_ANNOTATED_BASE_PATH, "Use @Path annotations for basePath"));
+
     }
 
 
@@ -83,6 +87,10 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
 
+        if (additionalProperties.containsKey(USE_ANNOTATED_BASE_PATH)) {
+            boolean useAnnotatedBasePathProp = convertPropertyToBooleanAndWriteBack(USE_ANNOTATED_BASE_PATH);
+            this.setUseAnnotatedBasePath(useAnnotatedBasePathProp);
+        }
     }
 
     @Override
@@ -244,5 +252,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         this.useBeanValidation = useBeanValidation;
     }
 
+    public void setUseAnnotatedBasePath(boolean useAnnotatedBasePath) {
+        this.useAnnotatedBasePath = useAnnotatedBasePath;
+    }
 
 }

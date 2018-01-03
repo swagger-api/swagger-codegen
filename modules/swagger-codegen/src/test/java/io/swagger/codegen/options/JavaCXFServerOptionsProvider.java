@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.AbstractJavaJAXRSServerCodegen;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
 
 public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
@@ -41,7 +42,7 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
 
     public static final String IMPL_FOLDER_VALUE = "src/main/java";
 
-    public static final String USE_ANNOTATED_BASE_PATH = "true";
+    public static final String USE_ANNOTATED_BASE_PATH = "false";
 
     public static final String GENERATE_NON_SPRING_APPLICATION = "true";
     
@@ -89,7 +90,7 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
 
         builder.put(JavaCXFServerCodegen.ADD_CONSUMES_PRODUCES_JSON, ADD_CONSUMES_PRODUCES_JSON);
 
-        builder.put(JavaCXFServerCodegen.USE_ANNOTATED_BASE_PATH, USE_ANNOTATED_BASE_PATH);
+        builder.put(AbstractJavaJAXRSServerCodegen.USE_ANNOTATED_BASE_PATH, USE_ANNOTATED_BASE_PATH);
 
         builder.put(JavaCXFServerCodegen.GENERATE_NON_SPRING_APPLICATION, GENERATE_NON_SPRING_APPLICATION);
         builder.put("serverPort", "3456");
