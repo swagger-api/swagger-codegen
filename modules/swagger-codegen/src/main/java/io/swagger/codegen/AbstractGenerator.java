@@ -108,7 +108,7 @@ public abstract class AbstractGenerator {
         }
             
         // Fall back to the template file embedded/packaged in the JAR file...
-        return config.embeddedTemplateDir() + File.separator + templateFile;
+        return config.embeddedTemplateDir() + "/" + templateFile;
     }
 
     public String readResourceContents(String resourceFilePath) {
