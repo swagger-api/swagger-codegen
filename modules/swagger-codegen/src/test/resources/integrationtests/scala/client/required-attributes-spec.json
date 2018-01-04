@@ -188,7 +188,7 @@
           {
             "type": "boolean",
             "description": "a bool",
-            "name": "b",
+            "name": "bool",
             "required": false,
             "in": "query",
             "default": true
@@ -242,7 +242,7 @@
             "type": "string",
             "format": "binary",
             "description": "an octet string",
-            "name": "b",
+            "name": "bin",
             "required": false,
             "in": "query",
             "default": "DEADBEEF"

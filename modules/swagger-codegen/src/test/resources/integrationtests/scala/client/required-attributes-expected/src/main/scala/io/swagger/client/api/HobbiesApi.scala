@@ -88,17 +88,17 @@ class HobbiesApi(
    * @param s a string (optional, default to some string)
    * @param i an integer (optional, default to 1)
    * @param l a long (optional, default to 2)
-   * @param b a bool (optional, default to true)
+   * @param bool a bool (optional, default to true)
    * @param f a float (optional, default to 0.1)
    * @param d a double (optional, default to 10.005)
    * @param datetime a date time (optional, default to 2018-01-01T08:30:00Z-04:00)
    * @param date a date (optional, default to 2018-01-01)
-   * @param b2 a base64 encoded string (optional, default to c3dhZ2dlciBjb2RlZ2Vu)
-   * @param b3 an octet string (optional, default to DEADBEEF)
+   * @param b a base64 encoded string (optional, default to c3dhZ2dlciBjb2RlZ2Vu)
+   * @param bin an octet string (optional, default to DEADBEEF)
    * @return Hobby
    */
-  def getHobbies(s: Option[String] = Option("some string"), i: Option[Integer] = Option(1), l: Option[Long] = Option(2), b: Option[Boolean] = Option(true), f: Option[Float] = Option(0.1), d: Option[Double] = Option(10.005), datetime: Option[Date] = Option(dateTimeFormatter.parse("2018-01-01T08:30:00Z-04:00")), date: Option[Date] = Option(dateFormatter.parse("2018-01-01")), b2: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes), b3: Option[ArrayByte] = Option("DEADBEEF".getBytes)): Option[Hobby] = {
-    val await = Try(Await.result(getHobbiesAsync(s, i, l, b, f, d, datetime, date, b2, b3), Duration.Inf))
+  def getHobbies(s: Option[String] = Option("some string"), i: Option[Integer] = Option(1), l: Option[Long] = Option(2), bool: Option[Boolean] = Option(true), f: Option[Float] = Option(0.1), d: Option[Double] = Option(10.005), datetime: Option[Date] = Option(dateTimeFormatter.parse("2018-01-01T08:30:00Z-04:00")), date: Option[Date] = Option(dateFormatter.parse("2018-01-01")), b: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes), bin: Option[ArrayByte] = Option("DEADBEEF".getBytes)): Option[Hobby] = {
+    val await = Try(Await.result(getHobbiesAsync(s, i, l, bool, f, d, datetime, date, b, bin), Duration.Inf))
     await match {
       case Success(i) => Some(await.get)
       case Failure(t) => None
@@ -112,17 +112,17 @@ class HobbiesApi(
    * @param s a string (optional, default to some string)
    * @param i an integer (optional, default to 1)
    * @param l a long (optional, default to 2)
-   * @param b a bool (optional, default to true)
+   * @param bool a bool (optional, default to true)
    * @param f a float (optional, default to 0.1)
    * @param d a double (optional, default to 10.005)
    * @param datetime a date time (optional, default to 2018-01-01T08:30:00Z-04:00)
    * @param date a date (optional, default to 2018-01-01)
-   * @param b2 a base64 encoded string (optional, default to c3dhZ2dlciBjb2RlZ2Vu)
-   * @param b3 an octet string (optional, default to DEADBEEF)
+   * @param b a base64 encoded string (optional, default to c3dhZ2dlciBjb2RlZ2Vu)
+   * @param bin an octet string (optional, default to DEADBEEF)
    * @return Future(Hobby)
    */
-  def getHobbiesAsync(s: Option[String] = Option("some string"), i: Option[Integer] = Option(1), l: Option[Long] = Option(2), b: Option[Boolean] = Option(true), f: Option[Float] = Option(0.1), d: Option[Double] = Option(10.005), datetime: Option[Date] = Option(dateTimeFormatter.parse("2018-01-01T08:30:00Z-04:00")), date: Option[Date] = Option(dateFormatter.parse("2018-01-01")), b2: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes), b3: Option[ArrayByte] = Option("DEADBEEF".getBytes)): Future[Hobby] = {
-      helper.getHobbies(s, i, l, b, f, d, datetime, date, b2, b3)
+  def getHobbiesAsync(s: Option[String] = Option("some string"), i: Option[Integer] = Option(1), l: Option[Long] = Option(2), bool: Option[Boolean] = Option(true), f: Option[Float] = Option(0.1), d: Option[Double] = Option(10.005), datetime: Option[Date] = Option(dateTimeFormatter.parse("2018-01-01T08:30:00Z-04:00")), date: Option[Date] = Option(dateFormatter.parse("2018-01-01")), b: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes), bin: Option[ArrayByte] = Option("DEADBEEF".getBytes)): Future[Hobby] = {
+      helper.getHobbies(s, i, l, bool, f, d, datetime, date, b, bin)
   }
 
 }
@@ -132,13 +132,13 @@ class HobbiesApiAsyncHelper(client: TransportClient, config: SwaggerConfig) exte
   def getHobbies(s: Option[String] = Option("some string"),
     i: Option[Integer] = Option(1),
     l: Option[Long] = Option(2),
-    b: Option[Boolean] = Option(true),
+    bool: Option[Boolean] = Option(true),
     f: Option[Float] = Option(0.1),
     d: Option[Double] = Option(10.005),
     datetime: Option[Date] = Option(dateTimeFormatter.parse("2018-01-01T08:30:00Z-04:00")),
     date: Option[Date] = Option(dateFormatter.parse("2018-01-01")),
-    b2: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes),
-    b3: Option[ArrayByte] = Option("DEADBEEF".getBytes)
+    b: Option[ArrayByte] = Option("c3dhZ2dlciBjb2RlZ2Vu".getBytes),
+    bin: Option[ArrayByte] = Option("DEADBEEF".getBytes)
     )(implicit reader: ClientResponseReader[Hobby]): Future[Hobby] = {
     // create path and map variables
     val path = (addFmt("/hobbies"))
@@ -159,8 +159,8 @@ class HobbiesApiAsyncHelper(client: TransportClient, config: SwaggerConfig) exte
       case Some(param) => queryParams += "l" -> param.toString
       case _ => queryParams
     }
-    b match {
-      case Some(param) => queryParams += "b" -> param.toString
+    bool match {
+      case Some(param) => queryParams += "bool" -> param.toString
       case _ => queryParams
     }
     f match {
@@ -179,12 +179,12 @@ class HobbiesApiAsyncHelper(client: TransportClient, config: SwaggerConfig) exte
       case Some(param) => queryParams += "date" -> param.toString
       case _ => queryParams
     }
-    b2 match {
+    b match {
       case Some(param) => queryParams += "b" -> param.toString
       case _ => queryParams
     }
-    b3 match {
-      case Some(param) => queryParams += "b" -> param.toString
+    bin match {
+      case Some(param) => queryParams += "bin" -> param.toString
       case _ => queryParams
     }
 
