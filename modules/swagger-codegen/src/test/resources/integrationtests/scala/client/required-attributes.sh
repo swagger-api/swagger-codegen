@@ -4,7 +4,7 @@ set -eo pipefail
 
 declare prefix="required-attributes"
 
-declare opts="-DdebugModels -Dproject -Dmodels -Dapis -DmodelTests=false -DmodelDocs=false $JAVA_OPTS"
+declare opts="-DdebugModels -DdebugOperations -Dproject -Dmodels -Dapis -DmodelTests=false -DmodelDocs=false $JAVA_OPTS"
 declare curdir=$(cd $(dirname "${BASH_SOURCE}") && pwd)
 
 # NOTE: This is sensitive to the location of this script.
