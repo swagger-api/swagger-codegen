@@ -707,7 +707,13 @@ if let Some(body) = body {
 
 
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
-
+        context.auth_data.as_ref().map(|auth_data| {
+            if let &swagger::AuthData::Basic(ref basic_header) = auth_data {
+                request.headers_mut().set(hyper::header::Authorization(
+                    basic_header.clone(),
+                ))
+            }
+        });
 
 
 

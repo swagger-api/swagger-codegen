@@ -270,7 +270,13 @@ impl Api for Client {
         request.headers_mut().set(ContentType(mimetypes::requests::{{#vendorExtensions}}{{uppercase_operation_id}}{{/vendorExtensions}}.clone()));
 {{/bodyParam}}
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
-{{#headerParams}}{{#-first}}
+{{#authMethods}}{{#isBasic}}        context.auth_data.as_ref().map(|auth_data| {
+            if let &swagger::AuthData::Basic(ref basic_header) = auth_data {
+                request.headers_mut().set(hyper::header::Authorization(
+                    basic_header.clone(),
+                ))
+            }
+        });{{/isBasic}}{{/authMethods}}{{#headerParams}}{{#-first}}
         // Header parameters
 {{/-first}}{{^isMapContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isListContainer}}({{{baseType}}})*{{/isListContainer}}{{^isListContainer}}[{{{dataType}}}]{{/isListContainer}} }
 {{#required}}        request.headers_mut().set(Request{{vendorExtensions.typeName}}(param_{{paramName}}{{#isListContainer}}.clone(){{/isListContainer}}));
