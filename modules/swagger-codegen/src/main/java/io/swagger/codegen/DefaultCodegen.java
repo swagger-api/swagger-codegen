@@ -2142,9 +2142,11 @@ public class DefaultCodegen {
 
             if (methodResponse != null) {
                 if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
+                    Property responseProp = methodResponse.getSchema();
+                    responseProp.setRequired(true);
+                    CodegenProperty cm = fromProperty("response", responseProp);
 
-                    Property responseProperty = methodResponse.getSchema();
+                    Property responseProperty = responseProp;
 
                     if (responseProperty instanceof ArrayProperty) {
                         ArrayProperty ap = (ArrayProperty) responseProperty;
@@ -2320,7 +2322,7 @@ public class DefaultCodegen {
             r.code = responseCode;
         }
         r.message = escapeText(response.getDescription());
-        r.schema = response.getSchema();
+        r.schema = response.getResponseSchema();
         r.examples = toExamples(response.getExamples());
         r.jsonSchema = Json.pretty(response);
         r.vendorExtensions = response.getVendorExtensions();
