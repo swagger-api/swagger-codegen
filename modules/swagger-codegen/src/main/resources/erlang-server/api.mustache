@@ -16,9 +16,9 @@
 {{#apiInfo}}{{#apis}}
 {{#operations}}{{#operation}}
 request_params('{{operationId}}') ->
-    [{{#allParams}}{{^isBodyParam}}
-        '{{baseName}}'{{/isBodyParam}}{{#isBodyParam}}
-        '{{dataType}}'{{/isBodyParam}}{{^@last}},{{/@last}}{{/allParams}}
+    [{{#allParams}}{{#isNot this 'body-param'}}
+        '{{baseName}}'{{/isNot}}{{#is this 'body-param'}}
+        '{{dataType}}'{{/is}}{{#has this 'more'}},{{/has}}{{/allParams}}
     ];
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 request_params(_) ->
@@ -53,7 +53,7 @@ request_params(_) ->
 {{#operations}}{{#operation}}{{#allParams}}
 request_param_info('{{operationId}}', {{^isBodyParam}}'{{baseName}}'{{/isBodyParam}}{{#isBodyParam}}'{{dataType}}'{{/isBodyParam}}) ->
     #{
-        source => {{#vendorExtensions.x-is-query-param}}qs_val{{/vendorExtensions.x-is-query-param}} {{#isPathParam}}binding{{/isPathParam}} {{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}},
+        source => {{#is this 'query-param'}}qs_val{{/is}} {{#isPathParam}}binding{{/isPathParam}} {{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}},
         rules => [{{#isString}}
             {type, 'binary'},{{/isString}}{{#isInteger}}
             {type, 'integer'},{{/isInteger}}{{#isLong}}
