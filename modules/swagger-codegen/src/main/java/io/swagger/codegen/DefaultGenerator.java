@@ -145,11 +145,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         // model/api tests and documentation options rely on parent generate options (api or model) and no other options.
         // They default to true in all scenarios and can only be marked false explicitly
         generateModelTests = System.getProperty(CodegenConstants.MODEL_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
-        generateModelDocumentation = System.getProperty(CodegenConstants.MODEL_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
+        //generateModelDocumentation = System.getProperty(CodegenConstants.MODEL_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
         generateApiTests = System.getProperty(CodegenConstants.API_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
-        generateApiDocumentation = System.getProperty(CodegenConstants.API_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
-
-
+        //generateApiDocumentation = System.getProperty(CodegenConstants.API_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
+        
+        //Not generate Documentation
+        generateApiDocumentation=false;
+        generateModelDocumentation = false;
+        
+        
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_TESTS, generateModelTests);
@@ -425,7 +429,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     private void generateApis(List<File> files, List<Object> allOperations, List<Object> allModels) {
-        if (!generateApis) {
+    	if (!generateApis) {
             return;
         }
         Map<String, List<CodegenOperation>> paths = processPaths(swagger.getPaths());
@@ -503,18 +507,38 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                 if (generateApiTests) {
                     // to generate api test files
+                	LinkedHashMap import_add = new LinkedHashMap();
+                	import_add.put("import", operation.get("package") + "." + tag + "Api");
+                	((ArrayList)(operation.get("imports"))).add(import_add);
                     for (String templateName : config.apiTestTemplateFiles().keySet()) {
-                        String filename = config.apiTestFilename(templateName, tag);
+                    	HashMap<String, Object> tmpoperations = (HashMap<String, Object>) operation.get("operations");
+                    	ArrayList<CodegenOperation> list = (ArrayList<CodegenOperation>)tmpoperations.get("operation");
+                    	for(CodegenOperation co : list) {
+                    		HashMap<String, Object> tmp = new HashMap<String, Object>();
+                    		for(Iterator it = operation.keySet().iterator() ; it.hasNext();){
+                    			String key = it.next().toString();
+                    			if(key.equals("operations")) {
+                    				tmpoperations.put("operation", co);
+                    				tmp.put("operations", tmpoperations);
+                    				continue;
+                    			}
+                    			tmp.put(key, operation.get(key));
+                    		}
+                    		String filename = config.apiTestFilename(templateName, co.operationIdCamelCase);
+                    		File written = processTemplateToFile(operation, templateName, filename);
+                            if (written != null) {
+                                files.add(written);
+                            }
+                    	}
+                    	//Map<String, Object> testMap = new HashMap<String, Object>();
+                        
                         // do not overwrite test file that already exists
-                        if (new File(filename).exists()) {
-                            LOGGER.info("File exists. Skipped overwriting " + filename);
-                            continue;
-                        }
+//                        if (new File(filename).exists()) {
+//                            LOGGER.info("File exists. Skipped overwriting " + filename);
+//                            continue;
+//                        }
 
-                        File written = processTemplateToFile(operation, templateName, filename);
-                        if (written != null) {
-                            files.add(written);
-                        }
+                       
                     }
                 }
 
@@ -756,7 +780,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
         String adjustedOutputFilename = outputFilename.replaceAll("//", "/").replace('/', File.separatorChar);
         if (ignoreProcessor.allowsFile(new File(adjustedOutputFilename))) {
-            String templateFile = getFullTemplateFile(config, templateName);
+            String templateFile = getFullTemplateFile(config, templateName); //get mustache name
             String template = readTemplate(templateFile);
             Mustache.Compiler compiler = Mustache.compiler();
             compiler = config.processCompiler(compiler);

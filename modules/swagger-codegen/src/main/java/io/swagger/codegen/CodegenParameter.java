@@ -10,7 +10,7 @@ public class CodegenParameter {
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
-          collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
+          collectionFormat, description, unescapedDescription, baseType, defaultValue, defaultTestValue, enumName;
 
     public String example; // example value (x-example)
     public String jsonSchema;
@@ -115,6 +115,7 @@ public class CodegenParameter {
         output.multipleOf = this.multipleOf;
         output.jsonSchema = this.jsonSchema;
         output.defaultValue = this.defaultValue;
+        output.defaultTestValue = this.defaultValue;
         output.example = this.example;
         output.isEnum = this.isEnum;
         if (this._enum != null) {

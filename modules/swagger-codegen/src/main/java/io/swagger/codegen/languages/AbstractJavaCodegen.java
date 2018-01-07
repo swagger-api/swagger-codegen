@@ -464,7 +464,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String apiTestFileFolder() {
-        return outputFolder + "/" + testFolder + "/" + apiPackage().replace('.', '/');
+        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', '/').replace("api", "action");
     }
 
     @Override
@@ -494,7 +494,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toApiTestFilename(String name) {
-        return toApiName(name) + "Test";
+        return name + "Action";
     }
 
     @Override

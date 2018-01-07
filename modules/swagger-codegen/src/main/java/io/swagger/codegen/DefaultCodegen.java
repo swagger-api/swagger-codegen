@@ -2226,7 +2226,15 @@ public class DefaultCodegen {
                         }
                     }
                 }
-
+                if(p.defaultTestValue == null) {
+                	if(p.isBoolean) {
+                		p.defaultTestValue = "false";
+                	}else if(p.isNumeric || p.isNumber || p.isInteger || p.isLong || p.isDouble || p.isFloat) {
+                		p.defaultTestValue = "-1";
+                	}else {
+                		p.defaultTestValue = "null";
+                	}
+                }
                 allParams.add(p);
                 // Issue #2561 (neilotoole) : Moved setting of is<Type>Param flags
                 // from here to fromParameter().

@@ -1,0 +1,434 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: MicroStrategy Intelligence Server
+  description: The MicroStrategy Intelligence Server is the core server that the MicroStrategy platform is built around.
+  contact:
+    name: Doug Meyer / Server Architects Team
+    email: meyer@microstrategy.com
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /MstrIServer/api
+tags:
+- name: "session"
+paths:
+  /session:
+    post:
+      tags:
+      - "session"
+      summary: ""
+      description: "Creates a new connection to the MicroStrategy Intelligence Server. 
+        It is the entry point to the Platform Controller and must be called before any other calls. Use the returned session id in subsequent calls for authentication."
+      operationId: "createSession"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "Credentials"
+        description: "The MicroStrategy Intelligence Server credentials"
+        required: true
+        schema:
+          $ref: "#/definitions/Credentials"
+      responses:
+        201:
+          description: "The connection was successfully established"
+          schema:
+            $ref: "#/definitions/Session"
+        401:
+          description: "User credentials where not sufficient"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"            
+    delete:
+      tags:
+      - "session"
+      summary: ""
+      description: "Closes an existing MicroStrategy Intelligence Server connection that was previously created with session POST."
+      operationId: "deleteSession"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session POST"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "The session was successfully deleted"
+          schema:
+            $ref: "#/definitions/Message"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Message"
+        404:
+          description: "Connection was not found"
+          schema:
+            $ref: "#/definitions/Message"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Message"
+    get:
+      tags:
+      - "session"
+      summary: ""
+      description: "Renews an existing MicroStrategy Intelligence Server connection that was previously created with session POST."
+      operationId: "getSession"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session POST"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A message about the renewal of the session id."
+          schema:
+            $ref: "#/definitions/Message"
+        401:
+          description: "Not authorized to do this operation"
+          schema:
+            $ref: "#/definitions/Error"
+        406:
+          description: "Not acceptable"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+    put:
+      tags:
+      - "session"
+      summary: ""
+      description: "Renews an existing MicroStrategy Intelligence Server connection that was previously created with session POST."
+      operationId: "renewSession"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session POST"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A message about the renewal of the session id."
+          schema:
+            $ref: "#/definitions/Message"
+        401:
+          description: "Not authorized to do this operation"
+          schema:
+            $ref: "#/definitions/Error"
+        406:
+          description: "Not acceptable"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"             
+  /objects/{objectId}/propertySets/{propertySetId}/propertyInheritedValues:
+    get:
+      tags:
+      - "objects"
+      summary: ""
+      description: "Retrieves VLDB properties from existing MicroStrategy Intelligence Server with session GET."
+      operationId: "getPropertySetsFromObjects"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session GET"
+        required: true
+        type: "string"
+      - name: "objectId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "propertySetId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "id"
+        in: query
+        type: "string"
+        required: true
+        description: "list of ids, such as: 1,2,3"
+      - name: "type"
+        in: query
+        type: "integer"
+        required: true
+        description: "Object Type"
+      responses:
+        200:
+          description: "A message about the retrieval of property set info from objects."
+          schema:
+            $ref: "#/definitions/PropertySetInfos"
+        400:
+          description: "Bad request error"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authorized to do this operation"
+          schema:
+            $ref: "#/definitions/Error"
+        406:
+          description: "Not acceptable"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /messages/{messageId}/documentInstance/propertySets/{propertySetId}/propertyInheritedValues:
+    get:
+      tags:
+      - "objects"
+      summary: ""
+      description: "Retrieves VLDB properties in document instance messages from existing MicroStrategy Intelligence Server with session GET."
+      operationId: "getPropertySetsFromDocumentInstanceMessages"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session GET"
+        required: true
+        type: "string"
+      - name: "messageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "propertySetId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "id"
+        in: query
+        type: "string"
+        required: true
+        description: "list of ids, such as: 1,2,3"
+      responses:
+        200:
+          description: "A message about the retrieval of property set info from document instance messages."
+          schema:
+            $ref: "#/definitions/PropertySetInfos"
+        400:
+          description: "Bad request error"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authorized to do this operation"
+          schema:
+            $ref: "#/definitions/Error"
+        406:
+          description: "Not acceptable"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+  /messages/{messageId}/reportInstance/propertySets/{propertySetId}/propertyInheritedValues:
+    get:
+      tags:
+      - "objects"
+      summary: ""
+      description: "Retrieves VLDB properties in report instance messages from existing MicroStrategy Intelligence Server with session GET."
+      operationId: "getPropertySetsFromReportInstanceMessages"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "X-MSTR-ISERVER-SESSION"
+        in: "header"
+        description: "Authenticated token gotten from a session GET"
+        required: true
+        type: "string"
+      - name: "messageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "propertySetId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "id"
+        in: query
+        type: "string"
+        required: true
+        description: "list of ids, such as: 1,2,3"
+      responses:
+        200:
+          description: "A message about the retrieval of property set info from report instance messages."
+          schema:
+            $ref: "#/definitions/PropertySetInfos"
+        400:
+          description: "Bad request error"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authorized to do this operation"
+          schema:
+            $ref: "#/definitions/Error"
+        406:
+          description: "Not acceptable"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+  Credentials:
+    type: "object"
+    required:
+    - "login"
+    - "password"
+    properties:
+      login:
+        type: "string"
+      password:
+        type: "string"
+    description: "Credentials for logging into the MicroStrategy Intelligence Server"
+    
+  Session:
+    type: "object"
+    required:
+    - "sessionId"
+    - "status"
+    properties:
+      sessionId:
+        type: "string"
+      status:
+        type: "integer"
+        format: "int32"        
+    description: "The session that was created on the MicroStrategy Intelligence Server"
+
+  Message:
+    type: "object"
+    required:
+    - "message"
+    - "status"
+    properties:
+      message:
+        type: "string"
+      status:
+        type: "integer"
+        format: "int32"        
+    description: "The message returned from session GET"
+
+  Error:
+    type: "object"
+    required:
+    - "iServerErrorCode"
+    - "errorMessage"
+    - "status"
+    properties:
+      iServerErrorCode:
+        type: "integer"
+        format: "int64"        
+      errorMessage:
+        type: "string"      
+      status:
+        type: "integer"
+        format: "int32"
+    description: "Error and success messages"
+  Property:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+    description: ""
+  Inherited:
+    type: "object"
+    required:
+    - "value"
+    - "level"
+    properties:
+      value:
+        type: "string"
+      level:
+        type: "integer"
+        format: "int32"        
+    description: ""
+    
+  PropertySetInfo:
+    type: "object"
+    required:
+    - "property"
+    - "inherited"
+    properties:
+      property:
+        type: "object"
+        items:
+          $ref: "#/definitions/Property"
+      inherited:
+        type: "object"
+        items:
+          $ref: "#/definitions/Inherited"
+    description: ""
+
+  PropertySetInfos:
+    type: "array"
+    items:
+      $ref: "#/definitions/PropertySetInfo"
