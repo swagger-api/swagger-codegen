@@ -41,6 +41,8 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
+import org.json4s._
+
 class UserApi(
   val defBasePath: String = "http://petstore.swagger.io/v2",
   defApiInvoker: ApiInvoker = ApiInvoker
