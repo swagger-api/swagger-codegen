@@ -152,7 +152,7 @@ public class DefaultCodegen {
         }
 
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
-            this.setSortParamsByRequiredFlag(Boolean.valueOf(additionalProperties
+            this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
         }
     }
@@ -1835,6 +1835,17 @@ public class DefaultCodegen {
             property.complexType = innerProperty.baseType;
         } else {
             property.isPrimitiveType = true;
+            property.isBoolean = innerProperty.isBoolean;
+            property.isLong = innerProperty.isLong;
+            property.isInteger = innerProperty.isInteger;
+            property.isDouble = innerProperty.isDouble;
+            property.isFloat = innerProperty.isFloat;
+            property.isByteArray = innerProperty.isByteArray;
+            property.isBinary = innerProperty.isBinary;
+            property.isFile = innerProperty.isFile;
+            property.isDate = innerProperty.isDate;
+            property.isDateTime = innerProperty.isDateTime;      
+            property.isString = innerProperty.isString;
         }
         property.items = innerProperty;
         // inner item is Enum
