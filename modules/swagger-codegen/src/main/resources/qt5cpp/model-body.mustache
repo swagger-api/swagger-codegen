@@ -104,10 +104,10 @@ QJsonObject*
 {{classname}}::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     {{#vars}}
-    {{^isContainer}}{{#complexType}}{{^isString}}
+    {{^isContainer}}{{#complexType}}{{^isString}}{{^isDate}}{{^isDateTime}}{{^isByteArray}} 
     if({{name}}->isSet()){
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
-    }{{/isString}}{{#isString}}
+    }{{/isByteArray}}{{/isDateTime}}{{/isDate}}{{/isString}}{{#isString}}
     if({{name}} != nullptr && *{{name}} != QString("")){
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }{{/isString}}{{/complexType}}{{#isPrimitiveType}}{{^isDateTime}}{{^isDate}}{{^isByteArray}}
@@ -115,13 +115,13 @@ QJsonObject*
         obj->insert("{{baseName}}", QJsonValue({{name}}));
     }{{/isByteArray}}{{/isDate}}{{/isDateTime}}{{/isPrimitiveType}}{{#isDate}}    
     if({{name}} != nullptr) { 
-        obj->insert("{{name}}", QJsonValue(*{{name}}));
+        toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }{{/isDate}}{{#isByteArray}}    
     if({{name}} != nullptr) { 
         obj->insert("{{name}}", QJsonValue(*{{name}}));
     }{{/isByteArray}}{{#isDateTime}}   
     if({{name}} != nullptr) { 
-        obj->insert("{{name}}", QJsonValue(*{{name}}));
+        toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }{{/isDateTime}}{{/isContainer}}{{#isContainer}}{{#isListContainer}}
     if({{name}}->size() > 0){
         {{^items.isContainer}}toJsonArray((QList<void*>*){{name}}, obj, "{{baseName}}", "{{complexType}}");{{/items.isContainer}}{{#items.isContainer}}
