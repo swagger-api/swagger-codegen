@@ -11,9 +11,14 @@ import Foundation
 
 public struct Tag: Codable {
 
-    public var id: Int64?
+    public var _id: Int64?
     public var name: String?
 
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case name
+    }
 
 
 }

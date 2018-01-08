@@ -11,14 +11,19 @@ import Foundation
 
 public struct Category: Codable {
 
-    public var id: Int64?
-    public var idNum: NSNumber? {
+    public var _id: Int64?
+    public var _idNum: NSNumber? {
         get {
-            return id.map({ return NSNumber(value: $0) })
+            return _id.map({ return NSNumber(value: $0) })
         }
     }
     public var name: String?
 
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case name
+    }
 
 
 }

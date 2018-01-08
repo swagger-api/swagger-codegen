@@ -16,7 +16,7 @@ public struct Order: Codable {
         case approved = "approved"
         case delivered = "delivered"
     }
-    public var id: Int64?
+    public var _id: Int64?
     public var petId: Int64?
     public var quantity: Int?
     public var shipDate: Date?
@@ -24,6 +24,15 @@ public struct Order: Codable {
     public var status: Status?
     public var complete: Bool?
 
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case petId
+        case quantity
+        case shipDate
+        case status
+        case complete
+    }
 
 
 }

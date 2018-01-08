@@ -16,7 +16,7 @@ public struct Pet: Codable {
         case pending = "pending"
         case sold = "sold"
     }
-    public var id: Int64?
+    public var _id: Int64?
     public var category: Category?
     public var name: String
     public var photoUrls: [String]
@@ -24,6 +24,15 @@ public struct Pet: Codable {
     /** pet status in the store */
     public var status: Status?
 
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case category
+        case name
+        case photoUrls
+        case tags
+        case status
+    }
 
 
 }

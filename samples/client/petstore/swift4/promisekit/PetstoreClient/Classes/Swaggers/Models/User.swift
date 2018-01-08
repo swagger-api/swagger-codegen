@@ -11,7 +11,7 @@ import Foundation
 
 public struct User: Codable {
 
-    public var id: Int64?
+    public var _id: Int64?
     public var username: String?
     public var firstName: String?
     public var lastName: String?
@@ -21,6 +21,17 @@ public struct User: Codable {
     /** User Status */
     public var userStatus: Int?
 
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case username
+        case firstName
+        case lastName
+        case email
+        case password
+        case phone
+        case userStatus
+    }
 
 
 }
