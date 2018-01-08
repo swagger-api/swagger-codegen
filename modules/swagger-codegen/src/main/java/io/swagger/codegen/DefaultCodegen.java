@@ -2322,7 +2322,7 @@ public class DefaultCodegen {
             r.code = responseCode;
         }
         r.message = escapeText(response.getDescription());
-        r.schema = response.getResponseSchema();
+        r.schema = response.getSchema();
         r.examples = toExamples(response.getExamples());
         r.jsonSchema = Json.pretty(response);
         r.vendorExtensions = response.getVendorExtensions();
