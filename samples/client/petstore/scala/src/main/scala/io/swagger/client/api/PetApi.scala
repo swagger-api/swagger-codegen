@@ -310,7 +310,7 @@ class PetApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends 
   }
 
   def deletePet(petId: Long,
-    apiKey: Option[String] = None
+    apiKey: Option[String] = None /* None */
     )(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/pet/{petId}")
@@ -398,8 +398,8 @@ class PetApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends 
   }
 
   def updatePetWithForm(petId: Long,
-    name: Option[String] = None,
-    status: Option[String] = None
+    name: Option[String] = None /* None */,
+    status: Option[String] = None /* None */
     )(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/pet/{petId}")
@@ -417,8 +417,8 @@ class PetApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends 
   }
 
   def uploadFile(petId: Long,
-    additionalMetadata: Option[String] = None,
-    file: Option[File] = None
+    additionalMetadata: Option[String] = None /* None */,
+    file: Option[File] = None /* None */
     )(implicit reader: ClientResponseReader[ApiResponse]): Future[ApiResponse] = {
     // create path and map variables
     val path = (addFmt("/pet/{petId}/uploadImage")

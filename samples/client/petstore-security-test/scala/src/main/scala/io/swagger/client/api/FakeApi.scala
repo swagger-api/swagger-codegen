@@ -98,7 +98,7 @@ class FakeApi(
 
 class FakeApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends ApiClient(client, config) {
 
-  def testCodeInject * &#39; &quot; &#x3D;end  rn n r(testCodeInjectEndRnNR: Option[String] = None
+  def testCodeInject * &#39; &quot; &#x3D;end  rn n r(testCodeInjectEndRnNR: Option[String] = None /* None */
     )(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/fake"))

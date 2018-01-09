@@ -93,7 +93,7 @@ class {{classname}}(
 class {{classname}}AsyncHelper(client: TransportClient, config: SwaggerConfig) extends ApiClient(client, config) {
 
 {{#operation}}
-  def {{operationId}}({{#allParams}}{{^required}}{{paramName}}: Option[{{dataType}}] = {{#defaultValue}}Some({{defaultValue}}){{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{#hasMore}},{{/hasMore}}
+  def {{operationId}}({{#allParams}}{{^required}}{{paramName}}: Option[{{dataType}}] = None /* {{#defaultValue}}Some({{defaultValue}}){{/defaultValue}}{{^defaultValue}}None{{/defaultValue}} */{{#hasMore}},{{/hasMore}}
     {{/required}}{{#required}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}},
     {{/hasMore}}{{/required}}{{/allParams}})(implicit reader: ClientResponseReader[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}]{{#bodyParams}}, writer: RequestWriter[{{dataType}}]{{/bodyParams}}){{#returnType}}: Future[{{returnType}}]{{/returnType}}{{^returnType}}: Future[Unit]{{/returnType}} = {
     // create path and map variables
