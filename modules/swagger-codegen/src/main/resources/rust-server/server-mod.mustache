@@ -381,7 +381,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                             header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }
                                                     response.headers_mut().set(Response{{nameInCamelCase}}({{name}}));
 {{/headers}}{{#produces}}{{#-first}}{{#dataType}}
-                                                            response.headers_mut().set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
+                                                            response.headers_mut().set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{x-uppercaseResponseId}}{{/vendorExtensions}}.clone()));
 {{/dataType}}{{/-first}}{{/produces}}
                                                             response.set_body(vec);
                                                         },

@@ -81,9 +81,21 @@ pub mod requests {
     lazy_static! {
         pub static ref TEST_CLIENT_MODEL: Mime = "application/json".parse().unwrap();
     }
+   /// Create Mime objects for the request content types for TestEndpointParameters
+    lazy_static! {
+        pub static ref TEST_ENDPOINT_PARAMETERS: Mime = "application/xml; charset=utf-8".parse().unwrap();
+    }
+   /// Create Mime objects for the request content types for TestEnumParameters
+    lazy_static! {
+        pub static ref TEST_ENUM_PARAMETERS: Mime = "*/*".parse().unwrap();
+    }
    /// Create Mime objects for the request content types for TestInlineAdditionalProperties
     lazy_static! {
         pub static ref TEST_INLINE_ADDITIONAL_PROPERTIES: Mime = "application/json".parse().unwrap();
+    }
+   /// Create Mime objects for the request content types for TestJsonFormData
+    lazy_static! {
+        pub static ref TEST_JSON_FORM_DATA: Mime = "application/json".parse().unwrap();
     }
    /// Create Mime objects for the request content types for TestClassname
     lazy_static! {
@@ -96,6 +108,10 @@ pub mod requests {
    /// Create Mime objects for the request content types for UpdatePet
     lazy_static! {
         pub static ref UPDATE_PET: Mime = "application/json".parse().unwrap();
+    }
+   /// Create Mime objects for the request content types for UpdatePetWithForm
+    lazy_static! {
+        pub static ref UPDATE_PET_WITH_FORM: Mime = "application/x-www-form-urlencoded".parse().unwrap();
     }
    /// Create Mime objects for the request content types for PlaceOrder
     lazy_static! {

@@ -7,6 +7,7 @@ extern crate mime;
 extern crate chrono;
 extern crate url;
 extern crate multipart;
+extern crate serde_urlencoded;
 
 use self::multipart::client::lazy::Multipart;
 use hyper;
@@ -704,7 +705,26 @@ if let Some(body) = body {
 
         let mut request = hyper::Request::new(hyper::Method::Post, uri);
 
+        let params = &[
+            ("integer", param_integer.map(|param| format!("{:?}", param))),
+            ("int32", param_int32.map(|param| format!("{:?}", param))),
+            ("int64", param_int64.map(|param| format!("{:?}", param))),
+            ("number", Some(format!("{:?}", param_number))),
+            ("float", param_float.map(|param| format!("{:?}", param))),
+            ("double", Some(format!("{:?}", param_double))),
+            ("string", param_string),
+            ("pattern_without_delimiter", Some(param_pattern_without_delimiter)),
+            ("byte", Some(format!("{:?}", param_byte))),
+            ("binary", param_binary.map(|param| format!("{:?}", param))),
+            ("date", param_date.map(|param| format!("{:?}", param))),
+            ("dateTime", param_date_time.map(|param| format!("{:?}", param))),
+            ("password", param_password),
+            ("callback", param_callback),
+        ];
+        let body = serde_urlencoded::to_string(params).expect("impossible to fail to serialize");
 
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_ENDPOINT_PARAMETERS.clone()));
+        request.set_body(body.into_bytes());
 
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
         context.auth_data.as_ref().map(|auth_data| {
@@ -787,7 +807,15 @@ if let Some(body) = body {
 
         let mut request = hyper::Request::new(hyper::Method::Get, uri);
 
+        let params = &[
+            ("enum_form_string_array", param_enum_form_string_array.map(|param| format!("{:?}", param))),
+            ("enum_form_string", param_enum_form_string),
+            ("enum_query_double", param_enum_query_double.map(|param| format!("{:?}", param))),
+        ];
+        let body = serde_urlencoded::to_string(params).expect("impossible to fail to serialize");
 
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_ENUM_PARAMETERS.clone()));
+        request.set_body(body.into_bytes());
 
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
 
@@ -928,7 +956,14 @@ if let Some(body) = body {
 
         let mut request = hyper::Request::new(hyper::Method::Get, uri);
 
+        let params = &[
+            ("param", Some(param_param)),
+            ("param2", Some(param_param2)),
+        ];
+        let body = serde_urlencoded::to_string(params).expect("impossible to fail to serialize");
 
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_JSON_FORM_DATA.clone()));
+        request.set_body(body.into_bytes());
 
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
 
@@ -1542,7 +1577,14 @@ if let Some(body) = body {
 
         let mut request = hyper::Request::new(hyper::Method::Post, uri);
 
+        let params = &[
+            ("name", param_name),
+            ("status", param_status),
+        ];
+        let body = serde_urlencoded::to_string(params).expect("impossible to fail to serialize");
 
+        request.headers_mut().set(ContentType(mimetypes::requests::UPDATE_PET_WITH_FORM.clone()));
+        request.set_body(body.into_bytes());
 
         context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
 

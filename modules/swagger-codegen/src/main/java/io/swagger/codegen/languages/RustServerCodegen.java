@@ -450,6 +450,10 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         return mimetype.toLowerCase().startsWith("text/plain");
     }
 
+    boolean isMimetypeWwwFormUrlEncoded(String mimetype) {
+        return mimetype.toLowerCase().startsWith("application/x-www-form-urlencoded");
+    }
+
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
@@ -525,6 +529,8 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                     consumesXml = true;
                 } else if (isMimetypePlainText(mimeType)) {
                     consumesPlainText = true;
+                } else if (isMimetypeWwwFormUrlEncoded(mimeType)) {
+                    additionalProperties.put("usesUrlEncodedForm", true);
                 }
 
                 mediaType.put("mediaType", mimeType);
