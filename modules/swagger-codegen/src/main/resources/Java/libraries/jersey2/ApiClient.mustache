@@ -779,7 +779,7 @@ public class ApiClient {
       java.util.logging.Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME).setLevel(java.util.logging.Level.ALL);
 {{/supportJava6}}
 {{#supportJava6}}
-        clientConfig.register(new LoggingFilter(java.util.logging.Logger.getLogger(LoggingFilter.class.getName()), true));    	
+      clientConfig.register(new LoggingFilter(java.util.logging.Logger.getLogger(LoggingFilter.class.getName()), true));
 {{/supportJava6}}
     }
     performAdditionalClientConfiguration(clientConfig);
