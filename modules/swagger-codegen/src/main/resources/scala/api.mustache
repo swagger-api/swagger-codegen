@@ -39,8 +39,6 @@ class {{classname}}(
   val defBasePath: String = "{{{basePath}}}",
   defApiInvoker: ApiInvoker = ApiInvoker
 ) {
-  import org.json4s._
-
   private lazy val dateTimeFormatter = {
     val formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
