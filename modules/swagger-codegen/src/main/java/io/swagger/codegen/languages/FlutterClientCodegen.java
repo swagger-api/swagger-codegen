@@ -9,12 +9,10 @@ import java.io.File;
 import java.util.*;
 
 public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfig {
-    public static final String BROWSER_CLIENT = "browserClient";
     public static final String PUB_NAME = "pubName";
     public static final String PUB_VERSION = "pubVersion";
     public static final String PUB_DESCRIPTION = "pubDescription";
     public static final String USE_ENUM_EXTENSION = "useEnumExtension";
-    protected boolean browserClient = false;
     protected String pubName = "swagger";
     protected String pubVersion = "1.0.0";
     protected String pubDescription = "Swagger API client";
@@ -86,7 +84,6 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
 
-        cliOptions.add(new CliOption(BROWSER_CLIENT, "Is the client browser based"));
         cliOptions.add(new CliOption(PUB_NAME, "Name in generated pubspec"));
         cliOptions.add(new CliOption(PUB_VERSION, "Version in generated pubspec"));
         cliOptions.add(new CliOption(PUB_DESCRIPTION, "Description in generated pubspec"));
@@ -112,13 +109,6 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
     @Override
     public void processOpts() {
         super.processOpts();
-
-        if (additionalProperties.containsKey(BROWSER_CLIENT)) {
-            this.setBrowserClient(convertPropertyToBooleanAndWriteBack(BROWSER_CLIENT));
-        } else {
-            //not set, use to be passed to template
-            additionalProperties.put(BROWSER_CLIENT, browserClient);
-        }
 
         if (additionalProperties.containsKey(PUB_NAME)) {
             this.setPubName((String) additionalProperties.get(PUB_NAME));
@@ -422,10 +412,6 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
         }
 
         return camelize(operationId, true);
-    }
-
-    public void setBrowserClient(boolean browserClient) {
-        this.browserClient = browserClient;
     }
 
     public void setPubName(String pubName) {
