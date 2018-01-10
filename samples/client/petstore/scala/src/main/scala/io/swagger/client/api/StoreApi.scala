@@ -48,8 +48,6 @@ class StoreApi(
   val defBasePath: String = "http://petstore.swagger.io/v2",
   defApiInvoker: ApiInvoker = ApiInvoker
 ) {
-  import org.json4s._
-
   private lazy val dateTimeFormatter = {
     val formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
