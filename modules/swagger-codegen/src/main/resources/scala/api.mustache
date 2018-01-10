@@ -32,6 +32,8 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
+import org.json4s._
+
 {{#operations}}
 class {{classname}}(
   val defBasePath: String = "{{{basePath}}}",
@@ -105,7 +107,7 @@ class {{classname}}AsyncHelper(client: TransportClient, config: SwaggerConfig) e
 {{#operation}}
   def {{operationId}}({{#allParams}}{{^required}}{{paramName}}: Option[{{dataType}}] = {{#defaultValue}}Option({{#isString}}"{{{defaultValue}}}"{{/isString}}{{^isString}}{{#isByteArray}}"{{/isByteArray}}{{#isDate}}dateFormatter.parse("{{/isDate}}{{#isDateTime}}dateTimeFormatter.parse("{{/isDateTime}}{{{defaultValue}}}{{#isDate}}"){{/isDate}}{{#isDateTime}}"){{/isDateTime}}{{#isByteArray}}".getBytes{{/isByteArray}}{{/isString}}){{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{#hasMore}},{{/hasMore}}
     {{/required}}{{#required}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{#isString}}"{{{defaultValue}}}"{{/isString}}{{^isString}}{{#isByteArray}}"{{/isByteArray}}{{#isDate}}dateFormatter.parse("{{/isDate}}{{#isDateTime}}dateTimeFormatter.parse("{{/isDateTime}}{{{defaultValue}}}{{#isDate}}"){{/isDate}}{{#isDateTime}}"){{/isDateTime}}{{#isByteArray}}".getBytes{{/isByteArray}}{{/isString}}{{/defaultValue}}{{#hasMore}},
-    {{/hasMore}}{{/required}}{{/allParams}})(implicit reader: ClientResponseReader[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}]{{#bodyParams}}, writer: RequestWriter[{{dataType}}]{{/bodyParams}}){{#returnType}}: Future[{{returnType}}]{{/returnType}}{{^returnType}}: Future[Unit]{{/returnType}} = {
+    {{/hasMore}}{{/required}}{{/allParams}})(implicit reader: ClientResponseReader[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}]{{#bodyParams}}, writer: RequestWriter[{{^required}}Option[{{dataType}}]{{/required}}{{#required}}{{dataType}}{{/required}}]{{/bodyParams}}){{#returnType}}: Future[{{returnType}}]{{/returnType}}{{^returnType}}: Future[Unit]{{/returnType}} = {
     // create path and map variables
     val path = (addFmt("{{path}}"){{#pathParams}}
       replaceAll("\\{" + "{{baseName}}" + "\\}", {{paramName}}.toString){{/pathParams}})
