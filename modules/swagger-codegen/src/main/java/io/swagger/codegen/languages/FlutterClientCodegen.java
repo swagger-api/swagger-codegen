@@ -14,7 +14,7 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
     public static final String PUB_VERSION = "pubVersion";
     public static final String PUB_DESCRIPTION = "pubDescription";
     public static final String USE_ENUM_EXTENSION = "useEnumExtension";
-    protected boolean browserClient = true;
+    protected boolean browserClient = false;
     protected String pubName = "swagger";
     protected String pubVersion = "1.0.0";
     protected String pubDescription = "Swagger API client";
