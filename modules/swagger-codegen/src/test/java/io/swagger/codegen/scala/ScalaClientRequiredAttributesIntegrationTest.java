@@ -47,7 +47,7 @@ public class ScalaClientRequiredAttributesIntegrationTest extends AbstractIntegr
     }
 
     // TODO: Remove this when super.generatesCorrectDirectoryStructure() is re-enabled.
-    @Test(description = "Verify Scala client's understanding of 'required' attributes.")
+    @Test(description = "Verify Scala client's understanding of 'required' attributes. (disabled awaiting CI fix for integration tests classpath)", enabled = false)
     public void test() throws IOException {
         this.generatesCorrectDirectoryStructure();
     }
