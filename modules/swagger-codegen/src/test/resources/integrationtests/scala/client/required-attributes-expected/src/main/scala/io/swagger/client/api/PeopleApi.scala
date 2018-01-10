@@ -42,12 +42,12 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
+import org.json4s._
+
 class PeopleApi(
   val defBasePath: String = "https://localhost:8080",
   defApiInvoker: ApiInvoker = ApiInvoker
 ) {
-  import org.json4s._
-
   private lazy val dateTimeFormatter = {
     val formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
