@@ -10,16 +10,13 @@
  * Do not edit the class manually.
  */
 
+package com.wordnik.server.model
 
-package com.wordnik.client.model
-
-
-case class Pet (
+case class Pet(
   id: Option[Long],
   category: Option[Category],
   name: String,
   photoUrls: List[String],
   tags: Option[List[Tag]],
   /* pet status in the store */
-  status: Option[String]
-)
+  status: Option[String])

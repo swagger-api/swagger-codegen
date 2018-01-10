@@ -10,18 +10,14 @@
  * Do not edit the class manually.
  */
 
+package com.wordnik.server.model
+import java.util.Date
 
-package com.wordnik.client.model
-
-
-case class User (
+case class Order(
   id: Option[Long],
-  username: Option[String],
-  firstName: Option[String],
-  lastName: Option[String],
-  email: Option[String],
-  password: Option[String],
-  phone: Option[String],
-  /* User Status */
-  userStatus: Option[Int]
-)
+  petId: Option[Long],
+  quantity: Option[Int],
+  shipDate: Option[Date],
+  /* Order Status */
+  status: Option[String],
+  complete: Option[Boolean])

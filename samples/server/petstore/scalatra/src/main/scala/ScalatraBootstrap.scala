@@ -10,10 +10,8 @@
  * Do not edit the class manually.
  */
 
-
-import com.wordnik.client.api._
-import akka.actor.ActorSystem
-import io.swagger.app.{ResourcesApp, SwaggerApp}
+import com.wordnik.server.api._
+import io.swagger.app.{ ResourcesApp, SwaggerApp }
 import javax.servlet.ServletContext
 import org.scalatra.LifeCycle
 
@@ -21,12 +19,11 @@ class ScalatraBootstrap extends LifeCycle {
   implicit val swagger = new SwaggerApp
 
   override def init(context: ServletContext) {
-    implicit val system = ActorSystem("appActorSystem")
     try {
       context mount (new PetApi, "/v2/Pet/*")
       context mount (new StoreApi, "/v2/Store/*")
       context mount (new UserApi, "/v2/User/*")
-      
+
       context mount (new ResourcesApp, "/api-docs/*")
     } catch {
       case e: Throwable => e.printStackTrace()
