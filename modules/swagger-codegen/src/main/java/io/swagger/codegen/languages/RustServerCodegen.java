@@ -611,8 +611,13 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             }
         }
         for (CodegenParameter param : op.headerParams) {
-            // Give header params a name in camel case. CodegenParameters don't have a nameInCamelCase property.
+            // If a header uses UUIDs, we need to import the UUID package.
+            if (param.dataType.equals("uuid::Uuid")) {
+                additionalProperties.put("apiUsesUuid", true);
+            }
             processParam(param, op);
+
+            // Give header params a name in camel case. CodegenParameters don't have a nameInCamelCase property.
             param.vendorExtensions.put("typeName", toModelName(param.baseName));
         }
         for (CodegenParameter param : op.formParams) {
@@ -664,10 +669,16 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 }
             }
             for (CodegenProperty header : rsp.headers) {
+                if (header.datatype.equals("uuid::Uuid")) {
+                    additionalProperties.put("apiUsesUuid", true);
+                }
                 header.nameInCamelCase = toModelName(header.baseName);
             }
         }
         for (CodegenProperty header : op.responseHeaders) {
+            if (header.datatype.equals("uuid::Uuid")) {
+                    additionalProperties.put("apiUsesUuid", true);
+            }
             header.nameInCamelCase = toModelName(header.baseName);
         }
 

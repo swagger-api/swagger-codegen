@@ -9,6 +9,7 @@ extern crate url;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 {{#usesUrlEncodedForm}}extern crate serde_urlencoded;{{/usesUrlEncodedForm}}
 
+{{#apiUsesUuid}}use uuid;{{/apiUsesUuid}}
 {{#apiHasFile}}use self::multipart::client::lazy::Multipart;{{/apiHasFile}}
 use hyper;
 use hyper::header::{Headers, ContentType};

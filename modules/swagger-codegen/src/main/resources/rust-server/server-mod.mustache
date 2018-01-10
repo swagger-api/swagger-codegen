@@ -5,12 +5,13 @@ extern crate native_tls;
 extern crate hyper_tls;
 extern crate openssl;
 extern crate mime;
-extern crate uuid;
+{{^apiUsesUuid}}extern crate uuid;{{/apiUsesUuid}}
 extern crate chrono;
 {{#apiHasFile}}extern crate multipart;{{/apiHasFile}}
 extern crate percent_encoding;
 extern crate url;
 
+{{#apiUsesUuid}}use uuid;{{/apiUsesUuid}}
 use std::sync::Arc;
 use futures::{Future, future, Stream, stream};
 use hyper;

@@ -3,6 +3,7 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
+{{#apiUsesUuid}}extern crate uuid;{{/apiUsesUuid}}
 {{#usesXml}}extern crate serde_xml_rs;{{/usesXml}}
 extern crate futures;
 extern crate chrono;

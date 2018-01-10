@@ -7,6 +7,7 @@ use chrono;
 use futures::Stream;
 use std::collections::HashMap;
 use std::io::Error;
+
 use swagger;
 
 use petstore_api::{Api, ApiError, Context,
