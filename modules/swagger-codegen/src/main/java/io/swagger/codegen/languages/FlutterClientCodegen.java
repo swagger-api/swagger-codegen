@@ -30,10 +30,10 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
         // at the moment
         importMapping.clear();
 
-        outputFolder = "generated-code/dart";
+        outputFolder = "generated-code/flutter";
         modelTemplateFiles.put("model.mustache", ".dart");
         apiTemplateFiles.put("api.mustache", ".dart");
-        embeddedTemplateDir = templateDir = "dart";
+        embeddedTemplateDir = templateDir = "flutter";
         apiPackage = "lib.api";
         modelPackage = "lib.model";
         modelDocTemplateFiles.put("object_doc.mustache", ".md");
@@ -101,12 +101,12 @@ public class FlutterClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String getName() {
-        return "dart";
+        return "flutter";
     }
 
     @Override
     public String getHelp() {
-        return "Generates a Dart client library.";
+        return "Generates a flutter-compatible Dart client library.";
     }
 
     @Override
