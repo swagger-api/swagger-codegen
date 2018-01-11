@@ -179,25 +179,25 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             // Handle integer enums
             IntegerProperty sp = (IntegerProperty) p;
             if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
             }
         } else if (p instanceof LongProperty) {
             // Handle long enums
             LongProperty sp = (LongProperty) p;
             if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
             }
         } else if (p instanceof DoubleProperty) {
             // Handle double enums
             DoubleProperty sp = (DoubleProperty) p;
             if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
             }
         } else if (p instanceof FloatProperty) {
             // Handle float enums
             FloatProperty sp = (FloatProperty) p;
             if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
             }
         } else if (p instanceof DateProperty) {
             // Handle date enums
@@ -216,6 +216,14 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         return super.getTypeDeclaration(p);
     }
 
+    /**
+     * Converts a list of strings to a literal union for representing enum values as a type.
+     * Example: 'available' | 'pending' | 'sold'
+     *
+     * @param values list of allowed enum values
+     * @param dataType either "string" or "number"
+     * @return
+     */
     private String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
         StringBuilder b = new StringBuilder();
         boolean isFirst = true;
@@ -229,7 +237,14 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         return b.toString();
     }
 
-    private String numericEnumValuesToEnumTypeUnion(List<Object> values) {
+    /**
+     * Converts a list of numbers to a literal union for representing enum values as a type.
+     * Example: 3 | 9 | 55
+     *
+     * @param values
+     * @return
+     */
+    private String numericEnumValuesToEnumTypeUnion(List<Number> values) {
         List<String> stringValues = new ArrayList<>();
         for (Object value: values) {
             stringValues.add(value.toString());
