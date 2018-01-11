@@ -17,12 +17,7 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.utils.SemVer;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.Property;
+import io.swagger.models.properties.*;
 
 public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
@@ -174,9 +169,72 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             return "Blob";
         } else if (p instanceof ObjectProperty) {
             return "any";
-        } else {
-            return super.getTypeDeclaration(p);
+        } else if (p instanceof StringProperty) {
+            // Handle string enums
+            StringProperty sp = (StringProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof IntegerProperty) {
+            // Handle integer enums
+            IntegerProperty sp = (IntegerProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+            }
+        } else if (p instanceof LongProperty) {
+            // Handle integer enums
+            LongProperty sp = (LongProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+            }
+        } else if (p instanceof DoubleProperty) {
+            // Handle integer enums
+            DoubleProperty sp = (DoubleProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+            }
+        } else if (p instanceof FloatProperty) {
+            // Handle integer enums
+            FloatProperty sp = (FloatProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
+            }
+        } else if (p instanceof DateProperty) {
+            // Handle integer enums
+            DateProperty sp = (DateProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof DateTimeProperty) {
+            // Handle integer enums
+            DateTimeProperty sp = (DateTimeProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
         }
+
+        return super.getTypeDeclaration(p);
+    }
+
+    private String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
+        StringBuilder b = new StringBuilder();
+        boolean isFirst = true;
+        for (String value: values) {
+            if (!isFirst) {
+                b.append(" | ");
+            }
+            b.append(toEnumValue(value.toString(), dataType));
+            isFirst = false;
+        }
+        return b.toString();
+    }
+
+    private String numericEnumValuesToEnumTypeUnion(List<Object> values) {
+        List<String> stringValues = new ArrayList<>();
+        for (Object value: values) {
+            stringValues.add(value.toString());
+        }
+        return enumValuesToEnumTypeUnion(stringValues, "number");
     }
 
     @Override
