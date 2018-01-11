@@ -182,31 +182,31 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
             }
         } else if (p instanceof LongProperty) {
-            // Handle integer enums
+            // Handle long enums
             LongProperty sp = (LongProperty) p;
             if (sp.getEnum() != null) {
                 return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
             }
         } else if (p instanceof DoubleProperty) {
-            // Handle integer enums
+            // Handle double enums
             DoubleProperty sp = (DoubleProperty) p;
             if (sp.getEnum() != null) {
                 return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
             }
         } else if (p instanceof FloatProperty) {
-            // Handle integer enums
+            // Handle float enums
             FloatProperty sp = (FloatProperty) p;
             if (sp.getEnum() != null) {
                 return numericEnumValuesToEnumTypeUnion(new ArrayList<Object>(sp.getEnum()));
             }
         } else if (p instanceof DateProperty) {
-            // Handle integer enums
+            // Handle date enums
             DateProperty sp = (DateProperty) p;
             if (sp.getEnum() != null) {
                 return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
             }
         } else if (p instanceof DateTimeProperty) {
-            // Handle integer enums
+            // Handle datetime enums
             DateTimeProperty sp = (DateTimeProperty) p;
             if (sp.getEnum() != null) {
                 return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
