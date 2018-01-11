@@ -12,14 +12,14 @@ class {{classname}} {
 
   {{classname}}.fromJson(Map<String, dynamic> json) {
   {{#vars}}
-    {{name}} = json['{{name}}'];
+    {{name}} = {{#complexType}}new {{complexType}}.fromJson(json['{{name}}']){{/complexType}}{{^complexType}}json['{{name}}']{{/complexType}};
   {{/vars}}
   }
 
   Map<String, dynamic> toMap() {
     return {
       {{#vars}}
-        '{{name}}' : {{name}},
+      '{{name}}': {{#complexType}}{{name}} == null ? null : {{name}}.toMap(){{/complexType}}{{^complexType}}{{name}}{{/complexType}}{{^-last}},{{/-last}}
       {{/vars}}
      };
   }
