@@ -1275,7 +1275,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
      * @return getter name based on naming convention
      */
     public String toBooleanGetter(String name) {
-        return "is" + getterAndSetterCapitalize(name);
+        return "get" + getterAndSetterCapitalize(name);
     }
 
     @Override
