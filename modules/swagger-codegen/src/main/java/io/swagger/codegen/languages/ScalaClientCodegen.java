@@ -96,6 +96,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("file", "File");
         typeMapping.put("binary", "Array[Byte]");
         typeMapping.put("ByteArray", "Array[Byte]");
+        typeMapping.put("ArrayByte", "Array[Byte]");
         typeMapping.put("date-time", "Date");
         typeMapping.put("DateTime", "Date");
 
