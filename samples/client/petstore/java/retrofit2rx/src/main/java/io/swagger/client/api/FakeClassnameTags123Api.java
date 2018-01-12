@@ -7,6 +7,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 import io.swagger.client.model.Client;
 
@@ -20,7 +21,7 @@ public interface FakeClassnameTags123Api {
    * To test class name in snake case
    * 
    * @param body client model (required)
-   * @return Call&lt;Client&gt;
+   * @return Observable&lt;Client&gt;
    */
   @Headers({
     "Content-Type:application/json"
