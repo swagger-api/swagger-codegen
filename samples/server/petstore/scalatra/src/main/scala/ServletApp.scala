@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+
 package io.swagger.app
 
 import org.scalatra.swagger.{ ApiInfo, SwaggerWithAuth, Swagger }

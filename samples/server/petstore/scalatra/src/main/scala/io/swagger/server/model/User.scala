@@ -10,15 +10,16 @@
  * Do not edit the class manually.
  */
 
-package com.wordnik.server.model
+package io.swagger.server.model
 
 case class User(
   id: Option[Long],
-  username: Option[String],
-  firstName: Option[String],
-  lastName: Option[String],
-  email: Option[String],
-  password: Option[String],
-  phone: Option[String],
+    username: Option[String],
+    firstName: Option[String],
+    lastName: Option[String],
+    email: Option[String],
+    password: Option[String],
+    phone: Option[String],
   /* User Status */
-  userStatus: Option[Int])
+  userStatus: Option[Int]
+  )

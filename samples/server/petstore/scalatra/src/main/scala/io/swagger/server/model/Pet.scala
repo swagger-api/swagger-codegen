@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-package com.wordnik.server.model
-import java.util.Date
+package io.swagger.server.model
 
-case class Order(
+case class Pet(
   id: Option[Long],
-  petId: Option[Long],
-  quantity: Option[Int],
-  shipDate: Option[Date],
-  /* Order Status */
-  status: Option[String],
-  complete: Option[Boolean])
+    category: Option[Category],
+    name: String,
+    photoUrls: List[String],
+    tags: Option[List[Tag]],
+  /* pet status in the store */
+  status: Option[String]
+  )

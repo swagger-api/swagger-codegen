@@ -10,9 +10,10 @@
  * Do not edit the class manually.
  */
 
-package com.wordnik.server.model
+package io.swagger.server.model
 
 case class ApiResponse(
   code: Option[Int],
-  _type: Option[String],
-  message: Option[String])
+    _type: Option[String],
+    message: Option[String]
+  )

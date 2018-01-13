@@ -10,8 +10,15 @@
  * Do not edit the class manually.
  */
 
-package com.wordnik.server.model
+package io.swagger.server.model
+import java.util.Date
 
-case class Tag(
+case class Order(
   id: Option[Long],
-  name: Option[String])
+    petId: Option[Long],
+    quantity: Option[Int],
+    shipDate: Option[Date],
+  /* Order Status */
+  status: Option[String],
+    complete: Option[Boolean]
+  )
