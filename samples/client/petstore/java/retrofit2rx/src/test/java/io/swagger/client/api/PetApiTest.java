@@ -15,6 +15,7 @@ import org.junit.*;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.Response;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +30,7 @@ public class PetApiTest {
     @Test
     public void testCreateAndGetPet() throws Exception {
         final Pet pet = createRandomPet();
-        api.addPet(pet).subscribe(new SkeletonSubscriber<Void>() {
+        api.addPet(pet).subscribe(new SkeletonSubscriber<Response<Void>>() {
             @Override
             public void onCompleted() {
                 api.getPetById(pet.getId()).subscribe(new SkeletonSubscriber<Pet>() {
@@ -52,7 +53,7 @@ public class PetApiTest {
         final Pet pet = createRandomPet();
         pet.setName("programmer");
 
-        api.updatePet(pet).subscribe(new SkeletonSubscriber<Void>() {
+        api.updatePet(pet).subscribe(new SkeletonSubscriber<Response<Void>>() {
             @Override
             public void onCompleted() {
                 api.getPetById(pet.getId()).subscribe(new SkeletonSubscriber<Pet>() {
@@ -76,7 +77,7 @@ public class PetApiTest {
         pet.setName("programmer");
         pet.setStatus(Pet.StatusEnum.AVAILABLE);
 
-        api.updatePet(pet).subscribe(new SkeletonSubscriber<Void>() {
+        api.updatePet(pet).subscribe(new SkeletonSubscriber<Response<Void>>() {
             @Override
             public void onCompleted() {
                 api.findPetsByStatus(new CSVParams("available")).subscribe(new SkeletonSubscriber<List<Pet>>() {
@@ -113,7 +114,7 @@ public class PetApiTest {
         tags.add(tag1);
         pet.setTags(tags);
 
-        api.updatePet(pet).subscribe(new SkeletonSubscriber<Void>() {
+        api.updatePet(pet).subscribe(new SkeletonSubscriber<Response<Void>>() {
             @Override
             public void onCompleted() {
                 api.findPetsByTags(new CSVParams("friendly")).subscribe(new SkeletonSubscriber<List<Pet>>() {
@@ -146,7 +147,7 @@ public class PetApiTest {
             @Override
             public void onNext(final Pet fetched) {
                 api.updatePetWithForm(fetched.getId(), "furt", null)
-                        .subscribe(new SkeletonSubscriber<Void>() {
+                        .subscribe(new SkeletonSubscriber<Response<Void>>() {
                             @Override
                             public void onCompleted() {
                                 api.getPetById(fetched.getId()).subscribe(new SkeletonSubscriber<Pet>() {

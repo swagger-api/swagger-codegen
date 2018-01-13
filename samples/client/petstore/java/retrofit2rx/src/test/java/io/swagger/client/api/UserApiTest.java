@@ -7,6 +7,7 @@ import io.swagger.client.model.*;
 import java.util.Arrays;
 
 import org.junit.*;
+import retrofit2.Response;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +27,7 @@ public class UserApiTest {
     public void testCreateUser() throws Exception {
         final User user = createUser();
 
-        api.createUser(user).subscribe(new SkeletonSubscriber<Void>() {
+        api.createUser(user).subscribe(new SkeletonSubscriber<Response<Void>>() {
             @Override
             public void onCompleted() {
                 api.getUserByName(user.getUsername()).subscribe(new SkeletonSubscriber<User>() {
