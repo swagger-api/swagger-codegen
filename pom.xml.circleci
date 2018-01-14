@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.3.0-SNAPSHOT</version>
+    <version>2.3.1</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -92,7 +92,7 @@
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
@@ -102,7 +102,7 @@
                         <phase>validate</phase>
                         <configuration>
                             <configLocation>google_checkstyle.xml</configLocation>
-                            <!-- Don't include generated sources a la http://stackoverflow.com/a/30406454 -->
+                            Don't include generated sources a la http://stackoverflow.com/a/30406454
                             <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
@@ -121,7 +121,7 @@
                         <version>6.19</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -822,6 +822,7 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
+                <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/scala</module>
                 <module>samples/client/petstore/scalaz</module>
                 <module>samples/client/petstore/clojure</module>
@@ -841,9 +842,11 @@
                 <module>samples/client/petstore/kotlin/</module>
                 <!-- test non-java projects -->
                 <module>samples/client/petstore/go</module>
-                <module>samples/client/petstore/ruby</module>
                 <!-- servers -->
+                <module>samples/server/petstore/java-vertx/rx</module>
+                <module>samples/server/petstore/java-vertx/async</module>
                 <module>samples/server/petstore/java-inflector</module>
+                <module>samples/server/petstore/java-pkmst</module>
                 <module>samples/server/petstore/java-play-framework</module>
                 <module>samples/server/petstore/undertow</module>
                 <module>samples/server/petstore/jaxrs/jersey1</module>

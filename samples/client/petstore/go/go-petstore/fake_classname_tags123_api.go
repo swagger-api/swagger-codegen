@@ -11,6 +11,7 @@
 package petstore
 
 import (
+	"io/ioutil"
 	"net/url"
 	"net/http"
 	"strings"
@@ -27,7 +28,7 @@ type FakeClassnameTags123ApiService service
 
 
 /* FakeClassnameTags123ApiService To test class name in snake case
- * @param ctx context.Context Authentication Context 
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body client model
  @return Client*/
 func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body Client) (Client,  *http.Response, error) {
@@ -91,7 +92,8 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {

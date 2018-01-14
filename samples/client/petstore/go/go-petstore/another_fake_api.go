@@ -11,6 +11,7 @@
 package petstore
 
 import (
+	"io/ioutil"
 	"net/url"
 	"net/http"
 	"strings"
@@ -28,10 +29,10 @@ type AnotherFakeApiService service
 
 /* AnotherFakeApiService To test special tags
  To test special tags
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body client model
  @return Client*/
-func (a *AnotherFakeApiService) TestSpecialTags(body Client) (Client,  *http.Response, error) {
+func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client) (Client,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody interface{}
@@ -69,7 +70,7 @@ func (a *AnotherFakeApiService) TestSpecialTags(body Client) (Client,  *http.Res
 	}
 	// body params
 	localVarPostBody = &body
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return successPayload, nil, err
 	}
@@ -80,7 +81,8 @@ func (a *AnotherFakeApiService) TestSpecialTags(body Client) (Client,  *http.Res
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {

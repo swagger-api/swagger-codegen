@@ -11,6 +11,7 @@
 package petstore
 
 import (
+	"io/ioutil"
 	"net/url"
 	"net/http"
 	"strings"
@@ -29,10 +30,10 @@ type UserApiService service
 
 /* UserApiService Create user
  This can only be done by the logged in user.
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body Created user object
  @return */
-func (a *UserApiService) CreateUser(body User) ( *http.Response, error) {
+func (a *UserApiService) CreateUser(ctx context.Context, body User) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody interface{}
@@ -70,7 +71,7 @@ func (a *UserApiService) CreateUser(body User) ( *http.Response, error) {
 	}
 	// body params
 	localVarPostBody = &body
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +82,8 @@ func (a *UserApiService) CreateUser(body User) ( *http.Response, error) {
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err
@@ -89,10 +91,10 @@ func (a *UserApiService) CreateUser(body User) ( *http.Response, error) {
 
 /* UserApiService Creates list of users with given input array
  
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body List of user object
  @return */
-func (a *UserApiService) CreateUsersWithArrayInput(body []User) ( *http.Response, error) {
+func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []User) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody interface{}
@@ -130,7 +132,7 @@ func (a *UserApiService) CreateUsersWithArrayInput(body []User) ( *http.Response
 	}
 	// body params
 	localVarPostBody = &body
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +143,8 @@ func (a *UserApiService) CreateUsersWithArrayInput(body []User) ( *http.Response
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err
@@ -149,10 +152,10 @@ func (a *UserApiService) CreateUsersWithArrayInput(body []User) ( *http.Response
 
 /* UserApiService Creates list of users with given input array
  
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param body List of user object
  @return */
-func (a *UserApiService) CreateUsersWithListInput(body []User) ( *http.Response, error) {
+func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []User) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody interface{}
@@ -190,7 +193,7 @@ func (a *UserApiService) CreateUsersWithListInput(body []User) ( *http.Response,
 	}
 	// body params
 	localVarPostBody = &body
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +204,8 @@ func (a *UserApiService) CreateUsersWithListInput(body []User) ( *http.Response,
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err
@@ -209,10 +213,10 @@ func (a *UserApiService) CreateUsersWithListInput(body []User) ( *http.Response,
 
 /* UserApiService Delete user
  This can only be done by the logged in user.
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username The name that needs to be deleted
  @return */
-func (a *UserApiService) DeleteUser(username string) ( *http.Response, error) {
+func (a *UserApiService) DeleteUser(ctx context.Context, username string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody interface{}
@@ -249,7 +253,7 @@ func (a *UserApiService) DeleteUser(username string) ( *http.Response, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +264,8 @@ func (a *UserApiService) DeleteUser(username string) ( *http.Response, error) {
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err
@@ -268,10 +273,10 @@ func (a *UserApiService) DeleteUser(username string) ( *http.Response, error) {
 
 /* UserApiService Get user by user name
  
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username The name that needs to be fetched. Use user1 for testing. 
  @return User*/
-func (a *UserApiService) GetUserByName(username string) (User,  *http.Response, error) {
+func (a *UserApiService) GetUserByName(ctx context.Context, username string) (User,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -309,7 +314,7 @@ func (a *UserApiService) GetUserByName(username string) (User,  *http.Response, 
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return successPayload, nil, err
 	}
@@ -320,7 +325,8 @@ func (a *UserApiService) GetUserByName(username string) (User,  *http.Response, 
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -333,11 +339,11 @@ func (a *UserApiService) GetUserByName(username string) (User,  *http.Response, 
 
 /* UserApiService Logs user into the system
  
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username The user name for login
  @param password The password for login in clear text
  @return string*/
-func (a *UserApiService) LoginUser(username string, password string) (string,  *http.Response, error) {
+func (a *UserApiService) LoginUser(ctx context.Context, username string, password string) (string,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -376,7 +382,7 @@ func (a *UserApiService) LoginUser(username string, password string) (string,  *
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return successPayload, nil, err
 	}
@@ -387,7 +393,8 @@ func (a *UserApiService) LoginUser(username string, password string) (string,  *
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -400,9 +407,9 @@ func (a *UserApiService) LoginUser(username string, password string) (string,  *
 
 /* UserApiService Logs out current logged in user session
  
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @return */
-func (a *UserApiService) LogoutUser() ( *http.Response, error) {
+func (a *UserApiService) LogoutUser(ctx context.Context) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -438,7 +445,7 @@ func (a *UserApiService) LogoutUser() ( *http.Response, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +456,8 @@ func (a *UserApiService) LogoutUser() ( *http.Response, error) {
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err
@@ -457,11 +465,11 @@ func (a *UserApiService) LogoutUser() ( *http.Response, error) {
 
 /* UserApiService Updated user
  This can only be done by the logged in user.
-
+ * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username name that need to be deleted
  @param body Updated user object
  @return */
-func (a *UserApiService) UpdateUser(username string, body User) ( *http.Response, error) {
+func (a *UserApiService) UpdateUser(ctx context.Context, username string, body User) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody interface{}
@@ -500,7 +508,7 @@ func (a *UserApiService) UpdateUser(username string, body User) ( *http.Response
 	}
 	// body params
 	localVarPostBody = &body
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -511,7 +519,8 @@ func (a *UserApiService) UpdateUser(username string, body User) ( *http.Response
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
 	return localVarHttpResponse, err

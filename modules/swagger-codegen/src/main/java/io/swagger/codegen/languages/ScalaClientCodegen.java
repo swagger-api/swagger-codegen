@@ -5,7 +5,6 @@ import io.swagger.codegen.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -94,13 +93,10 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
         typeMapping.put("file", "File");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
-        typeMapping.put("ByteArray", "String");
+        typeMapping.put("binary", "Array[Byte]");
+        typeMapping.put("ByteArray", "Array[Byte]");
+        typeMapping.put("ArrayByte", "Array[Byte]");
         typeMapping.put("date-time", "Date");
-//        typeMapping.put("date", "Date");
-//        typeMapping.put("Date", "Date");
         typeMapping.put("DateTime", "Date");
 
         instantiationTypes.put("array", "ListBuffer");
