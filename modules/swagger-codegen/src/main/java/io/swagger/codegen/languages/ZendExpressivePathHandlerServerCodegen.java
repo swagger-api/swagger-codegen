@@ -52,6 +52,7 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         supportingFiles.add(new SupportingFile("app.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "app.yml"));
         supportingFiles.add(new SupportingFile("path_handler.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "path_handler.yml"));
         supportingFiles.add(new SupportingFile("data_transfer.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "data_transfer.yml"));
+        supportingFiles.add(new SupportingFile("ErrorMiddleware.php.mustache", packagePath + File.separator + srcBasePath, "ErrorMiddleware.php"));
         supportingFiles.add(new SupportingFile("Date.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "Date.php"));
         supportingFiles.add(new SupportingFile("DateTime.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "DateTime.php"));
         supportingFiles.add(new SupportingFile("Type.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Validator", "Type.php"));
@@ -123,6 +124,7 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         String interfaceToImplement;
         StringBuilder interfacesToImplement = new StringBuilder();
         String classMethod;
+        String pathPattern = null;
         for (CodegenOperation op : operationList) {
             switch (op.httpMethod) {
                 case "GET":
@@ -153,63 +155,41 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
             }
             interfacesToImplement.append(interfaceToImplement);
             op.httpMethod = classMethod;
+            //All operations have same path because of custom operation grouping, so path pattern can be calculated only once
+            if (pathPattern == null) {
+                pathPattern = generatePathPattern(op);
+            }
         }
         operations.put("interfacesToImplement", interfacesToImplement.toString());
+        operations.put("pathPattern", pathPattern);
 
         return objs;
     }
 
-    @Override
-    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        objs = super.postProcessSupportingFileData(objs);
-
-        Map<String, Object> apiInfo = (Map<String, Object>) objs.get("apiInfo");
-        List<Map<String, Object>> apis = (List<Map<String, Object>>) apiInfo.get("apis");
-
-        List<Map<String, Object>> routes = new ArrayList<Map<String, Object>>();
-        for (Map<String, Object> api : apis) {
-            String handler = (String) api.get("classname");
-            String url = (String) api.get("baseName");
-            if (url.charAt(0) == '/') {
-                url = url.substring(1);
-            }
-            insertRoute(routes, url.split("/"), 0, handler);
-        }
-
-        objs.put("routes", routes);
-        return objs;
-    }
-
-    private void insertRoute(List<Map<String, Object>> routes, String[] urlParts, int currentUrlPartIndex, String handler) {
-        if (urlParts.length > currentUrlPartIndex) {
-            String urlPart = urlParts[currentUrlPartIndex];
-            //List<Map<String, Object>> subRoutes = null;
-            Map<String, Object> currentRoute = null;
-            for (Map<String, Object> route : routes) {
-                if (urlPart.equals(route.get("name"))) {
-                    currentRoute = route;
-                    break;
+    protected String generatePathPattern(CodegenOperation op) {
+        String result = op.path;
+        for (CodegenParameter pp : op.pathParams) {
+            StringBuilder replacement = new StringBuilder( "{" + pp.paramName);
+            if (pp.isEnum) {
+                StringBuilder enumRegExp = new StringBuilder();
+                for (String enumValue : pp._enum) {
+                    if (enumRegExp.length() > 0) {
+                        enumRegExp.append("|");
+                    }
+                    enumRegExp.append(enumValue.replaceAll("[\\Q<>()[]{}|^$-=!?*+.\\\\E]", "\\\\$0"));
                 }
+                replacement.append(":");
+                replacement.append(enumRegExp);
+            } else if (pp.isInteger) {
+                replacement.append(":0|(?:-?[1-9][0-9]*)");
+            } else if (pp.isString && (pp.pattern != null) && (!pp.pattern.isEmpty())) {
+                replacement.append(":");
+                replacement.append(pp.pattern);
             }
-            if (currentRoute == null) {
-                currentRoute = new HashMap<String, Object>();
-
-                String routePart = urlPart.replaceAll("^\\{(\\w+)\\}$", ":$1");
-                boolean isLastUrlPart = currentUrlPartIndex == urlParts.length - 1;
-
-                currentRoute.put("name", urlPart);
-                currentRoute.put("route", "/" + routePart);
-                currentRoute.put("type", (urlPart == routePart) ? "Literal" : "Segment");
-                currentRoute.put("handler", isLastUrlPart ? handler : null);
-                currentRoute.put("hasChildren", false);
-                currentRoute.put("children", new ArrayList<Map<String, Object>>());
-                currentRoute.put("padding", StringUtils.repeat(' ', 4 * currentUrlPartIndex));
-
-                routes.add(currentRoute);
-            }
-            List<Map<String, Object>> subRoutes = (List<Map<String, Object>>) currentRoute.get("children");
-            insertRoute(subRoutes, urlParts, currentUrlPartIndex + 1, handler);
-            currentRoute.put("hasChildren", !subRoutes.isEmpty());
+            //TODO add regular expressions for other types if they are actually used for path parameters
+            replacement.append("}");
+            result = result.replace("{" + pp.paramName + "}", replacement);
         }
+        return result;
     }
 }

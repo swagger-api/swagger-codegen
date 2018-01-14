@@ -1,13 +1,11 @@
+dependencies:
+  factories:
+    Articus\DataTransfer\Service: Articus\DataTransfer\ServiceFactory
+
 data_transfer:
   metadata_cache:
     adapter:
       name: blackhole
-#    adapter:
-#      name: filesystem
-#      options:
-#        cache_dir: data/cache/data_transfer
-#        namespace: dt
-
   strategies:
     invokables:
       {{invokerPackage}}\Strategy\Date: {{invokerPackage}}\Strategy\Date
