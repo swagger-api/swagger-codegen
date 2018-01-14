@@ -50,6 +50,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("authScheme", authScheme);
         additionalProperties.put("authPreemptive", authPreemptive);
         additionalProperties.put("clientName", clientName);
+        additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
@@ -94,13 +95,9 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
         typeMapping.put("file", "File");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
-        typeMapping.put("ByteArray", "String");
+        typeMapping.put("binary", "Array[Byte]");
+        typeMapping.put("ByteArray", "Array[Byte]");
         typeMapping.put("date-time", "Date");
-//        typeMapping.put("date", "Date");
-//        typeMapping.put("Date", "Date");
         typeMapping.put("DateTime", "Date");
 
         instantiationTypes.put("array", "ListBuffer");
@@ -232,12 +229,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     @Override
     public String toEnumName(CodegenProperty property) {
         return formatIdentifier(stripPackageName(property.baseName), true);
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
     }
 
 }
