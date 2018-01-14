@@ -5,7 +5,6 @@ import io.swagger.codegen.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,6 +49,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("authScheme", authScheme);
         additionalProperties.put("authPreemptive", authPreemptive);
         additionalProperties.put("clientName", clientName);
+        additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
@@ -96,6 +96,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("file", "File");
         typeMapping.put("binary", "Array[Byte]");
         typeMapping.put("ByteArray", "Array[Byte]");
+        typeMapping.put("ArrayByte", "Array[Byte]");
         typeMapping.put("date-time", "Date");
         typeMapping.put("DateTime", "Date");
 
@@ -228,12 +229,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     @Override
     public String toEnumName(CodegenProperty property) {
         return formatIdentifier(stripPackageName(property.baseName), true);
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
     }
 
 }
