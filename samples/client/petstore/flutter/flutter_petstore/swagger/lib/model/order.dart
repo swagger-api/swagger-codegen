@@ -36,10 +36,10 @@ class Order {
     complete = json['complete'];
   }
 
-  static List<Order> listFromJson(Map<String, dynamic> json) {
+  static List<Order> listFromJson(List<Map<String, dynamic>> json) {
     var list = new List<Order>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => list.add(new Order.fromJson(value)));
+      json.forEach((Map<String, dynamic> value) => list.add(new Order.fromJson(value)));
     }
     return list;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swagger/api.dart';
 
 void main() => runApp(new MyApp());
 
@@ -57,6 +58,52 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fetchPets();
+    fetchStoreInventory();
+    fetchUser1();
+  }
+
+  void fetchPets() {
+    print('fetching pets by status...');
+    var statuses = new List<String>();
+    statuses.add('available');
+    new PetApi(defaultApiClient).findPetsByStatus(statuses)
+        .then((List<Pet> pets) {
+      print('pets received: ');
+      print(pets);
+    }).catchError((error) {
+      print('error fetching pets');
+      print(error);
+    });
+  }
+
+  void fetchStoreInventory() {
+    print('fetching inventory...');
+    new StoreApi(defaultApiClient).getInventory()
+        .then((Map<String, int> inventory) {
+      print('inventory received: ');
+      print(inventory);
+    }).catchError((error) {
+      print('error fetching inventory');
+      print(error);
+    });
+  }
+
+  void fetchUser1() {
+    print('fetching user1...');
+    new UserApi(defaultApiClient).getUserByName('user1')
+        .then((User user) {
+      print('user received: ');
+      print(user);
+    }).catchError((error) {
+      print('error fetching user');
+      print(error);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -94,7 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             new Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .display1,
             ),
           ],
         ),

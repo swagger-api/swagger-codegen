@@ -20,10 +20,10 @@ class Tag {
     name = json['name'];
   }
 
-  static List<Tag> listFromJson(Map<String, dynamic> json) {
+  static List<Tag> listFromJson(List<Map<String, dynamic>> json) {
     var list = new List<Tag>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => list.add(new Tag.fromJson(value)));
+      json.forEach((Map<String, dynamic> value) => list.add(new Tag.fromJson(value)));
     }
     return list;
   }

@@ -36,10 +36,10 @@ class Pet {
     status = json['status'];
   }
 
-  static List<Pet> listFromJson(Map<String, dynamic> json) {
+  static List<Pet> listFromJson(List<Map<String, dynamic>> json) {
     var list = new List<Pet>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => list.add(new Pet.fromJson(value)));
+      json.forEach((Map<String, dynamic> value) => list.add(new Pet.fromJson(value)));
     }
     return list;
   }
