@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     fetchPets();
     fetchStoreInventory();
-    fetchUser1();
+    fetchUser();
   }
 
   void fetchPets() {
@@ -73,6 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((List<Pet> pets) {
       print('pets received: ');
       print(pets);
+      var order = new Order();
+      order.petId = pets[0].id;
+      order.quantity = 1;
+      new StoreApi(defaultApiClient).placeOrder(order)
+      .then((Order order) => print(order));
     }).catchError((error) {
       print('error fetching pets');
       print(error);
@@ -91,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void fetchUser1() {
+  void fetchUser() {
     print('fetching user1...');
     new UserApi(defaultApiClient).getUserByName('user1')
         .then((User user) {
