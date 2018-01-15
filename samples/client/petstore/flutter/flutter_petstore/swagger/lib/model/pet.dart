@@ -32,9 +32,24 @@ class Pet {
     category = new Category.fromJson(json['category']);
     name = json['name'];
     photoUrls = json['photoUrls'];
-    tags = new Tag.fromJson(json['tags']);
+    tags = Tag.listFromJson(json['tags']);
     status = json['status'];
   }
+
+  static List<Pet> listFromJson(Map<String, dynamic> json) {
+    var list = new List<Pet>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, dynamic value) => list.add(new Pet.fromJson(value)));
+    }
+    return list;
+  }
+
+  static List<Map<String, dynamic>> toMapList(List<Pet> list) {
+    var listResult = new List<Map<String, dynamic>>();
+    list.forEach((Pet it) => listResult.add(it.toMap()));
+    return listResult;
+  }
+
 
   Map<String, dynamic> toMap() {
     return {
@@ -42,7 +57,7 @@ class Pet {
       'category': category == null ? null : category.toMap(),
       'name': name,
       'photoUrls': photoUrls,
-      'tags': tags == null ? null : tags.toMap(),
+      'tags': tags == null ? null : Tag.toMapList(tags),
       'status': status
      };
   }
