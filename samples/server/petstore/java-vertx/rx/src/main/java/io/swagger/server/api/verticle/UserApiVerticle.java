@@ -44,6 +44,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for createUser
         vertx.eventBus().<JsonObject> consumer(CREATEUSER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "createUser";
                 JsonObject bodyParam = message.body().getJsonObject("body");
                 if (bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);
@@ -66,6 +68,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for createUsersWithArrayInput
         vertx.eventBus().<JsonObject> consumer(CREATEUSERSWITHARRAYINPUT_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "createUsersWithArrayInput";
                 JsonArray bodyParam = message.body().getJsonArray("body");
                 if(bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);
@@ -89,6 +93,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for createUsersWithListInput
         vertx.eventBus().<JsonObject> consumer(CREATEUSERSWITHLISTINPUT_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "createUsersWithListInput";
                 JsonArray bodyParam = message.body().getJsonArray("body");
                 if(bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);
@@ -112,6 +118,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for deleteUser
         vertx.eventBus().<JsonObject> consumer(DELETEUSER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "deleteUser";
                 String usernameParam = message.body().getString("username");
                 if(usernameParam == null) {
                     manageError(message, new MainApiException(400, "username is required"), serviceId);
@@ -134,6 +142,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for getUserByName
         vertx.eventBus().<JsonObject> consumer(GETUSERBYNAME_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "getUserByName";
                 String usernameParam = message.body().getString("username");
                 if(usernameParam == null) {
                     manageError(message, new MainApiException(400, "username is required"), serviceId);
@@ -156,6 +166,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for loginUser
         vertx.eventBus().<JsonObject> consumer(LOGINUSER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "loginUser";
                 String usernameParam = message.body().getString("username");
                 if(usernameParam == null) {
                     manageError(message, new MainApiException(400, "username is required"), serviceId);
@@ -184,6 +196,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for logoutUser
         vertx.eventBus().<JsonObject> consumer(LOGOUTUSER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "logoutUser";
                 service.logoutUser().subscribe(
                     () -> {
                         message.reply(null);
@@ -200,6 +214,8 @@ public class UserApiVerticle extends AbstractVerticle {
         //Consumer for updateUser
         vertx.eventBus().<JsonObject> consumer(UPDATEUSER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "updateUser";
                 String usernameParam = message.body().getString("username");
                 if(usernameParam == null) {
                     manageError(message, new MainApiException(400, "username is required"), serviceId);

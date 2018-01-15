@@ -46,6 +46,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for addPet
         vertx.eventBus().<JsonObject> consumer(ADDPET_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "addPet";
                 JsonObject bodyParam = message.body().getJsonObject("body");
                 if (bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);
@@ -68,6 +70,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for deletePet
         vertx.eventBus().<JsonObject> consumer(DELETEPET_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "deletePet";
                 String petIdParam = message.body().getString("petId");
                 if(petIdParam == null) {
                     manageError(message, new MainApiException(400, "petId is required"), serviceId);
@@ -92,6 +96,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for findPetsByStatus
         vertx.eventBus().<JsonObject> consumer(FINDPETSBYSTATUS_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "findPetsByStatus";
                 JsonArray statusParam = message.body().getJsonArray("status");
                 if(statusParam == null) {
                     manageError(message, new MainApiException(400, "status is required"), serviceId);
@@ -115,6 +121,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for findPetsByTags
         vertx.eventBus().<JsonObject> consumer(FINDPETSBYTAGS_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "findPetsByTags";
                 JsonArray tagsParam = message.body().getJsonArray("tags");
                 if(tagsParam == null) {
                     manageError(message, new MainApiException(400, "tags is required"), serviceId);
@@ -138,6 +146,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for getPetById
         vertx.eventBus().<JsonObject> consumer(GETPETBYID_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "getPetById";
                 String petIdParam = message.body().getString("petId");
                 if(petIdParam == null) {
                     manageError(message, new MainApiException(400, "petId is required"), serviceId);
@@ -160,6 +170,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for updatePet
         vertx.eventBus().<JsonObject> consumer(UPDATEPET_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "updatePet";
                 JsonObject bodyParam = message.body().getJsonObject("body");
                 if (bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);
@@ -182,6 +194,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for updatePetWithForm
         vertx.eventBus().<JsonObject> consumer(UPDATEPETWITHFORM_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "updatePetWithForm";
                 String petIdParam = message.body().getString("petId");
                 if(petIdParam == null) {
                     manageError(message, new MainApiException(400, "petId is required"), serviceId);
@@ -208,6 +222,8 @@ public class PetApiVerticle extends AbstractVerticle {
         //Consumer for uploadFile
         vertx.eventBus().<JsonObject> consumer(UPLOADFILE_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "uploadFile";
                 String petIdParam = message.body().getString("petId");
                 if(petIdParam == null) {
                     manageError(message, new MainApiException(400, "petId is required"), serviceId);

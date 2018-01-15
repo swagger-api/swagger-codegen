@@ -40,6 +40,8 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for deleteOrder
         vertx.eventBus().<JsonObject> consumer(DELETEORDER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "deleteOrder";
                 String orderIdParam = message.body().getString("orderId");
                 if(orderIdParam == null) {
                     manageError(message, new MainApiException(400, "orderId is required"), serviceId);
@@ -62,6 +64,8 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for getInventory
         vertx.eventBus().<JsonObject> consumer(GETINVENTORY_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "getInventory";
                 service.getInventory().subscribe(
                     result -> {
                         message.reply(new JsonObject(Json.encode(result)).encodePrettily());
@@ -78,6 +82,8 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for getOrderById
         vertx.eventBus().<JsonObject> consumer(GETORDERBYID_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "getOrderById";
                 String orderIdParam = message.body().getString("orderId");
                 if(orderIdParam == null) {
                     manageError(message, new MainApiException(400, "orderId is required"), serviceId);
@@ -100,6 +106,8 @@ public class StoreApiVerticle extends AbstractVerticle {
         //Consumer for placeOrder
         vertx.eventBus().<JsonObject> consumer(PLACEORDER_SERVICE_ID).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "placeOrder";
                 JsonObject bodyParam = message.body().getJsonObject("body");
                 if (bodyParam == null) {
                     manageError(message, new MainApiException(400, "body is required"), serviceId);

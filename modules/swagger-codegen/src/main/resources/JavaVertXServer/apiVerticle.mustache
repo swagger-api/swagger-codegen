@@ -37,6 +37,8 @@ public class {{classname}}Verticle extends AbstractVerticle {
         //Consumer for {{#vendorExtensions}}{{x-serviceid}}{{/vendorExtensions}}
         vertx.eventBus().<JsonObject> consumer({{#vendorExtensions}}{{x-serviceid-varname}}{{/vendorExtensions}}).handler(message -> {
             try {
+                // Workaround for #allParams section clearing the vendorExtensions map
+                String serviceId = "{{#vendorExtensions}}{{x-serviceid}}{{/vendorExtensions}}";
                 {{#hasParams}}
                     {{#allParams}}
                         {{#isListContainer}}
