@@ -13,15 +13,29 @@ class {{classname}} {
   {{classname}}.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
   {{#vars}}
-    {{name}} = {{#complexType}}new {{complexType}}.fromJson(json['{{name}}']){{/complexType}}{{^complexType}}json['{{name}}']{{/complexType}};
+    {{name}} = {{#complexType}}{{#isListContainer}}{{complexType}}.listFromJson(json['{{name}}']){{/isListContainer}}{{^isListContainer}}new {{complexType}}.fromJson(json['{{name}}']){{/isListContainer}}{{/complexType}}{{^complexType}}json['{{name}}']{{/complexType}};
   {{/vars}}
+  }
+
+  static List<{{classname}}> listFromJson(Map<String, dynamic> json) {
+    var list = new List<{{classname}}>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, dynamic value) => list.add(new {{classname}}.fromJson(value)));
+    }
+    return list;
+  }
+
+  static List<Map<String, dynamic>> toMapList(List<{{classname}}> list) {
+    var listResult = new List<Map<String, dynamic>>();
+    list.forEach(({{classname}} it) => listResult.add(it.toMap()));
+    return listResult;
   }
 
   Map<String, dynamic> toMap() {
     return {
-      {{#vars}}
-      '{{name}}': {{#complexType}}{{name}} == null ? null : {{name}}.toMap(){{/complexType}}{{^complexType}}{{name}}{{/complexType}}{{^-last}},{{/-last}}
-      {{/vars}}
+    {{#vars}}
+      '{{name}}': {{#complexType}}{{name}} == null ? null : {{#isListContainer}}{{complexType}}.toMapList({{name}}){{/isListContainer}}{{^isListContainer}}{{name}}.toMap(){{/isListContainer}}{{/complexType}}{{^complexType}}{{name}}{{/complexType}}{{^-last}},{{/-last}}
+    {{/vars}}
      };
   }
 }

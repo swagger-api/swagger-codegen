@@ -24,6 +24,21 @@ class ApiResponse {
     message = json['message'];
   }
 
+  static List<ApiResponse> listFromJson(Map<String, dynamic> json) {
+    var list = new List<ApiResponse>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, dynamic value) => list.add(new ApiResponse.fromJson(value)));
+    }
+    return list;
+  }
+
+  static List<Map<String, dynamic>> toMapList(List<ApiResponse> list) {
+    var listResult = new List<Map<String, dynamic>>();
+    list.forEach((ApiResponse it) => listResult.add(it.toMap()));
+    return listResult;
+  }
+
+
   Map<String, dynamic> toMap() {
     return {
       'code': code,
