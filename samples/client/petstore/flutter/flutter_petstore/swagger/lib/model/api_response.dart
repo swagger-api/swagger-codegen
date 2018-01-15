@@ -38,7 +38,6 @@ class ApiResponse {
     return listResult;
   }
 
-
   Map<String, dynamic> toMap() {
     return {
       'code': code,

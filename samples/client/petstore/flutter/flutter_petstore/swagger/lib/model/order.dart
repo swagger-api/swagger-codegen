@@ -31,7 +31,7 @@ class Order {
     id = json['id'];
     petId = json['petId'];
     quantity = json['quantity'];
-    shipDate = new DateTime.fromJson(json['shipDate']);
+    shipDate = DateTime.parse(json['shipDate']);
     status = json['status'];
     complete = json['complete'];
   }
@@ -50,13 +50,12 @@ class Order {
     return listResult;
   }
 
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'petId': petId,
       'quantity': quantity,
-      'shipDate': shipDate == null ? null : shipDate.toMap(),
+      'shipDate': shipDate.toUtc().toIso8601String(),
       'status': status,
       'complete': complete
      };
