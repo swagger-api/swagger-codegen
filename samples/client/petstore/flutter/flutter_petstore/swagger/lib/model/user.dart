@@ -44,10 +44,10 @@ class User {
     userStatus = json['userStatus'];
   }
 
-  static List<User> listFromJson(Map<String, dynamic> json) {
+  static List<User> listFromJson(List<Map<String, dynamic>> json) {
     var list = new List<User>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => list.add(new User.fromJson(value)));
+      json.forEach((Map<String, dynamic> value) => list.add(new User.fromJson(value)));
     }
     return list;
   }

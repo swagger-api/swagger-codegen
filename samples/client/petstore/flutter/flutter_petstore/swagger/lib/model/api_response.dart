@@ -24,10 +24,10 @@ class ApiResponse {
     message = json['message'];
   }
 
-  static List<ApiResponse> listFromJson(Map<String, dynamic> json) {
+  static List<ApiResponse> listFromJson(List<Map<String, dynamic>> json) {
     var list = new List<ApiResponse>();
     if (json != null && json.length > 0) {
-      json.forEach((String key, dynamic value) => list.add(new ApiResponse.fromJson(value)));
+      json.forEach((Map<String, dynamic> value) => list.add(new ApiResponse.fromJson(value)));
     }
     return list;
   }
