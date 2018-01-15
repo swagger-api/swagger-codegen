@@ -27,10 +27,15 @@ fi
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 
-ags="$@ generate -t modules/swagger-codegen/src/main/resources/dart -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger -DhideGenerationTimestamp=true"
+# Generate browserClient
+ags="$@ generate -t modules/swagger-codegen/src/main/resources/dart -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger -DhideGenerationTimestamp=true -DbrowserClient=false"
 
-# Also copy the generated client to the flutter test app
-cp -r samples/client/petstore/dart/swagger/* samples/client/petstore/dart/flutter_petstore/swagger
+# then options to generate the library for vm would be:
+#ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger_vm -DbrowserClient=false -DpubName=swagger_vm"
+java $JAVA_OPTS -jar $executable $ags
+
+# Generate non-browserClient and put it to the flutter sample app
+ags="$@ generate -t modules/swagger-codegen/src/main/resources/dart -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/flutter_petstore/swagger -DhideGenerationTimestamp=true -DbrowserClient=false"
 
 # then options to generate the library for vm would be:
 #ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger_vm -DbrowserClient=false -DpubName=swagger_vm"

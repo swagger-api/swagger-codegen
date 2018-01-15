@@ -10,13 +10,10 @@ class QueryParam {
 class ApiClient {
 
   String basePath;
-  var client = new BrowserClient();
+  var client = new Client();
 
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
-
-  final dson = new Dartson.JSON()
-      ..addTransformer(new DateTimeParser(), DateTime);
 
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
@@ -43,17 +40,17 @@ class ApiClient {
         case 'double':
           return value is double ? value : double.parse('$value');
         case 'ApiResponse':
-          return dson.map(value, new ApiResponse());
+          return new ApiResponse.fromJson(value);
         case 'Category':
-          return dson.map(value, new Category());
+          return new Category.fromJson(value);
         case 'Order':
-          return dson.map(value, new Order());
+          return new Order.fromJson(value);
         case 'Pet':
-          return dson.map(value, new Pet());
+          return new Pet.fromJson(value);
         case 'Tag':
-          return dson.map(value, new Tag());
+          return new Tag.fromJson(value);
         case 'User':
-          return dson.map(value, new User());
+          return new User.fromJson(value);
         default:
           {
             Match match;
@@ -91,8 +88,20 @@ class ApiClient {
       serialized = '';
     } else if (obj is String) {
       serialized = obj;
+    } else if (obj is ApiResponse) {
+       serialized = JSON.encode(obj.toMap());
+    } else if (obj is Category) {
+       serialized = JSON.encode(obj.toMap());
+    } else if (obj is Order) {
+       serialized = JSON.encode(obj.toMap());
+    } else if (obj is Pet) {
+       serialized = JSON.encode(obj.toMap());
+    } else if (obj is Tag) {
+       serialized = JSON.encode(obj.toMap());
+    } else if (obj is User) {
+       serialized = JSON.encode(obj.toMap());
     } else {
-      serialized = dson.encode(obj);
+      throw new Exception('unknown type');
     }
     return serialized;
   }
