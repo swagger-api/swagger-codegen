@@ -13,7 +13,7 @@ class {{classname}} {
   {{classname}}.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
   {{#vars}}
-    {{#isDateTime}}{{name}} = DateTime.parse(json['{{name}}']);{{/isDateTime}}{{^isDateTime}}{{name}} = {{#complexType}}{{#isListContainer}}{{complexType}}.listFromJson(json['{{name}}']){{/isListContainer}}{{^isListContainer}}new {{complexType}}.fromJson(json['{{name}}']){{/isListContainer}}{{/complexType}}{{^complexType}}json['{{name}}']{{/complexType}};{{/isDateTime}}
+    {{#isDateTime}}{{name}} = json['{{name}}'] == null ? null : DateTime.parse(json['{{name}}']);{{/isDateTime}}{{^isDateTime}}{{name}} = {{#complexType}}{{#isListContainer}}{{complexType}}.listFromJson(json['{{name}}']){{/isListContainer}}{{^isListContainer}}new {{complexType}}.fromJson(json['{{name}}']){{/isListContainer}}{{/complexType}}{{^complexType}}json['{{name}}']{{/complexType}};{{/isDateTime}}
   {{/vars}}
   }
 
@@ -34,7 +34,7 @@ class {{classname}} {
   Map<String, dynamic> toMap() {
     return {
     {{#vars}}
-      {{#isDateTime}}'{{name}}': {{name}}.toUtc().toIso8601String(){{^-last}},{{/-last}}{{/isDateTime}}{{^isDateTime}}'{{name}}': {{#complexType}}{{name}} == null ? null : {{#isListContainer}}{{complexType}}.toMapList({{name}}){{/isListContainer}}{{^isListContainer}}{{name}}.toMap(){{/isListContainer}}{{/complexType}}{{^complexType}}{{name}}{{/complexType}}{{^-last}},{{/-last}}{{/isDateTime}}
+      {{#isDateTime}}'{{name}}': {{name}} == null ? '' : {{name}}.toUtc().toIso8601String(){{^-last}},{{/-last}}{{/isDateTime}}{{^isDateTime}}'{{name}}': {{#complexType}}{{name}} == null ? null : {{#isListContainer}}{{complexType}}.toMapList({{name}}){{/isListContainer}}{{^isListContainer}}{{name}}.toMap(){{/isListContainer}}{{/complexType}}{{^complexType}}{{name}}{{/complexType}}{{^-last}},{{/-last}}{{/isDateTime}}
     {{/vars}}
      };
   }

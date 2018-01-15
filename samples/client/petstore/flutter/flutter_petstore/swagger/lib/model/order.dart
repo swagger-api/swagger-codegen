@@ -31,7 +31,7 @@ class Order {
     id = json['id'];
     petId = json['petId'];
     quantity = json['quantity'];
-    shipDate = DateTime.parse(json['shipDate']);
+    shipDate = json['shipDate'] == null ? null : DateTime.parse(json['shipDate']);
     status = json['status'];
     complete = json['complete'];
   }
@@ -55,7 +55,7 @@ class Order {
       'id': id,
       'petId': petId,
       'quantity': quantity,
-      'shipDate': shipDate.toUtc().toIso8601String(),
+      'shipDate': shipDate == null ? '' : shipDate.toUtc().toIso8601String(),
       'status': status,
       'complete': complete
      };
