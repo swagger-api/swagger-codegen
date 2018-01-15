@@ -346,12 +346,12 @@ class PetApi {
       
       if (name != null) {
         hasFields = true;
-        mp.fields['name'] = apiClient.parameterToString(name);
+        mp.fields['name'] = parameterToString(name);
       }
       
       if (status != null) {
         hasFields = true;
-        mp.fields['status'] = apiClient.parameterToString(status);
+        mp.fields['status'] = parameterToString(status);
       }
       
       if(hasFields)
@@ -359,9 +359,9 @@ class PetApi {
     }
     else {
       if (name != null)
-        formParams['name'] = apiClient.parameterToString(name);
+        formParams['name'] = parameterToString(name);
 if (status != null)
-        formParams['status'] = apiClient.parameterToString(status);
+        formParams['status'] = parameterToString(status);
     }
 
     var response = await apiClient.invokeAPI(path,
@@ -411,7 +411,7 @@ if (status != null)
       
       if (additionalMetadata != null) {
         hasFields = true;
-        mp.fields['additionalMetadata'] = apiClient.parameterToString(additionalMetadata);
+        mp.fields['additionalMetadata'] = parameterToString(additionalMetadata);
       }
       
       if (file != null) {
@@ -425,7 +425,7 @@ if (status != null)
     }
     else {
       if (additionalMetadata != null)
-        formParams['additionalMetadata'] = apiClient.parameterToString(additionalMetadata);
+        formParams['additionalMetadata'] = parameterToString(additionalMetadata);
 
     }
 
