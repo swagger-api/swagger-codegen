@@ -1,0 +1,12 @@
+ktor {
+  deployment {
+    environment = development
+    port = 8080
+    autoreload = true
+    watch = [ {{packageName}} ]
+  }
+
+  application {
+    modules = [ {{packageName}}.AppMainKt.main ]
+  }
+}
