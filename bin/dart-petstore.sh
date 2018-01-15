@@ -29,6 +29,9 @@ export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/
 
 ags="$@ generate -t modules/swagger-codegen/src/main/resources/dart -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger -DhideGenerationTimestamp=true"
 
+# Also copy the generated client to the flutter test app
+cp -r samples/client/petstore/dart/swagger/* samples/client/petstore/dart/flutter_petstore/swagger
+
 # then options to generate the library for vm would be:
 #ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger_vm -DbrowserClient=false -DpubName=swagger_vm"
 java $JAVA_OPTS -jar $executable $ags
