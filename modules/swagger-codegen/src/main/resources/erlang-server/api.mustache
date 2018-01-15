@@ -261,7 +261,7 @@ validate(Rule = {pattern, Pattern}, Name, Value, _ValidatorState) ->
     end;
 
 validate(Rule = schema, Name, Value, ValidatorState) ->
-    Definition =  list_to_binary("#/definitions/" ++ {{packageName}}_utils:to_list(Name)),
+    Definition =  list_to_binary("#/components/schemas/" ++ {{packageName}}_utils:to_list(Name)),
     try
         _ = validate_with_schema(Value, Definition, ValidatorState),
         ok
