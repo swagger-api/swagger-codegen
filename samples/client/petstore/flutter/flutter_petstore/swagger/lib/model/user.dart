@@ -58,7 +58,6 @@ class User {
     return listResult;
   }
 
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -50,7 +50,6 @@ class Pet {
     return listResult;
   }
 
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
