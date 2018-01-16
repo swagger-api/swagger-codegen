@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 SWGCategory::SWGCategory(QString* json) {
     init();
     this->fromJson(*json);
@@ -44,7 +43,6 @@ SWGCategory::init() {
 
 void
 SWGCategory::cleanup() {
-    
 
     if(name != nullptr) {
         delete name;
@@ -79,9 +77,7 @@ SWGCategory::asJson ()
 QJsonObject*
 SWGCategory::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
-    
     obj->insert("id", QJsonValue(id));
-
     toJsonValue(QString("name"), name, obj, QString("QString"));
 
     return obj;
@@ -106,6 +102,5 @@ SWGCategory::setName(QString* name) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

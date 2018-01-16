@@ -9,7 +9,7 @@
       "email" : "apiteam@swagger.io"
     },
     "license" : {
-      "name" : "Apache 2.0",
+      "name" : "Apache-2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "available", "pending", "sold" ],
-            "default" : "available"
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
           },
           "collectionFormat" : "csv"
         } ],
@@ -166,7 +166,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "deprecated" : true
       }
     },
     "/pet/{petId}" : {
@@ -698,7 +699,7 @@
           "type" : "string"
         }
       },
-      "title" : "Pet catehgry",
+      "title" : "Pet category",
       "description" : "A category for a pet",
       "xml" : {
         "name" : "Category"

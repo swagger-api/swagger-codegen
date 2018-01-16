@@ -16,12 +16,14 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * MapTest
@@ -29,7 +31,7 @@ import javax.validation.constraints.*;
 
 public class MapTest {
   @JsonProperty("map_map_of_string")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
    * Gets or Sets inner
@@ -43,6 +45,11 @@ public class MapTest {
 
     InnerEnum(String value) {
       this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
@@ -62,7 +69,7 @@ public class MapTest {
   }
 
   @JsonProperty("map_of_enum_string")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
@@ -70,6 +77,9 @@ public class MapTest {
   }
 
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+    if (this.mapMapOfString == null) {
+      this.mapMapOfString = new HashMap<>();
+    }
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
@@ -78,6 +88,7 @@ public class MapTest {
    * Get mapMapOfString
    * @return mapMapOfString
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
@@ -93,6 +104,9 @@ public class MapTest {
   }
 
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+    if (this.mapOfEnumString == null) {
+      this.mapOfEnumString = new HashMap<>();
+    }
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
@@ -151,6 +165,6 @@ public class MapTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

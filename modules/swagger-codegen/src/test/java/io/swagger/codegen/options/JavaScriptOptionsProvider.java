@@ -1,7 +1,6 @@
 package io.swagger.codegen.options;
 
 import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 
 import com.google.common.collect.ImmutableMap;
@@ -30,6 +29,7 @@ public class JavaScriptOptionsProvider implements OptionsProvider {
     public static final String EMIT_MODEL_METHODS_VALUE = "true";
     public static final String EMIT_JS_DOC_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String USE_ES6_VALUE = "true";
 
 
     private ImmutableMap<String, String> options;
@@ -55,13 +55,14 @@ public class JavaScriptOptionsProvider implements OptionsProvider {
                 .put(JavascriptClientCodegen.MODULE_NAME, MODULE_NAME_VALUE)
                 .put(JavascriptClientCodegen.PROJECT_DESCRIPTION, PROJECT_DESCRIPTION_VALUE)
                 .put(JavascriptClientCodegen.PROJECT_VERSION, PROJECT_VERSION_VALUE)
-                .put(JavascriptClientCodegen.PROJECT_LICENSE_NAME, PROJECT_LICENSE_NAME_VALUE)
+                .put(CodegenConstants.LICENSE_NAME, PROJECT_LICENSE_NAME_VALUE)
                 .put(JavascriptClientCodegen.USE_PROMISES, USE_PROMISES_VALUE)
                 .put(JavascriptClientCodegen.USE_INHERITANCE, USE_INHERITANCE_VALUE)
                 .put(JavascriptClientCodegen.EMIT_MODEL_METHODS, EMIT_MODEL_METHODS_VALUE)
                 .put(JavascriptClientCodegen.EMIT_JS_DOC, EMIT_JS_DOC_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(JavascriptClientCodegen.USE_ES6, USE_ES6_VALUE)
                 .build();
     }
 

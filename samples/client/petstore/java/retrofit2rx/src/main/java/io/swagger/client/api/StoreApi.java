@@ -3,11 +3,10 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 import rx.Observable;
-
-
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 import io.swagger.client.model.Order;
 
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public interface StoreApi {
   /**
    * Delete purchase order by ID
@@ -24,9 +22,9 @@ public interface StoreApi {
    * @param orderId ID of the order that needs to be deleted (required)
    * @return Call&lt;Void&gt;
    */
-  @DELETE("store/order/{orderId}")
+  @DELETE("store/order/{order_id}")
   Observable<Void> deleteOrder(
-    @retrofit2.http.Path("orderId") String orderId
+    @retrofit2.http.Path("order_id") String orderId
   );
 
   /**
@@ -44,9 +42,9 @@ public interface StoreApi {
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Call&lt;Order&gt;
    */
-  @GET("store/order/{orderId}")
+  @GET("store/order/{order_id}")
   Observable<Order> getOrderById(
-    @retrofit2.http.Path("orderId") Long orderId
+    @retrofit2.http.Path("order_id") Long orderId
   );
 
   /**

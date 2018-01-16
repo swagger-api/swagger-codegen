@@ -16,8 +16,11 @@
 
 #include "SWGObject.h"
 
-{{#models}}{{#model}}
-namespace Swagger {
+{{#models}}
+{{#model}}
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
 
 class {{classname}}: public SWGObject {
 public:
@@ -44,7 +47,9 @@ private:
     {{/vars}}
 };
 
-} /* namespace Swagger */
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}
 
 #endif /* {{classname}}_H_ */
 {{/model}}

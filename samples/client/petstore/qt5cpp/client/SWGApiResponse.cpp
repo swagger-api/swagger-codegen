@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 SWGApiResponse::SWGApiResponse(QString* json) {
     init();
     this->fromJson(*json);
@@ -45,12 +44,10 @@ SWGApiResponse::init() {
 
 void
 SWGApiResponse::cleanup() {
-    
 
     if(type != nullptr) {
         delete type;
     }
-
     if(message != nullptr) {
         delete message;
     }
@@ -85,11 +82,8 @@ SWGApiResponse::asJson ()
 QJsonObject*
 SWGApiResponse::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
-    
     obj->insert("code", QJsonValue(code));
-
     toJsonValue(QString("type"), type, obj, QString("QString"));
-
     toJsonValue(QString("message"), message, obj, QString("QString"));
 
     return obj;
@@ -123,6 +117,5 @@ SWGApiResponse::setMessage(QString* message) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

@@ -1,6 +1,5 @@
 package io.swagger.codegen;
 
-
 import io.swagger.models.*;
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
@@ -161,7 +160,7 @@ public class InlineModelResolverTest {
                         .name("name")
                         .property("street", new StringProperty())
                         .property("city", new StringProperty())
-        		.property("apartment", new StringProperty())));
+                .property("apartment", new StringProperty())));
 
         new InlineModelResolver().flatten(swagger);
 
@@ -206,7 +205,7 @@ public class InlineModelResolverTest {
         Response response = responses.get("200");
         assertNotNull(response);
         Property schema = response.getSchema();
-		assertTrue(schema instanceof RefProperty);
+        assertTrue(schema instanceof RefProperty);
         assertEquals(1, schema.getVendorExtensions().size());
         assertEquals("ext-prop", schema.getVendorExtensions().get("x-ext"));
 
@@ -222,7 +221,7 @@ public class InlineModelResolverTest {
         Swagger swagger = new Swagger();
 
         String responseTitle = "GetBarResponse";
-	swagger.path("/foo/bar", new Path()
+    swagger.path("/foo/bar", new Path()
             .get(new Operation()
                     .response(200, new Response()
                             .description("it works!")
@@ -329,6 +328,48 @@ public class InlineModelResolverTest {
         ModelImpl impl = (ModelImpl) body;
         assertNotNull(impl.getProperties().get("address"));
     }
+
+    @Test
+    public void resolveInlineBodyParameterWithRequired() throws Exception {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ModelImpl()
+                                        .property("address", new ObjectProperty()
+                                                .property("street", new StringProperty()
+                                                        .required(true))
+                                                .required(true))
+                                        .property("name", new StringProperty())))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Operation operation = swagger.getPaths().get("/hello").getGet();
+        BodyParameter bp = (BodyParameter)operation.getParameters().get(0);
+        assertTrue(bp.getSchema() instanceof RefModel);
+
+        Model body = swagger.getDefinitions().get("body");
+        assertTrue(body instanceof ModelImpl);
+
+        ModelImpl impl = (ModelImpl) body;
+        assertNotNull(impl.getProperties().get("address"));
+
+        Property addressProperty = impl.getProperties().get("address");
+        assertTrue(addressProperty instanceof RefProperty);
+        assertTrue(addressProperty.getRequired());
+
+        Model helloAddress = swagger.getDefinitions().get("hello_address");
+        assertTrue(helloAddress instanceof ModelImpl);
+
+        ModelImpl addressImpl = (ModelImpl) helloAddress;
+        assertNotNull(addressImpl);
+
+        Property streetProperty = addressImpl.getProperties().get("street");
+        assertTrue(streetProperty instanceof  StringProperty);
+        assertTrue(streetProperty.getRequired());
+    }
     
     @Test
     public void resolveInlineBodyParameterWithTitle() throws Exception {
@@ -336,8 +377,8 @@ public class InlineModelResolverTest {
 
         ModelImpl addressModelItem = new ModelImpl();
         String addressModelName = "DetailedAddress";
-	addressModelItem.setTitle(addressModelName);
-	swagger.path("/hello", new Path()
+    addressModelItem.setTitle(addressModelName);
+    swagger.path("/hello", new Path()
                 .get(new Operation()
                         .parameter(new BodyParameter()
                                 .name("body")
@@ -436,12 +477,12 @@ public class InlineModelResolverTest {
     public void resolveInlineArrayResponse() throws Exception {
         Swagger swagger = new Swagger();
 
-		ArrayProperty schema = new ArrayProperty()
-				.items(new ObjectProperty()
-						.property("name", new StringProperty())
-						.vendorExtension("x-ext", "ext-items"))
-				.vendorExtension("x-ext", "ext-prop");
-		swagger.path("/foo/baz", new Path()
+        ArrayProperty schema = new ArrayProperty()
+                .items(new ObjectProperty()
+                        .property("name", new StringProperty())
+                        .vendorExtension("x-ext", "ext-items"))
+                .vendorExtension("x-ext", "ext-prop");
+        swagger.path("/foo/baz", new Path()
                 .get(new Operation()
                         .response(200, new Response()
                                 .vendorExtension("x-foo", "bar")
@@ -487,15 +528,14 @@ public class InlineModelResolverTest {
         Swagger swagger = new Swagger();
 
         swagger.path("/foo/baz", new Path()
-                .get(new Operation()
-                        .response(200, new Response()
-                                .vendorExtension("x-foo", "bar")
-                                .description("it works!")
-                                .schema(new ArrayProperty()
-                                        .items(
-                                                new ObjectProperty()
-                                                	.title("FooBar")
-                                                        .property("name", new StringProperty()))))));
+            .get(new Operation()
+                .response(200, new Response()
+                    .vendorExtension("x-foo", "bar")
+                    .description("it works!")
+                    .schema(new ArrayProperty()
+                        .items(new ObjectProperty()
+                            .title("FooBar")
+                            .property("name", new StringProperty()))))));
 
         new InlineModelResolver().flatten(swagger);
 

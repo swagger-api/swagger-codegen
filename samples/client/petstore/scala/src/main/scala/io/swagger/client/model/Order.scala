@@ -12,15 +12,15 @@
 
 package io.swagger.client.model
 
-import org.joda.time.DateTime
+import java.util.Date
 
 case class Order (
-  id: Option[Long],
-  petId: Option[Long],
-  quantity: Option[Integer],
-  shipDate: Option[DateTime],
-  /* Order Status */
-  status: Option[String],
-  complete: Option[Boolean]
+  id: Option[Long] = None,
+  petId: Option[Long] = None,
+  quantity: Option[Integer] = None,
+  shipDate: Option[Date] = None,
+  // Order Status
+  status: Option[String] = None,
+  complete: Option[Boolean] = None
 )
 

@@ -29,7 +29,6 @@
 
 #include "SWGObject.h"
 
-
 namespace Swagger {
 
 class SWGPet: public SWGObject {
@@ -73,6 +72,6 @@ private:
     QString* status;
 };
 
-} /* namespace Swagger */
+}
 
 #endif /* SWGPet_H_ */

@@ -12,82 +12,39 @@ import static org.junit.Assert.*;
 
 
 public class ApiClientTest {
-    ApiClient apiClient = null;
+    ApiClient apiClient;
+    JSON json;
 
     @Before
     public void setup() {
         apiClient = new ApiClient();
-    }
-
-    @Test
-    public void testParseAndFormatDatetime() {
-        // default datetime format with UTC time zone
-        apiClient.getDatetimeFormat().setTimeZone(TimeZone.getTimeZone("UTC"));
-        String dateStr = "2015-11-07T03:49:09.356Z";
-        assertTrue(apiClient.isLenientDatetimeFormat());
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356+00:00")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T05:49:09.356+02:00")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T02:49:09.356-01:00")));
-        // support various cases
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356Z")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356+00")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T02:49:09.356-0100")));
-        dateStr = "2015-11-07T03:49:09.000Z";
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T05:49:09+02")));
-
-        // custom datetime format: without milli-seconds, custom time zone
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
-        format.setTimeZone(TimeZone.getTimeZone("GMT+10"));
-        apiClient.setDatetimeFormat(format);
-        // disable support of various datetime format
-        apiClient.setLenientDatetimeFormat(false);
-        dateStr = "2015-11-07T13:49:09+10:00";
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09+00:00")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09Z")));
-        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T00:49:09-03:00")));
-
-        try {
-            // invalid time zone format
-            apiClient.parseDatetime("2015-11-07T03:49:09+00");
-            fail("parseDatetime should fail");
-        } catch (RuntimeException e) {
-            // OK
-        }
-        try {
-            // unexpected miliseconds
-            apiClient.parseDatetime("2015-11-07T03:49:09.000Z");
-            fail("parseDatetime should fail");
-        } catch (RuntimeException e) {
-            // OK
-        }
-    }
-
-    @Test
-    public void testParseAndFormatDate() {
-        // default date format
-        String dateStr = "2015-11-07";
-        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDatetime("2015-11-07T03:49:09.356+00:00")));
-        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDate("2015-11-07")));
-
-        // custom date format: without day
-        DateFormat format = new SimpleDateFormat("yyyy-MM");
-        apiClient.setDateFormat(format);
-        dateStr = "2015-11";
-        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDatetime("2015-11-07T03:49:09Z")));
-        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDate("2015-11")));
+        json = apiClient.getJSON();
     }
 
     @Test
     public void testIsJsonMime() {
-      assertFalse(apiClient.isJsonMime(null));
-      assertFalse(apiClient.isJsonMime(""));
-      assertFalse(apiClient.isJsonMime("text/plain"));
-      assertFalse(apiClient.isJsonMime("application/xml"));
-      assertFalse(apiClient.isJsonMime("application/jsonp"));
+        assertFalse(apiClient.isJsonMime(null));
+        assertFalse(apiClient.isJsonMime(""));
+        assertFalse(apiClient.isJsonMime("text/plain"));
+        assertFalse(apiClient.isJsonMime("application/xml"));
+        assertFalse(apiClient.isJsonMime("application/jsonp"));
+        assertFalse(apiClient.isJsonMime("example/json"));
+        assertFalse(apiClient.isJsonMime("example/foo+bar+jsonx"));
+        assertFalse(apiClient.isJsonMime("example/foo+bar+xjson"));
 
-      assertTrue(apiClient.isJsonMime("application/json"));
-      assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
-      assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
+        assertTrue(apiClient.isJsonMime("application/json"));
+        assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
+        assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
+
+        assertTrue(apiClient.isJsonMime("application/problem+json"));
+        assertTrue(apiClient.isJsonMime("APPLICATION/PROBLEM+JSON"));
+        assertTrue(apiClient.isJsonMime("application/json\t"));
+        assertTrue(apiClient.isJsonMime("example/foo+bar+json"));
+        assertTrue(apiClient.isJsonMime("example/foo+json;x;y"));
+        assertTrue(apiClient.isJsonMime("example/foo+json\t;"));
+        assertTrue(apiClient.isJsonMime("Example/fOO+JSON"));
+
+        assertTrue(apiClient.isJsonMime("application/json-patch+json"));
     }
 
     @Test
@@ -208,11 +165,85 @@ public class ApiClientTest {
 
         apiClient.setConnectTimeout(10000);
     }
+    
+    @Test
+    public void testGetAndSetReadTimeout() {
+        // read timeout defaults to 10 seconds
+        assertEquals(10000, apiClient.getReadTimeout());
+        assertEquals(10000, apiClient.getHttpClient().getReadTimeout());
+
+        apiClient.setReadTimeout(0);
+        assertEquals(0, apiClient.getReadTimeout());
+        assertEquals(0, apiClient.getHttpClient().getReadTimeout());
+
+        apiClient.setReadTimeout(10000);
+    }
+    
+    @Test
+    public void testGetAndSetWriteTimeout() {
+        // write timeout defaults to 10 seconds
+        assertEquals(10000, apiClient.getWriteTimeout());
+        assertEquals(10000, apiClient.getHttpClient().getWriteTimeout());
+
+        apiClient.setWriteTimeout(0);
+        assertEquals(0, apiClient.getWriteTimeout());
+        assertEquals(0, apiClient.getHttpClient().getWriteTimeout());
+
+        apiClient.setWriteTimeout(10000);
+    }
+    
+    @Test
+    public void testParameterToPairWhenNameIsInvalid() throws Exception {
+        List<Pair> pairs_a = apiClient.parameterToPair(null, new Integer(1));
+        List<Pair> pairs_b = apiClient.parameterToPair("", new Integer(1));
+
+        assertTrue(pairs_a.isEmpty());
+        assertTrue(pairs_b.isEmpty());
+    }
+
+    @Test
+    public void testParameterToPairWhenValueIsNull() throws Exception {
+        List<Pair> pairs = apiClient.parameterToPair("param-a", null);
+
+        assertTrue(pairs.isEmpty());
+    }
+
+    @Test
+    public void testParameterToPairWhenValueIsEmptyString() throws Exception {
+        // single empty string
+        List<Pair> pairs = apiClient.parameterToPair("param-a", " ");
+        assertEquals(1, pairs.size());
+    }
+
+    @Test
+    public void testParameterToPairWhenValueIsNotCollection() throws Exception {
+        String name = "param-a";
+        Integer value = 1;
+
+        List<Pair> pairs = apiClient.parameterToPair(name, value);
+
+        assertEquals(1, pairs.size());
+        assertEquals(value, Integer.valueOf(pairs.get(0).getValue()));
+    }
+
+    @Test
+    public void testParameterToPairWhenValueIsCollection() throws Exception {
+        List<Object> values = new ArrayList<Object>();
+        values.add("value-a");
+        values.add(123);
+        values.add(new Date());
+
+        List<Pair> pairs = apiClient.parameterToPair("param-a", values);
+        assertEquals(0, pairs.size());
+    }
 
     @Test
     public void testParameterToPairsWhenNameIsInvalid() throws Exception {
-        List<Pair> pairs_a = apiClient.parameterToPairs("csv", null, new Integer(1));
-        List<Pair> pairs_b = apiClient.parameterToPairs("csv", "", new Integer(1));
+        List<Integer> objects = new ArrayList<Integer>();
+        objects.add(new Integer(1));
+
+        List<Pair> pairs_a = apiClient.parameterToPairs("csv", null, objects);
+        List<Pair> pairs_b = apiClient.parameterToPairs("csv", "", objects);
 
         assertTrue(pairs_a.isEmpty());
         assertTrue(pairs_b.isEmpty());
@@ -227,11 +258,6 @@ public class ApiClientTest {
 
     @Test
     public void testParameterToPairsWhenValueIsEmptyStrings() throws Exception {
-
-        // single empty string
-        List<Pair> pairs = apiClient.parameterToPairs("csv", "param-a", " ");
-        assertEquals(1, pairs.size());
-
         // list of empty strings
         List<String> strs = new ArrayList<String>();
         strs.add(" ");
@@ -245,23 +271,12 @@ public class ApiClientTest {
     }
 
     @Test
-    public void testParameterToPairsWhenValueIsNotCollection() throws Exception {
-        String name = "param-a";
-        Integer value = 1;
-
-        List<Pair> pairs = apiClient.parameterToPairs("csv", name, value);
-
-        assertEquals(1, pairs.size());
-        assertEquals(value, Integer.valueOf(pairs.get(0).getValue()));
-    }
-
-    @Test
     public void testParameterToPairsWhenValueIsCollection() throws Exception {
         Map<String, String> collectionFormatMap = new HashMap<String, String>();
         collectionFormatMap.put("csv", ",");
         collectionFormatMap.put("tsv", "\t");
         collectionFormatMap.put("ssv", " ");
-        collectionFormatMap.put("pipes", "\\|");
+        collectionFormatMap.put("pipes", "|");
         collectionFormatMap.put("", ","); // no format, must default to csv
         collectionFormatMap.put("unknown", ","); // all other formats, must default to csv
 
@@ -275,6 +290,9 @@ public class ApiClientTest {
         // check for multi separately
         List<Pair> multiPairs = apiClient.parameterToPairs("multi", name, values);
         assertEquals(values.size(), multiPairs.size());
+        for (int i = 0; i < values.size(); i++) {
+            assertEquals(apiClient.escapeString(apiClient.parameterToString(values.get(i))), multiPairs.get(i).getValue());
+        }
 
         // all other formats
         for (String collectionFormat : collectionFormatMap.keySet()) {
@@ -283,10 +301,17 @@ public class ApiClientTest {
             assertEquals(1, pairs.size());
 
             String delimiter = collectionFormatMap.get(collectionFormat);
+            if (!delimiter.equals(",")) {
+                // commas are not escaped because they are reserved characters in URIs
+                delimiter = apiClient.escapeString(delimiter);
+            }
             String[] pairValueSplit = pairs.get(0).getValue().split(delimiter);
 
             // must equal input values
             assertEquals(values.size(), pairValueSplit.length);
+            for (int i = 0; i < values.size(); i++) {
+                assertEquals(apiClient.escapeString(apiClient.parameterToString(values.get(i))), pairValueSplit[i]);
+            }
         }
     }
 

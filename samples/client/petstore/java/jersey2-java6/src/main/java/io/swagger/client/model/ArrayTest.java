@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.ReadOnlyFirst;
@@ -28,13 +29,13 @@ import java.util.List;
 
 public class ArrayTest {
   @JsonProperty("array_of_string")
-  private List<String> arrayOfString = new ArrayList<String>();
+  private List<String> arrayOfString = null;
 
   @JsonProperty("array_array_of_integer")
-  private List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
+  private List<List<Long>> arrayArrayOfInteger = null;
 
   @JsonProperty("array_array_of_model")
-  private List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+  private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
 
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
@@ -42,6 +43,9 @@ public class ArrayTest {
   }
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
+    if (this.arrayOfString == null) {
+      this.arrayOfString = new ArrayList<String>();
+    }
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
@@ -65,6 +69,9 @@ public class ArrayTest {
   }
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
+    if (this.arrayArrayOfInteger == null) {
+      this.arrayArrayOfInteger = new ArrayList<List<Long>>();
+    }
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
@@ -88,6 +95,9 @@ public class ArrayTest {
   }
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
+    if (this.arrayArrayOfModel == null) {
+      this.arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+    }
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
@@ -148,6 +158,6 @@ public class ArrayTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

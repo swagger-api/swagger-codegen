@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -108,7 +113,7 @@ public class Tag implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
   public void writeToParcel(Parcel out, int flags) {
      
     out.writeValue(id);
@@ -125,7 +130,7 @@ public class Tag implements Parcelable {
     id = (Long)in.readValue(null);
     name = (String)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

@@ -14,42 +14,55 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FormatTest  {
   
   @ApiModelProperty(value = "")
   private Integer integer = null;
+
   @ApiModelProperty(value = "")
   private Integer int32 = null;
+
   @ApiModelProperty(value = "")
   private Long int64 = null;
+
   @ApiModelProperty(required = true, value = "")
   private BigDecimal number = null;
+
   @ApiModelProperty(value = "")
   private Float _float = null;
+
   @ApiModelProperty(value = "")
   private Double _double = null;
+
   @ApiModelProperty(value = "")
   private String string = null;
+
   @ApiModelProperty(required = true, value = "")
   private byte[] _byte = null;
+
   @ApiModelProperty(value = "")
   private byte[] binary = null;
+
   @ApiModelProperty(required = true, value = "")
   private LocalDate date = null;
+
   @ApiModelProperty(value = "")
   private Date dateTime = null;
+
   @ApiModelProperty(value = "")
   private UUID uuid = null;
+
   @ApiModelProperty(required = true, value = "")
   private String password = null;
-
  /**
    * Get integer
    * minimum: 10
    * maximum: 100
    * @return integer
   **/
+  @JsonProperty("integer")
  @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
@@ -69,6 +82,7 @@ public class FormatTest  {
    * maximum: 200
    * @return int32
   **/
+  @JsonProperty("int32")
  @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
@@ -86,6 +100,7 @@ public class FormatTest  {
    * Get int64
    * @return int64
   **/
+  @JsonProperty("int64")
   public Long getInt64() {
     return int64;
   }
@@ -105,6 +120,7 @@ public class FormatTest  {
    * maximum: 543.2
    * @return number
   **/
+  @JsonProperty("number")
   @NotNull
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
@@ -125,6 +141,7 @@ public class FormatTest  {
    * maximum: 987.6
    * @return _float
   **/
+  @JsonProperty("float")
  @DecimalMin("54.3") @DecimalMax("987.6")  public Float getFloat() {
     return _float;
   }
@@ -144,6 +161,7 @@ public class FormatTest  {
    * maximum: 123.4
    * @return _double
   **/
+  @JsonProperty("double")
  @DecimalMin("67.8") @DecimalMax("123.4")  public Double getDouble() {
     return _double;
   }
@@ -161,6 +179,7 @@ public class FormatTest  {
    * Get string
    * @return string
   **/
+  @JsonProperty("string")
  @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
@@ -178,8 +197,9 @@ public class FormatTest  {
    * Get _byte
    * @return _byte
   **/
+  @JsonProperty("byte")
   @NotNull
-  public byte[] getByte() {
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public byte[] getByte() {
     return _byte;
   }
 
@@ -196,6 +216,7 @@ public class FormatTest  {
    * Get binary
    * @return binary
   **/
+  @JsonProperty("binary")
   public byte[] getBinary() {
     return binary;
   }
@@ -213,6 +234,7 @@ public class FormatTest  {
    * Get date
    * @return date
   **/
+  @JsonProperty("date")
   @NotNull
   public LocalDate getDate() {
     return date;
@@ -231,6 +253,7 @@ public class FormatTest  {
    * Get dateTime
    * @return dateTime
   **/
+  @JsonProperty("dateTime")
   public Date getDateTime() {
     return dateTime;
   }
@@ -248,6 +271,7 @@ public class FormatTest  {
    * Get uuid
    * @return uuid
   **/
+  @JsonProperty("uuid")
   public UUID getUuid() {
     return uuid;
   }
@@ -265,6 +289,7 @@ public class FormatTest  {
    * Get password
    * @return password
   **/
+  @JsonProperty("password")
   @NotNull
  @Size(min=10,max=64)  public String getPassword() {
     return password;

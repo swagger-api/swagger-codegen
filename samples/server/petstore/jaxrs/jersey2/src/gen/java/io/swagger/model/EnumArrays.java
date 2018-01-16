@@ -94,17 +94,17 @@ public class EnumArrays   {
   }
 
   @JsonProperty("array_enum")
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
+  private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-   /**
+  /**
    * Get justSymbol
    * @return justSymbol
-  **/
+   **/
   @JsonProperty("just_symbol")
   @ApiModelProperty(value = "")
   public JustSymbolEnum getJustSymbol() {
@@ -121,14 +121,17 @@ public class EnumArrays   {
   }
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
+    if (this.arrayEnum == null) {
+      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+    }
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
 
-   /**
+  /**
    * Get arrayEnum
    * @return arrayEnum
-  **/
+   **/
   @JsonProperty("array_enum")
   @ApiModelProperty(value = "")
   public List<ArrayEnumEnum> getArrayEnum() {

@@ -42,7 +42,7 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     protected String layoutsFolder = viewsFolder + File.separator + "layouts";
     protected String binFolder = "bin";
     protected String configFolder = "config";
-    protected String environmentsFolder = configFolder + File.separator + "config";
+    protected String environmentsFolder = configFolder + File.separator + "environments";
     protected String initializersFolder = configFolder + File.separator + "initializers";
     protected String localesFolder = configFolder + File.separator + "locales";
     protected String dbFolder = "db";
@@ -186,7 +186,7 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -259,7 +259,9 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+            String modelName = camelize("Model" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
         }
 
         // camelize the model name
@@ -271,7 +273,9 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     public String toModelFilename(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+            String filename = underscore("model_" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + filename);
+            return filename;
         }
 
         // underscore the model file name
@@ -285,7 +289,7 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // e.g. DefaultController => defaults_controller.rb
-        return underscore(name) + "s_controller";
+        return underscore(name) + "_controller";
     }
 
     @Override
@@ -301,7 +305,9 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            String newOperationId = underscore("call_" + operationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            return newOperationId;
         }
 
         return underscore(operationId);

@@ -1,11 +1,13 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
+import io.swagger.client.EncodingUtils;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,58 @@ import feign.*;
 
 public interface FakeApi extends ApiClient.Api {
 
+
+  /**
+   * 
+   * Test serialization of outer boolean types
+    * @param body Input boolean as post body (optional)
+   * @return Boolean
+   */
+  @RequestLine("POST /fake/outer/boolean")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  Boolean fakeOuterBooleanSerialize(Boolean body);
+
+  /**
+   * 
+   * Test serialization of object with outer number type
+    * @param body Input composite as post body (optional)
+   * @return OuterComposite
+   */
+  @RequestLine("POST /fake/outer/composite")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  OuterComposite fakeOuterCompositeSerialize(OuterComposite body);
+
+  /**
+   * 
+   * Test serialization of outer number types
+    * @param body Input number as post body (optional)
+   * @return BigDecimal
+   */
+  @RequestLine("POST /fake/outer/number")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  BigDecimal fakeOuterNumberSerialize(BigDecimal body);
+
+  /**
+   * 
+   * Test serialization of outer string types
+    * @param body Input string as post body (optional)
+   * @return String
+   */
+  @RequestLine("POST /fake/outer/string")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  String fakeOuterStringSerialize(String body);
 
   /**
    * To test \&quot;client\&quot; model
@@ -53,7 +107,7 @@ public interface FakeApi extends ApiClient.Api {
     "Content-Type: application/xml; charset&#x3D;utf-8",
     "Accept: application/xml; charset&#x3D;utf-8,application/json; charset&#x3D;utf-8",
   })
-  void testEndpointParameters(@Param("number") BigDecimal number, @Param("_double") Double _double, @Param("patternWithoutDelimiter") String patternWithoutDelimiter, @Param("_byte") byte[] _byte, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("_float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") DateTime dateTime, @Param("password") String password, @Param("paramCallback") String paramCallback);
+  void testEndpointParameters(@Param("number") BigDecimal number, @Param("_double") Double _double, @Param("patternWithoutDelimiter") String patternWithoutDelimiter, @Param("_byte") byte[] _byte, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("_float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") OffsetDateTime dateTime, @Param("password") String password, @Param("paramCallback") String paramCallback);
 
   /**
    * To test enum parameters
@@ -106,7 +160,7 @@ public interface FakeApi extends ApiClient.Api {
       
       "enum_header_string: {enumHeaderString}"
   })
-  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryDouble") Double enumQueryDouble, @QueryMap Map<String, Object> queryParams);
+  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryDouble") Double enumQueryDouble, @QueryMap(encoded=true) Map<String, Object> queryParams);
 
   /**
    * A convenience class for generating query parameters for the
@@ -114,16 +168,41 @@ public interface FakeApi extends ApiClient.Api {
    */
   public static class TestEnumParametersQueryParams extends HashMap<String, Object> {
     public TestEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
-      put("enum_query_string_array", value);
+      put("enum_query_string_array", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
     public TestEnumParametersQueryParams enumQueryString(final String value) {
-      put("enum_query_string", value);
+      put("enum_query_string", EncodingUtils.encode(value));
       return this;
     }
     public TestEnumParametersQueryParams enumQueryInteger(final Integer value) {
-      put("enum_query_integer", value);
+      put("enum_query_integer", EncodingUtils.encode(value));
       return this;
     }
   }
+
+  /**
+   * test inline additionalProperties
+   * 
+    * @param param request body (required)
+   */
+  @RequestLine("POST /fake/inline-additionalProperties")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testInlineAdditionalProperties(Object param);
+
+  /**
+   * test json serialization of form data
+   * 
+    * @param param field1 (required)
+    * @param param2 field2 (required)
+   */
+  @RequestLine("GET /fake/jsonFormData")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testJsonFormData(@Param("param") String param, @Param("param2") String param2);
 }

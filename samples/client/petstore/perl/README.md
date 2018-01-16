@@ -88,37 +88,37 @@ you are accessing. Usually `prefix` and `in` will be determined by the code gene
 the spec and you will not need to set them at run time. If not, `in` will
 default to 'head' and `prefix` to the empty string.
 
-The tokens will be placed in the `WWW::SwaggerClient::Configuration` namespace
+The tokens will be placed in a L<WWW::SwaggerClient::Configuration> instance
 as follows, but you don't need to know about this.
 
-- `$WWW::SwaggerClient::Configuration::username`
+- `$cfg->{username}`
 
     String. The username for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::password`
+- `$cfg->{password}`
 
     String. The password for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::api_key`
+- `$cfg->{api_key}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens).
 
-            $WWW::SwaggerClient::Configuration::api_key = {
+            $cfg->{api_key} = {
                     secretKey => 'aaaabbbbccccdddd',
                     anotherKey => '1111222233334444',
                     };
 
-- `$WWW::SwaggerClient::Configuration::api_key_prefix`
+- `$cfg->{api_key_prefix}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens). Note not
     all api keys require a prefix.
 
-            $WWW::SwaggerClient::Configuration::api_key_prefix = {
+            $cfg->{api_key_prefix} = {
                     secretKey => 'string',
                     anotherKey => 'same or some other string',
                     };
 
-- `$WWW::SwaggerClient::Configuration::access_token`
+- `$cfg->{access_token}`
 
     String. The OAuth access token.
 
@@ -127,8 +127,7 @@ as follows, but you don't need to know about this.
 ## `base_url`
 
 The generated code has the `base_url` already set as a default value. This method
-returns (and optionally sets, but only if the API client has not been
-created yet) the current value of `base_url`.
+returns the current value of `base_url`.
 
 ## `api_factory`
 
@@ -222,7 +221,9 @@ Each of these calls returns a hashref with various useful pieces of information.
 
 To load the API packages:
 ```perl
+use WWW::SwaggerClient::AnotherFakeApi;
 use WWW::SwaggerClient::FakeApi;
+use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
 use WWW::SwaggerClient::StoreApi;
 use WWW::SwaggerClient::UserApi;
@@ -239,11 +240,9 @@ use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayTest;
 use WWW::SwaggerClient::Object::Capitalization;
-use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
 use WWW::SwaggerClient::Object::Client;
-use WWW::SwaggerClient::Object::Dog;
 use WWW::SwaggerClient::Object::EnumArrays;
 use WWW::SwaggerClient::Object::EnumClass;
 use WWW::SwaggerClient::Object::EnumTest;
@@ -257,12 +256,18 @@ use WWW::SwaggerClient::Object::ModelReturn;
 use WWW::SwaggerClient::Object::Name;
 use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
+use WWW::SwaggerClient::Object::OuterBoolean;
+use WWW::SwaggerClient::Object::OuterComposite;
 use WWW::SwaggerClient::Object::OuterEnum;
+use WWW::SwaggerClient::Object::OuterNumber;
+use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
 use WWW::SwaggerClient::Object::ReadOnlyFirst;
 use WWW::SwaggerClient::Object::SpecialModelName;
 use WWW::SwaggerClient::Object::Tag;
 use WWW::SwaggerClient::Object::User;
+use WWW::SwaggerClient::Object::Cat;
+use WWW::SwaggerClient::Object::Dog;
 
 ````
 
@@ -274,7 +279,9 @@ use lib 'lib';
 use strict;
 use warnings;
 # load the API package
+use WWW::SwaggerClient::AnotherFakeApi;
 use WWW::SwaggerClient::FakeApi;
+use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
 use WWW::SwaggerClient::StoreApi;
 use WWW::SwaggerClient::UserApi;
@@ -288,11 +295,9 @@ use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayTest;
 use WWW::SwaggerClient::Object::Capitalization;
-use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
 use WWW::SwaggerClient::Object::Client;
-use WWW::SwaggerClient::Object::Dog;
 use WWW::SwaggerClient::Object::EnumArrays;
 use WWW::SwaggerClient::Object::EnumClass;
 use WWW::SwaggerClient::Object::EnumTest;
@@ -306,40 +311,54 @@ use WWW::SwaggerClient::Object::ModelReturn;
 use WWW::SwaggerClient::Object::Name;
 use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
+use WWW::SwaggerClient::Object::OuterBoolean;
+use WWW::SwaggerClient::Object::OuterComposite;
 use WWW::SwaggerClient::Object::OuterEnum;
+use WWW::SwaggerClient::Object::OuterNumber;
+use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
 use WWW::SwaggerClient::Object::ReadOnlyFirst;
 use WWW::SwaggerClient::Object::SpecialModelName;
 use WWW::SwaggerClient::Object::Tag;
 use WWW::SwaggerClient::Object::User;
+use WWW::SwaggerClient::Object::Cat;
+use WWW::SwaggerClient::Object::Dog;
 
 # for displaying the API response data
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::;
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
+my $api_instance = WWW::SwaggerClient::->new(
+);
+
 my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
 
 eval {
-    my $result = $api_instance->test_client_model(body => $body);
+    my $result = $api_instance->test_special_tags(body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling FakeApi->test_client_model: $@\n";
+    warn "Exception when calling AnotherFakeApi->test_special_tags: $@\n";
 }
 
 ```
 
 # DOCUMENTATION FOR API ENDPOINTS
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AnotherFakeApi* | [**test_special_tags**](docs/AnotherFakeApi.md#test_special_tags) | **PATCH** /another-fake/dummy | To test special tags
+*FakeApi* | [**fake_outer_boolean_serialize**](docs/FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
+*FakeApi* | [**fake_outer_composite_serialize**](docs/FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
+*FakeApi* | [**fake_outer_number_serialize**](docs/FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
+*FakeApi* | [**fake_outer_string_serialize**](docs/FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
 *FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
+*FakeApi* | [**test_json_form_data**](docs/FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
+*FakeClassnameTags123Api* | [**test_classname**](docs/FakeClassnameTags123Api.md#test_classname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**add_pet**](docs/PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**delete_pet**](docs/PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**find_pets_by_status**](docs/PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
@@ -348,9 +367,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**update_pet**](docs/PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**update_pet_with_form**](docs/PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**upload_file**](docs/PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 *StoreApi* | [**get_inventory**](docs/StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
+*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{order_id} | Find purchase order by ID
 *StoreApi* | [**place_order**](docs/StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 *UserApi* | [**create_user**](docs/UserApi.md#create_user) | **POST** /user | Create user
 *UserApi* | [**create_users_with_array_input**](docs/UserApi.md#create_users_with_array_input) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -371,11 +390,9 @@ Class | Method | HTTP request | Description
  - [WWW::SwaggerClient::Object::ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [WWW::SwaggerClient::Object::ArrayTest](docs/ArrayTest.md)
  - [WWW::SwaggerClient::Object::Capitalization](docs/Capitalization.md)
- - [WWW::SwaggerClient::Object::Cat](docs/Cat.md)
  - [WWW::SwaggerClient::Object::Category](docs/Category.md)
  - [WWW::SwaggerClient::Object::ClassModel](docs/ClassModel.md)
  - [WWW::SwaggerClient::Object::Client](docs/Client.md)
- - [WWW::SwaggerClient::Object::Dog](docs/Dog.md)
  - [WWW::SwaggerClient::Object::EnumArrays](docs/EnumArrays.md)
  - [WWW::SwaggerClient::Object::EnumClass](docs/EnumClass.md)
  - [WWW::SwaggerClient::Object::EnumTest](docs/EnumTest.md)
@@ -389,12 +406,18 @@ Class | Method | HTTP request | Description
  - [WWW::SwaggerClient::Object::Name](docs/Name.md)
  - [WWW::SwaggerClient::Object::NumberOnly](docs/NumberOnly.md)
  - [WWW::SwaggerClient::Object::Order](docs/Order.md)
+ - [WWW::SwaggerClient::Object::OuterBoolean](docs/OuterBoolean.md)
+ - [WWW::SwaggerClient::Object::OuterComposite](docs/OuterComposite.md)
  - [WWW::SwaggerClient::Object::OuterEnum](docs/OuterEnum.md)
+ - [WWW::SwaggerClient::Object::OuterNumber](docs/OuterNumber.md)
+ - [WWW::SwaggerClient::Object::OuterString](docs/OuterString.md)
  - [WWW::SwaggerClient::Object::Pet](docs/Pet.md)
  - [WWW::SwaggerClient::Object::ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [WWW::SwaggerClient::Object::SpecialModelName](docs/SpecialModelName.md)
  - [WWW::SwaggerClient::Object::Tag](docs/Tag.md)
  - [WWW::SwaggerClient::Object::User](docs/User.md)
+ - [WWW::SwaggerClient::Object::Cat](docs/Cat.md)
+ - [WWW::SwaggerClient::Object::Dog](docs/Dog.md)
 
 
 # DOCUMENTATION FOR AUTHORIZATION
@@ -404,6 +427,12 @@ Class | Method | HTTP request | Description
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
+
+## api_key_query
+
+- **Type**: API key
+- **API key parameter name**: api_key_query
+- **Location**: URL query string
 
 ## http_basic_test
 

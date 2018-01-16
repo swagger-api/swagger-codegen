@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +32,7 @@ import java.util.List;
 
 public class ArrayOfNumberOnly {
   @SerializedName("ArrayNumber")
-  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
+  private List<BigDecimal> arrayNumber = null;
 
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
@@ -35,6 +40,9 @@ public class ArrayOfNumberOnly {
   }
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
+    if (this.arrayNumber == null) {
+      this.arrayNumber = new ArrayList<BigDecimal>();
+    }
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
@@ -91,6 +99,6 @@ public class ArrayOfNumberOnly {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

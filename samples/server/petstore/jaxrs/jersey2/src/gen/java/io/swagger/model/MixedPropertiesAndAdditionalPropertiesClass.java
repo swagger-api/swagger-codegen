@@ -38,17 +38,17 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   private Date dateTime = null;
 
   @JsonProperty("map")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
+  private Map<String, Animal> map = null;
 
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-   /**
+  /**
    * Get uuid
    * @return uuid
-  **/
+   **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
   public UUID getUuid() {
@@ -64,10 +64,10 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
     return this;
   }
 
-   /**
+  /**
    * Get dateTime
    * @return dateTime
-  **/
+   **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
   public Date getDateTime() {
@@ -84,14 +84,17 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    if (this.map == null) {
+      this.map = new HashMap<String, Animal>();
+    }
     this.map.put(key, mapItem);
     return this;
   }
 
-   /**
+  /**
    * Get map
    * @return map
-  **/
+   **/
   @JsonProperty("map")
   @ApiModelProperty(value = "")
   public Map<String, Animal> getMap() {

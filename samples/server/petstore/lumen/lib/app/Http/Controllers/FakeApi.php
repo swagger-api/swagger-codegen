@@ -48,7 +48,7 @@ class FakeApi extends Controller
         $body = $input['body'];
 
 
-        return response('How about implementing testClientModel as a PATCH method ?');
+        return response('How about implementing testClientModel as a patch method ?');
     }
     /**
      * Operation testEndpointParameters
@@ -91,8 +91,8 @@ class FakeApi extends Controller
         if (!isset($input['pattern_without_delimiter'])) {
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
-        if (!preg_match("/^[A-Z].", $input['pattern_without_delimiter'])) {
-            throw new \InvalidArgumentException('invalid value for $pattern_without_delimiter when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z]..');
+        if (!preg_match("/^[A-Z].*/", $input['pattern_without_delimiter'])) {
+            throw new \InvalidArgumentException('invalid value for $pattern_without_delimiter when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*/.');
         }
         $pattern_without_delimiter = $input['pattern_without_delimiter'];
 
@@ -146,7 +146,7 @@ class FakeApi extends Controller
         $callback = $input['callback'];
 
 
-        return response('How about implementing testEndpointParameters as a POST method ?');
+        return response('How about implementing testEndpointParameters as a post method ?');
     }
     /**
      * Operation testEnumParameters
@@ -181,6 +181,143 @@ class FakeApi extends Controller
         $enum_query_double = $input['enum_query_double'];
 
 
-        return response('How about implementing testEnumParameters as a GET method ?');
+        return response('How about implementing testEnumParameters as a get method ?');
+    }
+    /**
+     * Operation testInlineAdditionalProperties
+     *
+     * test inline additionalProperties.
+     *
+     *
+     * @return Http response
+     */
+    public function testInlineAdditionalProperties()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['param'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $param when calling testInlineAdditionalProperties');
+        }
+        $param = $input['param'];
+
+
+        return response('How about implementing testInlineAdditionalProperties as a post method ?');
+    }
+    /**
+     * Operation testJsonFormData
+     *
+     * test json serialization of form data.
+     *
+     *
+     * @return Http response
+     */
+    public function testJsonFormData()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['param'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $param when calling testJsonFormData');
+        }
+        $param = $input['param'];
+
+        if (!isset($input['param2'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $param2 when calling testJsonFormData');
+        }
+        $param2 = $input['param2'];
+
+
+        return response('How about implementing testJsonFormData as a get method ?');
+    }
+    /**
+     * Operation fakeOuterBooleanSerialize
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function fakeOuterBooleanSerialize()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        $body = $input['body'];
+
+
+        return response('How about implementing fakeOuterBooleanSerialize as a post method ?');
+    }
+    /**
+     * Operation fakeOuterCompositeSerialize
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function fakeOuterCompositeSerialize()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        $body = $input['body'];
+
+
+        return response('How about implementing fakeOuterCompositeSerialize as a post method ?');
+    }
+    /**
+     * Operation fakeOuterNumberSerialize
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function fakeOuterNumberSerialize()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        $body = $input['body'];
+
+
+        return response('How about implementing fakeOuterNumberSerialize as a post method ?');
+    }
+    /**
+     * Operation fakeOuterStringSerialize
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function fakeOuterStringSerialize()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        $body = $input['body'];
+
+
+        return response('How about implementing fakeOuterStringSerialize as a post method ?');
     }
 }

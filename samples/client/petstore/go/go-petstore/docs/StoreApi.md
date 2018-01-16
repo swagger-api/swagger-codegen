@@ -1,32 +1,31 @@
 # \StoreApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteOrder**](StoreApi.md#DeleteOrder) | **Delete** /store/order/{orderId} | Delete purchase order by ID
+[**DeleteOrder**](StoreApi.md#DeleteOrder) | **Delete** /store/order/{order_id} | Delete purchase order by ID
 [**GetInventory**](StoreApi.md#GetInventory) | **Get** /store/inventory | Returns pet inventories by status
-[**GetOrderById**](StoreApi.md#GetOrderById) | **Get** /store/order/{orderId} | Find purchase order by ID
+[**GetOrderById**](StoreApi.md#GetOrderById) | **Get** /store/order/{order_id} | Find purchase order by ID
 [**PlaceOrder**](StoreApi.md#PlaceOrder) | **Post** /store/order | Place an order for a pet
 
 
 # **DeleteOrder**
-> DeleteOrder($orderId)
-
+> DeleteOrder(ctx, orderId)
 Delete purchase order by ID
 
 For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **string**| ID of the order that needs to be deleted | 
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **orderId** | **string**| ID of the order that needs to be deleted | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -40,19 +39,17 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetInventory**
-> map[string]int32 GetInventory()
-
+> map[string]int32 GetInventory(ctx, )
 Returns pet inventories by status
 
 Returns a map of status codes to quantities
 
-
-### Parameters
+### Required Parameters
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**map[string]int32**](map.md)
+**map[string]int32**
 
 ### Authorization
 
@@ -66,18 +63,17 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetOrderById**
-> Order GetOrderById($orderId)
-
+> Order GetOrderById(ctx, orderId)
 Find purchase order by ID
 
 For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **int64**| ID of pet that needs to be fetched | 
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **orderId** | **int64**| ID of pet that needs to be fetched | 
 
 ### Return type
 
@@ -95,18 +91,17 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **PlaceOrder**
-> Order PlaceOrder($body)
-
+> Order PlaceOrder(ctx, body)
 Place an order for a pet
 
 
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
 
 ### Return type
 

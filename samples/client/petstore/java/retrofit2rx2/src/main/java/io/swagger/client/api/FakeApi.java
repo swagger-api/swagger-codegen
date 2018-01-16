@@ -2,25 +2,68 @@ package io.swagger.client.api;
 
 import io.swagger.client.CollectionFormats.*;
 
-import rx.Observable;
-
-
+import io.reactivex.Observable;
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public interface FakeApi {
+  /**
+   * 
+   * Test serialization of outer boolean types
+   * @param body Input boolean as post body (optional)
+   * @return Call&lt;Boolean&gt;
+   */
+  @POST("fake/outer/boolean")
+  Observable<Boolean> fakeOuterBooleanSerialize(
+    @retrofit2.http.Body Boolean body
+  );
+
+  /**
+   * 
+   * Test serialization of object with outer number type
+   * @param body Input composite as post body (optional)
+   * @return Call&lt;OuterComposite&gt;
+   */
+  @POST("fake/outer/composite")
+  Observable<OuterComposite> fakeOuterCompositeSerialize(
+    @retrofit2.http.Body OuterComposite body
+  );
+
+  /**
+   * 
+   * Test serialization of outer number types
+   * @param body Input number as post body (optional)
+   * @return Call&lt;BigDecimal&gt;
+   */
+  @POST("fake/outer/number")
+  Observable<BigDecimal> fakeOuterNumberSerialize(
+    @retrofit2.http.Body BigDecimal body
+  );
+
+  /**
+   * 
+   * Test serialization of outer string types
+   * @param body Input string as post body (optional)
+   * @return Call&lt;String&gt;
+   */
+  @POST("fake/outer/string")
+  Observable<String> fakeOuterStringSerialize(
+    @retrofit2.http.Body String body
+  );
+
   /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
@@ -57,7 +100,7 @@ public interface FakeApi {
   @retrofit2.http.FormUrlEncoded
   @POST("fake")
   Observable<Void> testEndpointParameters(
-    @retrofit2.http.Field("number") BigDecimal number, @retrofit2.http.Field("double") Double _double, @retrofit2.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit2.http.Field("byte") byte[] _byte, @retrofit2.http.Field("integer") Integer integer, @retrofit2.http.Field("int32") Integer int32, @retrofit2.http.Field("int64") Long int64, @retrofit2.http.Field("float") Float _float, @retrofit2.http.Field("string") String string, @retrofit2.http.Field("binary") byte[] binary, @retrofit2.http.Field("date") LocalDate date, @retrofit2.http.Field("dateTime") DateTime dateTime, @retrofit2.http.Field("password") String password, @retrofit2.http.Field("callback") String paramCallback
+    @retrofit2.http.Field("number") BigDecimal number, @retrofit2.http.Field("double") Double _double, @retrofit2.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit2.http.Field("byte") byte[] _byte, @retrofit2.http.Field("integer") Integer integer, @retrofit2.http.Field("int32") Integer int32, @retrofit2.http.Field("int64") Long int64, @retrofit2.http.Field("float") Float _float, @retrofit2.http.Field("string") String string, @retrofit2.http.Field("binary") byte[] binary, @retrofit2.http.Field("date") LocalDate date, @retrofit2.http.Field("dateTime") OffsetDateTime dateTime, @retrofit2.http.Field("password") String password, @retrofit2.http.Field("callback") String paramCallback
   );
 
   /**
@@ -77,6 +120,33 @@ public interface FakeApi {
   @GET("fake")
   Observable<Void> testEnumParameters(
     @retrofit2.http.Field("enum_form_string_array") List<String> enumFormStringArray, @retrofit2.http.Field("enum_form_string") String enumFormString, @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit2.http.Header("enum_header_string") String enumHeaderString, @retrofit2.http.Query("enum_query_string_array") CSVParams enumQueryStringArray, @retrofit2.http.Query("enum_query_string") String enumQueryString, @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger, @retrofit2.http.Field("enum_query_double") Double enumQueryDouble
+  );
+
+  /**
+   * test inline additionalProperties
+   * 
+   * @param param request body (required)
+   * @return Call&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("fake/inline-additionalProperties")
+  Observable<Void> testInlineAdditionalProperties(
+    @retrofit2.http.Body Object param
+  );
+
+  /**
+   * test json serialization of form data
+   * 
+   * @param param field1 (required)
+   * @param param2 field2 (required)
+   * @return Call&lt;Void&gt;
+   */
+  @retrofit2.http.FormUrlEncoded
+  @GET("fake/jsonFormData")
+  Observable<Void> testJsonFormData(
+    @retrofit2.http.Field("param") String param, @retrofit2.http.Field("param2") String param2
   );
 
 }

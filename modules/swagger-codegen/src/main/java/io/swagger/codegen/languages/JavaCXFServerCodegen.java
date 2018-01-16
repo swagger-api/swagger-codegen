@@ -15,19 +15,17 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.features.CXFServerFeatures;
 import io.swagger.codegen.languages.features.GzipTestFeatures;
-import io.swagger.codegen.languages.features.JaxbFeatures;
 import io.swagger.codegen.languages.features.LoggingTestFeatures;
+import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 import io.swagger.models.Operation;
 
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
-        implements CXFServerFeatures, GzipTestFeatures, LoggingTestFeatures, JaxbFeatures
-{   
+        implements CXFServerFeatures, GzipTestFeatures, LoggingTestFeatures, UseGenericResponseFeatures
+{
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
     
     protected boolean addConsumesProducesJson = true;
 
-    protected boolean useJaxbAnnotations = true;
-    
     protected boolean generateSpringApplication = false;
     
     protected boolean useSpringAnnotationConfig = false;
@@ -58,6 +56,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     protected boolean generateNonSpringApplication = false;
 
+    protected boolean useGenericResponse = false;
+
     public JavaCXFServerCodegen()
     {
         super();
@@ -82,8 +82,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
-
-        cliOptions.add(CliOption.newBoolean(USE_JAXB_ANNOTATIONS, "Use JAXB annotations for XML"));
 
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
         cliOptions.add(CliOption.newBoolean(USE_SPRING_ANNOTATION_CONFIG, "Use Spring Annotation Config"));
@@ -111,6 +109,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(CliOption.newBoolean(USE_ANNOTATED_BASE_PATH, "Use @Path annotations for basePath"));
 
         cliOptions.add(CliOption.newBoolean(GENERATE_NON_SPRING_APPLICATION, "Generate non-Spring application"));
+        cliOptions.add(CliOption.newBoolean(USE_GENERIC_RESPONSE, "Use generic response"));
+
     }
 
 
@@ -119,13 +119,16 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     {
         super.processOpts();
         
-        if (additionalProperties.containsKey(USE_JAXB_ANNOTATIONS)) {
-            boolean useJaxbAnnotationsProp = convertPropertyToBooleanAndWriteBack(USE_JAXB_ANNOTATIONS);
-            this.setUseJaxbAnnotations(useJaxbAnnotationsProp);
-        }
-        
         if (additionalProperties.containsKey(ADD_CONSUMES_PRODUCES_JSON)) {
             this.setAddConsumesProducesJson(convertPropertyToBooleanAndWriteBack(ADD_CONSUMES_PRODUCES_JSON));
+        }
+        
+        if (additionalProperties.containsKey(USE_GENERIC_RESPONSE)) {
+            this.setUseGenericResponse(convertPropertyToBoolean(USE_GENERIC_RESPONSE));
+        }
+
+        if (useGenericResponse) {
+            writePropertyBack(USE_GENERIC_RESPONSE, useGenericResponse);
         }
 
         if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
@@ -275,10 +278,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         this.generateSpringBootApplication = generateSpringBootApplication;
     }
 
-    public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
-        this.useJaxbAnnotations = useJaxbAnnotations;
-    }
-
     public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
         this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
@@ -305,6 +304,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     public void setGenerateNonSpringApplication(boolean generateNonSpringApplication) {
         this.generateNonSpringApplication = generateNonSpringApplication;
+    }
+    
+    public void setUseGenericResponse(boolean useGenericResponse) {
+        this.useGenericResponse = useGenericResponse;
     }
 
 }

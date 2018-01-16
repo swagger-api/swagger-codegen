@@ -5,14 +5,203 @@
 use WWW::SwaggerClient::Object::FakeApi;
 ```
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**fake_outer_boolean_serialize**](FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
+[**fake_outer_composite_serialize**](FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
+[**fake_outer_number_serialize**](FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
+[**fake_outer_string_serialize**](FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
+[**test_json_form_data**](FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
 
+
+# **fake_outer_boolean_serialize**
+> OuterBoolean fake_outer_boolean_serialize(body => $body)
+
+
+
+Test serialization of outer boolean types
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $body = WWW::SwaggerClient::Object::OuterBoolean->new(); # OuterBoolean | Input boolean as post body
+
+eval { 
+    my $result = $api_instance->fake_outer_boolean_serialize(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->fake_outer_boolean_serialize: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional] 
+
+### Return type
+
+[**OuterBoolean**](OuterBoolean.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fake_outer_composite_serialize**
+> OuterComposite fake_outer_composite_serialize(body => $body)
+
+
+
+Test serialization of object with outer number type
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $body = WWW::SwaggerClient::Object::OuterComposite->new(); # OuterComposite | Input composite as post body
+
+eval { 
+    my $result = $api_instance->fake_outer_composite_serialize(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->fake_outer_composite_serialize: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterComposite**](OuterComposite.md)| Input composite as post body | [optional] 
+
+### Return type
+
+[**OuterComposite**](OuterComposite.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fake_outer_number_serialize**
+> OuterNumber fake_outer_number_serialize(body => $body)
+
+
+
+Test serialization of outer number types
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $body = WWW::SwaggerClient::Object::OuterNumber->new(); # OuterNumber | Input number as post body
+
+eval { 
+    my $result = $api_instance->fake_outer_number_serialize(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->fake_outer_number_serialize: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional] 
+
+### Return type
+
+[**OuterNumber**](OuterNumber.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fake_outer_string_serialize**
+> OuterString fake_outer_string_serialize(body => $body)
+
+
+
+Test serialization of outer string types
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $body = WWW::SwaggerClient::Object::OuterString->new(); # OuterString | Input string as post body
+
+eval { 
+    my $result = $api_instance->fake_outer_string_serialize(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->fake_outer_string_serialize: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional] 
+
+### Return type
+
+[**OuterString**](OuterString.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_client_model**
 > Client test_client_model(body => $body)
@@ -24,10 +213,10 @@ To test \"client\" model
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
 
 eval { 
@@ -70,18 +259,18 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
 
-# Configure HTTP basic authorization: http_basic_test
-$WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
-$WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
+    # Configure HTTP basic authorization: http_basic_test
+    username => 'YOUR_USERNAME',
+    password => 'YOUR_PASSWORD',
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $number = 3.4; # Number | None
 my $double = 1.2; # double | None
 my $pattern_without_delimiter = 'pattern_without_delimiter_example'; # string | None
-my $byte = 'B'; # string | None
+my $byte = 'byte_example'; # string | None
 my $integer = 56; # int | None
 my $int32 = 56; # int | None
 my $int64 = 789; # int | None
@@ -145,10 +334,10 @@ To test enum parameters
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $enum_form_string_array = []; # ARRAY[string] | Form parameter enum test (string array)
 my $enum_form_string = 'enum_form_string_example'; # string | Form parameter enum test (string)
 my $enum_header_string_array = []; # ARRAY[string] | Header parameter enum test (string array)
@@ -191,6 +380,53 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **test_json_form_data**
+> test_json_form_data(param => $param, param2 => $param2)
+
+test json serialization of form data
+
+
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $param = 'param_example'; # string | field1
+my $param2 = 'param2_example'; # string | field2
+
+eval { 
+    $api_instance->test_json_form_data(param => $param, param2 => $param2);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->test_json_form_data: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | **string**| field1 | 
+ **param2** | **string**| field2 | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

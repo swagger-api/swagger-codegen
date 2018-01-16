@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
@@ -39,6 +40,11 @@ public class EnumTest {
 
     EnumStringEnum(String value) {
       this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
@@ -74,6 +80,11 @@ public class EnumTest {
       this.value = value;
     }
 
+    @JsonValue
+    public Integer getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
@@ -105,6 +116,11 @@ public class EnumTest {
 
     EnumNumberEnum(Double value) {
       this.value = value;
+    }
+
+    @JsonValue
+    public Double getValue() {
+      return value;
     }
 
     @Override
@@ -246,6 +262,6 @@ public class EnumTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

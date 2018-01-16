@@ -1,15 +1,25 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 
 public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     /**
@@ -25,8 +35,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
-    public AbstractJavaJAXRSServerCodegen()
-    {
+    public AbstractJavaJAXRSServerCodegen() {
         super();
 
         sourceFolder = "src/gen/java";
@@ -45,7 +54,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-
+        cliOptions.add(new CliOption("serverPort", "The port on which the server should be started"));
     }
 
 
@@ -54,8 +63,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     // ===============
 
     @Override
-    public CodegenType getTag()
-    {
+    public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
@@ -83,15 +91,19 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             swagger.setBasePath("");
         }
 
-        String host = swagger.getHost();
-        String port = "8080"; // Default value for a JEE Server
-        if ( host != null ) {
-            String[] parts = host.split(":");
-            if ( parts.length > 1 ) {
-                port = parts[1];
+        if (!this.additionalProperties.containsKey("serverPort")) {
+            final String host = swagger.getHost();
+            String port = "8080"; // Default value for a JEE Server
+            if ( host != null ) {
+                String[] parts = host.split(":");
+                if ( parts.length > 1 ) {
+                    port = parts[1];
+                }
             }
+
+            this.additionalProperties.put("serverPort", port);
         }
-        this.additionalProperties.put("serverPort", port);
+
         if ( swagger.getPaths() != null ) {
             for ( String pathname : swagger.getPaths().keySet() ) {
                 Path path = swagger.getPath(pathname);
@@ -128,6 +140,15 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             @SuppressWarnings("unchecked")
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for ( CodegenOperation operation : ops ) {
+                if (operation.hasConsumes == Boolean.TRUE) {
+                    Map<String, String> firstType = operation.consumes.get(0);
+                    if (firstType != null) {
+                        if ("multipart/form-data".equals(firstType.get("mediaType"))) {
+                            operation.isMultipart = Boolean.TRUE;
+                        }
+                    }
+                }
+
                 boolean isMultipartPost = false;
                 List<Map<String, String>> consumes = operation.consumes;
                 if(consumes != null) {
@@ -154,39 +175,32 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                             resp.code = "200";
                         }
 
-                         // set vendorExtensions.x-java-is-response-void to true as dataType is set to "void"
-                        if (resp.dataType == null) {
+                        if (resp.baseType == null) {
+                            resp.dataType = "void";
+                            resp.baseType = "Void";
+                            // set vendorExtensions.x-java-is-response-void to true as baseType is set to "Void"
                             resp.vendorExtensions.put("x-java-is-response-void", true);
                         }
 
+                        if ("array".equals(resp.containerType)) {
+                            resp.containerType = "List";
+                        } else if ("map".equals(resp.containerType)) {
+                            resp.containerType = "Map";
+                        }
                     }
                 }
 
-                if ( operation.returnType == null ) {
+                if ( operation.returnBaseType == null ) {
                     operation.returnType = "void";
-                    // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
+                    operation.returnBaseType = "Void";
+                    // set vendorExtensions.x-java-is-response-void to true as returnBaseType is set to "Void"
                     operation.vendorExtensions.put("x-java-is-response-void", true);
-                } else if ( operation.returnType.startsWith("List") ) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if ( end > 0 ) {
-                        operation.returnType = rt.substring("List<".length(), end).trim();
-                        operation.returnContainer = "List";
-                    }
-                } else if ( operation.returnType.startsWith("Map") ) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if ( end > 0 ) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
-                        operation.returnContainer = "Map";
-                    }
-                } else if ( operation.returnType.startsWith("Set") ) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if ( end > 0 ) {
-                        operation.returnType = rt.substring("Set<".length(), end).trim();
-                        operation.returnContainer = "Set";
-                    }
+                }
+
+                if ("array".equals(operation.returnContainer)) {
+                    operation.returnContainer = "List";
+                } else if ("map".equals(operation.returnContainer)) {
+                    operation.returnContainer = "Map";
                 }
             }
         }
@@ -229,5 +243,6 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
     }
+
 
 }

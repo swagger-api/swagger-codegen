@@ -80,12 +80,11 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                 clientCodegen.setUseBeanValidationFeature(
                         Boolean.valueOf(JavaCXFServerOptionsProvider.USE_BEANVALIDATION_FEATURE));
                 times = 1;
+                clientCodegen.setUseGenericResponse(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_GENERIC_RESPONSE));
+                times = 1;
 
                 clientCodegen.setGenerateSpringBootApplication(
                         Boolean.valueOf(JavaCXFServerOptionsProvider.GENERATE_SPRING_BOOT_APPLICATION));
-                times = 1;
-
-                clientCodegen.setUseJaxbAnnotations(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_JAXB_ANNOTATIONS));
                 times = 1;
 
                 clientCodegen.setUseSpringAnnotationConfig(

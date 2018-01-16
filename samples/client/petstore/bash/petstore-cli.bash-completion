@@ -68,9 +68,17 @@ _petstore-cli()
     # The list of available operation in the REST service
     # It's modelled as an associative array for efficient key lookup
     declare -A operations
+    operations["testSpecialTags"]=1
+    operations["fakeOuterBooleanSerialize"]=1
+    operations["fakeOuterCompositeSerialize"]=1
+    operations["fakeOuterNumberSerialize"]=1
+    operations["fakeOuterStringSerialize"]=1
     operations["testClientModel"]=1
     operations["testEndpointParameters"]=1
     operations["testEnumParameters"]=1
+    operations["testInlineAdditionalProperties"]=1
+    operations["testJsonFormData"]=1
+    operations["testClassname"]=1
     operations["addPet"]=1
     operations["deletePet"]=1
     operations["findPetsByStatus"]=1
@@ -95,9 +103,17 @@ _petstore-cli()
     # An associative array of operations to their parameters
     # Only include path, query and header parameters
     declare -A operation_parameters
+    operation_parameters["testSpecialTags"]=""
+    operation_parameters["fakeOuterBooleanSerialize"]=""
+    operation_parameters["fakeOuterCompositeSerialize"]=""
+    operation_parameters["fakeOuterNumberSerialize"]=""
+    operation_parameters["fakeOuterStringSerialize"]=""
     operation_parameters["testClientModel"]=""
     operation_parameters["testEndpointParameters"]=""
     operation_parameters["testEnumParameters"]="enum_query_string_array= enum_query_string= enum_query_integer= enum_header_string_array: enum_header_string: "
+    operation_parameters["testInlineAdditionalProperties"]=""
+    operation_parameters["testJsonFormData"]=""
+    operation_parameters["testClassname"]=""
     operation_parameters["addPet"]=""
     operation_parameters["deletePet"]="petId= api_key: "
     operation_parameters["findPetsByStatus"]="status= "
@@ -106,9 +122,9 @@ _petstore-cli()
     operation_parameters["updatePet"]=""
     operation_parameters["updatePetWithForm"]="petId= "
     operation_parameters["uploadFile"]="petId= "
-    operation_parameters["deleteOrder"]="orderId= "
+    operation_parameters["deleteOrder"]="order_id= "
     operation_parameters["getInventory"]=""
-    operation_parameters["getOrderById"]="orderId= "
+    operation_parameters["getOrderById"]="order_id= "
     operation_parameters["placeOrder"]=""
     operation_parameters["createUser"]=""
     operation_parameters["createUsersWithArrayInput"]=""

@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +34,10 @@ import android.os.Parcel;
 
 public class AdditionalPropertiesClass implements Parcelable {
   @SerializedName("map_property")
-  private Map<String, String> mapProperty = new HashMap<String, String>();
+  private Map<String, String> mapProperty = null;
 
   @SerializedName("map_of_map_property")
-  private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapOfMapProperty = null;
 
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
@@ -40,6 +45,9 @@ public class AdditionalPropertiesClass implements Parcelable {
   }
 
   public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+    if (this.mapProperty == null) {
+      this.mapProperty = new HashMap<String, String>();
+    }
     this.mapProperty.put(key, mapPropertyItem);
     return this;
   }
@@ -63,6 +71,9 @@ public class AdditionalPropertiesClass implements Parcelable {
   }
 
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+    if (this.mapOfMapProperty == null) {
+      this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
+    }
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
   }
@@ -121,7 +132,7 @@ public class AdditionalPropertiesClass implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
   public void writeToParcel(Parcel out, int flags) {
      
     out.writeValue(mapProperty);
@@ -138,7 +149,7 @@ public class AdditionalPropertiesClass implements Parcelable {
     mapProperty = (Map<String, String>)in.readValue(null);
     mapOfMapProperty = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
   }
-  
+
   public int describeContents() {
     return 0;
   }

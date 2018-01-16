@@ -5,10 +5,12 @@
         "noImplicitAny": true,
         "sourceMap": false,
         "outDir": "dist",
-        "rootDir": ".",
-        "types":[
-            "mocha",
-            "core-js"
+        "types": [
+            "mocha"
+        ],
+        "lib": [
+            "es6",
+            "dom"
         ]
     },
     "exclude": [

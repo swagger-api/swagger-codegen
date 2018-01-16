@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 
 /**
  * Model for testing reserved words  *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
@@ -33,10 +38,10 @@ public class ModelReturn {
   }
 
    /**
-   * property description  *_/ ' \" =end -- \\r\\n \\n \\r
+   * property description  *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
    * @return _return
   **/
-  @ApiModelProperty(example = "null", value = "property description  *_/ ' \" =end -- \\r\\n \\n \\r")
+  @ApiModelProperty(value = "property description  *_/ ' \" =end -- \\r\\n \\n \\r")
   public Integer getReturn() {
     return _return;
   }
@@ -84,6 +89,6 @@ public class ModelReturn {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

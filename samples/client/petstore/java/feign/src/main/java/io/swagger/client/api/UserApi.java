@@ -1,6 +1,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
+import io.swagger.client.EncodingUtils;
 
 import io.swagger.client.model.User;
 
@@ -57,7 +58,6 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /user/{username}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   void deleteUser(@Param("username") String username);
@@ -70,7 +70,6 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/{username}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   User getUserByName(@Param("username") String username);
@@ -84,7 +83,6 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/login?username={username}&password={password}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   String loginUser(@Param("username") String username, @Param("password") String password);
@@ -107,10 +105,9 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/login?username={username}&password={password}")
   @Headers({
-  "Content-Type: application/json",
   "Accept: application/json",
   })
-  String loginUser(@QueryMap Map<String, Object> queryParams);
+  String loginUser(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
   /**
    * A convenience class for generating query parameters for the
@@ -118,11 +115,11 @@ public interface UserApi extends ApiClient.Api {
    */
   public static class LoginUserQueryParams extends HashMap<String, Object> {
     public LoginUserQueryParams username(final String value) {
-      put("username", value);
+      put("username", EncodingUtils.encode(value));
       return this;
     }
     public LoginUserQueryParams password(final String value) {
-      put("password", value);
+      put("password", EncodingUtils.encode(value));
       return this;
     }
   }
@@ -133,7 +130,6 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/logout")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   void logoutUser();

@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.models.ExternalDocs;
+import io.swagger.models.Tag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,12 +12,12 @@ import java.util.Arrays;
 
 public class CodegenOperation {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
-    public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams,
+    public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams, hasRequiredParams,
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
             isListContainer, isMultipart, hasMore = true,
             isResponseBinary = false, isResponseFile = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
-            isRestful;
+            isRestful, isDeprecated;
     public String path, operationId, returnType, httpMethod, returnBaseType,
             returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
@@ -27,16 +28,19 @@ public class CodegenOperation {
     public List<CodegenParameter> queryParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
+    public List<CodegenParameter> requiredParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
-    public List<String> tags;
+    public List<Tag> tags;
     public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
     public Set<String> imports = new HashSet<String>();
     public List<Map<String, String>> examples;
+    public List<Map<String, String>> requestBodyExamples;
     public ExternalDocs externalDocs;
     public Map<String, Object> vendorExtensions;
     public String nickname; // legacy support
-    public String operationIdLowerCase; // for mardown documentation
+    public String operationIdLowerCase; // for markdown documentation
     public String operationIdCamelCase; // for class names
+    public String operationIdSnakeCase;
 
     /**
      * Check if there's at least one parameter
@@ -116,7 +120,7 @@ public class CodegenOperation {
      * @return true if act as Restful show method, false otherwise
      */
     public boolean isRestfulShow() {
-        return "GET".equals(httpMethod) && isMemberPath();
+        return "GET".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -125,7 +129,7 @@ public class CodegenOperation {
      * @return true if act as Restful create method, false otherwise
      */
     public boolean isRestfulCreate() {
-        return "POST".equals(httpMethod) && "".equals(pathWithoutBaseName());
+        return "POST".equalsIgnoreCase(httpMethod) && "".equals(pathWithoutBaseName());
     }
 
     /**
@@ -134,7 +138,16 @@ public class CodegenOperation {
      * @return true if act as Restful update method, false otherwise
      */
     public boolean isRestfulUpdate() {
-        return Arrays.asList("PUT", "PATCH").contains(httpMethod) && isMemberPath();
+        return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase()) && isMemberPath();
+    }
+
+    /**
+     * Check if body param is allowed for the request method
+     *
+     * @return true request method is PUT, PATCH or POST; false otherwise
+     */
+    public boolean isBodyAllowed() {
+        return Arrays.asList("PUT", "PATCH", "POST").contains(httpMethod.toUpperCase());
     }
 
     /**
@@ -143,7 +156,7 @@ public class CodegenOperation {
      * @return true if act as Restful destroy method, false otherwise
      */
     public boolean isRestfulDestroy() {
-        return "DELETE".equals(httpMethod) && isMemberPath();
+        return "DELETE".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -171,7 +184,6 @@ public class CodegenOperation {
      */
     private boolean isMemberPath() {
         if (pathParams.size() != 1) return false;
-
         String id = pathParams.get(0).baseName;
         return ("/{" + id + "}").equals(pathWithoutBaseName());
     }
@@ -219,6 +231,8 @@ public class CodegenOperation {
         if (hasReference != that.hasReference)
             return false;
         if (isResponseFile != that.isResponseFile)
+            return false;
+        if (isDeprecated != that.isDeprecated)
             return false;
         if (path != null ? !path.equals(that.path) : that.path != null)
             return false;
@@ -304,6 +318,7 @@ public class CodegenOperation {
         result = 31 * result + (isResponseBinary ? 13:31);
         result = 31 * result + (isResponseFile ? 13:31);
         result = 31 * result + (hasReference ? 13:31);
+        result = 31 * result + (isDeprecated ? 13:31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (returnType != null ? returnType.hashCode() : 0);

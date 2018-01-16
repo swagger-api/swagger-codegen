@@ -2,16 +2,21 @@ package io.swagger.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.threeten.bp.Instant;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZonedDateTime;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
@@ -58,14 +63,23 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
     }
   }
 
+  @Bean
+  public Jackson2ObjectMapperBuilder builder() {
+    Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+        .indentOutput(true)
+        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .dateFormat(new RFC3339DateFormat());
+    return builder;
+  }
+
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
-        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-        .dateFormat( new RFC3339DateFormat())
-        .build();
-    converters.add(new MappingJackson2HttpMessageConverter(objectMapper));
+    converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     super.configureMessageConverters(converters);
   }
 
+  @Bean
+  public ObjectMapper objectMapper(){
+    return builder().build();
+  }
 }

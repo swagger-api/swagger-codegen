@@ -43,7 +43,7 @@ class StoreApi extends Controller
 
         //not path params validation
 
-        return response('How about implementing getInventory as a GET method ?');
+        return response('How about implementing getInventory as a get method ?');
     }
     /**
      * Operation placeOrder
@@ -67,7 +67,7 @@ class StoreApi extends Controller
         $body = $input['body'];
 
 
-        return response('How about implementing placeOrder as a POST method ?');
+        return response('How about implementing placeOrder as a post method ?');
     }
     /**
      * Operation deleteOrder
@@ -87,7 +87,7 @@ class StoreApi extends Controller
 
         //not path params validation
 
-        return response('How about implementing deleteOrder as a DELETE method ?');
+        return response('How about implementing deleteOrder as a delete method ?');
     }
     /**
      * Operation getOrderById
@@ -103,16 +103,16 @@ class StoreApi extends Controller
         $input = Request::all();
 
         //path params validation
-        if ($order_id] > 5) {
+        if ($order_id > 5) {
             throw new \InvalidArgumentException('invalid value for $order_id when calling StoreApi.getOrderById, must be smaller than or equal to 5.');
         }
-        if ($order_id] < 1) {
+        if ($order_id < 1) {
             throw new \InvalidArgumentException('invalid value for $order_id when calling StoreApi.getOrderById, must be bigger than or equal to 1.');
         }
 
 
         //not path params validation
 
-        return response('How about implementing getOrderById as a GET method ?');
+        return response('How about implementing getOrderById as a get method ?');
     }
 }

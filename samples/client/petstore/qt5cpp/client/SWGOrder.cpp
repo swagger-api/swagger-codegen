@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 SWGOrder::SWGOrder(QString* json) {
     init();
     this->fromJson(*json);
@@ -48,14 +47,12 @@ SWGOrder::init() {
 
 void
 SWGOrder::cleanup() {
-    
 
 
 
     if(ship_date != nullptr) {
         delete ship_date;
     }
-
     if(status != nullptr) {
         delete status;
     }
@@ -94,17 +91,11 @@ SWGOrder::asJson ()
 QJsonObject*
 SWGOrder::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
-    
     obj->insert("id", QJsonValue(id));
-
     obj->insert("petId", QJsonValue(pet_id));
-
     obj->insert("quantity", QJsonValue(quantity));
-
     toJsonValue(QString("shipDate"), ship_date, obj, QString("QDateTime"));
-
     toJsonValue(QString("status"), status, obj, QString("QString"));
-
     obj->insert("complete", QJsonValue(complete));
 
     return obj;
@@ -156,7 +147,7 @@ SWGOrder::setStatus(QString* status) {
 }
 
 bool
-SWGOrder::getComplete() {
+SWGOrder::isComplete() {
     return complete;
 }
 void
@@ -165,6 +156,5 @@ SWGOrder::setComplete(bool complete) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

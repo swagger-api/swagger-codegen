@@ -9,7 +9,7 @@ use Articus\DataTransfer\Annotation as DTA;
  * {{description}}
 {{/description}}
  */
-class {{classname}} 
+class {{classname}}
 {
 {{#vars}}
     /**
@@ -120,12 +120,11 @@ class {{classname}}
      * @DTA\Validator(name="LessThan", options={"max":{{maximum}}{{^exclusiveMaximum}}, "inclusive":true{{/exclusiveMaximum}}})
 {{/maximum}}
 {{#pattern}}
-     * @DTA\Validator(name="Regex", options={"pattern":"{{pattern}}})
+     * @DTA\Validator(name="Regex", options={"pattern":"{{{pattern}}}"})
 {{/pattern}}
 {{/hasValidation}}
      * @var {{datatype}}
      */
     public ${{name}};
 {{/vars}}
-}
-{{/model}}{{/models}}
+}{{/model}}{{/models}}

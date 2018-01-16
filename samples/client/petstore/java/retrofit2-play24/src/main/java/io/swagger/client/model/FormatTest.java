@@ -16,13 +16,15 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.UUID;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * FormatTest
@@ -60,7 +62,7 @@ public class FormatTest {
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @JsonProperty("uuid")
   private UUID uuid = null;
@@ -138,6 +140,7 @@ public class FormatTest {
    * @return number
   **/
   @NotNull
+  @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  @ApiModelProperty(required = true, value = "")
   public BigDecimal getNumber() {
     return number;
@@ -215,7 +218,7 @@ public class FormatTest {
    * @return _byte
   **/
   @NotNull
-  @ApiModelProperty(required = true, value = "")
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  @ApiModelProperty(required = true, value = "")
   public byte[] getByte() {
     return _byte;
   }
@@ -252,6 +255,7 @@ public class FormatTest {
    * @return date
   **/
   @NotNull
+  @Valid
   @ApiModelProperty(required = true, value = "")
   public LocalDate getDate() {
     return date;
@@ -261,7 +265,7 @@ public class FormatTest {
     this.date = date;
   }
 
-  public FormatTest dateTime(DateTime dateTime) {
+  public FormatTest dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -270,12 +274,13 @@ public class FormatTest {
    * Get dateTime
    * @return dateTime
   **/
+  @Valid
   @ApiModelProperty(value = "")
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -288,6 +293,7 @@ public class FormatTest {
    * Get uuid
    * @return uuid
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;
@@ -379,6 +385,6 @@ public class FormatTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

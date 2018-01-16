@@ -16,14 +16,14 @@ import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipTestFeatures;
-import io.swagger.codegen.languages.features.JaxbFeatures;
 import io.swagger.codegen.languages.features.LoggingTestFeatures;
+import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 import io.swagger.models.Operation;
 
 public class JavaCXFClientCodegen extends AbstractJavaCodegen
-        implements BeanValidationFeatures, JaxbFeatures, GzipTestFeatures, LoggingTestFeatures
-{
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodegen.class);
+        implements BeanValidationFeatures, UseGenericResponseFeatures, GzipTestFeatures, LoggingTestFeatures {
+
+private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodegen.class);
 
     /**
      * Name of the sub-directory in "src/main/resource" where to find the
@@ -31,9 +31,9 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
      */
     protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
 
-    protected boolean useJaxbAnnotations = true;
-
     protected boolean useBeanValidation = false;
+    
+    protected boolean useGenericResponse = false;
 
     protected boolean useGzipFeatureForTests = false;
 
@@ -68,14 +68,12 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
-        cliOptions.add(CliOption.newBoolean(USE_JAXB_ANNOTATIONS, "Use JAXB annotations for XML"));
-
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE_FOR_TESTS, "Use Gzip Feature for tests"));
         cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE_FOR_TESTS, "Use Logging Feature for tests"));
 
-
+        cliOptions.add(CliOption.newBoolean(USE_GENERIC_RESPONSE, "Use generic response"));
     }
 
 
@@ -84,14 +82,17 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
     {
         super.processOpts();
 
-        if (additionalProperties.containsKey(USE_JAXB_ANNOTATIONS)) {
-            boolean useJaxbAnnotationsProp = convertPropertyToBooleanAndWriteBack(USE_JAXB_ANNOTATIONS);
-            this.setUseJaxbAnnotations(useJaxbAnnotationsProp);
-        }
-
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
             this.setUseBeanValidation(useBeanValidationProp);
+        }
+        
+        if (additionalProperties.containsKey(USE_GENERIC_RESPONSE)) {
+            this.setUseGenericResponse(convertPropertyToBoolean(USE_GENERIC_RESPONSE));
+        }
+
+        if (useGenericResponse) {
+            writePropertyBack(USE_GENERIC_RESPONSE, useGenericResponse);
         }
 
         this.setUseGzipFeatureForTests(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE_FOR_TESTS));
@@ -133,6 +134,28 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        objs = super.postProcessOperations(objs);
+
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+
+                if (operation.returnType == null) {
+                    operation.returnType = "void";
+                    // set vendorExtensions.x-java-is-response-void to true as
+                    // returnType is set to "void"
+                    operation.vendorExtensions.put("x-java-is-response-void", true);
+                }
+            }
+        }
+
+        return operations;
+    }
+
+    @Override
     public String getHelp()
     {
         return "Generates a Java JAXRS Client based on Apache CXF framework.";
@@ -142,17 +165,16 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
         this.useBeanValidation = useBeanValidation;
     }
 
-
-    public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
-        this.useJaxbAnnotations = useJaxbAnnotations;
-    }
-
     public void setUseGzipFeatureForTests(boolean useGzipFeatureForTests) {
         this.useGzipFeatureForTests = useGzipFeatureForTests;
     }
 
     public void setUseLoggingFeatureForTests(boolean useLoggingFeatureForTests) {
         this.useLoggingFeatureForTests = useLoggingFeatureForTests;
+    }
+
+    public void setUseGenericResponse(boolean useGenericResponse) {
+        this.useGenericResponse = useGenericResponse;
     }
 
 }

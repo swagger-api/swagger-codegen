@@ -3,10 +3,10 @@ package io.swagger.codegen.languages;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -18,11 +18,20 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DoubleProperty;
 import io.swagger.models.properties.FileProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
+    private static final String UNDEFINED_VALUE = "undefined";
 
     protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
@@ -43,7 +52,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 // Typescript reserved words
                 "abstract", "await", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else", "enum", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with", "yield"));
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList(
+        languageSpecificPrimitives = new HashSet<>(Arrays.asList(
                 "string",
                 "String",
                 "boolean",
@@ -57,8 +66,10 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "Date",
                 "number",
                 "any",
-                "Error"
-        ));
+                "File",
+                "Error",
+                "Map"
+                ));
 
         languageGenericTypes = new HashSet<String>(Arrays.asList(
                 "Array"
@@ -82,12 +93,15 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         typeMapping.put("object", "any");
         typeMapping.put("integer", "number");
         typeMapping.put("Map", "any");
+        typeMapping.put("date", "string");
         typeMapping.put("DateTime", "Date");
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");
+        typeMapping.put("File", "any");
+        typeMapping.put("Error", "Error");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
         cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
@@ -114,7 +128,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -133,28 +147,32 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     @Override
     public String toParamName(String name) {
-        // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-
-        // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$"))
-            return name;
-
-        // camelize the variable name
-        // pet_id => petId
-        name = camelize(name, true);
-
-        // for reserved word or word starting with number, append _
-        if (isReservedWord(name) || name.matches("^\\d.*"))
-            name = escapeReservedWord(name);
-
-        return name;
+        // should be the same as variable name
+        return toVarName(name);
     }
 
     @Override
     public String toVarName(String name) {
-        // should be the same as variable name
-        return getNameUsingModelPropertyNaming(name);
+        // sanitize name
+        name = sanitizeName(name);
+
+        if("_".equals(name)) {
+            name = "_u";
+        }
+
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$")) {
+            return name;
+        }
+
+        name = getNameUsingModelPropertyNaming(name);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
     }
 
     @Override
@@ -188,6 +206,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             LOGGER.warn(name + " (model name matches existing language type) cannot be used as a model name. Renamed to " + modelName);
             return modelName;
         }
+
         // camelize the model name
         // phone_number => PhoneNumber
         return camelize(name);
@@ -213,6 +232,49 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             return "any";
         }
         return super.getTypeDeclaration(p);
+    }
+
+    @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof StringProperty) {
+            StringProperty sp = (StringProperty) p;
+            if (sp.getDefault() != null) {
+                return "\"" + sp.getDefault() + "\"";
+            }
+            return UNDEFINED_VALUE;
+        } else if (p instanceof BooleanProperty) {
+            return UNDEFINED_VALUE;
+        } else if (p instanceof DateProperty) {
+            return UNDEFINED_VALUE;
+        } else if (p instanceof DateTimeProperty) {
+            return UNDEFINED_VALUE;
+        } else if (p instanceof DoubleProperty) {
+            DoubleProperty dp = (DoubleProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return UNDEFINED_VALUE;
+        } else if (p instanceof FloatProperty) {
+            FloatProperty fp = (FloatProperty) p;
+            if (fp.getDefault() != null) {
+                return fp.getDefault().toString();
+            }
+            return UNDEFINED_VALUE;
+        } else if (p instanceof IntegerProperty) {
+            IntegerProperty ip = (IntegerProperty) p;
+            if (ip.getDefault() != null) {
+                return ip.getDefault().toString();
+            }
+            return UNDEFINED_VALUE;
+        } else if (p instanceof LongProperty) {
+            LongProperty lp = (LongProperty) p;
+            if (lp.getDefault() != null) {
+                return lp.getDefault().toString();
+            }
+            return UNDEFINED_VALUE;
+        } else {
+            return UNDEFINED_VALUE;
+        }
     }
 
     @Override

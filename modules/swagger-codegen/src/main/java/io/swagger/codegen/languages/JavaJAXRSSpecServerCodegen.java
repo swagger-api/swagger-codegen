@@ -15,14 +15,18 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
-import io.swagger.models.properties.Property;
 import io.swagger.util.Json;
 
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 {
+
+    public static final String INTERFACE_ONLY = "interfaceOnly";
+    public static final String GENERATE_POM = "generatePom";
+
+    private boolean interfaceOnly = false;
+    private boolean generatePom = true;
 
     public JavaJAXRSSpecServerCodegen()
     {
@@ -69,19 +73,34 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
+        cliOptions.add(CliOption.newBoolean(GENERATE_POM, "Whether to generate pom.xml if the file does not already exist.").defaultValue(String.valueOf(generatePom)));
+        cliOptions.add(CliOption.newBoolean(INTERFACE_ONLY, "Whether to generate only API interface stubs without the server files.").defaultValue(String.valueOf(interfaceOnly)));
     }
 
     @Override
     public void processOpts()
     {
+        if (additionalProperties.containsKey(GENERATE_POM)) {
+            generatePom = Boolean.valueOf(additionalProperties.get(GENERATE_POM).toString());
+        }
+        if (additionalProperties.containsKey(INTERFACE_ONLY)) {
+            interfaceOnly = Boolean.valueOf(additionalProperties.get(INTERFACE_ONLY).toString());
+        }
+        if (interfaceOnly) {
+            // Change default artifactId if genereating interfaces only, before command line options are applied in base class.
+            artifactId = "swagger-jaxrs-client";
+        }
+
         super.processOpts();
 
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
-        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
-
-        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
-                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
-
+        if (generatePom) {
+            writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        }
+        if (!interfaceOnly) {
+            writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
+                    (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
+        }
     }
 
 

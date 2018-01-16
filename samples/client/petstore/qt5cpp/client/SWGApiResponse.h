@@ -26,7 +26,6 @@
 
 #include "SWGObject.h"
 
-
 namespace Swagger {
 
 class SWGApiResponse: public SWGObject {
@@ -58,6 +57,6 @@ private:
     QString* message;
 };
 
-} /* namespace Swagger */
+}
 
 #endif /* SWGApiResponse_H_ */

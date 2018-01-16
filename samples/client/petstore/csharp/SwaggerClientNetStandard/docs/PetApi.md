@@ -1,6 +1,6 @@
 # IO.Swagger.Api.PetApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -20,8 +20,6 @@ Method | HTTP request | Description
 
 Add a new pet to the store
 
-
-
 ### Example
 ```csharp
 using System;
@@ -36,7 +34,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -84,8 +81,6 @@ void (empty response body)
 
 Deletes a pet
 
-
-
 ### Example
 ```csharp
 using System;
@@ -100,7 +95,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -166,7 +160,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -231,7 +224,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -296,11 +288,10 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure API key authorization: api_key
-            Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
+            Configuration.Default.AddApiKey("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
+            // Configuration.Default.AddApiKeyPrefix("api_key", "Bearer");
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to return
@@ -347,8 +338,6 @@ Name | Type | Description  | Notes
 
 Update an existing pet
 
-
-
 ### Example
 ```csharp
 using System;
@@ -363,7 +352,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -411,8 +399,6 @@ void (empty response body)
 
 Updates a pet in the store with form data
 
-
-
 ### Example
 ```csharp
 using System;
@@ -427,7 +413,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -479,8 +464,6 @@ void (empty response body)
 
 uploads an image
 
-
-
 ### Example
 ```csharp
 using System;
@@ -495,7 +478,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 

@@ -59,11 +59,6 @@
         });
       }
 
-
-      // load google web fonts
-      loadGoogleFontCss();
-
-
       // Bootstrap Scrollspy
       $(this).scrollspy({ target: '#scrollingNav', offset: 18 });
 
@@ -105,21 +100,6 @@
 
       //Convert elements with "marked" class to markdown
       processMarked();
-
-      /**
-       * Load google fonts.
-       */
-      function loadGoogleFontCss() {
-        WebFont.load({
-          active: function() {
-            // Update scrollspy
-            $(window).scrollspy('refresh')
-          },
-          google: {
-            families: ['Source Code Pro', 'Source Sans Pro:n4,n6,n7']
-          }
-        });
-      }
     });
   </script>
   <style type="text/css">
@@ -132,10 +112,10 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-    {{#models}}
-    {{#model}}
-    defs.{{name}} = {{{modelJson}}};
-    {{/model}}
+        {{#models}}
+        {{#model}}
+            defs.{{name}} = {{{modelJson}}};
+        {{/model}}
     {{/models}}
   </script>
 
@@ -182,7 +162,7 @@
               <div class="app-desc">Version: {{{version}}}</div>
             {{/version}}
             <hr>
-            <p class="marked">{{appDescription}}</p>
+            <div>{{{appDescription}}}</div>
           </div>
         </div>
         <div id="sections">
@@ -224,7 +204,7 @@
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-{{baseName}}-{{nickname}}-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X <span style="text-transform: uppercase;">{{httpMethod}}</span>{{#authMethods}}{{#isApiKey}}{{#isKeyInHeader}} -H "{{keyParamName}}: [[apiKey]]"{{/isKeyInHeader}}{{/isApiKey}}{{#isBasic}}{{#hasProduces}} -H "Accept: {{#produces}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/produces}}"{{/hasProduces}}{{#hasConsumes}} -H "Content-Type: {{#consumes}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/consumes}}"{{/hasConsumes}} -H "Authorization: Basic [[basicHash]]"{{/isBasic}}{{/authMethods}} "{{basePath}}{{path}}{{#hasQueryParams}}?{{#queryParams}}{{^-first}}&{{/-first}}{{baseName}}={{vendorExtensions.x-eg}}{{/queryParams}}{{/hasQueryParams}}"</code></pre>
+                            <pre class="prettyprint"><code class="language-bsh">curl -X {{vendorExtensions.x-codegen-httpMethodUpperCase}}{{#authMethods}}{{#isApiKey}}{{#isKeyInHeader}} -H "{{keyParamName}}: [[apiKey]]"{{/isKeyInHeader}}{{/isApiKey}}{{#isBasic}}{{#hasProduces}} -H "Accept: {{#produces}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/produces}}"{{/hasProduces}}{{#hasConsumes}} -H "Content-Type: {{#consumes}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/consumes}}"{{/hasConsumes}} -H "Authorization: Basic [[basicHash]]"{{/isBasic}}{{/authMethods}} "{{basePath}}{{path}}{{#hasQueryParams}}?{{#queryParams}}{{^-first}}&{{/-first}}{{baseName}}={{vendorExtensions.x-eg}}{{/queryParams}}{{/hasQueryParams}}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-{{baseName}}-{{nickname}}-0-java">
                             <pre class="prettyprint"><code class="language-java">{{>sample_java}}</code></pre>
@@ -359,24 +339,25 @@
                               {{#schema}}
                                 <div class="tab-pane active" id="responses-{{nickname}}-{{code}}-schema">
                                   <div id='responses-{{nickname}}-{{code}}-schema-{{code}}' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                                               <script>
+                                    <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {{{jsonSchema}}};
                                         var schema = schemaWrapper.schema;
-                                        schemaWrapper.definitions = defs;
-                                        //console.log(JSON.stringify(schema))
-                                        JsonRefs.resolveRefs(schemaWrapper, {
-                                            "depth": 3,
-                                            "resolveRemoteRefs": false,
-                                            "resolveFileRefs": false
-                                        }, function(err, resolved, metadata) {
-                                          //console.log(JSON.stringify(resolved));
-                                          var view = new JSONSchemaView(resolved.schema, 3);
-                                          $('#responses-{{nickname}}-{{code}}-schema-data').val(JSON.stringify(resolved.schema));
-                                          var result = $('#responses-{{nickname}}-{{code}}-schema-{{code}}');
-                                          result.empty();
-                                          result.append(view.render());
-                                        });
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-{{nickname}}-{{code}}-schema-data').val(stringify(schema));
+                                        var result = $('#responses-{{nickname}}-{{code}}-schema-{{code}}');
+                                        result.empty();
+                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -448,8 +429,17 @@
   </div>
   {{>js_jsonformatter}}
   {{>js_jsonschemaview}}
-  {{>js_jsonref}}
+  {{>js_json_schema_ref_parser}}
+  {{>js_json_stringify_safe}}
   {{>js_webfontloader}}
+  <script>
+    var schemaWrapper = {};
+    schemaWrapper.definitions = Object.assign({}, defs);
+    defsParser = new $RefParser();
+    defsParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  </script>
   <script>
   $(document).ready(function () {
     $('.nav-tabs-examples').find('a:first').tab('show');

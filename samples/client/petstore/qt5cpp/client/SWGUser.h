@@ -26,7 +26,6 @@
 
 #include "SWGObject.h"
 
-
 namespace Swagger {
 
 class SWGUser: public SWGObject {
@@ -78,6 +77,6 @@ private:
     qint32 user_status;
 };
 
-} /* namespace Swagger */
+}
 
 #endif /* SWGUser_H_ */

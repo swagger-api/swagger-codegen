@@ -13,16 +13,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ArrayOfNumberOnly  {
   
   @ApiModelProperty(value = "")
-  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
-
+  private List<BigDecimal> arrayNumber = null;
  /**
    * Get arrayNumber
    * @return arrayNumber
   **/
+  @JsonProperty("ArrayNumber")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }

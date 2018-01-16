@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
@@ -28,10 +29,10 @@ import java.util.Map;
 
 public class AdditionalPropertiesClass {
   @JsonProperty("map_property")
-  private Map<String, String> mapProperty = new HashMap<String, String>();
+  private Map<String, String> mapProperty = null;
 
   @JsonProperty("map_of_map_property")
-  private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapOfMapProperty = null;
 
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
@@ -39,6 +40,9 @@ public class AdditionalPropertiesClass {
   }
 
   public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+    if (this.mapProperty == null) {
+      this.mapProperty = new HashMap<String, String>();
+    }
     this.mapProperty.put(key, mapPropertyItem);
     return this;
   }
@@ -62,6 +66,9 @@ public class AdditionalPropertiesClass {
   }
 
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+    if (this.mapOfMapProperty == null) {
+      this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
+    }
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
   }
@@ -120,6 +127,6 @@ public class AdditionalPropertiesClass {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

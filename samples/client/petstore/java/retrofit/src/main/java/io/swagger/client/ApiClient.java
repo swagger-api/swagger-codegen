@@ -56,6 +56,8 @@ public class ApiClient {
             Interceptor auth;
             if ("api_key".equals(authName)) {
                 auth = new ApiKeyAuth("header", "api_key");
+            } else if ("api_key_query".equals(authName)) {
+                auth = new ApiKeyAuth("query", "api_key_query");
             } else if ("http_basic_test".equals(authName)) {
                 auth = new HttpBasicAuth();
 
@@ -126,7 +128,7 @@ public class ApiClient {
 
         adapterBuilder = new RestAdapter
                 .Builder()
-                .setEndpoint("http://petstore.swagger.io/v2")
+                .setEndpoint("http://petstore.swagger.io:80/v2")
                 .setClient(new OkClient(okClient))
                 .setConverter(new GsonConverterWrapper(gson));
     }

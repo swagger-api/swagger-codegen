@@ -39,7 +39,7 @@ public class CodegenProperty implements Cloneable {
     public boolean hasMore, required, secondaryParam;
     public boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not readonly
     public boolean isPrimitiveType, isContainer, isNotContainer;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime;
+    public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime, isUuid;
     public boolean isListContainer, isMapContainer;
     public boolean isEnum;
     public boolean isReadOnly = false;
@@ -49,11 +49,19 @@ public class CodegenProperty implements Cloneable {
     public Map<String, Object> vendorExtensions;
     public boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
     public boolean isInherited;
+    public String discriminatorValue;
     public String nameInCamelCase; // property name in camel case
     // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
     public String enumName;
     public Integer maxItems;
     public Integer minItems;
+
+    // XML
+    public boolean isXmlAttribute = false;
+    public String xmlPrefix;
+    public String xmlName;
+    public String xmlNamespace;
+    public boolean isXmlWrapped = false;
 
 
     @Override
@@ -108,8 +116,10 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((vendorExtensions == null) ? 0 : vendorExtensions.hashCode());
         result = prime * result + ((hasValidation  ? 13:31));
         result = prime * result + ((isString  ? 13:31));
+        result = prime * result + ((isNumeric ? 13:31));
         result = prime * result + ((isInteger ? 13:31));
         result = prime * result + ((isLong  ?13:31));
+        result = prime * result + ((isNumber ? 13:31));
         result = prime * result + ((isFloat ? 13:31));
         result = prime * result + ((isDouble  ? 13:31));
         result = prime * result + ((isByteArray  ? 13:31));
@@ -118,13 +128,20 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((isBoolean  ? 13:31));
         result = prime * result + ((isDate  ? 13:31));
         result = prime * result + ((isDateTime ? 13:31));
+        result = prime * result + ((isUuid ? 13:31));
         result = prime * result + ((isMapContainer ? 13:31));
         result = prime * result + ((isListContainer  ? 13:31));
         result = prime * result + Objects.hashCode(isInherited);
+        result = prime * result + Objects.hashCode(discriminatorValue);
         result = prime * result + Objects.hashCode(nameInCamelCase);
         result = prime * result + Objects.hashCode(enumName);
         result = prime * result + ((maxItems == null) ? 0 : maxItems.hashCode());
         result = prime * result + ((minItems == null) ? 0 : minItems.hashCode());
+        result = prime * result + ((isXmlAttribute  ? 13:31));
+        result = prime * result + ((xmlPrefix == null) ? 0 : xmlPrefix.hashCode());
+        result = prime * result + ((xmlName == null) ? 0 : xmlName.hashCode());
+        result = prime * result + ((xmlNamespace == null) ? 0 : xmlNamespace.hashCode());
+        result = prime * result + ((isXmlWrapped  ? 13:31));
         return result;
     }
 
@@ -249,10 +266,16 @@ public class CodegenProperty implements Cloneable {
             return false;
         }
 
+        if (this.isNumeric != other.isNumeric) {
+            return false;
+        }
         if (this.isInteger != other.isInteger) {
             return false;
         }
         if (this.isLong != other.isLong) {
+            return false;
+        }
+        if (this.isNumber != other.isNumber) {
             return false;
         }
         if (this.isFloat != other.isFloat) {
@@ -273,6 +296,9 @@ public class CodegenProperty implements Cloneable {
         if (this.isDateTime != other.isDateTime) {
             return false;
         }
+        if (this.isUuid != other.isUuid) {
+            return false;
+        }
         if (this.isBinary != other.isBinary) {
             return false;
         }
@@ -288,6 +314,9 @@ public class CodegenProperty implements Cloneable {
         if (!Objects.equals(this.isInherited, other.isInherited)) {
             return false;
         }
+        if (!Objects.equals(this.discriminatorValue, other.discriminatorValue)) {
+            return false;
+        }
         if (!Objects.equals(this.nameInCamelCase, other.nameInCamelCase)) {
             return false;
         }
@@ -300,14 +329,29 @@ public class CodegenProperty implements Cloneable {
         if (this.minItems != other.minItems && (this.minItems == null || !this.minItems.equals(other.minItems))) {
             return false;
         }
+        if (!Objects.equals(this.isXmlAttribute, other.isXmlAttribute)) {
+            return false;
+        }
+        if (!Objects.equals(this.xmlPrefix, other.xmlPrefix)) {
+            return false;
+        }
+        if (!Objects.equals(this.xmlName, other.xmlName)) {
+            return false;
+        }
+        if (!Objects.equals(this.xmlNamespace, other.xmlNamespace)) {
+            return false;
+        }
+        if (!Objects.equals(this.isXmlWrapped, other.isXmlWrapped)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public CodegenProperty clone() {
         try {
-        	CodegenProperty cp = (CodegenProperty) super.clone();
-        	if (this._enum != null) {
+            CodegenProperty cp = (CodegenProperty) super.clone();
+            if (this._enum != null) {
                 cp._enum = new ArrayList<String>(this._enum);
             }
             if (this.allowableValues != null) {
@@ -316,10 +360,10 @@ public class CodegenProperty implements Cloneable {
             if (this.items != null) {
                 cp.items = this.items;
             }
-        	if(this.vendorExtensions != null){
+            if(this.vendorExtensions != null){
                 cp.vendorExtensions = new HashMap<String, Object>(this.vendorExtensions);
             }
-        	return cp;
+            return cp;
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException(e);
         }

@@ -5,10 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * SpecialModelName
  */
+@Validated
 
 public class SpecialModelName   {
   @JsonProperty("$special[property.name]")
@@ -19,11 +23,13 @@ public class SpecialModelName   {
     return this;
   }
 
-   /**
+  /**
    * Get specialPropertyName
    * @return specialPropertyName
   **/
   @ApiModelProperty(value = "")
+
+
   public Long getSpecialPropertyName() {
     return specialPropertyName;
   }

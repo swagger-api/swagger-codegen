@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -36,19 +37,19 @@ namespace IO.Swagger.Model
         /// Enum Placed for "placed"
         /// </summary>
         [EnumMember(Value = "placed")]
-        Placed,
+        Placed = 1,
         
         /// <summary>
         /// Enum Approved for "approved"
         /// </summary>
         [EnumMember(Value = "approved")]
-        Approved,
+        Approved = 2,
         
         /// <summary>
         /// Enum Delivered for "delivered"
         /// </summary>
         [EnumMember(Value = "delivered")]
-        Delivered
+        Delivered = 3
     }
 
 }

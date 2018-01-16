@@ -67,6 +67,18 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("DateTime", "datetime");
         typeMapping.put("object", "object");
         typeMapping.put("file", "file");
+        typeMapping.put("UUID", "str");
+
+        // from https://docs.python.org/3/reference/lexical_analysis.html#keywords
+        setReservedWordsLowerCase(
+                Arrays.asList(
+                    // @property
+                    "property",
+                    // python reserved words
+                    "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
+                    "assert", "else", "if", "pass", "yield", "break", "except", "import",
+                    "print", "class", "exec", "in", "raise", "continue", "finally", "is",
+                    "return", "def", "for", "lambda", "try", "self", "None", "True", "False", "nonlocal"));
 
         // set the output folder here
         outputFolder = "generated-code/connexion";
@@ -80,14 +92,6 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
          * will use the resource stream to attempt to read the templates.
          */
         embeddedTemplateDir = templateDir = "flaskConnexion";
-
-        // from https://docs.python.org/release/2.5.4/ref/keywords.html
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                        "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                        "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                        "return", "def", "for", "lambda", "try"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -129,6 +133,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 defaultValue("default_controller"));
         cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").
                 defaultValue("false"));
+        cliOptions.add(new CliOption("serverPort", "TCP port to listen to in app.run").
+                defaultValue("8080"));
     }
 
     @Override
@@ -243,7 +249,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * those terms here.  This logic is only called if a variable matches the reserved words
      *
      * @return the escaped term
      */
@@ -419,6 +425,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toParamName(String name) {
+        // don't do name =removeNonNameElementToCamelCase(name); // this breaks connexion, which does not modify param names before sending them
+        if (reservedWords.contains(name)) {
+            return escapeReservedWord(name);
+        }
         // Param name is already sanitized in swagger spec processing
         return name;
     }
@@ -463,13 +473,18 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toOperationId(String operationId) {
-        operationId = super.toOperationId(operationId); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // Use the part after the last dot, e.g.
-        //     controllers.defaultController.addPet => addPet
-        operationId = operationId.replaceAll(".*\\.", "");
-        // Need to underscore it since it has been processed via removeNonNameElementToCamelCase, e.g.
-        //     addPet => add_pet
-        return underscore(operationId);
+        // throw exception if method name is empty (should not occur as an auto-generated method name will be used)
+        if (StringUtils.isEmpty(operationId)) {
+            throw new RuntimeException("Empty method name (operationId) not allowed");
+        }
+
+        // method name cannot use reserved keyword, e.g. return
+        if (isReservedWord(operationId)) {
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            operationId = "call_" + operationId;
+        }
+
+        return underscore(sanitizeName(operationId));
     }
 
     /**
@@ -650,6 +665,12 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             addImport(model, "import re");
         }
         postProcessPattern(property.pattern, property.vendorExtensions);
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        // process enum in models
+        return postProcessModelsEnum(objs);
     }
 
     @Override

@@ -26,7 +26,7 @@ import Foundation
 
 #if os(iOS) || os(watchOS) || os(tvOS)
 import MobileCoreServices
-#elseif os(OSX)
+#elseif os(macOS)
 import CoreServices
 #endif
 
@@ -92,7 +92,7 @@ open class MultipartFormData {
     // MARK: - Properties
 
     /// The `Content-Type` header value containing the boundary used to generate the `multipart/form-data`.
-    open var contentType: String { return "multipart/form-data; boundary=\(boundary)" }
+    open lazy var contentType: String = "multipart/form-data; boundary=\(self.boundary)"
 
     /// The content length of all body parts used to generate the `multipart/form-data` not including the boundaries.
     public var contentLength: UInt64 { return bodyParts.reduce(0) { $0 + $1.bodyContentLength } }
@@ -257,8 +257,7 @@ open class MultipartFormData {
         var isDirectory: ObjCBool = false
         let path = fileURL.path
 
-        guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) && !isDirectory.boolValue else
-        {
+        guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) && !isDirectory.boolValue else {
             setBodyPartError(withReason: .bodyPartFileIsDirectory(at: fileURL))
             return
         }

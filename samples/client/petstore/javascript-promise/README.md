@@ -23,6 +23,30 @@ Then install it via:
 npm install swagger_petstore --save
 ```
 
+##### Local development
+
+To use the library locally without publishing to a remote npm registry, first install the dependencies by changing 
+into the directory containing `package.json` (and this README). Let's call this `JAVASCRIPT_CLIENT_DIR`. Then run:
+
+```shell
+npm install
+```
+
+Next, [link](https://docs.npmjs.com/cli/link) it globally in npm with the following, also from `JAVASCRIPT_CLIENT_DIR`:
+
+```shell
+npm link
+```
+
+Finally, switch to the directory you want to use your swagger_petstore from, and run:
+
+```shell
+npm link /path/to/<JAVASCRIPT_CLIENT_DIR>
+```
+
+You should now be able to `require('swagger_petstore')` in javascript files from the directory you ran the last 
+command above from.
+
 #### git
 #
 If the library is hosted at a git repository, e.g.
@@ -37,13 +61,32 @@ then install it via:
 
 The library also works in the browser environment via npm and [browserify](http://browserify.org/). After following
 the above steps with Node.js and installing browserify with `npm install -g browserify`,
-perform the following (assuming *main.js* is your entry file):
+perform the following (assuming *main.js* is your entry file, that's to say your javascript file where you actually 
+use this library):
 
 ```shell
 browserify main.js > bundle.js
 ```
 
 Then include *bundle.js* in the HTML pages.
+
+### Webpack Configuration
+
+Using Webpack you may encounter the following error: "Module not found: Error:
+Cannot resolve module", most certainly you should disable AMD loader. Add/merge
+the following section to your webpack config:
+
+```javascript
+module: {
+  rules: [
+    {
+      parser: {
+        amd: false
+      }
+    }
+  ]
+}
+```
 
 ## Getting Started
 
@@ -52,11 +95,11 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```javascript
 var SwaggerPetstore = require('swagger_petstore');
 
-var api = new SwaggerPetstore.FakeApi()
+var api = new SwaggerPetstore.AnotherFakeApi()
 
 var body = new SwaggerPetstore.Client(); // {Client} client model
 
-api.testClientModel(body).then(function(data) {
+api.testSpecialTags(body).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -67,13 +110,21 @@ api.testClientModel(body).then(function(data) {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*SwaggerPetstore.AnotherFakeApi* | [**testSpecialTags**](docs/AnotherFakeApi.md#testSpecialTags) | **PATCH** /another-fake/dummy | To test special tags
+*SwaggerPetstore.FakeApi* | [**fakeOuterBooleanSerialize**](docs/FakeApi.md#fakeOuterBooleanSerialize) | **POST** /fake/outer/boolean | 
+*SwaggerPetstore.FakeApi* | [**fakeOuterCompositeSerialize**](docs/FakeApi.md#fakeOuterCompositeSerialize) | **POST** /fake/outer/composite | 
+*SwaggerPetstore.FakeApi* | [**fakeOuterNumberSerialize**](docs/FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
+*SwaggerPetstore.FakeApi* | [**fakeOuterStringSerialize**](docs/FakeApi.md#fakeOuterStringSerialize) | **POST** /fake/outer/string | 
 *SwaggerPetstore.FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *SwaggerPetstore.FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *SwaggerPetstore.FakeApi* | [**testEnumParameters**](docs/FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
+*SwaggerPetstore.FakeApi* | [**testInlineAdditionalProperties**](docs/FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
+*SwaggerPetstore.FakeApi* | [**testJsonFormData**](docs/FakeApi.md#testJsonFormData) | **GET** /fake/jsonFormData | test json serialization of form data
+*SwaggerPetstore.FakeClassnameTags123Api* | [**testClassname**](docs/FakeClassnameTags123Api.md#testClassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *SwaggerPetstore.PetApi* | [**addPet**](docs/PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 *SwaggerPetstore.PetApi* | [**deletePet**](docs/PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
 *SwaggerPetstore.PetApi* | [**findPetsByStatus**](docs/PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
@@ -82,9 +133,9 @@ Class | Method | HTTP request | Description
 *SwaggerPetstore.PetApi* | [**updatePet**](docs/PetApi.md#updatePet) | **PUT** /pet | Update an existing pet
 *SwaggerPetstore.PetApi* | [**updatePetWithForm**](docs/PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *SwaggerPetstore.PetApi* | [**uploadFile**](docs/PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
-*SwaggerPetstore.StoreApi* | [**deleteOrder**](docs/StoreApi.md#deleteOrder) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+*SwaggerPetstore.StoreApi* | [**deleteOrder**](docs/StoreApi.md#deleteOrder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 *SwaggerPetstore.StoreApi* | [**getInventory**](docs/StoreApi.md#getInventory) | **GET** /store/inventory | Returns pet inventories by status
-*SwaggerPetstore.StoreApi* | [**getOrderById**](docs/StoreApi.md#getOrderById) | **GET** /store/order/{orderId} | Find purchase order by ID
+*SwaggerPetstore.StoreApi* | [**getOrderById**](docs/StoreApi.md#getOrderById) | **GET** /store/order/{order_id} | Find purchase order by ID
 *SwaggerPetstore.StoreApi* | [**placeOrder**](docs/StoreApi.md#placeOrder) | **POST** /store/order | Place an order for a pet
 *SwaggerPetstore.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user | Create user
 *SwaggerPetstore.UserApi* | [**createUsersWithArrayInput**](docs/UserApi.md#createUsersWithArrayInput) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -106,11 +157,9 @@ Class | Method | HTTP request | Description
  - [SwaggerPetstore.ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [SwaggerPetstore.ArrayTest](docs/ArrayTest.md)
  - [SwaggerPetstore.Capitalization](docs/Capitalization.md)
- - [SwaggerPetstore.Cat](docs/Cat.md)
  - [SwaggerPetstore.Category](docs/Category.md)
  - [SwaggerPetstore.ClassModel](docs/ClassModel.md)
  - [SwaggerPetstore.Client](docs/Client.md)
- - [SwaggerPetstore.Dog](docs/Dog.md)
  - [SwaggerPetstore.EnumArrays](docs/EnumArrays.md)
  - [SwaggerPetstore.EnumClass](docs/EnumClass.md)
  - [SwaggerPetstore.EnumTest](docs/EnumTest.md)
@@ -124,12 +173,18 @@ Class | Method | HTTP request | Description
  - [SwaggerPetstore.Name](docs/Name.md)
  - [SwaggerPetstore.NumberOnly](docs/NumberOnly.md)
  - [SwaggerPetstore.Order](docs/Order.md)
+ - [SwaggerPetstore.OuterBoolean](docs/OuterBoolean.md)
+ - [SwaggerPetstore.OuterComposite](docs/OuterComposite.md)
  - [SwaggerPetstore.OuterEnum](docs/OuterEnum.md)
+ - [SwaggerPetstore.OuterNumber](docs/OuterNumber.md)
+ - [SwaggerPetstore.OuterString](docs/OuterString.md)
  - [SwaggerPetstore.Pet](docs/Pet.md)
  - [SwaggerPetstore.ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [SwaggerPetstore.SpecialModelName](docs/SpecialModelName.md)
  - [SwaggerPetstore.Tag](docs/Tag.md)
  - [SwaggerPetstore.User](docs/User.md)
+ - [SwaggerPetstore.Cat](docs/Cat.md)
+ - [SwaggerPetstore.Dog](docs/Dog.md)
 
 
 ## Documentation for Authorization
@@ -140,6 +195,12 @@ Class | Method | HTTP request | Description
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
+
+### api_key_query
+
+- **Type**: API key
+- **API key parameter name**: api_key_query
+- **Location**: URL query string
 
 ### http_basic_test
 

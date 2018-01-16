@@ -1,6 +1,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
+import io.swagger.client.EncodingUtils;
 
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
@@ -36,7 +37,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /pet/{petId}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
     "api_key: {apiKey}"
   })
@@ -50,7 +50,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   List<Pet> findPetsByStatus(@Param("status") List<String> status);
@@ -72,10 +71,9 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
-  "Content-Type: application/json",
   "Accept: application/json",
   })
-  List<Pet> findPetsByStatus(@QueryMap Map<String, Object> queryParams);
+  List<Pet> findPetsByStatus(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
   /**
    * A convenience class for generating query parameters for the
@@ -83,7 +81,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByStatusQueryParams extends HashMap<String, Object> {
     public FindPetsByStatusQueryParams status(final List<String> value) {
-      put("status", value);
+      put("status", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
   }
@@ -96,7 +94,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   List<Pet> findPetsByTags(@Param("tags") List<String> tags);
@@ -118,10 +115,9 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
-  "Content-Type: application/json",
   "Accept: application/json",
   })
-  List<Pet> findPetsByTags(@QueryMap Map<String, Object> queryParams);
+  List<Pet> findPetsByTags(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
   /**
    * A convenience class for generating query parameters for the
@@ -129,7 +125,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByTagsQueryParams extends HashMap<String, Object> {
     public FindPetsByTagsQueryParams tags(final List<String> value) {
-      put("tags", value);
+      put("tags", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
   }
@@ -142,7 +138,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/{petId}")
   @Headers({
-    "Content-Type: application/json",
     "Accept: application/json",
   })
   Pet getPetById(@Param("petId") Long petId);

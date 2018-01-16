@@ -1,23 +1,29 @@
 {
   "private": true,
   "dependencies": {
-    "@types/chai": "^3.4.35",
-    "@types/core-js": "0.9.35",
-    "@types/mocha": "^2.2.40",
-    "chai": "^3.5.0",
-    "core-js": "2.4.1"
-  },
-  "devDependencies": {
-    "browserify": "14.1.0",
-    "ts-loader": "^0.8.2",
-    "tsify": "3.0.1",
-    "typescript": "^2.0.7",
-    "webpack": "^1.13.0"
+    "@swagger/typescript-fetch-petstore": "file:../../builds/with-npm-version",
+    "chai": "^4.1.0",
+    "ts-node": "^3.3.0"
   },
   "scripts": {
-    "prepublish": "./scripts/prepublish.sh",
-    "pretest": "npm install mocha",
-    "test": "mocha"
+    "prepublish": "npm install ../../builds/with-npm-version && npm run build && npm run webpack && npm run browserify",
+    "test": "mocha test/*.ts --compilers ts:ts-node/register --timeout 10000",
+    "build": "tsc",
+    "webpack": "webpack",
+    "browserify": "browserify test -p [ tsify ] > ./dist/test.browserify-bundle.js"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/isomorphic-fetch": "0.0.34",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.14",
+    "browserify": "^14.4.0",
+    "mocha": "^3.4.2",
+    "ts-loader": "^2.3.0",
+    "tsify": "^3.0.1",
+    "typescript": "^2.4.1",
+    "typings": "^2.1.1",
+    "webpack": "^1.13.0"
   },
   "name": "typescript-fetch-test",
   "version": "1.0.0",

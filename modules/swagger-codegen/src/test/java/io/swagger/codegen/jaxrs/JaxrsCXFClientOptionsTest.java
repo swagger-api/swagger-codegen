@@ -59,14 +59,12 @@ public class JaxrsCXFClientOptionsTest extends AbstractOptionsTest {
 
                 clientCodegen.setUseBeanValidation(Boolean.valueOf(JavaCXFClientOptionsProvider.USE_BEANVALIDATION));
                 times = 1;
+                clientCodegen.setUseGenericResponse(Boolean.valueOf(JavaCXFClientOptionsProvider.USE_GENERIC_RESPONSE));
+                times = 1;
+
                 clientCodegen.setUseLoggingFeatureForTests(
                         Boolean.valueOf(JavaCXFClientOptionsProvider.USE_LOGGING_FEATURE_FOR_TESTS));
                 times = 1;
-
-
-                clientCodegen.setUseJaxbAnnotations(Boolean.valueOf(JavaCXFClientOptionsProvider.USE_JAXB_ANNOTATIONS));
-                times = 1;
-
 
             }
         };

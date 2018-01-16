@@ -5,6 +5,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.HeaderParameter;
@@ -26,6 +27,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public static final String PROJECT_NAME = "projectName";
     public static final String RESPONSE_AS = "responseAs";
     public static final String UNWRAP_REQUIRED = "unwrapRequired";
+    public static final String OBJC_COMPATIBLE = "objcCompatible";
     public static final String POD_SOURCE = "podSource";
     public static final String POD_AUTHORS = "podAuthors";
     public static final String POD_SOCIAL_MEDIA_URL = "podSocialMediaURL";
@@ -38,15 +40,17 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public static final String POD_DOCUMENTATION_URL = "podDocumentationURL";
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
     public static final String DEFAULT_POD_AUTHORS = "Swagger Codegen";
+    public static final String LENIENT_TYPE_CAST = "lenientTypeCast";
     protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
     protected static final String LIBRARY_RX_SWIFT = "RxSwift";
     protected static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT};
     protected String projectName = "SwaggerClient";
     protected boolean unwrapRequired;
+    protected boolean objcCompatible = false;
+    protected boolean lenientTypeCast = false;
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
     protected String sourceFolder = "Classes" + File.separator + "Swaggers";
-    private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{[a-zA-Z_]+\\}");
 
     @Override
     public CodegenType getTag() {
@@ -61,6 +65,16 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String getHelp() {
         return "Generates a swift client library.";
+    }
+
+    @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+
+        final Property additionalProperties = swaggerModel.getAdditionalProperties();
+
+        if(additionalProperties != null) {
+            codegenModel.additionalPropertiesType = getSwaggerType(additionalProperties);
+        }
     }
 
     public Swift3Codegen() {
@@ -103,7 +117,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         reservedWords = new HashSet<>(
                 Arrays.asList(
                     // name used by swift client
-                    "ErrorResponse",
+                    "ErrorResponse", "Response",
 
                     // swift keywords
                     "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
@@ -113,15 +127,14 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
                     "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
                     "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
                     "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                    "required", "right", "set", "Type", "unowned", "weak")
+                    "required", "right", "set", "Type", "unowned", "weak", "Data")
         );
 
         typeMapping = new HashMap<>();
         typeMapping.put("array", "Array");
         typeMapping.put("List", "Array");
         typeMapping.put("map", "Dictionary");
-        typeMapping.put("date", "Date");
-        typeMapping.put("Date", "Date");
+        typeMapping.put("date", "ISOFullDate");
         typeMapping.put("DateTime", "Date");
         typeMapping.put("boolean", "Bool");
         typeMapping.put("string", "String");
@@ -147,6 +160,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
                 StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
         cliOptions.add(new CliOption(UNWRAP_REQUIRED, "Treat 'required' properties in response as non-optional " +
                 "(which would crash the app if api returns null as opposed to required option specified in json schema"));
+        cliOptions.add(new CliOption(OBJC_COMPATIBLE, "Add additional properties and methods for Objective-C compatibility (default: false)"));
         cliOptions.add(new CliOption(POD_SOURCE, "Source information used for Podspec"));
         cliOptions.add(new CliOption(CodegenConstants.POD_VERSION, "Version used for Podspec"));
         cliOptions.add(new CliOption(POD_AUTHORS, "Authors used for Podspec"));
@@ -161,12 +175,14 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
-
+        cliOptions.add(new CliOption(LENIENT_TYPE_CAST, "Accept and cast values for simple types (string->bool, string->int, int->string)")
+                .defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
+
         // default HIDE_GENERATION_TIMESTAMP to true
         if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
             additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
@@ -188,6 +204,12 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             setUnwrapRequired(convertPropertyToBooleanAndWriteBack(UNWRAP_REQUIRED));
         }
         additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
+
+        // Setup objcCompatible option, which adds additional properties and methods for Objective-C compatibility
+        if (additionalProperties.containsKey(OBJC_COMPATIBLE)) {
+            setObjcCompatible(convertPropertyToBooleanAndWriteBack(OBJC_COMPATIBLE));
+        }
+        additionalProperties.put(OBJC_COMPATIBLE, objcCompatible);
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(RESPONSE_AS)) {
@@ -215,11 +237,14 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
         }
 
+        setLenientTypeCast(convertPropertyToBooleanAndWriteBack(LENIENT_TYPE_CAST));
+
         supportingFiles.add(new SupportingFile("Podspec.mustache", "", projectName + ".podspec"));
         supportingFiles.add(new SupportingFile("Cartfile.mustache", "", "Cartfile"));
         supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder, "APIHelper.swift"));
         supportingFiles.add(new SupportingFile("AlamofireImplementations.mustache", sourceFolder,
                 "AlamofireImplementations.swift"));
+        supportingFiles.add(new SupportingFile("Configuration.mustache", sourceFolder, "Configuration.swift"));
         supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder, "Extensions.swift"));
         supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder, "Models.swift"));
         supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder, "APIs.swift"));
@@ -234,13 +259,13 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;  // add an underscore to the name
     }
-    
+
     @Override
     public String modelFileFolder() {
         return outputFolder + File.separator + sourceFolder + modelPackage().replace('.', File.separatorChar);
@@ -350,7 +375,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
             String inner = getSwaggerType(ap.getAdditionalProperties());
-            return "[String:" + inner + "]";
+            return inner;
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());
@@ -455,46 +480,20 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         return codegenModel;
     }
 
-    @Override
-    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        path = normalizePath(path); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // issue 3914 - removed logic designed to remove any parameter of type HeaderParameter
-        return super.fromOperation(path, httpMethod, operation, definitions, swagger);
-    }
-
-    private static String normalizePath(String path) {
-        StringBuilder builder = new StringBuilder();
-
-        int cursor = 0;
-        Matcher matcher = PATH_PARAM_PATTERN.matcher(path);
-        boolean found = matcher.find();
-        while (found) {
-            String stringBeforeMatch = path.substring(cursor, matcher.start());
-            builder.append(stringBeforeMatch);
-
-            String group = matcher.group().substring(1, matcher.group().length() - 1);
-            group = camelize(group, true);
-            builder
-                    .append("{")
-                    .append(group)
-                    .append("}");
-
-            cursor = matcher.end();
-            found = matcher.find();
-        }
-
-        String stringAfterMatch = path.substring(cursor);
-        builder.append(stringAfterMatch);
-
-        return builder.toString();
-    }
-
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
 
     public void setUnwrapRequired(boolean unwrapRequired) {
         this.unwrapRequired = unwrapRequired;
+    }
+
+    public void setObjcCompatible(boolean objcCompatible) {
+        this.objcCompatible = objcCompatible;
+    }
+
+    public void setLenientTypeCast(boolean lenientTypeCast) {
+        this.lenientTypeCast = lenientTypeCast;
     }
 
     public void setResponseAs(String[] responseAs) {
@@ -591,6 +590,31 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // process enum in models
         return postProcessModelsEnum(objs);
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+
+        // The default template code has the following logic for assigning a type as Swift Optional:
+        //
+        // {{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}
+        //
+        // which means:
+        //
+        // boolean isSwiftOptional = !unwrapRequired || (unwrapRequired && !property.required);
+        //
+        // We can drop the check for unwrapRequired in (unwrapRequired && !property.required)
+        // due to short-circuit evaluation of the || operator.
+        boolean isSwiftOptional = !unwrapRequired || !property.required;
+        boolean isSwiftScalarType = property.isInteger || property.isLong || property.isFloat || property.isDouble || property.isBoolean;
+        if (isSwiftOptional && isSwiftScalarType) {
+            // Optional scalar types like Int?, Int64?, Float?, Double?, and Bool?
+            // do not translate to Objective-C. So we want to flag those
+            // properties in case we want to put special code in the templates
+            // which provide Objective-C compatibility.
+            property.vendorExtensions.put("x-swift-optional-scalar", true);
+        }
     }
 
     @Override

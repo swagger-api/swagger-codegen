@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 SWGTag::SWGTag(QString* json) {
     init();
     this->fromJson(*json);
@@ -44,7 +43,6 @@ SWGTag::init() {
 
 void
 SWGTag::cleanup() {
-    
 
     if(name != nullptr) {
         delete name;
@@ -79,9 +77,7 @@ SWGTag::asJson ()
 QJsonObject*
 SWGTag::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
-    
     obj->insert("id", QJsonValue(id));
-
     toJsonValue(QString("name"), name, obj, QString("QString"));
 
     return obj;
@@ -106,6 +102,5 @@ SWGTag::setName(QString* name) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

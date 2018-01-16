@@ -16,12 +16,14 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * ArrayOfArrayOfNumberOnly
@@ -29,7 +31,7 @@ import javax.validation.constraints.*;
 
 public class ArrayOfArrayOfNumberOnly {
   @JsonProperty("ArrayArrayNumber")
-  private List<List<BigDecimal>> arrayArrayNumber = new ArrayList<List<BigDecimal>>();
+  private List<List<BigDecimal>> arrayArrayNumber = null;
 
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
@@ -37,6 +39,9 @@ public class ArrayOfArrayOfNumberOnly {
   }
 
   public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
+    if (this.arrayArrayNumber == null) {
+      this.arrayArrayNumber = new ArrayList<>();
+    }
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
@@ -45,6 +50,7 @@ public class ArrayOfArrayOfNumberOnly {
    * Get arrayArrayNumber
    * @return arrayArrayNumber
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
@@ -93,6 +99,6 @@ public class ArrayOfArrayOfNumberOnly {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 
