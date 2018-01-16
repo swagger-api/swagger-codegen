@@ -90,13 +90,11 @@ class ApiClient {
       serialized = obj;
     } else if (obj is List) {
       serialized += '[';
-      for (var elem in obj) {
-        serialized += serialize(elem);
-        serialized += ',';
-      }
-      if (obj.length > 0) {
-        var index = serialized.lastIndexOf(',');
-        serialized = serialized.replaceRange(index, index + 1, '');
+      for (var i = 0; i < obj.length; i++) {
+        serialized += serialize(obj[i]);
+        if (i != obj.length - 1) {
+          serialized += ',';
+        }
       }
       serialized += ']';
     } else if (obj is ApiResponse) {
