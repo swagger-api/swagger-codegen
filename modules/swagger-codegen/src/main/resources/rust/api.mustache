@@ -107,7 +107,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
                 query.append_pair(key, val);
             }
 {{/hasAuthMethods}} 
-            query.finish()
+            format!("?{}", query.finish())
         };
         let uri_str = format!("{}{{{path}}}{}", configuration.base_path, query_string{{#pathParams}}, {{baseName}}={{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}}{{/pathParams}});
 
