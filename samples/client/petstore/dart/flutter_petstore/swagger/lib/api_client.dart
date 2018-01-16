@@ -89,14 +89,15 @@ class ApiClient {
     } else if (obj is String) {
       serialized = obj;
     } else if (obj is List) {
-      serialized += '[';
+      var buf = new StringBuffer('[');
       for (var i = 0; i < obj.length; i++) {
-        serialized += serialize(obj[i]);
+        buf.write(serialize(obj[i]));
         if (i != obj.length - 1) {
-          serialized += ',';
+          buf.write(',');
         }
       }
-      serialized += ']';
+      buf.write(']');
+      serialized = buf.toString();
     } else if (obj is ApiResponse) {
        serialized = JSON.encode(obj.toMap());
     } else if (obj is Category) {
