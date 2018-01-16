@@ -32,6 +32,8 @@ mod mimetypes;
 
 pub use swagger::{ApiError, Context, ContextWrapper};
 
+pub const BASE_PATH: &'static str = "/v2";
+
 
 #[derive(Debug, PartialEq)]
 pub enum TestSpecialTagsResponse {
