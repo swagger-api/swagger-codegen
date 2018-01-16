@@ -88,6 +88,17 @@ class ApiClient {
       serialized = '';
     } else if (obj is String) {
       serialized = obj;
+    } else if (obj is List) {
+      serialized += '[';
+      for (var elem in obj) {
+        serialized += serialize(elem);
+        serialized += ',';
+      }
+      if (obj.length > 0) {
+        var index = serialized.lastIndexOf(',');
+        serialized = serialized.replaceRange(index, index + 1, '');
+      }
+      serialized += ']';
     } else if (obj is ApiResponse) {
        serialized = JSON.encode(obj.toMap());
     } else if (obj is Category) {
