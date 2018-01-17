@@ -11,34 +11,43 @@
 */
 package io.swagger.server.apis
 
-import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.locations.get as GET
-import io.ktor.routing.Route
 import io.ktor.application.call
-import io.ktor.locations.post as POST
-import io.ktor.locations.head as HEAD
-import io.ktor.locations.put as PUT
-import io.ktor.locations.patch as PATCH
-import io.ktor.locations.options as OPTIONS
+import io.ktor.auth.authentication
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.location
+import io.ktor.response.respond
+import io.ktor.routing.Route
+import io.ktor.routing.delete as DELETE
+import io.ktor.routing.get as GET
+import io.ktor.routing.head as HEAD
+import io.ktor.routing.options as OPTIONS
+import io.ktor.routing.patch as PATCH
+import io.ktor.routing.post as POST
+import io.ktor.routing.put as PUT
 
-// NOTE: ktor-location@0.9.0 is missing extension for Route.delete. This includes it.
-import io.swagger.server.delete as DELETE
 import io.swagger.server.Paths
 
 import io.swagger.server.models.Order
 
 fun Route.StoreApi() {
-    DELETE<Paths.deleteOrder> {
-        call.respond(HttpStatusCode.NotImplemented)
+    location<Paths.deleteOrder> {
+        DELETE {
+            call.respond(HttpStatusCode.NotImplemented)
+        }
     }
-    GET<Paths.getInventory> {
-        call.respond(HttpStatusCode.NotImplemented)
+    location<Paths.getInventory> {
+        GET {
+            call.respond(HttpStatusCode.NotImplemented)
+        }
     }
-    GET<Paths.getOrderById> {
-        call.respond(HttpStatusCode.NotImplemented)
+    location<Paths.getOrderById> {
+        GET {
+            call.respond(HttpStatusCode.NotImplemented)
+        }
     }
-    POST<Paths.placeOrder> {
-        call.respond(HttpStatusCode.NotImplemented)
+    location<Paths.placeOrder> {
+        POST {
+            call.respond(HttpStatusCode.NotImplemented)
+        }
     }
 }

@@ -21,11 +21,26 @@ fun Application.main() {
                 .outputTo(log)
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build();
-        reporter.start(10, TimeUnit.SECONDS);
+                .build()
+        reporter.start(10, TimeUnit.SECONDS)
     }
 {{#generateApis}}
-    install(Locations)
+    {{#featureAutoHead}}
+    install(AutoHeadResponse) // see http://ktor.io/features/autoheadresponse.html
+    {{/featureAutoHead}}
+    {{#featureConditionalHeaders}}
+    install(ConditionalHeaders) // see http://ktor.io/features/conditional-headers.html
+    {{/featureConditionalHeaders}}
+    {{#featureHSTS}}
+    install(HSTS, ApplicationHstsConfiguration()) // see http://ktor.io/features/hsts.html
+    {{/featureHSTS}}
+    {{#featureCORS}}
+    install(CORS, ApplicationCORSConfiguration()) // see http://ktor.io/features/cors.html
+    {{/featureCORS}}
+    {{#featureCompression}}
+    install(Compression, ApplicationCompressionConfiguration()) // see http://ktor.io/features/compression.html
+    {{/featureCompression}}
+    install(Locations) // see http://ktor.io/features/locations.html
     install(Routing) {
     {{#apiInfo}}
     {{#apis}}

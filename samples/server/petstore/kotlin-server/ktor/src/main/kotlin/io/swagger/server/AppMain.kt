@@ -17,10 +17,13 @@ fun Application.main() {
                 .outputTo(log)
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build();
-        reporter.start(10, TimeUnit.SECONDS);
+                .build()
+        reporter.start(10, TimeUnit.SECONDS)
     }
-    install(Locations)
+    install(AutoHeadResponse) // see http://ktor.io/features/autoheadresponse.html
+    install(HSTS, ApplicationHstsConfiguration()) // see http://ktor.io/features/hsts.html
+    install(Compression, ApplicationCompressionConfiguration()) // see http://ktor.io/features/compression.html
+    install(Locations) // see http://ktor.io/features/locations.html
     install(Routing) {
         PetApi()
         StoreApi()

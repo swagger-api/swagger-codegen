@@ -1,19 +1,20 @@
 {{>licenseInfo}}
 package {{apiPackage}}
 
-import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.locations.get as GET
-import io.ktor.routing.Route
 import io.ktor.application.call
-import io.ktor.locations.post as POST
-import io.ktor.locations.head as HEAD
-import io.ktor.locations.put as PUT
-import io.ktor.locations.patch as PATCH
-import io.ktor.locations.options as OPTIONS
+import io.ktor.auth.authentication
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.location
+import io.ktor.response.respond
+import io.ktor.routing.Route
+import io.ktor.routing.delete as DELETE
+import io.ktor.routing.get as GET
+import io.ktor.routing.head as HEAD
+import io.ktor.routing.options as OPTIONS
+import io.ktor.routing.patch as PATCH
+import io.ktor.routing.post as POST
+import io.ktor.routing.put as PUT
 
-// NOTE: ktor-location@0.9.0 is missing extension for Route.delete. This includes it.
-import {{packageName}}.delete as DELETE
 import {{packageName}}.Paths
 
 {{#imports}}import {{import}}
@@ -22,8 +23,11 @@ import {{packageName}}.Paths
 {{#operations}}
 fun Route.{{classname}}() {
 {{#operation}}
-    {{httpMethod}}<Paths.{{operationId}}> {
-        call.respond(HttpStatusCode.NotImplemented)
+    location<Paths.{{operationId}}> {
+        {{! This format allows us to support authentication strategies }}
+        {{httpMethod}} {
+            call.respond(HttpStatusCode.NotImplemented)
+        }
     }
 {{/operation}}
 }

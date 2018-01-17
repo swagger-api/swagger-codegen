@@ -171,14 +171,30 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         specialCharReplacements.put(";", "Semicolon");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC).defaultValue(sourceFolder));
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Generated artifact package name (e.g. io.swagger).").defaultValue(packageName));
-        cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, "Generated artifact package's organization (i.e. maven groupId).").defaultValue(groupId));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, "Generated artifact id (name of jar).").defaultValue(artifactId));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, "Generated artifact's package version.").defaultValue(artifactVersion));
+        addOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC, sourceFolder);
+        addOption(CodegenConstants.PACKAGE_NAME, "Generated artifact package name (e.g. io.swagger).", packageName);
+        addOption(CodegenConstants.GROUP_ID, "Generated artifact package's organization (i.e. maven groupId).", groupId);
+        addOption(CodegenConstants.ARTIFACT_ID, "Generated artifact id (name of jar).", artifactId);
+        addOption(CodegenConstants.ARTIFACT_VERSION, "Generated artifact's package version.", artifactVersion);
 
         CliOption enumPropertyNamingOpt = new CliOption(CodegenConstants.ENUM_PROPERTY_NAMING, CodegenConstants.ENUM_PROPERTY_NAMING_DESC);
         cliOptions.add(enumPropertyNamingOpt.defaultValue(enumPropertyNaming.name()));
+    }
+
+    protected void addOption(String key, String description) {
+        addOption(key, description, null);
+    }
+
+    protected void addOption(String key, String description, String defaultValue) {
+        CliOption option = new CliOption(key, description);
+        if (defaultValue != null) option.defaultValue(defaultValue);
+        cliOptions.add(option);
+    }
+
+    protected void addSwitch(String key, String description, Boolean defaultValue) {
+        CliOption option = CliOption.newBoolean(key, description);
+        if (defaultValue != null) option.defaultValue(defaultValue.toString());
+        cliOptions.add(option);
     }
 
     @Override
