@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 import com.wordnik.client.api._
 import akka.actor.ActorSystem
 import io.swagger.app.{ResourcesApp, SwaggerApp}

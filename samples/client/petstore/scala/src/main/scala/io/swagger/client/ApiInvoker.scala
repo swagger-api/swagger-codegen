@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-
 package io.swagger.client
 
 import com.sun.jersey.api.client.Client
