@@ -10,13 +10,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.codegen.utils.SemVer;
 import io.swagger.models.ModelImpl;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 
 public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCodegen {
@@ -169,6 +166,22 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             return "Blob";
         } else if (p instanceof ObjectProperty) {
             return "any";
+        }
+
+        return super.getTypeDeclaration(p);
+    }
+
+    @Override
+    protected String getParameterDataType(Parameter parameter, Property p) {
+        Property inner;
+        if (p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty) p;
+            inner = mp1.getItems();
+            return this.getSwaggerType(p) + "<" + this.getParameterDataType(parameter, inner) + ">";
+        } else if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            inner = mp.getAdditionalProperties();
+            return "{ [key: string]: " + this.getParameterDataType(parameter, inner) + "; }";
         } else if (p instanceof StringProperty) {
             // Handle string enums
             StringProperty sp = (StringProperty) p;
@@ -212,8 +225,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
             }
         }
-
-        return super.getTypeDeclaration(p);
+        return this.getTypeDeclaration(p);
     }
 
     /**
@@ -224,7 +236,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
      * @param dataType either "string" or "number"
      * @return
      */
-    private String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
+    protected String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
         StringBuilder b = new StringBuilder();
         boolean isFirst = true;
         for (String value: values) {
@@ -244,7 +256,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
      * @param values
      * @return
      */
-    private String numericEnumValuesToEnumTypeUnion(List<Number> values) {
+    protected String numericEnumValuesToEnumTypeUnion(List<Number> values) {
         List<String> stringValues = new ArrayList<>();
         for (Number value: values) {
             stringValues.add(value.toString());
