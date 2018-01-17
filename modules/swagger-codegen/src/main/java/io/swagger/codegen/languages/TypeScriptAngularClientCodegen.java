@@ -246,7 +246,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
      */
     private String numericEnumValuesToEnumTypeUnion(List<Number> values) {
         List<String> stringValues = new ArrayList<>();
-        for (Object value: values) {
+        for (Number value: values) {
             stringValues.add(value.toString());
         }
         return enumValuesToEnumTypeUnion(stringValues, "number");
