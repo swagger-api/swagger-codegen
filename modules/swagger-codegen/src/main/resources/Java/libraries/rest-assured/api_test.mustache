@@ -1,0 +1,64 @@
+{{>licenseInfo}}
+
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+import io.swagger.client.ApiClient;
+import io.swagger.client.api.{{classname}};
+import io.restassured.builder.RequestSpecBuilder;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.Ignore;
+
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+{{/fullJavaUtil}}
+
+
+import static io.restassured.http.ContentType.JSON;
+import static io.restassured.mapper.ObjectMapperType.GSON;
+
+/**
+ * API tests for {{classname}}
+ */
+@Ignore
+public class {{classname}}Test {
+
+    private {{classname}} api;
+
+    @Before
+    public void createApi() {
+        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
+                () -> new RequestSpecBuilder()
+                        .setContentType(JSON)
+                        .setBaseUri("{{basePath}}"))).{{classVarName}}();
+    }
+{{#operations}}
+{{#operation}}
+
+    {{#responses}}
+    /**
+     * {{message}}
+     */
+    @Test
+    public void shouldSee{{code}}After{{operationIdCamelCase}}() {
+        {{#allParams}}
+        {{#isHeaderParam}}String {{paramName}} = null;{{/isHeaderParam}}{{^isHeaderParam}}{{{dataType}}} {{paramName}} = null;{{/isHeaderParam}}
+        {{/allParams}}
+        api.{{operationId}}(){{#allParams}}{{#required}}{{#isPathParam}}
+                .{{paramName}}Path({{paramName}}){{/isPathParam}}{{#isQueryParam}}
+                .{{paramName}}Query({{paramName}}){{/isQueryParam}}{{#isFormParam}}
+                .{{paramName}}Form({{paramName}}){{/isFormParam}}{{#isHeaderParam}}
+                .{{paramName}}Header({{paramName}}){{/isHeaderParam}}{{#isBodyParam}}
+                .body({{paramName}}){{/isBodyParam}}{{/required}}{{/allParams}}.execute(r -> r.prettyPeek());
+        // TODO: test validations
+    }
+
+    {{/responses}}
+{{/operation}}
+{{/operations}}
+}

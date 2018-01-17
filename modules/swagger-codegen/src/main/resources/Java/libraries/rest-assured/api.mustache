@@ -1,0 +1,188 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.response.Response;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+{{/fullJavaUtil}}
+
+import static io.restassured.http.Method.*;
+import static io.restassured.mapper.ObjectMapperType.GSON;
+
+public class {{classname}} {
+
+    private RequestSpecBuilder reqSpec;
+
+    private {{classname}}(RequestSpecBuilder reqSpec) {
+        this.reqSpec = reqSpec;
+    }
+
+    public static {{classname}} {{classVarName}}(RequestSpecBuilder reqSpec) {
+        return new {{classname}}(reqSpec);
+    }
+
+{{#operations}}
+{{#operation}}
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public {{operationIdCamelCase}}Oper {{operationId}}() {
+        return new {{operationIdCamelCase}}Oper(reqSpec);
+    }
+
+{{/operation}}
+{{/operations}}
+
+    {{#operations}}
+    {{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     *
+     {{#allParams}}
+     * @see #{{#isPathParam}}{{paramName}}Path{{/isPathParam}}{{#isQueryParam}}{{paramName}}Query{{/isQueryParam}}{{#isFormParam}}{{paramName}}Form{{/isFormParam}}{{#isHeaderParam}}{{paramName}}Header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
+     {{#returnType}}
+     * return {{{returnType}}}
+     {{/returnType}}
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+     {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public class {{operationIdCamelCase}}Oper {
+
+        public static final String REQ_URI = "{{path}}";
+
+        private RequestSpecBuilder reqSpec;
+
+        private ResponseSpecBuilder respSpec;
+
+        public {{operationIdCamelCase}}Oper() {
+            this.reqSpec = new RequestSpecBuilder();
+            this.respSpec = new ResponseSpecBuilder();
+        }
+
+        public {{operationIdCamelCase}}Oper(RequestSpecBuilder reqSpec) {
+            this.reqSpec = reqSpec;
+            this.respSpec = new ResponseSpecBuilder();
+        }
+
+        /**
+         * {{httpMethod}} {{path}}
+         */
+        public <T> T execute(Function<Response, T> handler) {
+            return handler.apply(RestAssured.given().spec(reqSpec.build()).expect().spec(respSpec.build()).when().request({{httpMethod}}, REQ_URI));
+        }
+
+        {{#returnType}}
+        {{#returnSimpleType}}
+        /**
+         * {{httpMethod}} {{path}}
+         * @return {{{returnType}}}
+         */
+        public {{{returnType}}} executeAs(Function<Response, Response> handler) {
+            return execute(handler).as({{{returnType}}}.class, GSON);
+        }
+        {{/returnSimpleType}}
+
+        {{^returnSimpleType}}
+        {{#isListContainer}}
+        /**
+         * {{httpMethod}} {{path}}
+         * @return {{{returnType}}}
+         */
+        public {{{returnType}}} executeAs(Function<Response, Response> handler) {
+            return Arrays.asList(execute(handler).as({{{returnBaseType}}}[].class, GSON));
+        }
+        {{/isListContainer}}
+        {{/returnSimpleType}}
+        {{/returnType}}
+
+        {{#bodyParams}}
+         /**
+         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         */
+        public {{operationIdCamelCase}}Oper body({{{dataType}}} {{paramName}}) {
+            reqSpec.setBody({{paramName}}, GSON);
+            return this;
+        }
+        {{/bodyParams}}
+
+        {{#headerParams}}
+        /**
+         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         */
+        public {{operationIdCamelCase}}Oper {{paramName}}Header(String {{paramName}}) {
+            reqSpec.addHeader("{{baseName}}", {{paramName}});
+            return this;
+        }
+        {{/headerParams}}
+
+        {{#pathParams}}
+        /**
+         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         */
+        public {{operationIdCamelCase}}Oper {{paramName}}Path({{{dataType}}} {{paramName}}) {
+            reqSpec.addPathParam("{{baseName}}", {{paramName}});
+            return this;
+        }
+        {{/pathParams}}
+
+        {{#queryParams}}
+        /**
+         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         */
+        public {{operationIdCamelCase}}Oper {{paramName}}Query({{{dataType}}} {{paramName}}) {
+            reqSpec.addQueryParam("{{baseName}}", {{paramName}});
+            return this;
+        }
+        {{/queryParams}}
+
+        {{#formParams}}
+         /**
+         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         */
+         public {{operationIdCamelCase}}Oper {{paramName}}Form({{{dataType}}} {{paramName}}) {
+            reqSpec.addFormParam("{{baseName}}", {{paramName}});
+            return this;
+         }
+        {{/formParams}}
+
+        /**
+         * Customise request specification
+         */
+        public {{operationIdCamelCase}}Oper reqSpec(Consumer<RequestSpecBuilder> consumer) {
+            consumer.accept(reqSpec);
+            return this;
+        }
+
+        /**
+         * Customise response specification
+         */
+        public {{operationIdCamelCase}}Oper respSpec(Consumer<ResponseSpecBuilder> consumer) {
+            consumer.accept(respSpec);
+            return this;
+        }
+    }
+{{/operation}}
+{{/operations}}
+}
