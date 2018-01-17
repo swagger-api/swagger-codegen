@@ -156,101 +156,15 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String getTypeDeclaration(Property p) {
-        Property inner;
-        if (p instanceof ArrayProperty) {
-            ArrayProperty mp1 = (ArrayProperty) p;
-            inner = mp1.getItems();
-            return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
-        } else if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            inner = mp.getAdditionalProperties();
-            return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if (p instanceof FileProperty) {
+        if (p instanceof FileProperty) {
             return "Blob";
         } else if (p instanceof ObjectProperty) {
             return "any";
-        } else if (p instanceof StringProperty) {
-            // Handle string enums
-            StringProperty sp = (StringProperty) p;
-            if (sp.getEnum() != null) {
-                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
-            }
-        } else if (p instanceof IntegerProperty) {
-            // Handle integer enums
-            IntegerProperty sp = (IntegerProperty) p;
-            if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
-            }
-        } else if (p instanceof LongProperty) {
-            // Handle long enums
-            LongProperty sp = (LongProperty) p;
-            if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
-            }
-        } else if (p instanceof DoubleProperty) {
-            // Handle double enums
-            DoubleProperty sp = (DoubleProperty) p;
-            if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
-            }
-        } else if (p instanceof FloatProperty) {
-            // Handle float enums
-            FloatProperty sp = (FloatProperty) p;
-            if (sp.getEnum() != null) {
-                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
-            }
-        } else if (p instanceof DateProperty) {
-            // Handle date enums
-            DateProperty sp = (DateProperty) p;
-            if (sp.getEnum() != null) {
-                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
-            }
-        } else if (p instanceof DateTimeProperty) {
-            // Handle datetime enums
-            DateTimeProperty sp = (DateTimeProperty) p;
-            if (sp.getEnum() != null) {
-                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
-            }
+        } else {
+            return super.getTypeDeclaration(p);
         }
-
-        return super.getTypeDeclaration(p);
     }
 
-    /**
-     * Converts a list of strings to a literal union for representing enum values as a type.
-     * Example: 'available' | 'pending' | 'sold'
-     *
-     * @param values list of allowed enum values
-     * @param dataType either "string" or "number"
-     * @return
-     */
-    private String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
-        StringBuilder b = new StringBuilder();
-        boolean isFirst = true;
-        for (String value: values) {
-            if (!isFirst) {
-                b.append(" | ");
-            }
-            b.append(toEnumValue(value.toString(), dataType));
-            isFirst = false;
-        }
-        return b.toString();
-    }
-
-    /**
-     * Converts a list of numbers to a literal union for representing enum values as a type.
-     * Example: 3 | 9 | 55
-     *
-     * @param values
-     * @return
-     */
-    private String numericEnumValuesToEnumTypeUnion(List<Number> values) {
-        List<String> stringValues = new ArrayList<>();
-        for (Object value: values) {
-            stringValues.add(value.toString());
-        }
-        return enumValuesToEnumTypeUnion(stringValues, "number");
-    }
 
     @Override
     public String getSwaggerType(Property p) {
