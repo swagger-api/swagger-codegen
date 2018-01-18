@@ -12,9 +12,12 @@
 package io.swagger.server.apis
 
 import io.ktor.application.call
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.auth.authentication
+import io.ktor.auth.basicAuthentication
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
+import io.ktor.locations.oauthAtLocation
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.delete as DELETE
@@ -25,7 +28,12 @@ import io.ktor.routing.patch as PATCH
 import io.ktor.routing.post as POST
 import io.ktor.routing.put as PUT
 
+import kotlinx.coroutines.experimental.asCoroutineDispatcher
+
+import io.swagger.server.ApplicationAuthProviders
 import io.swagger.server.Paths
+import io.swagger.server.ApplicationExecutors
+import io.swagger.server.HTTP.client
 
 import io.swagger.server.models.User
 

@@ -2,9 +2,12 @@
 package {{apiPackage}}
 
 import io.ktor.application.call
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.auth.authentication
+import io.ktor.auth.basicAuthentication
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
+import io.ktor.locations.oauthAtLocation
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.delete as DELETE
@@ -15,7 +18,12 @@ import io.ktor.routing.patch as PATCH
 import io.ktor.routing.post as POST
 import io.ktor.routing.put as PUT
 
+import kotlinx.coroutines.experimental.asCoroutineDispatcher
+
+import {{packageName}}.ApplicationAuthProviders
 import {{packageName}}.Paths
+import {{packageName}}.ApplicationExecutors
+import {{packageName}}.HTTP.client
 
 {{#imports}}import {{import}}
 {{/imports}}
@@ -25,6 +33,35 @@ fun Route.{{classname}}() {
 {{#operation}}
     location<Paths.{{operationId}}> {
         {{! This format allows us to support authentication strategies }}
+        {{#hasAuthMethods}}
+        authentication {
+            {{#authMethods}}
+            {{#isBasic}}
+            basicAuthentication("{{{name}}}") { credentials ->
+                // TODO: Apply your authentication functionality here.
+                // Accessible in-method via call.principal<UserIdPrincipal>()?.name
+                // if (credentials.name == credentials.password) {
+                //     UserIdPrincipal(credentials.name)
+                // } else {
+                    null
+                // }
+            }
+            {{/isBasic}}
+            {{#isApiKey}}
+            TODO("Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'.")
+            {{/isApiKey}}
+            {{#isOAuth}}
+            authentication {
+                oauthAtLocation<Paths.{{operationId}}>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[{{{name}}}] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+            {{/isOAuth}}
+            {{/authMethods}}
+        }
+        {{/hasAuthMethods}}
         {{httpMethod}} {
             call.respond(HttpStatusCode.NotImplemented)
         }

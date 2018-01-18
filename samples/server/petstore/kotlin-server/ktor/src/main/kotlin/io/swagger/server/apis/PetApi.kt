@@ -12,9 +12,12 @@
 package io.swagger.server.apis
 
 import io.ktor.application.call
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.auth.authentication
+import io.ktor.auth.basicAuthentication
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
+import io.ktor.locations.oauthAtLocation
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.delete as DELETE
@@ -25,48 +28,119 @@ import io.ktor.routing.patch as PATCH
 import io.ktor.routing.post as POST
 import io.ktor.routing.put as PUT
 
+import kotlinx.coroutines.experimental.asCoroutineDispatcher
+
+import io.swagger.server.ApplicationAuthProviders
 import io.swagger.server.Paths
+import io.swagger.server.ApplicationExecutors
+import io.swagger.server.HTTP.client
 
 import io.swagger.server.models.ApiResponse
 import io.swagger.server.models.Pet
 
 fun Route.PetApi() {
     location<Paths.addPet> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.addPet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         POST {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.deletePet> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.deletePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         DELETE {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.findPetsByStatus> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.findPetsByStatus>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         GET {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.findPetsByTags> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.findPetsByTags>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         GET {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.getPetById> {
+        authentication {
+            TODO("Implement API key auth (api_key) for parameter name 'api_key'.")
+        }
         GET {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.updatePet> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.updatePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         PUT {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.updatePetWithForm> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.updatePetWithForm>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         POST {
             call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.uploadFile> {
+        authentication {
+            authentication {
+                oauthAtLocation<Paths.uploadFile>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
+                        urlProvider = { currentLocation, provider ->
+                            TODO()
+                        })
+            }
+        }
         POST {
             call.respond(HttpStatusCode.NotImplemented)
         }

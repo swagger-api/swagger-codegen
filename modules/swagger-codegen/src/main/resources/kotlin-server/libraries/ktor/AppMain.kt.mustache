@@ -2,6 +2,8 @@ package {{packageName}}
 
 import com.codahale.metrics.*
 import io.ktor.application.*
+import io.ktor.client.HttpClient
+import io.ktor.client.backend.apache.ApacheBackend
 import io.ktor.features.*
 import io.ktor.locations.*
 import io.ktor.metrics.*
@@ -13,6 +15,10 @@ import {{apiPackage}}.*
 
 {{#imports}}import {{import}}
 {{/imports}}
+
+object HTTP {
+    val client = HttpClient(ApacheBackend)
+}
 
 fun Application.main() {
     install(DefaultHeaders)
@@ -51,4 +57,9 @@ fun Application.main() {
     {{/apiInfo}}
     }
 {{/generateApis}}
+
+    environment.monitor.subscribe(ApplicationStopping)
+    {
+        HTTP.client.close()
+    }
 }
