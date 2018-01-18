@@ -202,7 +202,7 @@ public class TypeScriptFetchModelTest {
         Property property =  definition.getProperties().get("array_enum");
         CodegenProperty prope = codegen.fromProperty("array_enum", property);
         codegen.updateCodegenPropertyEnum(prope);
-        // Assert.assertEquals(prope.datatypeWithEnum, "Array<ArrayEnumEnum>");
+        Assert.assertEquals(prope.datatypeWithEnum, "Array<ArrayEnumEnum>");
         Assert.assertEquals(prope.enumName, "ArrayEnumEnum");
         Assert.assertTrue(prope.isEnum);
         Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList("fish", "crab"));
