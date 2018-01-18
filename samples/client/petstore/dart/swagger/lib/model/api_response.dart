@@ -19,9 +19,20 @@ class ApiResponse {
 
   ApiResponse.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    code = json['code'];
-    type = json['type'];
-    message = json['message'];
+    code =
+    json['code'];
+    type =
+    json['type'];
+    message =
+    json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+      'type': type,
+      'message': message
+     };
   }
 
   static List<ApiResponse> listFromJson(List<Map<String, dynamic>> json) {
@@ -32,18 +43,12 @@ class ApiResponse {
     return list;
   }
 
-  static List<Map<String, dynamic>> toMapList(List<ApiResponse> list) {
-    var listResult = new List<Map<String, dynamic>>();
-    list.forEach((ApiResponse it) => listResult.add(it.toMap()));
-    return listResult;
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'code': code,
-      'type': type,
-      'message': message
-     };
+  static Map<String, ApiResponse> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, ApiResponse>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new ApiResponse.fromJson(value));
+    }
+    return map;
   }
 }
 

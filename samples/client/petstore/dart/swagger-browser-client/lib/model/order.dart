@@ -28,12 +28,28 @@ class Order {
 
   Order.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['id'];
-    petId = json['petId'];
-    quantity = json['quantity'];
+    id =
+    json['id'];
+    petId =
+    json['petId'];
+    quantity =
+    json['quantity'];
     shipDate = json['shipDate'] == null ? null : DateTime.parse(json['shipDate']);
-    status = json['status'];
-    complete = json['complete'];
+    status =
+    json['status'];
+    complete =
+    json['complete'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'petId': petId,
+      'quantity': quantity,
+      'shipDate': shipDate == null ? '' : shipDate.toUtc().toIso8601String(),
+      'status': status,
+      'complete': complete
+     };
   }
 
   static List<Order> listFromJson(List<Map<String, dynamic>> json) {
@@ -44,21 +60,12 @@ class Order {
     return list;
   }
 
-  static List<Map<String, dynamic>> toMapList(List<Order> list) {
-    var listResult = new List<Map<String, dynamic>>();
-    list.forEach((Order it) => listResult.add(it.toMap()));
-    return listResult;
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'petId': petId,
-      'quantity': quantity,
-      'shipDate': shipDate == null ? '' : shipDate.toUtc().toIso8601String(),
-      'status': status,
-      'complete': complete
-     };
+  static Map<String, Order> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, Order>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new Order.fromJson(value));
+    }
+    return map;
   }
 }
 

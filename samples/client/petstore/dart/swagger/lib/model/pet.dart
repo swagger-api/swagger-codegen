@@ -28,12 +28,33 @@ class Pet {
 
   Pet.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['id'];
-    category = new Category.fromJson(json['category']);
-    name = json['name'];
-    photoUrls = json['photoUrls'];
-    tags = Tag.listFromJson(json['tags']);
-    status = json['status'];
+    id =
+    json['id'];
+    category =
+        
+        
+        new Category.fromJson(json['category'])
+    ;
+    name =
+    json['name'];
+    photoUrls =
+    json['photoUrls'];
+    tags =
+        Tag.listFromJson(json['tags'])
+    ;
+    status =
+    json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'category': category,
+      'name': name,
+      'photoUrls': photoUrls,
+      'tags': tags,
+      'status': status
+     };
   }
 
   static List<Pet> listFromJson(List<Map<String, dynamic>> json) {
@@ -44,21 +65,12 @@ class Pet {
     return list;
   }
 
-  static List<Map<String, dynamic>> toMapList(List<Pet> list) {
-    var listResult = new List<Map<String, dynamic>>();
-    list.forEach((Pet it) => listResult.add(it.toMap()));
-    return listResult;
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'category': category == null ? null : category.toMap(),
-      'name': name,
-      'photoUrls': photoUrls,
-      'tags': tags == null ? null : Tag.toMapList(tags),
-      'status': status
-     };
+  static Map<String, Pet> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, Pet>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new Pet.fromJson(value));
+    }
+    return map;
   }
 }
 

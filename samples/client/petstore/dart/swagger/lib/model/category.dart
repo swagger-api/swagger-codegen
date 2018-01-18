@@ -16,8 +16,17 @@ class Category {
 
   Category.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['id'];
-    name = json['name'];
+    id =
+    json['id'];
+    name =
+    json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name
+     };
   }
 
   static List<Category> listFromJson(List<Map<String, dynamic>> json) {
@@ -28,17 +37,12 @@ class Category {
     return list;
   }
 
-  static List<Map<String, dynamic>> toMapList(List<Category> list) {
-    var listResult = new List<Map<String, dynamic>>();
-    list.forEach((Category it) => listResult.add(it.toMap()));
-    return listResult;
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name
-     };
+  static Map<String, Category> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, Category>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new Category.fromJson(value));
+    }
+    return map;
   }
 }
 

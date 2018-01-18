@@ -88,30 +88,8 @@ class ApiClient {
       serialized = '';
     } else if (obj is String) {
       serialized = obj;
-    } else if (obj is List) {
-      var buf = new StringBuffer('[');
-      for (var i = 0; i < obj.length; i++) {
-        buf.write(serialize(obj[i]));
-        if (i != obj.length - 1) {
-          buf.write(',');
-        }
-      }
-      buf.write(']');
-      serialized = buf.toString();
-    } else if (obj is ApiResponse) {
-       serialized = JSON.encode(obj.toMap());
-    } else if (obj is Category) {
-       serialized = JSON.encode(obj.toMap());
-    } else if (obj is Order) {
-       serialized = JSON.encode(obj.toMap());
-    } else if (obj is Pet) {
-       serialized = JSON.encode(obj.toMap());
-    } else if (obj is Tag) {
-       serialized = JSON.encode(obj.toMap());
-    } else if (obj is User) {
-       serialized = JSON.encode(obj.toMap());
     } else {
-      throw new Exception('unknown type');
+      serialized = JSON.encode(obj);
     }
     return serialized;
   }
