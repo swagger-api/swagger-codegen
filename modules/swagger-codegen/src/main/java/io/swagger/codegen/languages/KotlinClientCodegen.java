@@ -296,7 +296,7 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         if (DateLibrary.THREETENBP.value.equals(dateLibrary)) {
-            additionalProperties.put(DateLibrary.THREETENBP.value, "true");
+            additionalProperties.put(DateLibrary.THREETENBP.value, true);
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "LocalDateTime");
             importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
@@ -307,7 +307,7 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
             typeMapping.put("Date", "kotlin.String");
             typeMapping.put("DateTime", "kotlin.String");
         } else if (DateLibrary.JAVA8.value.equals(dateLibrary)) {
-            additionalProperties.put(DateLibrary.JAVA8.value, "true");
+            additionalProperties.put(DateLibrary.JAVA8.value, true);
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage());
