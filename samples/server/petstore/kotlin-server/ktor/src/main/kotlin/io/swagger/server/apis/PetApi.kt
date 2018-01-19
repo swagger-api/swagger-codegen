@@ -12,9 +12,11 @@
 package io.swagger.server.apis
 
 import io.ktor.application.call
-import io.ktor.auth.OAuthServerSettings
+import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
+import io.ktor.auth.OAuthAccessTokenResponse
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
 import io.ktor.locations.oauthAtLocation
@@ -34,6 +36,8 @@ import io.swagger.server.ApplicationAuthProviders
 import io.swagger.server.Paths
 import io.swagger.server.ApplicationExecutors
 import io.swagger.server.HTTP.client
+import io.swagger.server.infrastructure.ApiPrincipal
+import io.swagger.server.infrastructure.apiKeyAuth
 
 import io.swagger.server.models.ApiResponse
 import io.swagger.server.models.Pet
@@ -41,108 +45,142 @@ import io.swagger.server.models.Pet
 fun Route.PetApi() {
     location<Paths.addPet> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.addPet>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.addPet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.deletePet> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.deletePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.deletePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         DELETE {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.findPetsByStatus> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.findPetsByStatus>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.findPetsByStatus>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.findPetsByTags> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.findPetsByTags>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.findPetsByTags>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.getPetById> {
         authentication {
             TODO("Implement API key auth (api_key) for parameter name 'api_key'.")
+            apiKeyAuth("api_key", "header") {
+                TODO("Verify key here , accessible as it.value")
+                // if (it.value == "keyboardcat") {
+                //     ApiPrincipal(it)
+                // } else {
+                    null
+                // }
+            }
         }
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<ApiPrincipal>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.updatePet> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.updatePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.updatePet>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         PUT {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.updatePetWithForm> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.updatePetWithForm>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.updatePetWithForm>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.uploadFile> {
         authentication {
-            authentication {
-                oauthAtLocation<Paths.uploadFile>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                        providerLookup = { ApplicationAuthProviders[petstore_auth] },
-                        urlProvider = { currentLocation, provider ->
-                            TODO()
-                        })
-            }
+            oauthAtLocation<Paths.uploadFile>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                    providerLookup = { ApplicationAuthProviders["petstore_auth"] },
+                    urlProvider = { currentLocation, provider ->
+                        TODO()
+                    })
         }
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
 }

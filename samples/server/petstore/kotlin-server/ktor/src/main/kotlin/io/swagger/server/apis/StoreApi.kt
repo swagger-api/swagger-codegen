@@ -12,9 +12,11 @@
 package io.swagger.server.apis
 
 import io.ktor.application.call
-import io.ktor.auth.OAuthServerSettings
+import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
+import io.ktor.auth.OAuthAccessTokenResponse
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
 import io.ktor.locations.oauthAtLocation
@@ -34,31 +36,46 @@ import io.swagger.server.ApplicationAuthProviders
 import io.swagger.server.Paths
 import io.swagger.server.ApplicationExecutors
 import io.swagger.server.HTTP.client
+import io.swagger.server.infrastructure.ApiPrincipal
+import io.swagger.server.infrastructure.apiKeyAuth
 
 import io.swagger.server.models.Order
 
 fun Route.StoreApi() {
     location<Paths.deleteOrder> {
         DELETE {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.getInventory> {
         authentication {
             TODO("Implement API key auth (api_key) for parameter name 'api_key'.")
+            apiKeyAuth("api_key", "header") {
+                TODO("Verify key here , accessible as it.value")
+                // if (it.value == "keyboardcat") {
+                //     ApiPrincipal(it)
+                // } else {
+                    null
+                // }
+            }
         }
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+            val principal = call.authentication.principal<ApiPrincipal>()
+            if (principal == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(HttpStatusCode.NotImplemented)
+            }
         }
     }
     location<Paths.getOrderById> {
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.placeOrder> {
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
 }

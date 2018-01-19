@@ -12,9 +12,11 @@
 package io.swagger.server.apis
 
 import io.ktor.application.call
-import io.ktor.auth.OAuthServerSettings
+import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
+import io.ktor.auth.OAuthAccessTokenResponse
+import io.ktor.auth.OAuthServerSettings
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
 import io.ktor.locations.oauthAtLocation
@@ -34,48 +36,50 @@ import io.swagger.server.ApplicationAuthProviders
 import io.swagger.server.Paths
 import io.swagger.server.ApplicationExecutors
 import io.swagger.server.HTTP.client
+import io.swagger.server.infrastructure.ApiPrincipal
+import io.swagger.server.infrastructure.apiKeyAuth
 
 import io.swagger.server.models.User
 
 fun Route.UserApi() {
     location<Paths.createUser> {
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.createUsersWithArrayInput> {
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.createUsersWithListInput> {
         POST {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.deleteUser> {
         DELETE {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.getUserByName> {
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.loginUser> {
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.logoutUser> {
         GET {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.updateUser> {
         PUT {
-            call.respond(HttpStatusCode.NotImplemented)
+                call.respond(HttpStatusCode.NotImplemented)
         }
     }
 }
