@@ -302,7 +302,6 @@ public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig
             importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
             importMapping.put("LocalDateTime", "org.threeten.bp.LocalDateTime");
         } else if (DateLibrary.STRING.value.equals(dateLibrary)) {
-            additionalProperties.put(DateLibrary.STRING.value, "true");
             typeMapping.put("date-time", "kotlin.String");
             typeMapping.put("date", "kotlin.String");
             typeMapping.put("Date", "kotlin.String");
