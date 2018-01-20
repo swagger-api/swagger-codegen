@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
@@ -139,7 +138,7 @@ public class StoreApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI(basePath, localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarContentType);
       if(localVarResponse != null){
-        return (Map<String, Integer>) ApiInvoker.deserialize(localVarResponse, "map", Map.class);
+        return (Map<String, Integer>) ApiInvoker.deserialize(localVarResponse, "map", Integer.class);
       }
       else {
         return null;
