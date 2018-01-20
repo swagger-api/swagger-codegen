@@ -11,16 +11,19 @@
 */
 package io.swagger.server.apis
 
+import com.google.gson.Gson
 import io.ktor.application.call
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
 import io.ktor.auth.OAuthAccessTokenResponse
 import io.ktor.auth.OAuthServerSettings
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
 import io.ktor.locations.oauthAtLocation
 import io.ktor.response.respond
+import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.delete as DELETE
 import io.ktor.routing.get as GET
@@ -42,21 +45,23 @@ import io.swagger.server.infrastructure.apiKeyAuth
 import io.swagger.server.models.Order
 
 fun Route.StoreApi() {
+    val gson = Gson()
+    val empty = mutableMapOf<String, Any?>()
     location<Paths.deleteOrder> {
         DELETE {
-                call.respond(HttpStatusCode.NotImplemented)
+            call.respond(HttpStatusCode.NotImplemented)
         }
     }
     location<Paths.getInventory> {
         authentication {
-            TODO("Implement API key auth (api_key) for parameter name 'api_key'.")
+            // "Implement API key auth (api_key) for parameter name 'api_key'."
             apiKeyAuth("api_key", "header") {
-                TODO("Verify key here , accessible as it.value")
-                // if (it.value == "keyboardcat") {
-                //     ApiPrincipal(it)
-                // } else {
+                // TODO: "Verify key here , accessible as it.value"
+                if (it.value == "keyboardcat") {
+                     ApiPrincipal(it)
+                } else {
                     null
-                // }
+                }
             }
         }
         GET {
@@ -64,18 +69,55 @@ fun Route.StoreApi() {
             if (principal == null) {
                 call.respond(HttpStatusCode.Unauthorized)
             } else {
-                call.respond(HttpStatusCode.NotImplemented)
+                val exampleContentType = "application/json"
+                val exampleContentString = """{
+  "key" : 0
+}"""
+
+                when(exampleContentType) {
+                    "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+                    "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+                    else -> call.respondText(exampleContentString)
+                }
             }
         }
     }
     location<Paths.getOrderById> {
         GET {
-                call.respond(HttpStatusCode.NotImplemented)
+                val exampleContentType = "application/xml"
+                val exampleContentString = """<Order>
+  <id>123456789</id>
+  <petId>123456789</petId>
+  <quantity>123</quantity>
+  <shipDate>2000-01-23T04:56:07.000Z</shipDate>
+  <status>aeiou</status>
+  <complete>true</complete>
+</Order>"""
+
+                when(exampleContentType) {
+                    "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+                    "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+                    else -> call.respondText(exampleContentString)
+                }
         }
     }
     location<Paths.placeOrder> {
         POST {
-                call.respond(HttpStatusCode.NotImplemented)
+                val exampleContentType = "application/xml"
+                val exampleContentString = """<Order>
+  <id>123456789</id>
+  <petId>123456789</petId>
+  <quantity>123</quantity>
+  <shipDate>2000-01-23T04:56:07.000Z</shipDate>
+  <status>aeiou</status>
+  <complete>true</complete>
+</Order>"""
+
+                when(exampleContentType) {
+                    "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+                    "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+                    else -> call.respondText(exampleContentString)
+                }
         }
     }
 }

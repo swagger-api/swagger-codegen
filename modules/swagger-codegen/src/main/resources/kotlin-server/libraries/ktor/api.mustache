@@ -1,16 +1,19 @@
 {{>licenseInfo}}
 package {{apiPackage}}
 
+import com.google.gson.Gson
 import io.ktor.application.call
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
 import io.ktor.auth.OAuthAccessTokenResponse
 import io.ktor.auth.OAuthServerSettings
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.location
 import io.ktor.locations.oauthAtLocation
 import io.ktor.response.respond
+import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.delete as DELETE
 import io.ktor.routing.get as GET
@@ -34,6 +37,8 @@ import {{packageName}}.infrastructure.apiKeyAuth
 
 {{#operations}}
 fun Route.{{classname}}() {
+    val gson = Gson()
+    val empty = mutableMapOf<String, Any?>()
 {{#operation}}
     location<Paths.{{operationId}}> {
         {{! This format allows us to support authentication strategies }}
@@ -42,24 +47,24 @@ fun Route.{{classname}}() {
             {{#authMethods}}
             {{#isBasic}}
             basicAuthentication("{{{name}}}") { credentials ->
-                TODO("Apply your basic authentication functionality.")
+                // TODO: "Apply your basic authentication functionality."
                 // Accessible in-method via call.principal<UserIdPrincipal>()
-                // if (credentials.name == credentials.password) {
-                //     UserIdPrincipal(credentials.name)
-                // } else {
+                if (credentials.name == "Swagger" && "Codegen" == credentials.password) {
+                     UserIdPrincipal(credentials.name)
+                } else {
                     null
-                // }
+                }
             }
             {{/isBasic}}
             {{#isApiKey}}
-            TODO("Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'.")
+            // "Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'."
             apiKeyAuth("{{{keyParamName}}}", {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}) {
-                TODO("Verify key here , accessible as it.value")
-                // if (it.value == "keyboardcat") {
-                //     ApiPrincipal(it)
-                // } else {
+                // TODO: "Verify key here , accessible as it.value"
+                if (it.value == "keyboardcat") {
+                     ApiPrincipal(it)
+                } else {
                     null
-                // }
+                }
             }
             {{/isApiKey}}
             {{#isOAuth}}
@@ -89,7 +94,21 @@ fun Route.{{classname}}() {
                 call.respond(HttpStatusCode.Unauthorized)
             } else {
             {{/hasAuthMethods}}
-                call.respond(HttpStatusCode.NotImplemented)
+            {{#examples}}
+            {{#-first}}
+                val exampleContentType = "{{{contentType}}}"
+                val exampleContentString = """{{&example}}"""
+
+                when(exampleContentType) {
+                    "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+                    "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+                    else -> call.respondText(exampleContentString)
+                }
+            {{/-first}}
+            {{/examples}}
+            {{^examples}}
+            {{#hasAuthMethods}}    {{/hasAuthMethods}}call.respond(HttpStatusCode.NotImplemented)
+            {{/examples}}
             {{#hasAuthMethods}}
             }
             {{/hasAuthMethods}}

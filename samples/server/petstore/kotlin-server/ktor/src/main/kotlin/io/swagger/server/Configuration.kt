@@ -66,8 +66,8 @@ val ApplicationAuthProviders: Map<String, OAuthServerSettings> = listOf<OAuthSer
 //                accessTokenUrl = "https://graph.facebook.com/oauth/access_token",
 //                requestMethod = HttpMethod.Post,
 //
-//                clientId = "***",
-//                clientSecret = "***",
+//                clientId = "settings.property("auth.oauth.facebook.clientId").getString()",
+//                clientSecret = "settings.property("auth.oauth.facebook.clientSecret").getString()",
 //                defaultScopes = listOf("public_profile")
 //        )
 ).associateBy { it.name }

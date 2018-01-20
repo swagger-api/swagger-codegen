@@ -7,6 +7,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.backend.apache.ApacheBackend
 import io.ktor.config.HoconApplicationConfig
 import io.ktor.features.*
+import io.ktor.gson.GsonConverter
+import io.ktor.http.ContentType
 import io.ktor.locations.*
 import io.ktor.metrics.*
 import io.ktor.routing.*
@@ -29,6 +31,9 @@ fun Application.main() {
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build()
         reporter.start(10, TimeUnit.SECONDS)
+    }
+    install(ContentNegotiation) {
+        register(ContentType.Application.Json, GsonConverter())
     }
     install(AutoHeadResponse) // see http://ktor.io/features/autoheadresponse.html
     install(HSTS, ApplicationHstsConfiguration()) // see http://ktor.io/features/hsts.html

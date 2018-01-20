@@ -33,7 +33,7 @@ fun ApplicationRequest.apiKey(key: String, keyLocation: ApiKeyLocation = ApiKeyL
 
 fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, validate: suspend (ApiKey) -> ApiPrincipal?) {
     intercept(AuthenticationPipeline.RequestAuthentication) { context ->
-        val credentials = call.request.apiKey(apiKeyName, ApiKeyLocation.valueOf(authLocation))
+        val credentials = call.request.apiKey(apiKeyName, ApiKeyLocation.values().first {  it.location == authLocation })
         val principal = credentials?.let { validate(it) }
 
         val cause = when {
