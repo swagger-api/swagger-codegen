@@ -1,9 +1,11 @@
 package io.swagger.server
 
 import com.codahale.metrics.*
+import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
 import io.ktor.client.HttpClient
 import io.ktor.client.backend.apache.ApacheBackend
+import io.ktor.config.HoconApplicationConfig
 import io.ktor.features.*
 import io.ktor.locations.*
 import io.ktor.metrics.*
@@ -11,6 +13,8 @@ import io.ktor.routing.*
 import java.util.concurrent.*
 import io.swagger.server.apis.*
 
+
+internal val settings = HoconApplicationConfig(ConfigFactory.defaultApplication(HTTP::class.java.classLoader))
 
 object HTTP {
     val client = HttpClient(ApacheBackend)

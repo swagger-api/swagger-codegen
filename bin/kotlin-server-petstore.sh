@@ -25,7 +25,7 @@ then
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
-export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties -DdebugModels=true -DdebugOperations=true"
+export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties -DdebugSupportingFiles=true"
 ags="generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -t modules/swagger-codegen/src/main/resources/kotlin-server -l kotlin-server --library=ktor -o samples/server/petstore/kotlin-server/ktor $@"
 
 java ${JAVA_OPTS} -jar ${executable} ${ags}

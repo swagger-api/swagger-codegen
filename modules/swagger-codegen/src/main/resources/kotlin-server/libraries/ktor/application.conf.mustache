@@ -10,3 +10,18 @@ ktor {
     modules = [ {{packageName}}.AppMainKt.main ]
   }
 }
+
+# Typesafe config allows multiple ways to provide configuration values without hard-coding them here.
+# Please see https://github.com/lightbend/config for details.
+auth {
+  oauth {
+{{#authMethods}}
+{{#isOAuth}}
+    {{name}} {
+        clientId = ""
+        clientSecret = ""
+    }
+{{/isOAuth}}
+{{/authMethods}}
+  }
+}

@@ -7,6 +7,8 @@ import io.ktor.http.*
 import java.time.Duration
 import java.util.concurrent.Executors
 
+import {{packageName}}.settings
+
 {{#featureCORS}}
 /**
  * Application block for [CORS] configuration.
@@ -76,14 +78,28 @@ internal fun ApplicationCompressionConfiguration(): Compression.Configuration.()
 
 // Defines authentication mechanisms used throughout the application.
 val ApplicationAuthProviders: Map<String, OAuthServerSettings> = listOf<OAuthServerSettings>(
+{{#authMethods}}
+    {{#isOAuth}}
+        OAuthServerSettings.OAuth2ServerSettings(
+            name = "{{name}}",
+            authorizeUrl = "{{authorizationUrl}}",
+            accessTokenUrl = "{{tokenUrl}}",
+            requestMethod = HttpMethod.Get,
+            {{! TODO: flow, doesn't seem to be supported yet by ktor }}
+            clientId = settings.property("auth.oauth.{{name}}.clientId").getString(),
+            clientSecret = settings.property("auth.oauth.{{name}}.clientSecret").getString(),
+            defaultScopes = listOf({{#scopes}}"{{scope}}"{{#hasMore}}, {{/hasMore}}{{/scopes}})
+        ){{#hasMore}},{{/hasMore}}
+    {{/isOAuth}}
+{{/authMethods}}
 //        OAuthServerSettings.OAuth2ServerSettings(
 //                name = "facebook",
 //                authorizeUrl = "https://graph.facebook.com/oauth/authorize",
 //                accessTokenUrl = "https://graph.facebook.com/oauth/access_token",
 //                requestMethod = HttpMethod.Post,
 //
-//                clientId = "***",
-//                clientSecret = "***",
+//                clientId = "settings.property("auth.oauth.facebook.clientId").getString()",
+//                clientSecret = "settings.property("auth.oauth.facebook.clientSecret").getString()",
 //                defaultScopes = listOf("public_profile")
 //        )
 ).associateBy { it.name }
