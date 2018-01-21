@@ -1,8 +1,10 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
-import io.swagger.models.Operation;
-import org.apache.commons.lang3.StringUtils;
+import io.swagger.models.*;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.models.parameters.QueryParameter;
+import io.swagger.models.properties.*;
 
 
 import java.io.File;
@@ -12,6 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
+
+    public static final String VEN_FROM_QUERY = "internal.ze-ph.fromQuery";
+    public static final String VEN_COLLECTION_FORMAT = "internal.ze-ph.collectionFormat";
+    public static final String VEN_QUERY_DATA_TYPE = "internal.ze-ph.queryDataType";
+    public static final String VEN_HAS_QUERY_DATA = "internal.ze-ph.hasQueryData";
+
     @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
@@ -55,7 +63,11 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         supportingFiles.add(new SupportingFile("ErrorMiddleware.php.mustache", packagePath + File.separator + srcBasePath, "ErrorMiddleware.php"));
         supportingFiles.add(new SupportingFile("Date.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "Date.php"));
         supportingFiles.add(new SupportingFile("DateTime.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "DateTime.php"));
+        supportingFiles.add(new SupportingFile("QueryParameter.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "QueryParameter.php"));
+        supportingFiles.add(new SupportingFile("QueryParameterArray.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "QueryParameterArray.php"));
         supportingFiles.add(new SupportingFile("Type.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Validator", "Type.php"));
+        supportingFiles.add(new SupportingFile("QueryParameterType.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Validator", "QueryParameterType.php"));
+        supportingFiles.add(new SupportingFile("QueryParameterArrayType.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Validator", "QueryParameterArrayType.php"));
 
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, "1.0.0");
     }
@@ -114,6 +126,121 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         //Remove }
         name = name.replaceAll("[\\}]", "");
         return super.toModelName(name);
+    }
+
+    /**
+     * Generate additional model definitions from query parameters
+     *
+     * @param swagger
+     */
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        super.preprocessSwagger(swagger);
+        for (String pathKey : swagger.getPaths().keySet())
+        {
+            Path path = swagger.getPath(pathKey);
+            Map<HttpMethod, Operation> operations = path.getOperationMap();
+            for (HttpMethod method : operations.keySet())
+            {
+                Operation operation = operations.get(method);
+                Map<String, Property> properties = new HashMap<>();
+                for (Parameter parameter : operation.getParameters())
+                {
+                    Property property = convertParameterToProperty(parameter);
+                    if (property != null)
+                    {
+                        properties.put(property.getName(), property);
+                    }
+                }
+                if (!properties.isEmpty())
+                {
+                    Model model = new ModelImpl();
+                    String operationId = getOrGenerateOperationId(operation, pathKey, method.name());
+                    model.setDescription("Query parameters for " + operationId);
+                    model.setProperties(properties);
+                    model.getVendorExtensions().put(VEN_FROM_QUERY, Boolean.TRUE);
+                    String definitionName = generateUniqueDefinitionName(operationId + "QueryData", swagger);
+                    swagger.addDefinition(definitionName, model);
+                    String definitionModel = "\\" + modelPackage + "\\" + toModelName(definitionName);
+                    operation.getVendorExtensions().put(VEN_QUERY_DATA_TYPE, definitionModel);
+                    operation.getVendorExtensions().put(VEN_HAS_QUERY_DATA, Boolean.TRUE);
+                }
+            }
+        }
+    }
+
+    protected Property convertParameterToProperty(Parameter parameter) {
+        Property property = null;
+        if (parameter instanceof QueryParameter)
+        {
+            QueryParameter queryParameter = (QueryParameter) parameter;
+            switch (queryParameter.getType())
+            {
+                case "string":
+                    StringProperty stringProperty = new StringProperty();
+                    stringProperty.setMinLength(queryParameter.getMinLength());
+                    stringProperty.setMaxLength(queryParameter.getMaxLength());
+                    stringProperty.setPattern(queryParameter.getPattern());
+                    stringProperty.setEnum(queryParameter.getEnum());
+                    property = stringProperty;
+                    break;
+                case "integer":
+                    IntegerProperty integerProperty = new IntegerProperty();
+                    integerProperty.setMinimum(queryParameter.getMinimum());
+                    integerProperty.setMaximum(queryParameter.getMaximum());
+                    property = integerProperty;
+                    break;
+                case "number":
+                    FloatProperty floatProperty = new FloatProperty();
+                    floatProperty.setMinimum(queryParameter.getMinimum());
+                    floatProperty.setMaximum(queryParameter.getMaximum());
+                    property = floatProperty;
+                    break;
+                case "boolean":
+                    property = new BooleanProperty();
+                    break;
+                case "array":
+                    ArrayProperty arrayProperty = new ArrayProperty();
+                    arrayProperty.setMinItems(queryParameter.getMinItems());
+                    arrayProperty.setMaxItems(queryParameter.getMaxItems());
+                    arrayProperty.setItems(queryParameter.getItems());
+                    String collectionFormat = queryParameter.getCollectionFormat();
+                    if (collectionFormat == null) {
+                        collectionFormat = "csv";
+                    }
+                    arrayProperty.getVendorExtensions().put(VEN_COLLECTION_FORMAT, collectionFormat);
+                    property = arrayProperty;
+                    break;
+                case "date":
+                    property = new DateProperty();
+                    break;
+                case "date-time":
+                    property = new DateTimeProperty();
+                    break;
+            }
+            if (property != null)
+            {
+                property.setName(queryParameter.getName());
+                property.setDescription(queryParameter.getDescription());
+                property.setRequired(queryParameter.getRequired());
+                property.getVendorExtensions().put(VEN_FROM_QUERY, Boolean.TRUE);
+            }
+        }
+        return property;
+    }
+
+    protected String generateUniqueDefinitionName(String name, Swagger swagger)
+    {
+        String result = name;
+        if (swagger.getDefinitions() != null) {
+            int count = 1;
+            while (swagger.getDefinitions().containsKey(result))
+            {
+                result = name + "_" + count;
+                count += 1;
+            }
+        }
+        return result;
     }
 
     @Override

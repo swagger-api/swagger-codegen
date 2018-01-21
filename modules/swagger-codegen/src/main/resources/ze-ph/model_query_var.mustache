@@ -1,0 +1,97 @@
+{{^isPrimitiveType}}
+{{^isListContainer}}
+{{#isDate}}
+     * @DTA\Strategy(name="Date")
+     * @DTA\Validator(name="Date")
+{{/isDate}}
+{{#isDateTime}}
+     * @DTA\Strategy(name="DateTime")
+     * @DTA\Validator(name="Date", options={"format": \DateTime::RFC3339})
+{{/isDateTime}}
+{{/isListContainer}}
+{{#isListContainer}}
+     * TODO add validator(s) and strategy for Array<{{#items}}{{datatype}}{{/items}}> and collection format {{internal.ze-ph.collectionFormat}}
+{{/isListContainer}}
+{{/isPrimitiveType}}
+{{#isPrimitiveType}}
+{{#isListContainer}}
+{{#items}}
+{{#isString}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"string", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"string", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isString}}
+{{#isInteger}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"int", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"int", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isInteger}}
+{{#isLong}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"int", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"int", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isLong}}
+{{#isBoolean}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"bool", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"bool", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isBoolean}}
+{{#isFloat}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"float", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"float", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isFloat}}
+{{#isDouble}}
+     * @DTA\Strategy(name="QueryParameterArray", options={"type":"float", "format":"{{internal.ze-ph.collectionFormat}}"})
+     * @DTA\Validator(name="QueryParameterArrayType", options={"type":"float", "format":"{{internal.ze-ph.collectionFormat}}"})
+{{/isDouble}}
+{{/items}}
+{{/isListContainer}}
+{{^isListContainer}}
+{{#isString}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"string"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"string"})
+{{/isString}}
+{{#isInteger}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"int"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"int"})
+{{/isInteger}}
+{{#isLong}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"int"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"int"})
+{{/isLong}}
+{{#isBoolean}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"bool"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"bool"})
+{{/isBoolean}}
+{{#isFloat}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"float"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"float"})
+{{/isFloat}}
+{{#isDouble}}
+     * @DTA\Strategy(name="QueryParameter", options={"type":"float"})
+     * @DTA\Validator(name="QueryParameterType", options={"type":"float"})
+{{/isDouble}}
+{{/isListContainer}}
+{{/isPrimitiveType}}
+{{#hasValidation}}
+{{#minLength}}
+{{#maxLength}}
+     * @DTA\Validator(name="StringLength", options={"min":{{minLength}}, "max":{{maxLength}}})
+{{/maxLength}}
+{{/minLength}}
+{{^minLength}}
+{{#maxLength}}
+     * @DTA\Validator(name="StringLength", options={"max":{{maxLength}}})
+{{/maxLength}}
+{{/minLength}}
+{{#minLength}}
+{{^maxLength}}
+     * @DTA\Validator(name="StringLength", options={"min":{{minLength}}})
+{{/maxLength}}
+{{/minLength}}
+{{#minimum}}
+     * @DTA\Validator(name="GreaterThan", options={"min":{{minimum}}{{^exclusiveMinimum}}, "inclusive":true{{/exclusiveMinimum}}})
+{{/minimum}}
+{{#maximum}}
+     * @DTA\Validator(name="LessThan", options={"max":{{maximum}}{{^exclusiveMaximum}}, "inclusive":true{{/exclusiveMaximum}}})
+{{/maximum}}
+{{#pattern}}
+     * @DTA\Validator(name="Regex", options={"pattern":"{{{pattern}}}"})
+{{/pattern}}
+{{/hasValidation}}
