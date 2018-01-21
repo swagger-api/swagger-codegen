@@ -1,5 +1,5 @@
 {{^isPrimitiveType}}
-{{^isListContainer}}
+{{^isContainer}}
 {{^isDate}}
 {{^isDateTime}}
      * @DTA\Strategy(name="Object", options={"type":{{datatype}}::class})
@@ -14,70 +14,27 @@
      * @DTA\Strategy(name="DateTime")
      * @DTA\Validator(name="Date", options={"format": \DateTime::RFC3339})
 {{/isDateTime}}
-{{/isListContainer}}
-{{#isListContainer}}
+{{/isContainer}}
+{{#isContainer}}
      * TODO check validator and strategy are correct and can handle container item type
      * @DTA\Strategy(name="ObjectArray", options={"type":{{#items}}{{datatype}}{{/items}}::class})
      * @DTA\Validator(name="Collection", options={"validators":{
      *     {"name":"Dictionary", "options":{"type":{{#items}}{{datatype}}{{/items}}::class}}
      * }})
-{{/isListContainer}}
+{{/isContainer}}
 {{/isPrimitiveType}}
 {{#isPrimitiveType}}
-{{#isListContainer}}
+{{#isContainer}}
 {{#items}}
-{{#isString}}
+     * TODO check validator and strategy are correct and can handle container item type
      * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"string"}}
+     *     {"name":"Type", "options":{"type":"{{datatype}}"}}
      * }})
-{{/isString}}
-{{#isInteger}}
-     * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"int"}}
-     * }})
-{{/isInteger}}
-{{#isLong}}
-     * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"int"}}
-     * }})
-{{/isLong}}
-{{#isBoolean}}
-     * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"bool"}}
-     * }})
-{{/isBoolean}}
-{{#isFloat}}
-     * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"float"}}
-     * }})
-{{/isFloat}}
-{{#isDouble}}
-     * @DTA\Validator(name="Collection", options={"validators":{
-     *     {"name":"Type", "options":{"type":"float"}}
-     * }})
-{{/isDouble}}
 {{/items}}
-{{/isListContainer}}
-{{^isListContainer}}
-{{#isString}}
-     * @DTA\Validator(name="Type", options={"type":"string"})
-{{/isString}}
-{{#isInteger}}
-     * @DTA\Validator(name="Type", options={"type":"int"})
-{{/isInteger}}
-{{#isLong}}
-     * @DTA\Validator(name="Type", options={"type":"int"})
-{{/isLong}}
-{{#isBoolean}}
-     * @DTA\Validator(name="Type", options={"type":"bool"})
-{{/isBoolean}}
-{{#isFloat}}
-     * @DTA\Validator(name="Type", options={"type":"float"})
-{{/isFloat}}
-{{#isDouble}}
-     * @DTA\Validator(name="Type", options={"type":"float"})
-{{/isDouble}}
-{{/isListContainer}}
+{{/isContainer}}
+{{^isContainer}}
+     * @DTA\Validator(name="Type", options={"type":"{{datatype}}"})
+{{/isContainer}}
 {{/isPrimitiveType}}
 {{#hasValidation}}
 {{#minLength}}

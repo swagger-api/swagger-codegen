@@ -37,6 +37,8 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
 
     public ZendExpressivePathHandlerServerCodegen() {
         super();
+        //no point to use double - http://php.net/manual/en/language.types.float.php , especially because of PHP 7+ float type declaration
+        typeMapping.put("double", "float");
 
         embeddedTemplateDir = templateDir = "ze-ph";
         invokerPackage = "App";
