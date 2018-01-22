@@ -11,16 +11,12 @@ import java.io.Writer;
  *
  * Register:
  * <pre>
- * {@code
  * additionalProperties.put("titlecase", new TitlecaseLambda());
- * }
  * </pre>
  *
  * Use:
  * <pre>
- * {@code
  * {{#titlecase}}{{classname}}{{/titlecase}}
- * }
  * </pre>
  */
 public class TitlecaseLambda implements Mustache.Lambda  {

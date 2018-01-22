@@ -11,16 +11,12 @@ import java.io.Writer;
  *
  * Register:
  * <pre>
- * {@code
  * additionalProperties.put("lowercase", new LowercaseLambda());
- * }
  * </pre>
  *
  * Use:
  * <pre>
- * {@code
- * {{#lowercase}}{{httpMethod}}{{/lowercase
- * }
+ * {{#lowercase}}{{httpMethod}}{{/lowercase}}
  * </pre>
  */
 public class LowercaseLambda implements Mustache.Lambda {

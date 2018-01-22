@@ -11,16 +11,12 @@ import java.io.Writer;
  *
  * Register:
  * <pre>
- * {@code
  * additionalProperties.put("uppercase", new UppercaseLambda());
- * }
  * </pre>
  *
  * Use:
  * <pre>
- * {@code
  * {{#uppercase}}{{summary}}{{/uppercase}}
- * }
  * </pre>
  */
 public class UppercaseLambda implements Mustache.Lambda {

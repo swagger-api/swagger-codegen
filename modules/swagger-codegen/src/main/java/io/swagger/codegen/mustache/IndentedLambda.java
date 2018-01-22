@@ -14,18 +14,14 @@ import java.io.Writer;
  * <p>
  * Register:
  * <pre>
- * {@code
  * additionalProperties.put("indent4", new IndentedLambda(4));
  * additionalProperties.put("indent8", new IndentedLambda(8));
- * }
  * </pre>
  * <p>
  * Use:
  * <pre>
- * {@code
  *     {{#indent4}}{{>template}}{{/indent4}}
  *         {{#indent8}}{{>other_template}}{{/indent8}}
- * }
  * </pre>
  */
 public class IndentedLambda implements Mustache.Lambda {
