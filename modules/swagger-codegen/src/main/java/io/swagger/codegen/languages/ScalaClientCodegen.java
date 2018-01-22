@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
     protected String authScheme = "";
-    protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean authPreemptive;
     protected boolean asyncHttpClient = !authScheme.isEmpty();
     protected String groupId = "io.swagger";
@@ -51,26 +50,15 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("clientName", clientName);
         additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
                 (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
         supportingFiles.add(new SupportingFile("client.mustache",
                 (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        // gradle settings
-        supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
-        supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
-        supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
-        // gradleWrapper files
-        supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew") );
-        supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat") );
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.properties.mustache",
-                gradleWrapperPackage.replace( ".", File.separator ), "gradle-wrapper.properties") );
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.jar",
-                gradleWrapperPackage.replace( ".", File.separator ), "gradle-wrapper.jar") );
-
         supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
+        supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+        supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
         importMapping.remove("List");
         importMapping.remove("Set");
