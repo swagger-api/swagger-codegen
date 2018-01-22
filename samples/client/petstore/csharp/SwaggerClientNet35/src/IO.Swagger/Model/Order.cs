@@ -39,19 +39,19 @@ namespace IO.Swagger.Model
         {
             
             /// <summary>
-            /// Enum Placed for "placed"
+            /// Enum Placed for value: placed
             /// </summary>
             [EnumMember(Value = "placed")]
             Placed = 1,
             
             /// <summary>
-            /// Enum Approved for "approved"
+            /// Enum Approved for value: approved
             /// </summary>
             [EnumMember(Value = "approved")]
             Approved = 2,
             
             /// <summary>
-            /// Enum Delivered for "delivered"
+            /// Enum Delivered for value: delivered
             /// </summary>
             [EnumMember(Value = "delivered")]
             Delivered = 3
@@ -143,7 +143,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

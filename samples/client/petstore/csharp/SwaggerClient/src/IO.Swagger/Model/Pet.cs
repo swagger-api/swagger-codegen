@@ -39,19 +39,19 @@ namespace IO.Swagger.Model
         {
             
             /// <summary>
-            /// Enum Available for "available"
+            /// Enum Available for value: available
             /// </summary>
             [EnumMember(Value = "available")]
             Available = 1,
             
             /// <summary>
-            /// Enum Pending for "pending"
+            /// Enum Pending for value: pending
             /// </summary>
             [EnumMember(Value = "pending")]
             Pending = 2,
             
             /// <summary>
-            /// Enum Sold for "sold"
+            /// Enum Sold for value: sold
             /// </summary>
             [EnumMember(Value = "sold")]
             Sold = 3
@@ -156,7 +156,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
