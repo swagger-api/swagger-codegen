@@ -110,6 +110,7 @@ public class JSON {
             .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
             {{/jsr310}}
             {{#java8}}
+            .disableHtmlEscaping(){{! Added to prevent base64 = (equal sign) from being escaped }}
             .registerTypeAdapter(byte[].class, localByteArrayAdapter)
             {{/java8}}
             .create();
