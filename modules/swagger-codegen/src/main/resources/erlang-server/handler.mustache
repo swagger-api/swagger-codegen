@@ -90,7 +90,7 @@ is_authorized(
     ),
     case Result of
         {true, Context, Req} ->  {true, Req, State#state{context = Context}};
-        {false, AuthHeader, Req} ->  {{false, AuthHeader}, Req, State}
+        {false, AuthHeader, Req} ->  { {false, AuthHeader}, Req, State}
     end;
   {{/isApiKey}}
 {{/authMethods}}
@@ -101,7 +101,7 @@ is_authorized(Req, State) ->
 {{/authMethods}}
 {{#authMethods}}
 is_authorized(Req, State) ->
-    {{false, <<"">>}, Req, State}.
+    { {false, <<"">>}, Req, State}.
 {{/authMethods}}
 
 -spec content_types_accepted(Req :: cowboy_req:req(), State :: state()) ->
