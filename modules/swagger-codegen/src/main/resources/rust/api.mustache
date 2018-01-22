@@ -24,7 +24,7 @@ impl<C: hyper::client::Connect> {{{classname}}}Client<C> {
 pub trait {{classname}} {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{returnType}}}{{/returnType}}, Error = Error>>;
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#vendorExtensions.x-is-string}}&str{{/vendorExtensions.x-is-string}}{{^vendorExtensions.x-is-string}}{{^vendorExtensions.x-is-primitive-type}}{{^vendorExtensions.x-is-container}}::models::{{/vendorExtensions.x-is-container}}{{/vendorExtensions.x-is-primitive-type}}{{{dataType}}}{{/vendorExtensions.x-is-string}}{{^@last}}, {{/@last}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{returnType}}}{{/returnType}}, Error = Error>>;
 {{/operation}}
 {{/operations}}
 }
@@ -33,7 +33,7 @@ pub trait {{classname}} {
 impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{^isString}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error>> {
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#vendorExtensions.x-is-string}}&str{{/vendorExtensions.x-is-string}}{{^vendorExtensions.x-is-string}}{{^vendorExtensions.x-is-primitive-type}}{{^vendorExtensions.x-is-container}}::models::{{/vendorExtensions.x-is-container}}{{/vendorExtensions.x-is-primitive-type}}{{{dataType}}}{{/vendorExtensions.x-is-string}}{{^@last}}, {{/@last}}{{/allParams}}) -> Box<Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::{{httpMethod}};

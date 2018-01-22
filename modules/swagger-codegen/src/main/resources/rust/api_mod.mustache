@@ -26,9 +26,9 @@ use super::models::*;
 mod {{classFilename}};
 {{#operations}}
 {{#operation}}
-{{#-last}}
+{{#@last}}
 pub use self::{{classFilename}}::{ {{classname}}, {{classname}}Client };
-{{/-last}}
+{{/@last}}
 {{/operation}}
 {{/operations}}
 {{/apis}}
