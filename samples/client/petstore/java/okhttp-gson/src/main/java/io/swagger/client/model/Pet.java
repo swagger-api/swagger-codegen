@@ -43,7 +43,7 @@ public class Pet {
   private String name = null;
 
   @SerializedName("photoUrls")
-  private List<String> photoUrls = new ArrayList<String>();
+  private List<String> photoUrls = new ArrayList<>();
 
   @SerializedName("tags")
   private List<Tag> tags = null;
@@ -99,6 +99,9 @@ public class Pet {
 
   @SerializedName("status")
   private StatusEnum status = null;
+
+  @SerializedName("profilePhoto")
+  private byte[] profilePhoto = null;
 
   public Pet id(Long id) {
     this.id = id;
@@ -184,7 +187,7 @@ public class Pet {
 
   public Pet addTagsItem(Tag tagsItem) {
     if (this.tags == null) {
-      this.tags = new ArrayList<Tag>();
+      this.tags = new ArrayList<>();
     }
     this.tags.add(tagsItem);
     return this;
@@ -221,6 +224,24 @@ public class Pet {
     this.status = status;
   }
 
+  public Pet profilePhoto(byte[] profilePhoto) {
+    this.profilePhoto = profilePhoto;
+    return this;
+  }
+
+   /**
+   * Get profilePhoto
+   * @return profilePhoto
+  **/
+  @ApiModelProperty(value = "")
+  public byte[] getProfilePhoto() {
+    return profilePhoto;
+  }
+
+  public void setProfilePhoto(byte[] profilePhoto) {
+    this.profilePhoto = profilePhoto;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -236,12 +257,13 @@ public class Pet {
         Objects.equals(this.name, pet.name) &&
         Objects.equals(this.photoUrls, pet.photoUrls) &&
         Objects.equals(this.tags, pet.tags) &&
-        Objects.equals(this.status, pet.status);
+        Objects.equals(this.status, pet.status) &&
+        Arrays.equals(this.profilePhoto, pet.profilePhoto);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, category, name, photoUrls, tags, status);
+    return Objects.hash(id, category, name, photoUrls, tags, status, Arrays.hashCode(profilePhoto));
   }
 
 
@@ -256,6 +278,7 @@ public class Pet {
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    profilePhoto: ").append(toIndentedString(profilePhoto)).append("\n");
     sb.append("}");
     return sb.toString();
   }

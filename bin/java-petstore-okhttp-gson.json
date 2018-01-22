@@ -1,4 +1,6 @@
 {
     "library": "okhttp-gson",
-    "artifactId": "swagger-petstore-okhttp-gson"
+    "artifactId": "swagger-petstore-okhttp-gson",
+	"java8": "true",
+	"dateLibrary": "java8"
 }
