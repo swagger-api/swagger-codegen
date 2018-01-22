@@ -20,7 +20,7 @@ class {{classname}} {
     {{name}} =
     {{#complexType}}
         {{#isListContainer}}{{complexType}}.listFromJson(json['{{name}}']){{/isListContainer}}{{^isListContainer}}
-        {{#isMapContainer}}new {{complexType}}.mapFromJson(json['{{name}}']){{/isMapContainer}}
+        {{#isMapContainer}}{{complexType}}.mapFromJson(json['{{name}}']){{/isMapContainer}}
         {{^isMapContainer}}new {{complexType}}.fromJson(json['{{name}}']){{/isMapContainer}}{{/isListContainer}}
     {{/complexType}}
     {{^complexType}}json['{{name}}']{{/complexType}};
