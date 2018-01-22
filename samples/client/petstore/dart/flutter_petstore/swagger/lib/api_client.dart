@@ -86,8 +86,6 @@ class ApiClient {
     String serialized = '';
     if (obj == null) {
       serialized = '';
-    } else if (obj is String) {
-      serialized = obj;
     } else {
       serialized = JSON.encode(obj);
     }
