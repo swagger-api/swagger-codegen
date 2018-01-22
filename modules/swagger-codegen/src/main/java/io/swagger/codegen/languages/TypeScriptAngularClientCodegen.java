@@ -10,19 +10,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.codegen.utils.SemVer;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.Property;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.models.properties.*;
 
 public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
@@ -174,9 +166,102 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             return "Blob";
         } else if (p instanceof ObjectProperty) {
             return "any";
-        } else {
-            return super.getTypeDeclaration(p);
         }
+
+        return super.getTypeDeclaration(p);
+    }
+
+    @Override
+    protected String getParameterDataType(Parameter parameter, Property p) {
+        Property inner;
+        if (p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty) p;
+            inner = mp1.getItems();
+            return this.getSwaggerType(p) + "<" + this.getParameterDataType(parameter, inner) + ">";
+        } else if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            inner = mp.getAdditionalProperties();
+            return "{ [key: string]: " + this.getParameterDataType(parameter, inner) + "; }";
+        } else if (p instanceof StringProperty) {
+            // Handle string enums
+            StringProperty sp = (StringProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof IntegerProperty) {
+            // Handle integer enums
+            IntegerProperty sp = (IntegerProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof LongProperty) {
+            // Handle long enums
+            LongProperty sp = (LongProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof DoubleProperty) {
+            // Handle double enums
+            DoubleProperty sp = (DoubleProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof FloatProperty) {
+            // Handle float enums
+            FloatProperty sp = (FloatProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof DateProperty) {
+            // Handle date enums
+            DateProperty sp = (DateProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof DateTimeProperty) {
+            // Handle datetime enums
+            DateTimeProperty sp = (DateTimeProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        }
+        return this.getTypeDeclaration(p);
+    }
+
+    /**
+     * Converts a list of strings to a literal union for representing enum values as a type.
+     * Example: 'available' | 'pending' | 'sold'
+     *
+     * @param values list of allowed enum values
+     * @param dataType either "string" or "number"
+     * @return
+     */
+    protected String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
+        StringBuilder b = new StringBuilder();
+        boolean isFirst = true;
+        for (String value: values) {
+            if (!isFirst) {
+                b.append(" | ");
+            }
+            b.append(toEnumValue(value.toString(), dataType));
+            isFirst = false;
+        }
+        return b.toString();
+    }
+
+    /**
+     * Converts a list of numbers to a literal union for representing enum values as a type.
+     * Example: 3 | 9 | 55
+     *
+     * @param values
+     * @return
+     */
+    protected String numericEnumValuesToEnumTypeUnion(List<Number> values) {
+        List<String> stringValues = new ArrayList<>();
+        for (Number value: values) {
+            stringValues.add(value.toString());
+        }
+        return enumValuesToEnumTypeUnion(stringValues, "number");
     }
 
     @Override
