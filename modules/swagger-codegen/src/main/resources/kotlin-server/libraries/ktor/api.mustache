@@ -6,22 +6,15 @@ import io.ktor.application.call
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
 import io.ktor.auth.basicAuthentication
+import io.ktor.auth.oauth
 import io.ktor.auth.OAuthAccessTokenResponse
 import io.ktor.auth.OAuthServerSettings
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.locations.location
-import io.ktor.locations.oauthAtLocation
+import io.ktor.locations.*
 import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.Route
-import io.ktor.routing.delete as DELETE
-import io.ktor.routing.get as GET
-import io.ktor.routing.head as HEAD
-import io.ktor.routing.options as OPTIONS
-import io.ktor.routing.patch as PATCH
-import io.ktor.routing.post as POST
-import io.ktor.routing.put as PUT
+import io.ktor.routing.*
 
 import kotlinx.coroutines.experimental.asCoroutineDispatcher
 
@@ -32,6 +25,10 @@ import {{packageName}}.HTTP.client
 import {{packageName}}.infrastructure.ApiPrincipal
 import {{packageName}}.infrastructure.apiKeyAuth
 
+// ktor 0.9.x is missing io.ktor.locations.DELETE, this adds it.
+// see https://github.com/ktorio/ktor/issues/288
+import {{packageName}}.delete
+
 {{#imports}}import {{import}}
 {{/imports}}
 
@@ -40,80 +37,78 @@ fun Route.{{classname}}() {
     val gson = Gson()
     val empty = mutableMapOf<String, Any?>()
 {{#operation}}
-    location<Paths.{{operationId}}> {
-        {{! This format allows us to support authentication strategies }}
-        {{#hasAuthMethods}}
-        authentication {
-            {{#authMethods}}
-            {{#isBasic}}
-            basicAuthentication("{{{name}}}") { credentials ->
-                // TODO: "Apply your basic authentication functionality."
-                // Accessible in-method via call.principal<UserIdPrincipal>()
-                if (credentials.name == "Swagger" && "Codegen" == credentials.password) {
-                     UserIdPrincipal(credentials.name)
-                } else {
-                    null
-                }
-            }
-            {{/isBasic}}
-            {{#isApiKey}}
-            // "Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'."
-            apiKeyAuth("{{{keyParamName}}}", {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}) {
-                // TODO: "Verify key here , accessible as it.value"
-                if (it.value == "keyboardcat") {
-                     ApiPrincipal(it)
-                } else {
-                    null
-                }
-            }
-            {{/isApiKey}}
-            {{#isOAuth}}
-            oauthAtLocation<Paths.{{operationId}}>(client, ApplicationExecutors.asCoroutineDispatcher(),
-                    providerLookup = { ApplicationAuthProviders["{{{name}}}"] },
-                    urlProvider = { currentLocation, provider ->
-                        TODO()
-                    })
-            {{/isOAuth}}
-            {{/authMethods}}
-        }
-        {{/hasAuthMethods}}
-        {{httpMethod}} {
-            {{#hasAuthMethods}}
-            {{#authMethods}}
-            {{#isBasic}}
-            val principal = call.authentication.principal<UserIdPrincipal>()
-            {{/isBasic}}
-            {{#isApiKey}}
-            val principal = call.authentication.principal<ApiPrincipal>()
-            {{/isApiKey}}
-            {{#isOAuth}}
-            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
-            {{/isOAuth}}
-            {{/authMethods}}
-            if (principal == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-            } else {
-            {{/hasAuthMethods}}
-            {{#examples}}
-            {{#-first}}
-                val exampleContentType = "{{{contentType}}}"
-                val exampleContentString = """{{&example}}"""
+    {{#bodyAllowed}}
 
-                when(exampleContentType) {
-                    "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
-                    "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
-                    else -> call.respondText(exampleContentString)
-                }
-            {{/-first}}
-            {{/examples}}
-            {{^examples}}
-            {{#hasAuthMethods}}    {{/hasAuthMethods}}call.respond(HttpStatusCode.NotImplemented)
-            {{/examples}}
-            {{#hasAuthMethods}}
-            }
-            {{/hasAuthMethods}}
+    route("{{path}}") {
+        {{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}} {
+            {{#lambda.indented_12}}{{>libraries/ktor/_api_body}}{{/lambda.indented_12}}
         }
     }
+    {{/bodyAllowed}}
+    {{^bodyAllowed}}
+
+    {{! NOTE: Locations can be used on routes without body parameters.}}
+    {{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}<Paths.{{operationId}}> {  it: Paths.{{operationId}} ->
+        {{#lambda.indented_8}}{{>libraries/ktor/_api_body}}{{/lambda.indented_8}}
+    }
+    {{/bodyAllowed}}
+    {{! THis looks a little weird, but it's completely valid Kotlin code, and simplifies templated route logic above. }}
+    {{#hasAuthMethods}}.apply {
+      // TODO: ktor doesn't allow different authentication registrations for endpoints sharing the same path but different methods.
+      //       It could be the authentication block is being abused here. Until this is resolved, swallow duplicate exceptions.
+
+        try {
+            authentication {
+                {{#authMethods}}
+                {{#isBasic}}
+                basicAuthentication("{{{name}}}") { credentials ->
+                    // TODO: "Apply your basic authentication functionality."
+                    // Accessible in-method via call.principal<UserIdPrincipal>()
+                    if (credentials.name == "Swagger" && "Codegen" == credentials.password) {
+                         UserIdPrincipal(credentials.name)
+                    } else {
+                        null
+                    }
+                }
+                {{/isBasic}}
+                {{#isApiKey}}
+                // "Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'."
+                apiKeyAuth("{{{keyParamName}}}", {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}) {
+                    // TODO: "Verify key here , accessible as it.value"
+                    if (it.value == "keyboardcat") {
+                         ApiPrincipal(it)
+                    } else {
+                        null
+                    }
+                }
+                {{/isApiKey}}
+                {{#isOAuth}}
+                {{#bodyAllowed}}
+                oauth(client, ApplicationExecutors.asCoroutineDispatcher(), { ApplicationAuthProviders["{{{name}}}"] }, {
+                    // TODO: define a callback url here.
+                    "/"
+                })
+                {{/bodyAllowed}}
+                {{^bodyAllowed}}
+                oauthAtLocation<Paths.{{operationId}}>(client, ApplicationExecutors.asCoroutineDispatcher(),
+                        providerLookup = { ApplicationAuthProviders["{{{name}}}"] },
+                        urlProvider = { currentLocation, provider ->
+                           // TODO: define a callback url here.
+                           "/"
+                        })
+                {{/bodyAllowed}}
+                {{/isOAuth}}
+                {{/authMethods}}
+            }
+        } catch(e: io.ktor.application.DuplicateApplicationFeatureException){
+            application.environment.log.warn("authentication block for '{{path}}' is duplicated in code. " +
+            "Generated endpoints may need to be merged under a 'route' entry.")
+        }
+    }
+    {{/hasAuthMethods}}
+    {{^hasAuthMethods}}
+
+    {{/hasAuthMethods}}
 {{/operation}}
 }
 {{/operations}}

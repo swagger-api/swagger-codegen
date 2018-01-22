@@ -37,16 +37,16 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
         val principal = credentials?.let { validate(it) }
 
         val cause = when {
-            credentials == null -> NotAuthenticatedCause.NoCredentials
-            principal == null -> NotAuthenticatedCause.InvalidCredentials
+            credentials == null -> AuthenticationFailedCause.NoCredentials
+            principal == null -> AuthenticationFailedCause.InvalidCredentials
             else -> null
         }
 
         if (cause != null) {
             context.challenge(apiKeyName, cause) {
-                it.success()
                 // TODO: Verify correct response structure here.
                 call.respond(UnauthorizedResponse(HttpAuthHeader.Parameterized("API_KEY", mapOf("key" to apiKeyName), HeaderValueEncoding.QUOTED_ALWAYS)))
+                it.complete()
             }
         }
         if (principal != null) {

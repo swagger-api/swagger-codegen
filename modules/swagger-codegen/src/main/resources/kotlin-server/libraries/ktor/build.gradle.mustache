@@ -2,13 +2,13 @@ group '{{groupId}}'
 version '{{artifactVersion}}'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '4.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
-    ext.ktor_version = '0.9.0'
+    ext.kotlin_version = '1.2.10'
+    ext.ktor_version = '0.9.1-alpha-9'
     ext.shadow_version = '2.0.2'
 
     repositories {
@@ -26,9 +26,12 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+
+// Initialization order with shadow 2.0.1 and Gradle 4.3 is weird.
+// See https://github.com/johnrengelman/shadow/issues/336#issuecomment-355402508
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 

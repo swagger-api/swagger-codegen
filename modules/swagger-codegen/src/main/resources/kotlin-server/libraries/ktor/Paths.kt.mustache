@@ -27,13 +27,15 @@ object Paths {
 {{#apis}}
 {{#operations}}
     {{#operation}}
+    {{^bodyAllowed}}
     /**
      * {{summary}}
      * {{#unescapedNotes}}{{.}}{{/unescapedNotes}}
      {{#allParams}}* @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
      {{/allParams}}*/
-    @location("{{path}}") class {{operationId}}({{#allParams}}val {{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    @Location("{{path}}") class {{operationId}}({{#allParams}}val {{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
 
+    {{/bodyAllowed}}
     {{/operation}}
 {{/operations}}
 {{/apis}}
