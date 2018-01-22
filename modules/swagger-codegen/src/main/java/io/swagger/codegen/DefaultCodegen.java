@@ -1834,13 +1834,13 @@ public class DefaultCodegen {
         if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
             property.complexType = innerProperty.baseType;
             if (!innerProperty.isContainer) {
-        			property.containedType = innerProperty.baseType;
+                property.containedType = innerProperty.baseType;
             }
         } else {
             property.isPrimitiveType = true;
         }
         if (innerProperty.containedType != null && !languageSpecificPrimitives.contains(innerProperty.containedType)) {
-        		property.containedType = innerProperty.containedType;
+            property.containedType = innerProperty.containedType;
         }
         property.items = innerProperty;
         // inner item is Enum
@@ -1870,13 +1870,13 @@ public class DefaultCodegen {
         if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
             property.complexType = innerProperty.baseType;
             if (!innerProperty.isContainer) {
-            		property.containedType = innerProperty.baseType;
+                property.containedType = innerProperty.baseType;
             }
         } else {
             property.isPrimitiveType = true;
         }
         if (innerProperty.containedType != null && !languageSpecificPrimitives.contains(innerProperty.containedType)) {
-    			property.containedType = innerProperty.containedType;
+            property.containedType = innerProperty.containedType;
         }
         property.items = innerProperty;
         property.dataFormat = innerProperty.dataFormat;
@@ -2143,9 +2143,8 @@ public class DefaultCodegen {
                         !languageSpecificPrimitives.contains(r.baseType)) {
                     imports.add(r.baseType);
                 }
-                if (r.containerType != null && !defaultIncludes.contains(r.containerType) &&
-                        !languageSpecificPrimitives.contains(r.containerType)) {
-                		imports.add(r.containedType);
+                if (r.containerType != null && !defaultIncludes.contains(r.containerType) && !languageSpecificPrimitives.contains(r.containerType)) {
+                    imports.add(r.containedType);
                 }
                 r.isDefault = response == methodResponse;
                 op.responses.add(r);
