@@ -9,14 +9,18 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
+import okio.ByteString;
 import org.junit.*;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import static org.junit.Assert.*;
 
@@ -125,7 +129,7 @@ public class JSONTest {
     public void testDefaultDate() throws Exception {
         final DateTimeFormatter datetimeFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
         final String dateStr = "2015-11-07T14:11:05.267Z";
-        order.setShipDate(OffsetDateTime.from(datetimeFormat.parse(dateStr)));
+        order.setShipDate(datetimeFormat.parse(dateStr, OffsetDateTime.FROM));
 
         String str = json.serialize(order);
         Type type = new TypeToken<Order>() { }.getType();
@@ -137,7 +141,7 @@ public class JSONTest {
     public void testCustomDate() throws Exception {
         final DateTimeFormatter datetimeFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of("Etc/GMT+2"));
         final String dateStr = "2015-11-07T14:11:05-02:00";
-        order.setShipDate(OffsetDateTime.from(datetimeFormat.parse(dateStr)));
+        order.setShipDate(datetimeFormat.parse(dateStr, OffsetDateTime.FROM));
 
         String str = json.serialize(order);
         Type type = new TypeToken<Order>() { }.getType();
@@ -156,7 +160,11 @@ public class JSONTest {
 
         // Assert
         String serializedBytes = serializedBytesWithQuotes.substring(1, serializedBytesWithQuotes.length() - 1);
-        byte[] actualBytes = Base64.getDecoder().decode(serializedBytes);
+        if (json.getGson().htmlSafe()) {
+            serializedBytes = serializedBytes.replaceAll("\\\\u003d", "=");
+        }
+        ByteString actualAsByteString = ByteString.decodeBase64(serializedBytes);
+        byte[] actualBytes = actualAsByteString.toByteArray();
         assertEquals(expectedBytesAsString, new String(actualBytes, StandardCharsets.UTF_8));
     }
 
@@ -165,7 +173,8 @@ public class JSONTest {
         // Arrange
         final String expectedBytesAsString = "Let's pretend this a jpg or something";
         final byte[] expectedBytes = expectedBytesAsString.getBytes(StandardCharsets.UTF_8);
-        final String serializedBytes = Base64.getEncoder().encodeToString(expectedBytes);
+        final ByteString expectedByteString = ByteString.of(expectedBytes);
+        final String serializedBytes = expectedByteString.base64();
         final String serializedBytesWithQuotes = "\"" + serializedBytes + "\"";
         Type type = new TypeToken<byte[]>() { }.getType();
 

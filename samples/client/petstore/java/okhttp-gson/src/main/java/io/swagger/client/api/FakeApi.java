@@ -29,8 +29,8 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
 
 import java.lang.reflect.Type;
