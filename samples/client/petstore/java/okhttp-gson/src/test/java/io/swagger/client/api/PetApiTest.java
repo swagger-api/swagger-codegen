@@ -282,17 +282,17 @@ public class PetApiTest {
 
         api.updatePet(pet);
 
-        Exception actualException = null;
-        try {
-            List<Pet> pets = api.findPetsByTags(Arrays.asList("friendly"));
-        } catch (Exception e) {
-            actualException = e;
-        }
+        List<Pet> pets = api.findPetsByTags(Arrays.asList("friendly"));
+        assertNotNull(pets);
 
-        assertNotNull(actualException);
-        assertTrue("The exception should be of type ApiException", actualException instanceof ApiException);
-        ApiException actualApiException = (ApiException) actualException;
-        assertEquals("Status code should be 500", actualApiException.getCode(), 500);
+        boolean found = false;
+        for (Pet fetched : pets) {
+            if (fetched.getId().equals(pet.getId())) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
 
         api.deletePet(pet.getId(), null);
     }
