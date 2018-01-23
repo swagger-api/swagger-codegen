@@ -259,6 +259,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             // Prep a string buffer where we're going to set up our new version of the string.
             StringBuilder pathBuffer = new StringBuilder();
             StringBuilder parameterName = new StringBuilder();
+            /** Whether to skip characters inside curly braces */
+            Boolean skipThisAndSubsequentChars = false;
             int insideCurly = 0;
 
             // Iterate through existing string, one character at a time.
@@ -276,15 +278,27 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                     insideCurly--;
 
                     // Add the more complicated component instead of just the brace.
+                    CodegenParameter parameter = findPathParameter(op, parameterName.toString());
                     pathBuffer.append(toVarName(parameterName.toString()));
+                    if (parameter.isDate || parameter.isDateTime) {
+                        pathBuffer.append(".toISOString()");
+                    }
                     pathBuffer.append("))}");
                     parameterName.setLength(0);
                     break;
                 default:
+                    char nextChar = op.path.charAt(i);
                     if (insideCurly > 0) {
-                        parameterName.append(op.path.charAt(i));
+                        if (!Character.isLetterOrDigit(nextChar) && nextChar != '_') {
+                            // skip any non-alpha numeric characters (and subsequent parameters)
+                            // not belonging to the parameter name
+                            skipThisAndSubsequentChars = true;
+                        }
+                        if (!skipThisAndSubsequentChars) {
+                            parameterName.append(nextChar);
+                        }
                     } else {
-                        pathBuffer.append(op.path.charAt(i));
+                        pathBuffer.append(nextChar);
                     }
                     break;
                 }
@@ -302,6 +316,15 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         }
 
         return operations;
+    }
+
+    private CodegenParameter findPathParameter(CodegenOperation operation, String parameterName) {
+        for(CodegenParameter param : operation.pathParams) {
+            if (param.baseName.equals(parameterName)) {
+                return param;
+            }
+        }
+        return null;
     }
 
     @Override
