@@ -225,4 +225,7 @@ public class CodegenConstants {
 
     public static final String STRIP_PACKAGE_NAME = "stripPackageName";
     public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
-}
+
+    public static final String LUAROCKS_FILENAME = "luaRocksFilename";
+    public static final String LUAROCKS_FILENAME_DESC = "LuaRocks file name.";
+ }

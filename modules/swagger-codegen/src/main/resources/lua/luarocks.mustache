@@ -1,0 +1,22 @@
+package = "{{{packageName}}}"
+version = "{{{packageVersion}}}"
+source = {
+   url = "https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}.git"
+}
+description = {
+   summary = "API client genreated by Swagger Codegen",
+   detailed = [[
+{{{appDescription}}}]],
+   homepage = "https://github.com/swagger-api/swagger-codegen",
+   license = "Unlicense",
+   maintainer = "Swagger Codegen contributors",
+   labels = { "rest", "api", "openapi", "swagger", "codegen" }
+}
+dependencies = {
+  "lua >= 5.2"
+}
+build = {
+   type = "builtin",
+   modules = {
+   }
+}

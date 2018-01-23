@@ -21,6 +21,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageVersion = "1.0.0";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected String luaRocksFilename = "swagger-client-1.0.0-1.rockspec";
 
     public CodegenType getTag() {
         return CodegenType.CLIENT;
@@ -107,6 +108,8 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 .defaultValue("swagger"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Lua package version.")
                 .defaultValue("1.0.0"));
+        cliOptions.add(new CliOption(CodegenConstants.LUAROCKS_FILENAME, CodegenConstants.LUAROCKS_FILENAME_DESC)
+                .defaultValue("swagger-client-0.0.1.rockspec"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
 
@@ -136,8 +139,13 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
             setPackageVersion("1.0.0");
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.LUAROCKS_FILENAME)) {
+            setLuaRocksFilename((String) additionalProperties.get(CodegenConstants.LUAROCKS_FILENAME));
+        }
+
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
+        additionalProperties.put(CodegenConstants.LUAROCKS_FILENAME, luaRocksFilename);
 
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
@@ -154,6 +162,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         //supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+        supportingFiles.add(new SupportingFile("luarocks.mustache", "",  luaRocksFilename));
         //supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.lua"));
         //supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.lua"));
         //supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.lua"));
@@ -441,6 +450,10 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
+    }
+
+    public void setLuaRocksFilename(String luaRocksFilename) {
+        this.luaRocksFilename = luaRocksFilename;
     }
 
     @Override
