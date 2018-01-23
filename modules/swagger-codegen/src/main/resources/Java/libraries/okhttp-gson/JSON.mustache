@@ -26,6 +26,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 {{/threetenbp}}
 
 import {{modelPackage}}.*;
+import okio.ByteString;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,7 +38,6 @@ import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 {{/java8}}
 import java.util.Date;
 import java.util.Map;
@@ -56,9 +56,7 @@ public class JSON {
     private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     {{/jsr310}}
-    {{#java8}}
-    private LocalByteArrayAdapter localByteArrayAdapter = new LocalByteArrayAdapter();
-    {{/java8}}
+    private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
@@ -109,10 +107,7 @@ public class JSON {
             .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
             .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
             {{/jsr310}}
-            {{#java8}}
-            .disableHtmlEscaping(){{! Added to prevent base64 = (equal sign) from being escaped }}
-            .registerTypeAdapter(byte[].class, localByteArrayAdapter)
-            {{/java8}}
+            .registerTypeAdapter(byte[].class, byteArrayAdapter)
             .create();
     }
 
@@ -179,18 +174,17 @@ public class JSON {
         }
     }
 
-    {{#java8}}
     /**
      * Gson TypeAdapter for Byte Array type
      */
-    public class LocalByteArrayAdapter extends TypeAdapter<byte[]> {
+    public class ByteArrayAdapter extends TypeAdapter<byte[]> {
 
         @Override
         public void write(JsonWriter out, byte[] value) throws IOException {
             if (value == null) {
                 out.nullValue();
             } else {
-                out.value(Base64.getEncoder().encodeToString(value));
+                out.value(ByteString.of(value).base64());
             }
         }
 
@@ -202,12 +196,12 @@ public class JSON {
                     return null;
                 default:
                     String bytesAsBase64 = in.nextString();
-                    return Base64.getDecoder().decode(bytesAsBase64);
+                    ByteString byteString = ByteString.decodeBase64(bytesAsBase64);
+                    return byteString.toByteArray();
             }
         }
     }
-	
-    {{/java8}}
+
     {{#joda}}
     /**
      * Gson TypeAdapter for Joda DateTime type
