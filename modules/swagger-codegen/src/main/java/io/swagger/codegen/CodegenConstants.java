@@ -228,4 +228,4 @@ public class CodegenConstants {
 
     public static final String LUAROCKS_FILENAME = "luaRocksFilename";
     public static final String LUAROCKS_FILENAME_DESC = "LuaRocks file name.";
- }
+}

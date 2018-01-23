@@ -146,7 +146,7 @@ func parameterToString(obj interface{}, collectionFormat string) string {
 	return fmt.Sprintf("%v", obj)
 }
 
-// callAPI do the request. 
+// callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 	 return c.cfg.HTTPClient.Do(request)
 }

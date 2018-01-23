@@ -8,11 +8,11 @@ import (
 const ContextOAuth2 		int = 1
 const ContextBasicAuth 		int = 2
 const ContextAccessToken 	int = 3
-const ContextAPIKey 		int = 4 
+const ContextAPIKey 		int = 4
 
 type BasicAuth struct {
 	UserName      string            `json:"userName,omitempty"`
-	Password      string            `json:"password,omitempty"`	
+	Password      string            `json:"password,omitempty"`
 }
 
 type APIKey struct {
