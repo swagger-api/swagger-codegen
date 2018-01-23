@@ -278,7 +278,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                     insideCurly--;
 
                     // Add the more complicated component instead of just the brace.
-                    CodegenParameter parameter = findPathParameter(op, parameterName.toString());
+                    CodegenParameter parameter = findPathParameterByName(op, parameterName.toString());
                     pathBuffer.append(toVarName(parameterName.toString()));
                     if (parameter != null && parameter.isDateTime) {
                         pathBuffer.append(".toISOString()");
@@ -318,7 +318,13 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         return operations;
     }
 
-    private CodegenParameter findPathParameter(CodegenOperation operation, String parameterName) {
+    /**
+     * Finds and returns a path parameter of an operation by its name
+     * @param operation
+     * @param parameterName
+     * @return
+     */
+    private CodegenParameter findPathParameterByName(CodegenOperation operation, String parameterName) {
         for(CodegenParameter param : operation.pathParams) {
             if (param.baseName.equals(parameterName)) {
                 return param;
