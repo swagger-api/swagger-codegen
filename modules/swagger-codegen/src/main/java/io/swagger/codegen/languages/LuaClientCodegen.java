@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(LuaClientCodegen.class);
 
-    protected String packageName = "swagger";
-    protected String packageVersion = "1.0.0";
+    protected String packageName = "swagger-client";
+    protected String packageVersion = "1.0.0-1";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected String luaRocksFilename = "swagger-client-1.0.0-1.rockspec";
@@ -105,11 +105,9 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Lua package name (convention: lowercase).")
-                .defaultValue("swagger"));
+                .defaultValue("swagger-client"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Lua package version.")
-                .defaultValue("1.0.0"));
-        cliOptions.add(new CliOption(CodegenConstants.LUAROCKS_FILENAME, CodegenConstants.LUAROCKS_FILENAME_DESC)
-                .defaultValue("swagger-client-0.0.1.rockspec"));
+                .defaultValue("1.0.0-1"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
 
@@ -129,23 +127,17 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
-        } else {
-            setPackageName("swagger");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        } else {
-            setPackageVersion("1.0.0");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.LUAROCKS_FILENAME)) {
-            setLuaRocksFilename((String) additionalProperties.get(CodegenConstants.LUAROCKS_FILENAME));
         }
 
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
-        additionalProperties.put(CodegenConstants.LUAROCKS_FILENAME, luaRocksFilename);
+
+        // set rockspec based on package name, version
+        setLuaRocksFilename(packageName + "-" + packageVersion + ".rockspec");
 
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);

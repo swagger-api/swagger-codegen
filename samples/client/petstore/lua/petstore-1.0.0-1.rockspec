@@ -1,5 +1,5 @@
 package = "petstore"
-version = "1.0.0"
+version = "1.0.0-1"
 source = {
    url = "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
 }
@@ -10,7 +10,6 @@ This is a sample server Petstore server.  You can find out more about Swagger at
    homepage = "https://github.com/swagger-api/swagger-codegen",
    license = "Unlicense",
    maintainer = "Swagger Codegen contributors",
-   labels = { "rest", "api", "openapi", "swagger", "codegen" }
 }
 dependencies = {
   "lua >= 5.2"
