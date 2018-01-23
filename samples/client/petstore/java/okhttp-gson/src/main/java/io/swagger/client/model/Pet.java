@@ -100,9 +100,6 @@ public class Pet {
   @SerializedName("status")
   private StatusEnum status = null;
 
-  @SerializedName("profilePhoto")
-  private byte[] profilePhoto = null;
-
   public Pet id(Long id) {
     this.id = id;
     return this;
@@ -224,24 +221,6 @@ public class Pet {
     this.status = status;
   }
 
-  public Pet profilePhoto(byte[] profilePhoto) {
-    this.profilePhoto = profilePhoto;
-    return this;
-  }
-
-   /**
-   * Get profilePhoto
-   * @return profilePhoto
-  **/
-  @ApiModelProperty(value = "")
-  public byte[] getProfilePhoto() {
-    return profilePhoto;
-  }
-
-  public void setProfilePhoto(byte[] profilePhoto) {
-    this.profilePhoto = profilePhoto;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -257,13 +236,12 @@ public class Pet {
         Objects.equals(this.name, pet.name) &&
         Objects.equals(this.photoUrls, pet.photoUrls) &&
         Objects.equals(this.tags, pet.tags) &&
-        Objects.equals(this.status, pet.status) &&
-        Arrays.equals(this.profilePhoto, pet.profilePhoto);
+        Objects.equals(this.status, pet.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, category, name, photoUrls, tags, status, Arrays.hashCode(profilePhoto));
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
 
 
@@ -278,7 +256,6 @@ public class Pet {
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    profilePhoto: ").append(toIndentedString(profilePhoto)).append("\n");
     sb.append("}");
     return sb.toString();
   }

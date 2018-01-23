@@ -1069,9 +1069,6 @@ definitions:
           - available
           - pending
           - sold
-      profilePhoto:
-        type: string
-        format: byte
     xml:
       name: Pet
   ApiResponse:

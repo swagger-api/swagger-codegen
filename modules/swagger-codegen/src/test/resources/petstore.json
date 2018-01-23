@@ -918,10 +918,6 @@
             "pending",
             "sold"
           ]
-        },
-        "profilePhoto": {
-          "type": "string",
-          "format": "byte"
         }
       },
       "xml": {
