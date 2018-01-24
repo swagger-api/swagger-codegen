@@ -21,7 +21,7 @@ package body Samples.Petstore.Clients is
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (Swagger.Clients.APPLICATION_JSON,
                                Swagger.Clients.APPLICATION_XML));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/pet");
       Client.Call (Swagger.Clients.POST, URI, Req);
@@ -107,7 +107,7 @@ package body Samples.Petstore.Clients is
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (Swagger.Clients.APPLICATION_JSON,
                                Swagger.Clients.APPLICATION_XML));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/pet");
       Client.Call (Swagger.Clients.PUT, URI, Req);
@@ -215,7 +215,7 @@ package body Samples.Petstore.Clients is
       Client.Set_Accept ((Swagger.Clients.APPLICATION_XML,
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/store/order");
       Client.Call (Swagger.Clients.POST, URI, Req, Reply);
@@ -233,7 +233,7 @@ package body Samples.Petstore.Clients is
       Client.Set_Accept ((Swagger.Clients.APPLICATION_XML,
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/user");
       Client.Call (Swagger.Clients.POST, URI, Req);
@@ -249,7 +249,7 @@ package body Samples.Petstore.Clients is
       Client.Set_Accept ((Swagger.Clients.APPLICATION_XML,
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/user/createWithArray");
       Client.Call (Swagger.Clients.POST, URI, Req);
@@ -265,7 +265,7 @@ package body Samples.Petstore.Clients is
       Client.Set_Accept ((Swagger.Clients.APPLICATION_XML,
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/user/createWithList");
       Client.Call (Swagger.Clients.POST, URI, Req);
@@ -346,7 +346,7 @@ package body Samples.Petstore.Clients is
       Client.Set_Accept ((Swagger.Clients.APPLICATION_XML,
                           Swagger.Clients.APPLICATION_JSON));
       Client.Initialize (Req, (1 => Swagger.Clients.APPLICATION_JSON));
-      Samples.Petstore.Models.Serialize (Req.Stream, "body", P_Body);
+      Samples.Petstore.Models.Serialize (Req.Stream, "", P_Body);
 
       URI.Set_Path ("/user/{username}");
       URI.Set_Path_Param ("username", Username);
