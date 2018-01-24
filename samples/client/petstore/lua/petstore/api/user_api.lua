@@ -16,8 +16,7 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
--- TODO fix model import: local petstore_user_api = require "petstore.model.user_api"
-
+local petstore_user = require "petstore.model.user"
 
 local user_api= {}
 local user_api_mt = {
@@ -223,7 +222,7 @@ function user_api:get_user_by_name(username)
 		if result == nil then
 			return nil, err3
 		end
-		return cast_user(result), headers
+		return petstore_user.cast(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -354,6 +353,6 @@ function user_api:update_user(username, body)
 end
 
 return {
-    new = new_user_api;
+	new = new_user_api;
 }
 

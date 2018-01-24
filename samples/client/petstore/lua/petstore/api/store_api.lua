@@ -16,8 +16,7 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
--- TODO fix model import: local petstore_store_api = require "petstore.model.store_api"
-
+local petstore_order = require "petstore.model.order"
 
 local store_api= {}
 local store_api_mt = {
@@ -94,7 +93,9 @@ function store_api:get_inventory()
 	req.headers:upsert("content-type", "application/json")
 
 	-- api key in headers 'api_key'
-	req.headers:upsert("api_key", self.api_key['api_key'])
+	if self.api_key['api_key'] then
+		req.headers:upsert("api_key", self.api_key['api_key'])
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -160,7 +161,7 @@ function store_api:get_order_by_id(order_id)
 		if result == nil then
 			return nil, err3
 		end
-		return cast_order(result), headers
+		return petstore_order.cast(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -208,7 +209,7 @@ function store_api:place_order(body)
 		if result == nil then
 			return nil, err3
 		end
-		return cast_order(result), headers
+		return petstore_order.cast(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -221,6 +222,6 @@ function store_api:place_order(body)
 end
 
 return {
-    new = new_store_api;
+	new = new_store_api;
 }
 

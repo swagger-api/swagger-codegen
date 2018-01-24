@@ -16,8 +16,8 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
--- TODO fix model import: local petstore_pet_api = require "petstore.model.pet_api"
-
+local petstore_api_response = require "petstore.model.api_response"
+local petstore_pet = require "petstore.model.pet"
 
 local pet_api= {}
 local pet_api_mt = {
@@ -66,7 +66,9 @@ function pet_api:add_pet(body)
 	req:set_body(dkjson.encode(body))
 
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -102,9 +104,13 @@ function pet_api:delete_pet(pet_id, api_key)
 	--local var_accept = { "application/xml", "application/json" }
 	req.headers:upsert("content-type", "application/xml")
 
-	req.headers:upsert("api_key", api_key)
+	if api_key then
+		req.headers:upsert("api_key", api_key)
+	end
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -141,7 +147,9 @@ function pet_api:find_pets_by_status(status)
 	req.headers:upsert("content-type", "application/xml")
 
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -162,7 +170,7 @@ function pet_api:find_pets_by_status(status)
 			return nil, err3
 		end
 		for _, ob in ipairs(result) do
-			cast_pet(ob)
+			petstore_pet.cast(ob)
 		end
 		return result, headers
 	else
@@ -192,7 +200,9 @@ function pet_api:find_pets_by_tags(tags)
 	req.headers:upsert("content-type", "application/xml")
 
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -213,7 +223,7 @@ function pet_api:find_pets_by_tags(tags)
 			return nil, err3
 		end
 		for _, ob in ipairs(result) do
-			cast_pet(ob)
+			petstore_pet.cast(ob)
 		end
 		return result, headers
 	else
@@ -243,7 +253,9 @@ function pet_api:get_pet_by_id(pet_id)
 	req.headers:upsert("content-type", "application/xml")
 
 	-- api key in headers 'api_key'
-	req.headers:upsert("api_key", self.api_key['api_key'])
+	if self.api_key['api_key'] then
+		req.headers:upsert("api_key", self.api_key['api_key'])
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -263,7 +275,7 @@ function pet_api:get_pet_by_id(pet_id)
 		if result == nil then
 			return nil, err3
 		end
-		return cast_pet(result), headers
+		return petstore_pet.cast(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -298,7 +310,9 @@ function pet_api:update_pet(body)
 	req:set_body(dkjson.encode(body))
 
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -344,7 +358,9 @@ function pet_api:update_pet_with_form(pet_id, name, status)
 		["status"] = status;
 	}))
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -390,7 +406,9 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
 		["file"] = file;
 	}))
 	-- oAuth
-	req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	if self.access_token then
+		req.headers:upsert("authorization", "Bearer " .. self.access_token)
+	end
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -410,7 +428,7 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
 		if result == nil then
 			return nil, err3
 		end
-		return cast_api_response(result), headers
+		return petstore_api_response.cast(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -423,6 +441,6 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
 end
 
 return {
-    new = new_pet_api;
+	new = new_pet_api;
 }
 
