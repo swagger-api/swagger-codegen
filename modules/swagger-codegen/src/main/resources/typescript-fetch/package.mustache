@@ -13,7 +13,8 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts" : {
-    "build": "tsc --outDir dist/"
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "portable-fetch": "^3.0.0"
