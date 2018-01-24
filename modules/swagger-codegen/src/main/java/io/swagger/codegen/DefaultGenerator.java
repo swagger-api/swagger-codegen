@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1004,14 +1005,27 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
         if (templateFile.startsWith(config.templateDir())) {
-            templateFile = templateFile.replaceFirst(config.templateDir(), StringUtils.EMPTY);
+            templateFile = templateFile.replaceFirst(Pattern.quote(config.templateDir()), StringUtils.EMPTY);
         }
-        final TemplateLoader templateLoader = new ClassPathTemplateLoader("/" + config.templateDir(), ".mustache");
-        final Handlebars handlebars = new Handlebars(templateLoader);
-        config.addHandlebarHelpers(handlebars);
+        
+        try{
+            /* try to get templates from classpath */
+            final TemplateLoader templateLoader = new ClassPathTemplateLoader(config.templateDir(), ".mustache");
+            final Handlebars handlebars = new Handlebars(templateLoader);
+            config.addHandlebarHelpers(handlebars);
 
-        return handlebars.compile(templateFile.replace(".mustache", StringUtils.EMPTY));
-    }
+            return handlebars.compile(templateFile.replace(".mustache", StringUtils.EMPTY));
+        } catch (java.io.FileNotFoundException e){
+            /* get templates from file system */
+            final TemplateLoader templateLoader = new FileTemplateLoader(config.templateDir(), ".mustache");
+            final Handlebars handlebars = new Handlebars(templateLoader);
+            config.addHandlebarHelpers(handlebars);
+
+            return handlebars.compile(templateFile.replace(".mustache", StringUtils.EMPTY));
+        
+        }
+        
+}
 
     private boolean isJavaCodegen(String name) {
         return name.equalsIgnoreCase("java")
