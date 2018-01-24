@@ -16,15 +16,16 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local petstore_user_api = require "petstore.api.user_api"
+-- TODO fix model import: local petstore_store_api = require "petstore.model.store_api"
 
-local petstore= {}
-local petstore_mt = {
-	__name = "user_api";
-	__index = petstore;
+
+local store_api= {}
+local store_api_mt = {
+	__name = "store_api";
+	__index = store_api;
 }
 
-local function new_user_api(host, basePath, schemes)
+local function new_store_api(host, basePath, schemes)
 	local schemes_map = {}
 	for _,v in ipairs(schemes) do
 		schemes_map[v] = v
@@ -39,126 +40,15 @@ local function new_user_api(host, basePath, schemes)
 		http_password = nil;
 		api_key = {};
 		access_token = nil;
-	}, petstore_mt)
+	}, store_api_mt)
 end
 
-function user_api:create_user(body)
+function store_api:delete_order(order_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
-		path = string.format("%s/user",
-			self.basePath);
-	})
-
-	-- set HTTP verb
-	req.headers:upsert(":method", "POST")
-	-- TODO: create a function to select proper content-type
-	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-	--local var_accept = { "application/xml", "application/json" }
-	req.headers:upsert("content-type", "application/xml")
-
-	req:set_body(dkjson.encode(body))
-
-
-	-- make the HTTP call
-	local headers, stream, errno = req:go()
-	if not headers then
-		return nil, stream, errno
-	end
-	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
-		return nil, headers
-	else
-		local body, err, errno2 = stream:get_body_as_string()
-		if not body then
-			return nil, err, errno2
-		end
-		stream:shutdown()
-		-- return the error message (http body)
-		return nil, http_status, body
-	end
-end
-
-function user_api:create_users_with_array_input(body)
-	local req = http_request.new_from_uri({
-		scheme = self.default_scheme;
-		host = self.host;
-		path = string.format("%s/user/createWithArray",
-			self.basePath);
-	})
-
-	-- set HTTP verb
-	req.headers:upsert(":method", "POST")
-	-- TODO: create a function to select proper content-type
-	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-	--local var_accept = { "application/xml", "application/json" }
-	req.headers:upsert("content-type", "application/xml")
-
-	req:set_body(dkjson.encode(body))
-
-
-	-- make the HTTP call
-	local headers, stream, errno = req:go()
-	if not headers then
-		return nil, stream, errno
-	end
-	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
-		return nil, headers
-	else
-		local body, err, errno2 = stream:get_body_as_string()
-		if not body then
-			return nil, err, errno2
-		end
-		stream:shutdown()
-		-- return the error message (http body)
-		return nil, http_status, body
-	end
-end
-
-function user_api:create_users_with_list_input(body)
-	local req = http_request.new_from_uri({
-		scheme = self.default_scheme;
-		host = self.host;
-		path = string.format("%s/user/createWithList",
-			self.basePath);
-	})
-
-	-- set HTTP verb
-	req.headers:upsert(":method", "POST")
-	-- TODO: create a function to select proper content-type
-	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-	--local var_accept = { "application/xml", "application/json" }
-	req.headers:upsert("content-type", "application/xml")
-
-	req:set_body(dkjson.encode(body))
-
-
-	-- make the HTTP call
-	local headers, stream, errno = req:go()
-	if not headers then
-		return nil, stream, errno
-	end
-	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
-		return nil, headers
-	else
-		local body, err, errno2 = stream:get_body_as_string()
-		if not body then
-			return nil, err, errno2
-		end
-		stream:shutdown()
-		-- return the error message (http body)
-		return nil, http_status, body
-	end
-end
-
-function user_api:delete_user(username)
-	local req = http_request.new_from_uri({
-		scheme = self.default_scheme;
-		host = self.host;
-		path = string.format("%s/user/%s",
-			self.basePath, username);
+		path = string.format("%s/store/order/%s",
+			self.basePath, order_id);
 	})
 
 	-- set HTTP verb
@@ -188,67 +78,23 @@ function user_api:delete_user(username)
 	end
 end
 
-function user_api:get_user_by_name(username)
+function store_api:get_inventory()
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
-		path = string.format("%s/user/%s",
-			self.basePath, username);
+		path = string.format("%s/store/inventory",
+			self.basePath);
 	})
 
 	-- set HTTP verb
 	req.headers:upsert(":method", "GET")
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-	--local var_accept = { "application/xml", "application/json" }
-	req.headers:upsert("content-type", "application/xml")
+	--local var_accept = { "application/json" }
+	req.headers:upsert("content-type", "application/json")
 
-
-	-- make the HTTP call
-	local headers, stream, errno = req:go()
-	if not headers then
-		return nil, stream, errno
-	end
-	local http_status = headers:get(":status")
-	if http_status:sub(1,1) == "2" then
-		local body, err, errno2 = stream:get_body_as_string()
-		-- exception when getting the HTTP body
-		if not body then
-			return nil, err, errno2
-		end
-		stream:shutdown()
-		local result, _, err3 = dkjson.decode(body)
-		-- exception when decoding the HTTP body
-		if result == nil then
-			return nil, err3
-		end
-		return cast_user(result), headers
-	else
-		local body, err, errno2 = stream:get_body_as_string()
-		if not body then
-			return nil, err, errno2
-		end
-		stream:shutdown()
-		-- return the error message (http body)
-		return nil, http_status, body
-	end
-end
-
-function user_api:login_user(username, password)
-	local req = http_request.new_from_uri({
-		scheme = self.default_scheme;
-		host = self.host;
-		path = string.format("%s/user/login?username=%s&password=%s",
-			self.basePath, http_util.encodeURIComponent(username), http_util.encodeURIComponent(password));
-	})
-
-	-- set HTTP verb
-	req.headers:upsert(":method", "GET")
-	-- TODO: create a function to select proper content-type
-	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
-	--local var_accept = { "application/xml", "application/json" }
-	req.headers:upsert("content-type", "application/xml")
-
+	-- api key in headers 'api_key'
+	req.headers:upsert("api_key", self.api_key['api_key'])
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -280,12 +126,12 @@ function user_api:login_user(username, password)
 	end
 end
 
-function user_api:logout_user()
+function store_api:get_order_by_id(order_id)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
-		path = string.format("%s/user/logout",
-			self.basePath);
+		path = string.format("%s/store/order/%s",
+			self.basePath, order_id);
 	})
 
 	-- set HTTP verb
@@ -303,7 +149,18 @@ function user_api:logout_user()
 	end
 	local http_status = headers:get(":status")
 	if http_status:sub(1,1) == "2" then
-		return nil, headers
+		local body, err, errno2 = stream:get_body_as_string()
+		-- exception when getting the HTTP body
+		if not body then
+			return nil, err, errno2
+		end
+		stream:shutdown()
+		local result, _, err3 = dkjson.decode(body)
+		-- exception when decoding the HTTP body
+		if result == nil then
+			return nil, err3
+		end
+		return cast_order(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -315,16 +172,16 @@ function user_api:logout_user()
 	end
 end
 
-function user_api:update_user(username, body)
+function store_api:place_order(body)
 	local req = http_request.new_from_uri({
 		scheme = self.default_scheme;
 		host = self.host;
-		path = string.format("%s/user/%s",
-			self.basePath, username);
+		path = string.format("%s/store/order",
+			self.basePath);
 	})
 
 	-- set HTTP verb
-	req.headers:upsert(":method", "PUT")
+	req.headers:upsert(":method", "POST")
 	-- TODO: create a function to select proper content-type
 	-- ref: https://github.com/swagger-api/swagger-codegen/pull/6252#issuecomment-321199879
 	--local var_accept = { "application/xml", "application/json" }
@@ -340,7 +197,18 @@ function user_api:update_user(username, body)
 	end
 	local http_status = headers:get(":status")
 	if http_status:sub(1,1) == "2" then
-		return nil, headers
+		local body, err, errno2 = stream:get_body_as_string()
+		-- exception when getting the HTTP body
+		if not body then
+			return nil, err, errno2
+		end
+		stream:shutdown()
+		local result, _, err3 = dkjson.decode(body)
+		-- exception when decoding the HTTP body
+		if result == nil then
+			return nil, err3
+		end
+		return cast_order(result), headers
 	else
 		local body, err, errno2 = stream:get_body_as_string()
 		if not body then
@@ -351,4 +219,8 @@ function user_api:update_user(username, body)
 		return nil, http_status, body
 	end
 end
+
+return {
+    new = new_store_api;
+}
 

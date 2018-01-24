@@ -16,12 +16,13 @@ local dkjson = require "dkjson"
 local basexx = require "basexx"
 
 -- model import
-local petstore_pet_api = require "petstore.api.pet_api"
+-- TODO fix model import: local petstore_pet_api = require "petstore.model.pet_api"
 
-local petstore= {}
-local petstore_mt = {
+
+local pet_api= {}
+local pet_api_mt = {
 	__name = "pet_api";
-	__index = petstore;
+	__index = pet_api;
 }
 
 local function new_pet_api(host, basePath, schemes)
@@ -39,7 +40,7 @@ local function new_pet_api(host, basePath, schemes)
 		http_password = nil;
 		api_key = {};
 		access_token = nil;
-	}, petstore_mt)
+	}, pet_api_mt)
 end
 
 function pet_api:add_pet(body)
@@ -242,7 +243,7 @@ function pet_api:get_pet_by_id(pet_id)
 	req.headers:upsert("content-type", "application/xml")
 
 	-- api key in headers 'api_key'
-	req.headers:upsert("api_key", api_key['api_key'])
+	req.headers:upsert("api_key", self.api_key['api_key'])
 
 	-- make the HTTP call
 	local headers, stream, errno = req:go()
@@ -420,4 +421,8 @@ function pet_api:upload_file(pet_id, additional_metadata, file)
 		return nil, http_status, body
 	end
 end
+
+return {
+    new = new_pet_api;
+}
 
