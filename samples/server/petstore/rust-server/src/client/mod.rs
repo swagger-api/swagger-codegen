@@ -109,92 +109,121 @@ impl fmt::Debug for Client {
 }
 
 impl Client {
-    pub fn try_new_http(handle: Handle, base_path: &str) -> Result<Client, ClientInitError>
+
+    /// Create an HTTP client.
+    ///
+    /// # Arguments
+    /// * `handle` - tokio reactor handle to use for execution
+    /// * `base_path` - base path of the client API, i.e. "www.my-api-implementation.com"
+    pub fn try_new_http(handle: Handle, base_path: &str) -> Result<Client, ClientInitError> {
+        let http_connector = swagger::http_connector();
+        Self::try_new_with_connector::<hyper::client::HttpConnector>(
+            handle,
+            base_path,
+            Some("http"),
+            http_connector,
+        )
+    }
+
+    /// Create a client with a TLS connection to the server.
+    ///
+    /// # Arguments
+    /// * `handle` - tokio reactor handle to use for execution
+    /// * `base_path` - base path of the client API, i.e. "www.my-api-implementation.com"
+    /// * `ca_certificate` - Path to CA certificate used to authenticate the server
+    pub fn try_new_https<CA>(
+        handle: Handle,
+        base_path: &str,
+        ca_certificate: CA,
+    ) -> Result<Client, ClientInitError>
+    where
+        CA: AsRef<Path>,
     {
-        let https_hyper_client = move |handle: &Handle| -> Box<hyper::client::Service<Request=hyper::Request<hyper::Body>, Response=hyper::Response, Error=hyper::Error, Future=hyper::client::FutureResponse>> {
-            Box::new(hyper::client::Client::new(handle))
+        let https_connector = swagger::https_connector(ca_certificate);
+        Self::try_new_with_connector::<hyper_tls::HttpsConnector<hyper::client::HttpConnector>>(
+            handle,
+            base_path,
+            Some("https"),
+            https_connector,
+        )
+    }
+
+    /// Create a client with a mutually authenticated TLS connection to the server.
+    ///
+    /// # Arguments
+    /// * `handle` - tokio reactor handle to use for execution
+    /// * `base_path` - base path of the client API, i.e. "www.my-api-implementation.com"
+    /// * `ca_certificate` - Path to CA certificate used to authenticate the server
+    /// * `client_key` - Path to the client private key
+    /// * `client_certificate` - Path to the client's public certificate associated with the private key
+    pub fn try_new_https_mutual<CA, K, C, T>(
+        handle: Handle,
+        base_path: &str,
+        ca_certificate: CA,
+        client_key: K,
+        client_certificate: C,
+    ) -> Result<Client, ClientInitError>
+    where
+        CA: AsRef<Path>,
+        K: AsRef<Path>,
+        C: AsRef<Path>,
+    {
+        let https_connector =
+            swagger::https_mutual_connector(ca_certificate, client_key, client_certificate);
+        Self::try_new_with_connector::<hyper_tls::HttpsConnector<hyper::client::HttpConnector>>(
+            handle,
+            base_path,
+            Some("https"),
+            https_connector,
+        )
+    }
+
+    /// Create a client with a custom implementation of hyper::client::Connect.
+    ///
+    /// Intended for use with custom implementations of connect for e.g. protocol logging
+    /// or similar functionality which requires wrapping the transport layer. When wrapping a TCP connection,
+    /// this function should be used in conjunction with
+    /// `swagger::{http_connector, https_connector, https_mutual_connector}`.
+    ///
+    /// For ordinary tcp connections, prefer the use of `try_new_http`, `try_new_https`
+    /// and `try_new_https_mutual`, to avoid introducing a dependency on the underlying transport layer.
+    ///
+    /// # Arguments
+    ///
+    /// * `handle` - tokio reactor handle to use for execution
+    /// * `base_path` - base path of the client API, i.e. "www.my-api-implementation.com"
+    /// * `protocol` - Which protocol to use when constructing the request url, e.g. `Some("http")`
+    /// * `connector_fn` - Function which returns an implementation of `hyper::client::Connect`
+    pub fn try_new_with_connector<C>(
+        handle: Handle,
+        base_path: &str,
+        protocol: Option<&'static str>,
+        connector_fn: Box<Fn(&Handle) -> C + Send + Sync>,
+    ) -> Result<Client, ClientInitError>
+    where
+        C: hyper::client::Connect + hyper::client::Service,
+    {
+        let hyper_client = {
+            move |handle: &Handle| -> Box<
+                hyper::client::Service<
+                    Request = hyper::Request<hyper::Body>,
+                    Response = hyper::Response,
+                    Error = hyper::Error,
+                    Future = hyper::client::FutureResponse,
+                >,
+            > {
+                let connector = connector_fn(handle);
+                Box::new(hyper::Client::configure().connector(connector).build(
+                    handle,
+                ))
+            }
         };
 
         Ok(Client {
-            hyper_client: Arc::new(https_hyper_client),
+            hyper_client: Arc::new(hyper_client),
             handle: Arc::new(handle),
-            base_path: into_base_path(base_path, Some("http"))?,
+            base_path: into_base_path(base_path, protocol)?,
         })
-    }
-
-    pub fn try_new_https<CA>(handle: Handle,
-                             base_path: &str,
-                             ca_certificate: CA)
-                            -> Result<Client, ClientInitError>
-        where CA: AsRef<Path>
-    {
-        let ca_certificate = ca_certificate.as_ref().to_owned();
-
-        let https_hyper_client = move |handle: &Handle| -> Box<hyper::client::Service<Request=hyper::Request<hyper::Body>, Response=hyper::Response, Error=hyper::Error, Future=hyper::client::FutureResponse>> {
-            // SSL implementation
-            let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
-
-            // Server authentication
-            ssl.set_ca_file(ca_certificate.clone()).unwrap();
-
-            let builder: native_tls::TlsConnectorBuilder = native_tls::backend::openssl::TlsConnectorBuilderExt::from_openssl(ssl);
-            let mut connector = hyper::client::HttpConnector::new(4, &handle);
-            connector.enforce_http(false);
-            let connector: hyper_tls::HttpsConnector<hyper::client::HttpConnector> = (connector, builder.build().unwrap()).into();
-            Box::new(
-                hyper::Client::configure()
-                    .connector(connector)
-                    .build(&handle))
-        };
-
-        Ok(Client {
-                hyper_client: Arc::new(https_hyper_client),
-                handle: Arc::new(handle),
-                base_path: into_base_path(base_path, Some("https"))?,
-            })
-    }
-
-    pub fn try_new_https_mutual<CA, K, C>(handle: Handle,
-                                          base_path: &str,
-                                          ca_certificate: CA,
-                                          client_key: K,
-                                          client_certificate: C)
-                                         -> Result<Client, ClientInitError>
-        where CA: AsRef<Path>,
-              K: AsRef<Path>,
-              C: AsRef<Path>
-    {
-        let ca_certificate = ca_certificate.as_ref().to_owned();
-        let client_key = client_key.as_ref().to_owned();
-        let client_certificate = client_certificate.as_ref().to_owned();
-
-        let https_mutual_hyper_client = move |handle: &Handle| -> Box<hyper::client::Service<Request=hyper::Request<hyper::Body>, Response=hyper::Response, Error=hyper::Error, Future=hyper::client::FutureResponse>> {
-            // SSL implementation
-            let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
-
-            // Server authentication
-            ssl.set_ca_file(ca_certificate.clone()).unwrap();
-
-            // Client authentication
-            ssl.set_private_key_file(client_key.clone(), openssl::x509::X509_FILETYPE_PEM).unwrap();
-            ssl.set_certificate_chain_file(client_certificate.clone()).unwrap();
-            ssl.check_private_key().unwrap();
-
-            let builder: native_tls::TlsConnectorBuilder = native_tls::backend::openssl::TlsConnectorBuilderExt::from_openssl(ssl);
-            let mut connector = hyper::client::HttpConnector::new(4, &handle);
-            connector.enforce_http(false);
-            let connector: hyper_tls::HttpsConnector<hyper::client::HttpConnector> = (connector, builder.build().unwrap()).into();
-            Box::new(
-                hyper::Client::configure()
-                    .connector(connector)
-                    .build(&handle))
-        };
-
-        Ok(Client {
-                hyper_client: Arc::new(https_mutual_hyper_client),
-                handle: Arc::new(handle),
-                base_path: into_base_path(base_path, Some("https"))?,
-            })
     }
 
     /// Constructor for creating a `Client` by passing in a pre-made `hyper` client.
