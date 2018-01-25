@@ -84,7 +84,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.8.9");
         supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.8.9");
         supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.8.9");
-        supportedLibraries.put("rest-assured", "HTTP client: rest-assured : 3.0.6. JSON processing: JSON processing: Gson 2.6.1");
+        supportedLibraries.put("rest-assured", "HTTP client: rest-assured : 3.0.6. JSON processing: Gson 2.6.1. Only for Java8");
 
         CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
         libraryOption.setEnum(supportedLibraries);
@@ -250,9 +250,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             additionalProperties.put("jackson", "true");
 
         } else if (REST_ASSURED.equals(getLibrary()))  {
-            additionalProperties.put("java8", "true");
             additionalProperties.put("gson", "true");
             apiTemplateFiles.put("api.mustache", ".java");
+            supportingFiles.add(new SupportingFile("ResponseSpecBuilders.mustache", invokerFolder, "ResponseSpecBuilders.java"));
+            supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+            supportingFiles.add(new SupportingFile("GsonObjectMapper.mustache", invokerFolder, "GsonObjectMapper.java"));
         } else {
             LOGGER.error("Unknown library option (-l/--library): " + getLibrary());
         }

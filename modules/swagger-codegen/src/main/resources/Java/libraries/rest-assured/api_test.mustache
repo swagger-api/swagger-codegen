@@ -4,9 +4,10 @@ package {{package}};
 
 {{#imports}}import {{import}};
 {{/imports}}
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.{{classname}};
+import {{invokerPackage}}.ApiClient;
+import {{apiPackage}}.{{classname}};
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.ErrorLoggingFilter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -17,10 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 {{/fullJavaUtil}}
-
-
-import static io.restassured.http.ContentType.JSON;
-import static io.restassured.mapper.ObjectMapperType.GSON;
+import static io.restassured.filter.log.LogDetail.ALL;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static {{invokerPackage}}.GsonObjectMapper.gson;
 
 /**
  * API tests for {{classname}}
@@ -33,8 +34,9 @@ public class {{classname}}Test {
     @Before
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
+                () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .log(ALL)
+                        .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("{{basePath}}"))).{{classVarName}}();
     }
 {{#operations}}
@@ -51,8 +53,9 @@ public class {{classname}}Test {
         {{/allParams}}
         api.{{operationId}}(){{#allParams}}{{#required}}{{#isPathParam}}
                 .{{paramName}}Path({{paramName}}){{/isPathParam}}{{#isQueryParam}}
-                .{{paramName}}Query({{paramName}}){{/isQueryParam}}{{#isFormParam}}
-                .{{paramName}}Form({{paramName}}){{/isFormParam}}{{#isHeaderParam}}
+                .{{paramName}}Query({{paramName}}){{/isQueryParam}}{{#isFormParam}}{{^isFile}}
+                .{{paramName}}Form({{paramName}}){{/isFile}}{{/isFormParam}}{{#isFormParam}}{{#isFile}}
+                .{{paramName}}MultiPart({{paramName}}){{/isFile}}{{/isFormParam}}{{#isHeaderParam}}
                 .{{paramName}}Header({{paramName}}){{/isHeaderParam}}{{#isBodyParam}}
                 .body({{paramName}}){{/isBodyParam}}{{/required}}{{/allParams}}.execute(r -> r.prettyPeek());
         // TODO: test validations

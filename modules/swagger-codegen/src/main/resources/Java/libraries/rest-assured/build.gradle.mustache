@@ -98,6 +98,7 @@ ext {
     rest_assured_version = "3.0.6"
     junit_version = "4.12"
     gson_version = "2.6.1"
+    gson_fire_version = "1.8.2"
 {{#joda}}
     jodatime_version = "2.9.9"
 {{/joda}}
@@ -109,6 +110,7 @@ ext {
 dependencies {
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "io.rest-assured:scala-support:$rest_assured_version"
+    compile "io.gsonfire:gson-fire:$gson_fire_version"
 {{#joda}}
     compile "joda-time:joda-time:$jodatime_version"
     compile 'com.google.code.gson:gson:$gson_version'

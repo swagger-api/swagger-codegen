@@ -13,26 +13,24 @@
 
 package io.swagger.client.api;
 
-import java.math.BigDecimal;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.ErrorLoggingFilter;
+import io.swagger.client.ApiClient;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.OuterComposite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
-import io.swagger.client.model.OuterComposite;
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.FakeApi;
-import io.restassured.builder.RequestSpecBuilder;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Ignore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
-
-import static io.restassured.http.ContentType.JSON;
-import static io.restassured.mapper.ObjectMapperType.GSON;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static io.restassured.filter.log.LogDetail.ALL;
+import static io.swagger.client.GsonObjectMapper.gson;
 
 /**
  * API tests for FakeApi
@@ -45,8 +43,9 @@ public class FakeApiTest {
     @Before
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
+                () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .log(ALL)
+                        .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
     }
 

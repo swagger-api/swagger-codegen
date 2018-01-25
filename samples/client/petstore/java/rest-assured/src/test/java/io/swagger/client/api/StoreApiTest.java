@@ -13,27 +13,30 @@
 
 package io.swagger.client.api;
 
-import io.swagger.client.model.Order;
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.StoreApi;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.ErrorLoggingFilter;
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.Order;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
+import org.threeten.bp.OffsetDateTime;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
-import static io.restassured.http.ContentType.JSON;
-import static io.restassured.mapper.ObjectMapperType.GSON;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static io.swagger.client.GsonObjectMapper.gson;
+import static io.swagger.client.ResponseSpecBuilders.shouldBeCode;
+import static io.swagger.client.ResponseSpecBuilders.validatedWith;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * API tests for StoreApi
  */
-@Ignore
 public class StoreApiTest {
 
     private StoreApi api;
@@ -41,98 +44,40 @@ public class StoreApiTest {
     @Before
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
+                () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
     }
 
-    /**
-     * Invalid ID supplied
-     */
     @Test
-    public void shouldSee400AfterDeleteOrder() {
-        String orderId = null;
-        api.deleteOrder()
-                .orderIdPath(orderId).execute(r -> r.prettyPeek());
-        // TODO: test validations
+    public void getInventoryTest() {
+        Map<String, Long> inventory = api.getInventory().execute(validatedWith(shouldBeCode(SC_OK)))
+                .as(HashMap.class);
+        assertThat(inventory.keySet().size(), greaterThan(0));
     }
 
-    /**
-     * Order not found
-     */
     @Test
-    public void shouldSee404AfterDeleteOrder() {
-        String orderId = null;
-        api.deleteOrder()
-                .orderIdPath(orderId).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee200AfterGetInventory() {
-        api.getInventory().execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee200AfterGetOrderById() {
-        Long orderId = null;
+    public void getOrderByIdTest() {
+        Order order = getOrder();
+        api.placeOrder().body(order).execute(validatedWith(shouldBeCode(SC_OK)));
         api.getOrderById()
-                .orderIdPath(orderId).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .orderIdPath(order.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
-    /**
-     * Invalid ID supplied
-     */
     @Test
-    public void shouldSee400AfterGetOrderById() {
-        Long orderId = null;
-        api.getOrderById()
-                .orderIdPath(orderId).execute(r -> r.prettyPeek());
-        // TODO: test validations
+    public void placeAndDeleteOrderTest() {
+        Order order = getOrder();
+        Long id = api.placeOrder()
+                .body(order).executeAs(validatedWith(shouldBeCode(SC_OK))).getId();
+        api.deleteOrder().orderIdPath(id.toString())
+                .execute(validatedWith(shouldBeCode(SC_OK)));
+        api.getOrderById().orderIdPath(order.getId()).execute(validatedWith(shouldBeCode(SC_NOT_FOUND)));
+
     }
 
-    /**
-     * Order not found
-     */
-    @Test
-    public void shouldSee404AfterGetOrderById() {
-        Long orderId = null;
-        api.getOrderById()
-                .orderIdPath(orderId).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee200AfterPlaceOrder() {
-        Order body = null;
-        api.placeOrder()
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-    /**
-     * Invalid Order
-     */
-    @Test
-    public void shouldSee400AfterPlaceOrder() {
-        Order body = null;
-        api.placeOrder()
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
+    private Order getOrder() {
+        return new Order().id(TestUtils.nextId()).complete(false).petId(0L)
+                .quantity(111).status(Order.StatusEnum.DELIVERED).shipDate(OffsetDateTime.now().withNano(123000000));
     }
 
 }

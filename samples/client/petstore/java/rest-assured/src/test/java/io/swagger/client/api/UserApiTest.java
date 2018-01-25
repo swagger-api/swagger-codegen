@@ -13,27 +13,30 @@
 
 package io.swagger.client.api;
 
-import io.swagger.client.model.User;
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.UserApi;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.ErrorLoggingFilter;
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-
-import static io.restassured.http.ContentType.JSON;
-import static io.restassured.mapper.ObjectMapperType.GSON;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static io.swagger.client.GsonObjectMapper.gson;
+import static io.swagger.client.ResponseSpecBuilders.shouldBeCode;
+import static io.swagger.client.ResponseSpecBuilders.validatedWith;
+import static io.swagger.client.api.TestUtils.nextId;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * API tests for UserApi
  */
-@Ignore
 public class UserApiTest {
 
     private UserApi api;
@@ -41,165 +44,72 @@ public class UserApiTest {
     @Before
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
+                () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
     }
 
-    /**
-     * successful operation
-     */
     @Test
-    public void shouldSee0AfterCreateUser() {
-        User body = null;
-        api.createUser()
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee0AfterCreateUsersWithArrayInput() {
-        List<User> body = null;
+    public void createUsersWithArrayInputTest() {
+        List<User> body = new ArrayList<>();
+        body.add(new User().id(nextId()));
+        body.add(new User().id(nextId()));
+        body.add(new User().id(nextId()));
         api.createUsersWithArrayInput()
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .body(body).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
-
-    /**
-     * successful operation
-     */
     @Test
-    public void shouldSee0AfterCreateUsersWithListInput() {
-        List<User> body = null;
+    public void createUsersWithListInputTest() {
+        List<User> body = new ArrayList<>();
+        body.add(new User().id(nextId()));
+        body.add(new User().id(nextId()));
+        body.add(new User().id(nextId()));
         api.createUsersWithListInput()
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .body(body).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
-
-    /**
-     * Invalid username supplied
-     */
     @Test
-    public void shouldSee400AfterDeleteUser() {
-        String username = null;
-        api.deleteUser()
-                .usernamePath(username).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-    /**
-     * User not found
-     */
-    @Test
-    public void shouldSee404AfterDeleteUser() {
-        String username = null;
-        api.deleteUser()
-                .usernamePath(username).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee200AfterGetUserByName() {
-        String username = null;
+    public void createUserTest() {
+        String userName = "userName";
+        User newUser = getUser().username(userName);
+        api.createUser().body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
         api.getUserByName()
-                .usernamePath(username).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .usernamePath(userName).executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertThat(newUser.getUsername(), equalTo(userName));
     }
 
-    /**
-     * Invalid username supplied
-     */
     @Test
-    public void shouldSee400AfterGetUserByName() {
-        String username = null;
-        api.getUserByName()
-                .usernamePath(username).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-    /**
-     * User not found
-     */
-    @Test
-    public void shouldSee404AfterGetUserByName() {
-        String username = null;
-        api.getUserByName()
-                .usernamePath(username).execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * successful operation
-     */
-    @Test
-    public void shouldSee200AfterLoginUser() {
-        String username = null;
-        String password = null;
-        api.loginUser()
+    public void loginTest() {
+        String username = "a";
+        String password = "b";
+        String result = api.loginUser()
                 .usernameQuery(username)
-                .passwordQuery(password).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .passwordQuery(password).executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertThat(result, containsString("logged in user session"));
+
     }
 
-    /**
-     * Invalid username/password supplied
-     */
     @Test
-    public void shouldSee400AfterLoginUser() {
-        String username = null;
-        String password = null;
-        api.loginUser()
-                .usernameQuery(username)
-                .passwordQuery(password).execute(r -> r.prettyPeek());
-        // TODO: test validations
+    public void logoutTest() {
+        api.logoutUser().execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
-
-    /**
-     * successful operation
-     */
     @Test
-    public void shouldSee0AfterLogoutUser() {
-        api.logoutUser().execute(r -> r.prettyPeek());
-        // TODO: test validations
-    }
-
-
-    /**
-     * Invalid user supplied
-     */
-    @Test
-    public void shouldSee400AfterUpdateUser() {
-        String username = null;
-        User body = null;
+    public void updateUserTest() {
+        String username = "me";
+        User newUser = new User().username(username);
+        api.createUser().body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
         api.updateUser()
                 .usernamePath(username)
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
+                .body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
+        String result = api.getUserByName().usernamePath(username).executeAs(validatedWith(shouldBeCode(SC_OK))).getUsername();
+        assertThat(result, equalTo(username));
+
     }
 
-    /**
-     * User not found
-     */
-    @Test
-    public void shouldSee404AfterUpdateUser() {
-        String username = null;
-        User body = null;
-        api.updateUser()
-                .usernamePath(username)
-                .body(body).execute(r -> r.prettyPeek());
-        // TODO: test validations
+    private User getUser() {
+        return new User().id(nextId()).username("Username")
+                .email("blah@blah.com").firstName("Firstname").lastName("Lastname").userStatus(1);
     }
-
 }
