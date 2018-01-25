@@ -19,7 +19,7 @@ local basexx = require "basexx"
 local petstore_api_response = require "petstore.model.api_response"
 local petstore_pet = require "petstore.model.pet"
 
-local pet_api= {}
+local pet_api = {}
 local pet_api_mt = {
 	__name = "pet_api";
 	__index = pet_api;

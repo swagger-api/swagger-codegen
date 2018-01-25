@@ -18,7 +18,7 @@ local basexx = require "basexx"
 -- model import
 local petstore_order = require "petstore.model.order"
 
-local store_api= {}
+local store_api = {}
 local store_api_mt = {
 	__name = "store_api";
 	__index = store_api;
