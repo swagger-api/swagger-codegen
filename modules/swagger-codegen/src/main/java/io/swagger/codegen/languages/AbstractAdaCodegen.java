@@ -483,54 +483,54 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
                     }
                     p.vendorExtensions.put("x-is-model-type", isModel);
                 }
-				// let us work with fully qualified names only
+                // let us work with fully qualified names only
                 modelDepends.put(modelPackage + ".Models." + m.classname, d);
                 orderedModels.add(model);
             }
         }
 
-		// Sort models using dependencies:
-		//   List revisedOrderedModels <- ()
-		//   if you have N model, do N passes. In each pass look for an independent model
-		//   cycle over orderedModels
-		//     if I find a model that has no dependencies, or all of its dependencies are in revisedOrderedModels, consider it the independentModel
-		//   put the independentModel at the end of revisedOrderedModels, and remove it from orderedModels
-		//   
-		List<Map<String, Object>> revisedOrderedModels = new ArrayList<Map<String, Object>>();
-		List<String> collectedModelNames = new ArrayList<String>();
-		int sizeOrderedModels = orderedModels.size();
-		for (int i=0;i<sizeOrderedModels;i++) {
-			Map<String, Object> independentModel = null;
-			String independentModelName = null;
-			for (Map<String, Object> model : orderedModels) {
-				// let us work with fully qualified names only
-				String modelName = modelPackage + ".Models." + ((CodegenModel) model.get("model")).classname;
-				boolean dependent = false;
-				for (String dependency : modelDepends.get(modelName)) {
-					if (!collectedModelNames.contains(dependency)) {
-						dependent = true;
-					}
-				}
-				if (!dependent) {
-					// this model was independent
-					independentModel = model;
-					independentModelName = modelName;
-				}
-			}
-			if (null != independentModel) {
-				// I have find an independentModel. Add it to revisedOrderedModels, and remove from orderedModels
-				revisedOrderedModels.add(independentModel);
-				collectedModelNames.add(independentModelName);
-				orderedModels.remove(independentModel);
-			}
-		}
-		// bookkeeping:
-		// if I still have elements in orderedModels:
-		//   if it's NOT last time I postProcessModels(), it means there are some dependencies that were not considered yet. That's not a problem
-		//   if it's last iteration, there are circular dependencies.
-		//  In any case, I add models still in orderedModels to revisedOrderedModels
-		revisedOrderedModels.addAll(orderedModels);
-		orderedModels = revisedOrderedModels;
+        // Sort models using dependencies:
+        //   List revisedOrderedModels <- ()
+        //   if you have N model, do N passes. In each pass look for an independent model
+        //   cycle over orderedModels
+        //     if I find a model that has no dependencies, or all of its dependencies are in revisedOrderedModels, consider it the independentModel
+        //   put the independentModel at the end of revisedOrderedModels, and remove it from orderedModels
+        //   
+        List<Map<String, Object>> revisedOrderedModels = new ArrayList<Map<String, Object>>();
+        List<String> collectedModelNames = new ArrayList<String>();
+        int sizeOrderedModels = orderedModels.size();
+        for (int i=0;i<sizeOrderedModels;i++) {
+            Map<String, Object> independentModel = null;
+            String independentModelName = null;
+            for (Map<String, Object> model : orderedModels) {
+                // let us work with fully qualified names only
+                String modelName = modelPackage + ".Models." + ((CodegenModel) model.get("model")).classname;
+                boolean dependent = false;
+                for (String dependency : modelDepends.get(modelName)) {
+                    if (!collectedModelNames.contains(dependency)) {
+                        dependent = true;
+                    }
+                }
+                if (!dependent) {
+                    // this model was independent
+                    independentModel = model;
+                    independentModelName = modelName;
+                }
+            }
+            if (null != independentModel) {
+                // I have find an independentModel. Add it to revisedOrderedModels, and remove from orderedModels
+                revisedOrderedModels.add(independentModel);
+                collectedModelNames.add(independentModelName);
+                orderedModels.remove(independentModel);
+            }
+        }
+        // bookkeeping:
+        // if I still have elements in orderedModels:
+        //   if it's NOT last time I postProcessModels(), it means there are some dependencies that were not considered yet. That's not a problem
+        //   if it's last iteration, there are circular dependencies.
+        //  In any case, I add models still in orderedModels to revisedOrderedModels
+        revisedOrderedModels.addAll(orderedModels);
+        orderedModels = revisedOrderedModels;
 
         return postProcessModelsEnum(objs);
     }
