@@ -19,10 +19,10 @@ import java.io.Writer;
  * </pre>
  * <p>
  * Use:
- * <pre>
+ * <pre>{@code
  *     {{#indent4}}{{>template}}{{/indent4}}
  *         {{#indent8}}{{>other_template}}{{/indent8}}
- * </pre>
+ * }</pre>
  */
 public class IndentedLambda implements Mustache.Lambda {
     private final int prefixSpaceCount;

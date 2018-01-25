@@ -36,7 +36,7 @@ public class TitlecaseLambda implements Mustache.Lambda  {
      *
      * NOTE: passing {@code null} results in a title-casing the first word only.
      *
-     * @param delimiter
+     * @param delimiter Provided to allow an override for the default space delimiter.
      */
     public TitlecaseLambda(String delimiter) {
         this.delimiter = delimiter;
