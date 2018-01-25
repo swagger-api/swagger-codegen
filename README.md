@@ -129,6 +129,11 @@ After cloning the project, you can build it from source with this command:
 mvn clean package
 ```
 
+If you don't have maven installed, you may directly use the included [maven wrapper](https://github.com/takari/maven-wrapper), and build with the command:
+```sh
+./mvnw clean package
+```
+
 ### Homebrew
 
 To install, run `brew install swagger-codegen`
@@ -931,56 +936,16 @@ Presentations/Videos/Tutorials/Books
 - 2017/12/29 - [REST APIs代码生成指南](https://gumroad.com/l/swagger_codegen_beginner_zh)(eBook) by [William Cheng](https://github.com/wing328), [Xin Meng](https://github.com/xmeng1)
 - 2017/12/21 - [Using Protocol Buffer to Generate SDK at Hootsuite](http://code.hootsuite.com/using-protocol-buffer-to-generate-sdk-at-hoosuite/?lipi=urn%3Ali%3Apage%3Ad_flagship3_messaging%3By4ATz3SDRXyvXJJ14LQysQ%3D%3D) by [Joy Zhang](https://www.linkedin.com/in/joy8zhang/)
 - 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
+- 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
 
 # Swagger Codegen Core Team
 
 Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
-## API Clients
-| Languages     | Core Team (join date) |
-|:-------------|:-------------|
-| ActionScript | |
-| C++      |  |
-| C#      | @jimschubert (2016/05/01) |
-| Clojure | @xhh (2016/05/01) |
-| Dart      |  |
-| Groovy     |  |
-| Go     |  @guohuang (2016/05/01) @neilotoole (2016/05/01) |
-| Java      | @cbornet (2016/05/01) @xhh (2016/05/01) @epaul (2016/06/04) |
-| Java (Spring Cloud) | @cbornet (2016/07/19) |
-| Kotlin      | @jimschubert (2016/05/01) |
-| NodeJS/Javascript | @xhh (2016/05/01) |
-| ObjC      | @mateuszmackowiak (2016/05/09) |
-| Perl      | @wing328 (2016/05/01) |
-| PHP      | @arnested (2016/05/01) |
-| Python   | @scottrw93 (2016/05/01) |
-| Ruby      | @wing328 (2016/05/01) @zlx (2016/05/22) |
-| Scala     |  |
-| Swift     | @jaz-ah (2016/05/01)  @Edubits (2016/05/01) |
-| TypeScript (Node) | @Vrolijkx (2016/05/01) |
-| TypeScript (Angular1) | @Vrolijkx (2016/05/01) |
-| TypeScript (Angular2) | @Vrolijkx (2016/05/01) |
-| TypeScript (Fetch) |  |
-## Server Stubs
-| Languages     | Core Team (date joined) |
-|:------------- |:-------------|
-| C# ASP.NET5 |  @jimschubert (2016/05/01) |
-| Go Server | @guohuang (2016/06/13) |
-| Haskell Servant |  |
-| Java Spring Boot | @cbornet (2016/07/19) |
-| Java Spring MVC | @kolyjjj (2016/05/01) @cbornet (2016/07/19) |
-| Java JAX-RS |  |
-| Java Play Framework |  |
-| NancyFX |  |
-| NodeJS | @kolyjjj (2016/05/01) |
-| PHP Lumen | @abcsun (2016/05/01) |
-| PHP Silex |  |
-| PHP Slim  |  |
-| Python Flask  |  |
-| Ruby Sinatra     | @wing328 (2016/05/01) |  |
-| Scala Scalatra |  |  |
-| Scala Finch | @jimschubert (2017/01/28) |
-
+## Core Team Members
+* [@jimschubert](https://github.com/jimschubert)
+* [@cbornet](https://github.com/cbornet)
+* [@jaz-ah](https://github.com/jaz-ah)
 
 ## Template Creator
 Here is a list of template creators:
@@ -995,6 +960,7 @@ Here is a list of template creators:
    * C# (.NET 4.5 refactored): @jimschubert
    * Clojure: @xhh
    * Dart: @yissachar
+   * Dart (refactored in 2.4.0): @joernahrens
    * Elixir: @niku
    * Elm: @trenneman
    * Eiffel: @jvelilla
@@ -1133,7 +1099,7 @@ The Swagger Codegen project is intended as a benefit for users of the Swagger / 
 * Generated code is intentionally _not_ subject to the parent project license
 
 When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
-
+ 
 License
 -------
 
