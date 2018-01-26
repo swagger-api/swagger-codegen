@@ -1,0 +1,20 @@
+{{>licenseInfo}}
+
+import {{apiPackage}}._
+import io.swagger.app.{ ResourcesApp, SwaggerApp }
+import javax.servlet.ServletContext
+import org.scalatra.LifeCycle
+
+class ScalatraBootstrap extends LifeCycle {
+  implicit val swagger = new SwaggerApp
+
+  override def init(context: ServletContext) {
+    try {
+      {{#apiInfo}}{{#apis}}context mount (new {{classname}}, "{{basePathWithoutHost}}/{{baseName}}/*")
+      {{/apis}}{{/apiInfo}}
+      context mount (new ResourcesApp, "/api-docs/*")
+    } catch {
+      case e: Throwable => e.printStackTrace()
+    }
+  }
+}
