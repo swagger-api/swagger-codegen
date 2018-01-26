@@ -1,0 +1,16 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+public class {{classname}} {
+{{#operations}}
+    {{#operation}}
+        /* {{httpMethod}}({{path}}, {{operationId}}); // {{returnType}} */
+    {{/operation}}
+{{/operations}}
+}
+
+/*
+{{this}}
+*/
