@@ -361,10 +361,10 @@ public class JavaModelTest {
 
         final CodegenProperty property = cm.vars.get(0);
         Assert.assertEquals(property.baseName, "NAME");
-        Assert.assertEquals(property.getter, "getNAME");
-        Assert.assertEquals(property.setter, "setNAME");
+        Assert.assertEquals(property.getter, "getNaME");
+        Assert.assertEquals(property.setter, "setNaME");
         Assert.assertEquals(property.datatype, "String");
-        Assert.assertEquals(property.name, "NAME");
+        Assert.assertEquals(property.name, "naME");
         Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "String");
         Assert.assertFalse(property.hasMore);

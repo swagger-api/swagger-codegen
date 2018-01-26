@@ -523,11 +523,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
           name = "_u";
         }
 
-        // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$")) {
-            return name;
-        }
-
         if(startsWithTwoUppercaseLetters(name)){
             name = name.substring(0, 2).toLowerCase() + name.substring(2);
         }
