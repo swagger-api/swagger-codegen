@@ -14,15 +14,23 @@ This is a sample server Petstore server.  You can find out more about Swagger at
 }
 
 dependencies = {
-	"lua >= 5.2"
+	"lua >= 5.2",
+	"http",
+	"dkjson",
+	"basexx"
 }
 
 build = {
 	type = "builtin",
 	modules = {
-		["http.request"] = "http/request.lua";
-		["http.util"] = "http/util.lua";
-		["dkjson"] = "dkjson.lua";
-		["basexx"] = "basexx.lua";
+		["pet_api"] = "petstore/api/pet_api.lua";
+		["store_api"] = "petstore/api/store_api.lua";
+		["user_api"] = "petstore/api/user_api.lua";
+		["api_response"] = "petstore/model/api_response.lua";
+		["category"] = "petstore/model/category.lua";
+		["order"] = "petstore/model/order.lua";
+		["pet"] = "petstore/model/pet.lua";
+		["tag"] = "petstore/model/tag.lua";
+		["user"] = "petstore/model/user.lua";
 	}
 }

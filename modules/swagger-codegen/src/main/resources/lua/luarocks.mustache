@@ -14,15 +14,30 @@ description = {
 }
 
 dependencies = {
-	"lua >= 5.2"
+	"lua >= 5.2",
+	"http",
+	"dkjson",
+	"basexx"
 }
 
 build = {
 	type = "builtin",
 	modules = {
-		["http.request"] = "http/request.lua";
-		["http.util"] = "http/util.lua";
-		["dkjson"] = "dkjson.lua";
-		["basexx"] = "basexx.lua";
+		{{#apiInfo}}
+		{{#apis}}
+		{{#operations}}
+		{{#operation}}
+		{{#-first}}
+		["{{{classname}}}"] = "{{{packageName}}}/api/{{{classname}}}.lua";
+		{{/-first}}
+		{{/operation}}
+		{{/operations}}
+		{{/apis}}
+		{{/apiInfo}}
+		{{#models}}
+		{{#model}}
+		["{{{classname}}}"] = "{{{packageName}}}/model/{{{classname}}}.lua";
+		{{/model}}
+		{{/models}}
 	}
 }
