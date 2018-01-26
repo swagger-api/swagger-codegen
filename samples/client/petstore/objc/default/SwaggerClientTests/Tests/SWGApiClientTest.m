@@ -2,6 +2,9 @@
 #import <XCTest/XCTest.h>
 #import <ISO8601/ISO8601.h>
 #import <SwaggerClient/SWGApiClient.h>
+#import <SwaggerClient/SWGDefaultConfiguration.h>
+#import <SwaggerClient/SWGQueryParamCollection.h>
+#import <SwaggerClient/SWGPet.h>
 
 @interface SWGApiClientTest : XCTestCase
 
@@ -86,7 +89,7 @@
 }
 
 - (void)testConfiguration {
-    SWGConfiguration *config = [SWGConfiguration sharedConfig];
+    SWGDefaultConfiguration *config = [SWGDefaultConfiguration sharedConfig];
     [config setApiKey:@"123456" forApiKeyIdentifier:@"api_key"];
     [config setApiKeyPrefix:@"PREFIX" forApiKeyPrefixIdentifier:@"api_key"];
     config.username = @"test_username";
@@ -113,7 +116,7 @@
 }
 
 - (void)testGetBasicAuthToken {
-    SWGConfiguration *config = [SWGConfiguration sharedConfig];
+    SWGDefaultConfiguration *config = [SWGDefaultConfiguration sharedConfig];
     config.username = @"test_username";
     config.password = @"test_password";
     
@@ -151,11 +154,11 @@
     // NSDate
     data = [NSDate dateWithISO8601String:@"1997-07-16T19:20:30.45+01:00"];
     result = [self.apiClient.sanitizer sanitizeForSerialization:data];
-    XCTAssertEqualObjects(result, [data ISO8601String]);
+    XCTAssertEqualObjects(result, [data ISO8601StringWithTimeZone:nil usingCalendar:nil]);
     
     data = [NSDate dateWithISO8601String:@"1997-07-16"];
     result = [self.apiClient.sanitizer sanitizeForSerialization:data];
-    XCTAssertEqualObjects(result, [data ISO8601String]);
+    XCTAssertEqualObjects(result, [data ISO8601StringWithTimeZone:nil usingCalendar:nil]);
     
     // model
     NSDictionary *petDict = @{@"id": @1, @"name": @"monkey",

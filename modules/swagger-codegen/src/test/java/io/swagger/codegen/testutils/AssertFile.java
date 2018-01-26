@@ -9,6 +9,7 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
 import java.util.List;
 
 import difflib.Delta;
@@ -56,8 +57,18 @@ public class AssertFile {
                         fail(String.format("Directory '%s' is missing.", actualDir));
                     }
 
-                    assertEquals(expectedDir.toFile().list(),
-                                 actualDir.toFile().list(),
+                    String[] expected = expectedDir.toFile().list();
+                    String[] actual = actualDir.toFile().list();
+
+                    if (expected != null) {
+                        Arrays.sort(expected);
+                    }
+                    if (actual != null) {
+                        Arrays.sort(actual);
+                    }
+
+                    assertEquals(expected,
+                                 actual,
                                  String.format("Directory content of '%s' and '%s' differ.", expectedDir, actualDir));
 
                     return FileVisitResult.CONTINUE;
@@ -113,12 +124,12 @@ public class AssertFile {
             if(!deltas.isEmpty()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("files diff:\n");
-                stringBuilder.append("\tfile: '" + expected.toAbsolutePath().toString() + "' \n");
-                stringBuilder.append("\tfile: '" + actual.toAbsolutePath().toString() + "' \n");
+                stringBuilder.append("\tfile: '").append(expected.toAbsolutePath().toString()).append("' \n");
+                stringBuilder.append("\tfile: '").append(actual.toAbsolutePath().toString()).append("' \n");
                 stringBuilder.append("\tdiffs:\n");
 
                 for (Delta delta: deltas) {
-                    stringBuilder.append(delta.toString() + "\n");
+                    stringBuilder.append(delta.toString()).append("\n");
                 }
 
                 fail(stringBuilder.toString());

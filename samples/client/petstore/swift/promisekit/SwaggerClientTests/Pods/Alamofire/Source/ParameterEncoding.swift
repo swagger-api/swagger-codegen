@@ -1,24 +1,26 @@
-// ParameterEncoding.swift
 //
-// Copyright (c) 2014–2016 Alamofire Software Foundation (http://alamofire.org/)
+//  ParameterEncoding.swift
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 import Foundation
 
@@ -36,8 +38,8 @@ public enum Method: String {
 /**
     Used to specify the way in which a set of parameters are applied to a URL request.
 
-    - `URL`:             Creates a query string to be set as or appended to any existing URL query for `GET`, `HEAD`, 
-                         and `DELETE` requests, or set as the body for requests with any other HTTP method. The 
+    - `URL`:             Creates a query string to be set as or appended to any existing URL query for `GET`, `HEAD`,
+                         and `DELETE` requests, or set as the body for requests with any other HTTP method. The
                          `Content-Type` HTTP header field of an encoded request with HTTP body is set to
                          `application/x-www-form-urlencoded; charset=utf-8`. Since there is no published specification
                          for how to encode collection types, the convention of appending `[]` to the key for array
@@ -47,8 +49,8 @@ public enum Method: String {
     - `URLEncodedInURL`: Creates query string to be set as or appended to any existing URL query. Uses the same
                          implementation as the `.URL` case, but always applies the encoded result to the URL.
 
-    - `JSON`:            Uses `NSJSONSerialization` to create a JSON representation of the parameters object, which is 
-                         set as the body of the request. The `Content-Type` HTTP header field of an encoded request is 
+    - `JSON`:            Uses `NSJSONSerialization` to create a JSON representation of the parameters object, which is
+                         set as the body of the request. The `Content-Type` HTTP header field of an encoded request is
                          set to `application/json`.
 
     - `PropertyList`:    Uses `NSPropertyListSerialization` to create a plist representation of the parameters object,
@@ -69,10 +71,10 @@ public enum ParameterEncoding {
     /**
         Creates a URL request by encoding parameters and applying them onto an existing request.
 
-        - parameter URLRequest: The request to have parameters applied
-        - parameter parameters: The parameters to apply
+        - parameter URLRequest: The request to have parameters applied.
+        - parameter parameters: The parameters to apply.
 
-        - returns: A tuple containing the constructed request and the error that occurred during parameter encoding, 
+        - returns: A tuple containing the constructed request and the error that occurred during parameter encoding,
                    if any.
     */
     public func encode(
@@ -82,9 +84,7 @@ public enum ParameterEncoding {
     {
         var mutableURLRequest = URLRequest.URLRequest
 
-        guard let parameters = parameters where !parameters.isEmpty else {
-            return (mutableURLRequest, nil)
-        }
+        guard let parameters = parameters else { return (mutableURLRequest, nil) }
 
         var encodingError: NSError? = nil
 
@@ -118,7 +118,10 @@ public enum ParameterEncoding {
             }
 
             if let method = Method(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
-                if let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false) {
+                if let
+                    URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false)
+                    where !parameters.isEmpty
+                {
                     let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
                     URLComponents.percentEncodedQuery = percentEncodedQuery
                     mutableURLRequest.URL = URLComponents.URL
@@ -141,7 +144,10 @@ public enum ParameterEncoding {
                 let options = NSJSONWritingOptions()
                 let data = try NSJSONSerialization.dataWithJSONObject(parameters, options: options)
 
-                mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                if mutableURLRequest.valueForHTTPHeaderField("Content-Type") == nil {
+                    mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                }
+
                 mutableURLRequest.HTTPBody = data
             } catch {
                 encodingError = error as NSError
@@ -153,7 +159,11 @@ public enum ParameterEncoding {
                     format: format,
                     options: options
                 )
-                mutableURLRequest.setValue("application/x-plist", forHTTPHeaderField: "Content-Type")
+
+                if mutableURLRequest.valueForHTTPHeaderField("Content-Type") == nil {
+                    mutableURLRequest.setValue("application/x-plist", forHTTPHeaderField: "Content-Type")
+                }
+
                 mutableURLRequest.HTTPBody = data
             } catch {
                 encodingError = error as NSError
@@ -219,7 +229,7 @@ public enum ParameterEncoding {
         //==========================================================================================================
         //
         //  Batching is required for escaping due to an internal bug in iOS 8.1 and 8.2. Encoding more than a few
-        //  hundred Chinense characters causes various malloc error crashes. To avoid this issue until iOS 8 is no
+        //  hundred Chinese characters causes various malloc error crashes. To avoid this issue until iOS 8 is no
         //  longer supported, batching MUST be used for encoding. This introduces roughly a 20% overhead. For more
         //  info, please refer to:
         //
@@ -236,7 +246,7 @@ public enum ParameterEncoding {
             while index != string.endIndex {
                 let startIndex = index
                 let endIndex = index.advancedBy(batchSize, limit: string.endIndex)
-                let range = Range(start: startIndex, end: endIndex)
+                let range = startIndex..<endIndex
 
                 let substring = string.substringWithRange(range)
 

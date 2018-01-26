@@ -1,18 +1,29 @@
 {
-  "name": "typescript-fetch-api",
-  "version": "0.0.0",
-  "license": "Apache-2.0",
-  "main": "./dist/api.js",
-  "browser": "./dist/api.js",
-  "typings": "./dist/api.d.ts",
-  "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
-  },
+  "name": "@swagger/typescript-fetch-petstore",
+  "version": "1.0.0",
+  "description": "swagger client for @swagger/typescript-fetch-petstore",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "fetch",
+    "typescript",
+    "swagger-client",
+    "@swagger/typescript-fetch-petstore"
+  ],
+  "license": "Unlicense",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts" : {
-    "prepublish" : "typings install && tsc"
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "portable-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "@types/node": "^8.0.9",
+    "typescript": "^2.0"
+  },
+  "publishConfig":{
+    "registry":"https://skimdb.npmjs.com/registry"
   }
 }

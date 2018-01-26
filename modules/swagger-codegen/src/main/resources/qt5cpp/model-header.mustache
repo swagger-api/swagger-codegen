@@ -14,12 +14,15 @@
 {{#imports}}{{{import}}}
 {{/imports}}
 
-#include "SWGObject.h"
+#include "{{prefix}}Object.h"
 
-{{#models}}{{#model}}
-namespace Swagger {
+{{#models}}
+{{#model}}
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
 
-class {{classname}}: public SWGObject {
+class {{classname}}: public {{prefix}}Object {
 public:
     {{classname}}();
     {{classname}}(QString* json);
@@ -32,16 +35,25 @@ public:
     void fromJsonObject(QJsonObject &json);
     {{classname}}* fromJson(QString &jsonString);
 
-    {{#vars}}{{{datatype}}} {{getter}}();
+    {{#vars}}
+    {{{datatype}}} {{getter}}();
     void {{setter}}({{{datatype}}} {{name}});
+
     {{/vars}}
 
+    virtual bool isSet() override;
+
 private:
-    {{#vars}}{{{datatype}}} {{name}};
+    {{#vars}}
+    {{{datatype}}} {{name}};
+    bool m_{{name}}_isSet;
+    
     {{/vars}}
 };
 
-} /* namespace Swagger */
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}
 
 #endif /* {{classname}}_H_ */
 {{/model}}

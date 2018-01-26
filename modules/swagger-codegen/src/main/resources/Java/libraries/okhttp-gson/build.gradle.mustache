@@ -9,8 +9,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.+'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+        classpath 'com.android.tools.build:gradle:2.3.+'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
@@ -25,15 +25,21 @@ if(hasProperty('target') && target == 'android') {
     apply plugin: 'com.github.dcendents.android-maven'
 
     android {
-        compileSdkVersion 23
-        buildToolsVersion '23.0.2'
+        compileSdkVersion 25
+        buildToolsVersion '25.0.2'
         defaultConfig {
             minSdkVersion 14
-            targetSdkVersion 23
+            targetSdkVersion 25
         }
         compileOptions {
+            {{#java8}}
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+            {{/java8}}
+            {{^java8}}
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
+            {{/java8}}
         }
 
         // Rename the aar correctly
@@ -94,12 +100,16 @@ if(hasProperty('target') && target == 'android') {
 }
 
 dependencies {
-    compile 'io.swagger:swagger-annotations:1.5.8'
+    compile 'io.swagger:swagger-annotations:1.5.17'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
     compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
-    compile 'com.google.code.gson:gson:2.6.2'
-    {{^java8}}
-    compile 'joda-time:joda-time:2.9.3'
-    {{/java8}}
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'io.gsonfire:gson-fire:1.8.0'
+    {{#joda}}
+    compile 'joda-time:joda-time:2.9.9'
+    {{/joda}}
+    {{#threetenbp}}
+    compile 'org.threeten:threetenbp:1.3.5'
+    {{/threetenbp}}
     testCompile 'junit:junit:4.12'
 }

@@ -2,13 +2,22 @@ package {{package}};
 
 {{#imports}}import {{import}};
 {{/imports}}
+{{#serializableModel}}
+import java.io.Serializable;
+{{/serializableModel}}
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+import javax.validation.Valid;
+{{/useBeanValidation}}
 
 {{#models}}
 {{#model}}{{#description}}
 /**
  * {{description}}
  **/{{/description}}
-{{#isEnum}}{{>enumClass}}{{/isEnum}}
+{{#isEnum}}
+{{>enumOuterClass}}
+{{/isEnum}}
 {{^isEnum}}{{>pojo}}{{/isEnum}}
 {{/model}}
 {{/models}}

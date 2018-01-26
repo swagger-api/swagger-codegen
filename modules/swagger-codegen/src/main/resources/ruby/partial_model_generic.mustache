@@ -56,11 +56,16 @@
 
       {{#vars}}
       if attributes.has_key?(:'{{{baseName}}}')
-        {{#isContainer}}
+        {{#isListContainer}}
         if (value = attributes[:'{{{baseName}}}']).is_a?(Array)
           self.{{{name}}} = value
         end
-        {{/isContainer}}
+        {{/isListContainer}}
+        {{#isMapContainer}}
+        if (value = attributes[:'{{{baseName}}}']).is_a?(Hash)
+          self.{{{name}}} = value
+        end
+        {{/isMapContainer}}
         {{^isContainer}}
         self.{{{name}}} = attributes[:'{{{baseName}}}']
         {{/isContainer}}
@@ -74,45 +79,61 @@
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
-    # @return Array for valid properies with the reasons
+    # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      {{#hasValidation}}
+      {{#vars}}
+      {{#required}}
       if @{{{name}}}.nil?
-        fail ArgumentError, "{{{name}}} cannot be nil"
+        invalid_properties.push("invalid value for '{{{name}}}', {{{name}}} cannot be nil.")
       end
 
-      {{#minLength}}
-      if @{{{name}}}.to_s.length > {{{maxLength}}}
+      {{/required}}
+      {{#hasValidation}}
+      {{#maxLength}}
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.to_s.length > {{{maxLength}}}
         invalid_properties.push("invalid value for '{{{name}}}', the character length must be smaller than or equal to {{{maxLength}}}.")
       end
 
-      {{/minLength}}
-      {{#maxLength}}
-      if @{{{name}}}.to_s.length < {{{minLength}}}
+      {{/maxLength}}
+      {{#minLength}}
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.to_s.length < {{{minLength}}}
         invalid_properties.push("invalid value for '{{{name}}}', the character length must be great than or equal to {{{minLength}}}.")
       end
 
-      {{/maxLength}}
+      {{/minLength}}
       {{#maximum}}
-      if @{{{name}}} > {{{maximum}}}
-        invalid_properties.push("invalid value for '{{{name}}}', must be smaller than or equal to {{{maximum}}}.")
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
+        invalid_properties.push("invalid value for '{{{name}}}', must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.")
       end
 
       {{/maximum}}
       {{#minimum}}
-      if @{{{name}}} < {{{minimum}}}
-        invalid_properties.push("invalid value for '{{{name}}}', must be greater than or equal to {{{minimum}}}.")
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
+        invalid_properties.push("invalid value for '{{{name}}}', must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.")
       end
 
       {{/minimum}}
       {{#pattern}}
-      if @{{{name}}} !~ Regexp.new({{{pattern}}})
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} !~ Regexp.new({{{pattern}}})
         invalid_properties.push("invalid value for '{{{name}}}', must conform to the pattern {{{pattern}}}.")
       end
 
       {{/pattern}}
+      {{#maxItems}}
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.length > {{{maxItems}}}
+        invalid_properties.push("invalid value for '{{{name}}}', number of items must be less than or equal to {{{maxItems}}}."
+      end
+
+      {{/maxItems}}
+      {{#minItems}}
+      if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.length < {{{minItems}}}
+        invalid_properties.push("invalid value for '{{{name}}}', number of items must be greater than or equal to {{{minItems}}}."
+      end
+
+      {{/minItems}}
       {{/hasValidation}}
+      {{/vars}}
       return invalid_properties
     end
 
@@ -130,21 +151,27 @@
       {{/isContainer}}
       {{/isEnum}}
       {{#hasValidation}}
-      {{#minLength}}
-      return false if @{{{name}}}.to_s.length > {{{maxLength}}}
-      {{/minLength}}
       {{#maxLength}}
-      return false if @{{{name}}}.to_s.length < {{{minLength}}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.to_s.length > {{{maxLength}}}
       {{/maxLength}}
+      {{#minLength}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.to_s.length < {{{minLength}}}
+      {{/minLength}}
       {{#maximum}}
-      return false if @{{{name}}} > {{{maximum}}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
       {{/maximum}}
       {{#minimum}}
-      return false if @{{{name}}} < {{{minimum}}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
       {{/minimum}}
       {{#pattern}}
-      return false if @{{{name}}} !~ Regexp.new({{{pattern}}})
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}} !~ Regexp.new({{{pattern}}})
       {{/pattern}}
+      {{#maxItems}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.length > {{{maxItems}}}
+      {{/maxItems}}
+      {{#minItems}}
+      return false if {{^required}}!@{{{name}}}.nil? && {{/required}}@{{{name}}}.length < {{{minItems}}}
+      {{/minItems}}
       {{/hasValidation}}
       {{/vars}}
       return true
@@ -170,40 +197,54 @@
     # Custom attribute writer method with validation
     # @param [Object] {{{name}}} Value to be assigned
     def {{{name}}}=({{{name}}})
+      {{#required}}
       if {{{name}}}.nil?
         fail ArgumentError, "{{{name}}} cannot be nil"
       end
+      {{/required}}
 
-      {{#minLength}}
-      if {{{name}}}.to_s.length > {{{maxLength}}}
+      {{#maxLength}}
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}}.to_s.length > {{{maxLength}}}
         fail ArgumentError, "invalid value for '{{{name}}}', the character length must be smaller than or equal to {{{maxLength}}}."
       end
 
-      {{/minLength}}
-      {{#maxLength}}
-      if {{{name}}}.to_s.length < {{{minLength}}}
+      {{/maxLength}}
+      {{#minLength}}
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}}.to_s.length < {{{minLength}}}
         fail ArgumentError, "invalid value for '{{{name}}}', the character length must be great than or equal to {{{minLength}}}."
       end
 
-      {{/maxLength}}
+      {{/minLength}}
       {{#maximum}}
-      if {{{name}}} > {{{maximum}}}
-        fail ArgumentError, "invalid value for '{{{name}}}', must be smaller than or equal to {{{maximum}}}."
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
+        fail ArgumentError, "invalid value for '{{{name}}}', must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}."
       end
 
       {{/maximum}}
       {{#minimum}}
-      if {{{name}}} < {{{minimum}}}
-        fail ArgumentError, "invalid value for '{{{name}}}', must be greater than or equal to {{{minimum}}}."
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
+        fail ArgumentError, "invalid value for '{{{name}}}', must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}."
       end
 
       {{/minimum}}
       {{#pattern}}
-      if @{{{name}}} !~ Regexp.new({{{pattern}}})
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}} !~ Regexp.new({{{pattern}}})
         fail ArgumentError, "invalid value for '{{{name}}}', must conform to the pattern {{{pattern}}}."
       end
 
       {{/pattern}}
+      {{#maxItems}}
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}}.length > {{{maxItems}}}
+        fail ArgumentError, "invalid value for '{{{name}}}', number of items must be less than or equal to {{{maxItems}}}."
+      end
+
+      {{/maxItems}}
+      {{#minItems}}
+      if {{^required}}!{{{name}}}.nil? && {{/required}}{{{name}}}.length < {{{minItems}}}
+        fail ArgumentError, "invalid value for '{{{name}}}', number of items must be greater than or equal to {{{minItems}}}."
+      end
+
+      {{/minItems}}
       @{{{name}}} = {{{name}}}
     end
 

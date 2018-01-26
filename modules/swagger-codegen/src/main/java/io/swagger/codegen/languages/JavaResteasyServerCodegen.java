@@ -1,6 +1,8 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.JbossFeature;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -8,18 +10,19 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.*;
 
-public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
+public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen implements JbossFeature {
 
+    protected boolean generateJbossDeploymentDescriptor = true;
+    
     public JavaResteasyServerCodegen() {
 
         super();
 
         artifactId = "swagger-jaxrs-resteasy-server";
 
-        outputFolder = "generated-code/javaJaxRS";
+        outputFolder = "generated-code/JavaJaxRS-Resteasy";
         apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
-        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
         apiTestTemplateFiles.clear(); // TODO: add test template
 
         // clear model and api doc template as AbstractJavaJAXRSServerCodegen
@@ -31,6 +34,9 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         dateLibrary = "legacy";// TODO: change to joda
 
         embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "resteasy";
+
+        cliOptions.add(
+                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
     }
 
     @Override
@@ -47,6 +53,12 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
+            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
+                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
+        }
+        
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
         writeOptional(outputFolder, new SupportingFile("settingsGradle.mustache", "", "settings.gradle"));
@@ -61,16 +73,22 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
                 (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
         writeOptional(outputFolder, new SupportingFile("web.mustache",
                 ("src/main/webapp/WEB-INF"), "web.xml"));
-        writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
+
+        if (generateJbossDeploymentDescriptor) {
+            writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
                 ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+        }
+
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
+        supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
+        supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RFC3339DateFormat.java"));
 
         if ("joda".equals(dateLibrary)) {
-            supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
-                    (sourceFolder + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
                     (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
@@ -113,54 +131,7 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-
-        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
-        if (operations != null) {
-            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
-            for (CodegenOperation operation : ops) {
-                if (operation.hasConsumes == Boolean.TRUE) {
-                    Map<String, String> firstType = operation.consumes.get(0);
-                    if (firstType != null) {
-                        if ("multipart/form-data".equals(firstType.get("mediaType"))) {
-                            operation.isMultipart = Boolean.TRUE;
-                        }
-                    }
-                }
-                List<CodegenResponse> responses = operation.responses;
-                if (responses != null) {
-                    for (CodegenResponse resp : responses) {
-                        if ("0".equals(resp.code)) {
-                            resp.code = "200";
-                        }
-                    }
-                }
-                if (operation.returnType == null) {
-                    operation.returnType = "Void";
-                } else if (operation.returnType.startsWith("List")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("List<".length(), end).trim();
-                        operation.returnContainer = "List";
-                    }
-                } else if (operation.returnType.startsWith("Map")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
-                        operation.returnContainer = "Map";
-                    }
-                } else if (operation.returnType.startsWith("Set")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Set<".length(), end).trim();
-                        operation.returnContainer = "Set";
-                    }
-                }
-            }
-        }
-        return objs;
+        return super.postProcessOperations(objs);
     }
 
     @Override
@@ -195,5 +166,9 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         }
 
         return objs;
+    }
+    
+    public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
+        this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
 }

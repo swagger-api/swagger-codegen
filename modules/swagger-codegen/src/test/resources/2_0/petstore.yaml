@@ -7,7 +7,7 @@ info:
   contact:
     email: apiteam@swagger.io
   license:
-    name: Apache 2.0
+    name: Apache-2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 host: petstore.swagger.io
 basePath: /v2
@@ -153,6 +153,7 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+      deprecated: true
   '/pet/{petId}':
     get:
       tags:
@@ -367,7 +368,6 @@ paths:
           description: ID of the order that needs to be deleted
           required: true
           type: string
-          minimum: 1
       responses:
         '400':
           description: Invalid ID supplied
@@ -573,6 +573,8 @@ securityDefinitions:
     in: header
 definitions:
   Order:
+    title: Pet Order
+    description: An order for a pets from the pet store
     type: object
     properties:
       id:
@@ -600,6 +602,8 @@ definitions:
     xml:
       name: Order
   Category:
+    title: Pet category
+    description: A category for a pet
     type: object
     properties:
       id:
@@ -610,6 +614,8 @@ definitions:
     xml:
       name: Category
   User:
+    title: a User
+    description: A User who is purchasing from the pet store
     type: object
     properties:
       id:
@@ -634,6 +640,8 @@ definitions:
     xml:
       name: User
   Tag:
+    title: Pet Tag
+    description: A tag for a pet
     type: object
     properties:
       id:
@@ -644,6 +652,8 @@ definitions:
     xml:
       name: Tag
   Pet:
+    title: a Pet
+    description: A pet for sale in the pet store
     type: object
     required:
       - name
@@ -681,6 +691,8 @@ definitions:
     xml:
       name: Pet
   ApiResponse:
+    title: An uploaded response
+    description: Describes the result of uploading an image resource
     type: object
     properties:
       code:

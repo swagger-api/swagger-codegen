@@ -3,11 +3,13 @@ package io.swagger.model;
 import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import javax.validation.constraints.*;
+import io.swagger.annotations.*;
 
+@ApiModel(description="Describes the result of uploading an image resource")
 
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-07-01T21:32:05.980+08:00")
 public class ModelApiResponse   {
   
   private Integer code = null;
@@ -17,6 +19,7 @@ public class ModelApiResponse   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("code")
   public Integer getCode() {
     return code;
@@ -28,6 +31,7 @@ public class ModelApiResponse   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
     return type;
@@ -39,6 +43,7 @@ public class ModelApiResponse   {
   /**
    **/
   
+  @ApiModelProperty(value = "")
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -49,7 +54,7 @@ public class ModelApiResponse   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -83,7 +88,7 @@ public class ModelApiResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

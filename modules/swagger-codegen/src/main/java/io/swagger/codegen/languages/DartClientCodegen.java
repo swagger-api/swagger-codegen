@@ -3,37 +3,54 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Model;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String BROWSER_CLIENT = "browserClient";
     public static final String PUB_NAME = "pubName";
     public static final String PUB_VERSION = "pubVersion";
     public static final String PUB_DESCRIPTION = "pubDescription";
+    public static final String USE_ENUM_EXTENSION = "useEnumExtension";
     protected boolean browserClient = true;
     protected String pubName = "swagger";
     protected String pubVersion = "1.0.0";
     protected String pubDescription = "Swagger API client";
+    protected boolean useEnumExtension = false;
     protected String sourceFolder = "";
+    protected String apiDocPath = "docs/";
+    protected String modelDocPath = "docs/";
 
     public DartClientCodegen() {
         super();
+
+        // clear import mapping (from default generator) as dart does not use it
+        // at the moment
+        importMapping.clear();
+
         outputFolder = "generated-code/dart";
         modelTemplateFiles.put("model.mustache", ".dart");
         apiTemplateFiles.put("api.mustache", ".dart");
         embeddedTemplateDir = templateDir = "dart";
         apiPackage = "lib.api";
         modelPackage = "lib.model";
+        modelDocTemplateFiles.put("object_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
         setReservedWordsLowerCase(
                 Arrays.asList(
@@ -53,6 +70,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "String",
                         "bool",
                         "int",
+                        "num",
                         "double")
         );
         instantiationTypes.put("array", "List");
@@ -64,17 +82,19 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "List");
         typeMapping.put("boolean", "bool");
         typeMapping.put("string", "String");
+        typeMapping.put("char", "String");
         typeMapping.put("int", "int");
-        typeMapping.put("float", "double");
         typeMapping.put("long", "int");
         typeMapping.put("short", "int");
-        typeMapping.put("char", "String");
+        typeMapping.put("number", "num");
+        typeMapping.put("float", "double");
         typeMapping.put("double", "double");
         typeMapping.put("object", "Object");
         typeMapping.put("integer", "int");
         typeMapping.put("Date", "DateTime");
         typeMapping.put("date", "DateTime");
         typeMapping.put("File", "MultipartFile");
+        typeMapping.put("UUID", "String");
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
@@ -83,6 +103,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(PUB_NAME, "Name in generated pubspec"));
         cliOptions.add(new CliOption(PUB_VERSION, "Version in generated pubspec"));
         cliOptions.add(new CliOption(PUB_DESCRIPTION, "Description in generated pubspec"));
+        cliOptions.add(new CliOption(USE_ENUM_EXTENSION, "Allow the 'x-enum-values' extension for enums"));
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, "source folder for generated code"));
     }
 
@@ -106,8 +127,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         super.processOpts();
 
         if (additionalProperties.containsKey(BROWSER_CLIENT)) {
-            this.setBrowserClient(Boolean.parseBoolean((String) additionalProperties.get(BROWSER_CLIENT)));
-            additionalProperties.put(BROWSER_CLIENT, browserClient);
+            this.setBrowserClient(convertPropertyToBooleanAndWriteBack(BROWSER_CLIENT));
         } else {
             //not set, use to be passed to template
             additionalProperties.put(BROWSER_CLIENT, browserClient);
@@ -134,12 +154,32 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
             additionalProperties.put(PUB_DESCRIPTION, pubDescription);
         }
 
+        if (additionalProperties.containsKey(USE_ENUM_EXTENSION)) {
+            this.setUseEnumExtension(convertPropertyToBooleanAndWriteBack(USE_ENUM_EXTENSION));
+        } else {
+            // Not set, use to be passed to template.
+            additionalProperties.put(USE_ENUM_EXTENSION, useEnumExtension);
+        }
+
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
             this.setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
         }
 
+        // default HIDE_GENERATION_TIMESTAMP to true
+        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+            Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+        }
+
+        // make api and model doc path available in mustache template
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
+
         final String libFolder = sourceFolder + File.separator + "lib";
         supportingFiles.add(new SupportingFile("pubspec.mustache", "", "pubspec.yaml"));
+        supportingFiles.add(new SupportingFile("analysis_options.mustache", "", ".analysis_options"));
         supportingFiles.add(new SupportingFile("api_client.mustache", libFolder, "api_client.dart"));
         supportingFiles.add(new SupportingFile("api_exception.mustache", libFolder, "api_exception.dart"));
         supportingFiles.add(new SupportingFile("api_helper.mustache", libFolder, "api_helper.dart"));
@@ -152,13 +192,12 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("auth/oauth.mustache", authFolder, "oauth.dart"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
-
 
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name;
+        return name + "_";
     }
 
     @Override
@@ -169,6 +208,16 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String modelFileFolder() {
         return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
+
+    @Override
+    public String apiDocFileFolder() {
+        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
     }
 
     @Override
@@ -185,8 +234,11 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         // pet_id => petId
         name = camelize(name, true);
 
-        // for reserved word or word starting with number, append _
-        if (isReservedWord(name) || name.matches("^\\d.*")) {
+        if (name.matches("^\\d.*")) {
+            name = "n" + name;
+        }
+
+        if (isReservedWord(name)) {
             name = escapeReservedWord(name);
         }
 
@@ -203,7 +255,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // camelize the model name
@@ -262,10 +315,123 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        return postProcessModelsEnum(objs);
+    }
+
+    @Override
+    public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
+        List<Object> models = (List<Object>) objs.get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            boolean succes = buildEnumFromVendorExtension(cm) ||
+                    buildEnumFromValues(cm);
+            for (CodegenProperty var : cm.vars) {
+                updateCodegenPropertyEnum(var);
+            }
+        }
+        return objs;
+    }
+
+    /**
+     * Builds the set of enum members from their declared value.
+     *
+     * @return {@code true} if the enum was built
+     */
+    private boolean buildEnumFromValues(CodegenModel cm) {
+        if (!cm.isEnum || cm.allowableValues == null) {
+            return false;
+        }
+        Map<String, Object> allowableValues = cm.allowableValues;
+        List<Object> values = (List<Object>) allowableValues.get("values");
+        List<Map<String, String>> enumVars =
+                new ArrayList<Map<String, String>>();
+        String commonPrefix = findCommonPrefixOfVars(values);
+        int truncateIdx = commonPrefix.length();
+        for (Object value : values) {
+            Map<String, String> enumVar = new HashMap<String, String>();
+            String enumName;
+            if (truncateIdx == 0) {
+                enumName = value.toString();
+            } else {
+                enumName = value.toString().substring(truncateIdx);
+                if ("".equals(enumName)) {
+                    enumName = value.toString();
+                }
+            }
+            enumVar.put("name", toEnumVarName(enumName, cm.dataType));
+            enumVar.put("value", toEnumValue(value.toString(), cm.dataType));
+            enumVars.add(enumVar);
+        }
+        cm.allowableValues.put("enumVars", enumVars);
+        return true;
+    }
+
+    /**
+     * Builds the set of enum members from a vendor extension.
+     *
+     * @return {@code true} if the enum was built
+     */
+    private boolean buildEnumFromVendorExtension(CodegenModel cm) {
+        if (!cm.isEnum || cm.allowableValues == null ||
+                !useEnumExtension ||
+                !cm.vendorExtensions.containsKey("x-enum-values")) {
+            return false;
+        }
+        Object extension = cm.vendorExtensions.get("x-enum-values");
+        List<Map<String, Object>> values =
+                (List<Map<String, Object>>) extension;
+        List<Map<String, String>> enumVars =
+                new ArrayList<Map<String, String>>();
+        for (Map<String, Object> value : values) {
+            Map<String, String> enumVar = new HashMap<String, String>();
+            String name = camelize((String) value.get("identifier"), true);
+            if (isReservedWord(name)) {
+                name = escapeReservedWord(name);
+            }
+            enumVar.put("name", name);
+            enumVar.put("value", toEnumValue(
+                    value.get("numericValue").toString(), cm.dataType));
+            if (value.containsKey("description")) {
+                enumVar.put("description", value.get("description").toString());
+            }
+            enumVars.add(enumVar);
+        }
+        cm.allowableValues.put("enumVars", enumVars);
+        return true;
+    }
+
+    @Override
+    public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "empty";
+        }
+        String var = value.replaceAll("\\W+", "_");
+        if ("number".equalsIgnoreCase(datatype) ||
+                "int".equalsIgnoreCase(datatype)) {
+            var = "Number" + var;
+        }
+        return escapeReservedWord(camelize(var, true));
+    }
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+      if ("number".equalsIgnoreCase(datatype) ||
+            "int".equalsIgnoreCase(datatype)) {
+          return value;
+      } else {
+          return "\"" + escapeText(value) + "\"";
+      }
+    }
+
+    @Override
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            String newOperationId = camelize("call_" + operationId, true);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            return newOperationId;
         }
 
         return camelize(operationId, true);
@@ -285,6 +451,10 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setPubDescription(String pubDescription) {
         this.pubDescription = pubDescription;
+    }
+
+    public void setUseEnumExtension(boolean useEnumExtension) {
+        this.useEnumExtension = useEnumExtension;
     }
 
     public void setSourceFolder(String sourceFolder) {

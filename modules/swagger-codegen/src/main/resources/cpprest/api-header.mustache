@@ -1,18 +1,20 @@
 {{>licenseInfo}}
 {{#operations}}/*
  * {{classname}}.h
- * 
+ *
  * {{description}}
  */
- 
-#ifndef {{classname}}_H_
-#define {{classname}}_H_
+
+#ifndef {{apiHeaderGuardPrefix}}_{{classname}}_H_
+#define {{apiHeaderGuardPrefix}}_{{classname}}_H_
 
 {{{defaultInclude}}}
-#include "ApiClient.h"
+#include "../ApiClient.h"
 
 {{#imports}}{{{import}}}
 {{/imports}}
+
+#include <boost/optional.hpp>
 
 {{#apiNamespaceDeclarations}}
 namespace {{this}} {
@@ -32,18 +34,24 @@ public:
     /// <remarks>
     /// {{notes}}
     /// </remarks>
-    {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>{{/allParams}}
-    pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#allParams}}
+    /// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
+    {{/allParams}}
+    pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {{operationId}}(
+        {{#allParams}}
+        {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}} {{paramName}}{{#hasMore}},{{/hasMore}}
+        {{/allParams}}
+    );
     {{/operation}}
-    
+
 protected:
-    std::shared_ptr<ApiClient> m_ApiClient;    
+    std::shared_ptr<ApiClient> m_ApiClient;
 };
-    
+
 {{#apiNamespaceDeclarations}}
 }
 {{/apiNamespaceDeclarations}}
 
-#endif /* {{classname}}_H_ */
+#endif /* {{apiHeaderGuardPrefix}}_{{classname}}_H_ */
 
 {{/operations}}

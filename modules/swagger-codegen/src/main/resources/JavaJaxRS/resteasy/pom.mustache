@@ -11,8 +11,17 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</source>
+                    <target>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>3.1.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -49,6 +58,19 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-core-version}</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -89,6 +111,7 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
             <version>${resteasy-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
@@ -107,7 +130,11 @@
             <artifactId>joda-time</artifactId>
             <version>2.7</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>${swagger-core-version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -134,6 +161,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
+{{#useBeanValidation}}
+    <!-- Bean Validation API support -->
+    <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>1.1.0.Final</version>
+        <scope>provided</scope>
+    </dependency>
+{{/useBeanValidation}}        
+        
     </dependencies>
     <repositories>
         <repository>
@@ -145,7 +182,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-core-version>1.5.8</swagger-core-version>
+        <swagger-core-version>1.5.18</swagger-core-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
         <resteasy-version>3.0.11.Final</resteasy-version>
         <slf4j-version>1.6.3</slf4j-version>

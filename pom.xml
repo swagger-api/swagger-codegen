@@ -1,5 +1,4 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -10,21 +9,23 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>2.4.0-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
         <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
         <url>https://github.com/swagger-api/swagger-codegen</url>
     </scm>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
     <developers>
         <developer>
             <id>fehguy</id>
             <name>Tony Tam</name>
             <email>fehguy@gmail.com</email>
+        </developer>
+        <developer>
+            <id>wing328</id>
+            <name>William Cheng</name>
+            <email>wing328hk@gmail.com</email>
         </developer>
     </developers>
     <issueManagement>
@@ -69,6 +70,56 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <!-- Uncomment this to format before checkstyle -->
+                <!-- <executions>
+                    <execution>
+                        <id>format</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions> -->
+                <configuration>
+                    <compilerSource>1.7</compilerSource>
+                    <compilerCompliance>1.7</compilerCompliance>
+                    <compilerTargetPlatform>1.7</compilerTargetPlatform>
+                    <lineEnding>LF</lineEnding>
+                </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>google_checkstyle.xml</configLocation>
+                            Don't include generated sources a la http://stackoverflow.com/a/30406454
+                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <linkXRef>false</linkXRef>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>6.19</version>
+                    </dependency>
+                </dependencies>
+            </plugin>-->
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-version}</version>
@@ -105,22 +156,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.6.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -129,7 +166,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -144,18 +181,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.5.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.5.3</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
+                <version>2.10.4</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.7</source>
@@ -176,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -187,7 +224,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.2.5</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>0.5.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <profiles>
         <profile>
@@ -271,6 +337,18 @@
             </modules>
         </profile>
         <profile>
+            <id>bash-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/bash</module>
+            </modules>
+        </profile>
+        <profile>
             <id>clojure-client</id>
             <activation>
                 <property>
@@ -280,6 +358,30 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/clojure</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/haskell-http-client</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client-integration-test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/haskell-http-client/tests-integration</module>
             </modules>
         </profile>
         <profile>
@@ -307,6 +409,18 @@
             </modules>
         </profile>
         <profile>
+            <id>java-client-jersey2-java6</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/jersey2-java6</module>
+            </modules>
+        </profile>
+        <profile>
             <id>java-client-okhttp-gson</id>
             <activation>
                 <property>
@@ -316,6 +430,18 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/okhttp-gson</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp-gson-parcelable</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp-gson/parcelableModel</module>
             </modules>
         </profile>
         <profile>
@@ -415,6 +541,30 @@
             </modules>
         </profile>
         <profile>
+            <id>java-msf4j-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/java-msf4/</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-cxf-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-cxf</module>
+            </modules>
+        </profile>
+        <profile>
             <id>jaxrs-resteasy-server</id>
             <activation>
                 <property>
@@ -436,6 +586,30 @@
             </activation>
             <modules>
                 <module>samples/server/petstore/jaxrs-resteasy/joda</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-eap-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/eap</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-eap-server-joda</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/eap-joda</module>
             </modules>
         </profile>
         <profile>
@@ -511,7 +685,7 @@
             </modules>
         </profile>
         <profile>
-            <id>typescript-angular-client</id>
+            <id>typescript-angularjs-client</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -519,7 +693,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/typescript-angular/npm</module>
+                <module>samples/client/petstore/typescript-angularjs/npm</module>
             </modules>
         </profile>
         <profile>
@@ -559,6 +733,18 @@
             </modules>
         </profile>
         <profile>
+            <id>go-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/go</module>
+            </modules>
+        </profile>
+        <profile>
             <id>spring-mvc</id>
             <activation>
                 <property>
@@ -568,6 +754,18 @@
             </activation>
             <modules>
                 <module>samples/server/petstore/spring-mvc</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>springboot-beanvalidation</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/springboot-beanvalidation</module>
             </modules>
         </profile>
         <profile>
@@ -595,6 +793,42 @@
             </modules>
         </profile>
         <profile>
+            <id>scalatra-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/scalatra</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-inflector</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/java-inflector</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-undertowr</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/undertow</module>
+            </modules>
+        </profile>
+        <profile>
             <id>samples</id>
             <activation>
                 <property>
@@ -603,36 +837,28 @@
                 </property>
             </activation>
             <modules>
-                <!-- run ruby test first which has a random delay script to
-                     avoid issues with running 2 CI jobs in parallel.       -->
+                <!-- <module>samples/server/petstore/erlang-server</module> note: make sample compilation work -->
+				<!-- clients -->
+                <module>samples/client/petstore/php/SwaggerClient-php</module>
                 <module>samples/client/petstore/ruby</module>
+                <module>samples/client/petstore/scala</module>
+                <module>samples/client/petstore/akka-scala</module>
+                <module>samples/client/petstore/javascript</module>
                 <module>samples/client/petstore/python</module>
-                <module>samples/client/petstore/typescript-fetch/tests/default</module>
+                <module>samples/client/petstore/python-tornado</module>
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
                 <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
-                <module>samples/client/petstore/typescript-angular</module>
+                <module>samples/client/petstore/typescript-fetch/tests/default</module>
                 <module>samples/client/petstore/typescript-node/npm</module>
-                <module>samples/client/petstore/android/volley</module>
-                <module>samples/client/petstore/clojure</module>
-                <module>samples/client/petstore/java/jersey1</module>
-                <module>samples/client/petstore/java/feign</module>
-                <module>samples/client/petstore/java/jersey2</module>
-                <module>samples/client/petstore/java/okhttp-gson</module>
-                <module>samples/client/petstore/java/retrofit</module>
-                <module>samples/client/petstore/java/retrofit2</module>
-                <module>samples/client/petstore/java/retrofit2rx</module>
-                <module>samples/client/petstore/javascript</module>
-                <module>samples/client/petstore/scala</module>
-                <module>samples/server/petstore/spring-mvc</module>
-                <module>samples/server/petstore/springboot</module>
-                <module>samples/client/petstore/spring-cloud</module>
-                <module>samples/server/petstore/jaxrs/jersey1</module>
-                <module>samples/server/petstore/jaxrs/jersey2</module>
-                <module>samples/server/petstore/jaxrs-resteasy/default</module>
-                <module>samples/server/petstore/jaxrs-resteasy/joda</module>
-                <!--module>samples/client/petstore/objc/SwaggerClientTests</module-->
-                <!--module>samples/client/petstore/swift/SwaggerClientTests</module-->
+                <!-- comment out due to github rate limit error
+                <module>samples/client/petstore/typescript-angularjs</module>-->
+                <!-- comment out due to error `npm run build`
+                <module>samples/client/petstore/typescript-jquery/npm</module>-->
+                <!--<module>samples/client/petstore/typescript-angular-v2/npm</module>-->
+                <module>samples/client/petstore/typescript-angular-v4/npm</module>
+                <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
+                <!--<module>samples/client/petstore/bash</module>-->
             </modules>
         </profile>
     </profiles>
@@ -653,7 +879,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.5</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -661,7 +887,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.6</version>
+                <version>2.9</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -704,21 +930,22 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.19</swagger-parser-version>
+        <swagger-parser-version>1.0.34</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
-        <felix-version>2.3.4</felix-version>
-        <swagger-core-version>1.5.9</swagger-core-version>
+        <felix-version>3.3.0</felix-version>
+        <swagger-core-version>1.5.18</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.8.1</junit-version>
+        <jackson-version>2.8.9</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.12</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.12</jmustache-version>
         <testng-version>6.9.6</testng-version>
-        <surefire-version>2.18.1</surefire-version>
-        <jmockit-version>1.19</jmockit-version>
+        <surefire-version>2.19.1</surefire-version>
+        <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.10</reflections-version>
     </properties>
 </project>

@@ -12,30 +12,28 @@ import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
 
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-07-01T21:32:16.906+08:00")
-public class StoreApiServiceImpl extends StoreApiService {
-      @Override
+@RequestScoped
+
+public class StoreApiServiceImpl implements StoreApiService {
       public Response deleteOrder(String orderId,SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      @Override
       public Response getInventory(SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      @Override
       public Response getOrderById(Long orderId,SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      @Override
       public Response placeOrder(Order body,SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!

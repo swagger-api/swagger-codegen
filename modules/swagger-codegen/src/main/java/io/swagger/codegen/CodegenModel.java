@@ -9,7 +9,6 @@ import java.util.Objects;
 
 import io.swagger.models.ExternalDocs;
 
-
 public class CodegenModel {
     public String parent, parentSchema;
     public List<String> interfaces;
@@ -17,13 +16,15 @@ public class CodegenModel {
     // References to parent and interface CodegenModels. Only set when code generator supports inheritance.
     public CodegenModel parentModel;
     public List<CodegenModel> interfaceModels;
+    public List<CodegenModel> children;
 
-    public String name, classname, description, classVarName, modelJson, dataType;
+    public String name, classname, title, description, classVarName, modelJson, dataType, xmlPrefix, xmlNamespace, xmlName;
     public String classFilename; // store the class file name, mainly used for import
     public String unescapedDescription;
     public String discriminator;
     public String defaultValue;
     public String arrayModelType;
+    public boolean isAlias; // Is this effectively an alias of another simple type
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
     public List<CodegenProperty> requiredVars = new ArrayList<CodegenProperty>(); // a list of required properties
     public List<CodegenProperty> optionalVars = new ArrayList<CodegenProperty>(); // a list of optional properties
@@ -38,8 +39,8 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public Boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, isArrayModel, hasChildren;
-    public Boolean hasOnlyReadOnly = true; // true if all properties are read-only
+    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, hasOptional, isArrayModel, hasChildren;
+    public boolean hasOnlyReadOnly = true; // true if all properties are read-only
     public ExternalDocs externalDocs;
 
     public Map<String, Object> vendorExtensions;
@@ -80,6 +81,8 @@ public class CodegenModel {
             return false;
         if (classname != null ? !classname.equals(that.classname) : that.classname != null)
             return false;
+        if (title != null ? !title.equals(that.title) : that.title != null)
+            return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
         if (classVarName != null ? !classVarName.equals(that.classVarName) : that.classVarName != null)
@@ -87,6 +90,12 @@ public class CodegenModel {
         if (modelJson != null ? !modelJson.equals(that.modelJson) : that.modelJson != null)
             return false;
         if (dataType != null ? !dataType.equals(that.dataType) : that.dataType != null)
+            return false;
+        if (xmlPrefix != null ? !xmlPrefix.equals(that.xmlPrefix) : that.xmlPrefix != null)
+            return false;
+        if (xmlNamespace != null ? !xmlNamespace.equals(that.xmlNamespace) : that.xmlNamespace != null)
+            return false;
+        if (xmlName != null ? !xmlName.equals(that.xmlName) : that.xmlName != null)
             return false;
         if (classFilename != null ? !classFilename.equals(that.classFilename) : that.classFilename != null)
             return false;
@@ -112,15 +121,15 @@ public class CodegenModel {
             return false;
         if (imports != null ? !imports.equals(that.imports) : that.imports != null)
             return false;
-        if (hasVars != null ? !hasVars.equals(that.hasVars) : that.hasVars != null)
+        if (hasVars != that.hasVars)
             return false;
-        if (emptyVars != null ? !emptyVars.equals(that.emptyVars) : that.emptyVars != null)
+        if (emptyVars != that.emptyVars)
             return false;
-        if (hasMoreModels != null ? !hasMoreModels.equals(that.hasMoreModels) : that.hasMoreModels != null)
+        if (hasMoreModels != that.hasMoreModels)
             return false;
-        if (hasEnums != null ? !hasEnums.equals(that.hasEnums) : that.hasEnums != null)
+        if (hasEnums != that.hasEnums)
             return false;
-        if (isEnum != null ? !isEnum.equals(that.isEnum) : that.isEnum != null)
+        if (isEnum != that.isEnum)
             return false;
         if (externalDocs != null ? !externalDocs.equals(that.externalDocs) : that.externalDocs != null)
             return false;
@@ -143,10 +152,14 @@ public class CodegenModel {
         result = 31 * result + (interfaceModels != null ? interfaceModels.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (classname != null ? classname.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (classVarName != null ? classVarName.hashCode() : 0);
         result = 31 * result + (modelJson != null ? modelJson.hashCode() : 0);
         result = 31 * result + (dataType != null ? dataType.hashCode() : 0);
+        result = 31 * result + (xmlPrefix != null ? xmlPrefix.hashCode() : 0);
+        result = 31 * result + (xmlNamespace != null ? xmlNamespace.hashCode() : 0);
+        result = 31 * result + (xmlName != null ? xmlName.hashCode() : 0);
         result = 31 * result + (classFilename != null ? classFilename.hashCode() : 0);
         result = 31 * result + (unescapedDescription != null ? unescapedDescription.hashCode() : 0);
         result = 31 * result + (discriminator != null ? discriminator.hashCode() : 0);
@@ -159,11 +172,11 @@ public class CodegenModel {
         result = 31 * result + (mandatory != null ? mandatory.hashCode() : 0);
         result = 31 * result + (allMandatory != null ? allMandatory.hashCode() : 0);
         result = 31 * result + (imports != null ? imports.hashCode() : 0);
-        result = 31 * result + (hasVars != null ? hasVars.hashCode() : 0);
-        result = 31 * result + (emptyVars != null ? emptyVars.hashCode() : 0);
-        result = 31 * result + (hasMoreModels != null ? hasMoreModels.hashCode() : 0);
-        result = 31 * result + (hasEnums != null ? hasEnums.hashCode() : 0);
-        result = 31 * result + (isEnum != null ? isEnum.hashCode() : 0);
+        result = 31 * result + (hasVars ? 13:31);
+        result = 31 * result + (emptyVars ? 13:31);
+        result = 31 * result + (hasMoreModels ? 13:31);
+        result = 31 * result + (hasEnums ? 13:31);
+        result = 31 * result + (isEnum ? 13:31);
         result = 31 * result + (externalDocs != null ? externalDocs.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
         result = 31 * result + Objects.hash(hasOnlyReadOnly);

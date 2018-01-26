@@ -12,11 +12,7 @@ class {{classname}} {
   /// {{summary}}
   ///
   /// {{notes}}
-  {{#returnType}}Future<{{{returnType}}}> {{/returnType}}{{^returnType}}Future {{/returnType}}{{nickname}}({{#allParams}}{{#required}}{{{dataType}}} {{paramName}}, {{/required}}{{/allParams}} { {{#allParams}}{{^required}} {{{dataType}}} {{paramName}}, {{/required}}{{/allParams}} bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  {{#returnType}}Future<{{{returnType}}}> {{/returnType}}{{^returnType}}Future {{/returnType}}{{nickname}}({{#allParams}}{{#required}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}}{{#hasOptionalParams}}{ {{#allParams}}{{^required}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}} }{{/hasOptionalParams}}) async {
     Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
     // verify required params are set
@@ -29,16 +25,20 @@ class {{classname}} {
     {{/allParams}}
 
     // create path and map variables
-    String path = "{{path}}".replaceAll("{format}","json"){{#pathParams}}.replaceAll("{" + "{{paramName}}" + "}", {{{paramName}}}.toString()){{/pathParams}};
+    String path = "{{{path}}}".replaceAll("{format}","json"){{#pathParams}}.replaceAll("{" + "{{baseName}}" + "}", {{{paramName}}}.toString()){{/pathParams}};
 
     // query params
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     {{#queryParams}}
-    if("null" != {{paramName}}) {
+    {{^required}}
+    if({{paramName}} != null) {
+    {{/required}}
       queryParams.addAll(_convertParametersForCollectionFormat("{{collectionFormat}}", "{{baseName}}", {{paramName}}));
+    {{^required}}
     }
+    {{/required}}
     {{/queryParams}}
     {{#headerParams}}headerParams["{{baseName}}"] = {{paramName}};
     {{/headerParams}}
@@ -54,7 +54,7 @@ class {{classname}} {
       {{#formParams}}{{#notFile}}
       if ({{paramName}} != null) {
         hasFields = true;
-        mp.fields['{{baseName}}'] = apiClient.parameterToString({{paramName}});
+        mp.fields['{{baseName}}'] = parameterToString({{paramName}});
       }
       {{/notFile}}{{#isFile}}
       if ({{paramName}} != null) {
@@ -68,7 +68,7 @@ class {{classname}} {
     }
     else {
       {{#formParams}}{{#notFile}}if ({{paramName}} != null)
-        formParams['{{baseName}}'] = apiClient.parameterToString({{paramName}});{{/notFile}}
+        formParams['{{baseName}}'] = parameterToString({{paramName}});{{/notFile}}
       {{/formParams}}
     }
 
@@ -84,7 +84,7 @@ class {{classname}} {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return {{#returnType}} apiClient.deserialize(response.body, '{{{returnType}}}') {{/returnType}};
+      return {{#returnType}}apiClient.deserialize(response.body, '{{{returnType}}}') as {{{returnType}}} {{/returnType}};
     } else {
       return {{#returnType}}null{{/returnType}};
     }

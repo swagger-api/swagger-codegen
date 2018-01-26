@@ -5,14 +5,16 @@ import java.util.Map;
 
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.AuthenticationRequestBuilder;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuilder;
+import org.threeten.bp.*;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
 
 import feign.Feign;
 import feign.RequestInterceptor;
+import feign.form.FormEncoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
@@ -24,7 +26,7 @@ public class ApiClient {
   public interface Api {}
 
   protected ObjectMapper objectMapper;
-  private String basePath = "http://petstore.swagger.io/v2";
+  private String basePath = "http://petstore.swagger.io:80/v2";
   private Map<String, RequestInterceptor> apiAuthorizations;
   private Feign.Builder feignBuilder;
 
@@ -32,18 +34,22 @@ public class ApiClient {
     objectMapper = createObjectMapper();
     apiAuthorizations = new LinkedHashMap<String, RequestInterceptor>();
     feignBuilder = Feign.builder()
-                .encoder(new FormAwareEncoder(new JacksonEncoder(objectMapper)))
+                .encoder(new FormEncoder(new JacksonEncoder(objectMapper)))
                 .decoder(new JacksonDecoder(objectMapper))
                 .logger(new Slf4jLogger());
   }
 
   public ApiClient(String[] authNames) {
     this();
-    for(String authName : authNames) { 
+    for(String authName : authNames) {
       RequestInterceptor auth;
-      if (authName == "api_key") { 
+      if ("api_key".equals(authName)) {
         auth = new ApiKeyAuth("header", "api_key");
-      } else if (authName == "petstore_auth") { 
+      } else if ("api_key_query".equals(authName)) {
+        auth = new ApiKeyAuth("query", "api_key_query");
+      } else if ("http_basic_test".equals(authName)) {
+        auth = new HttpBasicAuth();
+      } else if ("petstore_auth".equals(authName)) {
         auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
       } else {
         throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
@@ -129,8 +135,14 @@ public class ApiClient {
     objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
     objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    objectMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    objectMapper.registerModule(new JodaModule());
+    objectMapper.setDateFormat(new RFC3339DateFormat());
+    ThreeTenModule module = new ThreeTenModule();
+    module.addDeserializer(Instant.class, CustomInstantDeserializer.INSTANT);
+    module.addDeserializer(OffsetDateTime.class, CustomInstantDeserializer.OFFSET_DATE_TIME);
+    module.addDeserializer(ZonedDateTime.class, CustomInstantDeserializer.ZONED_DATE_TIME);
+    objectMapper.registerModule(module);
     return objectMapper;
   }
 
@@ -146,6 +158,9 @@ public class ApiClient {
    *    apiClient.setBasePath("http://localhost:8080");
    *    XYZApi api = apiClient.buildClient(XYZApi.class);
    *    XYZResponse response = api.someMethod(...);
+   * @param <T> Type
+   * @param clientClass Client class
+   * @return The Client
    */
   public <T extends Api> T buildClient(Class<T> clientClass) {
     return feignBuilder.target(clientClass, basePath);
@@ -183,7 +198,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure the first api key found
-   * @param apiKey
+   * @param apiKey API key
    */
   public void setApiKey(String apiKey) {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -198,8 +213,8 @@ public class ApiClient {
 
   /**
    * Helper method to configure the username/password for basic auth or password OAuth
-   * @param username
-   * @param password
+   * @param username Username
+   * @param password Password
    */
   public void setCredentials(String username, String password) {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -219,7 +234,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure the token endpoint of the first oauth found in the apiAuthorizations (there should be only one)
-   * @return
+   * @return Token request builder
    */
   public TokenRequestBuilder getTokenEndPoint() {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -233,7 +248,7 @@ public class ApiClient {
 
   /**
    * Helper method to configure authorization endpoint of the first oauth found in the apiAuthorizations (there should be only one)
-   * @return
+   * @return Authentication request builder
    */
   public AuthenticationRequestBuilder getAuthorizationEndPoint() {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -247,8 +262,8 @@ public class ApiClient {
 
   /**
    * Helper method to pre-set the oauth access token of the first oauth found in the apiAuthorizations (there should be only one)
-   * @param accessToken
-   * @param expiresIn : validity period in seconds
+   * @param accessToken Access Token
+   * @param expiresIn Validity period in seconds
    */
   public void setAccessToken(String accessToken, Long expiresIn) {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -262,9 +277,9 @@ public class ApiClient {
 
   /**
    * Helper method to configure the oauth accessCode/implicit flow parameters
-   * @param clientId
-   * @param clientSecret
-   * @param redirectURI
+   * @param clientId Client ID
+   * @param clientSecret Client secret
+   * @param redirectURI Redirect URI
    */
   public void configureAuthorizationFlow(String clientId, String clientSecret, String redirectURI) {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -284,7 +299,7 @@ public class ApiClient {
 
   /**
    * Configures a listener which is notified when a new access token is received.
-   * @param accessTokenListener
+   * @param accessTokenListener Acesss token listener
    */
   public void registerAccessTokenListener(AccessTokenListener accessTokenListener) {
     for(RequestInterceptor apiAuthorization : apiAuthorizations.values()) {
@@ -296,14 +311,19 @@ public class ApiClient {
     }
   }
 
+  /**
+   * Gets request interceptor based on authentication name
+   * @param authName Authentiation name
+   * @return Request Interceptor
+   */
   public RequestInterceptor getAuthorization(String authName) {
     return apiAuthorizations.get(authName);
   }
 
   /**
    * Adds an authorization to be used by the client
-   * @param authName
-   * @param authorization
+   * @param authName Authentication name
+   * @param authorization Request interceptor
    */
   public void addAuthorization(String authName, RequestInterceptor authorization) {
     if (apiAuthorizations.containsKey(authName)) {

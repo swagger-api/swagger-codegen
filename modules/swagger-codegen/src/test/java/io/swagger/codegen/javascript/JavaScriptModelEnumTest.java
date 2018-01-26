@@ -3,7 +3,6 @@ package io.swagger.codegen.javascript;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
@@ -11,6 +10,8 @@ import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -72,7 +73,7 @@ public class JavaScriptModelEnumTest {
                 .child(subModel)
                 .interfaces(new ArrayList<RefModel>());
 
-        final DefaultCodegen codegen = new JavaClientCodegen();
+        final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();
         allModels.put(parentModel.getName(), parentModel);
         allModels.put(subModel.getName(), subModel);
@@ -91,5 +92,62 @@ public class JavaScriptModelEnumTest {
         Assert.assertEquals(enumVar.datatype, "String");
         Assert.assertEquals(enumVar.datatypeWithEnum, "UnsharedThingEnum");
         Assert.assertTrue(enumVar.isEnum);
+    }
+
+    @Test(description = "test enum array model")
+    public void enumArrayModelTest() {
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final DefaultCodegen codegen = new JavascriptClientCodegen();
+        final Model definition = model.getDefinitions().get("EnumArrays");
+
+        Property property =  definition.getProperties().get("array_enum");
+        CodegenProperty prope = codegen.fromProperty("array_enum", property);
+        codegen.updateCodegenPropertyEnum(prope);
+        Assert.assertEquals(prope.datatypeWithEnum, "[ArrayEnumEnum]");
+        Assert.assertEquals(prope.enumName, "ArrayEnumEnum");
+        Assert.assertTrue(prope.isEnum);
+        Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList("fish", "crab"));
+
+        HashMap<String, String> fish= new HashMap<String, String>();
+        fish.put("name", "fish");
+        fish.put("value", "\"fish\"");
+        HashMap<String, String> crab= new HashMap<String, String>();
+        crab.put("name", "crab");
+        crab.put("value", "\"crab\"");
+        Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
+
+        // assert inner items
+        Assert.assertEquals(prope.datatypeWithEnum, "[ArrayEnumEnum]");
+        Assert.assertEquals(prope.enumName, "ArrayEnumEnum");
+        Assert.assertTrue(prope.items.isEnum);
+        Assert.assertEquals(prope.items.allowableValues.get("values"), Arrays.asList("fish", "crab"));
+        Assert.assertEquals(prope.items.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
+
+    }
+
+    @Test(description = "test enum model for values (numeric, string, etc)")
+    public void enumModelValueTest() {
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final DefaultCodegen codegen = new JavascriptClientCodegen();
+        final Model definition = model.getDefinitions().get("Enum_Test");
+
+        Property property =  definition.getProperties().get("enum_integer");
+        CodegenProperty prope = codegen.fromProperty("enum_integer", property);
+        codegen.updateCodegenPropertyEnum(prope);
+        Assert.assertEquals(prope.datatypeWithEnum, "EnumIntegerEnum");
+        Assert.assertEquals(prope.enumName, "EnumIntegerEnum");
+        Assert.assertTrue(prope.isEnum);
+        Assert.assertFalse(prope.isContainer);
+        Assert.assertNull(prope.items);
+        Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList(1, -1));
+
+        HashMap<String, String> one = new HashMap<String, String>();
+        one.put("name", "1");
+        one.put("value", "1");
+        HashMap<String, String> minusOne = new HashMap<String, String>();
+        minusOne.put("name", "-1");
+        minusOne.put("value", "-1");
+        Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(one, minusOne));
+
     }
 }

@@ -1,16 +1,16 @@
 {{>licenseInfo}}
 /*
  * ApiException.h
- * 
+ *
  * This is the exception being thrown in case the api call was not successful
  */
 
-#ifndef ApiException_H_
-#define ApiException_H_
+#ifndef {{apiHeaderGuardPrefix}}_ApiException_H_
+#define {{apiHeaderGuardPrefix}}_ApiException_H_
 
 {{{defaultInclude}}}
 
-#include <memory> 
+#include <memory>
 #include <map>
 
 #include <cpprest/details/basic_types.h>
@@ -33,12 +33,12 @@ public:
         , std::map<utility::string_t, utility::string_t>& headers
         , std::shared_ptr<std::istream> content = nullptr );
     virtual ~ApiException();
-    
+
     std::map<utility::string_t, utility::string_t>& getHeaders();
     std::shared_ptr<std::istream> getContent() const;
-        
+
 protected:
-    std::shared_ptr<std::istream> m_Content;    
+    std::shared_ptr<std::istream> m_Content;
     std::map<utility::string_t, utility::string_t> m_Headers;
 };
 
@@ -46,4 +46,4 @@ protected:
 }
 {{/apiNamespaceDeclarations}}
 
-#endif /* ApiBase_H_ */
+#endif /* {{apiHeaderGuardPrefix}}_ApiBase_H_ */

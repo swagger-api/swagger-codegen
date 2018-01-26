@@ -3,14 +3,14 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 import rx.Observable;
-
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
-import io.swagger.client.model.Pet;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.Pet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +24,12 @@ public interface PetApi {
    * @param body Pet object that needs to be added to the store (required)
    * @return Call&lt;Void&gt;
    */
-  
+  @Headers({
+    "Content-Type:application/json"
+  })
   @POST("pet")
   Observable<Void> addPet(
-    @Body Pet body
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -37,34 +39,33 @@ public interface PetApi {
    * @param apiKey  (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @DELETE("pet/{petId}")
   Observable<Void> deletePet(
-    @Path("petId") Long petId, @Header("api_key") String apiKey
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Header("api_key") String apiKey
   );
 
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
    * @param status Status values that need to be considered for filter (required)
-   * @return Call&lt;List<Pet>&gt;
+   * @return Call&lt;List&lt;Pet&gt;&gt;
    */
-  
   @GET("pet/findByStatus")
   Observable<List<Pet>> findPetsByStatus(
-    @Query("status") CSVParams status
+    @retrofit2.http.Query("status") CSVParams status
   );
 
   /**
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (required)
-   * @return Call&lt;List<Pet>&gt;
+   * @return Call&lt;List&lt;Pet&gt;&gt;
+   * @deprecated
    */
-  
+  @Deprecated
   @GET("pet/findByTags")
   Observable<List<Pet>> findPetsByTags(
-    @Query("tags") CSVParams tags
+    @retrofit2.http.Query("tags") CSVParams tags
   );
 
   /**
@@ -73,10 +74,9 @@ public interface PetApi {
    * @param petId ID of pet to return (required)
    * @return Call&lt;Pet&gt;
    */
-  
   @GET("pet/{petId}")
   Observable<Pet> getPetById(
-    @Path("petId") Long petId
+    @retrofit2.http.Path("petId") Long petId
   );
 
   /**
@@ -85,10 +85,12 @@ public interface PetApi {
    * @param body Pet object that needs to be added to the store (required)
    * @return Call&lt;Void&gt;
    */
-  
+  @Headers({
+    "Content-Type:application/json"
+  })
   @PUT("pet")
   Observable<Void> updatePet(
-    @Body Pet body
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -99,11 +101,10 @@ public interface PetApi {
    * @param status Updated status of the pet (optional)
    * @return Call&lt;Void&gt;
    */
-  
-  @FormUrlEncoded
+  @retrofit2.http.FormUrlEncoded
   @POST("pet/{petId}")
   Observable<Void> updatePetWithForm(
-    @Path("petId") Long petId, @Field("name") String name, @Field("status") String status
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
   /**
@@ -114,11 +115,10 @@ public interface PetApi {
    * @param file file to upload (optional)
    * @return Call&lt;ModelApiResponse&gt;
    */
-  
-  @Multipart
+  @retrofit2.http.Multipart
   @POST("pet/{petId}/uploadImage")
   Observable<ModelApiResponse> uploadFile(
-    @Path("petId") Long petId, @Part("additionalMetadata") String additionalMetadata, @Part("file\"; filename=\"file\"") RequestBody file
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Part("additionalMetadata") String additionalMetadata, @retrofit2.http.Part("file\"; filename=\"file") RequestBody file
   );
 
 }

@@ -9,12 +9,14 @@ import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class HaskellServantCodegen extends DefaultCodegen implements CodegenConfig {
 
     // source folder where to write the files
     protected String sourceFolder = "src";
     protected String apiVersion = "0.0.1";
+    private static final Pattern LEADING_UNDERSCORE = Pattern.compile("^_+");
 
     /**
      * Configures the type of generator.
@@ -49,8 +51,16 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     public HaskellServantCodegen() {
         super();
 
-        // override the mapping for "-" (Minus) to keep the original mapping in Haskell
-        specialCharReplacements.put('-', "Dash");
+        // override the mapping to keep the original mapping in Haskell
+        specialCharReplacements.put("-", "Dash");
+        specialCharReplacements.put(">", "GreaterThan");
+        specialCharReplacements.put("<", "LessThan");
+
+        // backslash and double quote need double the escapement for both Java and Haskell
+        specialCharReplacements.remove("\\");
+        specialCharReplacements.remove("\"");
+        specialCharReplacements.put("\\\\", "Back_Slash");
+        specialCharReplacements.put("\\\"", "Double_Quote");
 
         // set the output folder here
         outputFolder = "generated-code/haskell-servant";
@@ -137,6 +147,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("number", "Double");
         typeMapping.put("integer", "Int");
         typeMapping.put("any", "Value");
+        typeMapping.put("UUID", "Text");
+        typeMapping.put("ByteArray", "Text");
 
         importMapping.clear();
         importMapping.put("Map", "qualified Data.Map as Map");
@@ -147,13 +159,36 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * those terms here.  This logic is only called if a variable matches the reserved words
      *
      * @return the escaped term
      */
     @Override
     public String escapeReservedWord(String name) {
-        return name + "_";
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
+        return "_" + name;
+    }
+
+    public String firstLetterToUpper(String word) {
+        if (word.length() == 0) {
+            return word;
+        } else if (word.length() == 1) {
+            return word.substring(0, 1).toUpperCase();
+        } else {
+            return word.substring(0, 1).toUpperCase() + word.substring(1);
+        }
+    }
+
+    public String firstLetterToLower(String word) {
+        if (word.length() == 0) {
+            return word;
+        } else if (word.length() == 1) {
+            return word.substring(0, 1).toLowerCase();
+        } else {
+            return word.substring(0, 1).toLowerCase() + word.substring(1);
+        }
     }
 
     @Override
@@ -183,7 +218,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // The API name is made by appending the capitalized words of the title
         List<String> wordsCaps = new ArrayList<String>();
         for (String word : words) {
-            wordsCaps.add(word.substring(0, 1).toUpperCase() + word.substring(1));
+            wordsCaps.add(firstLetterToUpper(word));
         }
         String apiName = joinStrings("", wordsCaps);
 
@@ -194,7 +229,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
         additionalProperties.put("title", apiName);
-        additionalProperties.put("titleLower", apiName.substring(0, 1).toLowerCase() + apiName.substring(1));
+        additionalProperties.put("titleLower", firstLetterToLower(apiName));
         additionalProperties.put("package", cabalName);
 
         // Due to the way servant resolves types, we need a high context stack limit
@@ -203,9 +238,9 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         List<Map<String, Object>> replacements = new ArrayList<>();
         Object[] replacementChars = specialCharReplacements.keySet().toArray();
         for(int i = 0; i < replacementChars.length; i++) {
-            Character c = (Character) replacementChars[i];
+            String c = (String) replacementChars[i];
             Map<String, Object> o = new HashMap<>();
-            o.put("char", Character.toString(c));
+            o.put("char", c);
             o.put("replacement", "'" + specialCharReplacements.get(c));
             o.put("hasMore", i != replacementChars.length - 1);
             replacements.add(o);
@@ -364,7 +399,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // Query parameters appended to routes
         for (CodegenParameter param : op.queryParams) {
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             path.add("QueryParam \"" + param.baseName + "\" " + paramType);
@@ -395,7 +430,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             path.add("Header \"" + param.baseName + "\" " + param.dataType);
 
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             type.add("Maybe " + paramType);
@@ -436,10 +471,20 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     private String fixOperatorChars(String string) {
         StringBuilder sb = new StringBuilder();
-        for (char c : string.toCharArray()) {
-            if (specialCharReplacements.containsKey(c)) {
+        String name = string;
+        //Check if it is a reserved word, in which case the underscore is added when property name is generated.
+        if (string.startsWith("_")) {
+            if (reservedWords.contains(string.substring(1, string.length()))) {
+                name = string.substring(1, string.length());
+            } else if (reservedWordsMappings.containsValue(string)) {
+                name = LEADING_UNDERSCORE.matcher(string).replaceFirst("");
+            }
+        }
+        for (char c : name.toCharArray()) {
+            String cString = String.valueOf(c);
+            if (specialCharReplacements.containsKey(cString)) {
                 sb.append("'");
-                sb.append(specialCharReplacements.get(c));
+                sb.append(specialCharReplacements.get(cString));
             } else {
                 sb.append(c);
             }
@@ -466,11 +511,16 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // From the model name, compute the prefix for the fields.
         String prefix = camelize(model.classname, true);
         for(CodegenProperty prop : model.vars) {
-            prop.name = prefix + camelize(fixOperatorChars(prop.name));
+            prop.name = toVarName(prefix + camelize(fixOperatorChars(prop.name)));
         }
 
         // Create newtypes for things with non-object types
         String dataOrNewtype = "data";
+        // check if it's a ModelImpl before casting
+        if (!(mod instanceof ModelImpl)) {
+            return model;
+        }
+
         String modelType = ((ModelImpl)  mod).getType();
         if(modelType != "object" && typeMapping.containsKey(modelType)) {
             String newtype = typeMapping.get(modelType);
