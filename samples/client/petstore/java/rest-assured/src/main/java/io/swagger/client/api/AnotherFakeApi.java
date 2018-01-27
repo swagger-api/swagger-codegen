@@ -13,24 +13,36 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
+import io.swagger.client.model.Client;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
-import io.swagger.client.model.Client;
 
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.PATCH;
-import static io.swagger.client.GsonObjectMapper.gson;
+import static io.restassured.http.Method.*;
 
 public class AnotherFakeApi {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private AnotherFakeApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static AnotherFakeApi anotherFake(RequestSpecBuilder reqSpec) {
@@ -40,6 +52,26 @@ public class AnotherFakeApi {
 
     public TestSpecialTagsOper testSpecialTags() {
         return new TestSpecialTagsOper(reqSpec);
+    }
+
+    /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return AnotherFakeApi
+     */
+    public AnotherFakeApi setJSON(JSON json) {
+        this.json = json;
+        return this;
     }
 
     /**
@@ -83,14 +115,15 @@ public class AnotherFakeApi {
          * @return Client
          */
         public Client executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Client.class, gson());
+            Type type = new TypeToken<Client>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body client model (required)
+         * @param body (Client) client model (required)
          */
         public TestSpecialTagsOper body(Client body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 

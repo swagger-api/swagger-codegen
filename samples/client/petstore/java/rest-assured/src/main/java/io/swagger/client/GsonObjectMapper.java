@@ -19,7 +19,10 @@ import io.restassured.mapper.ObjectMapperSerializationContext;
 
 public class GsonObjectMapper implements ObjectMapper {
 
+    private JSON json;
+
     private GsonObjectMapper() {
+        this.json = new JSON();
     }
 
     public static GsonObjectMapper gson() {
@@ -28,11 +31,11 @@ public class GsonObjectMapper implements ObjectMapper {
 
     @Override
     public Object deserialize(ObjectMapperDeserializationContext context) {
-        return new JSON().deserialize(context.getDataToDeserialize().asString(), context.getType());
+        return json.deserialize(context.getDataToDeserialize().asString(), context.getType());
     }
 
     @Override
     public Object serialize(ObjectMapperSerializationContext context) {
-        return new JSON().serialize(context.getObjectToSerialize());
+        return json.serialize(context.getObjectToSerialize());
     }
 }

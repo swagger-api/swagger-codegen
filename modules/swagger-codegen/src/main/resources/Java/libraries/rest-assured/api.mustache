@@ -2,6 +2,7 @@
 
 package {{package}};
 
+import com.google.gson.reflect.TypeToken;
 {{#imports}}import {{import}};
 {{/imports}}
 
@@ -15,20 +16,25 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 {{/fullJavaUtil}}
+import {{invokerPackage}}.JSON;
 
-import static {{invokerPackage}}.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class {{classname}} {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private {{classname}}(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static {{classname}} {{classVarName}}(RequestSpecBuilder reqSpec) {
@@ -46,6 +52,26 @@ public class {{classname}} {
     }
 {{/operation}}
 {{/operations}}
+
+    /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return {{classname}}
+     */
+    public {{classname}} setJSON(JSON json) {
+        this.json = json;
+        return this;
+    }
 
     {{#operations}}
     {{#operation}}
@@ -111,57 +137,30 @@ public class {{classname}} {
             return handler.apply(RestAssured.given().spec(reqSpec.build()).expect().spec(respSpec.build()).when().request({{httpMethod}}, REQ_URI));
         }
         {{#returnType}}
-        {{#returnSimpleType}}
-        {{^returnTypeIsPrimitive}}
 
         /**
          * {{httpMethod}} {{path}}
          * @return {{{returnType}}}
          */
         public {{{returnType}}} executeAs(Function<Response, Response> handler) {
-            return execute(handler).as({{{returnType}}}.class, gson());
+            Type type = new TypeToken<{{{returnType}}}>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
-        {{/returnTypeIsPrimitive}}
-        {{/returnSimpleType}}
-        {{^returnSimpleType}}
-        {{#isListContainer}}
-
-        /**
-         * {{httpMethod}} {{path}}
-         * @return {{{returnType}}}
-         */
-        public {{{returnType}}} executeAs(Function<Response, Response> handler) {
-            return Arrays.asList(execute(handler).as({{{returnBaseType}}}[].class, gson()));
-        }
-        {{/isListContainer}}
-        {{/returnSimpleType}}
-        {{#returnSimpleType}}
-        {{#returnTypeIsPrimitive}}
-
-        /**
-         * {{httpMethod}} {{path}}
-         * @return String
-         */
-        public String executeAs(Function<Response, Response> handler) {
-            return execute(handler).asString();
-        }
-        {{/returnTypeIsPrimitive}}
-        {{/returnSimpleType}}
         {{/returnType}}
         {{#bodyParams}}
 
          /**
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
         public {{operationIdCamelCase}}Oper body({{{dataType}}} {{paramName}}) {
-            reqSpec.setBody({{paramName}}, gson());
+            reqSpec.setBody(getJSON().serialize({{paramName}}));
             return this;
         }
         {{/bodyParams}}
         {{#headerParams}}
 
         /**
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
         public {{operationIdCamelCase}}Oper {{paramName}}Header(String {{paramName}}) {
             reqSpec.addHeader("{{baseName}}", {{paramName}});
@@ -171,9 +170,9 @@ public class {{classname}} {
         {{#pathParams}}
 
         /**
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
-        public {{operationIdCamelCase}}Oper {{paramName}}Path({{{dataType}}} {{paramName}}) {
+        public {{operationIdCamelCase}}Oper {{paramName}}Path(Object {{paramName}}) {
             reqSpec.addPathParam("{{baseName}}", {{paramName}});
             return this;
         }
@@ -181,9 +180,9 @@ public class {{classname}} {
         {{#queryParams}}
 
         /**
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
-        public {{operationIdCamelCase}}Oper {{paramName}}Query({{{dataType}}} {{paramName}}) {
+        public {{operationIdCamelCase}}Oper {{paramName}}Query(Object... {{paramName}}) {
             reqSpec.addQueryParam("{{baseName}}", {{paramName}});
             return this;
         }
@@ -192,9 +191,9 @@ public class {{classname}} {
         {{^isFile}}
 
          /**
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
-         public {{operationIdCamelCase}}Oper {{paramName}}Form({{{dataType}}} {{paramName}}) {
+         public {{operationIdCamelCase}}Oper {{paramName}}Form(Object... {{paramName}}) {
             reqSpec.addFormParam("{{baseName}}", {{paramName}});
             return this;
          }
@@ -206,7 +205,7 @@ public class {{classname}} {
          /**
          * It will assume that the control name is file and the <content-type> is <application/octet-stream>
          * @see #reqSpec for customise
-         * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+         * @param {{paramName}} ({{{dataType}}}) {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
          */
          public {{operationIdCamelCase}}Oper {{paramName}}MultiPart({{{dataType}}} {{paramName}}) {
             reqSpec.addMultiPart({{paramName}});

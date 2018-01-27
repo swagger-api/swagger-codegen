@@ -13,6 +13,7 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
@@ -26,19 +27,24 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.swagger.client.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class PetApi {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private PetApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static PetApi pet(RequestSpecBuilder reqSpec) {
@@ -80,6 +86,26 @@ public class PetApi {
     }
 
     /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return PetApi
+     */
+    public PetApi setJSON(JSON json) {
+        this.json = json;
+        return this;
+    }
+
+    /**
      * Add a new pet to the store
      * 
      *
@@ -115,10 +141,10 @@ public class PetApi {
         }
 
          /**
-         * @param body Pet object that needs to be added to the store (required)
+         * @param body (Pet) Pet object that needs to be added to the store (required)
          */
         public AddPetOper body(Pet body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -173,7 +199,7 @@ public class PetApi {
         }
 
         /**
-         * @param apiKey  (optional)
+         * @param apiKey (String)  (optional)
          */
         public DeletePetOper apiKeyHeader(String apiKey) {
             reqSpec.addHeader("api_key", apiKey);
@@ -181,9 +207,9 @@ public class PetApi {
         }
 
         /**
-         * @param petId Pet id to delete (required)
+         * @param petId (Long) Pet id to delete (required)
          */
-        public DeletePetOper petIdPath(Long petId) {
+        public DeletePetOper petIdPath(Object petId) {
             reqSpec.addPathParam("petId", petId);
             return this;
         }
@@ -243,13 +269,14 @@ public class PetApi {
          * @return List<Pet>
          */
         public List<Pet> executeAs(Function<Response, Response> handler) {
-            return Arrays.asList(execute(handler).as(Pet[].class, gson()));
+            Type type = new TypeToken<List<Pet>>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param status Status values that need to be considered for filter (required)
+         * @param status (List<String>) Status values that need to be considered for filter (required)
          */
-        public FindPetsByStatusOper statusQuery(List<String> status) {
+        public FindPetsByStatusOper statusQuery(Object... status) {
             reqSpec.addQueryParam("status", status);
             return this;
         }
@@ -311,13 +338,14 @@ public class PetApi {
          * @return List<Pet>
          */
         public List<Pet> executeAs(Function<Response, Response> handler) {
-            return Arrays.asList(execute(handler).as(Pet[].class, gson()));
+            Type type = new TypeToken<List<Pet>>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param tags Tags to filter by (required)
+         * @param tags (List<String>) Tags to filter by (required)
          */
-        public FindPetsByTagsOper tagsQuery(List<String> tags) {
+        public FindPetsByTagsOper tagsQuery(Object... tags) {
             reqSpec.addQueryParam("tags", tags);
             return this;
         }
@@ -377,13 +405,14 @@ public class PetApi {
          * @return Pet
          */
         public Pet executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Pet.class, gson());
+            Type type = new TypeToken<Pet>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param petId ID of pet to return (required)
+         * @param petId (Long) ID of pet to return (required)
          */
-        public GetPetByIdOper petIdPath(Long petId) {
+        public GetPetByIdOper petIdPath(Object petId) {
             reqSpec.addPathParam("petId", petId);
             return this;
         }
@@ -440,10 +469,10 @@ public class PetApi {
         }
 
          /**
-         * @param body Pet object that needs to be added to the store (required)
+         * @param body (Pet) Pet object that needs to be added to the store (required)
          */
         public UpdatePetOper body(Pet body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -501,25 +530,25 @@ public class PetApi {
         }
 
         /**
-         * @param petId ID of pet that needs to be updated (required)
+         * @param petId (Long) ID of pet that needs to be updated (required)
          */
-        public UpdatePetWithFormOper petIdPath(Long petId) {
+        public UpdatePetWithFormOper petIdPath(Object petId) {
             reqSpec.addPathParam("petId", petId);
             return this;
         }
 
          /**
-         * @param name Updated name of the pet (optional)
+         * @param name (String) Updated name of the pet (optional)
          */
-         public UpdatePetWithFormOper nameForm(String name) {
+         public UpdatePetWithFormOper nameForm(Object... name) {
             reqSpec.addFormParam("name", name);
             return this;
          }
 
          /**
-         * @param status Updated status of the pet (optional)
+         * @param status (String) Updated status of the pet (optional)
          */
-         public UpdatePetWithFormOper statusForm(String status) {
+         public UpdatePetWithFormOper statusForm(Object... status) {
             reqSpec.addFormParam("status", status);
             return this;
          }
@@ -583,21 +612,22 @@ public class PetApi {
          * @return ModelApiResponse
          */
         public ModelApiResponse executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(ModelApiResponse.class, gson());
+            Type type = new TypeToken<ModelApiResponse>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param petId ID of pet to update (required)
+         * @param petId (Long) ID of pet to update (required)
          */
-        public UploadFileOper petIdPath(Long petId) {
+        public UploadFileOper petIdPath(Object petId) {
             reqSpec.addPathParam("petId", petId);
             return this;
         }
 
          /**
-         * @param additionalMetadata Additional data to pass to server (optional)
+         * @param additionalMetadata (String) Additional data to pass to server (optional)
          */
-         public UploadFileOper additionalMetadataForm(String additionalMetadata) {
+         public UploadFileOper additionalMetadataForm(Object... additionalMetadata) {
             reqSpec.addFormParam("additionalMetadata", additionalMetadata);
             return this;
          }
@@ -605,7 +635,7 @@ public class PetApi {
          /**
          * It will assume that the control name is file and the <content-type> is <application/octet-stream>
          * @see #reqSpec for customise
-         * @param file file to upload (optional)
+         * @param file(File) file to upload (optional)
          */
          public UploadFileOper fileMultiPart(File file) {
             reqSpec.addMultiPart(file);

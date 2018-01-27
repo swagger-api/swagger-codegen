@@ -24,13 +24,17 @@ This can only be done by the logged in user.
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.createUser()
-    .body(body).execute(res -> res.prettyPeek());
+api.createUser()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -62,13 +66,17 @@ Creates list of users with given input array
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.createUsersWithArrayInput()
-    .body(body).execute(res -> res.prettyPeek());
+api.createUsersWithArrayInput()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -100,13 +108,17 @@ Creates list of users with given input array
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.createUsersWithListInput()
-    .body(body).execute(res -> res.prettyPeek());
+api.createUsersWithListInput()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -138,13 +150,17 @@ This can only be done by the logged in user.
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.deleteUser()
-    .usernamePath(username).execute(res -> res.prettyPeek());
+api.deleteUser()
+    .usernamePath(username).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -176,13 +192,17 @@ Get user by user name
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.getUserByName()
-    .usernamePath(username).execute(res -> res.prettyPeek());
+api.getUserByName()
+    .usernamePath(username).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -214,14 +234,18 @@ Logs user into the system
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.loginUser()
+api.loginUser()
     .usernameQuery(username)
-    .passwordQuery(password).execute(res -> res.prettyPeek());
+    .passwordQuery(password).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -254,12 +278,16 @@ Logs out current logged in user session
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.logoutUser().execute(res -> res.prettyPeek());
+api.logoutUser().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -288,14 +316,18 @@ This can only be done by the logged in user.
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 UserApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).user();
 
- api.updateUser()
+api.updateUser()
     .usernamePath(username)
-    .body(body).execute(res -> res.prettyPeek());
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

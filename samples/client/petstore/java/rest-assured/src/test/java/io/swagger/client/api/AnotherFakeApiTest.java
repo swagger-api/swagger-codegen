@@ -23,7 +23,6 @@ import org.junit.Test;
 
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
-import static io.restassured.filter.log.LogDetail.ALL;
 import static io.swagger.client.GsonObjectMapper.gson;
 
 /**
@@ -38,7 +37,6 @@ public class AnotherFakeApiTest {
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
                 () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .log(ALL)
                         .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).anotherFake();
     }

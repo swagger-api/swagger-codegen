@@ -13,14 +13,19 @@
 
 package io.swagger.client;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.swagger.client.api.AnotherFakeApi;
-import io.swagger.client.api.FakeApi;
-import io.swagger.client.api.FakeClassnameTags123Api;
-import io.swagger.client.api.PetApi;
-import io.swagger.client.api.StoreApi;
-import io.swagger.client.api.UserApi;
+import io.swagger.client.api.*;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.response.Response;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ApiClient {

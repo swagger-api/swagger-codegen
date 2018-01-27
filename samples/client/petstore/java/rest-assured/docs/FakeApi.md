@@ -25,13 +25,16 @@ Test serialization of outer boolean types
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.fakeOuterBooleanSerialize()
-    .body(body).execute(res -> res.prettyPeek());
+api.fakeOuterBooleanSerialize().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -63,13 +66,16 @@ Test serialization of object with outer number type
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.fakeOuterCompositeSerialize()
-    .body(body).execute(res -> res.prettyPeek());
+api.fakeOuterCompositeSerialize().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -101,13 +107,16 @@ Test serialization of outer number types
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.fakeOuterNumberSerialize()
-    .body(body).execute(res -> res.prettyPeek());
+api.fakeOuterNumberSerialize().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -139,13 +148,16 @@ Test serialization of outer string types
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.fakeOuterStringSerialize()
-    .body(body).execute(res -> res.prettyPeek());
+api.fakeOuterStringSerialize().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -177,13 +189,17 @@ To test \&quot;client\&quot; model
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.testClientModel()
-    .body(body).execute(res -> res.prettyPeek());
+api.testClientModel()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -215,26 +231,20 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.testEndpointParameters()
+api.testEndpointParameters()
     .numberForm(number)
     ._doubleForm(_double)
     .patternWithoutDelimiterForm(patternWithoutDelimiter)
-    ._byteForm(_byte)
-    .integerForm(integer)
-    .int32Form(int32)
-    .int64Form(int64)
-    ._floatForm(_float)
-    .stringForm(string)
-    .binaryForm(binary)
-    .dateForm(date)
-    .dateTimeForm(dateTime)
-    .passwordForm(password)
-    .paramCallbackForm(paramCallback).execute(res -> res.prettyPeek());
+    ._byteForm(_byte).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -279,20 +289,16 @@ To test enum parameters
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.testEnumParameters()
-    .enumFormStringArrayForm(enumFormStringArray)
-    .enumFormStringForm(enumFormString)
-    .enumHeaderStringArrayHeader(enumHeaderStringArray)
-    .enumHeaderStringHeader(enumHeaderString)
-    .enumQueryStringArrayQuery(enumQueryStringArray)
-    .enumQueryStringQuery(enumQueryString)
-    .enumQueryIntegerQuery(enumQueryInteger)
-    .enumQueryDoubleForm(enumQueryDouble).execute(res -> res.prettyPeek());
+api.testEnumParameters().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -331,13 +337,17 @@ test inline additionalProperties
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.testInlineAdditionalProperties()
-    .body(param).execute(res -> res.prettyPeek());
+api.testInlineAdditionalProperties()
+    .body(param).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -369,14 +379,18 @@ test json serialization of form data
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fake();
 
- api.testJsonFormData()
+api.testJsonFormData()
     .paramForm(param)
-    .param2Form(param2).execute(res -> res.prettyPeek());
+    .param2Form(param2).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

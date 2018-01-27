@@ -15,13 +15,17 @@ To test class name in snake case
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 FakeClassnameTags123Api api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).fakeClassnameTags123();
 
- api.testClassname()
-    .body(body).execute(res -> res.prettyPeek());
+api.testClassname()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

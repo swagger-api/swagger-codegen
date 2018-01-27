@@ -20,13 +20,17 @@ For valid response try integer IDs with value &lt; 1000. Anything above 1000 or 
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 StoreApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
 
- api.deleteOrder()
-    .orderIdPath(orderId).execute(res -> res.prettyPeek());
+api.deleteOrder()
+    .orderIdPath(orderId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -58,12 +62,16 @@ Returns a map of status codes to quantities
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 StoreApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
 
- api.getInventory().execute(res -> res.prettyPeek());
+api.getInventory().execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -92,13 +100,17 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 StoreApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
 
- api.getOrderById()
-    .orderIdPath(orderId).execute(res -> res.prettyPeek());
+api.getOrderById()
+    .orderIdPath(orderId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -130,13 +142,17 @@ Place an order for a pet
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 StoreApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).store();
 
- api.placeOrder()
-    .body(body).execute(res -> res.prettyPeek());
+api.placeOrder()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

@@ -13,6 +13,7 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
 import io.swagger.client.model.User;
 
 import java.util.ArrayList;
@@ -24,19 +25,24 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.swagger.client.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class UserApi {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private UserApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static UserApi user(RequestSpecBuilder reqSpec) {
@@ -77,6 +83,26 @@ public class UserApi {
     }
 
     /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return UserApi
+     */
+    public UserApi setJSON(JSON json) {
+        this.json = json;
+        return this;
+    }
+
+    /**
      * Create user
      * This can only be done by the logged in user.
      *
@@ -112,10 +138,10 @@ public class UserApi {
         }
 
          /**
-         * @param body Created user object (required)
+         * @param body (User) Created user object (required)
          */
         public CreateUserOper body(User body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -171,10 +197,10 @@ public class UserApi {
         }
 
          /**
-         * @param body List of user object (required)
+         * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithArrayInputOper body(List<User> body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -230,10 +256,10 @@ public class UserApi {
         }
 
          /**
-         * @param body List of user object (required)
+         * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithListInputOper body(List<User> body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -287,9 +313,9 @@ public class UserApi {
         }
 
         /**
-         * @param username The name that needs to be deleted (required)
+         * @param username (String) The name that needs to be deleted (required)
          */
-        public DeleteUserOper usernamePath(String username) {
+        public DeleteUserOper usernamePath(Object username) {
             reqSpec.addPathParam("username", username);
             return this;
         }
@@ -349,13 +375,14 @@ public class UserApi {
          * @return User
          */
         public User executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(User.class, gson());
+            Type type = new TypeToken<User>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+         * @param username (String) The name that needs to be fetched. Use user1 for testing.  (required)
          */
-        public GetUserByNameOper usernamePath(String username) {
+        public GetUserByNameOper usernamePath(Object username) {
             reqSpec.addPathParam("username", username);
             return this;
         }
@@ -416,21 +443,22 @@ public class UserApi {
          * @return String
          */
         public String executeAs(Function<Response, Response> handler) {
-            return execute(handler).asString();
+            Type type = new TypeToken<String>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param username The user name for login (required)
+         * @param username (String) The user name for login (required)
          */
-        public LoginUserOper usernameQuery(String username) {
+        public LoginUserOper usernameQuery(Object... username) {
             reqSpec.addQueryParam("username", username);
             return this;
         }
 
         /**
-         * @param password The password for login in clear text (required)
+         * @param password (String) The password for login in clear text (required)
          */
-        public LoginUserOper passwordQuery(String password) {
+        public LoginUserOper passwordQuery(Object... password) {
             reqSpec.addQueryParam("password", password);
             return this;
         }
@@ -536,17 +564,17 @@ public class UserApi {
         }
 
          /**
-         * @param body Updated user object (required)
+         * @param body (User) Updated user object (required)
          */
         public UpdateUserOper body(User body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
         /**
-         * @param username name that need to be deleted (required)
+         * @param username (String) name that need to be deleted (required)
          */
-        public UpdateUserOper usernamePath(String username) {
+        public UpdateUserOper usernamePath(Object username) {
             reqSpec.addPathParam("username", username);
             return this;
         }

@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 {{/fullJavaUtil}}
-import static io.restassured.filter.log.LogDetail.ALL;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 import static {{invokerPackage}}.GsonObjectMapper.gson;
@@ -35,9 +34,8 @@ public class {{classname}}Test {
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
                 () -> new RequestSpecBuilder().setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .log(ALL)
                         .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("{{basePath}}"))).{{classVarName}}();
+                        .setBaseUri("{{{basePath}}}"))).{{classVarName}}();
     }
 {{#operations}}
 {{#operation}}

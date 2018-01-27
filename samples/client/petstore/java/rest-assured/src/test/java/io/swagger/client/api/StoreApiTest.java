@@ -21,7 +21,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.threeten.bp.OffsetDateTime;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
@@ -32,6 +31,7 @@ import static io.swagger.client.ResponseSpecBuilders.validatedWith;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 /**
@@ -51,8 +51,7 @@ public class StoreApiTest {
 
     @Test
     public void getInventoryTest() {
-        Map<String, Long> inventory = api.getInventory().execute(validatedWith(shouldBeCode(SC_OK)))
-                .as(HashMap.class);
+        Map<String, Integer> inventory = api.getInventory().executeAs(validatedWith(shouldBeCode(SC_OK)));
         assertThat(inventory.keySet().size(), greaterThan(0));
     }
 
@@ -60,8 +59,11 @@ public class StoreApiTest {
     public void getOrderByIdTest() {
         Order order = getOrder();
         api.placeOrder().body(order).execute(validatedWith(shouldBeCode(SC_OK)));
-        api.getOrderById()
-                .orderIdPath(order.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
+        Long orderId = api.getOrderById()
+                .orderIdPath(order.getId()).executeAs(validatedWith(shouldBeCode(SC_OK))).getId();
+        assertThat(orderId, equalTo(order.getId()));
+        api.deleteOrder().orderIdPath(orderId).execute(validatedWith(shouldBeCode(SC_OK)));
+
     }
 
     @Test
@@ -69,10 +71,9 @@ public class StoreApiTest {
         Order order = getOrder();
         Long id = api.placeOrder()
                 .body(order).executeAs(validatedWith(shouldBeCode(SC_OK))).getId();
-        api.deleteOrder().orderIdPath(id.toString())
+        api.deleteOrder().orderIdPath(id)
                 .execute(validatedWith(shouldBeCode(SC_OK)));
         api.getOrderById().orderIdPath(order.getId()).execute(validatedWith(shouldBeCode(SC_NOT_FOUND)));
-
     }
 
     private Order getOrder() {

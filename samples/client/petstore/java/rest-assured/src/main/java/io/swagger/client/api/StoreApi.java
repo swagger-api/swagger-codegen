@@ -13,6 +13,7 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
 import io.swagger.client.model.Order;
 
 import java.util.ArrayList;
@@ -24,19 +25,24 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.swagger.client.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class StoreApi {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private StoreApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static StoreApi store(RequestSpecBuilder reqSpec) {
@@ -58,6 +64,26 @@ public class StoreApi {
 
     public PlaceOrderOper placeOrder() {
         return new PlaceOrderOper(reqSpec);
+    }
+
+    /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return StoreApi
+     */
+    public StoreApi setJSON(JSON json) {
+        this.json = json;
+        return this;
     }
 
     /**
@@ -94,9 +120,9 @@ public class StoreApi {
         }
 
         /**
-         * @param orderId ID of the order that needs to be deleted (required)
+         * @param orderId (String) ID of the order that needs to be deleted (required)
          */
-        public DeleteOrderOper orderIdPath(String orderId) {
+        public DeleteOrderOper orderIdPath(Object orderId) {
             reqSpec.addPathParam("order_id", orderId);
             return this;
         }
@@ -148,6 +174,15 @@ public class StoreApi {
          */
         public <T> T execute(Function<Response, T> handler) {
             return handler.apply(RestAssured.given().spec(reqSpec.build()).expect().spec(respSpec.build()).when().request(GET, REQ_URI));
+        }
+
+        /**
+         * GET /store/inventory
+         * @return Map<String, Integer>
+         */
+        public Map<String, Integer> executeAs(Function<Response, Response> handler) {
+            Type type = new TypeToken<Map<String, Integer>>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
@@ -205,13 +240,14 @@ public class StoreApi {
          * @return Order
          */
         public Order executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Order.class, gson());
+            Type type = new TypeToken<Order>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
         /**
-         * @param orderId ID of pet that needs to be fetched (required)
+         * @param orderId (Long) ID of pet that needs to be fetched (required)
          */
-        public GetOrderByIdOper orderIdPath(Long orderId) {
+        public GetOrderByIdOper orderIdPath(Object orderId) {
             reqSpec.addPathParam("order_id", orderId);
             return this;
         }
@@ -273,14 +309,15 @@ public class StoreApi {
          * @return Order
          */
         public Order executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Order.class, gson());
+            Type type = new TypeToken<Order>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body order placed for purchasing the pet (required)
+         * @param body (Order) order placed for purchasing the pet (required)
          */
         public PlaceOrderOper body(Order body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 

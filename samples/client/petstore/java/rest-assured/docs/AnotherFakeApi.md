@@ -17,13 +17,17 @@ To test special tags
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 AnotherFakeApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).anotherFake();
 
- api.testSpecialTags()
-    .body(body).execute(res -> res.prettyPeek());
+api.testSpecialTags()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

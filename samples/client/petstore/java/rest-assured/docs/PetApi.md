@@ -24,13 +24,17 @@ Add a new pet to the store
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.addPet()
-    .body(body).execute(res -> res.prettyPeek());
+api.addPet()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -62,14 +66,17 @@ Deletes a pet
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.deletePet()
-    .petIdPath(petId)
-    .apiKeyHeader(apiKey).execute(res -> res.prettyPeek());
+api.deletePet()
+    .petIdPath(petId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -102,13 +109,17 @@ Multiple status values can be provided with comma separated strings
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.findPetsByStatus()
-    .statusQuery(status).execute(res -> res.prettyPeek());
+api.findPetsByStatus()
+    .statusQuery(status).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -140,13 +151,17 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.findPetsByTags()
-    .tagsQuery(tags).execute(res -> res.prettyPeek());
+api.findPetsByTags()
+    .tagsQuery(tags).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -178,13 +193,17 @@ Returns a single pet
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.getPetById()
-    .petIdPath(petId).execute(res -> res.prettyPeek());
+api.getPetById()
+    .petIdPath(petId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -216,13 +235,17 @@ Update an existing pet
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.updatePet()
-    .body(body).execute(res -> res.prettyPeek());
+api.updatePet()
+    .body(body).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -254,15 +277,17 @@ Updates a pet in the store with form data
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.updatePetWithForm()
-    .petIdPath(petId)
-    .nameForm(name)
-    .statusForm(status).execute(res -> res.prettyPeek());
+api.updatePetWithForm()
+    .petIdPath(petId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters
@@ -296,15 +321,17 @@ uploads an image
 
 ### Example
 ```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 PetApi api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("http://petstore.swagger.io:80/v2"))).pet();
 
- api.uploadFile()
-    .petIdPath(petId)
-    .additionalMetadataForm(additionalMetadata)
-    .fileForm(file).execute(res -> res.prettyPeek());
+api.uploadFile()
+    .petIdPath(petId).execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

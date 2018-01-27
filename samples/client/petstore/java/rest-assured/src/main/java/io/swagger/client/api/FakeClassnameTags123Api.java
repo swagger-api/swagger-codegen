@@ -13,6 +13,7 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
 import io.swagger.client.model.Client;
 
 import java.util.ArrayList;
@@ -24,19 +25,24 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.swagger.client.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class FakeClassnameTags123Api {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private FakeClassnameTags123Api(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static FakeClassnameTags123Api fakeClassnameTags123(RequestSpecBuilder reqSpec) {
@@ -46,6 +52,26 @@ public class FakeClassnameTags123Api {
 
     public TestClassnameOper testClassname() {
         return new TestClassnameOper(reqSpec);
+    }
+
+    /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return FakeClassnameTags123Api
+     */
+    public FakeClassnameTags123Api setJSON(JSON json) {
+        this.json = json;
+        return this;
     }
 
     /**
@@ -89,14 +115,15 @@ public class FakeClassnameTags123Api {
          * @return Client
          */
         public Client executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Client.class, gson());
+            Type type = new TypeToken<Client>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body client model (required)
+         * @param body (Client) client model (required)
          */
         public TestClassnameOper body(Client body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 

@@ -20,17 +20,22 @@ Method | HTTP request | Description
 
 ### Example
 ```java
+// Import classes:
+//import {{invokerPackage}}.ApiClient;
+//import io.restassured.builder.RequestSpecBuilder;
+//import io.restassured.filter.log.ErrorLoggingFilter;
+
 {{classname}} api = ApiClient.api(ApiClient.Config.apiConfig().withReqSpecSupplier(
                 () -> new RequestSpecBuilder()
-                        .setContentType(JSON)
                         .setBaseUri("{{basePath}}"))).{{classVarName}}();
 
- api.{{operationId}}(){{#allParams}}{{#isPathParam}}
+api.{{operationId}}(){{#allParams}}{{#required}}{{#isPathParam}}
     .{{paramName}}Path({{paramName}}){{/isPathParam}}{{#isQueryParam}}
-    .{{paramName}}Query({{paramName}}){{/isQueryParam}}{{#isFormParam}}
-    .{{paramName}}Form({{paramName}}){{/isFormParam}}{{#isHeaderParam}}
+    .{{paramName}}Query({{paramName}}){{/isQueryParam}}{{#isFormParam}}{{^isFile}}
+    .{{paramName}}Form({{paramName}}){{/isFile}}{{/isFormParam}}{{#isFormParam}}{{#isFile}}
+    .{{paramName}}MultiPart({{paramName}}){{/isFile}}{{/isFormParam}}{{#isHeaderParam}}
     .{{paramName}}Header({{paramName}}){{/isHeaderParam}}{{#isBodyParam}}
-    .body({{paramName}}){{/isBodyParam}}{{/allParams}}.execute(res -> res.prettyPeek());
+    .body({{paramName}}){{/isBodyParam}}{{/required}}{{/allParams}}.execute(r -> r.prettyPeek());
 ```
 
 ### Parameters

@@ -13,6 +13,7 @@
 
 package io.swagger.client.api;
 
+import com.google.gson.reflect.TypeToken;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
@@ -28,19 +29,24 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+
+import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.swagger.client.GsonObjectMapper.gson;
 import static io.restassured.http.Method.*;
 
 public class FakeApi {
 
     private RequestSpecBuilder reqSpec;
 
+    private JSON json;
+
     private FakeApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
+        this.json = new JSON();
     }
 
     public static FakeApi fake(RequestSpecBuilder reqSpec) {
@@ -85,6 +91,26 @@ public class FakeApi {
     }
 
     /**
+     * Get JSON
+     *
+     * @return JSON object
+     */
+    public JSON getJSON() {
+        return json;
+    }
+
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return FakeApi
+     */
+    public FakeApi setJSON(JSON json) {
+        this.json = json;
+        return this;
+    }
+
+    /**
      * 
      * Test serialization of outer boolean types
      *
@@ -122,17 +148,18 @@ public class FakeApi {
 
         /**
          * POST /fake/outer/boolean
-         * @return String
+         * @return Boolean
          */
-        public String executeAs(Function<Response, Response> handler) {
-            return execute(handler).asString();
+        public Boolean executeAs(Function<Response, Response> handler) {
+            Type type = new TypeToken<Boolean>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body Input boolean as post body (optional)
+         * @param body (Boolean) Input boolean as post body (optional)
          */
         public FakeOuterBooleanSerializeOper body(Boolean body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -193,14 +220,15 @@ public class FakeApi {
          * @return OuterComposite
          */
         public OuterComposite executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(OuterComposite.class, gson());
+            Type type = new TypeToken<OuterComposite>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body Input composite as post body (optional)
+         * @param body (OuterComposite) Input composite as post body (optional)
          */
         public FakeOuterCompositeSerializeOper body(OuterComposite body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -261,14 +289,15 @@ public class FakeApi {
          * @return BigDecimal
          */
         public BigDecimal executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(BigDecimal.class, gson());
+            Type type = new TypeToken<BigDecimal>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body Input number as post body (optional)
+         * @param body (BigDecimal) Input number as post body (optional)
          */
         public FakeOuterNumberSerializeOper body(BigDecimal body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -329,14 +358,15 @@ public class FakeApi {
          * @return String
          */
         public String executeAs(Function<Response, Response> handler) {
-            return execute(handler).asString();
+            Type type = new TypeToken<String>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body Input string as post body (optional)
+         * @param body (String) Input string as post body (optional)
          */
         public FakeOuterStringSerializeOper body(String body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -397,14 +427,15 @@ public class FakeApi {
          * @return Client
          */
         public Client executeAs(Function<Response, Response> handler) {
-            return execute(handler).as(Client.class, gson());
+            Type type = new TypeToken<Client>(){}.getType();
+            return getJSON().deserialize(execute(handler).asString(), type);
         }
 
          /**
-         * @param body client model (required)
+         * @param body (Client) client model (required)
          */
         public TestClientModelOper body(Client body) {
-            reqSpec.setBody(body, gson());
+            reqSpec.setBody(getJSON().serialize(body));
             return this;
         }
 
@@ -473,113 +504,113 @@ public class FakeApi {
         }
 
          /**
-         * @param integer None (optional)
+         * @param integer (Integer) None (optional)
          */
-         public TestEndpointParametersOper integerForm(Integer integer) {
+         public TestEndpointParametersOper integerForm(Object... integer) {
             reqSpec.addFormParam("integer", integer);
             return this;
          }
 
          /**
-         * @param int32 None (optional)
+         * @param int32 (Integer) None (optional)
          */
-         public TestEndpointParametersOper int32Form(Integer int32) {
+         public TestEndpointParametersOper int32Form(Object... int32) {
             reqSpec.addFormParam("int32", int32);
             return this;
          }
 
          /**
-         * @param int64 None (optional)
+         * @param int64 (Long) None (optional)
          */
-         public TestEndpointParametersOper int64Form(Long int64) {
+         public TestEndpointParametersOper int64Form(Object... int64) {
             reqSpec.addFormParam("int64", int64);
             return this;
          }
 
          /**
-         * @param number None (required)
+         * @param number (BigDecimal) None (required)
          */
-         public TestEndpointParametersOper numberForm(BigDecimal number) {
+         public TestEndpointParametersOper numberForm(Object... number) {
             reqSpec.addFormParam("number", number);
             return this;
          }
 
          /**
-         * @param _float None (optional)
+         * @param _float (Float) None (optional)
          */
-         public TestEndpointParametersOper _floatForm(Float _float) {
+         public TestEndpointParametersOper _floatForm(Object... _float) {
             reqSpec.addFormParam("float", _float);
             return this;
          }
 
          /**
-         * @param _double None (required)
+         * @param _double (Double) None (required)
          */
-         public TestEndpointParametersOper _doubleForm(Double _double) {
+         public TestEndpointParametersOper _doubleForm(Object... _double) {
             reqSpec.addFormParam("double", _double);
             return this;
          }
 
          /**
-         * @param string None (optional)
+         * @param string (String) None (optional)
          */
-         public TestEndpointParametersOper stringForm(String string) {
+         public TestEndpointParametersOper stringForm(Object... string) {
             reqSpec.addFormParam("string", string);
             return this;
          }
 
          /**
-         * @param patternWithoutDelimiter None (required)
+         * @param patternWithoutDelimiter (String) None (required)
          */
-         public TestEndpointParametersOper patternWithoutDelimiterForm(String patternWithoutDelimiter) {
+         public TestEndpointParametersOper patternWithoutDelimiterForm(Object... patternWithoutDelimiter) {
             reqSpec.addFormParam("pattern_without_delimiter", patternWithoutDelimiter);
             return this;
          }
 
          /**
-         * @param _byte None (required)
+         * @param _byte (byte[]) None (required)
          */
-         public TestEndpointParametersOper _byteForm(byte[] _byte) {
+         public TestEndpointParametersOper _byteForm(Object... _byte) {
             reqSpec.addFormParam("byte", _byte);
             return this;
          }
 
          /**
-         * @param binary None (optional)
+         * @param binary (byte[]) None (optional)
          */
-         public TestEndpointParametersOper binaryForm(byte[] binary) {
+         public TestEndpointParametersOper binaryForm(Object... binary) {
             reqSpec.addFormParam("binary", binary);
             return this;
          }
 
          /**
-         * @param date None (optional)
+         * @param date (LocalDate) None (optional)
          */
-         public TestEndpointParametersOper dateForm(LocalDate date) {
+         public TestEndpointParametersOper dateForm(Object... date) {
             reqSpec.addFormParam("date", date);
             return this;
          }
 
          /**
-         * @param dateTime None (optional)
+         * @param dateTime (OffsetDateTime) None (optional)
          */
-         public TestEndpointParametersOper dateTimeForm(OffsetDateTime dateTime) {
+         public TestEndpointParametersOper dateTimeForm(Object... dateTime) {
             reqSpec.addFormParam("dateTime", dateTime);
             return this;
          }
 
          /**
-         * @param password None (optional)
+         * @param password (String) None (optional)
          */
-         public TestEndpointParametersOper passwordForm(String password) {
+         public TestEndpointParametersOper passwordForm(Object... password) {
             reqSpec.addFormParam("password", password);
             return this;
          }
 
          /**
-         * @param paramCallback None (optional)
+         * @param paramCallback (String) None (optional)
          */
-         public TestEndpointParametersOper paramCallbackForm(String paramCallback) {
+         public TestEndpointParametersOper paramCallbackForm(Object... paramCallback) {
             reqSpec.addFormParam("callback", paramCallback);
             return this;
          }
@@ -643,7 +674,7 @@ public class FakeApi {
         }
 
         /**
-         * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+         * @param enumHeaderStringArray (List<String>) Header parameter enum test (string array) (optional)
          */
         public TestEnumParametersOper enumHeaderStringArrayHeader(String enumHeaderStringArray) {
             reqSpec.addHeader("enum_header_string_array", enumHeaderStringArray);
@@ -651,7 +682,7 @@ public class FakeApi {
         }
 
         /**
-         * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
+         * @param enumHeaderString (String) Header parameter enum test (string) (optional, default to -efg)
          */
         public TestEnumParametersOper enumHeaderStringHeader(String enumHeaderString) {
             reqSpec.addHeader("enum_header_string", enumHeaderString);
@@ -659,49 +690,49 @@ public class FakeApi {
         }
 
         /**
-         * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+         * @param enumQueryStringArray (List<String>) Query parameter enum test (string array) (optional)
          */
-        public TestEnumParametersOper enumQueryStringArrayQuery(List<String> enumQueryStringArray) {
+        public TestEnumParametersOper enumQueryStringArrayQuery(Object... enumQueryStringArray) {
             reqSpec.addQueryParam("enum_query_string_array", enumQueryStringArray);
             return this;
         }
 
         /**
-         * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
+         * @param enumQueryString (String) Query parameter enum test (string) (optional, default to -efg)
          */
-        public TestEnumParametersOper enumQueryStringQuery(String enumQueryString) {
+        public TestEnumParametersOper enumQueryStringQuery(Object... enumQueryString) {
             reqSpec.addQueryParam("enum_query_string", enumQueryString);
             return this;
         }
 
         /**
-         * @param enumQueryInteger Query parameter enum test (double) (optional)
+         * @param enumQueryInteger (Integer) Query parameter enum test (double) (optional)
          */
-        public TestEnumParametersOper enumQueryIntegerQuery(Integer enumQueryInteger) {
+        public TestEnumParametersOper enumQueryIntegerQuery(Object... enumQueryInteger) {
             reqSpec.addQueryParam("enum_query_integer", enumQueryInteger);
             return this;
         }
 
          /**
-         * @param enumFormStringArray Form parameter enum test (string array) (optional)
+         * @param enumFormStringArray (List<String>) Form parameter enum test (string array) (optional)
          */
-         public TestEnumParametersOper enumFormStringArrayForm(List<String> enumFormStringArray) {
+         public TestEnumParametersOper enumFormStringArrayForm(Object... enumFormStringArray) {
             reqSpec.addFormParam("enum_form_string_array", enumFormStringArray);
             return this;
          }
 
          /**
-         * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
+         * @param enumFormString (String) Form parameter enum test (string) (optional, default to -efg)
          */
-         public TestEnumParametersOper enumFormStringForm(String enumFormString) {
+         public TestEnumParametersOper enumFormStringForm(Object... enumFormString) {
             reqSpec.addFormParam("enum_form_string", enumFormString);
             return this;
          }
 
          /**
-         * @param enumQueryDouble Query parameter enum test (double) (optional)
+         * @param enumQueryDouble (Double) Query parameter enum test (double) (optional)
          */
-         public TestEnumParametersOper enumQueryDoubleForm(Double enumQueryDouble) {
+         public TestEnumParametersOper enumQueryDoubleForm(Object... enumQueryDouble) {
             reqSpec.addFormParam("enum_query_double", enumQueryDouble);
             return this;
          }
@@ -758,10 +789,10 @@ public class FakeApi {
         }
 
          /**
-         * @param param request body (required)
+         * @param param (Object) request body (required)
          */
         public TestInlineAdditionalPropertiesOper body(Object param) {
-            reqSpec.setBody(param, gson());
+            reqSpec.setBody(getJSON().serialize(param));
             return this;
         }
 
@@ -818,17 +849,17 @@ public class FakeApi {
         }
 
          /**
-         * @param param field1 (required)
+         * @param param (String) field1 (required)
          */
-         public TestJsonFormDataOper paramForm(String param) {
+         public TestJsonFormDataOper paramForm(Object... param) {
             reqSpec.addFormParam("param", param);
             return this;
          }
 
          /**
-         * @param param2 field2 (required)
+         * @param param2 (String) field2 (required)
          */
-         public TestJsonFormDataOper param2Form(String param2) {
+         public TestJsonFormDataOper param2Form(Object... param2) {
             reqSpec.addFormParam("param2", param2);
             return this;
          }

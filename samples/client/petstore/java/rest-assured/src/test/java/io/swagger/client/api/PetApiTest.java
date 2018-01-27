@@ -25,7 +25,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,12 +62,12 @@ public class PetApiTest {
     public void statusListTest() {
         Pet pet = getPet();
         api.addPet().body(pet.status(PENDING)).execute(validatedWith(shouldBeCode(SC_OK)));
-        List<String> statusList = new ArrayList<>();
-        statusList.add(PENDING.getValue());
+        List<String> statusList = Arrays.asList(PENDING.getValue());
         List<Long> petsId = api.findPetsByStatus()
-                .statusQuery(statusList).executeAs(validatedWith(shouldBeCode(SC_OK)))
+                .statusQuery(statusList.toArray()).executeAs(validatedWith(shouldBeCode(SC_OK)))
                 .stream().map(Pet::getId).collect(Collectors.toList());
         assertThat(petsId, hasItem(pet.getId()));
+        api.deletePet().petIdPath(pet.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
@@ -78,6 +77,7 @@ public class PetApiTest {
         Pet fetchedPet = api.getPetById()
                 .petIdPath(pet.getId()).executeAs(validatedWith(shouldBeCode(SC_OK)));
         assertThat(fetchedPet.getId(), equalTo(pet.getId()));
+        api.deletePet().petIdPath(pet.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
@@ -99,6 +99,7 @@ public class PetApiTest {
         writer.close();
         api.uploadFile().fileMultiPart(file)
                 .petIdPath(pet.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
+        api.deletePet().petIdPath(pet.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
@@ -108,6 +109,7 @@ public class PetApiTest {
         api.updatePet().body(pet.status(SOLD)).execute(validatedWith(shouldBeCode(SC_OK)));
         Pet.StatusEnum statusEnum = api.getPetById().petIdPath(pet.getId()).executeAs(validatedWith(shouldBeCode(SC_OK))).getStatus();
         assertThat(statusEnum, equalTo(SOLD));
+        api.deletePet().petIdPath(pet.getId()).execute(validatedWith(shouldBeCode(SC_OK)));
     }
 
 

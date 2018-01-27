@@ -20,7 +20,7 @@ import io.swagger.client.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
@@ -33,6 +33,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * API tests for UserApi
@@ -51,32 +52,43 @@ public class UserApiTest {
 
     @Test
     public void createUsersWithArrayInputTest() {
-        List<User> body = new ArrayList<>();
-        body.add(new User().id(nextId()));
-        body.add(new User().id(nextId()));
-        body.add(new User().id(nextId()));
+        User first = getUser().id(nextId());
+        User second = getUser().id(nextId());
+        List<User> body = Arrays.asList(first, second);
         api.createUsersWithArrayInput()
                 .body(body).execute(validatedWith(shouldBeCode(SC_OK)));
+        api.deleteUser().usernamePath(first.getUsername()).execute(
+                validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
     public void createUsersWithListInputTest() {
-        List<User> body = new ArrayList<>();
-        body.add(new User().id(nextId()));
-        body.add(new User().id(nextId()));
-        body.add(new User().id(nextId()));
+        User first = getUser().id(nextId());
+        User second = getUser().id(nextId());
+        List<User> body = Arrays.asList(first, second);
         api.createUsersWithListInput()
                 .body(body).execute(validatedWith(shouldBeCode(SC_OK)));
+        api.deleteUser().usernamePath(first.getUsername()).execute(
+                validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
     public void createUserTest() {
-        String userName = "userName";
-        User newUser = getUser().username(userName);
-        api.createUser().body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
-        api.getUserByName()
+        String userName = "Blah";
+        User user = getUser().username(userName);
+        api.createUser().body(user).execute(validatedWith(shouldBeCode(SC_OK)));
+        User fetched = api.getUserByName()
                 .usernamePath(userName).executeAs(validatedWith(shouldBeCode(SC_OK)));
-        assertThat(newUser.getUsername(), equalTo(userName));
+
+        assertThat(fetched, notNullValue());
+        assertThat(fetched.getUsername(), equalTo(userName));
+        assertThat(fetched.getPassword(), equalTo(user.getPassword()));
+        assertThat(fetched.getEmail(), equalTo(user.getEmail()));
+        assertThat(fetched.getFirstName(), equalTo(user.getFirstName()));
+        assertThat(fetched.getLastName(), equalTo(user.getLastName()));
+        assertThat(fetched.getId(), equalTo(user.getId()));
+        api.deleteUser().usernamePath(user.getUsername()).execute(
+                validatedWith(shouldBeCode(SC_OK)));
     }
 
     @Test
@@ -98,13 +110,18 @@ public class UserApiTest {
     @Test
     public void updateUserTest() {
         String username = "me";
-        User newUser = new User().username(username);
-        api.createUser().body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
+        String email = "me@blah.com";
+        User user = new User().username(username).email(email);
+        api.createUser().body(user).execute(validatedWith(shouldBeCode(SC_OK)));
         api.updateUser()
                 .usernamePath(username)
-                .body(newUser).execute(validatedWith(shouldBeCode(SC_OK)));
-        String result = api.getUserByName().usernamePath(username).executeAs(validatedWith(shouldBeCode(SC_OK))).getUsername();
-        assertThat(result, equalTo(username));
+                .body(user).execute(validatedWith(shouldBeCode(SC_OK)));
+        User fetched = api.getUserByName().usernamePath(username).executeAs(validatedWith(shouldBeCode(SC_OK)));
+        assertThat(fetched, notNullValue());
+        assertThat(fetched.getUsername(), equalTo(username));
+        assertThat(fetched.getEmail(), equalTo(email));
+        api.deleteUser().usernamePath(user.getUsername()).execute(
+                validatedWith(shouldBeCode(SC_OK)));
 
     }
 
