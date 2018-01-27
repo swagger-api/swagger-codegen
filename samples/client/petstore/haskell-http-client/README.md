@@ -58,6 +58,7 @@ These options allow some customization of the code generation process.
 
 | OPTION                          | DESCRIPTION                                                                                                                   | DEFAULT  | ACTUAL                                |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- |
+| allowNonUniqueOperationIds      | allow *different* API modules to contain the same operationId. Each API must be imported qualified                            | false    | false    |
 | allowFromJsonNulls              | allow JSON Null during model decoding from JSON                                                                               | true     | true              |
 | allowToJsonNulls                | allow emitting JSON Null during model encoding to JSON                                                                        | false    | false                |
 | dateFormat                      | format string used to parse/render a date                                                                                     | %Y-%m-%d | %Y-%m-%d                      |
@@ -126,7 +127,7 @@ describes additional constraints and actions on the _addFoo_ operation
 via its typeclass instances. These typeclass instances can be viewed
 in GHCi or via the Haddocks.
 
-* requried parameters are included as function arguments to _addFoo_
+* required parameters are included as function arguments to _addFoo_
 * optional non-body parameters are included by using  `applyOptionalParam`
 * optional body parameters are set by using  `setBodyParam`
 

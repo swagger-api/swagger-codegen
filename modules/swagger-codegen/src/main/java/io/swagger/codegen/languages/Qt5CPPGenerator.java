@@ -169,6 +169,20 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         }
 
         additionalProperties.put("cppNamespaceDeclarations", cppNamespace.split("\\::"));
+        if(additionalProperties.containsKey("modelNamePrefix")){
+            supportingFiles.clear();
+            supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, modelNamePrefix + "Helpers.h"));
+            supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, modelNamePrefix + "Helpers.cpp"));
+            supportingFiles.add(new SupportingFile("HttpRequest.h.mustache", sourceFolder, modelNamePrefix + "HttpRequest.h"));
+            supportingFiles.add(new SupportingFile("HttpRequest.cpp.mustache", sourceFolder, modelNamePrefix + "HttpRequest.cpp"));
+            supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, modelNamePrefix + "ModelFactory.h"));
+            supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, modelNamePrefix + "Object.h"));
+
+            typeMapping.put("object", modelNamePrefix + "Object");
+            typeMapping.put("file", modelNamePrefix + "HttpRequestInputFileElement");
+            importMapping.put("SWGHttpRequestInputFileElement", "#include \"" + modelNamePrefix + "HttpRequest.h\"");
+            additionalProperties().put("prefix", modelNamePrefix);
+        }
     }
 
     /**
@@ -258,7 +272,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toApiFilename(String name) {
-        return PREFIX + initialCaps(name) + "Api";
+        return modelNamePrefix + initialCaps(name) + "Api";
     }
 
     /**
@@ -315,19 +329,13 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         } else if (p instanceof DecimalProperty) {
             return "0.0";
         } else if (p instanceof MapProperty) {
-            MapProperty ap = (MapProperty) p;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
-            if (!languageSpecificPrimitives.contains(inner)) {
-                inner += "*";
-            }
-            return "new QMap<QString, " + inner + ">()";
+            MapProperty mp = (MapProperty) p;
+            Property inner = mp.getAdditionalProperties();
+            return "new QMap<QString, " + getTypeDeclaration(inner) + ">()";
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
-            if (!languageSpecificPrimitives.contains(inner)) {
-                inner += "*";
-            }
-            return "new QList<" + inner + ">()";
+            Property inner = ap.getItems();
+            return "new QList<" + getTypeDeclaration(inner) + ">()";
         }
         // else
         if (p instanceof RefProperty) {
@@ -404,7 +412,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toApiName(String type) {
-        return PREFIX + Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
+        return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
     }
 
     @Override

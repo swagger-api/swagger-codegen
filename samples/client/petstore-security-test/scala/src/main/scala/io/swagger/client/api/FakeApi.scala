@@ -40,30 +40,38 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
-class FakeApi(val defBasePath: String = "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r",
-                        defApiInvoker: ApiInvoker = ApiInvoker) {
+import org.json4s._
+
+class FakeApi(
+  val defBasePath: String = "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r",
+  defApiInvoker: ApiInvoker = ApiInvoker
+) {
 
   implicit val formats = new org.json4s.DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
   }
-  implicit val stringReader = ClientResponseReaders.StringReader
-  implicit val unitReader = ClientResponseReaders.UnitReader
-  implicit val jvalueReader = ClientResponseReaders.JValueReader
-  implicit val jsonReader = JsonFormatsReader
-  implicit val stringWriter = RequestWriters.StringWriter
-  implicit val jsonWriter = JsonFormatsWriter
+  implicit val stringReader: ClientResponseReader[String] = ClientResponseReaders.StringReader
+  implicit val unitReader: ClientResponseReader[Unit] = ClientResponseReaders.UnitReader
+  implicit val jvalueReader: ClientResponseReader[JValue] = ClientResponseReaders.JValueReader
+  implicit val jsonReader: ClientResponseReader[Nothing] = JsonFormatsReader
+  implicit val stringWriter: RequestWriter[String] = RequestWriters.StringWriter
+  implicit val jsonWriter: RequestWriter[Nothing] = JsonFormatsWriter
 
-  var basePath = defBasePath
-  var apiInvoker = defApiInvoker
+  var basePath: String = defBasePath
+  var apiInvoker: ApiInvoker = defApiInvoker
 
-  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
-  val config = SwaggerConfig.forUrl(new URI(defBasePath))
+  def addHeader(key: String, value: String): mutable.HashMap[String, String] = {
+    apiInvoker.defaultHeaders += key -> value
+  }
+
+  val config: SwaggerConfig = SwaggerConfig.forUrl(new URI(defBasePath))
   val client = new RestClient(config)
   val helper = new FakeApiAsyncHelper(client, config)
 
   /**
    * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
    * 
+   *
    * @param testCodeInjectEndRnNR To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
    * @return void
    */
@@ -78,13 +86,13 @@ class FakeApi(val defBasePath: String = "https://petstore.swagger.io *_/ ' \" =e
   /**
    * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r asynchronously
    * 
+   *
    * @param testCodeInjectEndRnNR To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
    * @return Future(void)
-  */
+   */
   def testCodeInject * &#39; &quot; &#x3D;end  rn n rAsync(testCodeInjectEndRnNR: Option[String] = None) = {
       helper.testCodeInject * &#39; &quot; &#x3D;end  rn n r(testCodeInjectEndRnNR)
   }
-
 
 }
 

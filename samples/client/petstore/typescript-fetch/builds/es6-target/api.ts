@@ -36,7 +36,7 @@ export const COLLECTION_FORMATS = {
  * @interface FetchAPI
  */
 export interface FetchAPI {
-    (url: string, init?: any): Promise<any>;
+    (url: string, init?: any): Promise<Response>;
 }
 
 /**
@@ -360,7 +360,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"Pet" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -413,11 +414,11 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;string&gt;} status Status values that need to be considered for filter
+         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<string>, options: any = {}): FetchArgs {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options: any = {}): FetchArgs {
             // verify required parameter 'status' is not null or undefined
             if (status === null || status === undefined) {
                 throw new RequiredError('status','Required parameter status was null or undefined when calling findPetsByStatus.');
@@ -562,7 +563,8 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"Pet" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -689,7 +691,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -709,7 +711,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -724,11 +726,11 @@ export const PetApiFp = function(configuration?: Configuration) {
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;string&gt;} status Status values that need to be considered for filter
+         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -785,7 +787,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -806,7 +808,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -872,11 +874,11 @@ export const PetApiFactory = function (configuration?: Configuration, fetch?: Fe
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;string&gt;} status Status values that need to be considered for filter
+         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<string>, options?: any) {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
             return PetApiFp(configuration).findPetsByStatus(status, options)(fetch, basePath);
         },
         /**
@@ -976,7 +978,7 @@ export class PetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public findPetsByStatus(status: Array<string>, options?: any) {
+    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
         return PetApiFp(this.configuration).findPetsByStatus(status, options)(this.fetch, this.basePath);
     }
 
@@ -1165,7 +1167,8 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"Order" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1188,7 +1191,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1393,7 +1396,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"User" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1424,7 +1428,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"Array&lt;User&gt;" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1455,7 +1460,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"Array&lt;User&gt;" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1614,7 +1620,8 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = JSON.stringify(body || {});
+            const needsSerialization = (<any>"User" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1637,7 +1644,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1656,7 +1663,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1675,7 +1682,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1694,7 +1701,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1751,7 +1758,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1771,7 +1778,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
