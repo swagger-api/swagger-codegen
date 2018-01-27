@@ -40,6 +40,13 @@ import javax.validation.constraints.*;
 import java.io.IOException;
 {{/jdk8-no-delegate}}
 import java.util.List;
+{{#operations}}
+    {{#operation}}
+        {{#isMapContainer}}
+import java.util.Map;
+        {{/isMapContainer}}
+    {{/operation}}
+{{/operations}}
 {{#jdk8-no-delegate}}
 import java.util.Optional;
 {{/jdk8-no-delegate}}
