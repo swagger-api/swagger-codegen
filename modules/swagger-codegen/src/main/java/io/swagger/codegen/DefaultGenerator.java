@@ -773,7 +773,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     .defaultValue("")
                     .compile(template);
 
-            writeToFile(adjustedOutputFilename, tmpl.execute(templateData));
+            String fileContents = tmpl.execute(templateData);
+            String adjustedFileContents = config.postProcessFileContents(templateName, fileContents);
+            writeToFile(adjustedOutputFilename, adjustedFileContents);
             return new File(adjustedOutputFilename);
         }
 

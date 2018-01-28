@@ -263,6 +263,18 @@ public class DefaultCodegen {
     }
 
     /**
+     * post process the file contents before it gets pushed to the file to provide any
+     * final adjustments not captured by templating etc.
+     * @param templateName Template name that generated the file contents
+     * @param fileContents Template generated file contents
+     * @return Contents to be written to the file.
+     */
+    public String postProcessFileContents(String templateName, String fileContents) {
+        return fileContents;
+    }
+
+
+    /**
      * Returns the common prefix of variables for enum naming
      *
      * @param vars List of variable names

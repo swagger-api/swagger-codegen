@@ -157,6 +157,8 @@ public interface CodegenConfig {
 
     Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs);
 
+    String postProcessFileContents(String templateName, String fileContents);
+
     void postProcessModelProperty(CodegenModel model, CodegenProperty property);
 
     void postProcessParameter(CodegenParameter parameter);

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
@@ -384,6 +385,66 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         }
 
         return objs;
+    }
+
+    @Override
+    public String postProcessFileContents(String templateName, String fileContents) {
+        String updatedContents = fileContents;
+        // Apply to all the api templates: controller, doc, and controller test.
+        List<String> apiTemplates = new ArrayList<>(Arrays.asList("api.mustache", "api_doc.mustache", "api_test.mustache"));
+        if (apiTemplates.contains(templateName)
+                && getLibrary().equalsIgnoreCase("RestTemplate")) {
+            updatedContents = reconstituteHateoasGenerics(updatedContents);
+        }
+        return updatedContents;
+    }
+
+    /**
+     * Update the file contents to fix the mangled HATEOAS generics
+     * @param contents Current contents
+     * @return Contents updated to have the HATEOAS generics reconstituted.
+     */
+    private String reconstituteHateoasGenerics(String contents) {
+        // Rebuild PagedResources into a generic. Do this before Resource since
+        // PagedResources contain Resource.
+        String updatedContents = reconstituteGenericTypeReferences("PagedResources", contents);
+
+        // Replace all ResourceBlah with Resource<Blah>
+        updatedContents = reconstituteGenericTypeReferences("Resource", updatedContents);
+        return updatedContents;
+    }
+
+    /**
+     * Re-constitute references to the specified generic type.
+     * Also removes the import of the mangled type name.
+     * @param genericClassName Generic type name
+     * @param originalText Text to re-constituted
+     * @return Reconstituted text
+     */
+    private String reconstituteGenericTypeReferences(String genericClassName, String originalText) {
+        // Remove the includes for the mangled generics
+        // This regex finds all lines with import GenericClassBlah;
+        String importPattern = String.format("import.*\\b%s\\w+.*;", genericClassName);
+        String updatedText = originalText.replaceAll(importPattern, "");
+
+        // Find the mangled GenericClassBlah and convert to GenericClass<Blah>
+        // This regex finds GenericClassBlah and breaks it into
+        // 2 groups for GenericClass and Blah
+        String referencePattern = String.format("\\b(%s)([\\w]+)", genericClassName);
+        Pattern pagedResourcesPattern = Pattern.compile(referencePattern);
+        Matcher matcher = pagedResourcesPattern.matcher(updatedText);
+        StringBuffer updatedTextStringBuffer = new StringBuffer();
+        int numberOfReferences = 0;
+        while (matcher.find()) {
+            String genericReference = String.format("%s<%s>", matcher.group(1), matcher.group(2));
+            matcher.appendReplacement(updatedTextStringBuffer, genericReference);
+            numberOfReferences++;
+        }
+        LOGGER.debug("Updated {} references to {}", numberOfReferences, genericClassName);
+        matcher.appendTail(updatedTextStringBuffer);
+        updatedText = updatedTextStringBuffer.toString();
+
+        return updatedText;
     }
 
     @Override
