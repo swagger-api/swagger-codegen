@@ -48,13 +48,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
     {{/async}}
 {{/jdk8}}
-{{#operations}}
-    {{#operation}}
-        {{#isMapContainer}}
-import java.util.Map;
-        {{/isMapContainer}}
-    {{/operation}}
-{{/operations}}
 {{>generatedAnnotation}}
 @Controller
 {{#operations}}

@@ -2131,6 +2131,9 @@ public class DefaultCodegen {
                         !languageSpecificPrimitives.contains(r.baseType)) {
                     imports.add(r.baseType);
                 }
+                if (!r.simpleType) {
+                    imports.add(typeMapping.get(r.containerType));
+                }
                 r.isDefault = response == methodResponse;
                 op.responses.add(r);
                 if (Boolean.TRUE.equals(r.isBinary) && Boolean.TRUE.equals(r.isDefault)){
