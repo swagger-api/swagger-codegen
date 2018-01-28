@@ -41,11 +41,11 @@ namespace IO.Swagger.Model
         /// <param name="Quarantine">Quarantine.</param>
         /// <param name="Grayware">Grayware.</param>
         /// <param name="Days">Days.</param>
-        public MyClassWithOptionalEnum(bool? Quarantine = default(bool?), bool? Grayware = default(bool?), WeekDays? Days = default(WeekDays?))
+        public MyClassWithOptionalEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), WeekDays? days = default(WeekDays?))
         {
-            this.Quarantine = Quarantine;
-            this.Grayware = Grayware;
-            this.Days = Days;
+            this.Quarantine = quarantine;
+            this.Grayware = grayware;
+            this.Days = days;
         }
         
         /// <summary>

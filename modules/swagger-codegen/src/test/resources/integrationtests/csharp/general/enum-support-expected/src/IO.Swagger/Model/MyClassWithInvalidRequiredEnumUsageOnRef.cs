@@ -40,10 +40,10 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="First">First.</param>
         /// <param name="Days">Days.</param>
-        public MyClassWithInvalidRequiredEnumUsageOnRef(bool? First = default(bool?), WeekDays? Days = default(WeekDays?))
+        public MyClassWithInvalidRequiredEnumUsageOnRef(bool? first = default(bool?), WeekDays? days = default(WeekDays?))
         {
-            this.First = First;
-            this.Days = Days;
+            this.First = first;
+            this.Days = days;
         }
         
         /// <summary>

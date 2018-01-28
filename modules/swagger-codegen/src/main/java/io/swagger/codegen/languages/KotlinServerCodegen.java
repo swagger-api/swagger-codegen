@@ -2,21 +2,18 @@ package io.swagger.codegen.languages;
 
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-import io.swagger.codegen.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.*;
-
-import io.swagger.codegen.mustache.IndentedLambda;
-import io.swagger.codegen.mustache.LowercaseLambda;
-import io.swagger.codegen.mustache.TitlecaseLambda;
-import io.swagger.codegen.mustache.UppercaseLambda;
-import org.apache.commons.lang3.StringUtils;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.mustache.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class KotlinServerCodegen extends AbstractKotlinCodegen {
 
@@ -194,6 +191,7 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
                 .put("lowercase", new LowercaseLambda())
                 .put("uppercase", new UppercaseLambda())
                 .put("titlecase", new TitlecaseLambda())
+                .put("camelcase", new CamelCaseLambda())
                 .put("indented", new IndentedLambda())
                 .put("indented_8", new IndentedLambda(8, " "))
                 .put("indented_12", new IndentedLambda(12, " "))

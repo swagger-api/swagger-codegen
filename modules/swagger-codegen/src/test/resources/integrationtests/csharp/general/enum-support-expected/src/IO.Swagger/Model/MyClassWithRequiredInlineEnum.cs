@@ -96,19 +96,19 @@ namespace IO.Swagger.Model
         /// <param name="Quarantine">Quarantine.</param>
         /// <param name="Grayware">Grayware.</param>
         /// <param name="Days">Days (required).</param>
-        public MyClassWithRequiredInlineEnum(bool? Quarantine = default(bool?), bool? Grayware = default(bool?), DaysEnum Days = default(DaysEnum))
+        public MyClassWithRequiredInlineEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), DaysEnum days = default(DaysEnum))
         {
-            // to ensure "Days" is required (not null)
-            if (Days == null)
+            // to ensure "days" is required (not null)
+            if (days == null)
             {
-                throw new InvalidDataException("Days is a required property for MyClassWithRequiredInlineEnum and cannot be null");
+                throw new InvalidDataException("days is a required property for MyClassWithRequiredInlineEnum and cannot be null");
             }
             else
             {
-                this.Days = Days;
+                this.Days = days;
             }
-            this.Quarantine = Quarantine;
-            this.Grayware = Grayware;
+            this.Quarantine = quarantine;
+            this.Grayware = grayware;
         }
         
         /// <summary>
