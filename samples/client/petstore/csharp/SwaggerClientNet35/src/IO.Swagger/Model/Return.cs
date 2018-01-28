@@ -34,9 +34,9 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="Return" /> class.
         /// </summary>
         /// <param name="_Return">_Return.</param>
-        public Return(int? _Return = default(int?))
+        public Return(int? return = default(int?))
         {
-            this._Return = _Return;
+            this._Return = return;
         }
         
         /// <summary>

@@ -38,10 +38,10 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="Name">Name.</param>
         /// <param name="Class">Class.</param>
-        public Model200Response(int? Name = default(int?), string Class = default(string))
+        public Model200Response(int? name = default(int?), string class = default(string))
         {
-            this.Name = Name;
-            this.Class = Class;
+            this.Name = name;
+            this.Class = class;
         }
         
         /// <summary>

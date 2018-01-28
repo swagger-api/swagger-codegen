@@ -35,10 +35,10 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="Id">Id.</param>
         /// <param name="Name">Name.</param>
-        public Category(long? Id = default(long?), string Name = default(string))
+        public Category(long? id = default(long?), string name = default(string))
         {
-            this.Id = Id;
-            this.Name = Name;
+            this.Id = id;
+            this.Name = name;
         }
         
         /// <summary>

@@ -86,10 +86,10 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="JustSymbol">JustSymbol.</param>
         /// <param name="ArrayEnum">ArrayEnum.</param>
-        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>))
+        public EnumArrays(JustSymbolEnum? justSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> arrayEnum = default(List<ArrayEnumEnum>))
         {
-            this.JustSymbol = JustSymbol;
-            this.ArrayEnum = ArrayEnum;
+            this.JustSymbol = justSymbol;
+            this.ArrayEnum = arrayEnum;
         }
         
 

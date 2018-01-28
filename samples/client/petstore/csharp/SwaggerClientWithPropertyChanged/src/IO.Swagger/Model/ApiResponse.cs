@@ -39,11 +39,11 @@ namespace IO.Swagger.Model
         /// <param name="Code">Code.</param>
         /// <param name="Type">Type.</param>
         /// <param name="Message">Message.</param>
-        public ApiResponse(int? Code = default(int?), string Type = default(string), string Message = default(string))
+        public ApiResponse(int? code = default(int?), string type = default(string), string message = default(string))
         {
-            this.Code = Code;
-            this.Type = Type;
-            this.Message = Message;
+            this.Code = code;
+            this.Type = type;
+            this.Message = message;
         }
         
         /// <summary>

@@ -37,9 +37,9 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="ClassModel" /> class.
         /// </summary>
         /// <param name="Class">Class.</param>
-        public ClassModel(string Class = default(string))
+        public ClassModel(string class = default(string))
         {
-            this.Class = Class;
+            this.Class = class;
         }
         
         /// <summary>

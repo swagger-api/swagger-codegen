@@ -122,12 +122,12 @@ namespace IO.Swagger.Model
         /// <param name="EnumInteger">EnumInteger.</param>
         /// <param name="EnumNumber">EnumNumber.</param>
         /// <param name="OuterEnum">OuterEnum.</param>
-        public EnumTest(EnumStringEnum? EnumString = default(EnumStringEnum?), EnumIntegerEnum? EnumInteger = default(EnumIntegerEnum?), EnumNumberEnum? EnumNumber = default(EnumNumberEnum?), OuterEnum? OuterEnum = default(OuterEnum?))
+        public EnumTest(EnumStringEnum? enumString = default(EnumStringEnum?), EnumIntegerEnum? enumInteger = default(EnumIntegerEnum?), EnumNumberEnum? enumNumber = default(EnumNumberEnum?), OuterEnum? outerEnum = default(OuterEnum?))
         {
-            this.EnumString = EnumString;
-            this.EnumInteger = EnumInteger;
-            this.EnumNumber = EnumNumber;
-            this.OuterEnum = OuterEnum;
+            this.EnumString = enumString;
+            this.EnumInteger = enumInteger;
+            this.EnumNumber = enumNumber;
+            this.OuterEnum = outerEnum;
         }
         
 
