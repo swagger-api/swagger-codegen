@@ -14,16 +14,15 @@ class ApiClient {
 
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
-  String accessToken;
 
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "{{{basePath}}}", this.accessToken}) {
+  ApiClient({this.basePath: "{{{basePath}}}"}) {
     // Setup authentications (key: authentication name, value: authentication).{{#authMethods}}{{#isBasic}}
     _authentications['{{name}}'] = new HttpBasicAuth();{{/isBasic}}{{#isApiKey}}
     _authentications['{{name}}'] = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");{{/isApiKey}}{{#isOAuth}}
-    _authentications['{{name}}'] = new OAuth(accessToken: this.accessToken);{{/isOAuth}}{{/authMethods}}
+    _authentications['{{name}}'] = new OAuth();{{/isOAuth}}{{/authMethods}}
   }
 
   void addDefaultHeader(String key, String value) {
@@ -156,7 +155,6 @@ class ApiClient {
   }
 
   void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
     _authentications.forEach((key, auth) {
       if (auth is OAuth) {
         auth.setAccessToken(accessToken);
