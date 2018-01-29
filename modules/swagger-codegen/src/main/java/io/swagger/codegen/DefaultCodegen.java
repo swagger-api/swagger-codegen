@@ -2992,6 +2992,7 @@ public class DefaultCodegen {
             LOGGER.warn("generated unique operationId `" + uniqueName + "`");
         }
         co.operationId = uniqueName;
+        co.operationIdOriginal = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
         co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
         co.operationIdSnakeCase = DefaultCodegen.underscore(uniqueName);
