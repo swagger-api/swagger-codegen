@@ -31,9 +31,9 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ArrayTest" /> class.
         /// </summary>
-        /// <param name="ArrayOfString">ArrayOfString.</param>
-        /// <param name="ArrayArrayOfInteger">ArrayArrayOfInteger.</param>
-        /// <param name="ArrayArrayOfModel">ArrayArrayOfModel.</param>
+        /// <param name="arrayOfString">arrayOfString.</param>
+        /// <param name="arrayArrayOfInteger">arrayArrayOfInteger.</param>
+        /// <param name="arrayArrayOfModel">arrayArrayOfModel.</param>
         public ArrayTest(List<string> arrayOfString = default(List<string>), List<List<long?>> arrayArrayOfInteger = default(List<List<long?>>), List<List<ReadOnlyFirst>> arrayArrayOfModel = default(List<List<ReadOnlyFirst>>))
         {
             this.ArrayOfString = arrayOfString;

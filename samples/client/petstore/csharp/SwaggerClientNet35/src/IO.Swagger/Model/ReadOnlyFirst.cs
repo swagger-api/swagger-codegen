@@ -33,7 +33,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyFirst" /> class.
         /// </summary>
-        /// <param name="Baz">Baz.</param>
+        /// <param name="baz">baz.</param>
         public ReadOnlyFirst(string baz = default(string))
         {
             this.Baz = baz;

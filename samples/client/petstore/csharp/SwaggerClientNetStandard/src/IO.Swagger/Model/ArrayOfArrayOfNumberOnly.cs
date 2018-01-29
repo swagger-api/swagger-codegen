@@ -31,7 +31,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ArrayOfArrayOfNumberOnly" /> class.
         /// </summary>
-        /// <param name="ArrayArrayNumber">ArrayArrayNumber.</param>
+        /// <param name="arrayArrayNumber">arrayArrayNumber.</param>
         public ArrayOfArrayOfNumberOnly(List<List<decimal?>> arrayArrayNumber = default(List<List<decimal?>>))
         {
             this.ArrayArrayNumber = arrayArrayNumber;

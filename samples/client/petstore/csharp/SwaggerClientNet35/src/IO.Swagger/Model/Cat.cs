@@ -38,7 +38,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
-        /// <param name="Declawed">Declawed.</param>
+        /// <param name="declawed">declawed.</param>
         public Cat(bool? declawed = default(bool?), string className = "Cat", string color = "red") : base(className, color)
         {
             this.Declawed = declawed;

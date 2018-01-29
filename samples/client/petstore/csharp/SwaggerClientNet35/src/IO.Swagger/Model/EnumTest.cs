@@ -118,10 +118,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumTest" /> class.
         /// </summary>
-        /// <param name="EnumString">EnumString.</param>
-        /// <param name="EnumInteger">EnumInteger.</param>
-        /// <param name="EnumNumber">EnumNumber.</param>
-        /// <param name="OuterEnum">OuterEnum.</param>
+        /// <param name="enumString">enumString.</param>
+        /// <param name="enumInteger">enumInteger.</param>
+        /// <param name="enumNumber">enumNumber.</param>
+        /// <param name="outerEnum">outerEnum.</param>
         public EnumTest(EnumStringEnum? enumString = default(EnumStringEnum?), EnumIntegerEnum? enumInteger = default(EnumIntegerEnum?), EnumNumberEnum? enumNumber = default(EnumNumberEnum?), OuterEnum? outerEnum = default(OuterEnum?))
         {
             this.EnumString = enumString;

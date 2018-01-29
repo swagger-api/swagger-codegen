@@ -41,8 +41,8 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Name" /> class.
         /// </summary>
-        /// <param name="_Name">_Name (required).</param>
-        /// <param name="Property">Property.</param>
+        /// <param name="name">name (required).</param>
+        /// <param name="property">property.</param>
         public Name(int? name = default(int?), string property = default(string))
         {
             // to ensure "name" is required (not null)

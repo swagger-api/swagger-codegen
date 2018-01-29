@@ -40,8 +40,8 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Animal" /> class.
         /// </summary>
-        /// <param name="ClassName">ClassName (required).</param>
-        /// <param name="Color">Color (default to &quot;red&quot;).</param>
+        /// <param name="className">className (required).</param>
+        /// <param name="color">color (default to &quot;red&quot;).</param>
         public Animal(string className = default(string), string color = "red")
         {
             // to ensure "className" is required (not null)
@@ -53,7 +53,7 @@ namespace IO.Swagger.Model
             {
                 this.ClassName = className;
             }
-            // use default value if no "Color" provided
+            // use default value if no "color" provided
             if (color == null)
             {
                 this.Color = "red";

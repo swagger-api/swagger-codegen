@@ -36,9 +36,9 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OuterComposite" /> class.
         /// </summary>
-        /// <param name="MyNumber">MyNumber.</param>
-        /// <param name="MyString">MyString.</param>
-        /// <param name="MyBoolean">MyBoolean.</param>
+        /// <param name="myNumber">myNumber.</param>
+        /// <param name="myString">myString.</param>
+        /// <param name="myBoolean">myBoolean.</param>
         public OuterComposite(OuterNumber myNumber = default(OuterNumber), OuterString myString = default(OuterString), OuterBoolean myBoolean = default(OuterBoolean))
         {
             this.MyNumber = myNumber;

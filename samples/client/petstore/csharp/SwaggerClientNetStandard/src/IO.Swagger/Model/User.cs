@@ -31,14 +31,14 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
-        /// <param name="Id">Id.</param>
-        /// <param name="Username">Username.</param>
-        /// <param name="FirstName">FirstName.</param>
-        /// <param name="LastName">LastName.</param>
-        /// <param name="Email">Email.</param>
-        /// <param name="Password">Password.</param>
-        /// <param name="Phone">Phone.</param>
-        /// <param name="UserStatus">User Status.</param>
+        /// <param name="id">id.</param>
+        /// <param name="username">username.</param>
+        /// <param name="firstName">firstName.</param>
+        /// <param name="lastName">lastName.</param>
+        /// <param name="email">email.</param>
+        /// <param name="password">password.</param>
+        /// <param name="phone">phone.</param>
+        /// <param name="userStatus">User Status.</param>
         public User(long? id = default(long?), string username = default(string), string firstName = default(string), string lastName = default(string), string email = default(string), string password = default(string), string phone = default(string), int? userStatus = default(int?))
         {
             this.Id = id;

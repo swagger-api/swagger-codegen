@@ -59,8 +59,8 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
-        /// <param name="MapMapOfString">MapMapOfString.</param>
-        /// <param name="MapOfEnumString">MapOfEnumString.</param>
+        /// <param name="mapMapOfString">mapMapOfString.</param>
+        /// <param name="mapOfEnumString">mapOfEnumString.</param>
         public MapTest(Dictionary<string, Dictionary<string, string>> mapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> mapOfEnumString = default(Dictionary<string, InnerEnum>))
         {
             this.MapMapOfString = mapMapOfString;

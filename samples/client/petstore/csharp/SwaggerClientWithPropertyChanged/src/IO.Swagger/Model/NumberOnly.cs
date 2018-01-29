@@ -36,7 +36,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberOnly" /> class.
         /// </summary>
-        /// <param name="JustNumber">JustNumber.</param>
+        /// <param name="justNumber">justNumber.</param>
         public NumberOnly(decimal? justNumber = default(decimal?))
         {
             this.JustNumber = justNumber;

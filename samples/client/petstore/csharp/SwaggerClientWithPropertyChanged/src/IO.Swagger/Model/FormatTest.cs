@@ -41,20 +41,20 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="FormatTest" /> class.
         /// </summary>
-        /// <param name="Integer">Integer.</param>
-        /// <param name="Int32">Int32.</param>
-        /// <param name="Int64">Int64.</param>
-        /// <param name="Number">Number (required).</param>
-        /// <param name="Float">Float.</param>
-        /// <param name="Double">Double.</param>
-        /// <param name="String">String.</param>
-        /// <param name="Byte">Byte (required).</param>
-        /// <param name="Binary">Binary.</param>
-        /// <param name="Date">Date (required).</param>
-        /// <param name="DateTime">DateTime.</param>
-        /// <param name="Uuid">Uuid.</param>
-        /// <param name="Password">Password (required).</param>
-        public FormatTest(int? integer = default(int?), int? int32 = default(int?), long? int64 = default(long?), decimal? number = default(decimal?), float? float = default(float?), double? double = default(double?), string string = default(string), byte[] byte = default(byte[]), byte[] binary = default(byte[]), DateTime? date = default(DateTime?), DateTime? dateTime = default(DateTime?), Guid? uuid = default(Guid?), string password = default(string))
+        /// <param name="integer">integer.</param>
+        /// <param name="int32">int32.</param>
+        /// <param name="int64">int64.</param>
+        /// <param name="number">number (required).</param>
+        /// <param name="_float">_float.</param>
+        /// <param name="_double">_double.</param>
+        /// <param name="_string">_string.</param>
+        /// <param name="_byte">_byte (required).</param>
+        /// <param name="binary">binary.</param>
+        /// <param name="date">date (required).</param>
+        /// <param name="dateTime">dateTime.</param>
+        /// <param name="uuid">uuid.</param>
+        /// <param name="password">password (required).</param>
+        public FormatTest(int? integer = default(int?), int? int32 = default(int?), long? int64 = default(long?), decimal? number = default(decimal?), float? _float = default(float?), double? _double = default(double?), string _string = default(string), byte[] _byte = default(byte[]), byte[] binary = default(byte[]), DateTime? date = default(DateTime?), DateTime? dateTime = default(DateTime?), Guid? uuid = default(Guid?), string password = default(string))
         {
             // to ensure "number" is required (not null)
             if (number == null)
@@ -65,14 +65,14 @@ namespace IO.Swagger.Model
             {
                 this.Number = number;
             }
-            // to ensure "byte" is required (not null)
-            if (byte == null)
+            // to ensure "_byte" is required (not null)
+            if (_byte == null)
             {
-                throw new InvalidDataException("byte is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("_byte is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Byte = byte;
+                this.Byte = _byte;
             }
             // to ensure "date" is required (not null)
             if (date == null)
@@ -95,9 +95,9 @@ namespace IO.Swagger.Model
             this.Integer = integer;
             this.Int32 = int32;
             this.Int64 = int64;
-            this.Float = float;
-            this.Double = double;
-            this.String = string;
+            this.Float = _float;
+            this.Double = _double;
+            this.String = _string;
             this.Binary = binary;
             this.DateTime = dateTime;
             this.Uuid = uuid;
