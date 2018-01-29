@@ -246,8 +246,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             // Prep a string buffer where we're going to set up our new version of the string.
             StringBuilder pathBuffer = new StringBuilder();
             StringBuilder parameterName = new StringBuilder();
-            /** Whether to skip characters inside curly braces */
-            Boolean skipThisAndSubsequentChars = false;
+            /** Whether to skip characters when inside curly braces. Used to skip characters after colon */
+            boolean skipThisAndSubsequentChars = false;
             int insideCurly = 0;
 
             // Iterate through existing string, one character at a time.
