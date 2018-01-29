@@ -49,26 +49,26 @@
         /// </summary>
         {{#vars}}
         {{^isReadOnly}}
-        /// <param name="{{name}}">{{#description}}{{description}}{{/description}}{{^description}}{{name}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
+        /// <param name="{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}">{{#description}}{{description}}{{/description}}{{^description}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
         {{/isReadOnly}}
         {{/vars}}
     {{#hasOnlyReadOnly}}
         [JsonConstructorAttribute]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}} {{#lambda.camelcase}}{{name}}{{/lambda.camelcase}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase}}{{name}}{{/lambda.camelcase}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
+        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
             {{^isInherited}}
             {{^isReadOnly}}
             {{#required}}
-            // to ensure "{{#lambda.camelcase}}{{name}}{{/lambda.camelcase}}" is required (not null)
-            if ({{#lambda.camelcase}}{{name}}{{/lambda.camelcase}} == null)
+            // to ensure "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" is required (not null)
+            if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
             {
-                throw new InvalidDataException("{{#lambda.camelcase}}{{name}}{{/lambda.camelcase}} is a required property for {{classname}} and cannot be null");
+                throw new InvalidDataException("{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} is a required property for {{classname}} and cannot be null");
             }
             else
             {
-                this.{{name}} = {{#lambda.camelcase}}{{name}}{{/lambda.camelcase}};
+                this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             }
             {{/required}}
             {{/isReadOnly}}
@@ -78,18 +78,18 @@
             {{^isInherited}}
             {{^isReadOnly}}
             {{^required}}
-            {{#defaultValue}}// use default value if no "{{name}}" provided
-            if ({{#lambda.camelcase}}{{name}}{{/lambda.camelcase}} == null)
+            {{#defaultValue}}// use default value if no "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" provided
+            if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
             {
                 this.{{name}} = {{{defaultValue}}};
             }
             else
             {
-                this.{{name}} = {{#lambda.camelcase}}{{name}}{{/lambda.camelcase}};
+                this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             }
             {{/defaultValue}}
             {{^defaultValue}}
-this.{{name}} = {{#lambda.camelcase}}{{name}}{{/lambda.camelcase}};
+this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             {{/defaultValue}}
             {{/required}}
             {{/isReadOnly}}

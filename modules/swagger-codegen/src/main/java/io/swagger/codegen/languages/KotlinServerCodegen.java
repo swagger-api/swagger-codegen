@@ -188,10 +188,10 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
     private void addMustacheLambdas(Map<String, Object> objs) {
 
         Map<String, Mustache.Lambda> lambdas = new ImmutableMap.Builder<String, Mustache.Lambda>()
-                .put("lowercase", new LowercaseLambda())
+                .put("lowercase", new LowercaseLambda().generator(this))
                 .put("uppercase", new UppercaseLambda())
                 .put("titlecase", new TitlecaseLambda())
-                .put("camelcase", new CamelCaseLambda())
+                .put("camelcase", new CamelCaseLambda().generator(this))
                 .put("indented", new IndentedLambda())
                 .put("indented_8", new IndentedLambda(8, " "))
                 .put("indented_12", new IndentedLambda(12, " "))

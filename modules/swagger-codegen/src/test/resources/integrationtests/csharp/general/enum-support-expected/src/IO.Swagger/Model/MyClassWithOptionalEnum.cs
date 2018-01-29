@@ -38,9 +38,9 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MyClassWithOptionalEnum" /> class.
         /// </summary>
-        /// <param name="Quarantine">Quarantine.</param>
-        /// <param name="Grayware">Grayware.</param>
-        /// <param name="Days">Days.</param>
+        /// <param name="quarantine">quarantine.</param>
+        /// <param name="grayware">grayware.</param>
+        /// <param name="days">days.</param>
         public MyClassWithOptionalEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), WeekDays? days = default(WeekDays?))
         {
             this.Quarantine = quarantine;
