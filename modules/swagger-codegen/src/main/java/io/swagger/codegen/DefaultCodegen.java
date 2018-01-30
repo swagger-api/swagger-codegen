@@ -2380,8 +2380,11 @@ public class DefaultCodegen implements CodegenConfig {
                 codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_API_KEY_EXT_NAME, Boolean.TRUE);
 
                 boolean isKeyInHeader = schemeDefinition.getIn() == SecurityScheme.In.HEADER;
+                boolean isKeyInCookie = schemeDefinition.getIn() == SecurityScheme.In.COOKIE;
+                boolean isKeyInQuery  = schemeDefinition.getIn() == SecurityScheme.In.QUERY;
                 codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_KEY_IN_HEADER_EXT_NAME, isKeyInHeader);
-                codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_KEY_IN_QUERY_EXT_NAME, !isKeyInHeader);
+                codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_KEY_IN_COOKIE_EXT_NAME, isKeyInCookie);
+                codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_KEY_IN_QUERY_EXT_NAME,  isKeyInQuery);
 
             } else if (SecurityScheme.Type.HTTP.equals(schemeDefinition.getType())) {
                 codegenSecurity.getVendorExtensions().put(CodegenConstants.IS_BASIC_EXT_NAME, Boolean.TRUE);
