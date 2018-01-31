@@ -13,10 +13,9 @@
 
 import pprint
 import re  # noqa: F401
-
 import six
 
-from petstore_api.models.outer_enum import OuterEnum  # noqa: F401,E501
+# from petstore_api.models.outer_enum import OuterEnum  # noqa: F401,E501
 
 
 class EnumTest(object):
