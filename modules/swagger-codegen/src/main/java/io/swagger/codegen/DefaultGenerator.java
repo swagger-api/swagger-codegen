@@ -1010,7 +1010,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         final Handlebars handlebars = new Handlebars(templateLoader);
         config.addHandlebarHelpers(handlebars);
 
-        return handlebars.compile(templateFile.replace(".mustache", StringUtils.EMPTY));
+        templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
+        return handlebars.compile(templateFile);
     }
 
     private boolean isJavaCodegen(String name) {
