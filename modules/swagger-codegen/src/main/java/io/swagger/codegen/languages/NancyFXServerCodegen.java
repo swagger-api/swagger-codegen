@@ -93,6 +93,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addSwitch(USE_BASE_PATH, "Enabled by default. If disabled, module paths will not mirror api base path", true);
         addSwitch(ASYNC_SERVER, "Set to true to enable the generation of async routes/endpoints.", this.asyncServer);
         typeMapping.putAll(nodaTimeTypesMappings());
+        typeMapping.put("file", "Response");
         languageSpecificPrimitives.addAll(nodaTimePrimitiveTypes());
 
         importMapping.clear();
