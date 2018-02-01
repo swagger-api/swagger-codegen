@@ -12,9 +12,10 @@
 
 
 /**
- * A category for a pet
+ * Describes the result of uploading an image resource
  */
-export interface Category {
-    id?: number;
-    name?: string;
+export interface ApiResponse { 
+    code?: number;
+    type?: string;
+    message?: string;
 }

@@ -9,29 +9,27 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Category } from './category';
-import { Tag } from './tag';
 
 
 /**
- * A pet for sale in the pet store
+ * An order for a pets from the pet store
  */
-export interface Pet {
+export interface Order { 
     id?: number;
-    category?: Category;
-    name: string;
-    photoUrls: Array<string>;
-    tags?: Array<Tag>;
+    petId?: number;
+    quantity?: number;
+    shipDate?: Date;
     /**
-     * pet status in the store
+     * Order Status
      */
-    status?: Pet.StatusEnum;
+    status?: Order.StatusEnum;
+    complete?: boolean;
 }
-export namespace Pet {
-    export type StatusEnum = 'available' | 'pending' | 'sold';
+export namespace Order {
+    export type StatusEnum = 'placed' | 'approved' | 'delivered';
     export const StatusEnum = {
-        Available: 'available' as StatusEnum,
-        Pending: 'pending' as StatusEnum,
-        Sold: 'sold' as StatusEnum
+        Placed: 'placed' as StatusEnum,
+        Approved: 'approved' as StatusEnum,
+        Delivered: 'delivered' as StatusEnum
     }
 }

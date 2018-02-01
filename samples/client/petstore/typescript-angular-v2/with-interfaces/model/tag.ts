@@ -12,10 +12,9 @@
 
 
 /**
- * Describes the result of uploading an image resource
+ * A tag for a pet
  */
-export interface ApiResponse {
-    code?: number;
-    type?: string;
-    message?: string;
+export interface Tag { 
+    id?: number;
+    name?: string;
 }
