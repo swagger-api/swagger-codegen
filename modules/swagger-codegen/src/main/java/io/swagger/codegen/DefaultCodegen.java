@@ -2023,6 +2023,9 @@ public class DefaultCodegen {
         Set<String> imports = new HashSet<String>();
         op.vendorExtensions = operation.getVendorExtensions();
 
+        // store the original operationId for plug-in
+        op.operationIdOriginal = operation.getOperationId();
+
         String operationId = getOrGenerateOperationId(operation, path, httpMethod);
         // remove prefix in operationId
         if (removeOperationIdPrefix) {
@@ -2992,7 +2995,6 @@ public class DefaultCodegen {
             LOGGER.warn("generated unique operationId `" + uniqueName + "`");
         }
         co.operationId = uniqueName;
-        co.operationIdOriginal = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
         co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
         co.operationIdSnakeCase = DefaultCodegen.underscore(uniqueName);
