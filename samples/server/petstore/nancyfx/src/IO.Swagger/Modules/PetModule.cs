@@ -98,7 +98,7 @@ namespace IO.Swagger.v2.Modules
             {
                 var petId = Parameters.ValueOf<long?>(parameters, Context.Request, "petId", ParameterType.Path);
                 var additionalMetadata = Parameters.ValueOf<string>(parameters, Context.Request, "additionalMetadata", ParameterType.Undefined);
-                var file = Parameters.ValueOf<Response>(parameters, Context.Request, "file", ParameterType.Undefined);
+                var file = Parameters.ValueOf<System.IO.Stream>(parameters, Context.Request, "file", ParameterType.Undefined);
                 Preconditions.IsNotNull(petId, "Required parameter: 'petId' is missing at 'UploadFile'");
                 
                 return service.UploadFile(Context, petId, additionalMetadata, file);
@@ -178,7 +178,7 @@ namespace IO.Swagger.v2.Modules
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile(NancyContext context, long? petId, string additionalMetadata, Response file);
+        ApiResponse UploadFile(NancyContext context, long? petId, string additionalMetadata, System.IO.Stream file);
     }
 
     /// <summary>
@@ -221,7 +221,7 @@ namespace IO.Swagger.v2.Modules
             UpdatePetWithForm(petId, name, status);
         }
 
-        public virtual ApiResponse UploadFile(NancyContext context, long? petId, string additionalMetadata, Response file)
+        public virtual ApiResponse UploadFile(NancyContext context, long? petId, string additionalMetadata, System.IO.Stream file)
         {
             return UploadFile(petId, additionalMetadata, file);
         }
@@ -240,7 +240,7 @@ namespace IO.Swagger.v2.Modules
 
         protected abstract void UpdatePetWithForm(long? petId, string name, string status);
 
-        protected abstract ApiResponse UploadFile(long? petId, string additionalMetadata, Response file);
+        protected abstract ApiResponse UploadFile(long? petId, string additionalMetadata, System.IO.Stream file);
     }
 
 }
