@@ -152,7 +152,7 @@ public class DefaultCodegen {
         }
 
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
-            this.setSortParamsByRequiredFlag(Boolean.valueOf(additionalProperties
+            this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
         }
     }
@@ -1930,6 +1930,8 @@ public class DefaultCodegen {
             if (property.defaultValue != null) {
                 property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
             }
+
+            updateCodegenPropertyEnum(property);
         }
     }
 
@@ -2506,7 +2508,12 @@ public class DefaultCodegen {
             // set boolean flag (e.g. isString)
             setParameterBooleanFlagWithCodegenProperty(p, cp);
 
-            p.dataType = cp.datatype;
+            String parameterDataType = this.getParameterDataType(param, property);
+            if (parameterDataType != null) {
+                p.dataType = parameterDataType;
+            } else {
+                p.dataType = cp.datatype;
+            }
             p.dataFormat = cp.dataFormat;
             if(cp.isEnum) {
                 p.datatypeWithEnum = cp.datatypeWithEnum;
@@ -2717,6 +2724,18 @@ public class DefaultCodegen {
         return p;
     }
 
+   /**
+    * Returns the data type of a parameter.
+    * Returns null by default to use the CodegenProperty.datatype value
+    * @param parameter
+    * @param property
+    * @return
+    */
+   protected String getParameterDataType(Parameter parameter, Property property) {
+        return null;
+   }
+
+
     public boolean isDataTypeBinary(String dataType) {
         if (dataType != null) {
             return dataType.toLowerCase().startsWith("byte");
@@ -2754,6 +2773,7 @@ public class DefaultCodegen {
             sec.name = entry.getKey();
             sec.type = schemeDefinition.getType();
             sec.isCode = sec.isPassword = sec.isApplication = sec.isImplicit = false;
+            sec.vendorExtensions = schemeDefinition.getVendorExtensions();
 
             if (schemeDefinition instanceof ApiKeyAuthDefinition) {
                 final ApiKeyAuthDefinition apiKeyDefinition = (ApiKeyAuthDefinition) schemeDefinition;

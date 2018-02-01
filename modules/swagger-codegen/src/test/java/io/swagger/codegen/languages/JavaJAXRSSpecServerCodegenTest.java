@@ -64,6 +64,20 @@ public class JavaJAXRSSpecServerCodegenTest {
     }
 
     @Test
+    public void verify_that_returnResponse_is_removed_from_additional_properties_if_false() {
+        generator.additionalProperties().put(JavaJAXRSSpecServerCodegen.RETURN_RESPONSE, Boolean.FALSE.toString());
+        generator.processOpts();
+        Assert.assertFalse(generator.additionalProperties().containsKey(JavaJAXRSSpecServerCodegen.RETURN_RESPONSE));
+    }
+
+    @Test
+    public void verify_that_returnResponse_is_preserved_in_additional_properties_if_true() {
+        generator.additionalProperties().put(JavaJAXRSSpecServerCodegen.RETURN_RESPONSE, Boolean.TRUE.toString());
+        generator.processOpts();
+        Assert.assertTrue(generator.additionalProperties().containsKey(JavaJAXRSSpecServerCodegen.RETURN_RESPONSE));
+    }
+
+    @Test
     public void verify_that_interfaceOnly_exists_as_a_parameter_with_default_false() {
         for (CliOption option : generator.cliOptions()) {
             if (option.getOpt().equals(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY)) {
@@ -73,5 +87,19 @@ public class JavaJAXRSSpecServerCodegenTest {
             }
         }
         Assert.fail("Missing " + JavaJAXRSSpecServerCodegen.INTERFACE_ONLY);
+    }
+
+    @Test
+    public void verify_that_interfaceOnly_is_removed_from_additional_properties_if_false() {
+        generator.additionalProperties().put(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY, Boolean.FALSE.toString());
+        generator.processOpts();
+        Assert.assertFalse(generator.additionalProperties().containsKey(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY));
+    }
+
+    @Test
+    public void verify_that_interfaceOnly_is_preserved_in_additional_properties_if_true() {
+        generator.additionalProperties().put(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY, Boolean.TRUE.toString());
+        generator.processOpts();
+        Assert.assertTrue(generator.additionalProperties().containsKey(JavaJAXRSSpecServerCodegen.INTERFACE_ONLY));
     }
 }
