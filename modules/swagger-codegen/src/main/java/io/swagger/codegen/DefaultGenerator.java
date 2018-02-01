@@ -563,6 +563,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 } else {
                     templateFile = getFullTemplateFile(config, support.templateFile);
                 }
+                templateFile = templateFile.replace("\\", "/");
+
                 boolean shouldGenerate = true;
                 if(supportingFilesToGenerate != null && !supportingFilesToGenerate.isEmpty()) {
                     shouldGenerate = supportingFilesToGenerate.contains(support.destinationFilename);
@@ -573,7 +575,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                 if(ignoreProcessor.allowsFile(new File(outputFilename))) {
                     if (templateFile.endsWith("mustache")) {
-                        String templateName = templateFile.replace("\\", "/");
+                        String templateName = templateFile;
                         final com.github.jknack.handlebars.Template hTemplate = getHandlebars(templateName.replace(config.templateDir(), StringUtils.EMPTY));
                         String rendered = hTemplate.apply(bundle);
                         writeToFile(outputFilename, rendered);
@@ -598,7 +600,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                             IOUtils.copy(in, out);
                             out.close();
                         } else {
-                            LOGGER.error("can't open " + templateFile + " for input");
+                            LOGGER.warn("can't open " + templateFile + " for input");
                         }
                         files.add(outputFile);
                     }
