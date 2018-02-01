@@ -13,11 +13,10 @@
 
 import pprint
 import re  # noqa: F401
-
 import six
 
-from petstore_api.models.category import Category  # noqa: F401,E501
-from petstore_api.models.tag import Tag  # noqa: F401,E501
+# from petstore_api.models.category import Category  # noqa: F401,E501
+# from petstore_api.models.tag import Tag  # noqa: F401,E501
 
 
 class Pet(object):

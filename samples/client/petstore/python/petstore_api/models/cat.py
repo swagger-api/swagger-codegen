@@ -13,10 +13,9 @@
 
 import pprint
 import re  # noqa: F401
-
 import six
 
-from petstore_api.models.animal import Animal  # noqa: F401,E501
+# from petstore_api.models.animal import Animal  # noqa: F401,E501
 
 
 class Cat(object):
