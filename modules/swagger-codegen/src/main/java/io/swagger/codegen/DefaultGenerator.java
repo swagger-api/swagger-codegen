@@ -681,7 +681,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("models", allModels);
         bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
         bundle.put("modelPackage", config.modelPackage());
-        List<CodegenSecurity> authMethods = config.fromSecurity(openAPI.getComponents().getSecuritySchemes());
+
+        final Map<String, SecurityScheme> securitySchemeMap = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
+        final List<CodegenSecurity> authMethods = config.fromSecurity(securitySchemeMap);
         if (authMethods != null && !authMethods.isEmpty()) {
             bundle.put("authMethods", authMethods);
             bundle.put("hasAuthMethods", true);
@@ -843,14 +845,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
 
+        final Map<String, Schema> schemas = openAPI.getComponents() != null ? openAPI.getComponents().getSchemas() : null;
+        final Map<String, SecurityScheme> securitySchemes = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
+        final List<SecurityRequirement> globalSecurities = openAPI.getSecurity();
         for (Tag tag : tags) {
             try {
-                CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, openAPI.getComponents().getSchemas(), openAPI);
+                CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, schemas, openAPI);
                 codegenOperation.tags = new ArrayList<>(tags);
                 config.addOperationToGroup(config.sanitizeTag(tag.getName()), resourcePath, operation, codegenOperation, operations);
 
-                final Map<String, SecurityScheme> securitySchemes = openAPI.getComponents().getSecuritySchemes();
-                List<SecurityRequirement> globalSecurities = openAPI.getSecurity();
                 List<SecurityRequirement> securities = operation.getSecurity();
                 if (securities != null && securities.isEmpty()) {
                     continue;
