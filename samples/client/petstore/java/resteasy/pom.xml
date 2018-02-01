@@ -85,6 +85,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
                 <executions>
                     <execution>
                         <id>add_sources</id>
@@ -164,23 +165,23 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-version}</version>
         </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-joda</artifactId>
-                <version>${jackson-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${jodatime-version}</version>
-            </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${jodatime-version}</version>
+        </dependency>
 
-            <!-- Base64 encoding that works in both JVM and Android -->
-            <dependency>
-                <groupId>com.brsanthu</groupId>
-                <artifactId>migbase64</artifactId>
-                <version>2.2</version>
-            </dependency>
+        <!-- Base64 encoding that works in both JVM and Android -->
+        <dependency>
+            <groupId>com.brsanthu</groupId>
+            <artifactId>migbase64</artifactId>
+            <version>2.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -207,10 +208,10 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <swagger-core-version>1.5.15</swagger-core-version>
+        <swagger-core-version>1.5.18</swagger-core-version>
         <resteasy-version>3.1.3.Final</resteasy-version>
         <jackson-version>2.6.4</jackson-version>
-            <jodatime-version>2.9.9</jodatime-version>
+        <jodatime-version>2.9.9</jodatime-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.12</junit-version>
     </properties>

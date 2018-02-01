@@ -15,8 +15,6 @@ import { HttpClient } from 'aurelia-http-client';
 import { Api } from './Api';
 import { AuthStorage } from './AuthStorage';
 import {
-  Array&lt;string&gt;,
-  any,
   Pet,
   ApiResponse,
 } from './models';
@@ -40,7 +38,7 @@ export interface IDeletePetParams {
  * findPetsByStatus - parameters interface
  */
 export interface IFindPetsByStatusParams {
-  status: Array<string>;
+  status: Array<'available' | 'pending' | 'sold'>;
 }
 
 /**
@@ -92,6 +90,7 @@ export class PetApi extends Api {
    * Creates a new PetApi class.
    *
    * @param httpClient The Aurelia HTTP client to be injected.
+   * @param authStorage A storage for authentication data.
    */
   constructor(httpClient: HttpClient, authStorage: AuthStorage) {
     super(httpClient, authStorage);
@@ -140,7 +139,7 @@ export class PetApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/pet/{petId}`
-      .replace(`{${'petId'}}`, encodeURIComponent(String(${params['petId']})));
+      .replace(`{${'petId'}}`, encodeURIComponent(`${params['petId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method
@@ -233,7 +232,7 @@ export class PetApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/pet/{petId}`
-      .replace(`{${'petId'}}`, encodeURIComponent(String(${params['petId']})));
+      .replace(`{${'petId'}}`, encodeURIComponent(`${params['petId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method
@@ -296,7 +295,7 @@ export class PetApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/pet/{petId}`
-      .replace(`{${'petId'}}`, encodeURIComponent(String(${params['petId']})));
+      .replace(`{${'petId'}}`, encodeURIComponent(`${params['petId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method
@@ -333,7 +332,7 @@ export class PetApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/pet/{petId}/uploadImage`
-      .replace(`{${'petId'}}`, encodeURIComponent(String(${params['petId']})));
+      .replace(`{${'petId'}}`, encodeURIComponent(`${params['petId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method

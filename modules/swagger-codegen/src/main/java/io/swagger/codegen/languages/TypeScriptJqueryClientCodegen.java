@@ -72,6 +72,12 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
+        if (p instanceof StringProperty) {
+            StringProperty sp = (StringProperty) p;
+            if (sp.getEnum() != null) {
+                return swaggerType;
+            }
+        }
         if (isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
             return swaggerType;
         }
@@ -108,7 +114,10 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     @Override
     public void postProcessParameter(CodegenParameter parameter) {
         super.postProcessParameter(parameter);
-        parameter.dataType = addModelPrefix(parameter.dataType);
+
+        if (!parameter.isEnum) {
+            parameter.dataType = addModelPrefix(parameter.dataType);
+        }
     }
 
     private void addNpmPackageGeneration() {
@@ -130,6 +139,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         }
 
         //Files for building our lib
+        supportingFiles.add(new SupportingFile("README.mustache", getPackageRootDirectory(), "README.md"));
         supportingFiles.add(new SupportingFile("package.mustache", getPackageRootDirectory(), "package.json"));
         supportingFiles.add(new SupportingFile("typings.mustache", getPackageRootDirectory(), "typings.json"));
         supportingFiles.add(new SupportingFile("tsconfig.mustache", getPackageRootDirectory(), "tsconfig.json"));
