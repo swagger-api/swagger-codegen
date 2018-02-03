@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractGoCodegen extends DefaultCodegen implements CodegenConfig {
 
     protected static Logger LOGGER = LoggerFactory.getLogger(AbstractGoCodegen.class);
-    public static final String WITH_XML = "withXml";
 
     protected boolean withXml = false;
 
@@ -87,20 +86,6 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 .defaultValue("swagger"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
-        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
-
-    }
-
-    @Override
-    public void processOpts() {
-        super.processOpts();
-
-        if(additionalProperties.containsKey(WITH_XML)) {
-            setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
-            if ( withXml ) {
-                additionalProperties.put(WITH_XML, "true");
-            }
-        }
     }
 
     /**
