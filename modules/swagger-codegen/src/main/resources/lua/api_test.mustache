@@ -1,14 +1,4 @@
---[[
 {{> partial_header}}
-]]
-
-local petstore_{{classname}} = require "{{packageName}}.api.{{{classname}}}"
-{{#models}}
-[[-- import all models --]]
-{{#model}}
-local {{packageName}}_{{{classname}}} = require "{{packageName}}.model.{{{classname}}}"
-{{/model}}
-{{/models}}
 
 --[[
 Unit tests for {{{packageName}}}.api.{{{classname}}}
@@ -18,6 +8,13 @@ Please update as you see appropriate
 {{#operations}}
 describe("{{classname}}", function()
 {{#operation}}
+  local petstore_{{classname}} = require "{{packageName}}.api.{{{classname}}}"
+  {{#models}}
+  [[-- import all models --]]
+  {{#model}}
+  local {{packageName}}_{{{classname}}} = require "{{packageName}}.model.{{{classname}}}"
+  {{/model}}
+  {{/models}}
   -- unit tests for {{operationId}}
   describe("{{operationId}} test", function()
     it("should work", function()
