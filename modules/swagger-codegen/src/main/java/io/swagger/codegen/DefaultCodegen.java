@@ -2131,8 +2131,13 @@ public class DefaultCodegen {
                         !languageSpecificPrimitives.contains(r.baseType)) {
                     imports.add(r.baseType);
                 }
-                if (!r.simpleType) {
-                    imports.add(typeMapping.get(r.containerType));
+                if (r.baseType != null &&
+                        !r.simpleType &&
+                        !defaultIncludes.contains(r.containerType)) {
+                    String containerTypeMapping = typeMapping.get(r.containerType);
+                    if (containerTypeMapping != null) {
+                        imports.add(containerTypeMapping);
+                    }
                 }
                 r.isDefault = response == methodResponse;
                 op.responses.add(r);
