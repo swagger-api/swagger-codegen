@@ -1,7 +1,6 @@
 <?php
 /**
- * ApiException
- * PHP version 5
+ * MappedApiException
  *
  * @category Class
  * @package  Swagger\Client
@@ -32,42 +31,49 @@ use \Exception;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * ApiException a generic exception that covers all exceptions that might occur during comminucation with an api.
+ * MappedApiException covers api exceptions that are defined by specification.
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ApiException extends Exception
+class MappedApiException extends ApiException
 {
 	/**
-	 * @var ResponseInterface
+	 * The mapped response data.
+	 *
+	 * @var mixed
 	 */
-	private $response;
+	private $responseData;
 
 	/**
-	 * Constructor
+	 * MappedApiException constructor.
 	 *
-	 * @param string $message Error message
-	 * @param int $code HTTP status code
-	 * @param ResponseInterface|null $response
+	 * @param $responseData
+	 * @param string $message
+	 * @param int $code
+	 * @param null|ResponseInterface $response
 	 * @param \Throwable|null $previous
 	 */
-    public function __construct(string $message, int $code, ResponseInterface $response = null, \Throwable $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-	    $this->response = $response;
-    }
-
+	public function __construct(
+		$responseData,
+		string $message,
+		int $code,
+		ResponseInterface $response = null,
+		\Throwable $previous = null
+	) {
+		parent::__construct($message, $code, $response, $previous);
+		$this->responseData = $responseData;
+	}
 
 	/**
-	 * Returns the response, if available.
+	 * Access the api type mapped response data for this exception.
 	 *
-	 * @return null|ResponseInterface
+	 * @return mixed
 	 */
-	public function getResponse(): ?ResponseInterface
+	public function getResponseData()
 	{
-		return $this->response;
+		return $this->responseData;
 	}
 }

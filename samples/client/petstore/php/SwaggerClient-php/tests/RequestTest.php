@@ -4,7 +4,9 @@ namespace Swagger\Client;
 
 use Swagger\Client\Api\FakeApi;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+require_once 'FakeHttpClient.php';
+
+class RequestTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var FakeApi */

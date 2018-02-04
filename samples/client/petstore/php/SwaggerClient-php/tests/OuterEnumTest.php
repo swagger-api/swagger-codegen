@@ -20,7 +20,7 @@ class OuterEnumTest extends \PHPUnit_Framework_TestCase
 
     public function testDeserializeInvalidValue()
     {
-        $this->setExpectedException(\InvalidArgumentException::class, 'Invalid value for enum');
+        $this->expectException(\InvalidArgumentException::class, 'Invalid value for enum');
 
         ObjectSerializer::deserialize(
             "lkjfalgkdfjg",
@@ -80,7 +80,7 @@ class OuterEnumTest extends \PHPUnit_Framework_TestCase
 
     public function testSanitizeNestedInvalidValue()
     {
-        $this->setExpectedException(\InvalidArgumentException::class, 'Invalid value for enum');
+        $this->expectException(\InvalidArgumentException::class, 'Invalid value for enum');
 
         $input = new EnumTest([
             'enum_string' => 'UPPER',

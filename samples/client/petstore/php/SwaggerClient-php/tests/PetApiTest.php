@@ -45,7 +45,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
-        \PHPUnit_Framework_Assert::assertEquals(200, $status);
+        self::assertEquals(200, $status);
     }
 
     public function setUp()

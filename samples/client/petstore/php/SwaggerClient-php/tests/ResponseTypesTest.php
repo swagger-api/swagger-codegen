@@ -87,7 +87,7 @@ class ResponseTypesTest extends \PHPUnit_Framework_TestCase
             $this->fakeHttpClient->setResponse(new Response(404, [], '{}'));
             $this->api->getPetById(123);
         } catch (ApiException $e) {
-            $result = $e->getResponseObject();
+            self::assertNotInstanceOf(MappedApiException::class, $e);
         }
 
         $this->assertNull($result);
