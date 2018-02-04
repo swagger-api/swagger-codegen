@@ -103,7 +103,7 @@ web::json::value ModelBase::toJson(const std::vector<T>& value) {
 }
 
 template <class T>
-std::shared_ptr<HttpContent> ModelBase::toHttpContent( const utility::string_t& name, const std::vector<T>& value, const utility::string_t& contentType = utility::conversions::to_string_t("") ) {
+std::shared_ptr<HttpContent> ModelBase::toHttpContent( const utility::string_t& name, const std::vector<T>& value, const utility::string_t& contentType ) {
     web::json::value json_array = ModelBase::toJson(value);
     std::shared_ptr<HttpContent> content( new HttpContent );
     content->setName( name );
