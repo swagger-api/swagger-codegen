@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use Swagger\Client\Model\FormatTest;
 
-class DateTimeSerializerTest extends \PHPUnit_Framework_TestCase
+class DateTimeSerializerTest extends \PHPUnit\Framework\TestCase
 {
     public function testDateTimeSanitazion()
     {

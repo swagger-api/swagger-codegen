@@ -40,7 +40,7 @@ use \Swagger\Client\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class UserApiTest extends \PHPUnit_Framework_TestCase
+class UserApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

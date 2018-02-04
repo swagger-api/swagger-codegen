@@ -2,7 +2,7 @@
 
 namespace Swagger\Client;
 
-class OrderApiTest extends \PHPUnit_Framework_TestCase
+class OrderApiTest extends \PHPUnit\Framework\TestCase
 {
 
     // add a new pet (id 10005) to ensure the pet object is available for all the tests

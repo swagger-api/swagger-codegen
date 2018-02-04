@@ -34,7 +34,9 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Swagger\Client\ApiException;
+use Swagger\Client\MappedApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
@@ -87,6 +89,122 @@ class StoreApi
         return $this->config;
     }
 
+	/**
+	 * Returns the un-boxed content from an response.
+	 *
+	 * @param ResponseInterface $response
+	 * @param string $targetType
+	 *
+	 * @return object|\Psr\Http\Message\StreamInterface|string
+	 */
+    protected function getContent(ResponseInterface $response, string $targetType)
+    {
+        $responseBody = $response->getBody();
+        if ($targetType === '\SplFileObject') {
+            return $responseBody; //stream goes to serializer
+        } else {
+            if ($targetType === 'string') {
+                return $responseBody->getContents();
+            }
+            // by default we expect json content
+            return json_decode($responseBody->getContents());
+        }
+    }
+
+	/**
+	 * Receive the content for operation result.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param string $defaultModel
+	 *
+	 * @return mixed
+	 */
+	protected function getResponseData(string $operationId, ResponseInterface $response, string $defaultModel = null)
+	{
+		$statusCode = $response->getStatusCode();
+		$targetModel = null;
+
+		if ($mapping = constant('self::' . $operationId . 'CodeMapping')) {
+			if (isset($mapping[$statusCode])) {
+				$targetModel = $mapping[$statusCode];
+			} else if (isset($mapping['default'])) {
+				$targetModel = $mapping['default'];
+			}
+		}
+
+		// fallback for successful call
+		if ($defaultModel && !$targetModel && $statusCode >= 200 && $statusCode <= 299) {
+			$targetModel = $defaultModel;
+		}
+
+		if (!$targetModel) {
+			throw new \LogicException(
+				sprintf(
+					'The operation %s has no defined response for status %d.',
+					$operationId,
+					$statusCode
+				)
+			);
+		}
+
+		return ObjectSerializer::deserialize(
+			$this->getContent($response, $targetModel),
+			$targetModel,
+			$response->getHeaders()
+		);
+	}
+
+	/**
+	 * Receive exception details for failed operation, caused by an response.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param RequestException|null $exception
+	 *
+	 * @return ApiException
+	 */
+	protected function getResponseException(string $operationId, ResponseInterface $response = null, RequestException $exception = null): ApiException
+	{
+		if ($response) {
+			try {
+				// we try to map the exception according to the specification rules
+				return new MappedApiException(
+					$this->getResponseData($operationId, $response),
+					sprintf('Operation %s was not successful. Code: %s', $operationId, $response->getStatusCode()),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			} catch (\LogicException $notMappedCode) {
+				// there is no mapping available, but we have a response
+				return new ApiException(
+					sprintf(
+						'Operation %s was not successful and it\'s response data was not mapped. Code: %s %s',
+						$operationId,
+						$response->getStatusCode(),
+                        $exception ? $exception->getMessage() : ''
+					),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			}
+		}
+		// unspecific exception, as we don't know about it's nature
+		return new ApiException(
+			sprintf(
+                'Operation %s was not successful. Code: %s %s',
+                $operationId,
+                $response ? $response->getStatusCode() : -1,
+                $exception ? $exception->getMessage() : ''
+            ),
+			$response ? $response->getStatusCode() : -1,
+			$response,
+			$exception
+		);
+	}
+
     /**
      * Operation deleteOrder
      *
@@ -98,7 +216,7 @@ class StoreApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteOrder($order_id)
+    public function deleteOrder($order_id) : void
     {
         $this->deleteOrderWithHttpInfo($order_id);
     }
@@ -116,44 +234,21 @@ class StoreApi
      */
     public function deleteOrderWithHttpInfo($order_id)
     {
-        $returnType = '';
         $request = $this->deleteOrderRequest($order_id);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('deleteOrder', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('deleteOrder', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -312,6 +407,9 @@ class StoreApi
         );
     }
 
+    protected const getInventoryCodeMapping = [
+        200 => 'map[string,int]'
+    ];
     /**
      * Operation getInventory
      *
@@ -322,10 +420,9 @@ class StoreApi
      * @throws \InvalidArgumentException
      * @return map[string,int]
      */
-    public function getInventory()
+    public function getInventory() 
     {
-        list($response) = $this->getInventoryWithHttpInfo();
-        return $response;
+        return $this->getInventoryWithHttpInfo()[0];
     }
 
     /**
@@ -340,66 +437,25 @@ class StoreApi
      */
     public function getInventoryWithHttpInfo()
     {
-        $returnType = 'map[string,int]';
         $request = $this->getInventoryRequest();
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'map[string,int]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('getInventory', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('getInventory', $response);
+        }
+
+        return [
+            $this->getResponseData('getInventory', $response, 'map[string,int]'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -560,6 +616,9 @@ class StoreApi
         );
     }
 
+    protected const getOrderByIdCodeMapping = [
+        200 => '\Swagger\Client\Model\Order', 
+    ];
     /**
      * Operation getOrderById
      *
@@ -571,10 +630,9 @@ class StoreApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
      */
-    public function getOrderById($order_id)
+    public function getOrderById($order_id) 
     {
-        list($response) = $this->getOrderByIdWithHttpInfo($order_id);
-        return $response;
+        return $this->getOrderByIdWithHttpInfo($order_id)[0];
     }
 
     /**
@@ -590,66 +648,25 @@ class StoreApi
      */
     public function getOrderByIdWithHttpInfo($order_id)
     {
-        $returnType = '\Swagger\Client\Model\Order';
         $request = $this->getOrderByIdRequest($order_id);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Order',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('getOrderById', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('getOrderById', $response);
+        }
+
+        return [
+            $this->getResponseData('getOrderById', $response, '\Swagger\Client\Model\Order'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -829,6 +846,9 @@ class StoreApi
         );
     }
 
+    protected const placeOrderCodeMapping = [
+        200 => '\Swagger\Client\Model\Order', 
+    ];
     /**
      * Operation placeOrder
      *
@@ -840,10 +860,9 @@ class StoreApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
      */
-    public function placeOrder($body)
+    public function placeOrder($body) 
     {
-        list($response) = $this->placeOrderWithHttpInfo($body);
-        return $response;
+        return $this->placeOrderWithHttpInfo($body)[0];
     }
 
     /**
@@ -859,66 +878,25 @@ class StoreApi
      */
     public function placeOrderWithHttpInfo($body)
     {
-        $returnType = '\Swagger\Client\Model\Order';
         $request = $this->placeOrderRequest($body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Order',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('placeOrder', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('placeOrder', $response);
+        }
+
+        return [
+            $this->getResponseData('placeOrder', $response, '\Swagger\Client\Model\Order'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**

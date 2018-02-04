@@ -3,7 +3,7 @@
 namespace Swagger\Client;
 
 // test object serializer
-class ObjectSerializerTest extends \PHPUnit_Framework_TestCase
+class ObjectSerializerTest extends \PHPUnit\Framework\TestCase
 {
     // test sanitizeFilename
     public function testSanitizeFilename()

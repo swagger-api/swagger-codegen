@@ -7,7 +7,7 @@ use Swagger\Client\Api\UserApi;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class ParametersTest extends \PHPUnit_Framework_TestCase
+class ParametersTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  FakeHttpClient */
     private $fakeHttpClient;

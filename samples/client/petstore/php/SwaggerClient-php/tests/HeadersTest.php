@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class HeadersTest extends \PHPUnit_Framework_TestCase
+class HeadersTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  FakeHttpClient */
     private $fakeHttpClient;

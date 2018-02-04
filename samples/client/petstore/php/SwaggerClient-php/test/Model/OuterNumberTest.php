@@ -39,7 +39,7 @@ namespace Swagger\Client;
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class OuterNumberTest extends \PHPUnit_Framework_TestCase
+class OuterNumberTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

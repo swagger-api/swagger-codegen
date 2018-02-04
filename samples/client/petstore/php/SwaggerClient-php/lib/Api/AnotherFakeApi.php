@@ -34,7 +34,9 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Swagger\Client\ApiException;
+use Swagger\Client\MappedApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
@@ -87,6 +89,125 @@ class AnotherFakeApi
         return $this->config;
     }
 
+	/**
+	 * Returns the un-boxed content from an response.
+	 *
+	 * @param ResponseInterface $response
+	 * @param string $targetType
+	 *
+	 * @return object|\Psr\Http\Message\StreamInterface|string
+	 */
+    protected function getContent(ResponseInterface $response, string $targetType)
+    {
+        $responseBody = $response->getBody();
+        if ($targetType === '\SplFileObject') {
+            return $responseBody; //stream goes to serializer
+        } else {
+            if ($targetType === 'string') {
+                return $responseBody->getContents();
+            }
+            // by default we expect json content
+            return json_decode($responseBody->getContents());
+        }
+    }
+
+	/**
+	 * Receive the content for operation result.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param string $defaultModel
+	 *
+	 * @return mixed
+	 */
+	protected function getResponseData(string $operationId, ResponseInterface $response, string $defaultModel = null)
+	{
+		$statusCode = $response->getStatusCode();
+		$targetModel = null;
+
+		if ($mapping = constant('self::' . $operationId . 'CodeMapping')) {
+			if (isset($mapping[$statusCode])) {
+				$targetModel = $mapping[$statusCode];
+			} else if (isset($mapping['default'])) {
+				$targetModel = $mapping['default'];
+			}
+		}
+
+		// fallback for successful call
+		if ($defaultModel && !$targetModel && $statusCode >= 200 && $statusCode <= 299) {
+			$targetModel = $defaultModel;
+		}
+
+		if (!$targetModel) {
+			throw new \LogicException(
+				sprintf(
+					'The operation %s has no defined response for status %d.',
+					$operationId,
+					$statusCode
+				)
+			);
+		}
+
+		return ObjectSerializer::deserialize(
+			$this->getContent($response, $targetModel),
+			$targetModel,
+			$response->getHeaders()
+		);
+	}
+
+	/**
+	 * Receive exception details for failed operation, caused by an response.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param RequestException|null $exception
+	 *
+	 * @return ApiException
+	 */
+	protected function getResponseException(string $operationId, ResponseInterface $response = null, RequestException $exception = null): ApiException
+	{
+		if ($response) {
+			try {
+				// we try to map the exception according to the specification rules
+				return new MappedApiException(
+					$this->getResponseData($operationId, $response),
+					sprintf('Operation %s was not successful. Code: %s', $operationId, $response->getStatusCode()),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			} catch (\LogicException $notMappedCode) {
+				// there is no mapping available, but we have a response
+				return new ApiException(
+					sprintf(
+						'Operation %s was not successful and it\'s response data was not mapped. Code: %s %s',
+						$operationId,
+						$response->getStatusCode(),
+                        $exception ? $exception->getMessage() : ''
+					),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			}
+		}
+		// unspecific exception, as we don't know about it's nature
+		return new ApiException(
+			sprintf(
+                'Operation %s was not successful. Code: %s %s',
+                $operationId,
+                $response ? $response->getStatusCode() : -1,
+                $exception ? $exception->getMessage() : ''
+            ),
+			$response ? $response->getStatusCode() : -1,
+			$response,
+			$exception
+		);
+	}
+
+    protected const testSpecialTagsCodeMapping = [
+        200 => '\Swagger\Client\Model\Client'
+    ];
     /**
      * Operation testSpecialTags
      *
@@ -98,10 +219,9 @@ class AnotherFakeApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
      */
-    public function testSpecialTags($body)
+    public function testSpecialTags($body) 
     {
-        list($response) = $this->testSpecialTagsWithHttpInfo($body);
-        return $response;
+        return $this->testSpecialTagsWithHttpInfo($body)[0];
     }
 
     /**
@@ -117,66 +237,25 @@ class AnotherFakeApi
      */
     public function testSpecialTagsWithHttpInfo($body)
     {
-        $returnType = '\Swagger\Client\Model\Client';
         $request = $this->testSpecialTagsRequest($body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Client',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('testSpecialTags', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('testSpecialTags', $response);
+        }
+
+        return [
+            $this->getResponseData('testSpecialTags', $response, '\Swagger\Client\Model\Client'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**

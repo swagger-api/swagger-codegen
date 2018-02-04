@@ -5,7 +5,7 @@ namespace Swagger\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\Pet;
 
-class AsyncTest extends \PHPUnit_Framework_TestCase
+class AsyncTest extends \PHPUnit\Framework\TestCase
 {
     /** @var PetApi */
     private $api;

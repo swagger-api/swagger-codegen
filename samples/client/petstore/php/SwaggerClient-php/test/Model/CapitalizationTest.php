@@ -39,7 +39,7 @@ namespace Swagger\Client;
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class CapitalizationTest extends \PHPUnit_Framework_TestCase
+class CapitalizationTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

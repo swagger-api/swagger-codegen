@@ -40,8 +40,10 @@
 
 namespace Swagger\Client;
 
+use GuzzleHttp\Exception\RequestException;
 use \Swagger\Client\Configuration;
 use \Swagger\Client\ApiException;
+use \Swagger\Client\MappedApiException;
 use \Swagger\Client\ObjectSerializer;
 
 /**
@@ -53,7 +55,7 @@ use \Swagger\Client\ObjectSerializer;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class PetApiTest extends \PHPUnit_Framework_TestCase
+class PetApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
@@ -266,6 +268,33 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
         $this->assertSame($status_code, 200);
         $this->assertSame($response_headers['Content-Type'], ['application/json']);
+    }
+
+    /**
+     * Test case for getPetById with an not existing id
+     *
+     * Find pet by ID.
+     *
+     */
+    public function testGetNotExistingPetById()
+    {
+        // initialize the API client without host
+        $pet_id = 1000500;  // ID of pet that needs to be not existing
+
+        $config = new Configuration();
+        $config->setApiKey('api_key', '111222333444555');
+        $pet_api = new Api\PetApi(null, $config);
+
+
+	    try {
+	    	$pet_api->getPetById($pet_id);
+	    	self::fail('Expected an ApiException here');
+	    } catch (\Swagger\Client\ApiException $exception) {
+	    	self::assertNotInstanceOf(MappedApiException::class, $exception, '404 is not mapped to a type in specification.');
+	    	self::assertInstanceOf(RequestException::class, $exception->getPrevious(), 'There must be an request exception.');
+	    	self::assertNotNull($exception->getResponse(), 'Response must be available.');
+	    }
+
     }
 
     /**

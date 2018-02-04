@@ -29,9 +29,10 @@
 namespace Swagger\Client;
 
 use \Exception;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * ApiException Class Doc Comment
+ * ApiException a generic exception that covers all exceptions that might occur during comminucation with an api.
  *
  * @category Class
  * @package  Swagger\Client
@@ -40,82 +41,33 @@ use \Exception;
  */
 class ApiException extends Exception
 {
+	/**
+	 * @var ResponseInterface
+	 */
+	private $response;
 
-    /**
-     * The HTTP body of the server response either as Json or string.
-     *
-     * @var mixed
-     */
-    protected $responseBody;
-
-    /**
-     * The HTTP header of the server response.
-     *
-     * @var string[]|null
-     */
-    protected $responseHeaders;
-
-    /**
-     * The deserialized response object
-     *
-     * @var $responseObject;
-     */
-    protected $responseObject;
-
-    /**
-     * Constructor
-     *
-     * @param string        $message         Error message
-     * @param int           $code            HTTP status code
-     * @param string[]|null $responseHeaders HTTP response header
-     * @param mixed         $responseBody    HTTP decoded body of the server response either as \stdClass or string
-     */
-    public function __construct($message = "", $code = 0, $responseHeaders = [], $responseBody = null)
+	/**
+	 * Constructor
+	 *
+	 * @param string $message Error message
+	 * @param int $code HTTP status code
+	 * @param ResponseInterface|null $response
+	 * @param \Throwable|null $previous
+	 */
+    public function __construct(string $message, int $code, ResponseInterface $response = null, \Throwable $previous = null)
     {
-        parent::__construct($message, $code);
-        $this->responseHeaders = $responseHeaders;
-        $this->responseBody = $responseBody;
+        parent::__construct($message, $code, $previous);
+	    $this->response = $response;
     }
 
-    /**
-     * Gets the HTTP response header
-     *
-     * @return string[]|null HTTP response header
-     */
-    public function getResponseHeaders()
-    {
-        return $this->responseHeaders;
-    }
 
-    /**
-     * Gets the HTTP body of the server response either as Json or string
-     *
-     * @return mixed HTTP body of the server response either as \stdClass or string
-     */
-    public function getResponseBody()
-    {
-        return $this->responseBody;
-    }
-
-    /**
-     * Sets the deseralized response object (during deserialization)
-     *
-     * @param mixed $obj Deserialized response object
-     *
-     * @return void
-     */
-    public function setResponseObject($obj)
-    {
-        $this->responseObject = $obj;
-    }
-
-    /**
-     * Gets the deseralized response object (during deserialization)
-     *
-     * @return mixed the deserialized response object
-     */
-    public function getResponseObject()
-    {
-        return $this->responseObject;
-    }
+	/**
+	 * Returns the response, if available.
+	 *
+	 * @return null|ResponseInterface
+	 */
+	public function getResponse(): ?ResponseInterface
+	{
+		return $this->response;
+	}
 }

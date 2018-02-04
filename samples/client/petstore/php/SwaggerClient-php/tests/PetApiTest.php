@@ -6,7 +6,7 @@ use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
 
-class PetApiTest extends \PHPUnit_Framework_TestCase
+class PetApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var  PetApi */

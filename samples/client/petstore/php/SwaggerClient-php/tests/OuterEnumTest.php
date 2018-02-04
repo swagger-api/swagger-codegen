@@ -5,7 +5,7 @@ namespace Swagger\Client;
 use Swagger\Client\Model\EnumTest;
 use Swagger\Client\Model\OuterEnum;
 
-class OuterEnumTest extends \PHPUnit_Framework_TestCase
+class OuterEnumTest extends \PHPUnit\Framework\TestCase
 {
     public function testDeserialize()
     {

@@ -34,7 +34,9 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Swagger\Client\ApiException;
+use Swagger\Client\MappedApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
@@ -87,6 +89,122 @@ class UserApi
         return $this->config;
     }
 
+	/**
+	 * Returns the un-boxed content from an response.
+	 *
+	 * @param ResponseInterface $response
+	 * @param string $targetType
+	 *
+	 * @return object|\Psr\Http\Message\StreamInterface|string
+	 */
+    protected function getContent(ResponseInterface $response, string $targetType)
+    {
+        $responseBody = $response->getBody();
+        if ($targetType === '\SplFileObject') {
+            return $responseBody; //stream goes to serializer
+        } else {
+            if ($targetType === 'string') {
+                return $responseBody->getContents();
+            }
+            // by default we expect json content
+            return json_decode($responseBody->getContents());
+        }
+    }
+
+	/**
+	 * Receive the content for operation result.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param string $defaultModel
+	 *
+	 * @return mixed
+	 */
+	protected function getResponseData(string $operationId, ResponseInterface $response, string $defaultModel = null)
+	{
+		$statusCode = $response->getStatusCode();
+		$targetModel = null;
+
+		if ($mapping = constant('self::' . $operationId . 'CodeMapping')) {
+			if (isset($mapping[$statusCode])) {
+				$targetModel = $mapping[$statusCode];
+			} else if (isset($mapping['default'])) {
+				$targetModel = $mapping['default'];
+			}
+		}
+
+		// fallback for successful call
+		if ($defaultModel && !$targetModel && $statusCode >= 200 && $statusCode <= 299) {
+			$targetModel = $defaultModel;
+		}
+
+		if (!$targetModel) {
+			throw new \LogicException(
+				sprintf(
+					'The operation %s has no defined response for status %d.',
+					$operationId,
+					$statusCode
+				)
+			);
+		}
+
+		return ObjectSerializer::deserialize(
+			$this->getContent($response, $targetModel),
+			$targetModel,
+			$response->getHeaders()
+		);
+	}
+
+	/**
+	 * Receive exception details for failed operation, caused by an response.
+	 *
+	 * @param string $operationId
+	 * @param ResponseInterface $response
+	 * @param RequestException|null $exception
+	 *
+	 * @return ApiException
+	 */
+	protected function getResponseException(string $operationId, ResponseInterface $response = null, RequestException $exception = null): ApiException
+	{
+		if ($response) {
+			try {
+				// we try to map the exception according to the specification rules
+				return new MappedApiException(
+					$this->getResponseData($operationId, $response),
+					sprintf('Operation %s was not successful. Code: %s', $operationId, $response->getStatusCode()),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			} catch (\LogicException $notMappedCode) {
+				// there is no mapping available, but we have a response
+				return new ApiException(
+					sprintf(
+						'Operation %s was not successful and it\'s response data was not mapped. Code: %s %s',
+						$operationId,
+						$response->getStatusCode(),
+                        $exception ? $exception->getMessage() : ''
+					),
+					$response->getStatusCode(),
+					$response,
+					$exception
+				);
+			}
+		}
+		// unspecific exception, as we don't know about it's nature
+		return new ApiException(
+			sprintf(
+                'Operation %s was not successful. Code: %s %s',
+                $operationId,
+                $response ? $response->getStatusCode() : -1,
+                $exception ? $exception->getMessage() : ''
+            ),
+			$response ? $response->getStatusCode() : -1,
+			$response,
+			$exception
+		);
+	}
+
     /**
      * Operation createUser
      *
@@ -98,7 +216,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function createUser($body)
+    public function createUser($body) : void
     {
         $this->createUserWithHttpInfo($body);
     }
@@ -116,44 +234,21 @@ class UserApi
      */
     public function createUserWithHttpInfo($body)
     {
-        $returnType = '';
         $request = $this->createUserRequest($body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('createUser', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('createUser', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -318,7 +413,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function createUsersWithArrayInput($body)
+    public function createUsersWithArrayInput($body) : void
     {
         $this->createUsersWithArrayInputWithHttpInfo($body);
     }
@@ -336,44 +431,21 @@ class UserApi
      */
     public function createUsersWithArrayInputWithHttpInfo($body)
     {
-        $returnType = '';
         $request = $this->createUsersWithArrayInputRequest($body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('createUsersWithArrayInput', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('createUsersWithArrayInput', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -538,7 +610,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function createUsersWithListInput($body)
+    public function createUsersWithListInput($body) : void
     {
         $this->createUsersWithListInputWithHttpInfo($body);
     }
@@ -556,44 +628,21 @@ class UserApi
      */
     public function createUsersWithListInputWithHttpInfo($body)
     {
-        $returnType = '';
         $request = $this->createUsersWithListInputRequest($body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('createUsersWithListInput', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('createUsersWithListInput', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -758,7 +807,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteUser($username)
+    public function deleteUser($username) : void
     {
         $this->deleteUserWithHttpInfo($username);
     }
@@ -776,44 +825,21 @@ class UserApi
      */
     public function deleteUserWithHttpInfo($username)
     {
-        $returnType = '';
         $request = $this->deleteUserRequest($username);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('deleteUser', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('deleteUser', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -972,6 +998,9 @@ class UserApi
         );
     }
 
+    protected const getUserByNameCodeMapping = [
+        200 => '\Swagger\Client\Model\User', 
+    ];
     /**
      * Operation getUserByName
      *
@@ -983,10 +1012,9 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\User
      */
-    public function getUserByName($username)
+    public function getUserByName($username) 
     {
-        list($response) = $this->getUserByNameWithHttpInfo($username);
-        return $response;
+        return $this->getUserByNameWithHttpInfo($username)[0];
     }
 
     /**
@@ -1002,66 +1030,25 @@ class UserApi
      */
     public function getUserByNameWithHttpInfo($username)
     {
-        $returnType = '\Swagger\Client\Model\User';
         $request = $this->getUserByNameRequest($username);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\User',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('getUserByName', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('getUserByName', $response);
+        }
+
+        return [
+            $this->getResponseData('getUserByName', $response, '\Swagger\Client\Model\User'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1234,6 +1221,9 @@ class UserApi
         );
     }
 
+    protected const loginUserCodeMapping = [
+        200 => 'string', 
+    ];
     /**
      * Operation loginUser
      *
@@ -1246,10 +1236,9 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return string
      */
-    public function loginUser($username, $password)
+    public function loginUser($username, $password) 
     {
-        list($response) = $this->loginUserWithHttpInfo($username, $password);
-        return $response;
+        return $this->loginUserWithHttpInfo($username, $password)[0];
     }
 
     /**
@@ -1266,66 +1255,25 @@ class UserApi
      */
     public function loginUserWithHttpInfo($username, $password)
     {
-        $returnType = 'string';
         $request = $this->loginUserRequest($username, $password);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('loginUser', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('loginUser', $response);
+        }
+
+        return [
+            $this->getResponseData('loginUser', $response, 'string'),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1517,7 +1465,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function logoutUser()
+    public function logoutUser() : void
     {
         $this->logoutUserWithHttpInfo();
     }
@@ -1534,44 +1482,21 @@ class UserApi
      */
     public function logoutUserWithHttpInfo()
     {
-        $returnType = '';
         $request = $this->logoutUserRequest();
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('logoutUser', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('logoutUser', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**
@@ -1725,7 +1650,7 @@ class UserApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function updateUser($username, $body)
+    public function updateUser($username, $body) : void
     {
         $this->updateUserWithHttpInfo($username, $body);
     }
@@ -1744,44 +1669,21 @@ class UserApi
      */
     public function updateUserWithHttpInfo($username, $body)
     {
-        $returnType = '';
         $request = $this->updateUserRequest($username, $body);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $requestException) {
+            throw $this->getResponseException('updateUser', $requestException->getResponse(), $requestException);
         }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 200 || $statusCode > 299) {
+            throw $this->getResponseException('updateUser', $response);
+        }
+
+        return [null, $statusCode, $response->getHeaders()];
     }
 
     /**

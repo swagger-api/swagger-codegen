@@ -8,7 +8,7 @@ use Swagger\Client\Model\Category;
 use Swagger\Client\Model\Pet;
 use Swagger\Client\Model\Tag;
 
-class StoreApiTest extends \PHPUnit_Framework_TestCase
+class StoreApiTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  StoreApi */
     private $api;

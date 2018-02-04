@@ -54,7 +54,7 @@ use \Swagger\Client\ObjectSerializer;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class FakeApiTest extends \PHPUnit_Framework_TestCase
+class FakeApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

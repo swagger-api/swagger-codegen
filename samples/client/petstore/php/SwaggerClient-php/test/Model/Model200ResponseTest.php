@@ -43,7 +43,7 @@ namespace Swagger\Client\Model;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Model200ResponseTest extends \PHPUnit_Framework_TestCase
+class Model200ResponseTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
