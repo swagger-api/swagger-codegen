@@ -413,78 +413,12 @@ toJsonArray(QList<void*> value, QJsonObject& output, QString innerName, QString 
 }
 
 void
-toJsonMap(QMap<QString, void*>* value, QJsonObject* output, QString innerName, QString innerType) {
-    if((value == nullptr) || (output == nullptr)) {
-        return;
+toJsonMap(QMap<QString, void*> value, QJsonObject& output, QString innerName, QString innerType) {
+    for (auto itemkey: value.keys()) {
+        QJsonObject mapobj;
+        ::{{cppNamespace}}::toJsonValue(itemkey, value.value(itemkey), &mapobj, innerType);
+        output.insert(innerName, mapobj);
     }
-    QJsonObject mapobj;
-    if(innerType.startsWith("{{prefix}}")){
-        auto items = reinterpret_cast< QMap<QString, {{prefix}}Object*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::{{cppNamespace}}::toJsonValue(itemkey, items->value(itemkey), &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("QString").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, QString*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::{{cppNamespace}}::toJsonValue(itemkey, items->value(itemkey), &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("QDate").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, QDate*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::{{cppNamespace}}::toJsonValue(itemkey, items->value(itemkey), &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("QDateTime").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, QDateTime*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::{{cppNamespace}}::toJsonValue(itemkey, items->value(itemkey), &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("QByteArray").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, QByteArray*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::{{cppNamespace}}::toJsonValue(itemkey, items->value(itemkey), &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("qint32").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, qint32> *>(value);
-        for(auto itemkey: items->keys()) {
-            auto val = items->value(itemkey);
-            ::{{cppNamespace}}::toJsonValue(itemkey, &val, &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("qint64").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, qint64> *>(value);
-        for(auto itemkey: items->keys()) {
-            auto val = items->value(itemkey);
-            ::{{cppNamespace}}::toJsonValue(itemkey, &val, &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("bool").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, bool> *>(value);
-        for(auto itemkey: items->keys()) {
-            auto val = items->value(itemkey);
-            ::{{cppNamespace}}::toJsonValue(itemkey, &val, &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("float").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, float> *>(value);
-        for(auto itemkey: items->keys()) {
-            auto val = items->value(itemkey);
-            ::{{cppNamespace}}::toJsonValue(itemkey, &val, &mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("double").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, double> *>(value);
-        for(auto itemkey: items->keys() ) {
-            auto val = items->value(itemkey);
-            ::{{cppNamespace}}::toJsonValue(itemkey, &val, &mapobj, innerType);
-        }
-    }
-    output->insert(innerName, mapobj);
-
 }
 
 QString
