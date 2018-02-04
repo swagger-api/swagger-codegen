@@ -4,6 +4,8 @@ package io.swagger.codegen;
  * A class for storing constants that are used throughout the project.
  */
 public class CodegenConstants {
+    /* System Properties */
+    // NOTE: We may want to move these to a separate class to avoid confusion or modification.
     public static final String APIS = "apis";
     public static final String MODELS = "models";
     public static final String SUPPORTING_FILES = "supportingFiles";
@@ -11,6 +13,8 @@ public class CodegenConstants {
     public static final String MODEL_DOCS = "modelDocs";
     public static final String API_TESTS = "apiTests";
     public static final String API_DOCS = "apiDocs";
+    public static final String WITH_XML = "withXml";
+    /* /end System Properties */
 
     public static final String API_PACKAGE = "apiPackage";
     public static final String API_PACKAGE_DESC = "package for generated api classes";
@@ -190,12 +194,15 @@ public class CodegenConstants {
     public static final String EXCLUDE_TESTS_DESC = "Specifies that no tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+
+    public static final String GENERATE_APIS = "generateApis";
     public static final String GENERATE_API_DOCS = "generateApiDocs";
 
     public static final String GENERATE_API_TESTS = "generateApiTests";
     public static final String GENERATE_API_TESTS_DESC = "Specifies that api tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_MODELS = "generateModels";
     public static final String GENERATE_MODEL_DOCS = "generateModelDocs";
 
     public static final String GENERATE_MODEL_TESTS = "generateModelTests";
@@ -218,4 +225,7 @@ public class CodegenConstants {
 
     public static final String REMOVE_OPERATION_ID_PREFIX = "removeOperationIdPrefix";
     public static final String REMOVE_OPERATION_ID_PREFIX_DESC = "Remove prefix of operationId, e.g. config_getId => getId";
+
+    public static final String STRIP_PACKAGE_NAME = "stripPackageName";
+    public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
 }

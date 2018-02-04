@@ -24,8 +24,8 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 3.5 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Elm**, **Eiffel**, **Erlang**, **Go**, **Groovy**, **Haskell** (http-client, Servant), **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx, Google API Client Library for Java), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust** (rust, rust-server), **Scala** (akka, http4s, swagger-async-httpclient), **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
-- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework, [PKMST](https://github.com/ProKarma-Inc/pkmst-getting-started-examples)), **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Rust** (rust-server), **Scala** ([Finch](https://github.com/finagle/finch), [Lagom](https://github.com/lagom/lagom), Scalatra)
+- **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 3.5 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Elm**, **Eiffel**, **Erlang**, **Go**, **Groovy**, **Haskell** (http-client, Servant), **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx, Google API Client Library for Java, Rest-assured), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust** (rust, rust-server), **Scala** (akka, http4s, swagger-async-httpclient), **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **Server stubs**: **Ada**, **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework, [PKMST](https://github.com/ProKarma-Inc/pkmst-getting-started-examples)), **Kotlin**, **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Rust** (rust-server), **Scala** ([Finch](https://github.com/finagle/finch), [Lagom](https://github.com/lagom/lagom), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki**
 - **Configuration files**: [**Apache2**](https://httpd.apache.org/)
 - **Others**: **JMeter**
@@ -66,7 +66,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
     - [Gradle Integration](#gradle-integration)
   - [Github Integration](#github-integration)
   - [Online Generators](#online-generators)
-  - [Guidelines for Contribution](https://github.com/swagger-api/swagger-codegen/wiki/Guidelines-for-Contribution)
+  - [Guidelines for Contribution](https://github.com/swagger-api/swagger-codegen/blob/master/CONTRIBUTING.md#guidelines-for-contributing)
   - [Companies/Projects using Swagger Codegen](#companiesprojects-using-swagger-codegen)
   - [Presentations/Videos/Tutorials/Books](#presentationsvideostutorialsbooks)
   - [Swagger Codegen Core Team](#swagger-codegen-core-team)
@@ -81,7 +81,8 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
 3.0.0 (upcoming major release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/3.0.0-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
 2.4.0 (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
-[2.3.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.0) (**current stable**) | 2017-12-21   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.0](https://github.com/swagger-api/swagger-codegen/tree/v2.3.0)
+[2.3.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.1) (**current stable**) | 2018-01-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.1](https://github.com/swagger-api/swagger-codegen/tree/v2.3.1)
+[2.3.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.0) | 2017-12-21   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.0](https://github.com/swagger-api/swagger-codegen/tree/v2.3.0)
 [2.2.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.3) | 2017-07-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.3](https://github.com/swagger-api/swagger-codegen/tree/v2.2.3)
 [2.2.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.2) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
 [2.2.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.1) | 2016-08-07   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.1](https://github.com/swagger-api/swagger-codegen/tree/v2.2.1)
@@ -91,31 +92,31 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 
 
 ### Prerequisites
-If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 8 runtime at a minimum):
+If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 7 runtime at a minimum):
 
 ```sh
-wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.0/swagger-codegen-cli-2.3.0.jar -O swagger-codegen-cli.jar
+wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 ```
 
-For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.0/swagger-codegen-cli-2.3.0.jar`
+For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar`
 
 On a mac, it's even easier with `brew`:
 ```sh
 brew install swagger-codegen
 ```
 
-To build from source, you need the following installed and available in your $PATH:
+To build from source, you need the following installed and available in your `$PATH:`
 
-* [Java 8](http://java.oracle.com)
+* [Java 7 or 8](http://java.oracle.com)
 
 * [Apache maven 3.3.3 or greater](http://maven.apache.org/)
 
 #### OS X Users
-Don't forget to install Java 8. You probably have 1.6.
+Don't forget to install Java 7 or 8. You probably have 1.6.
 
-Export JAVA_HOME in order to use the supported Java version:
+Export `JAVA_HOME` in order to use the supported Java version:
 ```sh
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export PATH=${JAVA_HOME}/bin:$PATH
@@ -126,6 +127,11 @@ export PATH=${JAVA_HOME}/bin:$PATH
 After cloning the project, you can build it from source with this command:
 ```sh
 mvn clean package
+```
+
+If you don't have maven installed, you may directly use the included [maven wrapper](https://github.com/takari/maven-wrapper), and build with the command:
+```sh
+./mvnw clean package
 ```
 
 ### Homebrew
@@ -237,7 +243,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.0/swagger-codegen-cli-2.3.0.jar)
+You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
@@ -263,7 +269,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java
 ```
 
-with a number of options. You can get the options with the `help generate` command (below only shows partal results):
+with a number of options. You can get the options with the `help generate` command (below only shows partial results):
 
 ```
 NAME
@@ -339,7 +345,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar meta \
   -o output/myLibrary -n myClientCodegen -p com.my.company.codegen
 ```
 
-This will write, in the folder `output/myLibrary`, all the files you need to get started, including a README.md. Once modified and compiled, you can load your library with the codegen and generate clients with your own, custom-rolled logic.
+This will write, in the folder `output/myLibrary`, all the files you need to get started, including a `README.md. Once modified and compiled, you can load your library with the codegen and generate clients with your own, custom-rolled logic.
 
 You would then compile your library in the `output/myLibrary` folder with `mvn package` and execute the codegen like such:
 
@@ -524,6 +530,7 @@ CONFIG OPTIONS
 	    retrofit - HTTP client: OkHttp 2.4.0. JSON processing: Gson 2.3.1 (Retrofit 1.9.0)
         retrofit2 - HTTP client: OkHttp 2.5.0. JSON processing: Gson 2.4 (Retrofit 2.0.0-beta2)
         google-api-client - HTTP client: google-api-client 1.23.0. JSON processing: Jackson 2.8.9
+        rest-assured - HTTP client: rest-assured : 3.0.6. JSON processing: Gson 2.6.1. Only for Java8 
 ```
 
 Your config file for Java can look like
@@ -540,7 +547,7 @@ Your config file for Java can look like
 For all the unspecified options default values will be used.
 
 Another way to override default options is to extend the config class for the specific language.
-To change, for example, the prefix for the Objective-C generated files, simply subclass the ObjcClientCodegen.java:
+To change, for example, the prefix for the Objective-C generated files, simply subclass the `ObjcClientCodegen.java`:
 
 ```java
 package com.mycompany.swagger.codegen;
@@ -789,6 +796,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Hewlett Packard Enterprise](https://hpe.com)
 - [High Technologies Center](http://htc-cs.com)
 - [Hootsuite](https://hootsuite.com/)
+- [Huawei Cloud](http://www.huaweicloud.com/en-us/product/cs.html) 
 - [IBM](https://www.ibm.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Individual Standard IVS](http://www.individual-standard.com)
@@ -834,6 +842,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Red Hat](https://www.redhat.com/)
 - [Reload! A/S](https://reload.dk/)
 - [REstore](https://www.restore.eu)
+- [REST United](https://restunited.com)
 - [Revault Sàrl](http://revault.ch)
 - [Riffyn](https://riffyn.com)
 - [Royal Bank of Canada (RBC)](http://www.rbc.com/canada.html)
@@ -885,6 +894,7 @@ Presentations/Videos/Tutorials/Books
 - 2016/01/15 - [How to end manual REST-API client coding](https://www.youtube.com/watch?v=RzZRdqZp6Oo) by [Johannes Fiala](https://github.com/jfiala) @ dotJS 2015
 - 2016/04/27 - [Automated REST API Development](https://yos.io/2016/04/27/automated-api-development/) by [Yos Riady](https://www.linkedin.com/in/yosriady)
 - 2016/05/29 - [Generating Java Spring-MVC code from Swagger Spec](https://www.clianz.com/2016/05/29/java-mvc-swagger-gen/) by [@icha024](https://github.com/icha024)
+- 2016/07/22 - [Building Microservices? Here is what you should know](https://cloudncode.blog/2016/07/22/msa-getting-started/) by Sumit Maingi
 - 2016/08/23 - [Generating Dreamfactory Client SDKs based on Swagger API Definitions](http://blog.dreamfactory.com/generating-dreamfactory-client-sdks-based-on-swagger-api-definitions) by [Phil Schuler](https://github.com/philicious/)
 - 2016/09/28 - [1 UNBELIEVABLE TRICK TO CREATE AN EASY TO CONSUME API IN .NET](https://stapp.space/1-simple-trick-to-create-a-good-api-in-net/) by [Piotr Stapp](https://stapp.space/author/piotr-stapp/)
 - 2016/10/10 - [Using swagger-codegen with Marketo](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/) by [Kenny Elkington](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/)
@@ -918,7 +928,7 @@ Presentations/Videos/Tutorials/Books
 - 2017/09/21 - [Generating an Elastic Cloud Enterprise Client](https://www.elastic.co/blog/generating-an-elastic-cloud-enterprise-client) by [Greg Marzouka](https://github.com/gmarz) ([Elastic](https://www.elastic.co/))
 - 2017/09/26 - [How to Use IoT Application Enablement Api Hub JSON Descriptor in Postman and How to Generate Client Code](https://www.linkedin.com/in/radu-simen/) by [Radu Simen](https://www.linkedin.com/in/radu-simen/) ([SAP](https://www.sap.com/))
 - 2017/09/28 - [Swagger Codegenで APIクライアントgem 自動生成 #m3kt](https://speakerdeck.com/juntaki/swagger-codegende-apikuraiantogem-zi-dong-sheng-cheng-number-m3kt) by [Jumpei Takiyasu](https://github.com/juntaki)
-- 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
+- 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
 - 2017/10/04 - [Enterprise-friendly Java client for Microsoft Machine Learning Server](https://blogs.msdn.microsoft.com/mlserver/2017/10/04/enterprise-friendly-java-client-for-microsoft-machine-learning-server/) by [Pratik Palnitkar](https://www.linkedin.com/in/pratikpalnitkar/) ([Microsoft](https://www.microsoft.com/))
 - 2017/10/08 - [Generating a REST Ada client with OpenAPI and Swagger Codegen](https://blog.vacs.fr/vacs/blogs/post.html?post=2017/10/08/Generating-a-REST-Ada-client-with-OpenAPI-and-Swagger-Codegen) by [Stephane Carrez](https://github.com/stcarrez)
 - 2017/11/08 - [A Beginner's Guide to Code Generation for REST APIs](https://gum.co/swagger_codegen_beginner)(eBook) by [William Cheng](https://twitter.com/wing328)
@@ -927,56 +937,17 @@ Presentations/Videos/Tutorials/Books
 - 2017/12/07 - [API-driven development with OpenAPI and Swagger, Part 2](https://www.itworld.com/article/3199190/apis/api-driven-development-with-openapi-and-swagger-part-2.html) by Matthew Tyson
 - 2017/12/29 - [REST APIs代码生成指南](https://gumroad.com/l/swagger_codegen_beginner_zh)(eBook) by [William Cheng](https://github.com/wing328), [Xin Meng](https://github.com/xmeng1)
 - 2017/12/21 - [Using Protocol Buffer to Generate SDK at Hootsuite](http://code.hootsuite.com/using-protocol-buffer-to-generate-sdk-at-hoosuite/?lipi=urn%3Ali%3Apage%3Ad_flagship3_messaging%3By4ATz3SDRXyvXJJ14LQysQ%3D%3D) by [Joy Zhang](https://www.linkedin.com/in/joy8zhang/)
+- 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
+- 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
 
 # Swagger Codegen Core Team
 
 Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
-## API Clients
-| Languages     | Core Team (join date) |
-|:-------------|:-------------|
-| ActionScript | |
-| C++      |  |
-| C#      | @jimschubert (2016/05/01) |
-| Clojure | @xhh (2016/05/01) |
-| Dart      |  |
-| Groovy     |  |
-| Go     |  @guohuang (2016/05/01) @neilotoole (2016/05/01) |
-| Java      | @cbornet (2016/05/01) @xhh (2016/05/01) @epaul (2016/06/04) |
-| Java (Spring Cloud) | @cbornet (2016/07/19) |
-| Kotlin      | @jimschubert (2016/05/01) |
-| NodeJS/Javascript | @xhh (2016/05/01) |
-| ObjC      | @mateuszmackowiak (2016/05/09) |
-| Perl      | @wing328 (2016/05/01) |
-| PHP      | @arnested (2016/05/01) |
-| Python   | @scottrw93 (2016/05/01) |
-| Ruby      | @wing328 (2016/05/01) @zlx (2016/05/22) |
-| Scala     |  |
-| Swift     | @jaz-ah (2016/05/01)  @Edubits (2016/05/01) |
-| TypeScript (Node) | @Vrolijkx (2016/05/01) |
-| TypeScript (Angular1) | @Vrolijkx (2016/05/01) |
-| TypeScript (Angular2) | @Vrolijkx (2016/05/01) |
-| TypeScript (Fetch) |  |
-## Server Stubs
-| Languages     | Core Team (date joined) |
-|:------------- |:-------------|
-| C# ASP.NET5 |  @jimschubert (2016/05/01) |
-| Go Server | @guohuang (2016/06/13) |
-| Haskell Servant |  |
-| Java Spring Boot | @cbornet (2016/07/19) |
-| Java Spring MVC | @kolyjjj (2016/05/01) @cbornet (2016/07/19) |
-| Java JAX-RS |  |
-| Java Play Framework |  |
-| NancyFX |  |
-| NodeJS | @kolyjjj (2016/05/01) |
-| PHP Lumen | @abcsun (2016/05/01) |
-| PHP Silex |  |
-| PHP Slim  |  |
-| Python Flask  |  |
-| Ruby Sinatra     | @wing328 (2016/05/01) |  |
-| Scala Scalatra |  |  |
-| Scala Finch | @jimschubert (2017/01/28) |
-
+## Core Team Members
+* [@jimschubert](https://github.com/jimschubert)
+* [@cbornet](https://github.com/cbornet)
+* [@jaz-ah](https://github.com/jaz-ah)
 
 ## Template Creator
 Here is a list of template creators:
@@ -991,6 +962,7 @@ Here is a list of template creators:
    * C# (.NET 4.5 refactored): @jimschubert
    * Clojure: @xhh
    * Dart: @yissachar
+   * Dart (refactored in 2.4.0): @joernahrens
    * Elixir: @niku
    * Elm: @trenneman
    * Eiffel: @jvelilla
@@ -1008,6 +980,7 @@ Here is a list of template creators:
    * Java (RESTEasy): @gayathrigs
    * Java (Vertx): @lopesmcc
    * Java (Google APIs Client Library): @charlescapps
+   * Java (Rest-assured): @viclovsky
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter: @davidkiss
@@ -1029,6 +1002,7 @@ Here is a list of template creators:
    * TypeScript (Angular2): @roni-frantchi
    * TypeScript (jQuery): @bherila
  * Server Stubs
+   * Ada: @stcarrez
    * C# ASP.NET5: @jimschubert
    * C# NancyFX: @mstefaniuk
    * C++ Pistache: @sebymiano
@@ -1045,6 +1019,7 @@ Here is a list of template creators:
    * JAX-RS CXF: @hiveship
    * JAX-RS CXF (CDI): @nickcmaynard
    * JAX-RS RestEasy (JBoss EAP): @jfiala
+   * Kotlin: @jimschubert
    * PHP Lumen: @abcsun
    * PHP Slim: @jfastnacht
    * PHP Symfony: @ksm2
@@ -1104,7 +1079,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Groovy    |  |
 | Go        | @antihax (2017/11) @bvwells (2017/12) |
 | Haskell   | |
-| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) @cbornet (2017/09) |
+| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) @cbornet (2017/09) @jeff9finger (2018/01) |
 | Kotlin     | @jimschubert (2017/09) |
 | Lua     | @daurnimator (2017/08) |
 | NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
@@ -1115,9 +1090,9 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | R        |  |
 | Ruby      | @cliffano (2017/07) @zlx (2017/09) |
 | Rust      | @frol (2017/07) @farcaller (2017/08) @bjgill (2017/12) |
-| Scala     | @clasnake (2017/07) @jimschubert (2017/09) |
+| Scala     | @clasnake (2017/07) @jimschubert (2017/09) @shijinkui  (2018/01) |
 | Swift     | @jgavris (2017/07) @ehyche (2017/08) @Edubits (2017/09) @jaz-ah (2017/09) |
-| TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) |
+| TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) @macjohnny (2018/01) |
 
 
 # License information on Generated Code
@@ -1128,11 +1103,11 @@ The Swagger Codegen project is intended as a benefit for users of the Swagger / 
 * Generated code is intentionally _not_ subject to the parent project license
 
 When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
-
+ 
 License
 -------
 
-Copyright 2017 SmartBear Software
+Copyright 2018 SmartBear Software
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
