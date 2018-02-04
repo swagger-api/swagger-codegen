@@ -345,7 +345,10 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
                 result[item.first] = itemObj;
                 {{/vendorExtensions.x-codegen-response.items.isString}}{{/vendorExtensions.x-codegen-response.items.isPrimitiveType}}
             }
-            {{/isMapContainer}}{{^isMapContainer}}{{#vendorExtensions.x-codegen-response.isPrimitiveType}}result = ModelBase::{{vendorExtensions.x-codegen-response.items.datatype}}FromJson(json);
+            {{/isMapContainer}}{{^isMapContainer}}{{#vendorExtensions.x-codegen-response.isPrimitiveType}}{{#vendorExtensions.x-codegen-response.items.datatype}}result = ModelBase::{{vendorExtensions.x-codegen-response.items.datatype}}FromJson(json);
+            {{/vendorExtensions.x-codegen-response.items.datatype}}
+            {{^vendorExtensions.x-codegen-response.items.datatype}}result = ModelBase::{{vendorExtensions.x-codegen-response.datatype}}FromJson(json);
+            {{/vendorExtensions.x-codegen-response.items.datatype}}
             {{/vendorExtensions.x-codegen-response.isPrimitiveType}}{{^vendorExtensions.x-codegen-response.isPrimitiveType}}{{#vendorExtensions.x-codegen-response.isString}}result = ModelBase::stringFromJson(json);
             {{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}result->fromJson(json);{{/vendorExtensions.x-codegen-response.isString}}{{/vendorExtensions.x-codegen-response.isPrimitiveType}}{{/isMapContainer}}{{/isListContainer}}
         }{{#vendorExtensions.x-codegen-response.isString}}
