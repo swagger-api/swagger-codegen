@@ -31,6 +31,7 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -259,9 +260,9 @@ class FakeApi
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testCodeInjectEndRnNRAsync($test_code_inject____end____rn_n_r = null)
+    public function testCodeInjectEndRnNRAsync($test_code_inject____end____rn_n_r = null) : PromiseInterface
     {
         return $this->testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r)
             ->then(
@@ -279,32 +280,20 @@ class FakeApi
      * @param  string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r = null)
+    public function testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r = null) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->testCodeInjectEndRnNRRequest($test_code_inject____end____rn_n_r);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testCodeInjectEndRnNR', $requestException->getResponse(), $requestException);
                 }
             );
     }

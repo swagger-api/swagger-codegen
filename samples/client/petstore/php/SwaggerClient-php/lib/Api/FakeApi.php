@@ -31,6 +31,7 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -262,9 +263,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterBooleanSerializeAsync($body = null)
+    public function fakeOuterBooleanSerializeAsync($body = null) : PromiseInterface
     {
         return $this->fakeOuterBooleanSerializeAsyncWithHttpInfo($body)
             ->then(
@@ -282,46 +283,24 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterBooleanSerializeAsyncWithHttpInfo($body = null)
+    public function fakeOuterBooleanSerializeAsyncWithHttpInfo($body = null) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\OuterBoolean';
         $request = $this->fakeOuterBooleanSerializeRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('fakeOuterBooleanSerialize', $response, '\Swagger\Client\Model\OuterBoolean'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('fakeOuterBooleanSerialize', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -470,9 +449,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterCompositeSerializeAsync($body = null)
+    public function fakeOuterCompositeSerializeAsync($body = null) : PromiseInterface
     {
         return $this->fakeOuterCompositeSerializeAsyncWithHttpInfo($body)
             ->then(
@@ -490,46 +469,24 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterCompositeSerializeAsyncWithHttpInfo($body = null)
+    public function fakeOuterCompositeSerializeAsyncWithHttpInfo($body = null) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\OuterComposite';
         $request = $this->fakeOuterCompositeSerializeRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('fakeOuterCompositeSerialize', $response, '\Swagger\Client\Model\OuterComposite'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('fakeOuterCompositeSerialize', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -678,9 +635,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterNumberSerializeAsync($body = null)
+    public function fakeOuterNumberSerializeAsync($body = null) : PromiseInterface
     {
         return $this->fakeOuterNumberSerializeAsyncWithHttpInfo($body)
             ->then(
@@ -698,46 +655,24 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterNumberSerializeAsyncWithHttpInfo($body = null)
+    public function fakeOuterNumberSerializeAsyncWithHttpInfo($body = null) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\OuterNumber';
         $request = $this->fakeOuterNumberSerializeRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('fakeOuterNumberSerialize', $response, '\Swagger\Client\Model\OuterNumber'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('fakeOuterNumberSerialize', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -886,9 +821,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterStringSerializeAsync($body = null)
+    public function fakeOuterStringSerializeAsync($body = null) : PromiseInterface
     {
         return $this->fakeOuterStringSerializeAsyncWithHttpInfo($body)
             ->then(
@@ -906,46 +841,24 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function fakeOuterStringSerializeAsyncWithHttpInfo($body = null)
+    public function fakeOuterStringSerializeAsyncWithHttpInfo($body = null) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\OuterString';
         $request = $this->fakeOuterStringSerializeRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('fakeOuterStringSerialize', $response, '\Swagger\Client\Model\OuterString'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('fakeOuterStringSerialize', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -1098,9 +1011,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testClientModelAsync($body)
+    public function testClientModelAsync($body) : PromiseInterface
     {
         return $this->testClientModelAsyncWithHttpInfo($body)
             ->then(
@@ -1118,46 +1031,24 @@ class FakeApi
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testClientModelAsyncWithHttpInfo($body)
+    public function testClientModelAsyncWithHttpInfo($body) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\Client';
         $request = $this->testClientModelRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('testClientModel', $response, '\Swagger\Client\Model\Client'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testClientModel', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -1348,9 +1239,9 @@ class FakeApi
      * @param  string $callback None (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testEndpointParametersAsync($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
+    public function testEndpointParametersAsync($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null) : PromiseInterface
     {
         return $this->testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback)
             ->then(
@@ -1381,32 +1272,20 @@ class FakeApi
      * @param  string $callback None (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
+    public function testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->testEndpointParametersRequest($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testEndpointParameters', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -1714,9 +1593,9 @@ class FakeApi
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testEnumParametersAsync($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
+    public function testEnumParametersAsync($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null) : PromiseInterface
     {
         return $this->testEnumParametersAsyncWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double)
             ->then(
@@ -1741,32 +1620,20 @@ class FakeApi
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testEnumParametersAsyncWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
+    public function testEnumParametersAsyncWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->testEnumParametersRequest($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testEnumParameters', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -1954,9 +1821,9 @@ class FakeApi
      * @param  object $param request body (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testInlineAdditionalPropertiesAsync($param)
+    public function testInlineAdditionalPropertiesAsync($param) : PromiseInterface
     {
         return $this->testInlineAdditionalPropertiesAsyncWithHttpInfo($param)
             ->then(
@@ -1974,32 +1841,20 @@ class FakeApi
      * @param  object $param request body (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testInlineAdditionalPropertiesAsyncWithHttpInfo($param)
+    public function testInlineAdditionalPropertiesAsyncWithHttpInfo($param) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->testInlineAdditionalPropertiesRequest($param);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testInlineAdditionalProperties', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -2154,9 +2009,9 @@ class FakeApi
      * @param  string $param2 field2 (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testJsonFormDataAsync($param, $param2)
+    public function testJsonFormDataAsync($param, $param2) : PromiseInterface
     {
         return $this->testJsonFormDataAsyncWithHttpInfo($param, $param2)
             ->then(
@@ -2175,32 +2030,20 @@ class FakeApi
      * @param  string $param2 field2 (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function testJsonFormDataAsyncWithHttpInfo($param, $param2)
+    public function testJsonFormDataAsyncWithHttpInfo($param, $param2) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->testJsonFormDataRequest($param, $param2);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('testJsonFormData', $requestException->getResponse(), $requestException);
                 }
             );
     }

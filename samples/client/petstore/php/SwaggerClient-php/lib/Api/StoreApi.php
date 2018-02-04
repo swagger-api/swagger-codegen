@@ -31,6 +31,7 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -259,9 +260,9 @@ class StoreApi
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteOrderAsync($order_id)
+    public function deleteOrderAsync($order_id) : PromiseInterface
     {
         return $this->deleteOrderAsyncWithHttpInfo($order_id)
             ->then(
@@ -279,32 +280,20 @@ class StoreApi
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteOrderAsyncWithHttpInfo($order_id)
+    public function deleteOrderAsyncWithHttpInfo($order_id) : PromiseInterface
     {
-        $returnType = '';
         $request = $this->deleteOrderRequest($order_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
+                function (ResponseInterface  $response) {
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('deleteOrder', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -465,9 +454,9 @@ class StoreApi
      *
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getInventoryAsync()
+    public function getInventoryAsync() : PromiseInterface
     {
         return $this->getInventoryAsyncWithHttpInfo()
             ->then(
@@ -484,46 +473,24 @@ class StoreApi
      *
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getInventoryAsyncWithHttpInfo()
+    public function getInventoryAsyncWithHttpInfo() : PromiseInterface
     {
-        $returnType = 'map[string,int]';
         $request = $this->getInventoryRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('getInventory', $response, 'map[string,int]'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('getInventory', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -677,9 +644,9 @@ class StoreApi
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getOrderByIdAsync($order_id)
+    public function getOrderByIdAsync($order_id) : PromiseInterface
     {
         return $this->getOrderByIdAsyncWithHttpInfo($order_id)
             ->then(
@@ -697,46 +664,24 @@ class StoreApi
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function getOrderByIdAsyncWithHttpInfo($order_id)
+    public function getOrderByIdAsyncWithHttpInfo($order_id) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\Order';
         $request = $this->getOrderByIdRequest($order_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('getOrderById', $response, '\Swagger\Client\Model\Order'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('getOrderById', $requestException->getResponse(), $requestException);
                 }
             );
     }
@@ -907,9 +852,9 @@ class StoreApi
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function placeOrderAsync($body)
+    public function placeOrderAsync($body) : PromiseInterface
     {
         return $this->placeOrderAsyncWithHttpInfo($body)
             ->then(
@@ -927,46 +872,24 @@ class StoreApi
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function placeOrderAsyncWithHttpInfo($body)
+    public function placeOrderAsyncWithHttpInfo($body) : PromiseInterface
     {
-        $returnType = '\Swagger\Client\Model\Order';
         $request = $this->placeOrderRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
+                function (ResponseInterface  $response) {
                     return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $this->getResponseData('placeOrder', $response, '\Swagger\Client\Model\Order'),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
+                function (RequestException $requestException) {
+                    throw $this->getResponseException('placeOrder', $requestException->getResponse(), $requestException);
                 }
             );
     }
