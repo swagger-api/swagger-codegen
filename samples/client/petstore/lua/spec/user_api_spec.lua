@@ -22,7 +22,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for create_users_with_array_input
   describe("create_users_with_array_input test", function()
     it("should work", function()
@@ -30,7 +29,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for create_users_with_list_input
   describe("create_users_with_list_input test", function()
     it("should work", function()
@@ -38,7 +36,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for delete_user
   describe("delete_user test", function()
     it("should work", function()
@@ -46,7 +43,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for get_user_by_name
   describe("get_user_by_name test", function()
     it("should work", function()
@@ -54,7 +50,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for login_user
   describe("login_user test", function()
     it("should work", function()
@@ -62,7 +57,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for logout_user
   describe("logout_user test", function()
     it("should work", function()
@@ -70,7 +64,6 @@ describe("user_api", function()
     end)
   end)
 
-  local petstore_user_api = require "petstore.api.user_api"
   -- unit tests for update_user
   describe("update_user test", function()
     it("should work", function()

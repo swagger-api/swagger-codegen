@@ -22,7 +22,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for delete_pet
   describe("delete_pet test", function()
     it("should work", function()
@@ -30,7 +29,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for find_pets_by_status
   describe("find_pets_by_status test", function()
     it("should work", function()
@@ -38,7 +36,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for find_pets_by_tags
   describe("find_pets_by_tags test", function()
     it("should work", function()
@@ -46,7 +43,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for get_pet_by_id
   describe("get_pet_by_id test", function()
     it("should work", function()
@@ -54,7 +50,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for update_pet
   describe("update_pet test", function()
     it("should work", function()
@@ -62,7 +57,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for update_pet_with_form
   describe("update_pet_with_form test", function()
     it("should work", function()
@@ -70,7 +64,6 @@ describe("pet_api", function()
     end)
   end)
 
-  local petstore_pet_api = require "petstore.api.pet_api"
   -- unit tests for upload_file
   describe("upload_file test", function()
     it("should work", function()

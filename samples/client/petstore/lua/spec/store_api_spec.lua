@@ -22,7 +22,6 @@ describe("store_api", function()
     end)
   end)
 
-  local petstore_store_api = require "petstore.api.store_api"
   -- unit tests for get_inventory
   describe("get_inventory test", function()
     it("should work", function()
@@ -30,7 +29,6 @@ describe("store_api", function()
     end)
   end)
 
-  local petstore_store_api = require "petstore.api.store_api"
   -- unit tests for get_order_by_id
   describe("get_order_by_id test", function()
     it("should work", function()
@@ -38,7 +36,6 @@ describe("store_api", function()
     end)
   end)
 
-  local petstore_store_api = require "petstore.api.store_api"
   -- unit tests for place_order
   describe("place_order test", function()
     it("should work", function()

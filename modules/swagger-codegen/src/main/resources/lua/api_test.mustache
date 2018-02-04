@@ -6,16 +6,16 @@ Please update as you see appropriate
 ]]
 {{#operations}}
 describe("{{classname}}", function()
+  local {{{packageName}}}_{{{classname}}} = require "{{{packageName}}}.api.{{{classname}}}"
 {{#operation}}
-  local petstore_{{classname}} = require "{{packageName}}.api.{{{classname}}}"
   {{#models}}
   [[-- import all models --]]
   {{#model}}
-  local {{packageName}}_{{{classname}}} = require "{{packageName}}.model.{{{classname}}}"
+  local {{{packageName}}}_{{{classname}}} = require "{{{packageName}}}.model.{{{classname}}}"
   {{/model}}
   {{/models}}
   -- unit tests for {{operationId}}
-  describe("{{operationId}} test", function()
+  describe("{{{operationId}}} test", function()
     it("should work", function()
       -- TODO assertion here: http://olivinelabs.com/busted/#asserts
     end)
