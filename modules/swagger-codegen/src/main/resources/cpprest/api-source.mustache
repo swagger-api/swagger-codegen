@@ -187,8 +187,9 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
             json = web::json::value::array(jsonArray);
         }
         {{/isListContainer}}
-        {{^isListContainer}}
-        json = ModelBase::toJson({{paramName}});
+        {{^isListContainer}}{{#required}}json = ModelBase::toJson({{paramName}});
+        {{/required}}{{^required}}if ({{paramName}})
+            json = ModelBase::toJson(*{{paramName}});{{/required}}
         {{/isListContainer}}
         {{/isPrimitiveType}}
 
@@ -217,15 +218,11 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
                 {{/items.isDateTime}}{{/items.isString}}{{/items.isPrimitiveType}}
             }
             multipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("{{paramName}}"), web::json::value::array(jsonArray), utility::conversions::to_string_t("application/json")));
-        }
-        {{/isListContainer}}
-        {{^isListContainer}}
-        {{#isString}}multipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("{{paramName}}"), {{paramName}}));
-        {{/isString}}
-        {{^isString}}
-        if({{paramName}}.get())
+        }{{/isListContainer}}
+        {{^isListContainer}}{{#isString}}multipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("{{paramName}}"), {{paramName}}));
+        {{/isString}}{{^isString}}if({{^required}}{{paramName}} && {{/required}}{{paramName}}.get())
         {
-            {{paramName}}->toMultipart(multipart, utility::conversions::to_string_t("{{paramName}}"));
+            {{^required}}(*{{/required}}{{paramName}}{{^required}}){{/required}}->toMultipart(multipart, utility::conversions::to_string_t("{{paramName}}"));
         }
         {{/isString}}
         {{/isListContainer}}

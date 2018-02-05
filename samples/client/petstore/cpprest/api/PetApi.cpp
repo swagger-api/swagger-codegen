@@ -97,6 +97,7 @@ pplx::task<void> PetApi::addPet(std::shared_ptr<Pet> body)
         web::json::value json;
 
         json = ModelBase::toJson(body);
+        
 
         httpBody = std::shared_ptr<IHttpBody>( new JsonBody( json ) );
     }
@@ -105,7 +106,8 @@ pplx::task<void> PetApi::addPet(std::shared_ptr<Pet> body)
     {
         requestHttpContentType = utility::conversions::to_string_t("multipart/form-data");
         std::shared_ptr<MultipartFormData> multipart(new MultipartFormData);
-                if(body.get())
+
+        if(body.get())
         {
             body->toMultipart(multipart, utility::conversions::to_string_t("body"));
         }
@@ -694,6 +696,7 @@ pplx::task<void> PetApi::updatePet(std::shared_ptr<Pet> body)
         web::json::value json;
 
         json = ModelBase::toJson(body);
+        
 
         httpBody = std::shared_ptr<IHttpBody>( new JsonBody( json ) );
     }
@@ -702,7 +705,8 @@ pplx::task<void> PetApi::updatePet(std::shared_ptr<Pet> body)
     {
         requestHttpContentType = utility::conversions::to_string_t("multipart/form-data");
         std::shared_ptr<MultipartFormData> multipart(new MultipartFormData);
-                if(body.get())
+
+        if(body.get())
         {
             body->toMultipart(multipart, utility::conversions::to_string_t("body"));
         }
