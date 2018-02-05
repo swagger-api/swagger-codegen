@@ -1,14 +1,10 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.models.parameters.Parameter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
@@ -147,28 +143,32 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     @Override
     public String toParamName(String name) {
-        // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-
-        // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$"))
-            return name;
-
-        // camelize the variable name
-        // pet_id => petId
-        name = camelize(name, true);
-
-        // for reserved word or word starting with number, append _
-        if (isReservedWord(name) || name.matches("^\\d.*"))
-            name = escapeReservedWord(name);
-
-        return name;
+        // should be the same as variable name
+        return toVarName(name);
     }
 
     @Override
     public String toVarName(String name) {
-        // should be the same as variable name
-        return getNameUsingModelPropertyNaming(name);
+        // sanitize name
+        name = sanitizeName(name);
+
+        if("_".equals(name)) {
+            name = "_u";
+        }
+
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$")) {
+            return name;
+        }
+
+        name = getNameUsingModelPropertyNaming(name);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
     }
 
     @Override
@@ -228,6 +228,101 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             return "any";
         }
         return super.getTypeDeclaration(p);
+    }
+
+
+    @Override
+    protected String getParameterDataType(Parameter parameter, Property p) {
+        // handle enums of various data types
+        Property inner;
+        if (p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty) p;
+            inner = mp1.getItems();
+            return this.getSwaggerType(p) + "<" + this.getParameterDataType(parameter, inner) + ">";
+        } else if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            inner = mp.getAdditionalProperties();
+            return "{ [key: string]: " + this.getParameterDataType(parameter, inner) + "; }";
+        } else if (p instanceof StringProperty) {
+            // Handle string enums
+            StringProperty sp = (StringProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof IntegerProperty) {
+            // Handle integer enums
+            IntegerProperty sp = (IntegerProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof LongProperty) {
+            // Handle long enums
+            LongProperty sp = (LongProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof DoubleProperty) {
+            // Handle double enums
+            DoubleProperty sp = (DoubleProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof FloatProperty) {
+            // Handle float enums
+            FloatProperty sp = (FloatProperty) p;
+            if (sp.getEnum() != null) {
+                return numericEnumValuesToEnumTypeUnion(new ArrayList<Number>(sp.getEnum()));
+            }
+        } else if (p instanceof DateProperty) {
+            // Handle date enums
+            DateProperty sp = (DateProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        } else if (p instanceof DateTimeProperty) {
+            // Handle datetime enums
+            DateTimeProperty sp = (DateTimeProperty) p;
+            if (sp.getEnum() != null) {
+                return enumValuesToEnumTypeUnion(sp.getEnum(), "string");
+            }
+        }
+        return this.getTypeDeclaration(p);
+    }
+
+    /**
+     * Converts a list of strings to a literal union for representing enum values as a type.
+     * Example output: 'available' | 'pending' | 'sold'
+     *
+     * @param values list of allowed enum values
+     * @param dataType either "string" or "number"
+     * @return
+     */
+    protected String enumValuesToEnumTypeUnion(List<String> values, String dataType) {
+        StringBuilder b = new StringBuilder();
+        boolean isFirst = true;
+        for (String value: values) {
+            if (!isFirst) {
+                b.append(" | ");
+            }
+            b.append(toEnumValue(value.toString(), dataType));
+            isFirst = false;
+        }
+        return b.toString();
+    }
+
+    /**
+     * Converts a list of numbers to a literal union for representing enum values as a type.
+     * Example output: 3 | 9 | 55
+     *
+     * @param values
+     * @return
+     */
+    protected String numericEnumValuesToEnumTypeUnion(List<Number> values) {
+        List<String> stringValues = new ArrayList<>();
+        for (Number value: values) {
+            stringValues.add(value.toString());
+        }
+        return enumValuesToEnumTypeUnion(stringValues, "number");
     }
 
     @Override

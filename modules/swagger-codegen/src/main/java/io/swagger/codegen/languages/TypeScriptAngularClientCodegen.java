@@ -1,7 +1,6 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
-import java.lang.StringBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,12 +17,7 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.utils.SemVer;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.Property;
+import io.swagger.models.properties.*;
 
 public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
@@ -94,6 +88,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         supportingFiles.add(new SupportingFile("encoder.mustache", getIndexDirectory(), "encoder.ts"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
 
         if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
@@ -144,7 +139,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         }
 
         //Files for building our lib
-        supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
         supportingFiles.add(new SupportingFile("package.mustache", getIndexDirectory(), "package.json"));
         supportingFiles.add(new SupportingFile("typings.mustache", getIndexDirectory(), "typings.json"));
         supportingFiles.add(new SupportingFile("tsconfig.mustache", getIndexDirectory(), "tsconfig.json"));
@@ -162,16 +156,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String getTypeDeclaration(Property p) {
-        Property inner;
-        if (p instanceof ArrayProperty) {
-            ArrayProperty mp1 = (ArrayProperty) p;
-            inner = mp1.getItems();
-            return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
-        } else if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            inner = mp.getAdditionalProperties();
-            return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if (p instanceof FileProperty) {
+        if (p instanceof FileProperty) {
             return "Blob";
         } else if (p instanceof ObjectProperty) {
             return "any";
@@ -179,6 +164,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             return super.getTypeDeclaration(p);
         }
     }
+
 
     @Override
     public String getSwaggerType(Property p) {
@@ -258,11 +244,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             }
 
             // Prep a string buffer where we're going to set up our new version of the string.
-            StringBuffer pathBuffer = new StringBuffer();
-
-            // Set up other variables for tracking the current state of the string.
+            StringBuilder pathBuffer = new StringBuilder();
+            StringBuilder parameterName = new StringBuilder();
             int insideCurly = 0;
-            boolean foundUnderscore = false;
 
             // Iterate through existing string, one character at a time.
             for (int i = 0; i < op.path.length(); i++) {
@@ -279,23 +263,13 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                     insideCurly--;
 
                     // Add the more complicated component instead of just the brace.
+                    pathBuffer.append(toVarName(parameterName.toString()));
                     pathBuffer.append("))}");
-                    break;
-                case '_':
-                    // If we're inside the curly brace, the following character will need to be uppercase.
-                    // Otherwise, just add the character.
-                    if (insideCurly > 0) {
-                        foundUnderscore = true;
-                    } else {
-                        pathBuffer.append(op.path.charAt(i));
-                    }
+                    parameterName.setLength(0);
                     break;
                 default:
-                    // If we previously found an underscore, we need an uppercase letter.
-                    // Otherwise, just add the character.
-                    if (foundUnderscore) {
-                        pathBuffer.append(Character.toUpperCase(op.path.charAt(i)));
-                        foundUnderscore = false;
+                    if (insideCurly > 0) {
+                        parameterName.append(op.path.charAt(i));
                     } else {
                         pathBuffer.append(op.path.charAt(i));
                     }
