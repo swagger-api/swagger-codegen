@@ -22,6 +22,7 @@ public class CodegenResponse {
     public Object schema;
     public String jsonSchema;
     public Map<String, Object> vendorExtensions;
+    public String containedType;
 
     public boolean isWildcard() {
         return "0".equals(code) || "default".equals(code);
