@@ -67,8 +67,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(USE_JACKSON, "Use Jackson object parsing with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(USE_GSON, "Use Gson object parsing with the retrofit2 library."));
+        cliOptions.add(CliOption.newBoolean(USE_JACKSON, "Use Jackson object parsing with the retrofit2 library. (Default false)"));
+        cliOptions.add(CliOption.newBoolean(USE_GSON, "Use Gson object parsing with the retrofit2 library. (Default true)").defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_PLAY_WS, "Use Play! Async HTTP client (Play WS API)"));
         cliOptions.add(CliOption.newString(PLAY_VERSION, "Version of Play! Framework (possible values \"play24\", \"play25\")"));
@@ -227,17 +227,17 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("GzipRequestInterceptor.mustache", invokerFolder, "GzipRequestInterceptor.java"));
             additionalProperties.put("gson", "true");
         } else if (usesAnyRetrofitLibrary()) {
-            additionalProperties.put(USE_JACKSON, "true");
-            if (additionalProperties.containsKey(USE_GSON) && Boolean.valueOf(additionalProperties.get(USE_GSON).toString())) {
-                additionalProperties.put("gson", "true");
-            } else if (additionalProperties.containsKey(USE_JACKSON) && Boolean.valueOf(additionalProperties.get(USE_JACKSON).toString())) {
-                additionalProperties.put("jackson", "true");
+            Boolean useJackson = Boolean.valueOf(additionalProperties.get(USE_JACKSON).toString());
+            if (useJackson) {
+                additionalProperties.put("jackson", true);
+            } else {
+                additionalProperties.put("gson", true);
+                if ("retrofit2".equals(getLibrary())) {
+                    supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+                }
             }
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
-            if ("retrofit2".equals(getLibrary()) && !usePlayWS) {
-                supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
-            }
         } else if ("jersey2".equals(getLibrary()) || "resteasy".equals(getLibrary()))  {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             additionalProperties.put("jackson", "true");

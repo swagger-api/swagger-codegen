@@ -1,8 +1,8 @@
 package io.swagger.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonElement;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -12,7 +12,6 @@ import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuil
 import org.threeten.bp.format.DateTimeFormatter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
@@ -33,10 +32,10 @@ public class ApiClient {
   private Map<String, Interceptor> apiAuthorizations;
   private OkHttpClient.Builder okBuilder;
   private Retrofit.Builder adapterBuilder;
-  private JSON json;
+  private ObjectMapper mapper = new ObjectMapper();
 
   public ApiClient() {
-    apiAuthorizations = new LinkedHashMap<String, Interceptor>();
+    apiAuthorizations = new LinkedHashMap<>();
     createDefaultAdapter();
   }
 
@@ -107,7 +106,6 @@ public class ApiClient {
   }
 
   public void createDefaultAdapter() {
-    json = new JSON();
     okBuilder = new OkHttpClient.Builder();
 
     String baseUrl = "http://petstore.swagger.io:80/v2";
@@ -117,8 +115,8 @@ public class ApiClient {
     adapterBuilder = new Retrofit
       .Builder()
       .baseUrl(baseUrl)
-      .addConverterFactory(ScalarsConverterFactory.create())
-      .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
+      .addConverterFactory(ScalarsConverterFactory.create());
+    adapterBuilder = addMappingConverterFactory(adapterBuilder);
   }
 
   public <S> S createService(Class<S> serviceClass) {
@@ -128,26 +126,15 @@ public class ApiClient {
       .create(serviceClass);
   }
 
+
+  private Retrofit.Builder addMappingConverterFactory(Retrofit.Builder builder) {
+    return builder.addConverterFactory(JacksonConverterFactory.create(mapper));
+  }
+
   public ApiClient setDateFormat(DateFormat dateFormat) {
-    this.json.setDateFormat(dateFormat);
+    mapper = mapper.setDateFormat(dateFormat);
     return this;
   }
-
-  public ApiClient setSqlDateFormat(DateFormat dateFormat) {
-    this.json.setSqlDateFormat(dateFormat);
-    return this;
-  }
-
-  public ApiClient setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
-    this.json.setOffsetDateTimeFormat(dateFormat);
-    return this;
-  }
-
-  public ApiClient setLocalDateFormat(DateTimeFormatter dateFormat) {
-    this.json.setLocalDateFormat(dateFormat);
-    return this;
-  }
-
 
   /**
    * Helper method to configure the first api key found
@@ -321,60 +308,5 @@ public class ApiClient {
   public void configureFromOkclient(OkHttpClient okClient) {
     this.okBuilder = okClient.newBuilder();
     addAuthsToOkBuilder(this.okBuilder);
-  }
-}
-
-/**
- * This wrapper is to take care of this case:
- * when the deserialization fails due to JsonParseException and the
- * expected type is String, then just return the body string.
- */
-class GsonResponseBodyConverterToString<T> implements Converter<ResponseBody, T> {
-  private final Gson gson;
-  private final Type type;
-
-  GsonResponseBodyConverterToString(Gson gson, Type type) {
-    this.gson = gson;
-    this.type = type;
-  }
-
-  @Override public T convert(ResponseBody value) throws IOException {
-    String returned = value.string();
-    try {
-      return gson.fromJson(returned, type);
-    }
-    catch (JsonParseException e) {
-      return (T) returned;
-    }
-  }
-}
-
-class GsonCustomConverterFactory extends Converter.Factory
-{
-  private final Gson gson;
-  private final GsonConverterFactory gsonConverterFactory;
-
-  public static GsonCustomConverterFactory create(Gson gson) {
-    return new GsonCustomConverterFactory(gson);
-  }
-
-  private GsonCustomConverterFactory(Gson gson) {
-    if (gson == null)
-      throw new NullPointerException("gson == null");
-    this.gson = gson;
-    this.gsonConverterFactory = GsonConverterFactory.create(gson);
-  }
-
-  @Override
-  public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-    if (type.equals(String.class))
-      return new GsonResponseBodyConverterToString<Object>(gson, type);
-    else
-      return gsonConverterFactory.responseBodyConverter(type, annotations, retrofit);
-  }
-
-  @Override
-  public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-    return gsonConverterFactory.requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
   }
 }

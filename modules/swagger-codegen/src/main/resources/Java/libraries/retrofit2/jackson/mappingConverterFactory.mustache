@@ -1,0 +1,8 @@
+  private Retrofit.Builder addMappingConverterFactory(Retrofit.Builder builder) {
+    return builder.addConverterFactory(JacksonConverterFactory.create(mapper));
+  }
+
+  public ApiClient setDateFormat(DateFormat dateFormat) {
+    mapper = mapper.setDateFormat(dateFormat);
+    return this;
+  }

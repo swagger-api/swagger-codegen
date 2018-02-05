@@ -49,6 +49,14 @@ public class OnlineGeneratorOptionsTest {
                                 ImmutableMap.of(CodegenConstants.LIBRARY,
                                         JavaClientCodegen.RETROFIT_2,
                                         JavaClientCodegen.USE_RX_JAVA, "true"))},
+                {
+                        new JavaOptionsProvider(),
+                        new JavaOptionsProvider(ImmutableMap.of(CodegenConstants.LIBRARY,
+                                JavaClientCodegen.RETROFIT_2)),
+                        new JavaOptionsProvider(
+                                ImmutableMap.of(CodegenConstants.LIBRARY,
+                                        JavaClientCodegen.RETROFIT_2,
+                                        JavaClientCodegen.USE_JACKSON, "true"))},
                 {new JaxRSServerOptionsProvider()}, {new NodeJSServerOptionsProvider()},
                 {new ObjcClientOptionsProvider()}, {new PerlClientOptionsProvider()},
                 {new PhpClientOptionsProvider()}, {new PythonClientOptionsProvider()},
