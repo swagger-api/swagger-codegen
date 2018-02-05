@@ -303,7 +303,7 @@ pplx::task<std::vector<std::shared_ptr<Pet>>> PetApi::findPetsByStatus(std::vect
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
     {
-        queryParams[utility::conversions::to_string_t("status")] = ApiClient::parameterToArrayString<utility::string_t>(status);
+        queryParams[utility::conversions::to_string_t("status")] = ApiClient::parameterToString(status);
     }
 
     std::shared_ptr<IHttpBody> httpBody;
@@ -429,7 +429,7 @@ pplx::task<std::vector<std::shared_ptr<Pet>>> PetApi::findPetsByTags(std::vector
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
     {
-        queryParams[utility::conversions::to_string_t("tags")] = ApiClient::parameterToArrayString<utility::string_t>(tags);
+        queryParams[utility::conversions::to_string_t("tags")] = ApiClient::parameterToString(tags);
     }
 
     std::shared_ptr<IHttpBody> httpBody;
