@@ -53,7 +53,7 @@ mod paths {
     lazy_static! {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(&[
 {{#pathSet}}
-            r"{{{pathRegEx}}}"{{^-last}},{{/-last}}
+            r"^{{basePathWithoutHost}}{{{pathRegEx}}}"{{^-last}},{{/-last}}
 {{/pathSet}}
         ]).unwrap();
     }
@@ -61,7 +61,7 @@ mod paths {
     pub static ID_{{PATH_ID}}: usize = {{index}};
 {{#hasPathParams}}
     lazy_static! {
-        pub static ref REGEX_{{PATH_ID}}: regex::Regex = regex::Regex::new(r"{{{pathRegEx}}}").unwrap();
+        pub static ref REGEX_{{PATH_ID}}: regex::Regex = regex::Regex::new(r"^{{basePathWithoutHost}}{{{pathRegEx}}}").unwrap();
     }
 {{/hasPathParams}}
 {{/pathSet}}
@@ -337,7 +337,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     }
 {{/-last}}
 {{/headers}}{{/dataType}}
-{{^dataType}}{{#headers}}{{#-first}}        
+{{^dataType}}{{#headers}}{{#-first}}
                                                     {
 {{/-first}}
                                                         {{name}}{{^-last}}, {{/-last}}

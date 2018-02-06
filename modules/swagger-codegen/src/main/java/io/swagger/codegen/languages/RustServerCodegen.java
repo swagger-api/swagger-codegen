@@ -484,7 +484,9 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             if (!op.pathParams.isEmpty()) {
                 pathSetEntry.put("hasPathParams", "true");
             }
-            pathSetEntry.put("pathRegEx", "^" + op.path.replace("{", "(?P<").replace("}", ">[^/?#]*)") + "$");
+            // Don't prefix with '^' so that the templates can put the
+            // basePath on the front.
+            pathSetEntry.put("pathRegEx", op.path.replace("{", "(?P<").replace("}", ">[^/?#]*)") + "$");
             pathSetMap.put(pathId, pathSetEntry);
         }
 

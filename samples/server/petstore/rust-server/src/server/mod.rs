@@ -82,29 +82,29 @@ mod paths {
 
     lazy_static! {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(&[
-            r"^/another-fake/dummy$",
-            r"^/fake$",
-            r"^/fake/inline-additionalProperties$",
-            r"^/fake/jsonFormData$",
-            r"^/fake/outer/boolean$",
-            r"^/fake/outer/composite$",
-            r"^/fake/outer/number$",
-            r"^/fake/outer/string$",
-            r"^/fake_classname_test$",
-            r"^/pet$",
-            r"^/pet/findByStatus$",
-            r"^/pet/findByTags$",
-            r"^/pet/(?P<petId>[^/?#]*)$",
-            r"^/pet/(?P<petId>[^/?#]*)/uploadImage$",
-            r"^/store/inventory$",
-            r"^/store/order$",
-            r"^/store/order/(?P<order_id>[^/?#]*)$",
-            r"^/user$",
-            r"^/user/createWithArray$",
-            r"^/user/createWithList$",
-            r"^/user/login$",
-            r"^/user/logout$",
-            r"^/user/(?P<username>[^/?#]*)$"
+            r"^/v2/another-fake/dummy$",
+            r"^/v2/fake$",
+            r"^/v2/fake/inline-additionalProperties$",
+            r"^/v2/fake/jsonFormData$",
+            r"^/v2/fake/outer/boolean$",
+            r"^/v2/fake/outer/composite$",
+            r"^/v2/fake/outer/number$",
+            r"^/v2/fake/outer/string$",
+            r"^/v2/fake_classname_test$",
+            r"^/v2/pet$",
+            r"^/v2/pet/findByStatus$",
+            r"^/v2/pet/findByTags$",
+            r"^/v2/pet/(?P<petId>[^/?#]*)$",
+            r"^/v2/pet/(?P<petId>[^/?#]*)/uploadImage$",
+            r"^/v2/store/inventory$",
+            r"^/v2/store/order$",
+            r"^/v2/store/order/(?P<order_id>[^/?#]*)$",
+            r"^/v2/user$",
+            r"^/v2/user/createWithArray$",
+            r"^/v2/user/createWithList$",
+            r"^/v2/user/login$",
+            r"^/v2/user/logout$",
+            r"^/v2/user/(?P<username>[^/?#]*)$"
         ]).unwrap();
     }
     pub static ID_ANOTHER_FAKE_DUMMY: usize = 0;
@@ -121,17 +121,17 @@ mod paths {
     pub static ID_PET_FINDBYTAGS: usize = 11;
     pub static ID_PET_PETID: usize = 12;
     lazy_static! {
-        pub static ref REGEX_PET_PETID: regex::Regex = regex::Regex::new(r"^/pet/(?P<petId>[^/?#]*)$").unwrap();
+        pub static ref REGEX_PET_PETID: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)$").unwrap();
     }
     pub static ID_PET_PETID_UPLOADIMAGE: usize = 13;
     lazy_static! {
-        pub static ref REGEX_PET_PETID_UPLOADIMAGE: regex::Regex = regex::Regex::new(r"^/pet/(?P<petId>[^/?#]*)/uploadImage$").unwrap();
+        pub static ref REGEX_PET_PETID_UPLOADIMAGE: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)/uploadImage$").unwrap();
     }
     pub static ID_STORE_INVENTORY: usize = 14;
     pub static ID_STORE_ORDER: usize = 15;
     pub static ID_STORE_ORDER_ORDER_ID: usize = 16;
     lazy_static! {
-        pub static ref REGEX_STORE_ORDER_ORDER_ID: regex::Regex = regex::Regex::new(r"^/store/order/(?P<order_id>[^/?#]*)$").unwrap();
+        pub static ref REGEX_STORE_ORDER_ORDER_ID: regex::Regex = regex::Regex::new(r"^/v2/store/order/(?P<order_id>[^/?#]*)$").unwrap();
     }
     pub static ID_USER: usize = 17;
     pub static ID_USER_CREATEWITHARRAY: usize = 18;
@@ -140,7 +140,7 @@ mod paths {
     pub static ID_USER_LOGOUT: usize = 21;
     pub static ID_USER_USERNAME: usize = 22;
     lazy_static! {
-        pub static ref REGEX_USER_USERNAME: regex::Regex = regex::Regex::new(r"^/user/(?P<username>[^/?#]*)$").unwrap();
+        pub static ref REGEX_USER_USERNAME: regex::Regex = regex::Regex::new(r"^/v2/user/(?P<username>[^/?#]*)$").unwrap();
     }
 }
 
