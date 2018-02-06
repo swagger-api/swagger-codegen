@@ -41,7 +41,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String RETROFIT_2 = "retrofit2";
     public static final String REST_ASSURED = "rest-assured";
     public static final String USE_JACKSON = "useJackson";
-    public static final String USE_GSON = "useGson";
 
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
@@ -67,8 +66,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(USE_JACKSON, "Use Jackson object parsing with the retrofit2 library. (Default false)"));
-        cliOptions.add(CliOption.newBoolean(USE_GSON, "Use Gson object parsing with the retrofit2 library. (Default true)").defaultValue(Boolean.TRUE.toString()));
+        cliOptions.add(CliOption.newBoolean(USE_JACKSON, "Use Jackson object parsing with the retrofit2 library instead of Gson."));
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_PLAY_WS, "Use Play! Async HTTP client (Play WS API)"));
         cliOptions.add(CliOption.newString(PLAY_VERSION, "Version of Play! Framework (possible values \"play24\", \"play25\")"));

@@ -1,2 +1,13 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+{{#jsr310}}
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import org.threeten.bp.Instant;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZonedDateTime;
+{{/jsr310}}
+{{#joda}}
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+{{/joda}}

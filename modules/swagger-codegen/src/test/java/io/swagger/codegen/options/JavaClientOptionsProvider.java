@@ -19,7 +19,6 @@ public class JavaClientOptionsProvider extends JavaOptionsProvider {
         options.put(JavaClientCodegen.USE_RX_JAVA, "false");
         options.put(JavaClientCodegen.USE_RX_JAVA2, "false");
         options.put(JavaClientCodegen.USE_JACKSON, "false");
-        options.put(JavaClientCodegen.USE_GSON, "true");
         options.put(JavaClientCodegen.USE_PLAY_WS, "false");
         options.put(JavaClientCodegen.PLAY_VERSION, JavaClientCodegen.PLAY_25);
         options.put(JavaClientCodegen.PARCELABLE_MODEL, "false");
