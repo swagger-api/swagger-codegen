@@ -70,6 +70,8 @@ public class JavaPlayFrameworkOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setUseSwaggerUI(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_SWAGGER_UI));
             times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+            times = 1;
         }};
     }
 }

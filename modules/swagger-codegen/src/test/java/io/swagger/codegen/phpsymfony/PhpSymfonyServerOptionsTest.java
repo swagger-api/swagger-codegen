@@ -4,6 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.AbstractPhpCodegen;
 import io.swagger.codegen.languages.SymfonyServerCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.SymfonyServerOptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -51,6 +52,8 @@ public class PhpSymfonyServerOptionsTest extends AbstractOptionsTest {
             symfonyCodegen.setGitRepoId(SymfonyServerOptionsProvider.GIT_REPO_ID_VALUE);
             times = 1;
             symfonyCodegen.setArtifactVersion(SymfonyServerOptionsProvider.ARTIFACT_VERSION_VALUE);
+            times = 1;
+            symfonyCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

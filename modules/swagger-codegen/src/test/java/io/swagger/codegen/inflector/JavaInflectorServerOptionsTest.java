@@ -5,6 +5,7 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.JavaInflectorServerCodegen;
 import io.swagger.codegen.options.JavaInflectorServerOptionsProvider;
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -49,6 +50,8 @@ public class JavaInflectorServerOptionsTest extends AbstractOptionsTest {
             clientCodegen.setFullJavaUtil(Boolean.valueOf(JavaInflectorServerOptionsProvider.FULL_JAVA_UTIL_VALUE));
             times = 1;
             clientCodegen.setSerializeBigDecimalAsString(true);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

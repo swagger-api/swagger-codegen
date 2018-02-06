@@ -228,4 +228,8 @@ public class CodegenConstants {
 
     public static final String STRIP_PACKAGE_NAME = "stripPackageName";
     public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
+
+    public static final String SUPPORTS_MODEL_EXTENSION = "supportsModelExtension";
+    public static final String SUPPORTS_MODEL_EXTENSION_DESC = "Generates code with support of parent type extending (first declared) instead of fields inheritance.";
+
 }

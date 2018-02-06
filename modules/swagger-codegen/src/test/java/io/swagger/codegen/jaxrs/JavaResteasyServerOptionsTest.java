@@ -62,7 +62,8 @@ public class JavaResteasyServerOptionsTest extends AbstractOptionsTest {
                 
                 clientCodegen.setUseBeanValidation(Boolean.valueOf(JavaResteasyServerOptionsProvider.USE_BEANVALIDATION));
                 times = 1;
-
+                clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+                times = 1;
             }
         };
     }

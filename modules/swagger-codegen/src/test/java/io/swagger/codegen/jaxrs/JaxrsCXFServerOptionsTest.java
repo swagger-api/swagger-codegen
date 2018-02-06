@@ -101,6 +101,8 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                 clientCodegen.setAddConsumesProducesJson(
                         Boolean.valueOf(JavaCXFServerOptionsProvider.ADD_CONSUMES_PRODUCES_JSON));
                 times = 1;
+                clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+                times = 1;
             }
         };
     }

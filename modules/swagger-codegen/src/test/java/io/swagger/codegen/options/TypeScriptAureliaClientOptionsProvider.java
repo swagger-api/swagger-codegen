@@ -31,6 +31,7 @@ public class TypeScriptAureliaClientOptionsProvider implements OptionsProvider {
                 .put(TypeScriptAureliaClientCodegen.NPM_NAME, NMP_NAME)
                 .put(TypeScriptAureliaClientCodegen.NPM_VERSION, NMP_VERSION)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
                 .build();
     }
 

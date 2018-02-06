@@ -49,6 +49,7 @@ public class AndroidClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.LIBRARY, LIBRARY_VALUE)
                 .put(CodegenConstants.SERIALIZABLE_MODEL, SERIALIZABLE_MODEL_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
                 .build();
     }
 

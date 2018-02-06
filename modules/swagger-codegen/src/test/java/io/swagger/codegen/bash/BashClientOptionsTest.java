@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.BashClientCodegen;
 import io.swagger.codegen.options.BashClientOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -52,7 +52,8 @@ public class BashClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setAllowUnicodeIdentifiers(Boolean.valueOf(BashClientOptionsProvider.ALLOW_UNICODE_IDENTIFIERS_VALUE));
             times = 1;
-
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+            times = 1;
         }};
     }
 }

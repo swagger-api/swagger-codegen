@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.DartClientCodegen;
 import io.swagger.codegen.options.DartClientOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -39,6 +39,8 @@ public class DartClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setSourceFolder(DartClientOptionsProvider.SOURCE_FOLDER_VALUE);
             times = 1;
             clientCodegen.setUseEnumExtension(Boolean.valueOf(DartClientOptionsProvider.USE_ENUM_EXTENSION));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

@@ -59,6 +59,7 @@ public class Swift3OptionsProvider implements OptionsProvider {
                 .put(Swift3Codegen.SWIFT_USE_API_NAMESPACE, SWIFT_USE_API_NAMESPACE_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
                 .build();
     }
 

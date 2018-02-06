@@ -3,6 +3,7 @@ package io.swagger.codegen.typescript.typescriptnode;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.TypeScriptNodeClientCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.TypeScriptNodeClientOptionsProvider;
 
 import mockit.Expectations;
@@ -31,6 +32,8 @@ public class TypeScriptNodeClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setModelPropertyNaming(TypeScriptNodeClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
             clientCodegen.setSupportsES6(Boolean.valueOf(TypeScriptNodeClientOptionsProvider.SUPPORTS_ES6_VALUE));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

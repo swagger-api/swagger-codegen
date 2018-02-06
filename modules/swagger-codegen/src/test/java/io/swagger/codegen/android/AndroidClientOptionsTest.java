@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.AndroidClientCodegen;
 import io.swagger.codegen.options.AndroidClientOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -55,6 +55,8 @@ public class AndroidClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setSerializableModel(Boolean.valueOf(AndroidClientOptionsProvider.SERIALIZABLE_MODEL_VALUE));
             times = 1;
             clientCodegen.setAllowUnicodeIdentifiers(Boolean.valueOf(AndroidClientOptionsProvider.ALLOW_UNICODE_IDENTIFIERS_VALUE));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

@@ -3,6 +3,7 @@ package io.swagger.codegen.php;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.PhpClientCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.PhpClientOptionsProvider;
 
 import mockit.Expectations;
@@ -49,6 +50,8 @@ public class PhpClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setGitRepoId(PhpClientOptionsProvider.GIT_REPO_ID_VALUE);
             times = 1;
             clientCodegen.setArtifactVersion(PhpClientOptionsProvider.ARTIFACT_VERSION_VALUE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

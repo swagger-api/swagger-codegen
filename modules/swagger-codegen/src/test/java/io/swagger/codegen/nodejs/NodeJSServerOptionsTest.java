@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.NodeJSServerCodegen;
 import io.swagger.codegen.options.NodeJSServerOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 import org.testng.annotations.Test;
@@ -32,6 +32,8 @@ public class NodeJSServerOptionsTest extends AbstractOptionsTest {
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(NodeJSServerOptionsProvider.SORT_PARAMS_VALUE));
             clientCodegen.setGoogleCloudFunctions(Boolean.valueOf(NodeJSServerOptionsProvider.GOOGLE_CLOUD_FUNCTIONS));
             clientCodegen.setExportedName(NodeJSServerOptionsProvider.EXPORTED_NAME);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

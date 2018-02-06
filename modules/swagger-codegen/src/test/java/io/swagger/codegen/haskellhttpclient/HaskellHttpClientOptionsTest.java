@@ -4,6 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.HaskellHttpClientCodegen;
 import io.swagger.codegen.options.HaskellHttpClientOptionsProvider;
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -61,6 +62,8 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setRequestType(HaskellHttpClientOptionsProvider.REQUEST_TYPE);
             times = 1;
             clientCodegen.setConfigType(HaskellHttpClientOptionsProvider.CONFIG_TYPE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

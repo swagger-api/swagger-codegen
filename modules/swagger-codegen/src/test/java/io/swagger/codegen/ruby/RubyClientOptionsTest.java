@@ -3,6 +3,7 @@ package io.swagger.codegen.ruby;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.RubyClientCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.RubyClientOptionsProvider;
 
 import mockit.Expectations;
@@ -46,7 +47,8 @@ public class RubyClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setGemAuthorEmail(RubyClientOptionsProvider.GEM_AUTHOR_EMAIL_VALUE);
             times = 1;
-
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+            times = 1;
         }};
     }
 }

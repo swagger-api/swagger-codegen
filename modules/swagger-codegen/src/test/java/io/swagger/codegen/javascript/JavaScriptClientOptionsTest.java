@@ -70,6 +70,8 @@ public class JavaScriptClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setUseES6(Boolean.valueOf(JavaScriptOptionsProvider.USE_ES6_VALUE));
             times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+            times = 1;
         }};
     }
 }

@@ -3,6 +3,7 @@ package io.swagger.codegen.swift;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.SwiftCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.SwiftOptionsProvider;
 
 import mockit.Expectations;
@@ -33,6 +34,8 @@ public class SwiftOptionsTest extends AbstractOptionsTest {
             clientCodegen.setResponseAs(SwiftOptionsProvider.RESPONSE_AS_VALUE.split(","));
             times = 1;
             clientCodegen.setUnwrapRequired(Boolean.valueOf(SwiftOptionsProvider.UNWRAP_REQUIRED_VALUE));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

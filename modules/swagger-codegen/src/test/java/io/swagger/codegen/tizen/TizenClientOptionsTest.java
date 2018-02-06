@@ -3,6 +3,7 @@ package io.swagger.codegen.tizen;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.TizenClientCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.TizenClientOptionsProvider;
 
 import mockit.Expectations;
@@ -27,6 +28,8 @@ public class TizenClientOptionsTest extends AbstractOptionsTest {
     protected void setExpectations() {
         new Expectations(clientCodegen) {{
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(TizenClientOptionsProvider.SORT_PARAMS_VALUE));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

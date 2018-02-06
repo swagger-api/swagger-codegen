@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.AkkaScalaClientCodegen;
 import io.swagger.codegen.options.AkkaScalaClientOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -33,6 +33,8 @@ public class AkkaScalaClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(AkkaScalaClientOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
             clientCodegen.setSourceFolder(AkkaScalaClientOptionsProvider.SOURCE_FOLDER_VALUE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

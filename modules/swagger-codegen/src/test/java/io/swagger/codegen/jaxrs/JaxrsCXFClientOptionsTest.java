@@ -65,7 +65,8 @@ public class JaxrsCXFClientOptionsTest extends AbstractOptionsTest {
                 clientCodegen.setUseLoggingFeatureForTests(
                         Boolean.valueOf(JavaCXFClientOptionsProvider.USE_LOGGING_FEATURE_FOR_TESTS));
                 times = 1;
-
+                clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+                times = 1;
             }
         };
     }

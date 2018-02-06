@@ -70,7 +70,8 @@ public class JavaResteasyEapServerOptionsTest extends AbstractOptionsTest {
                         .setUseSwaggerFeature(
                                 Boolean.valueOf(JavaResteasyEapServerOptionsProvider.USE_SWAGGER_FEATURE));
                 times = 1;
-
+                clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+                times = 1;
             }
         };
     }

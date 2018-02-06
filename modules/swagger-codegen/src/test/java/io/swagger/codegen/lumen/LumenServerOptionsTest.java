@@ -4,7 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.LumenServerCodegen;
 import io.swagger.codegen.options.LumenServerOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -45,6 +45,8 @@ public class LumenServerOptionsTest extends AbstractOptionsTest {
             clientCodegen.setGitRepoId(LumenServerOptionsProvider.GIT_REPO_ID_VALUE);
             times = 1;
             clientCodegen.setArtifactVersion(LumenServerOptionsProvider.ARTIFACT_VERSION_VALUE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

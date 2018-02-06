@@ -5,7 +5,7 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 import io.swagger.codegen.options.JaxRSServerOptionsProvider;
-
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -77,6 +77,8 @@ public class JaxRSServerOptionsTest extends AbstractOptionsTest {
             clientCodegen.setUseBeanValidation(Boolean.valueOf(JaxRSServerOptionsProvider.USE_BEANVALIDATION));
             times = 1;           
             clientCodegen.setUseTags(Boolean.valueOf(JaxRSServerOptionsProvider.USE_TAGS));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

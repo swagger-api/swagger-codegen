@@ -66,6 +66,7 @@ public class HaskellHttpClientOptionsProvider implements OptionsProvider {
                 .put(HaskellHttpClientCodegen.PROP_BASE_MODULE, BASE_MODULE)
                 .put(HaskellHttpClientCodegen.PROP_REQUEST_TYPE, REQUEST_TYPE)
                 .put(HaskellHttpClientCodegen.PROP_CONFIG_TYPE, CONFIG_TYPE)
+                .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
                 .build();
     }
 

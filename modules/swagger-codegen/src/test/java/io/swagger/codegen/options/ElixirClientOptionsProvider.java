@@ -23,6 +23,7 @@ public class ElixirClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.INVOKER_PACKAGE, "Yay.Pets")
                 .put("licenseHeader", "# Copyright 2017 Me\n#\n# Licensed under the Apache License")
                 .put(CodegenConstants.PACKAGE_NAME, "yay_pets")
+                .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
                 .build();
     }
 

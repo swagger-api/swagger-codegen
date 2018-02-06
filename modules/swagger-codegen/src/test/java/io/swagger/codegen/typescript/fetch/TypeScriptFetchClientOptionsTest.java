@@ -3,6 +3,7 @@ package io.swagger.codegen.typescript.fetch;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.TypeScriptFetchClientCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.TypeScriptFetchClientOptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -30,6 +31,8 @@ public class TypeScriptFetchClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setModelPropertyNaming(TypeScriptFetchClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
             clientCodegen.setSupportsES6(TypeScriptFetchClientOptionsProvider.SUPPORTS_ES6_VALUE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

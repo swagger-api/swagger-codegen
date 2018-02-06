@@ -3,6 +3,7 @@ package io.swagger.codegen.swift4;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.Swift4Codegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.Swift4OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -36,6 +37,8 @@ public class Swift4OptionsTest extends AbstractOptionsTest {
             clientCodegen.setObjcCompatible(Boolean.valueOf(Swift4OptionsProvider.OBJC_COMPATIBLE_VALUE));
             times = 1;
             clientCodegen.setLenientTypeCast(Boolean.valueOf(Swift4OptionsProvider.LENIENT_TYPE_CAST_VALUE));
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

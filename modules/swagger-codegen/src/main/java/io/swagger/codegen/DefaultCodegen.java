@@ -92,6 +92,8 @@ public class DefaultCodegen {
     protected List<CliOption> cliOptions = new ArrayList<CliOption>();
     protected boolean skipOverwrite;
     protected boolean removeOperationIdPrefix;
+    // supports inheritance as model extension (first type reference will be used as parent entity)
+    protected boolean supportsModelExtension;
     protected boolean supportsInheritance;
     protected boolean supportsMixins;
     protected Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
@@ -154,6 +156,10 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_MODEL_EXTENSION)) {
+            this.setSupportsModelExtension(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_MODEL_EXTENSION).toString()));
         }
     }
 
@@ -854,6 +860,8 @@ public class DefaultCodegen {
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
 
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.SUPPORTS_MODEL_EXTENSION, CodegenConstants.SUPPORTS_MODEL_EXTENSION_DESC));
+
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
     }
@@ -1386,8 +1394,9 @@ public class DefaultCodegen {
                     }
                     // set first interface with discriminator found as parent
                     if (parent == null
-                            && ((interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null)
-                            || (interfaceModel instanceof ComposedModel && isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions)))) {
+                            && (supportsModelExtension
+                                || (interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null)
+                                || (interfaceModel instanceof ComposedModel && isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions)))) {
                         parent = _interface;
                     } else {
                         final String interfaceRef = toModelName(_interface.getSimpleRef());
@@ -3367,6 +3376,14 @@ public class DefaultCodegen {
 
     public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+    }
+
+    public boolean isSupportsModelExtension() {
+        return supportsModelExtension;
+    }
+
+    public void setSupportsModelExtension(boolean supportsModelExtension) {
+        this.supportsModelExtension = supportsModelExtension;
     }
 
     /**

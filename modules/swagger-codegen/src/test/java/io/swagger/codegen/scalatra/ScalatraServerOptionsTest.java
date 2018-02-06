@@ -3,6 +3,7 @@ package io.swagger.codegen.scalatra;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.ScalatraServerCodegen;
+import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.options.ScalatraServerOptionsProvider;
 
 import mockit.Expectations;
@@ -33,6 +34,8 @@ public class ScalatraServerOptionsTest extends AbstractOptionsTest {
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(ScalatraServerOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
             clientCodegen.setSourceFolder(ScalatraServerOptionsProvider.SOURCE_FOLDER_VALUE);
+            times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
         }};
     }

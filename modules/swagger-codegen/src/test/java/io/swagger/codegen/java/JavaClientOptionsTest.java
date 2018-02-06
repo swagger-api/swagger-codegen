@@ -83,6 +83,8 @@ public class JavaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setUseBeanValidation(Boolean.valueOf(JavaClientOptionsProvider.PERFORM_BEANVALIDATION));
             times = 1;
+            clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
+            times = 1;
         }};
     }
 }
