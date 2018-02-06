@@ -1,0 +1,11 @@
+{{#hasEnums}}
+
+export namespace {{classname}} {
+{{#vars}}
+    {{#isEnum}}
+    export type {{enumName}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}} | {{/-last}}{{/enumVars}}{{/allowableValues}};
+    export const {{enumName}}Values = Object.freeze(
+        [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}] as {{enumName}}[]);
+    {{/isEnum}}
+{{/vars}}
+}{{/hasEnums}}

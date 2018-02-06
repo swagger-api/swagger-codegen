@@ -1,15 +1,20 @@
 package io.swagger.codegen.languages;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.samskivert.mustache.Mustache;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+
+import io.swagger.codegen.*;
+import io.swagger.models.*;
+import io.swagger.util.Json;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.*;
+import java.util.Map.Entry;
 
 import static java.util.UUID.randomUUID;
 
@@ -30,7 +35,8 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         apiTemplateFiles.put("controller.mustache", ".cs");
 
         // contextually reserved words
-        setReservedWordsLowerCase(
+        // NOTE: C# uses camel cased reserved words, while models are title cased. We don't want lowercase comparisons.
+        reservedWords.addAll(
             Arrays.asList("var", "async", "await", "dynamic", "yield")
         );
 
@@ -120,9 +126,14 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
 
         supportingFiles.add(new SupportingFile("Properties" + File.separator + "launchSettings.json", packageFolder + File.separator + "Properties", "launchSettings.json"));
 
+        supportingFiles.add(new SupportingFile("Filters" + File.separator + "BasePathFilter.mustache", packageFolder + File.separator + "Filters", "BasePathFilter.cs"));
+        supportingFiles.add(new SupportingFile("Filters" + File.separator + "GeneratePathParamsValidationFilter.mustache", packageFolder + File.separator + "Filters", "GeneratePathParamsValidationFilter.cs"));
+
         supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "README.md", packageFolder + File.separator + "wwwroot", "README.md"));
         supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "index.html", packageFolder + File.separator + "wwwroot", "index.html"));
         supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "web.config", packageFolder + File.separator + "wwwroot", "web.config"));
+
+        supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "swagger-original.mustache", packageFolder + File.separator + "wwwroot", "swagger-original.json"));
     }
 
     @Override
@@ -151,6 +162,21 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
     public String modelFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator  + "Models";
     }
+
+
+    @Override
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        if(swagger != null) {
+            try {
+                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger).replace("\r\n", "\n"));
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return super.postProcessSupportingFileData(objs);
+    }
+
 
     @Override
     protected void processOperation(CodegenOperation operation) {

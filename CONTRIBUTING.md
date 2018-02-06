@@ -42,6 +42,7 @@ Code change should conform to the programming style guide of the respective lang
 - C++: https://google.github.io/styleguide/cppguide.html
 - C++ (Tizen): https://wiki.tizen.org/Native_Platform_Coding_Idiom_and_Style_Guide#C.2B.2B_Coding_Style
 - Clojure: https://github.com/bbatsov/clojure-style-guide
+- Dart: https://www.dartlang.org/guides/language/effective-dart/style
 - Elixir: https://github.com/christopheradams/elixir_style_guide
 - Eiffel: https://www.eiffel.org/doc/eiffel/Coding%20Standards
 - Erlang: https://github.com/inaka/erlang_guidelines
@@ -58,6 +59,7 @@ Code change should conform to the programming style guide of the respective lang
 - Python: https://www.python.org/dev/peps/pep-0008/
 - R: https://google.github.io/styleguide/Rguide.xml
 - Ruby: https://github.com/bbatsov/ruby-style-guide
+- Rust: https://github.com/rust-lang-nursery/fmt-rfcs/blob/master/guide/guide.md (the default [rustfmt](https://github.com/rust-lang-nursery/rustfmt) configuration)
 - Scala: http://docs.scala-lang.org/style/
 - Swift: [Apple Developer](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html)
 - TypeScript: https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines
