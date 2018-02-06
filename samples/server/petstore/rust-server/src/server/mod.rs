@@ -249,7 +249,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::TEST_SPECIAL_TAGS_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -333,7 +332,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
                                                 => {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
-
 
 
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
@@ -421,7 +419,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
 
-
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -507,7 +504,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
 
-
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -591,7 +587,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
                                                 => {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
-
 
 
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
@@ -682,7 +677,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::TEST_CLIENT_MODEL_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
@@ -1088,7 +1082,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::TEST_CLASSNAME_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -1386,7 +1379,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::FIND_PETS_BY_STATUS_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -1484,7 +1476,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::FIND_PETS_BY_TAGS_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -1572,7 +1563,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::GET_PET_BY_ID_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
@@ -1917,6 +1907,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
                                     None => None,
                                 };
+
                                 let param_file = entries.fields.remove("file");
                                 let param_file = match param_file {
                                     Some(entry) =>
@@ -1942,7 +1933,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::UPLOAD_FILE_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
@@ -2087,7 +2077,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::GET_INVENTORY_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -2159,7 +2148,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::GET_ORDER_BY_ID_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
@@ -2261,7 +2249,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.set_status(StatusCode::try_from(200).unwrap());
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::PLACE_ORDER_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
@@ -2665,7 +2652,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ContentType(mimetypes::responses::GET_USER_BY_NAME_SUCCESSFUL_OPERATION.clone()));
 
 
-
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 
                                                     response.set_body(body);
@@ -2767,7 +2753,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                                     response.headers_mut().set(ResponseXExpiresAfter(x_expires_after));
 
                                                     response.headers_mut().set(ContentType(mimetypes::responses::LOGIN_USER_SUCCESSFUL_OPERATION.clone()));
-
 
 
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");

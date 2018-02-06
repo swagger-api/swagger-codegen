@@ -18,7 +18,7 @@ use futures::{Future, Stream};
 use futures::{future, stream};
 use self::tokio_core::reactor::Handle;
 use std::borrow::Cow;
-use std::io::{Read, Error};
+use std::io::{Read, Error, ErrorKind};
 use std::error;
 use std::fmt;
 use std::path::Path;
@@ -112,7 +112,7 @@ impl Client {
         let https_hyper_client = move |handle: &Handle| -> Box<hyper::client::Service<Request=hyper::Request<hyper::Body>, Response=hyper::Response, Error=hyper::Error, Future=hyper::client::FutureResponse>> {
             Box::new(hyper::client::Client::new(handle))
         };
-     
+
         Ok(Client {
             hyper_client: Arc::new(https_hyper_client),
             handle: Arc::new(handle),

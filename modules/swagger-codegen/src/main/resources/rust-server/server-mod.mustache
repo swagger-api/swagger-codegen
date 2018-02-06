@@ -294,14 +294,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                         },
 {{/isFile}}
 {{#required}}
-                                    None => return Box::new(future::ok(Response::with((status::BadRequest, format!("Missing required form parameter {{paramName}}"))))),
+                                    None => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Missing required form parameter {{paramName}}")))),
 {{/required}}{{^required}}
                                     None => None,
 {{/required}}
                                 };
-{{#isFile}}
-                                let param_{{paramName}} = Box::new(future::ok(param_{{paramName}}));
-{{/isFile}}
+{{^required}}{{#isFile}}                                let param_{{paramName}} = Box::new(future::ok(param_{{paramName}}));{{/isFile}}{{/required}}
 {{/formParams}}
 {{/hasFile}}{{^hasFile}}
                 Box::new(({
@@ -346,7 +344,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 {{/-last}}
 {{/headers}}{{/dataType}}
                                                 => {
-                                                    response.set_status(StatusCode::try_from({{code}}).unwrap());
+{{^isFile}}                                                    response.set_status(StatusCode::try_from({{code}}).unwrap());
 {{#headers}}
                                                     header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }
                                                     response.headers_mut().set(Response{{nameInCamelCase}}({{name}}));
@@ -354,7 +352,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 {{#produces}}{{#-first}}{{#dataType}}
                                                     response.headers_mut().set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{x-uppercaseResponseId}}{{/vendorExtensions}}.clone()));
 {{/dataType}}{{/-first}}{{/produces}}
-{{^isFile}}{{#dataType}}
+{{#dataType}}
 {{#vendorExtensions}}{{#producesXml}}{{^has_namespace}}
                                                     let body = serde_xml_rs::to_string(&body).expect("impossible to fail to serialize");
 {{/has_namespace}}{{#has_namespace}}
@@ -367,7 +365,32 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 {{/producesJson}}{{/vendorExtensions}}
                                                     response.set_body(body);
 {{/dataType}}{{/isFile}}{{#isFile}}
-                                                    response.set_body(body);
+                                                    let body = body.fold(Vec::new(), | mut body, chunk| {
+                                                        body.extend(chunk.iter());
+                                                        future::ok::<Vec<u8>, io::Error>(body)
+                                                    })
+                                                    // Block whilst waiting for the stream to complete
+                                                    .wait();
+
+                                                    match body {
+                                                        // If no error occurred then create successful hyper response
+                                                        Ok(vec) => {
+                                                            response.set_status(StatusCode::try_from({{code}}).unwrap());
+
+{{#headers}}
+                                                            header! { (Response{{nameInCamelCase}}, "{{baseName}}") => [{{{datatype}}}] }
+                                                    response.headers_mut().set(Response{{nameInCamelCase}}({{name}}));
+{{/headers}}{{#produces}}{{#-first}}{{#dataType}}
+                                                            response.headers_mut().set(ContentType(mimetypes::responses::{{#vendorExtensions}}{{uppercase_operation_id}}_{{uppercase_message}}{{/vendorExtensions}}.clone()));
+{{/dataType}}{{/-first}}{{/produces}}
+                                                            response.set_body(vec);
+                                                        },
+                                                        // It's possible that errors were received in the stream, if this is the case then we can't return a success response to the client and instead must return an internal error.
+                                                        Err(e) => {
+                                                            response.set_status(StatusCode::InternalServerError);
+                                                            response.set_body("An internal error occurred");
+                                                        }
+                                                    }
 {{/isFile}}
                                                 },
 {{/responses}}
