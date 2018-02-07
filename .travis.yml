@@ -7,7 +7,6 @@ cache:
   - $HOME/.ivy2
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
-  - $HOME/.stack
   - $HOME/samples/client/petstore/php/SwaggerClient-php/vendor
   - $HOME/samples/client/petstore/ruby/venodr/bundle
   - $HOME/samples/client/petstore/python/.venv/
@@ -59,10 +58,6 @@ before_install:
   - brew --version
   # show xcpretty version
   - xcpretty -v
-  # show go version
-  - go version
-  # show stack version
-  - stack --version
 
 script:
   # run integration tests defined in maven pom.xml
