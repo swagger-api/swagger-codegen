@@ -6,7 +6,7 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
+let BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
 /**
  *
@@ -18,6 +18,10 @@ export const COLLECTION_FORMATS = {
     tsv: "\t",
     pipes: "|",
 };
+
+export function setBasePath(basePath: string): void {
+    BASE_PATH = basePath;
+}
 
 /**
  *
