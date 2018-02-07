@@ -149,7 +149,21 @@ class ObjectSerializer {
 
 class HttpError extends Error {
   constructor(public readonly response: RequestResponse, public readonly body: any) {
-    super(`HttpError - Status: ${response.statusCode}; Content: ${JSON.stringify(body)}`);
+    super(`HttpError - Status: ${
+      response.statusCode
+    }; Tracking ID: ${
+      response.headers['apaleo-tracking-id']
+    }; URL: ${
+      response.request.uri.href
+    }; Response: ${
+      typeof body === 'string'
+      ? body
+      : JSON.stringify(body)
+    }; Request: ${
+      typeof response.request.body === 'string'
+      ? response.request.body
+      : JSON.stringify(response.request.body)
+    }`);
   }
 }
 
