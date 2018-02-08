@@ -179,6 +179,7 @@ public class ExampleGenerator {
             if (innerType != null) {
                 int arrayLength = null == ((ArrayProperty) property).getMaxItems() ? 2 : ((ArrayProperty) property).getMaxItems();
                 if(arrayLength>10000) {
+                    logger.warn("The max item is too large to new Object array and set it to 10000, the previous value is {}", arrayLength);
                     arrayLength=10000;
                 }
                 Object[] objectProperties = new Object[arrayLength];
