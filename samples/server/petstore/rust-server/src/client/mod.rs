@@ -42,6 +42,7 @@ use swagger::{Context, ApiError, XSpanId};
 
 use {Api,
      TestSpecialTagsResponse,
+     TestBodyWithQueryParamsResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -300,6 +301,76 @@ impl Api for Client {
                                              ))
                         .map(move |body|
                             TestSpecialTagsResponse::SuccessfulOperation(body)
+                        )
+                    ) as Box<Future<Item=_, Error=_>>
+                },
+                code => {
+                    let headers = response.headers().clone();
+                    Box::new(response.body()
+                            .take(100)
+                            .concat2()
+                            .then(move |body|
+                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
+                                    code,
+                                    headers,
+                                    match body {
+                                        Ok(ref body) => match str::from_utf8(body) {
+                                            Ok(body) => Cow::from(body),
+                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
+                                        },
+                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
+                                    })))
+                            )
+                    ) as Box<Future<Item=_, Error=_>>
+                }
+            }
+        }))
+
+    }
+
+    fn test_body_with_query_params(&self, param_body: models::User, param_query: String, context: &Context) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
+
+        // Query parameters
+        let query_query = format!("query={query}&", query=param_query.to_string());
+
+
+        let uri = format!(
+            "{}/v2/fake/body-with-query-params?{query}",
+            self.base_path,
+            query=utf8_percent_encode(&query_query, QUERY_ENCODE_SET)
+        );
+
+        let uri = match Uri::from_str(&uri) {
+            Ok(uri) => uri,
+            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
+        };
+
+        let mut request = hyper::Request::new(hyper::Method::Put, uri);
+
+
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
+
+
+        request.set_body(body.into_bytes());
+
+
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_BODY_WITH_QUERY_PARAMS.clone()));
+        context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
+
+
+
+
+        let hyper_client = (self.hyper_client)(&*self.handle);
+        Box::new(hyper_client.call(request)
+                             .map_err(|e| ApiError(format!("No response received: {}", e)))
+                             .and_then(|mut response| {
+            match response.status().as_u16() {
+                200 => {
+                    let body = response.body();
+                    Box::new(
+
+                        future::ok(
+                            TestBodyWithQueryParamsResponse::Success
                         )
                     ) as Box<Future<Item=_, Error=_>>
                 },

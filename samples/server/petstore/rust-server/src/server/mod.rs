@@ -40,6 +40,7 @@ use swagger::auth::Scopes;
 
 use {Api,
      TestSpecialTagsResponse,
+     TestBodyWithQueryParamsResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -85,6 +86,7 @@ mod paths {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(&[
             r"^/v2/another-fake/dummy$",
             r"^/v2/fake$",
+            r"^/v2/fake/body-with-query-params$",
             r"^/v2/fake/inline-additionalProperties$",
             r"^/v2/fake/jsonFormData$",
             r"^/v2/fake/outer/boolean$",
@@ -110,36 +112,37 @@ mod paths {
     }
     pub static ID_ANOTHER_FAKE_DUMMY: usize = 0;
     pub static ID_FAKE: usize = 1;
-    pub static ID_FAKE_INLINE_ADDITIONALPROPERTIES: usize = 2;
-    pub static ID_FAKE_JSONFORMDATA: usize = 3;
-    pub static ID_FAKE_OUTER_BOOLEAN: usize = 4;
-    pub static ID_FAKE_OUTER_COMPOSITE: usize = 5;
-    pub static ID_FAKE_OUTER_NUMBER: usize = 6;
-    pub static ID_FAKE_OUTER_STRING: usize = 7;
-    pub static ID_FAKE_CLASSNAME_TEST: usize = 8;
-    pub static ID_PET: usize = 9;
-    pub static ID_PET_FINDBYSTATUS: usize = 10;
-    pub static ID_PET_FINDBYTAGS: usize = 11;
-    pub static ID_PET_PETID: usize = 12;
+    pub static ID_FAKE_BODY_WITH_QUERY_PARAMS: usize = 2;
+    pub static ID_FAKE_INLINE_ADDITIONALPROPERTIES: usize = 3;
+    pub static ID_FAKE_JSONFORMDATA: usize = 4;
+    pub static ID_FAKE_OUTER_BOOLEAN: usize = 5;
+    pub static ID_FAKE_OUTER_COMPOSITE: usize = 6;
+    pub static ID_FAKE_OUTER_NUMBER: usize = 7;
+    pub static ID_FAKE_OUTER_STRING: usize = 8;
+    pub static ID_FAKE_CLASSNAME_TEST: usize = 9;
+    pub static ID_PET: usize = 10;
+    pub static ID_PET_FINDBYSTATUS: usize = 11;
+    pub static ID_PET_FINDBYTAGS: usize = 12;
+    pub static ID_PET_PETID: usize = 13;
     lazy_static! {
         pub static ref REGEX_PET_PETID: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)$").unwrap();
     }
-    pub static ID_PET_PETID_UPLOADIMAGE: usize = 13;
+    pub static ID_PET_PETID_UPLOADIMAGE: usize = 14;
     lazy_static! {
         pub static ref REGEX_PET_PETID_UPLOADIMAGE: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)/uploadImage$").unwrap();
     }
-    pub static ID_STORE_INVENTORY: usize = 14;
-    pub static ID_STORE_ORDER: usize = 15;
-    pub static ID_STORE_ORDER_ORDER_ID: usize = 16;
+    pub static ID_STORE_INVENTORY: usize = 15;
+    pub static ID_STORE_ORDER: usize = 16;
+    pub static ID_STORE_ORDER_ORDER_ID: usize = 17;
     lazy_static! {
         pub static ref REGEX_STORE_ORDER_ORDER_ID: regex::Regex = regex::Regex::new(r"^/v2/store/order/(?P<order_id>[^/?#]*)$").unwrap();
     }
-    pub static ID_USER: usize = 17;
-    pub static ID_USER_CREATEWITHARRAY: usize = 18;
-    pub static ID_USER_CREATEWITHLIST: usize = 19;
-    pub static ID_USER_LOGIN: usize = 20;
-    pub static ID_USER_LOGOUT: usize = 21;
-    pub static ID_USER_USERNAME: usize = 22;
+    pub static ID_USER: usize = 18;
+    pub static ID_USER_CREATEWITHARRAY: usize = 19;
+    pub static ID_USER_CREATEWITHLIST: usize = 20;
+    pub static ID_USER_LOGIN: usize = 21;
+    pub static ID_USER_LOGOUT: usize = 22;
+    pub static ID_USER_USERNAME: usize = 23;
     lazy_static! {
         pub static ref REGEX_USER_USERNAME: regex::Regex = regex::Regex::new(r"^/v2/user/(?P<username>[^/?#]*)$").unwrap();
     }
@@ -184,13 +187,14 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
     fn call(&self, (req, mut context): Self::Request) -> Self::Future {
         let api_impl = self.api_impl.clone();
-        let path = paths::GLOBAL_REGEX_SET.matches(req.path());
-        match req.method() {
+        let (method, uri, _, headers, body) = req.deconstruct();
+        let path = paths::GLOBAL_REGEX_SET.matches(uri.path());
+        match &method {
 
             // TestSpecialTags - PATCH /another-fake/dummy
             &hyper::Method::Patch if path.matched(paths::ID_ANOTHER_FAKE_DUMMY) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -201,7 +205,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -277,10 +281,105 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             },
 
 
+            // TestBodyWithQueryParams - PUT /fake/body-with-query-params
+            &hyper::Method::Put if path.matched(paths::ID_FAKE_BODY_WITH_QUERY_PARAMS) => {
+                if context.x_span_id.is_none() {
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                }
+
+
+
+
+
+                // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let param_query = query_params.iter().filter(|e| e.0 == "query").map(|e| e.1.to_owned())
+
+                    .nth(0);
+                let param_query = match param_query {
+                    Some(param_query) => match param_query.parse::<String>() {
+                        Ok(param_query) => param_query,
+                        Err(e) => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't parse query parameter query - doesn't match schema: {}", e)))),
+                    },
+                    None => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body("Missing required query parameter query"))),
+                };
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+                Box::new(body.concat2()
+                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
+                        match result {
+                            Ok(body) => {
+
+                                let mut unused_elements = Vec::new();
+                                let param_body: Option<models::User> = if !body.is_empty() {
+
+                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
+
+                                    match serde_ignored::deserialize(deserializer, |path| {
+                                            warn!("Ignoring unknown field in body: {}", path);
+                                            unused_elements.push(path.to_string());
+                                    }) {
+                                        Ok(param_body) => param_body,
+                                        Err(e) => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't parse body parameter body - doesn't match schema: {}", e)))),
+                                    }
+
+                                } else {
+                                    None
+                                };
+                                let param_body = match param_body {
+                                    Some(param_body) => param_body,
+                                    None => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body("Missing required body parameter body"))),
+                                };
+
+
+                                Box::new(api_impl.test_body_with_query_params(param_body, param_query, &context)
+                                    .then(move |result| {
+                                        let mut response = Response::new();
+                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+
+                                        if !unused_elements.is_empty() {
+                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                                        }
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                TestBodyWithQueryParamsResponse::Success
+
+
+                                                => {
+                                                    response.set_status(StatusCode::try_from(200).unwrap());
+
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                response.set_status(StatusCode::InternalServerError);
+                                                response.set_body("An internal error occurred");
+                                            },
+                                        }
+
+                                        future::ok(response)
+                                    }
+                                ))
+
+
+                            },
+                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
+                        }
+                    })
+                ) as Box<Future<Item=Response, Error=Error>>
+
+            },
+
+
             // FakeOuterBooleanSerialize - POST /fake/outer/boolean
             &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_BOOLEAN) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -291,7 +390,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -365,7 +464,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // FakeOuterCompositeSerialize - POST /fake/outer/composite
             &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_COMPOSITE) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -376,7 +475,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -450,7 +549,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // FakeOuterNumberSerialize - POST /fake/outer/number
             &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_NUMBER) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -461,7 +560,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -535,7 +634,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // FakeOuterStringSerialize - POST /fake/outer/string
             &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_STRING) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -546,7 +645,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -620,7 +719,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestClientModel - PATCH /fake
             &hyper::Method::Patch if path.matched(paths::ID_FAKE) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -631,7 +730,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -710,7 +809,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestEndpointParameters - POST /fake
             &hyper::Method::Post if path.matched(paths::ID_FAKE) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -791,21 +890,21 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestEnumParameters - GET /fake
             &hyper::Method::Get if path.matched(paths::ID_FAKE) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
 
                 // Header parameters
                 header! { (RequestEnumHeaderStringArray, "enum_header_string_array") => (String)* }
-                let param_enum_header_string_array = req.headers().get::<RequestEnumHeaderStringArray>().map(|header| header.0.clone());
+                let param_enum_header_string_array = headers.get::<RequestEnumHeaderStringArray>().map(|header| header.0.clone());
                 header! { (RequestEnumHeaderString, "enum_header_string") => [String] }
-                let param_enum_header_string = req.headers().get::<RequestEnumHeaderString>().map(|header| header.0.clone());
+                let param_enum_header_string = headers.get::<RequestEnumHeaderString>().map(|header| header.0.clone());
 
 
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
-                let query_params = form_urlencoded::parse(req.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
                 let param_enum_query_string_array = query_params.iter().filter(|e| e.0 == "enum_query_string_array").map(|e| e.1.to_owned())
                     .filter_map(|param_enum_query_string_array| param_enum_query_string_array.parse::<String>().ok())
                     .collect::<Vec<_>>();
@@ -879,7 +978,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestInlineAdditionalProperties - POST /fake/inline-additionalProperties
             &hyper::Method::Post if path.matched(paths::ID_FAKE_INLINE_ADDITIONALPROPERTIES) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -890,7 +989,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -961,7 +1060,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestJsonFormData - GET /fake/jsonFormData
             &hyper::Method::Get if path.matched(paths::ID_FAKE_JSONFORMDATA) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -1014,7 +1113,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // TestClassname - PATCH /fake_classname_test
             &hyper::Method::Patch if path.matched(paths::ID_FAKE_CLASSNAME_TEST) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1034,7 +1133,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -1113,7 +1212,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // AddPet - POST /pet
             &hyper::Method::Post if path.matched(paths::ID_PET) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1151,7 +1250,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -1221,7 +1320,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // DeletePet - DELETE /pet/{petId}
             &hyper::Method::Delete if path.matched(paths::ID_PET_PETID) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1253,7 +1352,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_PET_PETID
                     .captures(&path)
@@ -1271,7 +1370,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
                 // Header parameters
                 header! { (RequestApiKey, "api_key") => [String] }
-                let param_api_key = req.headers().get::<RequestApiKey>().map(|header| header.0.clone());
+                let param_api_key = headers.get::<RequestApiKey>().map(|header| header.0.clone());
 
 
 
@@ -1317,7 +1416,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // FindPetsByStatus - GET /pet/findByStatus
             &hyper::Method::Get if path.matched(paths::ID_PET_FINDBYSTATUS) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1352,7 +1451,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
-                let query_params = form_urlencoded::parse(req.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
                 let param_status = query_params.iter().filter(|e| e.0 == "status").map(|e| e.1.to_owned())
                     .filter_map(|param_status| param_status.parse::<String>().ok())
                     .collect::<Vec<_>>();
@@ -1414,7 +1513,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // FindPetsByTags - GET /pet/findByTags
             &hyper::Method::Get if path.matched(paths::ID_PET_FINDBYTAGS) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1449,7 +1548,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
-                let query_params = form_urlencoded::parse(req.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
                 let param_tags = query_params.iter().filter(|e| e.0 == "tags").map(|e| e.1.to_owned())
                     .filter_map(|param_tags| param_tags.parse::<String>().ok())
                     .collect::<Vec<_>>();
@@ -1511,7 +1610,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // GetPetById - GET /pet/{petId}
             &hyper::Method::Get if path.matched(paths::ID_PET_PETID) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1525,7 +1624,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_PET_PETID
                     .captures(&path)
@@ -1607,7 +1706,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // UpdatePet - PUT /pet
             &hyper::Method::Put if path.matched(paths::ID_PET) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1645,7 +1744,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -1729,7 +1828,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // UpdatePetWithForm - POST /pet/{petId}
             &hyper::Method::Post if path.matched(paths::ID_PET_PETID) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1761,7 +1860,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_PET_PETID
                     .captures(&path)
@@ -1825,7 +1924,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // UploadFile - POST /pet/{petId}/uploadImage
             &hyper::Method::Post if path.matched(paths::ID_PET_PETID_UPLOADIMAGE) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -1857,7 +1956,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_PET_PETID_UPLOADIMAGE
                     .captures(&path)
@@ -1877,12 +1976,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                let boundary = match multipart_boundary(&req) {
+                let boundary = match multipart_boundary(&headers) {
                     Some(boundary) => boundary.to_string(),
                     None => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body("Couldn't find valid multipart body"))),
                 };
 
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -1967,12 +2066,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // DeleteOrder - DELETE /store/order/{order_id}
             &hyper::Method::Delete if path.matched(paths::ID_STORE_ORDER_ORDER_ID) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_STORE_ORDER_ORDER_ID
                     .captures(&path)
@@ -2039,7 +2138,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // GetInventory - GET /store/inventory
             &hyper::Method::Get if path.matched(paths::ID_STORE_INVENTORY) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -2105,12 +2204,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // GetOrderById - GET /store/order/{order_id}
             &hyper::Method::Get if path.matched(paths::ID_STORE_ORDER_ORDER_ID) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_STORE_ORDER_ORDER_ID
                     .captures(&path)
@@ -2192,7 +2291,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // PlaceOrder - POST /store/order
             &hyper::Method::Post if path.matched(paths::ID_STORE_ORDER) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2203,7 +2302,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -2289,7 +2388,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // CreateUser - POST /user
             &hyper::Method::Post if path.matched(paths::ID_USER) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2300,7 +2399,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -2371,7 +2470,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // CreateUsersWithArrayInput - POST /user/createWithArray
             &hyper::Method::Post if path.matched(paths::ID_USER_CREATEWITHARRAY) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2382,7 +2481,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -2453,7 +2552,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // CreateUsersWithListInput - POST /user/createWithList
             &hyper::Method::Post if path.matched(paths::ID_USER_CREATEWITHLIST) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2464,7 +2563,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -2535,12 +2634,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // DeleteUser - DELETE /user/{username}
             &hyper::Method::Delete if path.matched(paths::ID_USER_USERNAME) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_USER_USERNAME
                     .captures(&path)
@@ -2607,12 +2706,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // GetUserByName - GET /user/{username}
             &hyper::Method::Get if path.matched(paths::ID_USER_USERNAME) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_USER_USERNAME
                     .captures(&path)
@@ -2694,7 +2793,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // LoginUser - GET /user/login
             &hyper::Method::Get if path.matched(paths::ID_USER_LOGIN) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2702,7 +2801,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
-                let query_params = form_urlencoded::parse(req.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
                 let param_username = query_params.iter().filter(|e| e.0 == "username").map(|e| e.1.to_owned())
 
                     .nth(0);
@@ -2790,7 +2889,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // LogoutUser - GET /user/logout
             &hyper::Method::Get if path.matched(paths::ID_USER_LOGOUT) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
@@ -2839,12 +2938,12 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             // UpdateUser - PUT /user/{username}
             &hyper::Method::Put if path.matched(paths::ID_USER_USERNAME) => {
                 if context.x_span_id.is_none() {
-                    context.x_span_id = Some(req.headers().get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
 
 
                 // Path parameters
-                let path = req.path().to_string();
+                let path = uri.path().to_string();
                 let path_params =
                     paths::REGEX_USER_USERNAME
                     .captures(&path)
@@ -2866,7 +2965,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                 // Body parameters (note that non-required body parameters will ignore garbage
                 // values, rather than causing a 400 response). Produce warning header and logs for
                 // any unused fields.
-                Box::new(req.body().concat2()
+                Box::new(body.concat2()
                     .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
                         match result {
                             Ok(body) => {
@@ -2946,9 +3045,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
     }
 }
 
-/// Utility function to get the multipart boundary marker (if any) from a request.
-fn multipart_boundary<'a>(req: &'a Request) -> Option<&'a str> {
-    req.headers().get::<ContentType>().and_then(|content_type| {
+/// Utility function to get the multipart boundary marker (if any) from the Headers.
+fn multipart_boundary<'a>(headers: &'a Headers) -> Option<&'a str> {
+    headers.get::<ContentType>().and_then(|content_type| {
         let ContentType(ref mime) = *content_type;
         if mime.type_() == mime::MULTIPART && mime.subtype() == mime::FORM_DATA {
             mime.get_param(mime::BOUNDARY).map(|x| x.as_str())

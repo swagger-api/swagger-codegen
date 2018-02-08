@@ -1479,6 +1479,43 @@ paths:
       hasPathParams: false
       HttpMethod: "Post"
       noClientExample: true
+  /fake/body-with-query-params:
+    put:
+      operationId: "testBodyWithQueryParams"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+        uppercase_data_type: "USER"
+        refName: "User"
+        formatString: "{:?}"
+        example: "???"
+        model_key: "OuterBoolean"
+        uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
+        consumesJson: true
+      - name: "query"
+        in: "query"
+        required: true
+        type: "string"
+        formatString: "\\\"{}\\\""
+        example: "\"query_example\".to_string()"
+      responses:
+        200:
+          description: "Success"
+          x-responseId: "Success"
+          x-uppercaseResponseId: "SUCCESS"
+          uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
+      operation_id: "test_body_with_query_params"
+      uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
+      path: "/fake/body-with-query-params"
+      PATH_ID: "FAKE_BODY_WITH_QUERY_PARAMS"
+      hasPathParams: false
+      HttpMethod: "Put"
+      noClientExample: true
   /another-fake/dummy:
     patch:
       tags:

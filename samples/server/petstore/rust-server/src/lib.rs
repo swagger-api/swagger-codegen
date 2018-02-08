@@ -42,6 +42,12 @@ pub enum TestSpecialTagsResponse {
 }
 
 #[derive(Debug, PartialEq)]
+pub enum TestBodyWithQueryParamsResponse {
+    /// Success
+    Success ,
+}
+
+#[derive(Debug, PartialEq)]
 pub enum FakeOuterBooleanSerializeResponse {
     /// Output boolean
     OutputBoolean ( models::OuterBoolean ) ,
@@ -263,6 +269,9 @@ pub trait Api {
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>>;
 
 
+    fn test_body_with_query_params(&self, body: models::User, query: String, context: &Context) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>>;
+
+
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError>>;
 
 
@@ -359,6 +368,9 @@ pub trait ApiNoContext {
 
     /// To test special tags
     fn test_special_tags(&self, body: models::Client) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>>;
+
+
+    fn test_body_with_query_params(&self, body: models::User, query: String) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>>;
 
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError>>;
@@ -469,6 +481,11 @@ impl<'a, T: Api> ApiNoContext for ContextWrapper<'a, T> {
     /// To test special tags
     fn test_special_tags(&self, body: models::Client) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>> {
         self.api().test_special_tags(body, &self.context())
+    }
+
+
+    fn test_body_with_query_params(&self, body: models::User, query: String) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
+        self.api().test_body_with_query_params(body, query, &self.context())
     }
 
 

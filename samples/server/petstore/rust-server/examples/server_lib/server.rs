@@ -12,6 +12,7 @@ use swagger;
 
 use petstore_api::{Api, ApiError, Context,
                       TestSpecialTagsResponse,
+                      TestBodyWithQueryParamsResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
@@ -54,6 +55,13 @@ impl Api for Server {
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>> {
         let context = context.clone();
         println!("test_special_tags({:?}) - X-Span-ID: {:?}", body, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        Box::new(futures::failed("Generic failure".into()))
+    }
+
+
+    fn test_body_with_query_params(&self, body: models::User, query: String, context: &Context) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
+        let context = context.clone();
+        println!("test_body_with_query_params({:?}, \"{}\") - X-Span-ID: {:?}", body, query, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 

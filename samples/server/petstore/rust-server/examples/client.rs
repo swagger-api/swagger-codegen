@@ -17,6 +17,7 @@ use tokio_core::reactor;
 use petstore_api::{ApiNoContext, ContextWrapperExt,
                       ApiError,
                       TestSpecialTagsResponse,
+                      TestBodyWithQueryParamsResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
@@ -119,6 +120,12 @@ fn main() {
         // Disabled because there's no example.
         // Some("TestSpecialTags") => {
         //     let result = core.run(client.test_special_tags(???));
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
+        //  },
+
+        // Disabled because there's no example.
+        // Some("TestBodyWithQueryParams") => {
+        //     let result = core.run(client.test_body_with_query_params(???, "query_example".to_string()));
         //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
