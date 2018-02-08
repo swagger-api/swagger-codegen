@@ -469,32 +469,32 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         //Apply Instantiation Types
-        if (instantiationTypes != null && !configOptionsNotNullAndContainsKey("instantiation-types")) {
+        if (instantiationTypes != null && (configOptions == null || !configOptions.containsKey("instantiation-types"))) {
             applyInstantiationTypesKvpList(instantiationTypes, configurator);
         }
 
         //Apply Import Mappings
-        if (importMappings != null && !configOptionsNotNullAndContainsKey("import-mappings")) {
+        if (importMappings != null && (configOptions == null || !configOptions.containsKey("import-mappings"))) {
             applyImportMappingsKvpList(importMappings, configurator);
         }
 
         //Apply Type Mappings
-        if (typeMappings != null && !configOptionsNotNullAndContainsKey("type-mappings")) {
+        if (typeMappings != null && (configOptions == null || !configOptions.containsKey("type-mappings"))) {
             applyTypeMappingsKvpList(typeMappings, configurator);
         }
 
         //Apply Language Specific Primitives
-        if (languageSpecificPrimitives != null && !configOptionsNotNullAndContainsKey("language-specific-primitives")) {
+        if (languageSpecificPrimitives != null && (configOptions == null || !configOptions.containsKey("language-specific-primitives"))) {
             applyLanguageSpecificPrimitivesCsvList(languageSpecificPrimitives, configurator);
         }
 
         //Apply Additional Properties
-        if (additionalProperties != null && !configOptionsNotNullAndContainsKey("additional-properties")) {
+        if (additionalProperties != null && (configOptions == null || !configOptions.containsKey("additional-properties"))) {
             applyAdditionalPropertiesKvpList(additionalProperties, configurator);
         }
 
         //Apply Reserved Words Mappings
-        if (reservedWordsMappings != null && !configOptionsNotNullAndContainsKey("reserved-words-mappings")) {
+        if (reservedWordsMappings != null && (configOptions == null || !configOptions.containsKey("reserved-words-mappings"))) {
             applyReservedWordsMappingsKvpList(reservedWordsMappings, configurator);
         }
 
@@ -545,10 +545,6 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         addCompileSourceRootIfConfigured();
-    }
-
-    private boolean configOptionsNotNullAndContainsKey(String s) {
-        return configOptions != null && configOptions.containsKey(s);
     }
 
     private void addCompileSourceRootIfConfigured() {
