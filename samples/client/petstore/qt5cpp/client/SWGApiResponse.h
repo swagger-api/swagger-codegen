@@ -12,7 +12,7 @@
 
 /*
  * SWGApiResponse.h
- * 
+ *
  * Describes the result of uploading an image resource
  */
 
@@ -25,7 +25,6 @@
 #include <QString>
 
 #include "SWGObject.h"
-
 
 namespace Swagger {
 
@@ -52,10 +51,18 @@ public:
     void setMessage(QString* message);
 
 
+    virtual bool isSet() override;
+
 private:
     qint32 code;
+    bool m_code_isSet;
+
     QString* type;
+    bool m_type_isSet;
+
     QString* message;
+    bool m_message_isSet;
+
 };
 
 }

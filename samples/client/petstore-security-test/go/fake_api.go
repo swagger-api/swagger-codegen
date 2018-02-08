@@ -11,8 +11,9 @@
 package swagger
 
 import (
-	"net/url"
+	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"golang.org/x/net/context"
 )
@@ -24,18 +25,17 @@ var (
 
 type FakeApiService service
 
-
 /* FakeApiService To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
-
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "testCodeInjectEndRnNR" (string) To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
- @return */
-func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]interface{}) ( *http.Response, error) {
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "testCodeInjectEndRnNR" (string) To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+@return */
+func (a *FakeApiService) TestCodeInjectEndRnNR(ctx context.Context, localVarOptionals map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
@@ -44,13 +44,12 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	if err := typeCheckParameter(localVarOptionals["testCodeInjectEndRnNR"], "string", "testCodeInjectEndRnNR"); err != nil {
 		return nil, err
 	}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "*_/ '  =end --       ",  }
+	localVarHttpContentTypes := []string{"application/json", "*_/ '  =end --       "}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -59,10 +58,7 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-		"*_/ '  =end --       ",
-		}
+	localVarHttpHeaderAccepts := []string{"application/json", "*_/ '  =end --       "}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -72,7 +68,7 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 	if localVarTempParam, localVarOk := localVarOptionals["testCodeInjectEndRnNR"].(string); localVarOk {
 		localVarFormParams.Add("test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r", parameterToString(localVarTempParam, ""))
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -83,9 +79,8 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		return localVarHttpResponse, reportError(localVarHttpResponse.Status)
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
-
 	return localVarHttpResponse, err
 }
-

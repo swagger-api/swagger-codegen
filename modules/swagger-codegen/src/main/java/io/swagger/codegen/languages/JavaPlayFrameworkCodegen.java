@@ -168,7 +168,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         if(this.useSwaggerUI) {
             //App/Controllers
             supportingFiles.add(new SupportingFile("swagger.mustache", "public", "swagger.json"));
-            supportingFiles.add(new SupportingFile("apiDocController.mustache", "app/controllers", "ApiDocController.java"));
+            supportingFiles.add(new SupportingFile("apiDocController.mustache", String.format("app/%s", apiPackage.replace(".", File.separator)), "ApiDocController.java"));
         }
 
         //We remove the default api.mustache that is used
@@ -272,6 +272,12 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                 }
 
                 if (operation.returnType != null) {
+                    if (operation.returnType.equals("Boolean")) {
+                        operation.vendorExtensions.put("missingReturnInfoIfNeeded", "true");
+                    }
+                    if (operation.returnType.equals("BigDecimal")) {
+                        operation.vendorExtensions.put("missingReturnInfoIfNeeded", "1.0");
+                    }
                     if (operation.returnType.startsWith("List")) {
                         String rt = operation.returnType;
                         int end = rt.lastIndexOf(">");

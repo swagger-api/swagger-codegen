@@ -1,3 +1,4 @@
+/// <reference path="./custom.d.ts" />
 // tslint:disable
 /**
  * Swagger Petstore *_/ ' \" =end -- \\r\\n \\n \\r
@@ -13,7 +14,7 @@
 
 
 import * as url from "url";
-import * as isomorphicFetch from "isomorphic-fetch";
+import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
 const BASE_PATH = "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r".replace(/\/+$/, "");
@@ -35,7 +36,7 @@ export const COLLECTION_FORMATS = {
  * @interface FetchAPI
  */
 export interface FetchAPI {
-    (url: string, init?: any): Promise<any>;
+    (url: string, init?: any): Promise<Response>;
 }
 
 /**
@@ -56,7 +57,7 @@ export interface FetchArgs {
 export class BaseAPI {
     protected configuration: Configuration;
 
-    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = isomorphicFetch) {
+    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
@@ -88,7 +89,7 @@ export interface ModelReturn {
      * @type {number}
      * @memberof ModelReturn
      */
-    return?: number;
+    _return?: number;
 }
 
 
@@ -101,11 +102,11 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
-         * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+         * @param {string} [testCodeInjectEndRnNR] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options: any = {}): FetchArgs {
+        testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, options: any = {}): FetchArgs {
             const localVarPath = `/fake`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -113,8 +114,8 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new url.URLSearchParams();
 
-            if (test code inject * &#39; &quot; &#x3D;end  rn n r !== undefined) {
-                localVarFormParams.set('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', test code inject * &#39; &quot; &#x3D;end  rn n r as any);
+            if (testCodeInjectEndRnNR !== undefined) {
+                localVarFormParams.set('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', testCodeInjectEndRnNR as any);
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -142,13 +143,13 @@ export const FakeApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
-         * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+         * @param {string} [testCodeInjectEndRnNR] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = FakeApiFetchParamCreator(configuration).testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options);
-            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+        testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = FakeApiFetchParamCreator(configuration).testCodeInjectEndRnNR(testCodeInjectEndRnNR, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -170,12 +171,12 @@ export const FakeApiFactory = function (configuration?: Configuration, fetch?: F
         /**
          * 
          * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
-         * @param {string} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+         * @param {string} [testCodeInjectEndRnNR] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any) {
-            return FakeApiFp(configuration).testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options)(fetch, basePath);
+        testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, options?: any) {
+            return FakeApiFp(configuration).testCodeInjectEndRnNR(testCodeInjectEndRnNR, options)(fetch, basePath);
         },
     };
 };
@@ -190,13 +191,13 @@ export class FakeApi extends BaseAPI {
     /**
      * 
      * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
-     * @param {} [test code inject * &#39; &quot; &#x3D;end  rn n r] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+     * @param {} [testCodeInjectEndRnNR] To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FakeApi
      */
-    public testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r?: string, options?: any) {
-        return FakeApiFp(this.configuration).testCodeInjectEndRnNR(test code inject * &#39; &quot; &#x3D;end  rn n r, options)(this.fetch, this.basePath);
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, options?: any) {
+        return FakeApiFp(this.configuration).testCodeInjectEndRnNR(testCodeInjectEndRnNR, options)(this.fetch, this.basePath);
     }
 
 }

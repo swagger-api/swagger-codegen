@@ -52,6 +52,7 @@ public enum JustSymbolEnum {
   @ApiModelProperty(value = "")
   private JustSymbolEnum justSymbol = null;
 
+
 @XmlType(name="ArrayEnumEnum")
 @XmlEnum(String.class)
 public enum ArrayEnumEnum {
@@ -85,15 +86,17 @@ public enum ArrayEnumEnum {
 }
 
   @ApiModelProperty(value = "")
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
-
+  private List<ArrayEnumEnum> arrayEnum = null;
  /**
    * Get justSymbol
    * @return justSymbol
   **/
   @JsonProperty("just_symbol")
-  public JustSymbolEnum getJustSymbol() {
-    return justSymbol;
+  public String getJustSymbol() {
+    if (justSymbol == null) {
+      return null;
+    }
+    return justSymbol.value();
   }
 
   public void setJustSymbol(JustSymbolEnum justSymbol) {

@@ -36,7 +36,7 @@ Class | Method | HTTP request | Description
 
 Example
 ```
-	auth := context.WithValue(context.TODO(), sw.ContextAPIKey, sw.APIKey{
+	auth := context.WithValue(context.Background(), sw.ContextAPIKey, sw.APIKey{
 		Key: "APIKEY",
 		Prefix: "Bearer", // Omit if not necessary.
 	})
@@ -52,11 +52,11 @@ Example
 
 Example
 ```
-	auth := context.WithValue(context.TODO(), sw.ContextAccessToken, "ACCESSTOKENSTRING")
+	auth := context.WithValue(context.Background(), sw.ContextAccessToken, "ACCESSTOKENSTRING")
     r, err := client.Service.Operation(auth, args)
 ```
 
-Or via OAuth2 module to automaticly refresh tokens and perform user authentication.
+Or via OAuth2 module to automatically refresh tokens and perform user authentication.
 ```
 	import 	"golang.org/x/oauth2"
 

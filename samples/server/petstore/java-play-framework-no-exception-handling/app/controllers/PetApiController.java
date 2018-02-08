@@ -19,6 +19,7 @@ import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.validation.constraints.*;
+import play.Configuration;
 
 import swagger.SwaggerUtils.ApiAction;
 
@@ -27,11 +28,13 @@ public class PetApiController extends Controller {
 
     private final PetApiControllerImpInterface imp;
     private final ObjectMapper mapper;
+    private final Configuration configuration;
 
     @Inject
-    private PetApiController(PetApiControllerImpInterface imp) {
+    private PetApiController(Configuration configuration, PetApiControllerImpInterface imp) {
         this.imp = imp;
         mapper = new ObjectMapper();
+        this.configuration = configuration;
     }
 
 
@@ -41,7 +44,9 @@ public class PetApiController extends Controller {
         Pet body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                SwaggerUtils.validate(body);
+            }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
@@ -71,12 +76,16 @@ public class PetApiController extends Controller {
         List<String> statusList = SwaggerUtils.parametersToList("csv", statusArray);
         List<String> status = new ArrayList<String>();
         for (String curParam : statusList) {
-            //noinspection UseBulkOperation
-            status.add(curParam);
+            if (!curParam.isEmpty()) {
+                //noinspection UseBulkOperation
+                status.add(curParam);
+            }
         }
         List<Pet> obj = imp.findPetsByStatus(status);
-        for (Pet curItem : obj) {
-            curItem.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            for (Pet curItem : obj) {
+                SwaggerUtils.validate(curItem);
+            }
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -91,12 +100,16 @@ public class PetApiController extends Controller {
         List<String> tagsList = SwaggerUtils.parametersToList("csv", tagsArray);
         List<String> tags = new ArrayList<String>();
         for (String curParam : tagsList) {
-            //noinspection UseBulkOperation
-            tags.add(curParam);
+            if (!curParam.isEmpty()) {
+                //noinspection UseBulkOperation
+                tags.add(curParam);
+            }
         }
         List<Pet> obj = imp.findPetsByTags(tags);
-        for (Pet curItem : obj) {
-            curItem.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            for (Pet curItem : obj) {
+                SwaggerUtils.validate(curItem);
+            }
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -105,7 +118,9 @@ public class PetApiController extends Controller {
     @ApiAction
     public Result getPetById(Long petId)  {
         Pet obj = imp.getPetById(petId);
-        obj.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            SwaggerUtils.validate(obj);
+        }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }
@@ -116,7 +131,9 @@ public class PetApiController extends Controller {
         Pet body;
         if (nodebody != null) {
             body = mapper.readValue(nodebody.toString(), Pet.class);
-            body.validate();
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                SwaggerUtils.validate(body);
+            }
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
@@ -155,7 +172,9 @@ public class PetApiController extends Controller {
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
-        obj.validate();
+        if (configuration.getBoolean("useOutputBeanValidation")) {
+            SwaggerUtils.validate(obj);
+        }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
     }

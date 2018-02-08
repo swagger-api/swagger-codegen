@@ -5,12 +5,12 @@
  * {{description}}
  */
 
-#ifndef {{classname}}_H_
-#define {{classname}}_H_
+#ifndef {{modelHeaderGuardPrefix}}_{{classname}}_H_
+#define {{modelHeaderGuardPrefix}}_{{classname}}_H_
 
 {{^parent}}
 {{{defaultInclude}}}
-#include "ModelBase.h"
+#include "../ModelBase.h"
 {{/parent}}
 
 {{#imports}}{{{this}}}
@@ -72,6 +72,6 @@ protected:
 }
 {{/modelNamespaceDeclarations}}
 
-#endif /* {{classname}}_H_ */
+#endif /* {{modelHeaderGuardPrefix}}_{{classname}}_H_ */
 {{/model}}
 {{/models}}

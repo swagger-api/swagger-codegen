@@ -16,11 +16,11 @@
  * Describes the result of uploading an image resource
  */
 
-#ifndef ApiResponse_H_
-#define ApiResponse_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
+#define IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
 
 
-#include "ModelBase.h"
+#include "../ModelBase.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -89,4 +89,4 @@ protected:
 }
 }
 
-#endif /* ApiResponse_H_ */
+#endif /* IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_ */

@@ -57,7 +57,7 @@ module Petstore
       end
 
       if attributes.has_key?(:'map')
-        if (value = attributes[:'map']).is_a?(Array)
+        if (value = attributes[:'map']).is_a?(Hash)
           self.map = value
         end
       end
@@ -65,7 +65,7 @@ module Petstore
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
-    # @return Array for valid properies with the reasons
+    # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
       return invalid_properties

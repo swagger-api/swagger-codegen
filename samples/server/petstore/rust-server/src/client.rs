@@ -1,6 +1,7 @@
 #![allow(unused_extern_crates)]
 extern crate hyper_openssl;
 extern crate chrono;
+extern crate url;
 extern crate multipart;
 
 use multipart::client::lazy::Multipart;
@@ -11,6 +12,7 @@ use hyper::header::{Headers, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 use hyper::Url;
 use self::hyper_openssl::openssl;
+use self::url::percent_encoding::{utf8_percent_encode, PATH_SEGMENT_ENCODE_SET, QUERY_ENCODE_SET};
 use futures;
 use futures::{Future, Stream};
 use futures::{future, stream};
@@ -36,8 +38,6 @@ use swagger::{Context, ApiError, XSpanId};
 
 use {Api,
      TestSpecialTagsResponse,
-     GetXmlFeaturesResponse,
-     PostXmlFeaturesResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
@@ -126,7 +126,7 @@ impl Client {
             let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
 
             // Server authentication
-            ssl.builder_mut().set_ca_file(ca_certificate.clone()).unwrap();
+            ssl.set_ca_file(ca_certificate.clone()).unwrap();
 
             let ssl = hyper_openssl::OpensslClient::from(ssl.build());
             let connector = hyper::net::HttpsConnector::new(ssl);
@@ -158,12 +158,12 @@ impl Client {
             let mut ssl = openssl::ssl::SslConnectorBuilder::new(openssl::ssl::SslMethod::tls()).unwrap();
 
             // Server authentication
-            ssl.builder_mut().set_ca_file(ca_certificate.clone()).unwrap();
+            ssl.set_ca_file(ca_certificate.clone()).unwrap();
 
             // Client authentication
-            ssl.builder_mut().set_private_key_file(client_key.clone(), openssl::x509::X509_FILETYPE_PEM).unwrap();
-            ssl.builder_mut().set_certificate_chain_file(client_certificate.clone()).unwrap();
-            ssl.builder_mut().check_private_key().unwrap();
+            ssl.set_private_key_file(client_key.clone(), openssl::x509::X509_FILETYPE_PEM).unwrap();
+            ssl.set_certificate_chain_file(client_certificate.clone()).unwrap();
+            ssl.check_private_key().unwrap();
 
             let ssl = hyper_openssl::OpensslClient::from(ssl.build());
             let connector = hyper::net::HttpsConnector::new(ssl);
@@ -202,7 +202,10 @@ impl Api for Client {
     fn test_special_tags(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/another-fake/dummy?", self.base_path);
+        let url = format!(
+            "{}/v2/another-fake/dummy",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -227,108 +230,7 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::Client>(&buf)?;
 
-
-
                     Ok(TestSpecialTagsResponse::SuccessfulOperation(body))
-                },
-                code => {
-                    let mut buf = [0; 100];
-                    let debug_body = match response.read(&mut buf) {
-                        Ok(len) => match str::from_utf8(&buf[..len]) {
-                            Ok(body) => Cow::from(body),
-                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
-                        },
-                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                    };
-                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                         code,
-                                         response.headers,
-                                         debug_body)))
-                }
-            }
-        }
-
-        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        Box::new(futures::done(result))
-    }
-
-    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
-
-
-        let url = format!("{}/v2/fake/xmlFeatures?", self.base_path);
-
-
-        let hyper_client = (self.hyper_client)();
-        let request = hyper_client.request(hyper::method::Method::Get, &url);
-        let mut custom_headers = hyper::header::Headers::new();
-
-        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
-
-
-        let request = request.headers(custom_headers);
-
-        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
-        fn parse_response(mut response: hyper::client::response::Response) -> Result<GetXmlFeaturesResponse, ApiError> {
-            match response.status.to_u16() {
-                200 => {
-                    let mut buf = String::new();
-                    response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                    // ToDo: this will move to swagger-rs and become a standard From conversion trait
-                    // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
-                    let body = serde_xml_rs::from_str::<models::XmlObject>(&buf)
-                        .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
-
-                    Ok(GetXmlFeaturesResponse::Success(body))
-                },
-                code => {
-                    let mut buf = [0; 100];
-                    let debug_body = match response.read(&mut buf) {
-                        Ok(len) => match str::from_utf8(&buf[..len]) {
-                            Ok(body) => Cow::from(body),
-                            Err(_) => Cow::from(format!("<Body was not UTF8: {:?}>", &buf[..len].to_vec())),
-                        },
-                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                    };
-                    Err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                         code,
-                                         response.headers,
-                                         debug_body)))
-                }
-            }
-        }
-
-        let result = request.send().map_err(|e| ApiError(format!("No response received: {}", e))).and_then(parse_response);
-        Box::new(futures::done(result))
-    }
-
-    fn post_xml_features(&self, param_xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
-
-
-        let url = format!("{}/v2/fake/xmlFeatures?", self.base_path);
-
-
-        let body = serde_xml_rs::to_string(&param_xml_object).expect("impossible to fail to serialize");
-
-        let hyper_client = (self.hyper_client)();
-        let request = hyper_client.request(hyper::method::Method::Post, &url);
-        let mut custom_headers = hyper::header::Headers::new();
-
-        let request = request.body(&body);
-
-        custom_headers.set(ContentType(mimetypes::requests::POST_XML_FEATURES.clone()));
-        context.x_span_id.as_ref().map(|header| custom_headers.set(XSpanId(header.clone())));
-
-
-        let request = request.headers(custom_headers);
-
-        // Helper function to provide a code block to use `?` in (to be replaced by the `catch` block when it exists).
-        fn parse_response(mut response: hyper::client::response::Response) -> Result<PostXmlFeaturesResponse, ApiError> {
-            match response.status.to_u16() {
-                200 => {
-
-
-                    Ok(PostXmlFeaturesResponse::Success)
                 },
                 code => {
                     let mut buf = [0; 100];
@@ -354,7 +256,10 @@ impl Api for Client {
     fn fake_outer_boolean_serialize(&self, param_body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/outer/boolean?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/outer/boolean",
+            self.base_path
+        );
 
         let body = param_body.map(|ref body| {
 
@@ -383,8 +288,6 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::OuterBoolean>(&buf)?;
 
-
-
                     Ok(FakeOuterBooleanSerializeResponse::OutputBoolean(body))
                 },
                 code => {
@@ -411,7 +314,10 @@ impl Api for Client {
     fn fake_outer_composite_serialize(&self, param_body: Option<models::OuterComposite>, context: &Context) -> Box<Future<Item=FakeOuterCompositeSerializeResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/outer/composite?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/outer/composite",
+            self.base_path
+        );
 
         let body = param_body.map(|ref body| {
 
@@ -440,8 +346,6 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::OuterComposite>(&buf)?;
 
-
-
                     Ok(FakeOuterCompositeSerializeResponse::OutputComposite(body))
                 },
                 code => {
@@ -468,7 +372,10 @@ impl Api for Client {
     fn fake_outer_number_serialize(&self, param_body: Option<models::OuterNumber>, context: &Context) -> Box<Future<Item=FakeOuterNumberSerializeResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/outer/number?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/outer/number",
+            self.base_path
+        );
 
         let body = param_body.map(|ref body| {
 
@@ -497,8 +404,6 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::OuterNumber>(&buf)?;
 
-
-
                     Ok(FakeOuterNumberSerializeResponse::OutputNumber(body))
                 },
                 code => {
@@ -525,7 +430,10 @@ impl Api for Client {
     fn fake_outer_string_serialize(&self, param_body: Option<models::OuterString>, context: &Context) -> Box<Future<Item=FakeOuterStringSerializeResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/outer/string?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/outer/string",
+            self.base_path
+        );
 
         let body = param_body.map(|ref body| {
 
@@ -554,8 +462,6 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::OuterString>(&buf)?;
 
-
-
                     Ok(FakeOuterStringSerializeResponse::OutputString(body))
                 },
                 code => {
@@ -582,7 +488,10 @@ impl Api for Client {
     fn test_client_model(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestClientModelResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake?", self.base_path);
+        let url = format!(
+            "{}/v2/fake",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -606,8 +515,6 @@ impl Api for Client {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::Client>(&buf)?;
-
-
 
                     Ok(TestClientModelResponse::SuccessfulOperation(body))
                 },
@@ -635,7 +542,10 @@ impl Api for Client {
     fn test_endpoint_parameters(&self, param_number: f64, param_double: f64, param_pattern_without_delimiter: String, param_byte: swagger::ByteArray, param_integer: Option<i32>, param_int32: Option<i32>, param_int64: Option<i64>, param_float: Option<f32>, param_string: Option<String>, param_binary: Option<swagger::ByteArray>, param_date: Option<chrono::DateTime<chrono::Utc>>, param_date_time: Option<chrono::DateTime<chrono::Utc>>, param_password: Option<String>, param_callback: Option<String>, context: &Context) -> Box<Future<Item=TestEndpointParametersResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake?", self.base_path);
+        let url = format!(
+            "{}/v2/fake",
+            self.base_path
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -689,7 +599,13 @@ impl Api for Client {
         let query_enum_query_integer = param_enum_query_integer.map_or_else(String::new, |query| format!("enum_query_integer={enum_query_integer}&", enum_query_integer=query.to_string()));
 
 
-        let url = format!("{}/v2/fake?{enum_query_string_array}{enum_query_string}{enum_query_integer}", self.base_path, enum_query_string_array=query_enum_query_string_array, enum_query_string=query_enum_query_string, enum_query_integer=query_enum_query_integer);
+        let url = format!(
+            "{}/v2/fake?{enum_query_string_array}{enum_query_string}{enum_query_integer}",
+            self.base_path,
+            enum_query_string_array=utf8_percent_encode(&query_enum_query_string_array, QUERY_ENCODE_SET),
+            enum_query_string=utf8_percent_encode(&query_enum_query_string, QUERY_ENCODE_SET),
+            enum_query_integer=utf8_percent_encode(&query_enum_query_integer, QUERY_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -744,7 +660,10 @@ impl Api for Client {
     fn test_inline_additional_properties(&self, param_param: object, context: &Context) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/inline-additionalProperties?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/inline-additionalProperties",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_param).expect("impossible to fail to serialize");
@@ -793,7 +712,10 @@ impl Api for Client {
     fn test_json_form_data(&self, param_param: String, param_param2: String, context: &Context) -> Box<Future<Item=TestJsonFormDataResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake/jsonFormData?", self.base_path);
+        let url = format!(
+            "{}/v2/fake/jsonFormData",
+            self.base_path
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -837,7 +759,10 @@ impl Api for Client {
     fn test_classname(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestClassnameResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/fake_classname_test?", self.base_path);
+        let url = format!(
+            "{}/v2/fake_classname_test",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -861,8 +786,6 @@ impl Api for Client {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::Client>(&buf)?;
-
-
 
                     Ok(TestClassnameResponse::SuccessfulOperation(body))
                 },
@@ -890,7 +813,10 @@ impl Api for Client {
     fn add_pet(&self, param_body: models::Pet, context: &Context) -> Box<Future<Item=AddPetResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet?", self.base_path);
+        let url = format!(
+            "{}/v2/pet",
+            self.base_path
+        );
 
 
         let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
@@ -939,7 +865,10 @@ impl Api for Client {
     fn delete_pet(&self, param_pet_id: i64, param_api_key: Option<String>, context: &Context) -> Box<Future<Item=DeletePetResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
+        let url = format!(
+            "{}/v2/pet/{petId}",
+            self.base_path, petId=utf8_percent_encode(&param_pet_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -990,7 +919,11 @@ impl Api for Client {
         let query_status = format!("status={status}&", status=param_status.join(","));
 
 
-        let url = format!("{}/v2/pet/findByStatus?{status}", self.base_path, status=query_status);
+        let url = format!(
+            "{}/v2/pet/findByStatus?{status}",
+            self.base_path,
+            status=utf8_percent_encode(&query_status, QUERY_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1012,7 +945,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(FindPetsByStatusResponse::SuccessfulOperation(body))
                 },
@@ -1048,7 +980,11 @@ impl Api for Client {
         let query_tags = format!("tags={tags}&", tags=param_tags.join(","));
 
 
-        let url = format!("{}/v2/pet/findByTags?{tags}", self.base_path, tags=query_tags);
+        let url = format!(
+            "{}/v2/pet/findByTags?{tags}",
+            self.base_path,
+            tags=utf8_percent_encode(&query_tags, QUERY_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1070,7 +1006,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<Vec<models::Pet>>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(FindPetsByTagsResponse::SuccessfulOperation(body))
                 },
@@ -1103,7 +1038,10 @@ impl Api for Client {
     fn get_pet_by_id(&self, param_pet_id: i64, context: &Context) -> Box<Future<Item=GetPetByIdResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
+        let url = format!(
+            "{}/v2/pet/{petId}",
+            self.base_path, petId=utf8_percent_encode(&param_pet_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1125,7 +1063,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<models::Pet>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(GetPetByIdResponse::SuccessfulOperation(body))
                 },
@@ -1163,7 +1100,10 @@ impl Api for Client {
     fn update_pet(&self, param_body: models::Pet, context: &Context) -> Box<Future<Item=UpdatePetResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet?", self.base_path);
+        let url = format!(
+            "{}/v2/pet",
+            self.base_path
+        );
 
 
         let body = serde_xml_rs::to_string(&param_body).expect("impossible to fail to serialize");
@@ -1222,7 +1162,10 @@ impl Api for Client {
     fn update_pet_with_form(&self, param_pet_id: i64, param_name: Option<String>, param_status: Option<String>, context: &Context) -> Box<Future<Item=UpdatePetWithFormResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet/{petId}?", self.base_path, petId=param_pet_id.to_string());
+        let url = format!(
+            "{}/v2/pet/{petId}",
+            self.base_path, petId=utf8_percent_encode(&param_pet_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1266,7 +1209,10 @@ impl Api for Client {
     fn upload_file(&self, param_pet_id: i64, param_additional_metadata: Option<String>, param_file: Box<Future<Item=Option<Box<Stream<Item=Vec<u8>, Error=Error> + Send>>, Error=Error> + Send>, context: &Context) -> Box<Future<Item=UploadFileResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/pet/{petId}/uploadImage?", self.base_path, petId=param_pet_id.to_string());
+        let url = format!(
+            "{}/v2/pet/{petId}/uploadImage",
+            self.base_path, petId=utf8_percent_encode(&param_pet_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
         // Form data body
         let mut multipart = Multipart::new();
@@ -1310,8 +1256,6 @@ impl Api for Client {
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<models::ApiResponse>(&buf)?;
 
-
-
                     Ok(UploadFileResponse::SuccessfulOperation(body))
                 },
                 code => {
@@ -1350,7 +1294,10 @@ impl Api for Client {
     fn delete_order(&self, param_order_id: String, context: &Context) -> Box<Future<Item=DeleteOrderResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
+        let url = format!(
+            "{}/v2/store/order/{order_id}",
+            self.base_path, order_id=utf8_percent_encode(&param_order_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1399,7 +1346,10 @@ impl Api for Client {
     fn get_inventory(&self, context: &Context) -> Box<Future<Item=GetInventoryResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/store/inventory?", self.base_path);
+        let url = format!(
+            "{}/v2/store/inventory",
+            self.base_path
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1418,8 +1368,6 @@ impl Api for Client {
                     let mut buf = String::new();
                     response.read_to_string(&mut buf).map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
                     let body = serde_json::from_str::<HashMap<String, i32>>(&buf)?;
-
-
 
                     Ok(GetInventoryResponse::SuccessfulOperation(body))
                 },
@@ -1447,7 +1395,10 @@ impl Api for Client {
     fn get_order_by_id(&self, param_order_id: i64, context: &Context) -> Box<Future<Item=GetOrderByIdResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/store/order/{order_id}?", self.base_path, order_id=param_order_id.to_string());
+        let url = format!(
+            "{}/v2/store/order/{order_id}",
+            self.base_path, order_id=utf8_percent_encode(&param_order_id.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1469,7 +1420,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<models::Order>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(GetOrderByIdResponse::SuccessfulOperation(body))
                 },
@@ -1507,7 +1457,10 @@ impl Api for Client {
     fn place_order(&self, param_body: models::Order, context: &Context) -> Box<Future<Item=PlaceOrderResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/store/order?", self.base_path);
+        let url = format!(
+            "{}/v2/store/order",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -1534,7 +1487,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<models::Order>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(PlaceOrderResponse::SuccessfulOperation(body))
                 },
@@ -1567,7 +1519,10 @@ impl Api for Client {
     fn create_user(&self, param_body: models::User, context: &Context) -> Box<Future<Item=CreateUserResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user?", self.base_path);
+        let url = format!(
+            "{}/v2/user",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -1616,7 +1571,10 @@ impl Api for Client {
     fn create_users_with_array_input(&self, param_body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithArrayInputResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/createWithArray?", self.base_path);
+        let url = format!(
+            "{}/v2/user/createWithArray",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -1665,7 +1623,10 @@ impl Api for Client {
     fn create_users_with_list_input(&self, param_body: &Vec<models::User>, context: &Context) -> Box<Future<Item=CreateUsersWithListInputResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/createWithList?", self.base_path);
+        let url = format!(
+            "{}/v2/user/createWithList",
+            self.base_path
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
@@ -1714,7 +1675,10 @@ impl Api for Client {
     fn delete_user(&self, param_username: String, context: &Context) -> Box<Future<Item=DeleteUserResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
+        let url = format!(
+            "{}/v2/user/{username}",
+            self.base_path, username=utf8_percent_encode(&param_username.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1763,7 +1727,10 @@ impl Api for Client {
     fn get_user_by_name(&self, param_username: String, context: &Context) -> Box<Future<Item=GetUserByNameResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
+        let url = format!(
+            "{}/v2/user/{username}",
+            self.base_path, username=utf8_percent_encode(&param_username.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1785,7 +1752,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<models::User>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
 
                     Ok(GetUserByNameResponse::SuccessfulOperation(body))
                 },
@@ -1827,7 +1793,12 @@ impl Api for Client {
         let query_password = format!("password={password}&", password=param_password.to_string());
 
 
-        let url = format!("{}/v2/user/login?{username}{password}", self.base_path, username=query_username, password=query_password);
+        let url = format!(
+            "{}/v2/user/login?{username}{password}",
+            self.base_path,
+            username=utf8_percent_encode(&query_username, QUERY_ENCODE_SET),
+            password=utf8_percent_encode(&query_password, QUERY_ENCODE_SET)
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1849,7 +1820,6 @@ impl Api for Client {
                     // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
                     let body = serde_xml_rs::from_str::<String>(&buf)
                         .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))?;
-
                     header! { (ResponseXRateLimit, "X-Rate-Limit") => [i32] }
                     let response_x_rate_limit = response.headers.get::<ResponseXRateLimit>().ok_or_else(|| "Required response header X-Rate-Limit for response 200 was not found.")?;
                     header! { (ResponseXExpiresAfter, "X-Expires-After") => [chrono::DateTime<chrono::Utc>] }
@@ -1886,7 +1856,10 @@ impl Api for Client {
     fn logout_user(&self, context: &Context) -> Box<Future<Item=LogoutUserResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/logout?", self.base_path);
+        let url = format!(
+            "{}/v2/user/logout",
+            self.base_path
+        );
 
 
         let hyper_client = (self.hyper_client)();
@@ -1930,7 +1903,10 @@ impl Api for Client {
     fn update_user(&self, param_username: String, param_body: models::User, context: &Context) -> Box<Future<Item=UpdateUserResponse, Error=ApiError> + Send> {
 
 
-        let url = format!("{}/v2/user/{username}?", self.base_path, username=param_username.to_string());
+        let url = format!(
+            "{}/v2/user/{username}",
+            self.base_path, username=utf8_percent_encode(&param_username.to_string(), PATH_SEGMENT_ENCODE_SET)
+        );
 
 
         let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");

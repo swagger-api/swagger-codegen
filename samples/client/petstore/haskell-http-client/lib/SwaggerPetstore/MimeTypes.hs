@@ -14,6 +14,7 @@ Module : SwaggerPetstore.MimeTypes
 -}
 
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -42,6 +43,13 @@ import qualified Web.HttpApiData as WH
 import Prelude (($), (.),(<$>),(<*>),Maybe(..),Bool(..),Char,Double,FilePath,Float,Int,Integer,String,fmap,undefined,mempty)
 import qualified Prelude as P
 
+-- * ContentType MimeType
+
+data ContentType a = MimeType a => ContentType { unContentType :: a }
+
+-- * Accept MimeType
+
+data Accept a = MimeType a => Accept { unAccept :: a }
 
 -- * Consumes Class
 
@@ -192,3 +200,29 @@ instance MimeUnrender MimeOctetStream String where mimeUnrender _ = P.Right . BC
 
 -- | @P.Right . P.const NoContent@
 instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
+
+
+-- * Custom Mime Types
+
+-- ** MimeJsonCharsetutf8
+
+data MimeJsonCharsetutf8 = MimeJsonCharsetutf8 deriving (P.Typeable)
+
+-- | @application/json; charset=utf-8@
+instance MimeType MimeJsonCharsetutf8 where
+  mimeType _ = Just $ P.fromString "application/json; charset=utf-8"
+instance A.ToJSON a => MimeRender MimeJsonCharsetutf8 a where mimeRender _ = A.encode
+instance A.FromJSON a => MimeUnrender MimeJsonCharsetutf8 a where mimeUnrender _ = A.eitherDecode
+-- instance MimeRender MimeJsonCharsetutf8 T.Text where mimeRender _ = undefined
+-- instance MimeUnrender MimeJsonCharsetutf8 T.Text where mimeUnrender _ = undefined
+
+-- ** MimeXmlCharsetutf8
+
+data MimeXmlCharsetutf8 = MimeXmlCharsetutf8 deriving (P.Typeable)
+
+-- | @application/xml; charset=utf-8@
+instance MimeType MimeXmlCharsetutf8 where
+  mimeType _ = Just $ P.fromString "application/xml; charset=utf-8"
+-- instance MimeRender MimeXmlCharsetutf8 T.Text where mimeRender _ = undefined
+-- instance MimeUnrender MimeXmlCharsetutf8 T.Text where mimeUnrender _ = undefined
+

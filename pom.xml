@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.3.0-SNAPSHOT+baikal24</version>
+    <version>2.4.0-SNAPSHOT+baikal1</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -94,7 +94,7 @@
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
@@ -104,7 +104,7 @@
                         <phase>validate</phase>
                         <configuration>
                             <configLocation>google_checkstyle.xml</configLocation>
-                            <!-- Don't include generated sources a la http://stackoverflow.com/a/30406454 -->
+                            Don't include generated sources a la http://stackoverflow.com/a/30406454
                             <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
                             <encoding>UTF-8</encoding>
                             <consoleOutput>true</consoleOutput>
@@ -123,7 +123,7 @@
                         <version>6.19</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -690,7 +690,7 @@
             </modules>
         </profile>
         <profile>
-            <id>typescript-angular-client</id>
+            <id>typescript-angularjs-client</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -842,18 +842,16 @@
                 </property>
             </activation>
             <modules>
-                <!-- servers -->
-                <module>samples/server/petstore/scalatra</module>
                 <!-- <module>samples/server/petstore/erlang-server</module> note: make sample compilation work -->
                 <!-- clients -->
-                <!--<module>samples/client/petstore/bash</module>-->
+                <module>samples/client/petstore/php/SwaggerClient-php</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/scala</module>
                 <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/javascript</module>
                 <module>samples/client/petstore/python</module>
-                <!-- <module>samples/client/petstore/haskell-http-client</module> -->
-                <!-- <module>samples/client/petstore/haskell-http-client/tests-integration</module> -->
+                <module>samples/client/petstore/python-tornado</module>
+                <module>samples/client/petstore/python-asyncio</module>
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
                 <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
@@ -863,19 +861,10 @@
                 <module>samples/client/petstore/typescript-angularjs</module>-->
                 <!-- comment out due to error `npm run build`
                 <module>samples/client/petstore/typescript-jquery/npm</module>-->
-                <module>samples/client/petstore/typescript-angular-v2/npm</module>
+                <!--<module>samples/client/petstore/typescript-angular-v2/npm</module>-->
                 <module>samples/client/petstore/typescript-angular-v4/npm</module>
-                <!-- comment out due to https://github.com/swagger-api/swagger-codegen/issues/6658
-                <module>samples/client/petstore/swift3/default/SwaggerClientTests</module>
-                <module>samples/client/petstore/swift3/promisekit/SwaggerClientTests</module>
-                <module>samples/client/petstore/swift3/rxswift/SwaggerClientTests</module>
-                <module>samples/client/petstore/swift/default/SwaggerClientTests</module>
-                <module>samples/client/petstore/swift/promisekit/SwaggerClientTests</module>
-                <module>samples/client/petstore/swift/rxswift/SwaggerClientTests</module>
-                -->
-                <!-- comment out objc tests as it's timing out
-                <module>samples/client/petstore/objc/default/SwaggerClientTests</module>
-                <module>samples/client/petstore/objc/core-data/SwaggerClientTests</module>-->
+                <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
+                <!--<module>samples/client/petstore/bash</module>-->
             </modules>
         </profile>
     </profiles>
@@ -937,16 +926,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>baikal-internal</id>
-            <url>s3://4pf-internal-dependencies/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>baikal-internal</id>
-            <url>s3://4pf-internal-dependencies/snapshots</url>
-        </repository>
-    </distributionManagement>
     <repositories>
         <repository>
             <id>baikal-internal</id>
@@ -955,10 +934,10 @@
     </repositories>
 
     <properties>
-        <swagger-parser-version>1.0.33-SNAPSHOT</swagger-parser-version>
+        <swagger-parser-version>1.0.34</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.5.16</swagger-core-version>
+        <swagger-core-version>1.5.18</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.4</commons-cli-version>
         <junit-version>4.8.1</junit-version>

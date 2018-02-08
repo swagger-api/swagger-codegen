@@ -6,6 +6,7 @@ import io.swagger.models.*;
 import io.swagger.models.properties.*;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("static-method")
@@ -88,6 +89,66 @@ public class KotlinClientCodegenModelTest {
         Assert.assertTrue(property3.isNotContainer);
     }
 
+    @Test(description = "convert a simple model: threetenbp")
+    public void selectDateLibraryAsThreetenbp() {
+        final Model model = getSimpleModel();
+        final KotlinClientCodegen codegen = new KotlinClientCodegen();
+        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.THREETENBP.value);
+        codegen.processOpts();
+
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        final CodegenProperty property3 = cm.vars.get(2);
+        Assert.assertEquals(property3.baseName, "createdAt");
+        Assert.assertEquals(property3.datatype, "org.threeten.bp.LocalDateTime");
+        Assert.assertEquals(property3.name, "createdAt");
+        Assert.assertEquals(property3.defaultValue, "null");
+        Assert.assertEquals(property3.baseType, "org.threeten.bp.LocalDateTime");
+        Assert.assertFalse(property3.hasMore);
+        Assert.assertFalse(property3.required);
+        Assert.assertTrue(property3.isNotContainer);
+    }
+
+    @Test(description = "convert a simple model: date string")
+    public void selectDateLibraryAsString() {
+        final Model model = getSimpleModel();
+        final KotlinClientCodegen codegen = new KotlinClientCodegen();
+        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.STRING.value);
+        codegen.processOpts();
+
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        final CodegenProperty property3 = cm.vars.get(2);
+        Assert.assertEquals(property3.baseName, "createdAt");
+        Assert.assertEquals(property3.datatype, "kotlin.String");
+        Assert.assertEquals(property3.name, "createdAt");
+        Assert.assertEquals(property3.defaultValue, "null");
+        Assert.assertEquals(property3.baseType, "kotlin.String");
+        Assert.assertFalse(property3.hasMore);
+        Assert.assertFalse(property3.required);
+        Assert.assertTrue(property3.isNotContainer);
+    }
+
+    @Test(description = "convert a simple model: date java8")
+    public void selectDateLibraryAsJava8() {
+        final Model model = getSimpleModel();
+        final KotlinClientCodegen codegen = new KotlinClientCodegen();
+        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.JAVA8.value);
+        codegen.processOpts();
+
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        final CodegenProperty property3 = cm.vars.get(2);
+        Assert.assertEquals(property3.baseName, "createdAt");
+        Assert.assertEquals(property3.datatype, "java.time.LocalDateTime");
+        Assert.assertEquals(property3.name, "createdAt");
+        Assert.assertEquals(property3.defaultValue, "null");
+        Assert.assertEquals(property3.baseType, "java.time.LocalDateTime");
+        Assert.assertFalse(property3.hasMore);
+        Assert.assertFalse(property3.required);
+        Assert.assertTrue(property3.isNotContainer);
+    }
+
     @Test(description = "convert a model with array property to default kotlin.Array")
     public void arrayPropertyTest() {
         final Model model = getArrayTestModel();
@@ -112,6 +173,7 @@ public class KotlinClientCodegenModelTest {
         Assert.assertFalse(property.required);
         Assert.assertTrue(property.isContainer);
     }
+
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
         final Model model = getMapModel();
@@ -152,6 +214,42 @@ public class KotlinClientCodegenModelTest {
         Assert.assertEquals(property1.baseType, "Child");
         Assert.assertFalse(property1.required);
         Assert.assertTrue(property1.isNotContainer);
+    }
+
+    @DataProvider(name = "modelNames")
+    public static Object[][] modelNames() {
+        return new Object[][]{
+                {"TestNs.TestClass", new ModelNameTest("TestNs.TestClass", "TestNsTestClass")},
+                {"$", new ModelNameTest("$", "Dollar")},
+                {"for", new ModelNameTest("`for`", "`for`")},
+                {"One<Two", new ModelNameTest("One<Two", "OneLess_ThanTwo")},
+                {"this is a test", new ModelNameTest("this is a test", "This_is_a_test")}
+        };
+    }
+
+    @Test(dataProvider = "modelNames", description = "sanitize model names")
+    public void sanitizeModelNames(final String name, final ModelNameTest testCase) {
+        final Model model = getComplexModel();
+        final DefaultCodegen codegen = new KotlinClientCodegen();
+        final CodegenModel cm = codegen.fromModel(name, model);
+
+        Assert.assertEquals(cm.name, testCase.expectedName);
+        Assert.assertEquals(cm.classname, testCase.expectedClassName);
+    }
+
+    private static class ModelNameTest {
+        private String expectedName;
+        private String expectedClassName;
+
+        private ModelNameTest(String nameAndClass) {
+            this.expectedName = nameAndClass;
+            this.expectedClassName = nameAndClass;
+        }
+
+        private ModelNameTest(String expectedName, String expectedClassName) {
+            this.expectedName = expectedName;
+            this.expectedClassName = expectedClassName;
+        }
     }
 }
 

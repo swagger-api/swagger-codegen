@@ -35,183 +35,221 @@ pub use swagger::{ApiError, Context, ContextWrapper};
 
 #[derive(Debug, PartialEq)]
 pub enum TestSpecialTagsResponse {
+    /// successful operation
     SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
-pub enum GetXmlFeaturesResponse {
-    Success ( models::XmlObject ) ,
-}
-
-#[derive(Debug, PartialEq)]
-pub enum PostXmlFeaturesResponse {
-    Success ,
-}
-
-#[derive(Debug, PartialEq)]
 pub enum FakeOuterBooleanSerializeResponse {
+    /// Output boolean
     OutputBoolean ( models::OuterBoolean ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterCompositeSerializeResponse {
+    /// Output composite
     OutputComposite ( models::OuterComposite ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterNumberSerializeResponse {
+    /// Output number
     OutputNumber ( models::OuterNumber ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FakeOuterStringSerializeResponse {
+    /// Output string
     OutputString ( models::OuterString ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestClientModelResponse {
+    /// successful operation
     SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestEndpointParametersResponse {
+    /// Invalid username supplied
     InvalidUsernameSupplied ,
+    /// User not found
     UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestEnumParametersResponse {
+    /// Invalid request
     InvalidRequest ,
+    /// Not found
     NotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestInlineAdditionalPropertiesResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestJsonFormDataResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum TestClassnameResponse {
+    /// successful operation
     SuccessfulOperation ( models::Client ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum AddPetResponse {
+    /// Invalid input
     InvalidInput ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeletePetResponse {
+    /// Invalid pet value
     InvalidPetValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FindPetsByStatusResponse {
+    /// successful operation
     SuccessfulOperation ( Vec<models::Pet> ) ,
+    /// Invalid status value
     InvalidStatusValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum FindPetsByTagsResponse {
+    /// successful operation
     SuccessfulOperation ( Vec<models::Pet> ) ,
+    /// Invalid tag value
     InvalidTagValue ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetPetByIdResponse {
+    /// successful operation
     SuccessfulOperation ( models::Pet ) ,
+    /// Invalid ID supplied
     InvalidIDSupplied ,
+    /// Pet not found
     PetNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdatePetResponse {
+    /// Invalid ID supplied
     InvalidIDSupplied ,
+    /// Pet not found
     PetNotFound ,
+    /// Validation exception
     ValidationException ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdatePetWithFormResponse {
+    /// Invalid input
     InvalidInput ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UploadFileResponse {
+    /// successful operation
     SuccessfulOperation ( models::ApiResponse ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeleteOrderResponse {
+    /// Invalid ID supplied
     InvalidIDSupplied ,
+    /// Order not found
     OrderNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetInventoryResponse {
+    /// successful operation
     SuccessfulOperation ( HashMap<String, i32> ) ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetOrderByIdResponse {
+    /// successful operation
     SuccessfulOperation ( models::Order ) ,
+    /// Invalid ID supplied
     InvalidIDSupplied ,
+    /// Order not found
     OrderNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum PlaceOrderResponse {
+    /// successful operation
     SuccessfulOperation ( models::Order ) ,
+    /// Invalid Order
     InvalidOrder ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUserResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUsersWithArrayInputResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum CreateUsersWithListInputResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum DeleteUserResponse {
+    /// Invalid username supplied
     InvalidUsernameSupplied ,
+    /// User not found
     UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum GetUserByNameResponse {
+    /// successful operation
     SuccessfulOperation ( models::User ) ,
+    /// Invalid username supplied
     InvalidUsernameSupplied ,
+    /// User not found
     UserNotFound ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum LoginUserResponse {
+    /// successful operation
     SuccessfulOperation { body: String, x_rate_limit: i32, x_expires_after: chrono::DateTime<chrono::Utc> } ,
+    /// Invalid username/password supplied
     InvalidUsername ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum LogoutUserResponse {
+    /// successful operation
     SuccessfulOperation ,
 }
 
 #[derive(Debug, PartialEq)]
 pub enum UpdateUserResponse {
+    /// Invalid user supplied
     InvalidUserSupplied ,
+    /// User not found
     UserNotFound ,
 }
 
@@ -221,12 +259,6 @@ pub trait Api {
 
     /// To test special tags
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send>;
-
-    /// Get some XML
-    fn get_xml_features(&self, context: &Context) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
-
-    /// Post some xml
-    fn post_xml_features(&self, xml_object: models::XmlObject, context: &Context) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send>;
 
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
@@ -325,12 +357,6 @@ pub trait ApiNoContext {
 
     /// To test special tags
     fn test_special_tags(&self, body: models::Client) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send>;
-
-    /// Get some XML
-    fn get_xml_features(&self) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send>;
-
-    /// Post some xml
-    fn post_xml_features(&self, xml_object: models::XmlObject) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send>;
 
 
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError> + Send>;
@@ -441,16 +467,6 @@ impl<'a, T: Api> ApiNoContext for ContextWrapper<'a, T> {
     /// To test special tags
     fn test_special_tags(&self, body: models::Client) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError> + Send> {
         self.api().test_special_tags(body, &self.context())
-    }
-
-    /// Get some XML
-    fn get_xml_features(&self) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError> + Send> {
-        self.api().get_xml_features(&self.context())
-    }
-
-    /// Post some xml
-    fn post_xml_features(&self, xml_object: models::XmlObject) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError> + Send> {
-        self.api().post_xml_features(xml_object, &self.context())
     }
 
 

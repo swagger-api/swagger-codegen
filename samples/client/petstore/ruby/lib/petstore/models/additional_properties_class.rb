@@ -45,13 +45,13 @@ module Petstore
       attributes = attributes.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
 
       if attributes.has_key?(:'map_property')
-        if (value = attributes[:'map_property']).is_a?(Array)
+        if (value = attributes[:'map_property']).is_a?(Hash)
           self.map_property = value
         end
       end
 
       if attributes.has_key?(:'map_of_map_property')
-        if (value = attributes[:'map_of_map_property']).is_a?(Array)
+        if (value = attributes[:'map_of_map_property']).is_a?(Hash)
           self.map_of_map_property = value
         end
       end
@@ -59,7 +59,7 @@ module Petstore
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
-    # @return Array for valid properies with the reasons
+    # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
       return invalid_properties

@@ -11,15 +11,10 @@
  */
 
 
-
 /**
  * A category for a pet
  */
-export interface Category {
+export interface Category { 
     id?: number;
-
     name?: string;
-
 }
-
-

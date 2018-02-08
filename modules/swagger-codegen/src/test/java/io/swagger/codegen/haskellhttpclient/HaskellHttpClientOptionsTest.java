@@ -24,11 +24,9 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
     @Override
     protected void setExpectations() {
         new Expectations(clientCodegen) {{
-            clientCodegen.setModelPackage(HaskellHttpClientOptionsProvider.MODEL_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setApiPackage(HaskellHttpClientOptionsProvider.API_PACKAGE_VALUE);
-            times = 1;
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(HaskellHttpClientOptionsProvider.SORT_PARAMS_VALUE));
+            times = 1;
+            clientCodegen.setAllowNonUniqueOperationIds(Boolean.valueOf(HaskellHttpClientOptionsProvider.ALLOW_NONUNIQUE_OPERATION_IDS));
             times = 1;
             clientCodegen.setAllowFromJsonNulls(Boolean.valueOf(HaskellHttpClientOptionsProvider.ALLOW_FROMJSON_NULLS));
             times = 1;
@@ -36,11 +34,13 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setGenerateModelConstructors(Boolean.valueOf(HaskellHttpClientOptionsProvider.GENERATE_MODEL_CONSTRUCTORS));
             times = 1;
+            clientCodegen.setGenerateEnums(Boolean.valueOf(HaskellHttpClientOptionsProvider.GENERATE_ENUMS));
+            times = 1;
             clientCodegen.setGenerateFormUrlEncodedInstances(Boolean.valueOf(HaskellHttpClientOptionsProvider.GENERATE_FORM_URLENCODED_INSTANCES));
             times = 1;
             clientCodegen.setGenerateLenses(Boolean.valueOf(HaskellHttpClientOptionsProvider.GENERATE_LENSES));
             times = 1;
-            clientCodegen.setInlineConsumesContentTypes(Boolean.valueOf(HaskellHttpClientOptionsProvider.INLINE_CONSUMES_CONTENT_TYPES));
+            clientCodegen.setInlineMimeTypes(Boolean.valueOf(HaskellHttpClientOptionsProvider.INLINE_MIME_TYPES));
             times = 1;
             clientCodegen.setModelDeriving(HaskellHttpClientOptionsProvider.MODEL_DERIVING);
             times = 1;
@@ -52,7 +52,16 @@ public class HaskellHttpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setUseMonadLogger(Boolean.valueOf(HaskellHttpClientOptionsProvider.USE_MONAD_LOGGER));
             times = 1;
-
+            clientCodegen.setCabalPackage(HaskellHttpClientOptionsProvider.CABAL_PACKAGE);
+            times = 1;
+            clientCodegen.setCabalVersion(HaskellHttpClientOptionsProvider.CABAL_VERSION);
+            times = 1;
+            clientCodegen.setBaseModule(HaskellHttpClientOptionsProvider.BASE_MODULE);
+            times = 1;
+            clientCodegen.setRequestType(HaskellHttpClientOptionsProvider.REQUEST_TYPE);
+            times = 1;
+            clientCodegen.setConfigType(HaskellHttpClientOptionsProvider.CONFIG_TYPE);
+            times = 1;
         }};
     }
 }

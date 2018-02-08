@@ -1,9 +1,10 @@
 {{>partial_header}}
 {-|
-Module : {{title}}.MimeTypes
+Module : {{baseModule}}.MimeTypes
 -}
 
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -11,7 +12,7 @@ Module : {{title}}.MimeTypes
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-unused-binds -fno-warn-unused-imports #-}
 
-module {{title}}.MimeTypes where
+module {{baseModule}}.MimeTypes where
 
 import qualified Control.Arrow as P (left)
 import qualified Data.Aeson as A
@@ -32,6 +33,13 @@ import qualified Web.HttpApiData as WH
 import Prelude (($), (.),(<$>),(<*>),Maybe(..),Bool(..),Char,Double,FilePath,Float,Int,Integer,String,fmap,undefined,mempty)
 import qualified Prelude as P
 
+-- * ContentType MimeType
+
+data ContentType a = MimeType a => ContentType { unContentType :: a }
+
+-- * Accept MimeType
+
+data Accept a = MimeType a => Accept { unAccept :: a }
 
 -- * Consumes Class
 
@@ -182,3 +190,21 @@ instance MimeUnrender MimeOctetStream String where mimeUnrender _ = P.Right . BC
 
 -- | @P.Right . P.const NoContent@
 instance MimeUnrender MimeNoContent NoContent where mimeUnrender _ = P.Right . P.const NoContent
+
+
+{{#x-hasUnknownMimeTypes}}
+-- * Custom Mime Types
+
+{{#x-unknownMimeTypes}}-- ** {{{x-mediaDataType}}}
+
+data {{{x-mediaDataType}}} = {{{x-mediaDataType}}} deriving (P.Typeable)
+
+-- | @{{{mediaType}}}@
+instance MimeType {{{x-mediaDataType}}} where
+  mimeType _ = Just $ P.fromString "{{{mediaType}}}"{{#x-mediaIsJson}}
+instance A.ToJSON a => MimeRender {{{x-mediaDataType}}} a where mimeRender _ = A.encode
+instance A.FromJSON a => MimeUnrender {{{x-mediaDataType}}} a where mimeUnrender _ = A.eitherDecode{{/x-mediaIsJson}}
+-- instance MimeRender {{{x-mediaDataType}}} T.Text where mimeRender _ = undefined
+-- instance MimeUnrender {{{x-mediaDataType}}} T.Text where mimeUnrender _ = undefined
+
+{{/x-unknownMimeTypes}}{{/x-hasUnknownMimeTypes}}

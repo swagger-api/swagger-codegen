@@ -18,6 +18,8 @@ Module : SwaggerPetstore.Model
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -28,13 +30,17 @@ Module : SwaggerPetstore.Model
 module SwaggerPetstore.Model where
 
 import SwaggerPetstore.Core
+import SwaggerPetstore.MimeTypes
 
 import Data.Aeson ((.:),(.:!),(.:?),(.=))
 
+import qualified Control.Arrow as P (left)
 import qualified Data.Aeson as A
 import qualified Data.ByteString as B
+import qualified Data.ByteString.Base64 as B64
+import qualified Data.ByteString.Char8 as BC
 import qualified Data.ByteString.Lazy as BL
-import qualified Data.Data as P (Data, Typeable)
+import qualified Data.Data as P (Typeable, TypeRep, typeOf, typeRep)
 import qualified Data.Foldable as P
 import qualified Data.HashMap.Lazy as HM
 import qualified Data.Map as Map
@@ -43,17 +49,131 @@ import qualified Data.Set as Set
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import qualified Data.Time as TI
+import qualified Lens.Micro as L
 import qualified Web.FormUrlEncoded as WH
 import qualified Web.HttpApiData as WH
 
 import Control.Applicative ((<|>))
 import Control.Applicative (Alternative)
+import Data.Function ((&))
+import Data.Monoid ((<>))
 import Data.Text (Text)
-import Prelude (($), (.),(<$>),(<*>),(>>=),Maybe(..),Bool(..),Char,Double,FilePath,Float,Int,Integer,String,fmap,undefined,mempty,maybe,pure,Monad,Applicative,Functor)
+import Prelude (($),(/=),(.),(<$>),(<*>),(>>=),(=<<),Maybe(..),Bool(..),Char,Double,FilePath,Float,Int,Integer,String,fmap,undefined,mempty,maybe,pure,Monad,Applicative,Functor)
 
 import qualified Prelude as P
 
 
+
+-- * Parameter newtypes
+
+
+-- ** AdditionalMetadata
+newtype AdditionalMetadata = AdditionalMetadata { unAdditionalMetadata :: Text } deriving (P.Eq, P.Show)
+
+-- ** ApiKey
+newtype ApiKey = ApiKey { unApiKey :: Text } deriving (P.Eq, P.Show)
+
+-- ** Body
+newtype Body = Body { unBody :: [User] } deriving (P.Eq, P.Show, A.ToJSON)
+
+-- ** Byte
+newtype Byte = Byte { unByte :: ByteArray } deriving (P.Eq, P.Show)
+
+-- ** Callback
+newtype Callback = Callback { unCallback :: Text } deriving (P.Eq, P.Show)
+
+-- ** EnumFormString
+newtype EnumFormString = EnumFormString { unEnumFormString :: E'EnumFormString } deriving (P.Eq, P.Show)
+
+-- ** EnumFormStringArray
+newtype EnumFormStringArray = EnumFormStringArray { unEnumFormStringArray :: [E'Inner2] } deriving (P.Eq, P.Show)
+
+-- ** EnumHeaderString
+newtype EnumHeaderString = EnumHeaderString { unEnumHeaderString :: E'EnumFormString } deriving (P.Eq, P.Show)
+
+-- ** EnumHeaderStringArray
+newtype EnumHeaderStringArray = EnumHeaderStringArray { unEnumHeaderStringArray :: [E'Inner2] } deriving (P.Eq, P.Show)
+
+-- ** EnumQueryDouble
+newtype EnumQueryDouble = EnumQueryDouble { unEnumQueryDouble :: E'EnumNumber } deriving (P.Eq, P.Show)
+
+-- ** EnumQueryInteger
+newtype EnumQueryInteger = EnumQueryInteger { unEnumQueryInteger :: E'EnumQueryInteger } deriving (P.Eq, P.Show)
+
+-- ** EnumQueryString
+newtype EnumQueryString = EnumQueryString { unEnumQueryString :: E'EnumFormString } deriving (P.Eq, P.Show)
+
+-- ** EnumQueryStringArray
+newtype EnumQueryStringArray = EnumQueryStringArray { unEnumQueryStringArray :: [E'Inner2] } deriving (P.Eq, P.Show)
+
+-- ** File
+newtype File = File { unFile :: FilePath } deriving (P.Eq, P.Show)
+
+-- ** Int32
+newtype Int32 = Int32 { unInt32 :: Int } deriving (P.Eq, P.Show)
+
+-- ** Int64
+newtype Int64 = Int64 { unInt64 :: Integer } deriving (P.Eq, P.Show)
+
+-- ** Name2
+newtype Name2 = Name2 { unName2 :: Text } deriving (P.Eq, P.Show)
+
+-- ** Number
+newtype Number = Number { unNumber :: Double } deriving (P.Eq, P.Show)
+
+-- ** OrderId
+newtype OrderId = OrderId { unOrderId :: Integer } deriving (P.Eq, P.Show)
+
+-- ** OrderIdText
+newtype OrderIdText = OrderIdText { unOrderIdText :: Text } deriving (P.Eq, P.Show)
+
+-- ** Param
+newtype Param = Param { unParam :: Text } deriving (P.Eq, P.Show)
+
+-- ** Param2
+newtype Param2 = Param2 { unParam2 :: Text } deriving (P.Eq, P.Show)
+
+-- ** ParamBinary
+newtype ParamBinary = ParamBinary { unParamBinary :: Binary } deriving (P.Eq, P.Show)
+
+-- ** ParamDate
+newtype ParamDate = ParamDate { unParamDate :: Date } deriving (P.Eq, P.Show)
+
+-- ** ParamDateTime
+newtype ParamDateTime = ParamDateTime { unParamDateTime :: DateTime } deriving (P.Eq, P.Show)
+
+-- ** ParamDouble
+newtype ParamDouble = ParamDouble { unParamDouble :: Double } deriving (P.Eq, P.Show)
+
+-- ** ParamFloat
+newtype ParamFloat = ParamFloat { unParamFloat :: Float } deriving (P.Eq, P.Show)
+
+-- ** ParamInteger
+newtype ParamInteger = ParamInteger { unParamInteger :: Int } deriving (P.Eq, P.Show)
+
+-- ** ParamString
+newtype ParamString = ParamString { unParamString :: Text } deriving (P.Eq, P.Show)
+
+-- ** Password
+newtype Password = Password { unPassword :: Text } deriving (P.Eq, P.Show)
+
+-- ** PatternWithoutDelimiter
+newtype PatternWithoutDelimiter = PatternWithoutDelimiter { unPatternWithoutDelimiter :: Text } deriving (P.Eq, P.Show)
+
+-- ** PetId
+newtype PetId = PetId { unPetId :: Integer } deriving (P.Eq, P.Show)
+
+-- ** Status
+newtype Status = Status { unStatus :: [E'Status2] } deriving (P.Eq, P.Show)
+
+-- ** StatusText
+newtype StatusText = StatusText { unStatusText :: Text } deriving (P.Eq, P.Show)
+
+-- ** Tags
+newtype Tags = Tags { unTags :: [Text] } deriving (P.Eq, P.Show)
+
+-- ** Username
+newtype Username = Username { unUsername :: Text } deriving (P.Eq, P.Show)
 
 -- * Models
 
@@ -90,7 +210,6 @@ mkAdditionalPropertiesClass =
   , additionalPropertiesClassMapOfMapProperty = Nothing
   }
 
-
 -- ** Animal
 -- | Animal
 data Animal = Animal
@@ -124,7 +243,6 @@ mkAnimal animalClassName =
   , animalColor = Nothing
   }
 
-
 -- ** AnimalFarm
 -- | AnimalFarm
 data AnimalFarm = AnimalFarm
@@ -152,7 +270,6 @@ mkAnimalFarm =
   AnimalFarm
   { 
   }
-
 
 -- ** ApiResponse
 -- | ApiResponse
@@ -190,7 +307,6 @@ mkApiResponse =
   , apiResponseMessage = Nothing
   }
 
-
 -- ** ArrayOfArrayOfNumberOnly
 -- | ArrayOfArrayOfNumberOnly
 data ArrayOfArrayOfNumberOnly = ArrayOfArrayOfNumberOnly
@@ -219,7 +335,6 @@ mkArrayOfArrayOfNumberOnly =
   { arrayOfArrayOfNumberOnlyArrayArrayNumber = Nothing
   }
 
-
 -- ** ArrayOfNumberOnly
 -- | ArrayOfNumberOnly
 data ArrayOfNumberOnly = ArrayOfNumberOnly
@@ -247,7 +362,6 @@ mkArrayOfNumberOnly =
   ArrayOfNumberOnly
   { arrayOfNumberOnlyArrayNumber = Nothing
   }
-
 
 -- ** ArrayTest
 -- | ArrayTest
@@ -284,7 +398,6 @@ mkArrayTest =
   , arrayTestArrayArrayOfInteger = Nothing
   , arrayTestArrayArrayOfModel = Nothing
   }
-
 
 -- ** Capitalization
 -- | Capitalization
@@ -334,7 +447,6 @@ mkCapitalization =
   , capitalizationAttName = Nothing
   }
 
-
 -- ** Category
 -- | Category
 data Category = Category
@@ -367,7 +479,6 @@ mkCategory =
   , categoryName = Nothing
   }
 
-
 -- ** ClassModel
 -- | ClassModel
 -- Model for testing model with \"_class\" property
@@ -397,7 +508,6 @@ mkClassModel =
   { classModelClass = Nothing
   }
 
-
 -- ** Client
 -- | Client
 data Client = Client
@@ -426,12 +536,11 @@ mkClient =
   { clientClient = Nothing
   }
 
-
 -- ** EnumArrays
 -- | EnumArrays
 data EnumArrays = EnumArrays
-  { enumArraysJustSymbol :: !(Maybe Text) -- ^ "just_symbol"
-  , enumArraysArrayEnum :: !(Maybe [Text]) -- ^ "array_enum"
+  { enumArraysJustSymbol :: !(Maybe E'JustSymbol) -- ^ "just_symbol"
+  , enumArraysArrayEnum :: !(Maybe [E'ArrayEnum]) -- ^ "array_enum"
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON EnumArrays
@@ -459,42 +568,12 @@ mkEnumArrays =
   , enumArraysArrayEnum = Nothing
   }
 
-
--- ** EnumClass
--- | EnumClass
-data EnumClass = EnumClass
-  { 
-  } deriving (P.Show, P.Eq, P.Typeable)
-
--- | FromJSON EnumClass
-instance A.FromJSON EnumClass where
-  parseJSON = A.withObject "EnumClass" $ \o ->
-    pure EnumClass
-      
-
--- | ToJSON EnumClass
-instance A.ToJSON EnumClass where
-  toJSON EnumClass  =
-   _omitNulls
-      [ 
-      ]
-
-
--- | Construct a value of type 'EnumClass' (by applying it's required fields, if any)
-mkEnumClass
-  :: EnumClass
-mkEnumClass =
-  EnumClass
-  { 
-  }
-
-
 -- ** EnumTest
 -- | EnumTest
 data EnumTest = EnumTest
-  { enumTestEnumString :: !(Maybe Text) -- ^ "enum_string"
-  , enumTestEnumInteger :: !(Maybe Int) -- ^ "enum_integer"
-  , enumTestEnumNumber :: !(Maybe Double) -- ^ "enum_number"
+  { enumTestEnumString :: !(Maybe E'EnumString) -- ^ "enum_string"
+  , enumTestEnumInteger :: !(Maybe E'EnumInteger) -- ^ "enum_integer"
+  , enumTestEnumNumber :: !(Maybe E'EnumNumber) -- ^ "enum_number"
   , enumTestOuterEnum :: !(Maybe OuterEnum) -- ^ "outerEnum"
   } deriving (P.Show, P.Eq, P.Typeable)
 
@@ -528,7 +607,6 @@ mkEnumTest =
   , enumTestEnumNumber = Nothing
   , enumTestOuterEnum = Nothing
   }
-
 
 -- ** FormatTest
 -- | FormatTest
@@ -610,7 +688,6 @@ mkFormatTest formatTestNumber formatTestByte formatTestDate formatTestPassword =
   , formatTestPassword
   }
 
-
 -- ** HasOnlyReadOnly
 -- | HasOnlyReadOnly
 data HasOnlyReadOnly = HasOnlyReadOnly
@@ -643,12 +720,11 @@ mkHasOnlyReadOnly =
   , hasOnlyReadOnlyFoo = Nothing
   }
 
-
 -- ** MapTest
 -- | MapTest
 data MapTest = MapTest
   { mapTestMapMapOfString :: !(Maybe (Map.Map String (Map.Map String Text))) -- ^ "map_map_of_string"
-  , mapTestMapOfEnumString :: !(Maybe (Map.Map String Text)) -- ^ "map_of_enum_string"
+  , mapTestMapOfEnumString :: !(Maybe (Map.Map String E'Inner)) -- ^ "map_of_enum_string"
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON MapTest
@@ -675,7 +751,6 @@ mkMapTest =
   { mapTestMapMapOfString = Nothing
   , mapTestMapOfEnumString = Nothing
   }
-
 
 -- ** MixedPropertiesAndAdditionalPropertiesClass
 -- | MixedPropertiesAndAdditionalPropertiesClass
@@ -713,7 +788,6 @@ mkMixedPropertiesAndAdditionalPropertiesClass =
   , mixedPropertiesAndAdditionalPropertiesClassMap = Nothing
   }
 
-
 -- ** Model200Response
 -- | Model200Response
 -- Model for testing model name starting with number
@@ -747,7 +821,6 @@ mkModel200Response =
   , model200ResponseClass = Nothing
   }
 
-
 -- ** ModelList
 -- | ModelList
 data ModelList = ModelList
@@ -775,7 +848,6 @@ mkModelList =
   ModelList
   { modelList123List = Nothing
   }
-
 
 -- ** ModelReturn
 -- | ModelReturn
@@ -805,7 +877,6 @@ mkModelReturn =
   ModelReturn
   { modelReturnReturn = Nothing
   }
-
 
 -- ** Name
 -- | Name
@@ -849,7 +920,6 @@ mkName nameName =
   , name123Number = Nothing
   }
 
-
 -- ** NumberOnly
 -- | NumberOnly
 data NumberOnly = NumberOnly
@@ -878,7 +948,6 @@ mkNumberOnly =
   { numberOnlyJustNumber = Nothing
   }
 
-
 -- ** Order
 -- | Order
 data Order = Order
@@ -886,7 +955,7 @@ data Order = Order
   , orderPetId :: !(Maybe Integer) -- ^ "petId"
   , orderQuantity :: !(Maybe Int) -- ^ "quantity"
   , orderShipDate :: !(Maybe DateTime) -- ^ "shipDate"
-  , orderStatus :: !(Maybe Text) -- ^ "status" - Order Status
+  , orderStatus :: !(Maybe E'Status) -- ^ "status" - Order Status
   , orderComplete :: !(Maybe Bool) -- ^ "complete"
   } deriving (P.Show, P.Eq, P.Typeable)
 
@@ -927,13 +996,11 @@ mkOrder =
   , orderComplete = Nothing
   }
 
-
 -- ** OuterBoolean
 -- | OuterBoolean
 newtype OuterBoolean = OuterBoolean
   { unOuterBoolean :: Bool
   } deriving (P.Eq, P.Show, P.Typeable, A.ToJSON, A.FromJSON, WH.ToHttpApiData, WH.FromHttpApiData)
-
 
 
 -- ** OuterComposite
@@ -972,36 +1039,6 @@ mkOuterComposite =
   , outerCompositeMyBoolean = Nothing
   }
 
-
--- ** OuterEnum
--- | OuterEnum
-data OuterEnum = OuterEnum
-  { 
-  } deriving (P.Show, P.Eq, P.Typeable)
-
--- | FromJSON OuterEnum
-instance A.FromJSON OuterEnum where
-  parseJSON = A.withObject "OuterEnum" $ \o ->
-    pure OuterEnum
-      
-
--- | ToJSON OuterEnum
-instance A.ToJSON OuterEnum where
-  toJSON OuterEnum  =
-   _omitNulls
-      [ 
-      ]
-
-
--- | Construct a value of type 'OuterEnum' (by applying it's required fields, if any)
-mkOuterEnum
-  :: OuterEnum
-mkOuterEnum =
-  OuterEnum
-  { 
-  }
-
-
 -- ** OuterNumber
 -- | OuterNumber
 newtype OuterNumber = OuterNumber
@@ -1009,13 +1046,11 @@ newtype OuterNumber = OuterNumber
   } deriving (P.Eq, P.Show, P.Typeable, A.ToJSON, A.FromJSON, WH.ToHttpApiData, WH.FromHttpApiData)
 
 
-
 -- ** OuterString
 -- | OuterString
 newtype OuterString = OuterString
   { unOuterString :: Text
   } deriving (P.Eq, P.Show, P.Typeable, A.ToJSON, A.FromJSON, WH.ToHttpApiData, WH.FromHttpApiData)
-
 
 
 -- ** Pet
@@ -1026,7 +1061,7 @@ data Pet = Pet
   , petName :: !(Text) -- ^ /Required/ "name"
   , petPhotoUrls :: !([Text]) -- ^ /Required/ "photoUrls"
   , petTags :: !(Maybe [Tag]) -- ^ "tags"
-  , petStatus :: !(Maybe Text) -- ^ "status" - pet status in the store
+  , petStatus :: !(Maybe E'Status2) -- ^ "status" - pet status in the store
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON Pet
@@ -1068,7 +1103,6 @@ mkPet petName petPhotoUrls =
   , petStatus = Nothing
   }
 
-
 -- ** ReadOnlyFirst
 -- | ReadOnlyFirst
 data ReadOnlyFirst = ReadOnlyFirst
@@ -1101,7 +1135,6 @@ mkReadOnlyFirst =
   , readOnlyFirstBaz = Nothing
   }
 
-
 -- ** SpecialModelName
 -- | SpecialModelName
 data SpecialModelName = SpecialModelName
@@ -1129,7 +1162,6 @@ mkSpecialModelName =
   SpecialModelName
   { specialModelNameSpecialPropertyName = Nothing
   }
-
 
 -- ** Tag
 -- | Tag
@@ -1162,7 +1194,6 @@ mkTag =
   { tagId = Nothing
   , tagName = Nothing
   }
-
 
 -- ** User
 -- | User
@@ -1220,7 +1251,6 @@ mkUser =
   , userUserStatus = Nothing
   }
 
-
 -- ** Cat
 -- | Cat
 data Cat = Cat
@@ -1257,7 +1287,6 @@ mkCat catClassName =
   , catColor = Nothing
   , catDeclawed = Nothing
   }
-
 
 -- ** Dog
 -- | Dog
@@ -1297,4 +1326,445 @@ mkDog dogClassName =
   }
 
 
+-- * Enums
+
+
+-- ** E'ArrayEnum
+
+-- | Enum of 'Text'
+data E'ArrayEnum
+  = E'ArrayEnum'Fish -- ^ @"fish"@
+  | E'ArrayEnum'Crab -- ^ @"crab"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'ArrayEnum where toJSON = A.toJSON . fromE'ArrayEnum
+instance A.FromJSON E'ArrayEnum where parseJSON o = P.either P.fail (pure . P.id) . toE'ArrayEnum =<< A.parseJSON o
+instance WH.ToHttpApiData E'ArrayEnum where toQueryParam = WH.toQueryParam . fromE'ArrayEnum
+instance WH.FromHttpApiData E'ArrayEnum where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'ArrayEnum
+instance MimeRender MimeMultipartFormData E'ArrayEnum where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'ArrayEnum' enum
+fromE'ArrayEnum :: E'ArrayEnum -> Text
+fromE'ArrayEnum = \case
+  E'ArrayEnum'Fish -> "fish"
+  E'ArrayEnum'Crab -> "crab"
+
+-- | parse 'E'ArrayEnum' enum
+toE'ArrayEnum :: Text -> P.Either String E'ArrayEnum
+toE'ArrayEnum = \case
+  "fish" -> P.Right E'ArrayEnum'Fish
+  "crab" -> P.Right E'ArrayEnum'Crab
+  s -> P.Left $ "toE'ArrayEnum: enum parse failure: " P.++ P.show s
+
+
+-- ** E'EnumFormString
+
+-- | Enum of 'Text'
+data E'EnumFormString
+  = E'EnumFormString'_abc -- ^ @"_abc"@
+  | E'EnumFormString'_efg -- ^ @"-efg"@
+  | E'EnumFormString'_xyz -- ^ @"(xyz)"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'EnumFormString where toJSON = A.toJSON . fromE'EnumFormString
+instance A.FromJSON E'EnumFormString where parseJSON o = P.either P.fail (pure . P.id) . toE'EnumFormString =<< A.parseJSON o
+instance WH.ToHttpApiData E'EnumFormString where toQueryParam = WH.toQueryParam . fromE'EnumFormString
+instance WH.FromHttpApiData E'EnumFormString where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'EnumFormString
+instance MimeRender MimeMultipartFormData E'EnumFormString where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'EnumFormString' enum
+fromE'EnumFormString :: E'EnumFormString -> Text
+fromE'EnumFormString = \case
+  E'EnumFormString'_abc -> "_abc"
+  E'EnumFormString'_efg -> "-efg"
+  E'EnumFormString'_xyz -> "(xyz)"
+
+-- | parse 'E'EnumFormString' enum
+toE'EnumFormString :: Text -> P.Either String E'EnumFormString
+toE'EnumFormString = \case
+  "_abc" -> P.Right E'EnumFormString'_abc
+  "-efg" -> P.Right E'EnumFormString'_efg
+  "(xyz)" -> P.Right E'EnumFormString'_xyz
+  s -> P.Left $ "toE'EnumFormString: enum parse failure: " P.++ P.show s
+
+
+-- ** E'EnumInteger
+
+-- | Enum of 'Int'
+data E'EnumInteger
+  = E'EnumInteger'Num1 -- ^ @1@
+  | E'EnumInteger'NumMinus_1 -- ^ @-1@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'EnumInteger where toJSON = A.toJSON . fromE'EnumInteger
+instance A.FromJSON E'EnumInteger where parseJSON o = P.either P.fail (pure . P.id) . toE'EnumInteger =<< A.parseJSON o
+instance WH.ToHttpApiData E'EnumInteger where toQueryParam = WH.toQueryParam . fromE'EnumInteger
+instance WH.FromHttpApiData E'EnumInteger where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'EnumInteger
+instance MimeRender MimeMultipartFormData E'EnumInteger where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'EnumInteger' enum
+fromE'EnumInteger :: E'EnumInteger -> Int
+fromE'EnumInteger = \case
+  E'EnumInteger'Num1 -> 1
+  E'EnumInteger'NumMinus_1 -> -1
+
+-- | parse 'E'EnumInteger' enum
+toE'EnumInteger :: Int -> P.Either String E'EnumInteger
+toE'EnumInteger = \case
+  1 -> P.Right E'EnumInteger'Num1
+  -1 -> P.Right E'EnumInteger'NumMinus_1
+  s -> P.Left $ "toE'EnumInteger: enum parse failure: " P.++ P.show s
+
+
+-- ** E'EnumNumber
+
+-- | Enum of 'Double'
+data E'EnumNumber
+  = E'EnumNumber'Num1_Dot_1 -- ^ @1.1@
+  | E'EnumNumber'NumMinus_1_Dot_2 -- ^ @-1.2@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'EnumNumber where toJSON = A.toJSON . fromE'EnumNumber
+instance A.FromJSON E'EnumNumber where parseJSON o = P.either P.fail (pure . P.id) . toE'EnumNumber =<< A.parseJSON o
+instance WH.ToHttpApiData E'EnumNumber where toQueryParam = WH.toQueryParam . fromE'EnumNumber
+instance WH.FromHttpApiData E'EnumNumber where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'EnumNumber
+instance MimeRender MimeMultipartFormData E'EnumNumber where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'EnumNumber' enum
+fromE'EnumNumber :: E'EnumNumber -> Double
+fromE'EnumNumber = \case
+  E'EnumNumber'Num1_Dot_1 -> 1.1
+  E'EnumNumber'NumMinus_1_Dot_2 -> -1.2
+
+-- | parse 'E'EnumNumber' enum
+toE'EnumNumber :: Double -> P.Either String E'EnumNumber
+toE'EnumNumber = \case
+  1.1 -> P.Right E'EnumNumber'Num1_Dot_1
+  -1.2 -> P.Right E'EnumNumber'NumMinus_1_Dot_2
+  s -> P.Left $ "toE'EnumNumber: enum parse failure: " P.++ P.show s
+
+
+-- ** E'EnumQueryInteger
+
+-- | Enum of 'Int'
+data E'EnumQueryInteger
+  = E'EnumQueryInteger'Num1 -- ^ @1@
+  | E'EnumQueryInteger'NumMinus_2 -- ^ @-2@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'EnumQueryInteger where toJSON = A.toJSON . fromE'EnumQueryInteger
+instance A.FromJSON E'EnumQueryInteger where parseJSON o = P.either P.fail (pure . P.id) . toE'EnumQueryInteger =<< A.parseJSON o
+instance WH.ToHttpApiData E'EnumQueryInteger where toQueryParam = WH.toQueryParam . fromE'EnumQueryInteger
+instance WH.FromHttpApiData E'EnumQueryInteger where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'EnumQueryInteger
+instance MimeRender MimeMultipartFormData E'EnumQueryInteger where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'EnumQueryInteger' enum
+fromE'EnumQueryInteger :: E'EnumQueryInteger -> Int
+fromE'EnumQueryInteger = \case
+  E'EnumQueryInteger'Num1 -> 1
+  E'EnumQueryInteger'NumMinus_2 -> -2
+
+-- | parse 'E'EnumQueryInteger' enum
+toE'EnumQueryInteger :: Int -> P.Either String E'EnumQueryInteger
+toE'EnumQueryInteger = \case
+  1 -> P.Right E'EnumQueryInteger'Num1
+  -2 -> P.Right E'EnumQueryInteger'NumMinus_2
+  s -> P.Left $ "toE'EnumQueryInteger: enum parse failure: " P.++ P.show s
+
+
+-- ** E'EnumString
+
+-- | Enum of 'Text'
+data E'EnumString
+  = E'EnumString'UPPER -- ^ @"UPPER"@
+  | E'EnumString'Lower -- ^ @"lower"@
+  | E'EnumString'Empty -- ^ @""@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'EnumString where toJSON = A.toJSON . fromE'EnumString
+instance A.FromJSON E'EnumString where parseJSON o = P.either P.fail (pure . P.id) . toE'EnumString =<< A.parseJSON o
+instance WH.ToHttpApiData E'EnumString where toQueryParam = WH.toQueryParam . fromE'EnumString
+instance WH.FromHttpApiData E'EnumString where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'EnumString
+instance MimeRender MimeMultipartFormData E'EnumString where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'EnumString' enum
+fromE'EnumString :: E'EnumString -> Text
+fromE'EnumString = \case
+  E'EnumString'UPPER -> "UPPER"
+  E'EnumString'Lower -> "lower"
+  E'EnumString'Empty -> ""
+
+-- | parse 'E'EnumString' enum
+toE'EnumString :: Text -> P.Either String E'EnumString
+toE'EnumString = \case
+  "UPPER" -> P.Right E'EnumString'UPPER
+  "lower" -> P.Right E'EnumString'Lower
+  "" -> P.Right E'EnumString'Empty
+  s -> P.Left $ "toE'EnumString: enum parse failure: " P.++ P.show s
+
+
+-- ** E'Inner
+
+-- | Enum of 'Text'
+data E'Inner
+  = E'Inner'UPPER -- ^ @"UPPER"@
+  | E'Inner'Lower -- ^ @"lower"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'Inner where toJSON = A.toJSON . fromE'Inner
+instance A.FromJSON E'Inner where parseJSON o = P.either P.fail (pure . P.id) . toE'Inner =<< A.parseJSON o
+instance WH.ToHttpApiData E'Inner where toQueryParam = WH.toQueryParam . fromE'Inner
+instance WH.FromHttpApiData E'Inner where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'Inner
+instance MimeRender MimeMultipartFormData E'Inner where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'Inner' enum
+fromE'Inner :: E'Inner -> Text
+fromE'Inner = \case
+  E'Inner'UPPER -> "UPPER"
+  E'Inner'Lower -> "lower"
+
+-- | parse 'E'Inner' enum
+toE'Inner :: Text -> P.Either String E'Inner
+toE'Inner = \case
+  "UPPER" -> P.Right E'Inner'UPPER
+  "lower" -> P.Right E'Inner'Lower
+  s -> P.Left $ "toE'Inner: enum parse failure: " P.++ P.show s
+
+
+-- ** E'Inner2
+
+-- | Enum of 'Text'
+data E'Inner2
+  = E'Inner2'GreaterThan -- ^ @">"@
+  | E'Inner2'Dollar -- ^ @"$"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'Inner2 where toJSON = A.toJSON . fromE'Inner2
+instance A.FromJSON E'Inner2 where parseJSON o = P.either P.fail (pure . P.id) . toE'Inner2 =<< A.parseJSON o
+instance WH.ToHttpApiData E'Inner2 where toQueryParam = WH.toQueryParam . fromE'Inner2
+instance WH.FromHttpApiData E'Inner2 where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'Inner2
+instance MimeRender MimeMultipartFormData E'Inner2 where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'Inner2' enum
+fromE'Inner2 :: E'Inner2 -> Text
+fromE'Inner2 = \case
+  E'Inner2'GreaterThan -> ">"
+  E'Inner2'Dollar -> "$"
+
+-- | parse 'E'Inner2' enum
+toE'Inner2 :: Text -> P.Either String E'Inner2
+toE'Inner2 = \case
+  ">" -> P.Right E'Inner2'GreaterThan
+  "$" -> P.Right E'Inner2'Dollar
+  s -> P.Left $ "toE'Inner2: enum parse failure: " P.++ P.show s
+
+
+-- ** E'JustSymbol
+
+-- | Enum of 'Text'
+data E'JustSymbol
+  = E'JustSymbol'Greater_Than_Or_Equal_To -- ^ @">="@
+  | E'JustSymbol'Dollar -- ^ @"$"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'JustSymbol where toJSON = A.toJSON . fromE'JustSymbol
+instance A.FromJSON E'JustSymbol where parseJSON o = P.either P.fail (pure . P.id) . toE'JustSymbol =<< A.parseJSON o
+instance WH.ToHttpApiData E'JustSymbol where toQueryParam = WH.toQueryParam . fromE'JustSymbol
+instance WH.FromHttpApiData E'JustSymbol where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'JustSymbol
+instance MimeRender MimeMultipartFormData E'JustSymbol where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'JustSymbol' enum
+fromE'JustSymbol :: E'JustSymbol -> Text
+fromE'JustSymbol = \case
+  E'JustSymbol'Greater_Than_Or_Equal_To -> ">="
+  E'JustSymbol'Dollar -> "$"
+
+-- | parse 'E'JustSymbol' enum
+toE'JustSymbol :: Text -> P.Either String E'JustSymbol
+toE'JustSymbol = \case
+  ">=" -> P.Right E'JustSymbol'Greater_Than_Or_Equal_To
+  "$" -> P.Right E'JustSymbol'Dollar
+  s -> P.Left $ "toE'JustSymbol: enum parse failure: " P.++ P.show s
+
+
+-- ** E'Status
+
+-- | Enum of 'Text' . 
+-- Order Status
+data E'Status
+  = E'Status'Placed -- ^ @"placed"@
+  | E'Status'Approved -- ^ @"approved"@
+  | E'Status'Delivered -- ^ @"delivered"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'Status where toJSON = A.toJSON . fromE'Status
+instance A.FromJSON E'Status where parseJSON o = P.either P.fail (pure . P.id) . toE'Status =<< A.parseJSON o
+instance WH.ToHttpApiData E'Status where toQueryParam = WH.toQueryParam . fromE'Status
+instance WH.FromHttpApiData E'Status where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'Status
+instance MimeRender MimeMultipartFormData E'Status where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'Status' enum
+fromE'Status :: E'Status -> Text
+fromE'Status = \case
+  E'Status'Placed -> "placed"
+  E'Status'Approved -> "approved"
+  E'Status'Delivered -> "delivered"
+
+-- | parse 'E'Status' enum
+toE'Status :: Text -> P.Either String E'Status
+toE'Status = \case
+  "placed" -> P.Right E'Status'Placed
+  "approved" -> P.Right E'Status'Approved
+  "delivered" -> P.Right E'Status'Delivered
+  s -> P.Left $ "toE'Status: enum parse failure: " P.++ P.show s
+
+
+-- ** E'Status2
+
+-- | Enum of 'Text' . 
+-- pet status in the store
+data E'Status2
+  = E'Status2'Available -- ^ @"available"@
+  | E'Status2'Pending -- ^ @"pending"@
+  | E'Status2'Sold -- ^ @"sold"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON E'Status2 where toJSON = A.toJSON . fromE'Status2
+instance A.FromJSON E'Status2 where parseJSON o = P.either P.fail (pure . P.id) . toE'Status2 =<< A.parseJSON o
+instance WH.ToHttpApiData E'Status2 where toQueryParam = WH.toQueryParam . fromE'Status2
+instance WH.FromHttpApiData E'Status2 where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'Status2
+instance MimeRender MimeMultipartFormData E'Status2 where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'E'Status2' enum
+fromE'Status2 :: E'Status2 -> Text
+fromE'Status2 = \case
+  E'Status2'Available -> "available"
+  E'Status2'Pending -> "pending"
+  E'Status2'Sold -> "sold"
+
+-- | parse 'E'Status2' enum
+toE'Status2 :: Text -> P.Either String E'Status2
+toE'Status2 = \case
+  "available" -> P.Right E'Status2'Available
+  "pending" -> P.Right E'Status2'Pending
+  "sold" -> P.Right E'Status2'Sold
+  s -> P.Left $ "toE'Status2: enum parse failure: " P.++ P.show s
+
+
+-- ** EnumClass
+
+-- | Enum of 'Text'
+data EnumClass
+  = EnumClass'_abc -- ^ @"_abc"@
+  | EnumClass'_efg -- ^ @"-efg"@
+  | EnumClass'_xyz -- ^ @"(xyz)"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON EnumClass where toJSON = A.toJSON . fromEnumClass
+instance A.FromJSON EnumClass where parseJSON o = P.either P.fail (pure . P.id) . toEnumClass =<< A.parseJSON o
+instance WH.ToHttpApiData EnumClass where toQueryParam = WH.toQueryParam . fromEnumClass
+instance WH.FromHttpApiData EnumClass where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toEnumClass
+instance MimeRender MimeMultipartFormData EnumClass where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'EnumClass' enum
+fromEnumClass :: EnumClass -> Text
+fromEnumClass = \case
+  EnumClass'_abc -> "_abc"
+  EnumClass'_efg -> "-efg"
+  EnumClass'_xyz -> "(xyz)"
+
+-- | parse 'EnumClass' enum
+toEnumClass :: Text -> P.Either String EnumClass
+toEnumClass = \case
+  "_abc" -> P.Right EnumClass'_abc
+  "-efg" -> P.Right EnumClass'_efg
+  "(xyz)" -> P.Right EnumClass'_xyz
+  s -> P.Left $ "toEnumClass: enum parse failure: " P.++ P.show s
+
+
+-- ** OuterEnum
+
+-- | Enum of 'Text'
+data OuterEnum
+  = OuterEnum'Placed -- ^ @"placed"@
+  | OuterEnum'Approved -- ^ @"approved"@
+  | OuterEnum'Delivered -- ^ @"delivered"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON OuterEnum where toJSON = A.toJSON . fromOuterEnum
+instance A.FromJSON OuterEnum where parseJSON o = P.either P.fail (pure . P.id) . toOuterEnum =<< A.parseJSON o
+instance WH.ToHttpApiData OuterEnum where toQueryParam = WH.toQueryParam . fromOuterEnum
+instance WH.FromHttpApiData OuterEnum where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toOuterEnum
+instance MimeRender MimeMultipartFormData OuterEnum where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'OuterEnum' enum
+fromOuterEnum :: OuterEnum -> Text
+fromOuterEnum = \case
+  OuterEnum'Placed -> "placed"
+  OuterEnum'Approved -> "approved"
+  OuterEnum'Delivered -> "delivered"
+
+-- | parse 'OuterEnum' enum
+toOuterEnum :: Text -> P.Either String OuterEnum
+toOuterEnum = \case
+  "placed" -> P.Right OuterEnum'Placed
+  "approved" -> P.Right OuterEnum'Approved
+  "delivered" -> P.Right OuterEnum'Delivered
+  s -> P.Left $ "toOuterEnum: enum parse failure: " P.++ P.show s
+
+
+-- * Auth Methods
+
+-- ** AuthApiKeyApiKey
+data AuthApiKeyApiKey =
+  AuthApiKeyApiKey Text -- ^ secret
+  deriving (P.Eq, P.Show, P.Typeable)
+
+instance AuthMethod AuthApiKeyApiKey where
+  applyAuthMethod _ a@(AuthApiKeyApiKey secret) req =
+    P.pure $
+    if (P.typeOf a `P.elem` rAuthTypes req)
+      then req `setHeader` toHeader ("api_key", secret)
+           & L.over rAuthTypesL (P.filter (/= P.typeOf a))
+      else req
+
+-- ** AuthApiKeyApiKeyQuery
+data AuthApiKeyApiKeyQuery =
+  AuthApiKeyApiKeyQuery Text -- ^ secret
+  deriving (P.Eq, P.Show, P.Typeable)
+
+instance AuthMethod AuthApiKeyApiKeyQuery where
+  applyAuthMethod _ a@(AuthApiKeyApiKeyQuery secret) req =
+    P.pure $
+    if (P.typeOf a `P.elem` rAuthTypes req)
+      then req `setQuery` toQuery ("api_key_query", Just secret)
+           & L.over rAuthTypesL (P.filter (/= P.typeOf a))
+      else req
+
+-- ** AuthBasicHttpBasicTest
+data AuthBasicHttpBasicTest =
+  AuthBasicHttpBasicTest B.ByteString B.ByteString -- ^ username password
+  deriving (P.Eq, P.Show, P.Typeable)
+
+instance AuthMethod AuthBasicHttpBasicTest where
+  applyAuthMethod _ a@(AuthBasicHttpBasicTest user pw) req =
+    P.pure $
+    if (P.typeOf a `P.elem` rAuthTypes req)
+      then req `setHeader` toHeader ("Authorization", T.decodeUtf8 cred)
+           & L.over rAuthTypesL (P.filter (/= P.typeOf a))
+      else req
+    where cred = BC.append "Basic " (B64.encode $ BC.concat [ user, ":", pw ])
+
+-- ** AuthOAuthPetstoreAuth
+data AuthOAuthPetstoreAuth =
+  AuthOAuthPetstoreAuth Text -- ^ secret
+  deriving (P.Eq, P.Show, P.Typeable)
+
+instance AuthMethod AuthOAuthPetstoreAuth where
+  applyAuthMethod _ a@(AuthOAuthPetstoreAuth secret) req =
+    P.pure $
+    if (P.typeOf a `P.elem` rAuthTypes req)
+      then req `setHeader` toHeader ("Authorization", "Bearer " <> secret) 
+           & L.over rAuthTypesL (P.filter (/= P.typeOf a))
+      else req
 
