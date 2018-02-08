@@ -114,25 +114,28 @@ ext {
     {{/usePlayWS}}
     swagger_annotations_version = "1.5.17"
     junit_version = "4.12"
-    {{#useRxJava}}
-    rx_java_version = "1.3.0"
-    {{/useRxJava}}
-    {{#useRxJava2}}
-    rx_java_version = "2.1.1"
-    {{/useRxJava2}}
-    {{#joda}}
-    jodatime_version = "2.9.9"
-    {{/joda}}
-    {{#threetenbp}}
-    threetenbp_version = "1.3.5"
-    {{/threetenbp}}
-    json_fire_version = "1.8.0"
+    {{#useRxJava}}rx_java_version = "1.3.0"{{/useRxJava}}
+    {{#useRxJava2}}rx_java_version = "2.1.1"{{/useRxJava2}}
+    {{#joda}}jodatime_version = "2.9.9"{{/joda}}
+    {{#threetenbp}}threetenbp_version = "1.3.5"{{/threetenbp}}
+    {{#gson}}json_fire_version = "1.8.0"{{/gson}}
+    {{#jackson}}{{^usePlayWS}}jackson_version="2.9.4"{{/usePlayWS}}{{/jackson}}
 }
 
 dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    {{#gson}}
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "io.gsonfire:gson-fire:$json_fire_version"
+    {{/gson}}
+    {{#jackson}}{{^usePlayWS}}
+    compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"
+    compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    {{#threetenbp}}compile "com.fasterxml.jackson.datatype:jackson-datatype-threetenbp:2.6.4"{{/threetenbp}}
+    {{#joda}}compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"{{/joda}}
+    {{/usePlayWS}}{{/jackson}}
     {{#useRxJava}}
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
     compile "io.reactivex:rxjava:$rx_java_version"
@@ -145,16 +148,10 @@ dependencies {
     compile ("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"){
         exclude group:'org.apache.oltu.oauth2' , module: 'org.apache.oltu.oauth2.common'
     }
-    compile "io.gsonfire:gson-fire:$json_fire_version"
-    {{#joda}}
-    compile "joda-time:joda-time:$jodatime_version"
-    {{/joda}}
-    {{#threetenbp}}
-    compile "org.threeten:threetenbp:$threetenbp_version"
-    {{/threetenbp}}
+    {{#joda}}compile "joda-time:joda-time:$jodatime_version"{{/joda}}
+    {{#threetenbp}}compile "org.threeten:threetenbp:$threetenbp_version"{{/threetenbp}}
     {{#usePlayWS}}
     compile "com.typesafe.play:play-java-ws_2.11:$play_version"
-    compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-{{^java8}}joda{{/java8}}{{#java8}}jsr310{{/java8}}:$jackson_version"

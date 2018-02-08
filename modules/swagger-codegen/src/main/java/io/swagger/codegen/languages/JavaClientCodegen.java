@@ -29,6 +29,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String USE_RX_JAVA = "useRxJava";
     public static final String USE_RX_JAVA2 = "useRxJava2";
     public static final String DO_NOT_USE_RX = "doNotUseRx";
+    public static final String USE_JACKSON = "useJackson";
     public static final String USE_PLAY_WS = "usePlayWS";
     public static final String PLAY_VERSION = "playVersion";
     public static final String PARCELABLE_MODEL = "parcelableModel";
@@ -40,7 +41,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
     public static final String REST_ASSURED = "rest-assured";
-    public static final String USE_JACKSON = "useJackson";
 
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
@@ -225,8 +225,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("GzipRequestInterceptor.mustache", invokerFolder, "GzipRequestInterceptor.java"));
             additionalProperties.put("gson", "true");
         } else if (usesAnyRetrofitLibrary()) {
-            Boolean useJackson = Boolean.valueOf(additionalProperties.get(USE_JACKSON).toString());
-            if (useJackson) {
+            Object useJackson = additionalProperties.get(USE_JACKSON);
+            if (useJackson != null && Boolean.valueOf(useJackson.toString())) {
                 additionalProperties.put("jackson", true);
             } else {
                 additionalProperties.put("gson", true);
