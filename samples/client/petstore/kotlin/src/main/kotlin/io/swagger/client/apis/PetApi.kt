@@ -15,8 +15,9 @@ import io.swagger.client.models.ApiResponse
 import io.swagger.client.models.Pet
 
 import io.swagger.client.infrastructure.*
+import okhttp3.OkHttpClient
 
-class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
+class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2", httpClient: OkHttpClient = OkHttpClient()) : ApiClient(basePath, httpClient) {
 
     /**
     * Add a new pet to the store
