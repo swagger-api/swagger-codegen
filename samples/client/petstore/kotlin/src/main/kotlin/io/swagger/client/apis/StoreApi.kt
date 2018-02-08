@@ -14,8 +14,9 @@ package io.swagger.client.apis
 import io.swagger.client.models.Order
 
 import io.swagger.client.infrastructure.*
+import okhttp3.OkHttpClient
 
-class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
+class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2", httpClient: OkHttpClient = OkHttpClient()) : ApiClient(basePath, httpClient) {
 
     /**
     * Delete purchase order by ID
