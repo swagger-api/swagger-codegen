@@ -12,6 +12,6 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./globalConfiguration";
+export class GlobalConfiguration {
+    static basePath: string = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
+}
