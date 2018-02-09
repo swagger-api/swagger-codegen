@@ -1,6 +1,5 @@
 package io.swagger.codegen.utils;
 
-import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.v3.oas.models.Operation;
@@ -12,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
@@ -46,15 +48,18 @@ public class ModelUtils {
     }
 
     public static Operation[] createOperationArray (PathItem pathItem) {
-        return new Operation[]{
-                pathItem.getGet(),
-                pathItem.getPost(),
-                pathItem.getDelete(),
-                pathItem.getHead(),
-                pathItem.getPut(),
-                pathItem.getPatch(),
-                pathItem.getOptions()
-        };
+        return Stream.of(
+                    pathItem.getGet(),
+                    pathItem.getPost(),
+                    pathItem.getDelete(),
+                    pathItem.getHead(),
+                    pathItem.getPut(),
+                    pathItem.getPatch(),
+                    pathItem.getOptions()
+               )
+               .filter(Objects::nonNull)
+               .collect(Collectors.toSet())
+               .toArray(new Operation[]{});
     }
 
     public static void processCodegenModels(Map<String, CodegenModel> allModels) {
