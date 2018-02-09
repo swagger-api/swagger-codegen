@@ -104,9 +104,10 @@ open class {{classname}}: APIBase {
      - returns: RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{description}}
      */
     open class func {{operationId}}WithRequestBuilder({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}? = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
-        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
+        let originalPath = "{{{path}}}"{{#pathParams}}{{^secondaryParam}}
+        var path = originalPath{{/secondaryParam}}{{/pathParams}}{{#pathParams}}
         path = path.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})", options: .literal, range: nil){{/pathParams}}
-        let URLString = {{projectName}}API.basePath + path
+        let URLString = {{projectName}}API.basePath + {{^pathParams}}originalPath{{/pathParams}}{{#pathParams}}{{^secondaryParam}}path{{/secondaryParam}}{{/pathParams}}
         {{#bodyParam}}
         let parameters = {{paramName}}{{^required}}?{{/required}}.encodeToJSON() as? [String:AnyObject]
         {{/bodyParam}}
@@ -141,7 +142,7 @@ open class {{classname}}: APIBase {
 
         let requestBuilder: RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>.Type = {{projectName}}API.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "{{httpMethod}}", URLString: (url?.string ?? URLString), parameters: parameters, isBody: {{hasBodyParam}}{{#headerParams}}{{^secondaryParam}}, headers: headerParameters{{/secondaryParam}}{{/headerParams}})
+        return requestBuilder.init(method: "{{httpMethod}}", path: originalPath, URLString: (url?.string ?? URLString), parameters: parameters, isBody: {{hasBodyParam}}{{#headerParams}}{{^secondaryParam}}, headers: headerParameters{{/secondaryParam}}{{/headerParams}})
     }
 
 {{/operation}}
