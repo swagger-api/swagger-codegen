@@ -16,8 +16,8 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
 private var managerStore: [String: Alamofire.SessionManager] = [:]
 
 open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool, headers: [String : String] = [:]) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
+    required public init(method: String, path: String, URLString: String, parameters: [String : Any]?, isBody: Bool, headers: [String : String] = [:]) {
+        super.init(method: method, path: path, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
     /**
@@ -92,7 +92,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     }
                     self.processRequest(request: upload, managerId, completion)
                 case .failure(let encodingError):
-                    completion(nil, ErrorResponse.Error(415, nil, encodingError))
+                    completion(nil, ErrorResponse.Error(self.path, self.URLString, 415, nil, encodingError))
                 }
             })
         } else {
@@ -124,13 +124,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if stringResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.Error(stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error as Error!)
+                        ErrorResponse.Error(self.path, self.URLString, stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error as Error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: stringResponse.response!,
                         body: ((stringResponse.result.value ?? "") as! T)
                     ),
@@ -144,13 +146,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if voidResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.Error(voidResponse.response?.statusCode ?? 500, voidResponse.data, voidResponse.result.error!)
+                        ErrorResponse.Error(self.path, self.URLString, voidResponse.response?.statusCode ?? 500, voidResponse.data, voidResponse.result.error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: voidResponse.response!,
                         body: nil),
                     nil
@@ -163,13 +167,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if (dataResponse.result.isFailure) {
                     completion(
                         nil,
-                        ErrorResponse.Error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
+                        ErrorResponse.Error(self.path, self.URLString, dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: dataResponse.response!,
                         body: (dataResponse.data as! T)
                     ),
@@ -181,7 +187,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 cleanupRequest()
 
                 if response.result.isFailure {
-                    completion(nil, ErrorResponse.Error(response.response?.statusCode ?? 500, response.data, response.result.error!))
+                    completion(nil, ErrorResponse.Error(self.path, self.URLString, response.response?.statusCode ?? 500, response.data, response.result.error!))
                     return
                 }
 
@@ -193,21 +199,21 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
 
                 if () is T {
-                    completion(Response(response: response.response!, body: (() as! T)), nil)
+                    completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: (() as! T)), nil)
                     return
                 }
                 if let json: Any = response.result.value {
                     let body = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
-                    completion(Response(response: response.response!, body: body), nil)
+                    completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: body), nil)
                     return
                 } else if "" is T {
                     // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
                     // https://github.com/swagger-api/swagger-parser/pull/34
-                    completion(Response(response: response.response!, body: ("" as! T)), nil)
+                    completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: ("" as! T)), nil)
                     return
                 }
 
-                completion(nil, ErrorResponse.Error(500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
+                completion(nil, ErrorResponse.Error(self.path, self.URLString, 500, nil, NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
             }
         }
     }
