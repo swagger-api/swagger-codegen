@@ -35,7 +35,7 @@ public class SwaggerDocumentationConfig {
                     .build()
                 .directModelSubstitute(org.threeten.bp.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.threeten.bp.OffsetDateTime.class, java.util.Date.class)
-				.genericModelSubstitutes(Optional.class)
+                .genericModelSubstitutes(Optional.class)
                 .apiInfo(apiInfo());
     }
 
