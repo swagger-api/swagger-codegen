@@ -42,19 +42,13 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         QString **val = static_cast<QString**>(value);
         if(val != nullptr) {
             if(!obj.isNull()) {
-                // create a new value and return
-                if(*val != nullptr) delete *val;
-                *val = new QString(obj.toString());
+                (*val)->clear();
+                (*val)->append(obj.toString());
                 return;
             }
             else {
-                // set target to nullptr
-                if(*val != nullptr) delete *val;
-                *val = nullptr;
+                (*val)->clear();
             }
-        }
-        else {
-            qDebug() << "Can't set value because the target pointer is nullptr";
         }
     }
     else if (QStringLiteral("QDateTime").compare(type) == 0) {
