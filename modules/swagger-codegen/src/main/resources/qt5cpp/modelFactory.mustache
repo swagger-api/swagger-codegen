@@ -18,13 +18,12 @@ namespace {{this}} {
   }
 
   inline void* create(QString json, QString type) {
-    void* val = create(type);
-    if(val != nullptr) {
-      {{prefix}}Object* obj = static_cast<{{prefix}}Object*>(val);
-      return obj->fromJson(json);
-    }
     if(type.startsWith("QString")) {
       return new QString();
+    }    
+    auto val = static_cast<{{prefix}}Object*>(create(type));
+    if(val != nullptr) {
+      return val->fromJson(json);
     }
     return nullptr;
   }
