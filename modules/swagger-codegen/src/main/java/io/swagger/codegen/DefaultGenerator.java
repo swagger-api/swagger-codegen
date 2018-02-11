@@ -157,6 +157,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
 
+        config.additionalProperties().put(CodegenConstants.GENERATE_APIS, generateApis);
+        config.additionalProperties().put(CodegenConstants.GENERATE_MODELS, generateModels);
+
         if (!generateApiTests && !generateModelTests) {
             config.additionalProperties().put(CodegenConstants.EXCLUDE_TESTS, true);
         }
@@ -977,7 +980,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
             if (mapping != null) {
                 im.put("import", mapping);
-                imports.add(im);
+                if (!imports.contains(im)) { // avoid duplicates
+                    imports.add(im);
+                }
             }
         }
 
