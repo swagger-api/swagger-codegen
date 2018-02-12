@@ -45,6 +45,11 @@ components:
           description: "folder containing the template files"
           x-option: "--template-dir"
           x-short-version: "-t"
+        templateVersion:
+          type: "string"
+          title: "template version"
+          description: "version of the template used on generation."
+          x-option: "--template-version"
         auth:
           type: "string"
           title: "authorization"

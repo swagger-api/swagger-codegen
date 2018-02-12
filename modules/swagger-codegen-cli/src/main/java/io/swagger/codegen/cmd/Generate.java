@@ -46,6 +46,7 @@ public class Generate implements Runnable {
     protected String output = "";
     protected String spec;
     protected String templateDir;
+    protected String templateVersion;
     protected String auth;
     protected List<String> systemProperties = new ArrayList<>();
     protected String configFile;
@@ -91,6 +92,10 @@ public class Generate implements Runnable {
 
     public void setTemplateDir(String templateDir) {
         this.templateDir = templateDir;
+    }
+
+    public void setTemplateVersion(String templateVersion) {
+        this.templateVersion = templateVersion;
     }
 
     public void setAuth(String auth) {
@@ -238,6 +243,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(templateDir)) {
             configurator.setTemplateDir(templateDir);
+        }
+
+        if (isNotEmpty(templateVersion)) {
+            configurator.setTemplateVersion(templateVersion);
         }
 
         if (isNotEmpty(apiPackage)) {
