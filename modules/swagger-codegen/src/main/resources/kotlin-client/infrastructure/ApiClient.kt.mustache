@@ -85,9 +85,9 @@ open class ApiClient(val baseUrl: String) {
             RequestMethod.DELETE -> Request.Builder().url(url).delete()
             RequestMethod.GET -> Request.Builder().url(url)
             RequestMethod.HEAD -> Request.Builder().url(url).head()
-            RequestMethod.PATCH -> Request.Builder().url(url).patch(safeRequestBody(body, contentType))
-            RequestMethod.PUT -> Request.Builder().url(url).put(safeRequestBody(body, contentType))
-            RequestMethod.POST -> Request.Builder().url(url).post(safeRequestBody(body, contentType))
+            RequestMethod.PATCH -> Request.Builder().url(url).patch(requestBody(body, contentType))
+            RequestMethod.PUT -> Request.Builder().url(url).put(requestBody(body, contentType))
+            RequestMethod.POST -> Request.Builder().url(url).post(requestBody(body, contentType))
             RequestMethod.OPTIONS -> Request.Builder().url(url).method("OPTIONS", null)
         }
 
@@ -125,9 +125,4 @@ open class ApiClient(val baseUrl: String) {
             )
         }
     }
-
-    inline protected fun safeRequestBody(body : Any?, contentType: String): RequestBody =
-        body?.let {
-            requestBody(body, contentType)
-        } ?: RequestBody.create(null, "")
 }
