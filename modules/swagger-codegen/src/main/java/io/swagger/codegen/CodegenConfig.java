@@ -41,6 +41,8 @@ public interface CodegenConfig {
 
     String embeddedTemplateDir();
 
+    String getTemplateVersion();
+
     String modelFileFolder();
 
     String modelTestFileFolder();
