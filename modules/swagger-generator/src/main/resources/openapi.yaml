@@ -138,6 +138,10 @@ components:
           type: "string"
           title: "api package"
           description: "package for generated api classes"
+        templateVersion:
+          type: "string"
+          title: "Template Version"
+          description: "template version for generation"
         modelPackage:
           type: "string"
           title: "model package"
