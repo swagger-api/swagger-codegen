@@ -1394,7 +1394,7 @@ public class DefaultCodegen {
                     }
                     // set first interface with discriminator found as parent
                     if (parent == null
-                    		&& ((supportsModelExtension && (interfaceModel instanceof ModelImpl || interfaceModel instanceof ComposedModel))
+                            && ((supportsModelExtension && (interfaceModel instanceof ModelImpl || interfaceModel instanceof ComposedModel))
                                 || (interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null)
                                 || (interfaceModel instanceof ComposedModel && isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions)))) {
                         parent = _interface;
