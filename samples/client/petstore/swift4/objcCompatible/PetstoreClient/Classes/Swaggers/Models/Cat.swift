@@ -20,6 +20,10 @@ public struct Cat: Codable {
         }
     }
 
+    public init(declawed: Bool?) {
+        self.declawed = declawed
+    }
+
 
 
 }

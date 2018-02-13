@@ -15,6 +15,10 @@ public struct Dog: Codable {
     public var color: String?
     public var breed: String?
 
+    public init(breed: String?) {
+        self.breed = breed
+    }
+
 
 
 }
