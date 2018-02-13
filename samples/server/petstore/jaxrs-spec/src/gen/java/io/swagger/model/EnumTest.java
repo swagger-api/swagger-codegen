@@ -4,6 +4,8 @@ import io.swagger.model.OuterEnum;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 
 import io.swagger.annotations.*;
@@ -30,10 +32,12 @@ public enum EnumStringEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumStringEnum fromValue(String v) {
         for (EnumStringEnum b : EnumStringEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -62,10 +66,12 @@ public enum EnumIntegerEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumIntegerEnum fromValue(String v) {
         for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -94,10 +100,12 @@ public enum EnumNumberEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumNumberEnum fromValue(String v) {
         for (EnumNumberEnum b : EnumNumberEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {

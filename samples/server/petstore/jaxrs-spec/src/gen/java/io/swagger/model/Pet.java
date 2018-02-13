@@ -7,6 +7,8 @@ import java.util.List;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 
 import io.swagger.annotations.*;
@@ -38,10 +40,12 @@ public enum StatusEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static StatusEnum fromValue(String v) {
         for (StatusEnum b : StatusEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
