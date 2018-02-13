@@ -28,6 +28,7 @@ public class Options {
     private String httpUserAgent;
     private List<String> reservedWordsMappings;
     private String ignoreFileOverride;
+    private String templateVersion;
     private Boolean removeOperationIdPrefix;
 
     public Options lang(String lang) {
@@ -318,6 +319,19 @@ public class Options {
 
     public Options httpUserAgent(String httpUserAgent) {
         this.httpUserAgent = httpUserAgent;
+        return this;
+    }
+
+    public String getTemplateVersion() {
+        return templateVersion;
+    }
+
+    public void setTemplateVersion(String templateVersion) {
+        this.templateVersion = templateVersion;
+    }
+
+    public Options templateVersion(String templateVersion) {
+        this.templateVersion = templateVersion;
         return this;
     }
 
