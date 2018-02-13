@@ -49,6 +49,7 @@ public class CodegenConfigurator implements Serializable {
     private boolean skipOverwrite;
     private boolean removeOperationIdPrefix;
     private String templateDir;
+    private String templateVersion;
     private String auth;
     private String apiPackage;
     private String modelPackage;
@@ -173,6 +174,15 @@ public class CodegenConfigurator implements Serializable {
         }
 
         this.templateDir = f.getAbsolutePath();
+        return this;
+    }
+
+    public String getTemplateVersion() {
+        return templateVersion;
+    }
+
+    public CodegenConfigurator setTemplateVersion(String templateVersion) {
+        this.templateVersion = templateVersion;
         return this;
     }
 
@@ -411,6 +421,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(artifactId, CodegenConstants.ARTIFACT_ID);
         checkAndSetAdditionalProperty(artifactVersion, CodegenConstants.ARTIFACT_VERSION);
         checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
+        checkAndSetAdditionalProperty(templateVersion, CodegenConstants.TEMPLATE_VERSION);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
@@ -470,6 +481,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(artifactId, CodegenConstants.ARTIFACT_ID);
         checkAndSetAdditionalProperty(artifactVersion, CodegenConstants.ARTIFACT_VERSION);
         checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
+        checkAndSetAdditionalProperty(templateVersion, CodegenConstants.TEMPLATE_VERSION);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);

@@ -75,6 +75,9 @@ public class GeneratorUtil {
         if (isNotEmpty(options.getReleaseNote())) {
             configurator.setReleaseNote(options.getReleaseNote());
         }
+        if (isNotEmpty(options.getTemplateVersion())) {
+            configurator.setTemplateVersion(options.getTemplateVersion());
+        }
         if (isNotEmpty(options.getHttpUserAgent())) {
             configurator.setHttpUserAgent(options.getHttpUserAgent());
         }
@@ -153,6 +156,9 @@ public class GeneratorUtil {
         }
         if (node.has("releaseNote")) {
             configurator.setReleaseNote(node.findValue("releaseNote").textValue());
+        }
+        if (node.has("templateVersion")) {
+            configurator.setTemplateVersion(node.findValue("templateVersion").textValue());
         }
         if (node.has("httpUserAgent")) {
             configurator.setHttpUserAgent(node.findValue("httpUserAgent").textValue());

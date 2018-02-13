@@ -106,6 +106,7 @@ public class DefaultCodegen implements CodegenConfig {
     protected String templateDir;
     protected String embeddedTemplateDir;
     protected String commonTemplateDir = "_common";
+    protected String templateVersion;
     protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
     protected Map<String, Object> vendorExtensions = new HashMap<String, Object>();
     protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
@@ -138,6 +139,10 @@ public class DefaultCodegen implements CodegenConfig {
     public void processOpts() {
         if (additionalProperties.containsKey(CodegenConstants.TEMPLATE_DIR)) {
             this.setTemplateDir((String) additionalProperties.get(CodegenConstants.TEMPLATE_DIR));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.TEMPLATE_VERSION)) {
+            this.setTemplateVersion((String) additionalProperties.get(CodegenConstants.TEMPLATE_VERSION));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
@@ -488,6 +493,15 @@ public class DefaultCodegen implements CodegenConfig {
 
     public void setTemplateDir(String templateDir) {
         this.templateDir = templateDir;
+    }
+
+    @Override
+    public String getTemplateVersion() {
+        return templateVersion;
+    }
+
+    public void setTemplateVersion(String templateVersion) {
+        this.templateVersion = templateVersion;
     }
 
     public void setModelPackage(String modelPackage) {
