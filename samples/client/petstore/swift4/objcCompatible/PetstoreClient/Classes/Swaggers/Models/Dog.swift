@@ -15,7 +15,9 @@ public struct Dog: Codable {
     public var color: String?
     public var breed: String?
 
-    public init(breed: String?) {
+    public init(className: String, color: String?, breed: String?) {
+        self.className = className
+        self.color = color
         self.breed = breed
     }
 

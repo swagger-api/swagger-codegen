@@ -23,10 +23,10 @@ public struct {{classname}}: Codable {
 {{/allVars}}
 
     {{#hasVars}}
-    public init({{#vars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) {
-        {{#vars}}
+    public init({{#allVars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/allVars}}) {
+        {{#allVars}}
         self.{{name}} = {{name}}
-        {{/vars}}
+        {{/allVars}}
     }
     {{/hasVars}}
 
