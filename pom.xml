@@ -926,6 +926,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </repository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>baikal-internal</id>
