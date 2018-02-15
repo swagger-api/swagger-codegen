@@ -27,6 +27,12 @@ lazy val root = (project in file(".")).
       "com.fasterxml.jackson.core" % "jackson-annotations" % "2.7.8" % "compile",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.8" % "compile",
       {{/play25}}
+      {{#play26}}
+      "com.typesafe.play" % "play-java-ws_2.11" % "2.5.15" % "compile",
+      "com.fasterxml.jackson.core" % "jackson-core" % "2.7.8" % "compile",
+      "com.fasterxml.jackson.core" % "jackson-annotations" % "2.7.8" % "compile",
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.8" % "compile",
+      {{/play26}}
       "com.squareup.retrofit2" % "converter-jackson" % "2.3.0" % "compile",
       {{/usePlayWS}}
       {{#useRxJava}}
