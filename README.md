@@ -95,7 +95,7 @@ If you're looking for the latest stable version, you can grab it directly from M
 ```sh
 wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar -O swagger-codegen-cli.jar
 
-java -jar swagger-codegen-cli.jar help
+java -jar swagger-codegen-cli.jar --help
 ```
 
 For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar`
