@@ -18,8 +18,7 @@ public class Play26CallAdapterFactory extends CallAdapter.Factory {
 
     private Function<RuntimeException, RuntimeException> exceptionConverter = Function.identity();
 
-    public Play26CallAdapterFactory() {
-    }
+    public Play26CallAdapterFactory() { }
 
     public Play26CallAdapterFactory(
             Function<RuntimeException, RuntimeException> exceptionConverter) {
