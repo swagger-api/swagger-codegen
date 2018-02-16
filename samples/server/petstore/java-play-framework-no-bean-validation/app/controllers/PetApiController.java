@@ -150,6 +150,6 @@ public class PetApiController extends Controller {
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         JsonNode result = mapper.valueToTree(obj);
-        return Results.status(201, result);
+        return Results.status(200, result);
     }
 }

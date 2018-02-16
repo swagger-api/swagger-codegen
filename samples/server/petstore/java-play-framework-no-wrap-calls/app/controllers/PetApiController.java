@@ -175,6 +175,6 @@ public class PetApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return Results.status(201, result);
+        return Results.status(200, result);
     }
 }
