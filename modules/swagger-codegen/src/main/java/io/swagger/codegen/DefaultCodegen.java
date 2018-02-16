@@ -1975,20 +1975,20 @@ public class DefaultCodegen {
      * @param responses Swagger Operation's responses
      * @return default method response or <tt>null</tt> if not found
      */
-    protected Response findMethodResponse(Map<String, Response> responses) {
+    protected Entry<String, Response> findMethodResponse(Map<String, Response> responses) {
 
-        String code = null;
-        for (String responseCode : responses.keySet()) {
-            if (responseCode.startsWith("2") || responseCode.equals("default")) {
-                if (code == null || code.compareTo(responseCode) > 0) {
-                    code = responseCode;
+        Entry<String, Response> response = null;
+        for (Entry<String, Response> entry : responses.entrySet()) {
+            if (entry.getKey().startsWith("2") || "default".equals(entry.getKey())) {
+                if (response == null || response.getKey().compareTo(entry.getKey()) > 0) {
+                    response = entry;
                 }
             }
         }
-        if (code == null) {
+        if (response == null) {
             return null;
         }
-        return responses.get(code);
+        return response;
     }
 
     /**
@@ -2123,80 +2123,84 @@ public class DefaultCodegen {
         }
 
         if (operation.getResponses() != null && !operation.getResponses().isEmpty()) {
-            Response methodResponse = findMethodResponse(operation.getResponses());
-
-            for (Map.Entry<String, Response> entry : operation.getResponses().entrySet()) {
-                Response response = entry.getValue();
-                CodegenResponse r = fromResponse(entry.getKey(), response);
-                r.hasMore = true;
-                if (r.baseType != null &&
-                        !defaultIncludes.contains(r.baseType) &&
-                        !languageSpecificPrimitives.contains(r.baseType)) {
-                    imports.add(r.baseType);
-                }
-                r.isDefault = response == methodResponse;
-                op.responses.add(r);
-                if (Boolean.TRUE.equals(r.isBinary) && Boolean.TRUE.equals(r.isDefault)){
-                    op.isResponseBinary = Boolean.TRUE;
-                }
-                if (Boolean.TRUE.equals(r.isFile) && Boolean.TRUE.equals(r.isDefault)){
-                    op.isResponseFile = Boolean.TRUE;
-                }
-            }
-            op.responses.get(op.responses.size() - 1).hasMore = false;
+            Entry<String, Response> methodResponse = findMethodResponse(operation.getResponses());
 
             if (methodResponse != null) {
-                if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
+                String code = methodResponse.getKey();
+                if (!"default".equals(code)) {
+                    op.successCode = Integer.parseInt(code);
+                }
 
-                    Property responseProperty = methodResponse.getSchema();
+                for (Entry<String, Response> entry : operation.getResponses().entrySet()) {
+                    Response response = entry.getValue();
+                    CodegenResponse r = fromResponse(entry.getKey(), response);
+                    r.hasMore = true;
+                    if (r.baseType != null &&
+                            !defaultIncludes.contains(r.baseType) &&
+                            !languageSpecificPrimitives.contains(r.baseType)) {
+                        imports.add(r.baseType);
+                    }
+                    r.isDefault = response == methodResponse.getValue();
+                    op.responses.add(r);
+                    if (Boolean.TRUE.equals(r.isBinary) && Boolean.TRUE.equals(r.isDefault)){
+                        op.isResponseBinary = Boolean.TRUE;
+                    }
+                    if (Boolean.TRUE.equals(r.isFile) && Boolean.TRUE.equals(r.isDefault)){
+                        op.isResponseFile = Boolean.TRUE;
+                    }
+                }
+                op.responses.get(op.responses.size() - 1).hasMore = false;
 
-                    if (responseProperty instanceof ArrayProperty) {
-                        ArrayProperty ap = (ArrayProperty) responseProperty;
-                        CodegenProperty innerProperty = fromProperty("response", ap.getItems());
-                        op.returnBaseType = innerProperty.baseType;
-                    } else if (responseProperty instanceof MapProperty) {
-                        MapProperty ap = (MapProperty) responseProperty;
-                        CodegenProperty innerProperty = fromProperty("response", ap.getAdditionalProperties());
-                        op.returnBaseType = innerProperty.baseType;
-                    } else {
-                        if (cm.complexType != null) {
-                            op.returnBaseType = cm.complexType;
+                Response response = methodResponse.getValue();
+                if (response != null) {
+                    if (response.getSchema() != null) {
+                        CodegenProperty cm = fromProperty("response", response.getSchema());
+
+                        Property responseProperty = response.getSchema();
+
+                        if (responseProperty instanceof ArrayProperty) {
+                            ArrayProperty ap = (ArrayProperty) responseProperty;
+                            CodegenProperty innerProperty = fromProperty("response", ap.getItems());
+                            op.returnBaseType = innerProperty.baseType;
+                        } else if (responseProperty instanceof MapProperty) {
+                            MapProperty ap = (MapProperty) responseProperty;
+                            CodegenProperty innerProperty = fromProperty("response", ap.getAdditionalProperties());
+                            op.returnBaseType = innerProperty.baseType;
                         } else {
                             op.returnBaseType = cm.baseType;
                         }
-                    }
-                    op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
-                    op.defaultResponse = toDefaultValue(responseProperty);
-                    op.returnType = cm.datatype;
-                    op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
+                        op.examples = new ExampleGenerator(definitions).generate(response.getExamples(), operation.getProduces(), responseProperty);
+                        op.defaultResponse = toDefaultValue(responseProperty);
+                        op.returnType = cm.datatype;
+                        op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
 
-                    // lookup discriminator
-                    if (definitions != null) {
-                        Model m = definitions.get(op.returnBaseType);
-                        if (m != null) {
-                            CodegenModel cmod = fromModel(op.returnBaseType, m, definitions);
-                            op.discriminator = cmod.discriminator;
+                        // lookup discriminator
+                        if (definitions != null) {
+                            Model m = definitions.get(op.returnBaseType);
+                            if (m != null) {
+                                CodegenModel cmod = fromModel(op.returnBaseType, m, definitions);
+                                op.discriminator = cmod.discriminator;
+                            }
+                        }
+
+                        if (cm.isContainer) {
+                            op.returnContainer = cm.containerType;
+                            if ("map".equals(cm.containerType)) {
+                                op.isMapContainer = true;
+                            } else if ("list".equalsIgnoreCase(cm.containerType)) {
+                                op.isListContainer = true;
+                            } else if ("array".equalsIgnoreCase(cm.containerType)) {
+                                op.isListContainer = true;
+                            }
+                        } else {
+                            op.returnSimpleType = true;
+                        }
+                        if (languageSpecificPrimitives().contains(op.returnBaseType) || op.returnBaseType == null) {
+                            op.returnTypeIsPrimitive = true;
                         }
                     }
-
-                    if (cm.isContainer) {
-                        op.returnContainer = cm.containerType;
-                        if ("map".equals(cm.containerType)) {
-                            op.isMapContainer = true;
-                        } else if ("list".equalsIgnoreCase(cm.containerType)) {
-                            op.isListContainer = true;
-                        } else if ("array".equalsIgnoreCase(cm.containerType)) {
-                            op.isListContainer = true;
-                        }
-                    } else {
-                        op.returnSimpleType = true;
-                    }
-                    if (languageSpecificPrimitives().contains(op.returnBaseType) || op.returnBaseType == null) {
-                        op.returnTypeIsPrimitive = true;
-                    }
+                    addHeaders(response, op.responseHeaders);
                 }
-                addHeaders(methodResponse, op.responseHeaders);
             }
         }
 
