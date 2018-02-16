@@ -8,6 +8,7 @@ import apimodels.OuterComposite;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class FakeApiController extends Controller {
         }
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -73,7 +74,7 @@ public class FakeApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -93,7 +94,7 @@ public class FakeApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -110,7 +111,7 @@ public class FakeApiController extends Controller {
         }
         String obj = imp.fakeOuterStringSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -130,7 +131,7 @@ public class FakeApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -234,7 +235,7 @@ public class FakeApiController extends Controller {
             paramCallback = null;
         }
         imp.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -302,7 +303,7 @@ public class FakeApiController extends Controller {
             enumHeaderString = "-efg";
         }
         imp.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -318,7 +319,7 @@ public class FakeApiController extends Controller {
             throw new IllegalArgumentException("'param' parameter is required");
         }
         imp.testInlineAdditionalProperties(param);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -338,6 +339,6 @@ public class FakeApiController extends Controller {
             throw new IllegalArgumentException("'param2' parameter is required");
         }
         imp.testJsonFormData(param, param2);
-        return ok();
+        return Results.status(200);
     }
 }

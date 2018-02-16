@@ -5,6 +5,7 @@ import apimodels.User;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         imp.createUser(body);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -67,7 +68,7 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         imp.createUsersWithArrayInput(body);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -85,13 +86,13 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         imp.createUsersWithListInput(body);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
         imp.deleteUser(username);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -101,7 +102,7 @@ public class UserApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -122,13 +123,13 @@ public class UserApiController extends Controller {
         }
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
         imp.logoutUser();
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -144,6 +145,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         imp.updateUser(username, body);
-        return ok();
+        return Results.status(200);
     }
 }

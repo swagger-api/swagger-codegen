@@ -5,6 +5,7 @@ import apimodels.User;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -63,7 +64,7 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -80,17 +81,17 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result getUserByName(String username) throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -109,12 +110,12 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'password' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -129,6 +130,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 }

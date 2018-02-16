@@ -4,6 +4,7 @@ import apimodels.Client;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,6 @@ public class AnotherFakeApiController extends Controller {
             SwaggerUtils.validate(obj);
         }
         JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        return Results.status(200, result);
     }
 }
