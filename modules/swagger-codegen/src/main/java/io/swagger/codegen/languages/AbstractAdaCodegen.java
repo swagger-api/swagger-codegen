@@ -387,7 +387,7 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
 
             if (methodResponse != null) {
                 String successCode = methodResponse.getKey();
-                if ("default".equals(successCode)) {
+                if (!"default".equals(successCode)) {
                     op.successCode = Integer.parseInt(successCode);
                 }
                 Response response = methodResponse.getValue();
