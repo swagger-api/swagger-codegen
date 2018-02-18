@@ -100,17 +100,17 @@ class {{controllerName}} extends Controller
 
         // Read out all input parameter values into variables
         {{#queryParams}}
-        ${{paramName}} = $request->query->get('{{paramName}}');
+        ${{paramName}} = $request->query->get('{{baseName}}');
         {{/queryParams}}
         {{#headerParams}}
         ${{paramName}} = $request->headers->get('{{baseName}}');
         {{/headerParams}}
         {{#formParams}}
         {{#isFile}}
-        ${{paramName}} = $request->files->get('{{paramName}}');
+        ${{paramName}} = $request->files->get('{{baseName}}');
         {{/isFile}}
         {{^isFile}}
-        ${{paramName}} = $request->request->get('{{paramName}}');
+        ${{paramName}} = $request->request->get('{{baseName}}');
         {{/isFile}}
         {{/formParams}}
         {{#bodyParams}}
