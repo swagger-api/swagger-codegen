@@ -109,7 +109,7 @@ public class DefaultCodegen {
     // When a model is an alias for a simple type
     protected Map<String, String> typeAliases = null;
     // The extension of the generated documentation files (defaults to markdown .md)
-    protected String docExtension = ".md";
+    protected String docExtension;
 
     protected String ignoreFilePathOverride;
 
@@ -3339,7 +3339,8 @@ public class DefaultCodegen {
      * @return the API documentation file name with full path
      */
     public String apiDocFilename(String templateName, String tag) {
-        String suffix = apiDocTemplateFiles().get(templateName);
+        String docExtension = getDocExtension();
+        String suffix = docExtension != null ? docExtension: apiDocTemplateFiles().get(templateName);
         return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
     }
 
