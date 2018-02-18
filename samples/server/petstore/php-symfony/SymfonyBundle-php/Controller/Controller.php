@@ -47,6 +47,12 @@ class Controller
     protected $validator;
     protected $serializer;
     protected $apiServer;
+    protected $debugMode=false;
+
+    public function setDebugMode($debugMode)
+    {
+        $this->debugMode = $debugMode;
+    }
 
     public function setValidator(ValidatorInterface $validator)
     {
@@ -146,7 +152,7 @@ class Controller
             return null;
         }
 
-        if (!$this->container->get('kernel')->isDebug()) {
+        if (!$this->debugMode) {
             return [
                 'message'  => $exception->getMessage(),
             ];
