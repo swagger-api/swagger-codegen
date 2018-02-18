@@ -25,6 +25,7 @@ services:
     {{bundleAlias}}.controller.{{pathPrefix}}:
         class: {{controllerPackage}}\{{baseName}}Controller
         calls:
+         - [setDebugMode,  ['%kernel.debug%']]
          - [setSerializer, ['@{{bundleAlias}}.service.serializer']]
          - [setValidator,  ['@{{bundleAlias}}.service.validator']]
          - [setApiServer,  ['@{{bundleAlias}}.api.api_server']]
