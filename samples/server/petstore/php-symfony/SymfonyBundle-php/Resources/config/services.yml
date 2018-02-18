@@ -22,6 +22,7 @@ services:
     swagger_server.controller.pet:
         class: Swagger\Server\Controller\PetController
         calls:
+         - [setDebugMode,  ['%kernel.debug%']]
          - [setSerializer, ['@swagger_server.service.serializer']]
          - [setValidator,  ['@swagger_server.service.validator']]
          - [setApiServer,  ['@swagger_server.api.api_server']]
@@ -29,6 +30,7 @@ services:
     swagger_server.controller.store:
         class: Swagger\Server\Controller\StoreController
         calls:
+         - [setDebugMode,  ['%kernel.debug%']]
          - [setSerializer, ['@swagger_server.service.serializer']]
          - [setValidator,  ['@swagger_server.service.validator']]
          - [setApiServer,  ['@swagger_server.api.api_server']]
@@ -36,6 +38,7 @@ services:
     swagger_server.controller.user:
         class: Swagger\Server\Controller\UserController
         calls:
+         - [setDebugMode,  ['%kernel.debug%']]
          - [setSerializer, ['@swagger_server.service.serializer']]
          - [setValidator,  ['@swagger_server.service.validator']]
          - [setApiServer,  ['@swagger_server.api.api_server']]

@@ -351,9 +351,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 }
 
                 // Create a variable to display the correct data type in comments for interfaces
-                param.vendorExtensions.put("x-commentType", param.dataType);
+                param.vendorExtensions.put("x-commentType", "\\"+param.dataType);
                 if (param.isContainer) {
-                    param.vendorExtensions.put("x-commentType", param.dataType+"[]");
+                    param.vendorExtensions.put("x-commentType", "\\"+param.dataType+"[]");
                 }
 
                 // Quote default values for strings
@@ -367,9 +367,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
 
             // Create a variable to display the correct return type in comments for interfaces
             if (op.returnType != null) {
-                op.vendorExtensions.put("x-commentType", op.returnType);
+                op.vendorExtensions.put("x-commentType", "\\"+op.returnType);
                 if (!op.returnTypeIsPrimitive) {
-                    op.vendorExtensions.put("x-commentType", op.returnType+"[]");
+                    op.vendorExtensions.put("x-commentType", "\\"+op.returnType+"[]");
                 }
             } else {
                 op.vendorExtensions.put("x-commentType", "void");
@@ -405,9 +405,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 }
 
                 // Create a variable to display the correct data type in comments for models
-                var.vendorExtensions.put("x-commentType", var.datatype);
+                var.vendorExtensions.put("x-commentType", "\\"+var.datatype);
                 if (var.isContainer) {
-                    var.vendorExtensions.put("x-commentType", var.datatype+"[]");
+                    var.vendorExtensions.put("x-commentType", "\\"+var.datatype+"[]");
                 }
 
                 if (var.isBoolean) {
