@@ -46,7 +46,10 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>vendor/bin/phpunit tests</executable>
+                            <executable>vendor/bin/phpunit</executable>
+                            <arguments>
+                                <argument>tests</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
