@@ -651,7 +651,7 @@ public class ApiClient {
     }
     for (Map.Entry<String,String> keyValue : defaultHeaderMap.entrySet()) {
       if (!headerParams.containsKey(keyValue.getKey())) {
-        builder = builder.header(keyValue.getKey(), defaultHeaderMap.get(keyValue.getValue()));
+        builder = builder.header(keyValue.getKey(), keyValue.getValue());
       }
     }
 
