@@ -99,7 +99,7 @@ void
     {{#bodyParams}}
     {{#isContainer}}
     QJsonObject {{paramName}}_jobj;
-    toJsonArray((QList<void*>){{paramName}}, {{paramName}}_jobj, QString("body"), QString("{{prefix}}User*"));
+    toJsonArray((QList<void*>*){{paramName}}, {{paramName}}_jobj, QString("body"), QString("{{prefix}}User*"));
 
     QJsonDocument doc({{paramName}}_jobj);
     QByteArray bytes = doc.toJson();
