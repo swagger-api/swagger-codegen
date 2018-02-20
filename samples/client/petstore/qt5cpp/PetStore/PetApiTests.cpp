@@ -36,45 +36,44 @@ void PetApiTests::runTests() {
 }
 
 void PetApiTests::findPetsByStatusTest() {
-    QEventLoop loop;
-    QTimer timer;
-    timer.setSingleShot(true);
-
     SWGPetApi* api = getApi();
+
+    static QEventLoop loop;
+    QTimer timer;
+    timer.setInterval(14000);
+    timer.setSingleShot(true);
 
     auto validator = [](QList<SWGPet*>* pets) {
         foreach(SWGPet* pet, *pets) {
             QVERIFY(pet->getStatus()->startsWith("available") || pet->getStatus()->startsWith("sold"));
         }
         loop.quit();
-        qDeleteAll(pets);
-        delete api;
     };
 
     connect(api, &SWGPetApi::findPetsByStatusSignal, this, validator);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
-    QList<QString> status;
-    status.append(QStringLiteral("available"));
-    status.append(QStringLiteral("sold"));
+    QList<QString*>* status = new QList<QString*>();
+    status->append(new QString("available"));
+    status->append(new QString("sold"));
     api->findPetsByStatus(status);
-    timer.start(14000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
+    delete api;
 }
 
 void PetApiTests::createAndGetPetTest() {
-    QEventLoop loop;
-    QTimer timer;
-    timer.setSingleShot(true);
-
-    // create pet
     SWGPetApi* api = getApi();
 
-    auto validator = [&]() {
+    static QEventLoop loop;
+    QTimer timer;
+    timer.setInterval(14000);
+    timer.setSingleShot(true);
+
+    auto validator = []() {
         // pet created
         loop.quit();
-        delete api;
     };
 
     connect(api, &SWGPetApi::addPetSignal, this, validator);
@@ -84,171 +83,169 @@ void PetApiTests::createAndGetPetTest() {
     qint64 id = pet->getId();
 
     api->addPet(*pet);
-    timer.start(14000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
-    // get it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto getPetValidator = [&](SWGPet* pet) {
+    auto getPetValidator = [](SWGPet* pet) {
         QVERIFY(pet->getId() > 0);
         QVERIFY(pet->getStatus()->compare("freaky") == 0);
         loop.quit();
-        delete api;
     };
 
     connect(api, &SWGPetApi::getPetByIdSignal, this, getPetValidator);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
     api->getPetById(id);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
+    delete api;
 }
 
 void PetApiTests::updatePetTest() {
+    static SWGPetApi* api = getApi();
+
     SWGPet* pet = createRandomPet();
-    SWGPet* petToCheck = nullptr;
+    static SWGPet* petToCheck;
     qint64 id = pet->getId();
-    QEventLoop loop;
+    static QEventLoop loop;
     QTimer timer;
+    timer.setInterval(100000);
     timer.setSingleShot(true);
 
-    // create pet
-    SWGPetApi* api = getApi();
-
-    auto validator = [&]() {
+    auto validator = []() {
         loop.quit();
-        delete api;
     };
 
     connect(api, &SWGPetApi::addPetSignal, this, validator);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
+    // create pet
     api->addPet(*pet);
-    timer.start(100000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // fetch it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto fetchPet = [&](SWGPet* pet) {
+    auto fetchPet = [](SWGPet* pet) {
         petToCheck = pet;
         loop.quit();
-        delete api;
     };
     connect(api, &SWGPetApi::getPetByIdSignal, this, fetchPet);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
+    // create pet
     api->getPetById(id);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // update it
-    api = getApi();
-
-    auto updatePetTest = [&]() {
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
+    auto updatePetTest = []() {
         loop.quit();
-        delete api;
     };
 
     connect(api, &SWGPetApi::updatePetSignal, this, updatePetTest);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
-    petToCheck->setStatus(QStringLiteral("scary"));
+    // update pet
+    petToCheck->setStatus(new QString("scary"));
     api->updatePet(*petToCheck);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // check it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto fetchPet2 = [&](SWGPet* pet) {
+    auto fetchPet2 = [](SWGPet* pet) {
         QVERIFY(pet->getId() == petToCheck->getId());
         QVERIFY(pet->getStatus()->compare(petToCheck->getStatus()) == 0);
         loop.quit();
-        delete api;
     };
-
     connect(api, &SWGPetApi::getPetByIdSignal, this, fetchPet2);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
-
     api->getPetById(id);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 }
 
 void PetApiTests::updatePetWithFormTest() {
+    static SWGPetApi* api = getApi();
+
     SWGPet* pet = createRandomPet();
-    SWGPet* petToCheck = nullptr;
+    static SWGPet* petToCheck;
     qint64 id = pet->getId();
-    QEventLoop loop;
+    static QEventLoop loop;
     QTimer timer;
-    timer.setSingleShot(true);
 
     // create pet
-    SWGPetApi* api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto validator = [&]() {
+    auto validator = []() {
         loop.quit();
-        delete api;
     };
 
     connect(api, &SWGPetApi::addPetSignal, this, validator);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
     api->addPet(*pet);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // fetch it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto fetchPet = [&](SWGPet* pet) {
+    auto fetchPet = [](SWGPet* pet) {
         petToCheck = pet;
         loop.quit();
-        delete api;
     };
     connect(api, &SWGPetApi::getPetByIdSignal, this, fetchPet);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
     api->getPetById(id);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // update it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    connect(api, &SWGPetApi::updatePetWithFormSignal, this, [&](){
-        loop.quit();
-        delete api;
-    });
+    connect(api, &SWGPetApi::updatePetWithFormSignal, this, [](){loop.quit();});
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
     api->updatePetWithForm(id, new QString("gorilla"), NULL);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 
     // fetch it
-    api = getApi();
+    timer.setInterval(1000);
+    timer.setSingleShot(true);
 
-    auto fetchUpdatedPet = [&](SWGPet* pet) {
+    auto fetchUpdatedPet = [](SWGPet* pet) {
         QVERIFY(pet->getName()->compare(QString("gorilla")) == 0);
         loop.quit();
-        delete api;
     };
     connect(api, &SWGPetApi::getPetByIdSignal, this, fetchUpdatedPet);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
 
     api->getPetById(id);
-    timer.start(1000);
+    timer.start();
     loop.exec();
     QVERIFY2(timer.isActive(), "didn't finish within timeout");
 }
