@@ -372,7 +372,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
             if (op.returnType != null) {
 
                 // Adding backslash for PHPStorm autocomplete to work
-                String prefix = isModelClass(param.dataType) ? "\\" : "";
+                String prefix = isModelClass(op.returnType) ? "\\" : "";
                 //If the return type is container add the brakets
                 if (op.returnContainer != null) {
                     op.vendorExtensions.put("x-commentType", prefix+op.returnType+"[]");
