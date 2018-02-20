@@ -351,9 +351,12 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 }
 
                 // Create a variable to display the correct data type in comments for interfaces
-                param.vendorExtensions.put("x-commentType", "\\"+param.dataType);
+                // Model classes are assumed to be imported and we reference them by their class name
+                // Adding backslash for PHPStorm autocomplete to work
+                String prefix = isModelClass(param.dataType) ? "\\" : "";
+                param.vendorExtensions.put("x-commentType", prefix+param.dataType);
                 if (param.isContainer) {
-                    param.vendorExtensions.put("x-commentType", "\\"+param.dataType+"[]");
+                    param.vendorExtensions.put("x-commentType", prefix+param.dataType+"[]");
                 }
 
                 // Quote default values for strings
@@ -367,10 +370,17 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
 
             // Create a variable to display the correct return type in comments for interfaces
             if (op.returnType != null) {
-                op.vendorExtensions.put("x-commentType", "\\"+op.returnType);
-                if (!op.returnTypeIsPrimitive) {
-                    op.vendorExtensions.put("x-commentType", "\\"+op.returnType+"[]");
+
+                // Adding backslash for PHPStorm autocomplete to work
+                String prefix = isModelClass(param.dataType) ? "\\" : "";
+                //If the return type is container add the brakets
+                if (op.returnContainer != null) {
+                    op.vendorExtensions.put("x-commentType", prefix+op.returnType+"[]");
+                }else{
+                    op.vendorExtensions.put("x-commentType", prefix+op.returnType);
                 }
+
+
             } else {
                 op.vendorExtensions.put("x-commentType", "void");
             }
