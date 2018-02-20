@@ -12,8 +12,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import play.libs.Json;
 import play.libs.ws.WSClient;
 
-import io.swagger.client.Play25CallAdapterFactory;
-import io.swagger.client.Play25CallFactory;
+import io.swagger.client.PlayCallAdapterFactory;
+import io.swagger.client.PlayCallFactory;
 
 import okhttp3.Interceptor;
 import io.swagger.client.auth.ApiKeyAuth;
@@ -47,7 +47,6 @@ public class ApiClient {
         // authentications.put("petstore_auth", new OAuth());
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
-
     }
 
     /**
@@ -72,8 +71,8 @@ public class ApiClient {
                        .baseUrl(basePath)
                        .addConverterFactory(ScalarsConverterFactory.create())
                        .addConverterFactory(JacksonConverterFactory.create(Json.mapper()))
-                       .callFactory(new Play25CallFactory(wsClient, extraHeaders, extraQueryParams))
-                       .addCallAdapterFactory(new Play25CallAdapterFactory())
+                       .callFactory(new PlayCallFactory(wsClient, extraHeaders, extraQueryParams))
+                       .addCallAdapterFactory(new PlayCallAdapterFactory())
                        .build()
                        .create(serviceClass);
     }

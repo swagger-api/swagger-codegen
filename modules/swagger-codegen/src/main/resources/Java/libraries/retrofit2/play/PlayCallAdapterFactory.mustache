@@ -1,0 +1,133 @@
+package {{invokerPackage}};
+
+{{#play24}}
+import play.libs.F;
+
+{{/play24}}
+import retrofit2.*;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
+{{^play24}}
+
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+{{/play24}}
+
+/**
+ * Creates {@link CallAdapter} instances that convert {@link Call} into {@link {{#play24}}F.Promise{{/play24}}{{^play24}}CompletionStage{{/play24}} }
+ */
+public class PlayCallAdapterFactory extends CallAdapter.Factory {
+{{^play24}}
+
+    private Function<RuntimeException, RuntimeException> exceptionConverter = Function.identity();
+
+    public PlayCallAdapterFactory() { }
+
+    public PlayCallAdapterFactory(Function<RuntimeException, RuntimeException> exceptionConverter) {
+        this.exceptionConverter = exceptionConverter;
+    }
+{{/play24}}
+
+    @Override
+    public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+
+        if (!(returnType instanceof ParameterizedType)) {
+            return null;
+        }
+
+        ParameterizedType type = (ParameterizedType) returnType;
+        if (type.getRawType() != {{#play24}}F.Promise.class{{/play24}}{{^play24}}CompletionStage.class{{/play24}}) {
+            return null;
+        }
+
+        return createAdapter((ParameterizedType) returnType);
+    }
+
+    private CallAdapter<?, {{#play24}}F.Promise{{/play24}}{{^play24}}CompletionStage{{/play24}}<?>> createAdapter(ParameterizedType returnType) {
+
+        Type[] types = returnType.getActualTypeArguments();
+        if (types.length != 1) {
+            throw new IllegalStateException("Must be exactly one type parameter");
+        }
+
+        Type resultType = types[0];
+        Class<?> rawTypeParam = getRawType(resultType);
+
+        boolean includeResponse = false;
+        if (rawTypeParam == Response.class) {
+            if (!(resultType instanceof ParameterizedType)) {
+                throw new IllegalStateException("Response must be parameterized" +
+                                                " as Response<T>");
+            }
+            resultType = ((ParameterizedType) resultType).getActualTypeArguments()[0];
+            includeResponse = true;
+        }
+
+        return new ValueAdapter(resultType, includeResponse{{^play24}}, exceptionConverter{{/play24}});
+    }
+
+    /**
+     * Adapter that coverts values returned by API interface into CompletionStage
+     */
+    private static final class ValueAdapter<R> implements CallAdapter<R, {{#play24}}F.Promise{{/play24}}{{^play24}}CompletionStage{{/play24}}<R>> {
+
+        private final Type responseType;
+        private final boolean includeResponse;
+{{^play24}}
+        private Function<RuntimeException, RuntimeException> exceptionConverter;
+{{/play24}}
+
+        ValueAdapter(Type responseType, boolean includeResponse{{^play24}},
+                     Function<RuntimeException, RuntimeException> exceptionConverter{{/play24}}) {
+            this.responseType = responseType;
+            this.includeResponse = includeResponse;
+{{^play24}}
+            this.exceptionConverter = exceptionConverter;
+{{/play24}}
+        }
+
+        @Override
+        public Type responseType() {
+            return responseType;
+        }
+
+        @Override
+        public {{#play24}}F.Promise{{/play24}}{{^play24}}CompletionStage{{/play24}}<R> adapt(final Call<R> call) {
+{{#play24}}
+            final F.RedeemablePromise<R> promise = new F.RedeemablePromise.empty();
+{{/play24}}
+{{^play24}}
+            final CompletableFuture<R> promise = new CompletableFuture();
+{{/play24}}
+
+            call.enqueue(new Callback<R>() {
+
+                @Override
+                public void onResponse(Call<R> call, Response<R> response) {
+                    if (response.isSuccessful()) {
+                        if (includeResponse) {
+                            promise.{{#play24}}success{{/play24}}{{^play24}}complete{{/play24}}((R) response);
+                        } else {
+                            promise.{{#play24}}success{{/play24}}{{^play24}}complete{{/play24}}(response.body());
+                        }
+                    } else {
+                    promise.{{#play24}}failure{{/play24}}{{^play24}}completeExceptionally(exceptionConverter.apply{{/play24}}(new HttpException(response){{^play24}}){{/play24}});
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<R> call, Throwable t) {
+                    promise.{{#play24}}failure{{/play24}}{{^play24}}completeExceptionally{{/play24}}(t);
+                }
+
+            });
+
+            return promise;
+        }
+    }
+}
+

@@ -261,6 +261,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         }
 
         if (usePlayWS) {
+
+            additionalProperties.put(playVersion, true);
+
             // remove unsupported auth
             Iterator<SupportingFile> iter = supportingFiles.iterator();
             while (iter.hasNext()) {
@@ -272,35 +275,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
             apiTemplateFiles.remove("api.mustache");
 
-            if (PLAY_24.equals(playVersion)) {
-                additionalProperties.put(PLAY_24, true);
-                apiTemplateFiles.put("play24/api.mustache", ".java");
-
-                supportingFiles.add(new SupportingFile("play24/ApiClient.mustache", invokerFolder, "ApiClient.java"));
-                supportingFiles.add(new SupportingFile("play24/Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
-                supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache", invokerFolder,
-                        "Play24CallAdapterFactory.java"));
-            } else if (PLAY_25.equals(playVersion)) {
-                additionalProperties.put(PLAY_25, true);
-                apiTemplateFiles.put("play25/api.mustache", ".java");
-
-                supportingFiles.add(new SupportingFile("play25/ApiClient.mustache", invokerFolder, "ApiClient.java"));
-                supportingFiles.add(new SupportingFile("play25/Play25CallFactory.mustache", invokerFolder, "Play25CallFactory.java"));
-                supportingFiles.add(new SupportingFile("play25/Play25CallAdapterFactory.mustache", invokerFolder,
-                        "Play25CallAdapterFactory.java"));
-                additionalProperties.put("java8", "true");
-            } else {
-                additionalProperties.put(PLAY_26, true);
-                apiTemplateFiles.put("play26/api.mustache", ".java");
-
-                supportingFiles.add(new SupportingFile("play26/ApiClient.mustache", invokerFolder, "ApiClient.java"));
-                supportingFiles.add(new SupportingFile("play26/Play26CallFactory.mustache", invokerFolder, "Play26CallFactory.java"));
-                supportingFiles.add(new SupportingFile("play26/Play26CallAdapterFactory.mustache", invokerFolder,
-                        "Play26CallAdapterFactory.java"));
+            if (PLAY_25.equals(playVersion) || PLAY_26.equals(playVersion)) {
                 additionalProperties.put("java8", "true");
             }
 
-            supportingFiles.add(new SupportingFile("play-common/auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+            supportingFiles.add(new SupportingFile("play/ApiClient.mustache", invokerFolder, "ApiClient.java"));
+            supportingFiles.add(new SupportingFile("play/PlayCallFactory.mustache", invokerFolder, "PlayCallFactory.java"));
+            supportingFiles.add(new SupportingFile("play/PlayCallAdapterFactory.mustache", invokerFolder, "PlayCallAdapterFactory.java"));
+            supportingFiles.add(new SupportingFile("play/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
             supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
 
