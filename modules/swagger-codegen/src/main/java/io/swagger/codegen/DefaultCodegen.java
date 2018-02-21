@@ -3164,6 +3164,11 @@ public class DefaultCodegen implements CodegenConfig {
         handlebars.registerHelper(HasNotHelper.NAME, new HasNotHelper());
     }
 
+    @Override
+    public List<CodegenArgument> getLanguageArguments() {
+        return null;
+    }
+
     /**
      * Only write if the file doesn't exist
      *
