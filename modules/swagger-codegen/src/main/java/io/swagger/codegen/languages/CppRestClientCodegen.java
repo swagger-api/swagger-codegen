@@ -237,15 +237,21 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
 
         if (operation.getResponses() != null && !operation.getResponses().isEmpty()) {
-            Response methodResponse = findMethodResponse(operation.getResponses());
+            Map.Entry<String, Response> methodResponse = findMethodResponse(operation.getResponses());
 
             if (methodResponse != null) {
-                if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-                    op.vendorExtensions.put("x-codegen-response", cm);
-                    if(cm.datatype == "HttpContent")
-                    {
-                        op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
+                String successCode = methodResponse.getKey();
+                if (!"default".equals(successCode)) {
+                    op.successCode = Integer.parseInt(successCode);
+                }
+                Response response = methodResponse.getValue();
+                if (response != null) {
+                    if (response.getSchema() != null) {
+                        CodegenProperty cm = fromProperty("response", response.getSchema());
+                        op.vendorExtensions.put("x-codegen-response", cm);
+                        if (cm.datatype == "HttpContent") {
+                            op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
+                        }
                     }
                 }
             }
