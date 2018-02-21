@@ -137,7 +137,7 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
                 if (request.body() != null) {
                     addBody(wsRequest);
                 }
-                filters.stream().forEach(f -> wsRequest.withRequestFilter(f));
+                filters.stream().forEach(f -> wsRequest.setRequestFilter(f));
 
                 return wsRequest.execute(request.method());
             } catch (Exception e) {
@@ -173,7 +173,7 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
 
                        @Override
                        public MediaType contentType() {
-                           return Optional.ofNullable(r.getHeader("Content-Type"))
+                           return r.getSingleHeader("Content-Type")
                                           .map(MediaType::parse)
                                           .orElse(null);
                        }

@@ -284,7 +284,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             path, httpMethod, operation, definitions, swagger);
         if (op.getHasExamples()) {
             // prepare examples for Apex test classes
-            Property responseProperty = findMethodResponse(operation.getResponses()).getSchema();
+            Property responseProperty = findMethodResponse(operation.getResponses()).getValue().getSchema();
             String deserializedExample = toExampleValue(responseProperty);
             for (Map<String, String> example : op.examples) {
                 example.put("example", escapeText(example.get("example")));
