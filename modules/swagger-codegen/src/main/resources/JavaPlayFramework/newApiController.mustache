@@ -200,9 +200,6 @@ public class {{classname}}Controller extends Controller {
         {{/collectionFormat}}
         {{/headerParams}}
 
-        // controllerOnly {{#controllerOnly}}true{{/controllerOnly}} {{^controllerOnly}}false{{/controllerOnly}}
-        // returnType {{#returnType}}true{{/returnType}} {{^returnType}}false{{/returnType}}
-        // supportAsync {{#supportAsync}}true{{/supportAsync}} {{^supportAsync}}false{{/supportAsync}}
         {{^controllerOnly}}
         {{^returnType}}{{#supportAsync}}
         return CompletableFuture.supplyAsync(() -> {
