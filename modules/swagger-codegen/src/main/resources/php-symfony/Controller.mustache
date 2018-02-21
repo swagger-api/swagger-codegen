@@ -151,6 +151,8 @@ class Controller
         return [
             'message'  => $exception->getMessage(),
             'type'     => get_class($exception),
+            'file'     => $exception->getFile(),
+            'line'     => $exception->getLine(),
             'previous' => $this->exceptionToArray($exception->getPrevious()),
         ];
     }
