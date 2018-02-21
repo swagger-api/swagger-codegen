@@ -414,10 +414,15 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                     var.vendorExtensions.put("x-parameterType", typeHint);
                 }
 
-                // Create a variable to display the correct data type in comments for models
-                var.vendorExtensions.put("x-commentType", "\\"+var.datatype);
                 if (var.isContainer) {
-                    var.vendorExtensions.put("x-commentType", "\\"+var.datatype+"[]");
+                    var.vendorExtensions.put("x-parameterType", getTypeHint(var.datatype+"[]"));
+                }
+
+                // Create a variable to display the correct data type in comments for models
+                String prefix = isModelClass(var.datatype) ? "\\" : "";
+                var.vendorExtensions.put("x-commentType", prefix+var.datatype);
+                if (var.isContainer) {
+                    var.vendorExtensions.put("x-commentType", prefix+var.datatype+"[]");
                 }
 
                 if (var.isBoolean) {
