@@ -55,8 +55,6 @@ public class FakeApiController extends Controller {
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -78,8 +76,6 @@ public class FakeApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -101,8 +97,6 @@ public class FakeApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -121,8 +115,6 @@ public class FakeApiController extends Controller {
         String obj = imp.fakeOuterStringSerialize(body);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -144,8 +136,6 @@ public class FakeApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction

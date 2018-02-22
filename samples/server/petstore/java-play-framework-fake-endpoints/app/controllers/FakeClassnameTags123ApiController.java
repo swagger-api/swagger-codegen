@@ -54,7 +54,5 @@ public class FakeClassnameTags123ApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

@@ -45,8 +45,6 @@ public class StoreApiController extends Controller {
         Map<String, Integer> obj = imp.getInventory();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -55,8 +53,6 @@ public class StoreApiController extends Controller {
         Order obj = imp.getOrderById(orderId);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -72,7 +68,5 @@ public class StoreApiController extends Controller {
         Order obj = imp.placeOrder(body);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

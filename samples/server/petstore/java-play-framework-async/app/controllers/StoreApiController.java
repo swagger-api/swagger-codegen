@@ -58,8 +58,6 @@ public class StoreApiController extends Controller {
         stage.thenApply(obj -> {
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
         });
     }
 
@@ -75,8 +73,6 @@ public class StoreApiController extends Controller {
         stage.thenApply(obj -> {
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
         });
     }
 
@@ -102,8 +98,6 @@ public class StoreApiController extends Controller {
         stage.thenApply(obj -> {
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
         });
     }
 }

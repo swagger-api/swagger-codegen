@@ -27,8 +27,7 @@ public class {{classname}}ControllerImp {{#useInterfaces}}implements {{classname
         {{/isResponseFile}}
         {{^isResponseFile}}
         return new {{>returnTypesNoVoidNoAbstract}}({{#vendorExtensions.missingReturnInfoIfNeeded}}{{vendorExtensions.missingReturnInfoIfNeeded}}{{/vendorExtensions.missingReturnInfoIfNeeded}});
-        {{/isResponseFile}}
-       {{#supportAsync}} });{{/supportAsync}}{{/returnType}}
+       {{/isResponseFile}}{{#supportAsync}} });{{/supportAsync}}{{/returnType}}
     }
 {{/operation}}
 }

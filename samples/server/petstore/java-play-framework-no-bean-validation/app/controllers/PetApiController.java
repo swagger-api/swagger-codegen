@@ -79,8 +79,6 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByStatus(status);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -101,8 +99,6 @@ public class PetApiController extends Controller {
         List<Pet> obj = imp.findPetsByTags(tags);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -111,8 +107,6 @@ public class PetApiController extends Controller {
         Pet obj = imp.getPetById(petId);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -164,7 +158,5 @@ public class PetApiController extends Controller {
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

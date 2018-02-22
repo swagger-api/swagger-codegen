@@ -87,8 +87,6 @@ public class UserApiController extends Controller {
         User obj = imp.getUserByName(username);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction
@@ -111,8 +109,6 @@ public class UserApiController extends Controller {
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     @ApiAction

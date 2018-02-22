@@ -54,7 +54,5 @@ public class AnotherFakeApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

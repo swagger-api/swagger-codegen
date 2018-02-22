@@ -48,8 +48,6 @@ public class StoreApiController extends Controller {
         Map<String, Integer> obj = imp.getInventory();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -61,8 +59,6 @@ public class StoreApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -84,7 +80,5 @@ public class StoreApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

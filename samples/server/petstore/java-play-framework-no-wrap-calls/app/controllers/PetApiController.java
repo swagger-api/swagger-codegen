@@ -90,8 +90,6 @@ public class PetApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -117,8 +115,6 @@ public class PetApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -130,8 +126,6 @@ public class PetApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 
     
@@ -189,7 +183,5 @@ public class PetApiController extends Controller {
         }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
     }
 }

@@ -125,8 +125,6 @@ public class UserApiController extends Controller {
         stage.thenApply(obj -> {
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
         });
     }
 
@@ -153,8 +151,6 @@ public class UserApiController extends Controller {
         stage.thenApply(obj -> {
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
-        
-        
         });
     }
 
