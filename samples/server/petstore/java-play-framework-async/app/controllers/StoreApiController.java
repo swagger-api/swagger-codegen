@@ -42,9 +42,6 @@ public class StoreApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> deleteOrder(String orderId) throws Exception {
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteOrder(orderId)
@@ -55,9 +52,6 @@ public class StoreApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> getInventory() throws Exception {
 
-        // controllerOnly  false
-        // returnType true 
-        // supportAsync true 
         CompletionStage<Map<String, Integer>> stage = imp.getInventory().thenApply(obj -> { 
             return obj;
         });
@@ -70,9 +64,6 @@ public class StoreApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
 
-        // controllerOnly  false
-        // returnType true 
-        // supportAsync true 
         CompletionStage<Order> stage = imp.getOrderById(orderId).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -98,9 +89,6 @@ public class StoreApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType true 
-        // supportAsync true 
         CompletionStage<Order> stage = imp.placeOrder(body).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);

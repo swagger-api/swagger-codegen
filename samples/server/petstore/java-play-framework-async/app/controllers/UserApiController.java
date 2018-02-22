@@ -52,9 +52,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUser(body)
@@ -77,9 +74,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithArrayInput(body)
@@ -102,9 +96,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithListInput(body)
@@ -115,9 +106,6 @@ public class UserApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> deleteUser(String username) throws Exception {
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteUser(username)
@@ -128,9 +116,6 @@ public class UserApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> getUserByName(String username) throws Exception {
 
-        // controllerOnly  false
-        // returnType true 
-        // supportAsync true 
         CompletionStage<User> stage = imp.getUserByName(username).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -160,9 +145,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'password' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType true 
-        // supportAsync true 
         CompletionStage<String> stage = imp.loginUser(username, password).thenApply(obj -> { 
             return obj;
         });
@@ -175,9 +157,6 @@ public class UserApiController extends Controller {
     @ApiAction
     public CompletionStage<Result> logoutUser() throws Exception {
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.logoutUser()
@@ -198,9 +177,6 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
 
-        // controllerOnly  false
-        // returnType  false
-        // supportAsync true 
         
         return CompletableFuture.supplyAsync(() -> {
             imp.updateUser(username, body)
