@@ -52,7 +52,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.addPet(body)
@@ -69,7 +68,6 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deletePet(petId, apiKey)
@@ -91,7 +89,6 @@ public class PetApiController extends Controller {
                 status.add(curParam);
             }
         }
-
         CompletionStage<List<Pet>> stage = imp.findPetsByStatus(status).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
@@ -120,7 +117,6 @@ public class PetApiController extends Controller {
                 tags.add(curParam);
             }
         }
-
         CompletionStage<List<Pet>> stage = imp.findPetsByTags(tags).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
@@ -137,7 +133,6 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public CompletionStage<Result> getPetById(Long petId) throws Exception {
-
         CompletionStage<Pet> stage = imp.getPetById(petId).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -162,7 +157,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePet(body)
@@ -186,7 +180,6 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePetWithForm(petId, name, status)
@@ -204,7 +197,6 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-
         CompletionStage<ModelApiResponse> stage = imp.uploadFile(petId, additionalMetadata, file).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);

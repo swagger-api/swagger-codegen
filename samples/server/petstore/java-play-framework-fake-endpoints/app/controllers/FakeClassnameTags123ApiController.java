@@ -47,7 +47,6 @@ public class FakeClassnameTags123ApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         Client obj = imp.testClassname(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);

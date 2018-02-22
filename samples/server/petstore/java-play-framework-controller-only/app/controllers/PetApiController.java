@@ -47,7 +47,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 
@@ -60,7 +59,6 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
-
         return ok();
     }
 
@@ -78,7 +76,6 @@ public class PetApiController extends Controller {
                 status.add(curParam);
             }
         }
-
         return ok();
     }
 
@@ -96,13 +93,11 @@ public class PetApiController extends Controller {
                 tags.add(curParam);
             }
         }
-
         return ok();
     }
 
     @ApiAction
     public Result getPetById(Long petId) throws Exception {
-
         return ok();
     }
 
@@ -118,7 +113,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 
@@ -138,7 +132,6 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
-
         return ok();
     }
 
@@ -152,7 +145,6 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-
         return ok();
     }
 }

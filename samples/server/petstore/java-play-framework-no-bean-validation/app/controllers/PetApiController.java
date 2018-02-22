@@ -42,7 +42,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.addPet(body);
         return ok();
     }
@@ -56,7 +55,6 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
-
         imp.deletePet(petId, apiKey);
         return ok();
     }
@@ -75,7 +73,6 @@ public class PetApiController extends Controller {
                 status.add(curParam);
             }
         }
-
         List<Pet> obj = imp.findPetsByStatus(status);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -95,7 +92,6 @@ public class PetApiController extends Controller {
                 tags.add(curParam);
             }
         }
-
         List<Pet> obj = imp.findPetsByTags(tags);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -103,7 +99,6 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result getPetById(Long petId) throws Exception {
-
         Pet obj = imp.getPetById(petId);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -118,7 +113,6 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.updatePet(body);
         return ok();
     }
@@ -139,7 +133,6 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
-
         imp.updatePetWithForm(petId, name, status);
         return ok();
     }
@@ -154,7 +147,6 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);

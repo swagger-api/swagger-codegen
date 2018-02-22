@@ -46,7 +46,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 
@@ -64,7 +63,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 
@@ -82,19 +80,16 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
-
         return ok();
     }
 
     @ApiAction
     public Result getUserByName(String username) throws Exception {
-
         return ok();
     }
 
@@ -114,13 +109,11 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'password' parameter is required");
         }
-
         return ok();
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
-
         return ok();
     }
 
@@ -136,7 +129,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         return ok();
     }
 }

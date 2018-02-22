@@ -51,7 +51,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUser(body)
@@ -73,7 +72,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithArrayInput(body)
@@ -95,7 +93,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithListInput(body)
@@ -105,7 +102,6 @@ public class UserApiController extends Controller {
 
     @ApiAction
     public CompletionStage<Result> deleteUser(String username) throws Exception {
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteUser(username)
@@ -115,7 +111,6 @@ public class UserApiController extends Controller {
 
     @ApiAction
     public CompletionStage<Result> getUserByName(String username) throws Exception {
-
         CompletionStage<User> stage = imp.getUserByName(username).thenApply(obj -> { 
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -144,7 +139,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'password' parameter is required");
         }
-
         CompletionStage<String> stage = imp.loginUser(username, password).thenApply(obj -> { 
             return obj;
         });
@@ -156,7 +150,6 @@ public class UserApiController extends Controller {
 
     @ApiAction
     public CompletionStage<Result> logoutUser() throws Exception {
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.logoutUser()
@@ -176,7 +169,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         
         return CompletableFuture.supplyAsync(() -> {
             imp.updateUser(username, body)

@@ -38,14 +38,12 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public Result deleteOrder(String orderId) throws Exception {
-
         imp.deleteOrder(orderId);
         return ok();
     }
 
     @ApiAction
     public Result getInventory() throws Exception {
-
         Map<String, Integer> obj = imp.getInventory();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -53,7 +51,6 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public Result getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
-
         Order obj = imp.getOrderById(orderId);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -74,7 +71,6 @@ public class StoreApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         Order obj = imp.placeOrder(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);

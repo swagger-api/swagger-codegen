@@ -47,7 +47,6 @@ public class AnotherFakeApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         Client obj = imp.testSpecialTags(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);

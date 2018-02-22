@@ -49,7 +49,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.createUser(body);
         return ok();
     }
@@ -68,7 +67,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.createUsersWithArrayInput(body);
         return ok();
     }
@@ -87,21 +85,18 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.createUsersWithListInput(body);
         return ok();
     }
 
     @ApiAction
     public Result deleteUser(String username)  {
-
         imp.deleteUser(username);
         return ok();
     }
 
     @ApiAction
     public Result getUserByName(String username)  {
-
         User obj = imp.getUserByName(username);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
@@ -126,7 +121,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'password' parameter is required");
         }
-
         String obj = imp.loginUser(username, password);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -134,7 +128,6 @@ public class UserApiController extends Controller {
 
     @ApiAction
     public Result logoutUser()  {
-
         imp.logoutUser();
         return ok();
     }
@@ -151,7 +144,6 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-
         imp.updateUser(username, body);
         return ok();
     }

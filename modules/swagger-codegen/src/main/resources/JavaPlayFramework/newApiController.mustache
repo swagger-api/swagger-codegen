@@ -199,7 +199,6 @@ public class {{classname}}Controller extends Controller {
         }
         {{/collectionFormat}}
         {{/headerParams}}
-
         {{^controllerOnly}}
         {{^returnType}}{{#supportAsync}}
         return CompletableFuture.supplyAsync(() -> {
