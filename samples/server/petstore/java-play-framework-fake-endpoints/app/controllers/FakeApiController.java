@@ -19,7 +19,6 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-
 import javax.validation.constraints.*;
 import play.Configuration;
 
