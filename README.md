@@ -21,6 +21,8 @@
 
 :rocket: ProductHunt: https://producthunt.com/posts/swagger-codegen :rocket:
 
+:notebook_with_decorative_cover: The eBook [A Beginner's Guide to Code Generation for REST APIs](https://gumroad.com/l/swagger_codegen_beginner) is a good starting point for begineers.
+
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
@@ -782,6 +784,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Finder](http://en.finder.pl/)
 - [Fitwell](https://fitwell.co/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
+- [FormAPI](https://formapi.io/)
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [General Electric](https://www.ge.com/)
@@ -797,6 +800,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [High Technologies Center](http://htc-cs.com)
 - [Hootsuite](https://hootsuite.com/)
 - [Huawei Cloud](http://www.huaweicloud.com/en-us/product/cs.html) 
+- [Husbanken](https://www.husbanken.no)
 - [IBM](https://www.ibm.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Individual Standard IVS](http://www.individual-standard.com)
@@ -842,12 +846,14 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Red Hat](https://www.redhat.com/)
 - [Reload! A/S](https://reload.dk/)
 - [REstore](https://www.restore.eu)
+- [REST United](https://restunited.com)
 - [Revault Sàrl](http://revault.ch)
 - [Riffyn](https://riffyn.com)
 - [Royal Bank of Canada (RBC)](http://www.rbc.com/canada.html)
 - [Saritasa](https://www.saritasa.com/)
 - [SAS](https://www.sas.com)
 - [SCOOP Software GmbH](http://www.scoop-software.de)
+- [SessionM](https://www.sessionm.com/)
 - [Shine Solutions](https://shinesolutions.com/)
 - [Simpfony](https://www.simpfony.com/)
 - [Skurt](http://www.skurt.com)
@@ -927,7 +933,7 @@ Presentations/Videos/Tutorials/Books
 - 2017/09/21 - [Generating an Elastic Cloud Enterprise Client](https://www.elastic.co/blog/generating-an-elastic-cloud-enterprise-client) by [Greg Marzouka](https://github.com/gmarz) ([Elastic](https://www.elastic.co/))
 - 2017/09/26 - [How to Use IoT Application Enablement Api Hub JSON Descriptor in Postman and How to Generate Client Code](https://www.linkedin.com/in/radu-simen/) by [Radu Simen](https://www.linkedin.com/in/radu-simen/) ([SAP](https://www.sap.com/))
 - 2017/09/28 - [Swagger Codegenで APIクライアントgem 自動生成 #m3kt](https://speakerdeck.com/juntaki/swagger-codegende-apikuraiantogem-zi-dong-sheng-cheng-number-m3kt) by [Jumpei Takiyasu](https://github.com/juntaki)
-- 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
+- 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
 - 2017/10/04 - [Enterprise-friendly Java client for Microsoft Machine Learning Server](https://blogs.msdn.microsoft.com/mlserver/2017/10/04/enterprise-friendly-java-client-for-microsoft-machine-learning-server/) by [Pratik Palnitkar](https://www.linkedin.com/in/pratikpalnitkar/) ([Microsoft](https://www.microsoft.com/))
 - 2017/10/08 - [Generating a REST Ada client with OpenAPI and Swagger Codegen](https://blog.vacs.fr/vacs/blogs/post.html?post=2017/10/08/Generating-a-REST-Ada-client-with-OpenAPI-and-Swagger-Codegen) by [Stephane Carrez](https://github.com/stcarrez)
 - 2017/11/08 - [A Beginner's Guide to Code Generation for REST APIs](https://gum.co/swagger_codegen_beginner)(eBook) by [William Cheng](https://twitter.com/wing328)
@@ -937,7 +943,9 @@ Presentations/Videos/Tutorials/Books
 - 2017/12/29 - [REST APIs代码生成指南](https://gumroad.com/l/swagger_codegen_beginner_zh)(eBook) by [William Cheng](https://github.com/wing328), [Xin Meng](https://github.com/xmeng1)
 - 2017/12/21 - [Using Protocol Buffer to Generate SDK at Hootsuite](http://code.hootsuite.com/using-protocol-buffer-to-generate-sdk-at-hoosuite/?lipi=urn%3Ali%3Apage%3Ad_flagship3_messaging%3By4ATz3SDRXyvXJJ14LQysQ%3D%3D) by [Joy Zhang](https://www.linkedin.com/in/joy8zhang/)
 - 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
-- 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
+- 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
+- 2018/02/03 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada) by [Stephane Carrez](https://github.com/stcarrez) at [FOSDEM 2018](https://fosdem.org/2018)
+
 
 # Swagger Codegen Core Team
 
