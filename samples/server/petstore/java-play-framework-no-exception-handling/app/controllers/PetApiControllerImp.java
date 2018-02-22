@@ -15,41 +15,45 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     @Override
     public void addPet(Pet body)  {
         //Do your magic!!!
+
     }
     @Override
     public void deletePet(Long petId, String apiKey)  {
         //Do your magic!!!
+
     }
     @Override
     public List<Pet> findPetsByStatus( @NotNull List<String> status)  {
         //Do your magic!!!
-        
-            return new ArrayList<Pet>();
+        return new ArrayList<Pet>();
+       
     }
     @Override
     public List<Pet> findPetsByTags( @NotNull List<String> tags)  {
         //Do your magic!!!
-        
-            return new ArrayList<Pet>();
+        return new ArrayList<Pet>();
+       
     }
     @Override
     public Pet getPetById(Long petId)  {
         //Do your magic!!!
-        
-            return new Pet();
+        return new Pet();
+       
     }
     @Override
     public void updatePet(Pet body)  {
         //Do your magic!!!
+
     }
     @Override
     public void updatePetWithForm(Long petId, String name, String status)  {
         //Do your magic!!!
+
     }
     @Override
     public ModelApiResponse uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file)  {
         //Do your magic!!!
-        
-            return new ModelApiResponse();
+        return new ModelApiResponse();
+       
     }
 }

@@ -13,7 +13,7 @@ public class FakeClassnameTags123ApiControllerImp implements FakeClassnameTags12
     @Override
     public Client testClassname(Client body) throws Exception {
         //Do your magic!!!
-        
-            return new Client();
+        return new Client();
+       
     }
 }

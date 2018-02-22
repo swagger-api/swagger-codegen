@@ -13,7 +13,7 @@ public class AnotherFakeApiControllerImp implements AnotherFakeApiControllerImpI
     @Override
     public Client testSpecialTags(Client body) throws Exception {
         //Do your magic!!!
-        
-            return new Client();
+        return new Client();
+       
     }
 }
