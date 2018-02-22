@@ -55,7 +55,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUser(body)
-            return ok();
+        return ok();
         });
     }
 
@@ -77,7 +77,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithArrayInput(body)
-            return ok();
+        return ok();
         });
     }
 
@@ -99,7 +99,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithListInput(body)
-            return ok();
+        return ok();
         });
     }
 
@@ -109,7 +109,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteUser(username)
-            return ok();
+        return ok();
         });
     }
 
@@ -123,8 +123,10 @@ public class UserApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
         });
     }
 
@@ -149,8 +151,10 @@ public class UserApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
         });
     }
 
@@ -160,7 +164,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.logoutUser()
-            return ok();
+        return ok();
         });
     }
 
@@ -180,7 +184,7 @@ public class UserApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.updateUser(username, body)
-            return ok();
+        return ok();
         });
     }
 }

@@ -53,8 +53,10 @@ public class FakeApiController extends Controller {
         }
 
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -74,8 +76,10 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -95,8 +99,10 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -113,8 +119,10 @@ public class FakeApiController extends Controller {
         }
 
         String obj = imp.fakeOuterStringSerialize(body);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -134,8 +142,10 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -240,7 +250,7 @@ public class FakeApiController extends Controller {
         }
 
         imp.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -309,7 +319,7 @@ public class FakeApiController extends Controller {
         }
 
         imp.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -326,7 +336,7 @@ public class FakeApiController extends Controller {
         }
 
         imp.testInlineAdditionalProperties(param);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -347,6 +357,6 @@ public class FakeApiController extends Controller {
         }
 
         imp.testJsonFormData(param, param2);
-            return ok();
+        return ok();
     }
 }

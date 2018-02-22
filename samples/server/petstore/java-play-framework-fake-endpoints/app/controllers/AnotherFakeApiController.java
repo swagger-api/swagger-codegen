@@ -52,7 +52,9 @@ public class AnotherFakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 }

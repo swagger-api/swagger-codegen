@@ -235,17 +235,17 @@ public class {{classname}}Controller extends Controller {
         {{#supportAsync}}
         stage.thenApply(obj -> {
         {{/supportAsync}}
-            {{^isResponseFile}}
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
-            {{/isResponseFile}}
-            {{#isResponseFile}}
-            return ok(obj);
-            {{/isResponseFile}}
-            {{/returnType}}
-            {{^returnType}}
-            return ok();
-            {{/returnType}}
+        {{^isResponseFile}}
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        {{/isResponseFile}}
+        {{#isResponseFile}}
+        return ok(obj);
+        {{/isResponseFile}}
+        {{/returnType}}
+        {{^returnType}}
+        return ok();
+        {{/returnType}}
         {{#supportAsync}}
         });
         {{/supportAsync}}

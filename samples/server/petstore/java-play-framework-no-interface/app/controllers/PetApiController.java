@@ -51,7 +51,7 @@ public class PetApiController extends Controller {
         }
 
         imp.addPet(body);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -65,7 +65,7 @@ public class PetApiController extends Controller {
         }
 
         imp.deletePet(petId, apiKey);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -89,8 +89,10 @@ public class PetApiController extends Controller {
                 SwaggerUtils.validate(curItem);
             }
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -114,8 +116,10 @@ public class PetApiController extends Controller {
                 SwaggerUtils.validate(curItem);
             }
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -125,8 +129,10 @@ public class PetApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -143,7 +149,7 @@ public class PetApiController extends Controller {
         }
 
         imp.updatePet(body);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -164,7 +170,7 @@ public class PetApiController extends Controller {
         }
 
         imp.updatePetWithForm(petId, name, status);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -182,7 +188,9 @@ public class PetApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 }

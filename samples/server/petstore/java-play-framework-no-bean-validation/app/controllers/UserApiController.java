@@ -43,7 +43,7 @@ public class UserApiController extends Controller {
         }
 
         imp.createUser(body);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -57,7 +57,7 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithArrayInput(body);
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -71,22 +71,24 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithListInput(body);
-            return ok();
+        return ok();
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
 
         imp.deleteUser(username);
-            return ok();
+        return ok();
     }
 
     @ApiAction
     public Result getUserByName(String username) throws Exception {
 
         User obj = imp.getUserByName(username);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -107,15 +109,17 @@ public class UserApiController extends Controller {
         }
 
         String obj = imp.loginUser(username, password);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
 
         imp.logoutUser();
-            return ok();
+        return ok();
     }
 
     @ApiAction
@@ -129,6 +133,6 @@ public class UserApiController extends Controller {
         }
 
         imp.updateUser(username, body);
-            return ok();
+        return ok();
     }
 }

@@ -39,15 +39,17 @@ public class StoreApiController extends Controller {
     public Result deleteOrder(String orderId) throws Exception {
 
         imp.deleteOrder(orderId);
-            return ok();
+        return ok();
     }
 
     
     public Result getInventory() throws Exception {
 
         Map<String, Integer> obj = imp.getInventory();
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     
@@ -57,8 +59,10 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     
@@ -78,7 +82,9 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 }

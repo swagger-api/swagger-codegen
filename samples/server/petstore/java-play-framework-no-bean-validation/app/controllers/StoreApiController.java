@@ -36,23 +36,27 @@ public class StoreApiController extends Controller {
     public Result deleteOrder(String orderId) throws Exception {
 
         imp.deleteOrder(orderId);
-            return ok();
+        return ok();
     }
 
     @ApiAction
     public Result getInventory() throws Exception {
 
         Map<String, Integer> obj = imp.getInventory();
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
     public Result getOrderById(Long orderId) throws Exception {
 
         Order obj = imp.getOrderById(orderId);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     @ApiAction
@@ -66,7 +70,9 @@ public class StoreApiController extends Controller {
         }
 
         Order obj = imp.placeOrder(body);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 }

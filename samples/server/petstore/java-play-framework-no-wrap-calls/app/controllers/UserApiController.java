@@ -49,7 +49,7 @@ public class UserApiController extends Controller {
         }
 
         imp.createUser(body);
-            return ok();
+        return ok();
     }
 
     
@@ -68,7 +68,7 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithArrayInput(body);
-            return ok();
+        return ok();
     }
 
     
@@ -87,14 +87,14 @@ public class UserApiController extends Controller {
         }
 
         imp.createUsersWithListInput(body);
-            return ok();
+        return ok();
     }
 
     
     public Result deleteUser(String username) throws Exception {
 
         imp.deleteUser(username);
-            return ok();
+        return ok();
     }
 
     
@@ -104,8 +104,10 @@ public class UserApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     
@@ -126,15 +128,17 @@ public class UserApiController extends Controller {
         }
 
         String obj = imp.loginUser(username, password);
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
     }
 
     
     public Result logoutUser() throws Exception {
 
         imp.logoutUser();
-            return ok();
+        return ok();
     }
 
     
@@ -151,6 +155,6 @@ public class UserApiController extends Controller {
         }
 
         imp.updateUser(username, body);
-            return ok();
+        return ok();
     }
 }

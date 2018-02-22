@@ -45,7 +45,7 @@ public class StoreApiController extends Controller {
         
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteOrder(orderId)
-            return ok();
+        return ok();
         });
     }
 
@@ -56,8 +56,10 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
         });
     }
 
@@ -71,8 +73,10 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
         });
     }
 
@@ -96,8 +100,10 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+        
         });
     }
 }
