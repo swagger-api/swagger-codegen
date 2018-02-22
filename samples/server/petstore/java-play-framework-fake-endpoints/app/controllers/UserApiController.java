@@ -16,6 +16,7 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+
 import javax.validation.constraints.*;
 import play.Configuration;
 
@@ -48,8 +49,9 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.createUser(body);
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -66,8 +68,9 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.createUsersWithArrayInput(body);
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -84,24 +87,27 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.createUsersWithListInput(body);
-        return ok();
+            return ok();
     }
 
     @ApiAction
     public Result deleteUser(String username) throws Exception {
+
         imp.deleteUser(username);
-        return ok();
+            return ok();
     }
 
     @ApiAction
     public Result getUserByName(String username) throws Exception {
+
         User obj = imp.getUserByName(username);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -120,15 +126,17 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'password' parameter is required");
         }
+
         String obj = imp.loginUser(username, password);
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
     public Result logoutUser() throws Exception {
+
         imp.logoutUser();
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -143,7 +151,8 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.updateUser(username, body);
-        return ok();
+            return ok();
     }
 }

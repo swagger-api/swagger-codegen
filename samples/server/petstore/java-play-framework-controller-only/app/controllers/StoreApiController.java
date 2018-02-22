@@ -16,6 +16,7 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+
 import javax.validation.constraints.*;
 import play.Configuration;
 
@@ -36,16 +37,19 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public Result deleteOrder(String orderId) throws Exception {
+
         return ok();
     }
 
     @ApiAction
     public Result getInventory() throws Exception {
+
         return ok();
     }
 
     @ApiAction
     public Result getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
+
         return ok();
     }
 
@@ -61,6 +65,7 @@ public class StoreApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         return ok();
     }
 }

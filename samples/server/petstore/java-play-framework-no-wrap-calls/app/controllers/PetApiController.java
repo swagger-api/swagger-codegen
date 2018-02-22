@@ -17,6 +17,7 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+
 import javax.validation.constraints.*;
 import play.Configuration;
 
@@ -48,8 +49,9 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.addPet(body);
-        return ok();
+            return ok();
     }
 
     
@@ -61,8 +63,9 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
+
         imp.deletePet(petId, apiKey);
-        return ok();
+            return ok();
     }
 
     
@@ -79,14 +82,15 @@ public class PetApiController extends Controller {
                 status.add(curParam);
             }
         }
+
         List<Pet> obj = imp.findPetsByStatus(status);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
                 SwaggerUtils.validate(curItem);
             }
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     
@@ -103,24 +107,26 @@ public class PetApiController extends Controller {
                 tags.add(curParam);
             }
         }
+
         List<Pet> obj = imp.findPetsByTags(tags);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             for (Pet curItem : obj) {
                 SwaggerUtils.validate(curItem);
             }
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     
     public Result getPetById(Long petId) throws Exception {
+
         Pet obj = imp.getPetById(petId);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     
@@ -135,8 +141,9 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         imp.updatePet(body);
-        return ok();
+            return ok();
     }
 
     
@@ -155,8 +162,9 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
+
         imp.updatePetWithForm(petId, name, status);
-        return ok();
+            return ok();
     }
 
     
@@ -169,11 +177,12 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
+
         ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 }

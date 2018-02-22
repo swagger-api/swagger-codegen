@@ -15,22 +15,22 @@ import javax.validation.constraints.*;
 
 @SuppressWarnings("RedundantThrows")
 public interface FakeApiControllerImpInterface {
-    Boolean fakeOuterBooleanSerialize(Boolean body) throws Exception;
+   Boolean fakeOuterBooleanSerialize(Boolean body) throws Exception;
 
-    OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws Exception;
+   OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws Exception;
 
-    BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws Exception;
+   BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws Exception;
 
-    String fakeOuterStringSerialize(String body) throws Exception;
+   String fakeOuterStringSerialize(String body) throws Exception;
 
-    Client testClientModel(Client body) throws Exception;
+   Client testClientModel(Client body) throws Exception;
 
-    void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws Exception;
+   void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws Exception;
 
-    void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws Exception;
+   void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws Exception;
 
-    void testInlineAdditionalProperties(Object param) throws Exception;
+   void testInlineAdditionalProperties(Object param) throws Exception;
 
-    void testJsonFormData(String param, String param2) throws Exception;
+   void testJsonFormData(String param, String param2) throws Exception;
 
 }

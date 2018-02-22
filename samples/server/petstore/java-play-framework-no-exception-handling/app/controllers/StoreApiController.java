@@ -17,6 +17,7 @@ import java.io.IOException;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+
 import javax.validation.constraints.*;
 import play.Configuration;
 
@@ -39,25 +40,28 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public Result deleteOrder(String orderId)  {
+
         imp.deleteOrder(orderId);
-        return ok();
+            return ok();
     }
 
     @ApiAction
     public Result getInventory()  {
+
         Map<String, Integer> obj = imp.getInventory();
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
     public Result getOrderById( @Min(1) @Max(5)Long orderId)  {
+
         Order obj = imp.getOrderById(orderId);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -72,11 +76,12 @@ public class StoreApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         Order obj = imp.placeOrder(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 }

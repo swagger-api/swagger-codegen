@@ -19,6 +19,7 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+
 import javax.validation.constraints.*;
 import play.Configuration;
 
@@ -51,9 +52,10 @@ public class FakeApiController extends Controller {
         } else {
             body = null;
         }
+
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -68,12 +70,13 @@ public class FakeApiController extends Controller {
         } else {
             body = null;
         }
+
         OuterComposite obj = imp.fakeOuterCompositeSerialize(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -88,12 +91,13 @@ public class FakeApiController extends Controller {
         } else {
             body = null;
         }
+
         BigDecimal obj = imp.fakeOuterNumberSerialize(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -108,9 +112,10 @@ public class FakeApiController extends Controller {
         } else {
             body = null;
         }
+
         String obj = imp.fakeOuterStringSerialize(body);
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -125,12 +130,13 @@ public class FakeApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
+
         Client obj = imp.testClientModel(body);
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
     }
 
     @ApiAction
@@ -233,8 +239,9 @@ public class FakeApiController extends Controller {
         } else {
             paramCallback = null;
         }
+
         imp.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -301,8 +308,9 @@ public class FakeApiController extends Controller {
         } else {
             enumHeaderString = "-efg";
         }
+
         imp.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -317,8 +325,9 @@ public class FakeApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'param' parameter is required");
         }
+
         imp.testInlineAdditionalProperties(param);
-        return ok();
+            return ok();
     }
 
     @ApiAction
@@ -337,7 +346,8 @@ public class FakeApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'param2' parameter is required");
         }
+
         imp.testJsonFormData(param, param2);
-        return ok();
+            return ok();
     }
 }
