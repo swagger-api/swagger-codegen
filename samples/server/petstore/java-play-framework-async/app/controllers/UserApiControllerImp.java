@@ -14,22 +14,18 @@ public class UserApiControllerImp implements UserApiControllerImpInterface {
     @Override
     public void createUser(User body) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void createUsersWithArrayInput(List<User> body) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void createUsersWithListInput(List<User> body) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void deleteUser(String username) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public CompletionStage<User> getUserByName(String username) throws Exception {
@@ -48,11 +44,9 @@ public class UserApiControllerImp implements UserApiControllerImpInterface {
     @Override
     public void logoutUser() throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void updateUser(String username, User body) throws Exception {
         //Do your magic!!!
-
     }
 }

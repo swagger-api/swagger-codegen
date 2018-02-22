@@ -15,12 +15,10 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     @Override
     public void addPet(Pet body) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void deletePet(Long petId, String apiKey) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public CompletionStage<List<Pet>> findPetsByStatus( @NotNull List<String> status) throws Exception {
@@ -46,12 +44,10 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     @Override
     public void updatePet(Pet body) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public void updatePetWithForm(Long petId, String name, String status) throws Exception {
         //Do your magic!!!
-
     }
     @Override
     public CompletionStage<ModelApiResponse> uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) throws Exception {

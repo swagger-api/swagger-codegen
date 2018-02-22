@@ -25,9 +25,11 @@ public class {{classname}}ControllerImp {{#useInterfaces}}implements {{classname
         {{#isResponseFile}}
         return new FileInputStream("replace this");
         {{/isResponseFile}}
-        {{^isResponseFile}}
-        return new {{>returnTypesNoVoidNoAbstract}}({{#vendorExtensions.missingReturnInfoIfNeeded}}{{vendorExtensions.missingReturnInfoIfNeeded}}{{/vendorExtensions.missingReturnInfoIfNeeded}});
-       {{/isResponseFile}}{{#supportAsync}} });{{/supportAsync}}{{/returnType}}
+        {{^isResponseFile}}return new {{>returnTypesNoVoidNoAbstract}}({{#vendorExtensions.missingReturnInfoIfNeeded}}{{vendorExtensions.missingReturnInfoIfNeeded}}{{/vendorExtensions.missingReturnInfoIfNeeded}});{{/isResponseFile}}
+    {{#supportAsync}}
+        });
+    {{/supportAsync}}
+        {{/returnType}}
     }
 {{/operation}}
 }

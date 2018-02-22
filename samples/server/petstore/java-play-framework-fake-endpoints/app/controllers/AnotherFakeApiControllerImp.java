@@ -14,6 +14,5 @@ public class AnotherFakeApiControllerImp implements AnotherFakeApiControllerImpI
     public Client testSpecialTags(Client body) throws Exception {
         //Do your magic!!!
         return new Client();
-       
     }
 }
