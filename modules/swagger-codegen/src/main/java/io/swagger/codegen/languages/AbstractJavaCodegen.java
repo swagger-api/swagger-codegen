@@ -48,7 +48,8 @@ import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 /**
- * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-templates
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.java.AbstractJavaCodegen</code> instead.
  */
 @Deprecated
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
