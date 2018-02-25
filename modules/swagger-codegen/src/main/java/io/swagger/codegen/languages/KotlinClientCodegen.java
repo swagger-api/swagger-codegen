@@ -18,6 +18,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.kotlin.KotlinClientCodegen</code> instead.
+ */
+@Deprecated
 public class KotlinClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
