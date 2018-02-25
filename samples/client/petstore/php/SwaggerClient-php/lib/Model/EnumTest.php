@@ -278,7 +278,7 @@ class EnumTest implements ModelInterface, ArrayAccess
         $invalidProperties = [];
 
         $allowedValues = $this->getEnumStringAllowableValues();
-        if (!in_array($this->container['enum_string'], $allowedValues)) {
+        if ($this->container['enum_string'] !== null && !in_array($this->container['enum_string'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'enum_string', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -289,7 +289,7 @@ class EnumTest implements ModelInterface, ArrayAccess
             $invalidProperties[] = "'enum_string_required' can't be null";
         }
         $allowedValues = $this->getEnumStringRequiredAllowableValues();
-        if (!in_array($this->container['enum_string_required'], $allowedValues)) {
+        if ($this->container['enum_string_required'] !== null && !in_array($this->container['enum_string_required'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'enum_string_required', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -297,7 +297,7 @@ class EnumTest implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getEnumIntegerAllowableValues();
-        if (!in_array($this->container['enum_integer'], $allowedValues)) {
+        if ($this->container['enum_integer'] !== null && !in_array($this->container['enum_integer'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'enum_integer', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -305,7 +305,7 @@ class EnumTest implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getEnumNumberAllowableValues();
-        if (!in_array($this->container['enum_number'], $allowedValues)) {
+        if ($this->container['enum_number'] !== null && !in_array($this->container['enum_number'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'enum_number', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -325,22 +325,22 @@ class EnumTest implements ModelInterface, ArrayAccess
     {
 
         $allowedValues = $this->getEnumStringAllowableValues();
-        if (!in_array($this->container['enum_string'], $allowedValues)) {
+        if ($this->container['enum_string'] !== null && !in_array($this->container['enum_string'], $allowedValues)) {
             return false;
         }
         if ($this->container['enum_string_required'] === null) {
             return false;
         }
         $allowedValues = $this->getEnumStringRequiredAllowableValues();
-        if (!in_array($this->container['enum_string_required'], $allowedValues)) {
+        if ($this->container['enum_string_required'] !== null && !in_array($this->container['enum_string_required'], $allowedValues)) {
             return false;
         }
         $allowedValues = $this->getEnumIntegerAllowableValues();
-        if (!in_array($this->container['enum_integer'], $allowedValues)) {
+        if ($this->container['enum_integer'] !== null && !in_array($this->container['enum_integer'], $allowedValues)) {
             return false;
         }
         $allowedValues = $this->getEnumNumberAllowableValues();
-        if (!in_array($this->container['enum_number'], $allowedValues)) {
+        if ($this->container['enum_number'] !== null && !in_array($this->container['enum_number'], $allowedValues)) {
             return false;
         }
         return true;
