@@ -58,6 +58,7 @@ class EnumTest implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'enum_string' => 'string',
+        'enum_string_required' => 'string',
         'enum_integer' => 'int',
         'enum_number' => 'double',
         'outer_enum' => '\Swagger\Client\Model\OuterEnum'
@@ -70,6 +71,7 @@ class EnumTest implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'enum_string' => null,
+        'enum_string_required' => null,
         'enum_integer' => 'int32',
         'enum_number' => 'double',
         'outer_enum' => null
@@ -103,6 +105,7 @@ class EnumTest implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'enum_string' => 'enum_string',
+        'enum_string_required' => 'enum_string_required',
         'enum_integer' => 'enum_integer',
         'enum_number' => 'enum_number',
         'outer_enum' => 'outerEnum'
@@ -115,6 +118,7 @@ class EnumTest implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'enum_string' => 'setEnumString',
+        'enum_string_required' => 'setEnumStringRequired',
         'enum_integer' => 'setEnumInteger',
         'enum_number' => 'setEnumNumber',
         'outer_enum' => 'setOuterEnum'
@@ -127,6 +131,7 @@ class EnumTest implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'enum_string' => 'getEnumString',
+        'enum_string_required' => 'getEnumStringRequired',
         'enum_integer' => 'getEnumInteger',
         'enum_number' => 'getEnumNumber',
         'outer_enum' => 'getOuterEnum'
@@ -176,6 +181,9 @@ class EnumTest implements ModelInterface, ArrayAccess
     const ENUM_STRING_UPPER = 'UPPER';
     const ENUM_STRING_LOWER = 'lower';
     const ENUM_STRING_EMPTY = '';
+    const ENUM_STRING_REQUIRED_UPPER = 'UPPER';
+    const ENUM_STRING_REQUIRED_LOWER = 'lower';
+    const ENUM_STRING_REQUIRED_EMPTY = '';
     const ENUM_INTEGER_1 = 1;
     const ENUM_INTEGER_MINUS_1 = -1;
     const ENUM_NUMBER_1_DOT_1 = 1.1;
@@ -194,6 +202,20 @@ class EnumTest implements ModelInterface, ArrayAccess
             self::ENUM_STRING_UPPER,
             self::ENUM_STRING_LOWER,
             self::ENUM_STRING_EMPTY,
+        ];
+    }
+    
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getEnumStringRequiredAllowableValues()
+    {
+        return [
+            self::ENUM_STRING_REQUIRED_UPPER,
+            self::ENUM_STRING_REQUIRED_LOWER,
+            self::ENUM_STRING_REQUIRED_EMPTY,
         ];
     }
     
@@ -240,6 +262,7 @@ class EnumTest implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['enum_string'] = isset($data['enum_string']) ? $data['enum_string'] : null;
+        $this->container['enum_string_required'] = isset($data['enum_string_required']) ? $data['enum_string_required'] : null;
         $this->container['enum_integer'] = isset($data['enum_integer']) ? $data['enum_integer'] : null;
         $this->container['enum_number'] = isset($data['enum_number']) ? $data['enum_number'] : null;
         $this->container['outer_enum'] = isset($data['outer_enum']) ? $data['outer_enum'] : null;
@@ -258,6 +281,17 @@ class EnumTest implements ModelInterface, ArrayAccess
         if (!in_array($this->container['enum_string'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'enum_string', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        if ($this->container['enum_string_required'] === null) {
+            $invalidProperties[] = "'enum_string_required' can't be null";
+        }
+        $allowedValues = $this->getEnumStringRequiredAllowableValues();
+        if (!in_array($this->container['enum_string_required'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'enum_string_required', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -292,6 +326,13 @@ class EnumTest implements ModelInterface, ArrayAccess
 
         $allowedValues = $this->getEnumStringAllowableValues();
         if (!in_array($this->container['enum_string'], $allowedValues)) {
+            return false;
+        }
+        if ($this->container['enum_string_required'] === null) {
+            return false;
+        }
+        $allowedValues = $this->getEnumStringRequiredAllowableValues();
+        if (!in_array($this->container['enum_string_required'], $allowedValues)) {
             return false;
         }
         $allowedValues = $this->getEnumIntegerAllowableValues();
@@ -335,6 +376,39 @@ class EnumTest implements ModelInterface, ArrayAccess
             );
         }
         $this->container['enum_string'] = $enum_string;
+
+        return $this;
+    }
+
+    /**
+     * Gets enum_string_required
+     *
+     * @return string
+     */
+    public function getEnumStringRequired()
+    {
+        return $this->container['enum_string_required'];
+    }
+
+    /**
+     * Sets enum_string_required
+     *
+     * @param string $enum_string_required enum_string_required
+     *
+     * @return $this
+     */
+    public function setEnumStringRequired($enum_string_required)
+    {
+        $allowedValues = $this->getEnumStringRequiredAllowableValues();
+        if (!in_array($enum_string_required, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_string_required', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['enum_string_required'] = $enum_string_required;
 
         return $this;
     }
