@@ -21,7 +21,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-templates
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.java.JavaClientCodegen</code> instead.
  */
 @Deprecated
 public class JavaClientCodegen extends AbstractJavaCodegen

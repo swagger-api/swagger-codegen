@@ -219,4 +219,6 @@ public interface CodegenConfig {
     String toGetter(String name);
 
     void addHandlebarHelpers(Handlebars handlebars);
+
+    List<CodegenArgument> getLanguageArguments();
 }
