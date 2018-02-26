@@ -141,14 +141,10 @@ public class SwaggerCodegen {
             BeanUtils.populate(commandObject, optionValueMap);
 
             if (codegenArguments != null && !codegenArguments.isEmpty() && commandObject instanceof Generate) {
-                System.out.println(".................... ok ok ok ");
                 codegenArguments = codegenArguments.stream()
                         .filter(codegenArgument -> {
                             final String option = CLIHelper.fixOptionName(codegenArgument.getOption());
                             final String optionValue = String.valueOf(inputArgs.get(option));
-
-                            System.out.println("++++++++++++++++++ option: " + option);
-                            System.out.println("++++++++++++++++++ value: " + optionValue);
 
                             if (StringUtils.isNotBlank(optionValue) && !"null".equalsIgnoreCase(optionValue)) {
                                 codegenArgument.setValue(optionValue);
@@ -160,7 +156,6 @@ public class SwaggerCodegen {
                         .collect(Collectors.toList());
 
                 Generate generateCommand = (Generate) commandObject;
-                System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::: size: " + codegenArguments.size());
                 generateCommand.setCodegenArguments(codegenArguments);
             }
 
