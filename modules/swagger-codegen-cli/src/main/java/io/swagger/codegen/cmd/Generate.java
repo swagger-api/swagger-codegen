@@ -3,6 +3,7 @@ package io.swagger.codegen.cmd;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.CLIHelper;
 import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.CodegenArgument;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.v3.core.util.Json;
@@ -73,6 +74,7 @@ public class Generate implements Runnable {
     protected String ignoreFileOverride;
     protected Boolean removeOperationIdPrefix;
     private String url;
+    private List<CodegenArgument> codegenArguments;
 
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
@@ -202,6 +204,10 @@ public class Generate implements Runnable {
         this.url = url;
     }
 
+    public void setCodegenArguments(List<CodegenArgument> codegenArguments) {
+        this.codegenArguments = codegenArguments;
+    }
+
     @Override
     public void run() {
 
@@ -307,6 +313,10 @@ public class Generate implements Runnable {
 
         if (removeOperationIdPrefix != null) {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
+        if (codegenArguments != null && !codegenArguments.isEmpty()) {
+            configurator.setCodegenArguments(codegenArguments);
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);
