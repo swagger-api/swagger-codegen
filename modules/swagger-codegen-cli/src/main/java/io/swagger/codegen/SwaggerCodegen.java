@@ -1,5 +1,6 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.cmd.Generate;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
@@ -18,8 +19,10 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * User: lanwen Date: 24.03.15 Time: 17:56
@@ -32,6 +35,7 @@ public class SwaggerCodegen {
 
 
     private static Logger LOGGER = LoggerFactory.getLogger(SwaggerCodegen.class);
+    private static String GENERATE_COMMAND_NAME = "Generate";
 
     public static void main(String[] args) {
         final String oas3 = CLIHelper.loadResourceOAS3File();
@@ -50,6 +54,7 @@ public class SwaggerCodegen {
                 .metavar("Command");
 
         final Map<String, Schema> commandMap = new HashMap<>();
+        List<CodegenArgument> codegenArguments = null;
 
         for(String schemaName : schemaNames) {
             final Schema schema = schemaMap.get(schemaName);
@@ -82,6 +87,28 @@ public class SwaggerCodegen {
                     argument.nargs("*");
                 }
             }
+            if (command.equalsIgnoreCase(GENERATE_COMMAND_NAME)) {
+                String language = CLIHelper.detectlanguage(args);
+                if (StringUtils.isNotBlank(language)) {
+                    CodegenConfig config = CodegenConfigLoader.forName(language);
+                    codegenArguments = config.getLanguageArguments();
+                    if (codegenArguments != null && !codegenArguments.isEmpty()) {
+                        for (CodegenArgument codegenArgument : codegenArguments) {
+                            String[] arguments = CLIHelper.getArguments(codegenArgument);
+                            Class clazz = "boolean".equalsIgnoreCase(codegenArgument.getType()) ? Boolean.class : String.class;
+                            final Argument argument = parser.addArgument(arguments)
+                                    .type(clazz)
+                                    .help(codegenArgument.getDescription())
+                                    .metavar(StringUtils.EMPTY);
+                            if (codegenArgument.getType().equalsIgnoreCase("boolean")) {
+                                argument.nargs("?").setConst(true);
+                            } else if(codegenArgument.getArray() != null && codegenArgument.getArray()) {
+                                argument.nargs("*");
+                            }
+                        }
+                    }
+                }
+            }
         }
         final Map<String, Object> inputArgs = new HashMap<>();
         try {
@@ -112,6 +139,26 @@ public class SwaggerCodegen {
             final Map<String, Object> optionValueMap = CLIHelper.createOptionValueMap(commandSchema, inputArgs);
 
             BeanUtils.populate(commandObject, optionValueMap);
+
+            if (codegenArguments != null && !codegenArguments.isEmpty() && commandObject instanceof Generate) {
+                codegenArguments = codegenArguments.stream()
+                        .filter(codegenArgument -> {
+                            final String option = CLIHelper.fixOptionName(codegenArgument.getOption());
+                            final String optionValue = String.valueOf(inputArgs.get(option));
+
+                            if (StringUtils.isNotBlank(optionValue) && !"null".equalsIgnoreCase(optionValue)) {
+                                codegenArgument.setValue(optionValue);
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })
+                        .collect(Collectors.toList());
+
+                Generate generateCommand = (Generate) commandObject;
+                generateCommand.setCodegenArguments(codegenArguments);
+            }
+
             if(commandObject instanceof Runnable) {
                 new Thread(((Runnable) commandObject)).start();
             }
