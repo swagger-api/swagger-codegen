@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenArgument;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.CodegenConstants;
@@ -61,6 +62,7 @@ public class CodegenConfigurator implements Serializable {
     private String artifactVersion;
     private String library;
     private String ignoreFileOverride;
+    private List<CodegenArgument> codegenArguments;
     private Map<String, String> systemProperties = new HashMap<String, String>();
     private Map<String, String> instantiationTypes = new HashMap<String, String>();
     private Map<String, String> typeMappings = new HashMap<String, String>();
@@ -414,6 +416,8 @@ public class CodegenConfigurator implements Serializable {
         config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
         config.reservedWordsMappings().putAll(reservedWordMappings);
 
+        config.processArgumentsValiues(codegenArguments);
+
         checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
         checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
         checkAndSetAdditionalProperty(invokerPackage, CodegenConstants.INVOKER_PACKAGE);
@@ -473,6 +477,8 @@ public class CodegenConfigurator implements Serializable {
         config.importMapping().putAll(importMappings);
         config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
         config.reservedWordsMappings().putAll(reservedWordMappings);
+
+        config.processArgumentsValiues(codegenArguments);
 
         checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
         checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
@@ -548,6 +554,10 @@ public class CodegenConfigurator implements Serializable {
         System.setProperty("debugModels", "");
         System.setProperty("debugOperations", "");
         System.setProperty("debugSupportingFiles", "");
+    }
+
+    public void setCodegenArguments(List<CodegenArgument> codegenArguments) {
+        this.codegenArguments = codegenArguments;
     }
 
     private void setSystemProperties() {

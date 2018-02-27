@@ -3169,6 +3169,10 @@ public class DefaultCodegen implements CodegenConfig {
         return null;
     }
 
+    @Override
+    public void processArgumentsValiues(List<CodegenArgument> codegenArguments){
+    }
+
     /**
      * Only write if the file doesn't exist
      *

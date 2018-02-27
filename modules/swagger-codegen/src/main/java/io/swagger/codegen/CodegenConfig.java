@@ -221,4 +221,6 @@ public interface CodegenConfig {
     void addHandlebarHelpers(Handlebars handlebars);
 
     List<CodegenArgument> getLanguageArguments();
+
+    void processArgumentsValiues(List<CodegenArgument> codegenArguments);
 }

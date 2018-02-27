@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -61,6 +62,17 @@ public class CLIHelper {
         return new String[] {extensions.get("x-option").toString()};
     }
 
+    static String[] getArguments(CodegenArgument codegenArgument) {
+        List<String> options = new ArrayList<>();
+        if (StringUtils.isNotBlank(codegenArgument.getOption())) {
+            options.add(codegenArgument.getOption());
+        }
+        if (StringUtils.isNotBlank(codegenArgument.getShortOption())) {
+            options.add(codegenArgument.getShortOption());
+        }
+        return options.toArray(new String[options.size()]);
+    }
+
     static String detectCommand(String[] args) {
         if(args == null || args.length == 0) {
             return null;
@@ -70,6 +82,32 @@ public class CLIHelper {
             return null;
         }
         return command;
+    }
+
+    static String detectlanguage(String[] args) {
+        if(args == null || args.length == 0) {
+            return null;
+        }
+        boolean langFlatFound = false;
+        String language = null;
+        for (String argument : args) {
+            argument = argument.trim();
+            if (langFlatFound) {
+                if (argument.startsWith("-")) {
+                    return null;
+                }
+                return argument;
+            }
+            if ("-l".equalsIgnoreCase(argument)
+                    || "--lang".equalsIgnoreCase(argument)) {
+                langFlatFound = true;
+                continue;
+            }
+            if (argument.startsWith("-l") && argument.length() > 2) {
+                return argument.substring(2);
+            }
+        }
+        return language;
     }
 
     static Class getClass(Schema property) {
@@ -180,7 +218,7 @@ public class CLIHelper {
         return optionValueMap;
     }
 
-    private static String fixOptionName(String option) {
+    static String fixOptionName(String option) {
         option = option.substring(countDashes(option));
         return option.replace("-", "_");
     }
