@@ -62,7 +62,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     @Override
     public String getName()
     {
-        return "jaxrs"; // TODO should be renamed as "jaxrs-jersey"
+        return "jaxrs-jersey";
     }
 
     @Override
