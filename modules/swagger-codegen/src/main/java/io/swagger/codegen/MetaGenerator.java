@@ -83,7 +83,7 @@ public class MetaGenerator extends AbstractGenerator {
             if (cmd.hasOption("n")) {
                 name = cmd.getOptionValue("n");
             } else {
-                System.out.println("name is required"); //FIXME replace by LOGGER
+                LOGGER.error("name is required");
                 usage(options);
                 return;
             }
@@ -95,7 +95,7 @@ public class MetaGenerator extends AbstractGenerator {
             if (cmd.hasOption("o")) {
                 outputFolder = cmd.getOptionValue("o");
             } else {
-                System.out.println("output folder is required"); // FIXME replace by LOGGER
+                LOGGER.error("output folder is required");
                 usage(options);
                 return;
             }
