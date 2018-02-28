@@ -80,6 +80,9 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             clientCodegen.setUseOptional(
                     Boolean.valueOf(SpringOptionsProvider.USE_OPTIONAL));
             times = 1;
+            clientCodegen.setGenerateDynamicMock(
+                    Boolean.valueOf(SpringOptionsProvider.GENERATE_DYNAMIC_MOCK));
+            times = 1;
         }};
     }
 }

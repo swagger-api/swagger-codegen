@@ -9,6 +9,15 @@ package {{package}};
 {{/imports}}
 {{#jdk8-no-delegate}}
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+{{#generateDynamicMock}}
+import io.swagger.mock.MockUtil;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import io.swagger.mock.model.MockRequest;
+import io.swagger.mock.model.MockResponse;
+import java.util.HashMap;
+import java.util.Map;
+{{/generateDynamicMock}}
 {{/jdk8-no-delegate}}
 import io.swagger.annotations.*;
 {{#jdk8-no-delegate}}
@@ -63,7 +72,12 @@ public interface {{classname}} {
     default Optional<ObjectMapper> getObjectMapper() {
         return Optional.empty();
     }
-
+	
+	{{#generateDynamicMock}}
+	default Optional<MockUtil> getMockUtil() {
+        return Optional.empty();
+    }
+	{{/generateDynamicMock}}
     default Optional<HttpServletRequest> getRequest() {
         return Optional.empty();
     }
@@ -100,7 +114,7 @@ public interface {{classname}} {
         produces = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}{{#hasConsumes}}
         consumes = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}{{/singleContentTypes}}
         method = RequestMethod.{{httpMethod}})
-    {{#jdk8}}default {{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}{{#jdk8}} {
+    {{#jdk8}}default {{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity{{^generateDynamicMock}}<{{>returnTypes}}>{{/generateDynamicMock}}{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}{{#jdk8}} {
         {{#delegate-method}}
         return {{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
@@ -108,18 +122,23 @@ public interface {{classname}} {
     // Override this method
     default {{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#allParams}}{{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}MultipartFile{{/isFile}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
         {{/delegate-method}}
+		{{#generateDynamicMock}}
+		{{>apiMockLogic}}
+		{{/generateDynamicMock}}
+		{{^generateDynamicMock}}
         {{^isDelegate}}
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         {{#examples}}
             if (getAcceptHeader().get().contains("{{{contentType}}}")) {
-                try {
-                    return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(getObjectMapper().get().readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.NOT_IMPLEMENTED){{#async}}){{/async}};
-                } catch (IOException e) {
-                    log.error("Couldn't serialize response for content type {{{contentType}}}", e);
-                    return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR){{#async}}){{/async}};
-                }
-            }
+				try {
+					return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(getObjectMapper().get().readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.NOT_IMPLEMENTED){{#async}}){{/async}};
+				} catch (IOException e) {
+					log.error("Couldn't serialize response for content type {{{contentType}}}", e);
+					return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR){{#async}}){{/async}};
+				}
+			}
         {{/examples}}
+
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default {{classname}} interface so no example is generated");
         }
@@ -128,7 +147,9 @@ public interface {{classname}} {
         {{#isDelegate}}
         return getDelegate().{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/isDelegate}}
-    }{{/jdk8}}
+		{{/generateDynamicMock}}
+
+	}{{/jdk8}}
 
 {{/operation}}
 }
