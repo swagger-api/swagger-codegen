@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ArrayOfArrayOfNumberOnly  {
   
   @ApiModelProperty(value = "")
+  @Valid
   private List<List<BigDecimal>> arrayArrayNumber = null;
  /**
    * Get arrayArrayNumber

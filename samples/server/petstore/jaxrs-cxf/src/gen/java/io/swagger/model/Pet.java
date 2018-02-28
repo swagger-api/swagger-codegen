@@ -33,6 +33,7 @@ public class Pet  {
   private List<String> photoUrls = new ArrayList<String>();
 
   @ApiModelProperty(value = "")
+  @Valid
   private List<Tag> tags = null;
 
 
@@ -70,7 +71,7 @@ public enum StatusEnum {
 
   @ApiModelProperty(value = "pet status in the store")
  /**
-   * pet status in the store  
+   * pet status in the store
   **/
   private StatusEnum status = null;
  /**

@@ -22,9 +22,11 @@ public class ArrayTest  {
   private List<String> arrayOfString = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private List<List<Long>> arrayArrayOfInteger = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
  /**
    * Get arrayOfString

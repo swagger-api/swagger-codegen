@@ -28,6 +28,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
   private Date dateTime = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private Map<String, Animal> map = null;
  /**
    * Get uuid
