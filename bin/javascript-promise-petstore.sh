@@ -34,4 +34,4 @@ ags="generate \
 --additional-properties usePromises=true,useES6=false \
 -DappName=PetstoreClient $@"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags
