@@ -29,4 +29,4 @@ export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/
 
 ags="$@ generate -t modules/swagger-codegen/src/main/resources/go-server -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l go-server -o samples/server/petstore/go-api-server -DpackageName=petstoreserver  --additional-properties hideGenerationTimestamp=true -Dservice"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags

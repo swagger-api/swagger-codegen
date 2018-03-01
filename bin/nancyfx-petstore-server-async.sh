@@ -28,4 +28,4 @@ fi
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 ags="generate $@ -t modules/swagger-codegen/src/main/resources/nancyfx -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l nancyfx -o samples/server/petstore/nancyfx-async --additional-properties packageGuid={768B8DC6-54EE-4D40-9B20-7857E1D742A4},asyncServer=true"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags

@@ -28,4 +28,4 @@ fi
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 ags="generate $@ -i modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml -l csharp -o samples/client/petstore/csharp/SwaggerClientNetStandard --additional-properties packageGuid={321C8C3F-0156-40C1-AE42-D59761FB9B6C} -c ./bin/csharp-petstore-net-standard.json"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags

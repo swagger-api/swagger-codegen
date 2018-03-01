@@ -7,4 +7,4 @@ If Not Exist %executable% (
 REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -DloggerPath=conf/log4j.properties
 set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore-with-fake-endpoints-models-for-testing.yaml -l rust-server -o samples\server\petstore\rust-server
 
-java %JAVA_OPTS% -jar %executable% %ags%
+REM java %JAVA_OPTS% -jar %executable% %ags%
