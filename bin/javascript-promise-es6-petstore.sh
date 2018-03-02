@@ -31,4 +31,4 @@ ags="generate -t modules/swagger-codegen/src/main/resources/Javascript/es6 \
 -o samples/client/petstore/javascript-promise-es6 \
 --additional-properties usePromises=true,useES6=true $@"
 
-java -DappName=PetstoreClient $JAVA_OPTS -jar $executable $ags
+# java -DappName=PetstoreClient $JAVA_OPTS -jar $executable $ags
