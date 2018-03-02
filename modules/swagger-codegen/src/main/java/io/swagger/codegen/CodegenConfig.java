@@ -222,5 +222,5 @@ public interface CodegenConfig {
 
     List<CodegenArgument> getLanguageArguments();
 
-    void processArgumentsValiues(List<CodegenArgument> codegenArguments);
+    void processArgumentsValues(List<CodegenArgument> codegenArguments);
 }
