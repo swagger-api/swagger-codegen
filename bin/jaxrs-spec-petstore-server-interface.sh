@@ -31,4 +31,4 @@ ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore-with
 -DserializableModel=true
 -DinterfaceOnly=true"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags

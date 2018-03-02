@@ -31,5 +31,5 @@ ags="$@ generate --template-dir modules/swagger-codegen/src/main/resources/Ada -
 ags="$ags -i $model -t modules/swagger-codegen/src/main/resources/Ada -o samples/client/petstore/ada"
 ags="$ags -DprojectName=Petstore --model-package Samples.Petstore"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags
 rm -rf  samples/client/petstore/ada/src/server
