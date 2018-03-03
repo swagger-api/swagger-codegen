@@ -3170,7 +3170,7 @@ public class DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public void processArgumentsValiues(List<CodegenArgument> codegenArguments){
+    public void processArgumentsValues(List<CodegenArgument> codegenArguments){
     }
 
     /**

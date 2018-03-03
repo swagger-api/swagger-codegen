@@ -31,4 +31,4 @@ ags="$@ generate -t modules/swagger-codegen/src/main/resources/java-pkmst -i mod
 echo "Removing files and folders under samples/server/petstore/java-pkmst/src/main"
 rm -rf samples/server/petstore/java-pkmst/src/main
 find samples/server/petstore/java-pkmst/ -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags
