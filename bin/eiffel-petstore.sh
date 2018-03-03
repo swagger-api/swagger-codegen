@@ -28,4 +28,4 @@ fi
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 args="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml -l eiffel -o samples/client/petstore/eiffel/"
 
-java $JAVA_OPTS -jar $executable $args
+# java $JAVA_OPTS -jar $executable $args

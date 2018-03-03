@@ -31,7 +31,7 @@ ags="$@ generate -t modules/swagger-codegen/src/main/resources/dart -i modules/s
 
 # then options to generate the library for vm would be:
 #ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger_vm -DbrowserClient=false -DpubName=swagger_vm"
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags
 
 # There is a proposal to allow importing different libraries depending on the environment:
 # https://github.com/munificent/dep-interface-libraries

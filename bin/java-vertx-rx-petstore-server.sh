@@ -28,4 +28,4 @@ fi
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l java-vertx --artifact-id swagger-java-vertx-rx-server -o samples/server/petstore/java-vertx/rx -DvertxSwaggerRouterVersion=1.2.0,rxInterface=true"
 
-java $JAVA_OPTS -jar $executable $ags
+# java $JAVA_OPTS -jar $executable $ags
