@@ -91,7 +91,7 @@ public class SwaggerCodegen {
                 String language = CLIHelper.detectlanguage(args);
                 if (StringUtils.isNotBlank(language)) {
                     CodegenConfig config = CodegenConfigLoader.forName(language);
-                    codegenArguments = config.getLanguageArguments();
+                    codegenArguments = config.readLanguageArguments();
                     if (codegenArguments != null && !codegenArguments.isEmpty()) {
                         for (CodegenArgument codegenArgument : codegenArguments) {
                             String[] arguments = CLIHelper.getArguments(codegenArgument);
