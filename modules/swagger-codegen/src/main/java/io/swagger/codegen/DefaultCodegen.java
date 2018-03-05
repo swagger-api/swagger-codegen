@@ -3165,12 +3165,17 @@ public class DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public List<CodegenArgument> readLanguageArguments() {
+        return null;
+    }
+
+    @Override
     public List<CodegenArgument> getLanguageArguments() {
         return null;
     }
 
     @Override
-    public void processArgumentsValues(List<CodegenArgument> codegenArguments){
+    public void setLanguageArguments(List<CodegenArgument> codegenArguments){
     }
 
     /**
