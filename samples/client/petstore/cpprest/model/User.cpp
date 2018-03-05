@@ -13,7 +13,6 @@
 
 
 #include "User.h"
-#include "Object.h"
 
 namespace io {
 namespace swagger {
@@ -244,11 +243,10 @@ void User::unsetId()
     m_IdIsSet = false;
 }
 
-int64_t* User::getNewidInstance()
+std::shared_ptr<int64_t> User::getNewidInstance()
 {
-	return new int64_t();
+	return std::make_shared<int64_t>();
 }
-
 
 utility::string_t User::getUsername() const
 {
@@ -272,11 +270,10 @@ void User::unsetUsername()
     m_UsernameIsSet = false;
 }
 
-utility::string_t* User::getNewusernameInstance()
+std::shared_ptr<utility::string_t> User::getNewusernameInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t User::getFirstName() const
 {
@@ -300,11 +297,10 @@ void User::unsetFirstName()
     m_FirstNameIsSet = false;
 }
 
-utility::string_t* User::getNewfirstNameInstance()
+std::shared_ptr<utility::string_t> User::getNewfirstNameInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t User::getLastName() const
 {
@@ -328,11 +324,10 @@ void User::unsetLastName()
     m_LastNameIsSet = false;
 }
 
-utility::string_t* User::getNewlastNameInstance()
+std::shared_ptr<utility::string_t> User::getNewlastNameInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t User::getEmail() const
 {
@@ -356,11 +351,10 @@ void User::unsetEmail()
     m_EmailIsSet = false;
 }
 
-utility::string_t* User::getNewemailInstance()
+std::shared_ptr<utility::string_t> User::getNewemailInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t User::getPassword() const
 {
@@ -384,11 +378,10 @@ void User::unsetPassword()
     m_PasswordIsSet = false;
 }
 
-utility::string_t* User::getNewpasswordInstance()
+std::shared_ptr<utility::string_t> User::getNewpasswordInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t User::getPhone() const
 {
@@ -412,11 +405,10 @@ void User::unsetPhone()
     m_PhoneIsSet = false;
 }
 
-utility::string_t* User::getNewphoneInstance()
+std::shared_ptr<utility::string_t> User::getNewphoneInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 int32_t User::getUserStatus() const
 {
@@ -440,15 +432,13 @@ void User::unsetUserStatus()
     m_UserStatusIsSet = false;
 }
 
-int32_t* User::getNewuserStatusInstance()
+std::shared_ptr<int32_t> User::getNewuserStatusInstance()
 {
-	return new int32_t();
+	return std::make_shared<int32_t>();
 }
 
-
 }
 }
 }
 }
-
 

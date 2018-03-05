@@ -16,8 +16,8 @@
  * Describes the result of uploading an image resource
  */
 
-#ifndef ApiResponse_H_
-#define ApiResponse_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
+#define IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
 
 
 #include "ModelBase.h"
@@ -57,32 +57,32 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    int32_t getCode() const;    
+    int32_t getCode() const;
     bool codeIsSet() const;
     void unsetCode();
     void setCode(int32_t value);
     
-    int32_t* getNewcodeInstance();
+    std::shared_ptr<int32_t> getNewcodeInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    utility::string_t getType() const;    
+    utility::string_t getType() const;
     bool typeIsSet() const;
     void unsetType();
     void setType(utility::string_t value);
     
-    utility::string_t* getNewtypeInstance();
+    std::shared_ptr<utility::string_t> getNewtypeInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    utility::string_t getMessage() const;    
+    utility::string_t getMessage() const;
     bool messageIsSet() const;
     void unsetMessage();
     void setMessage(utility::string_t value);
     
-    utility::string_t* getNewmessageInstance();
+    std::shared_ptr<utility::string_t> getNewmessageInstance();
        
 
 protected:
@@ -100,4 +100,3 @@ protected:
 }
 
 #endif /* ApiResponse_H_ */
-

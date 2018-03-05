@@ -16,8 +16,8 @@
  * A tag for a pet
  */
 
-#ifndef Tag_H_
-#define Tag_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_Tag_H_
+#define IO_SWAGGER_CLIENT_MODEL_Tag_H_
 
 
 #include "ModelBase.h"
@@ -57,22 +57,22 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    int64_t getId() const;    
+    int64_t getId() const;
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
     
-    int64_t* getNewidInstance();
+    std::shared_ptr<int64_t> getNewidInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    utility::string_t getName() const;    
+    utility::string_t getName() const;
     bool nameIsSet() const;
     void unsetName();
     void setName(utility::string_t value);
     
-    utility::string_t* getNewnameInstance();
+    std::shared_ptr<utility::string_t> getNewnameInstance();
        
 
 protected:
@@ -88,4 +88,3 @@ protected:
 }
 
 #endif /* Tag_H_ */
-

@@ -13,7 +13,6 @@
 
 
 #include "Pet.h"
-#include "Object.h"
 
 namespace io {
 namespace swagger {
@@ -90,8 +89,7 @@ void Pet::fromJson(web::json::value& val)
     {
         if(!val[utility::conversions::to_string_t("category")].is_null())
         {        	
-           	std::shared_ptr<Category> newItem(getNewcategoryInstance());
-           	           	
+           	std::shared_ptr<Category> newItem = getNewcategoryInstance();
            	newItem->fromJson(val[utility::conversions::to_string_t("category")]);
            	setCategory( newItem );      
         }
@@ -262,11 +260,10 @@ void Pet::unsetId()
     m_IdIsSet = false;
 }
 
-int64_t* Pet::getNewidInstance()
+std::shared_ptr<int64_t> Pet::getNewidInstance()
 {
-	return new int64_t();
+	return std::make_shared<int64_t>();
 }
-
 
 std::shared_ptr<Category> Pet::getCategory() const
 {
@@ -290,11 +287,10 @@ void Pet::unsetCategory()
     m_CategoryIsSet = false;
 }
 
-Category* Pet::getNewcategoryInstance()
+std::shared_ptr<Category> Pet::getNewcategoryInstance()
 {
-	return new Category();
+	return std::make_shared<Category>();
 }
-
 
 utility::string_t Pet::getName() const
 {
@@ -340,11 +336,10 @@ void Pet::unsetTags()
     m_TagsIsSet = false;
 }
 
-std::vector<std::shared_ptr<Tag>>* Pet::getNewtagsInstance()
+std::shared_ptr<std::vector<std::shared_ptr<Tag>>> Pet::getNewtagsInstance()
 {
-	return new std::vector<std::shared_ptr<Tag>>();
+	return std::make_shared<std::vector<std::shared_ptr<Tag>>>();
 }
-
 
 utility::string_t Pet::getStatus() const
 {
@@ -368,15 +363,13 @@ void Pet::unsetStatus()
     m_StatusIsSet = false;
 }
 
-utility::string_t* Pet::getNewstatusInstance()
+std::shared_ptr<utility::string_t> Pet::getNewstatusInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
 
-
 }
 }
 }
 }
-
 

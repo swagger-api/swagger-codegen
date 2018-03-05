@@ -13,7 +13,6 @@
 
 
 #include "ApiResponse.h"
-#include "Object.h"
 
 namespace io {
 namespace swagger {
@@ -146,11 +145,10 @@ void ApiResponse::unsetCode()
     m_CodeIsSet = false;
 }
 
-int32_t* ApiResponse::getNewcodeInstance()
+std::shared_ptr<int32_t> ApiResponse::getNewcodeInstance()
 {
-	return new int32_t();
+	return std::make_shared<int32_t>();
 }
-
 
 utility::string_t ApiResponse::getType() const
 {
@@ -174,11 +172,10 @@ void ApiResponse::unsetType()
     m_TypeIsSet = false;
 }
 
-utility::string_t* ApiResponse::getNewtypeInstance()
+std::shared_ptr<utility::string_t> ApiResponse::getNewtypeInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 utility::string_t ApiResponse::getMessage() const
 {
@@ -202,15 +199,13 @@ void ApiResponse::unsetMessage()
     m_MessageIsSet = false;
 }
 
-utility::string_t* ApiResponse::getNewmessageInstance()
+std::shared_ptr<utility::string_t> ApiResponse::getNewmessageInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
 
-
 }
 }
 }
 }
-
 

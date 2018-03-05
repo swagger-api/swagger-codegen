@@ -13,7 +13,6 @@
 
 
 #include "Order.h"
-#include "Object.h"
 
 namespace io {
 namespace swagger {
@@ -200,11 +199,10 @@ void Order::unsetId()
     m_IdIsSet = false;
 }
 
-int64_t* Order::getNewidInstance()
+std::shared_ptr<int64_t> Order::getNewidInstance()
 {
-	return new int64_t();
+	return std::make_shared<int64_t>();
 }
-
 
 int64_t Order::getPetId() const
 {
@@ -228,11 +226,10 @@ void Order::unsetPetId()
     m_PetIdIsSet = false;
 }
 
-int64_t* Order::getNewpetIdInstance()
+std::shared_ptr<int64_t> Order::getNewpetIdInstance()
 {
-	return new int64_t();
+	return std::make_shared<int64_t>();
 }
-
 
 int32_t Order::getQuantity() const
 {
@@ -256,11 +253,10 @@ void Order::unsetQuantity()
     m_QuantityIsSet = false;
 }
 
-int32_t* Order::getNewquantityInstance()
+std::shared_ptr<int32_t> Order::getNewquantityInstance()
 {
-	return new int32_t();
+	return std::make_shared<int32_t>();
 }
-
 
 utility::datetime Order::getShipDate() const
 {
@@ -284,11 +280,10 @@ void Order::unsetShipDate()
     m_ShipDateIsSet = false;
 }
 
-utility::datetime* Order::getNewshipDateInstance()
+std::shared_ptr<utility::datetime> Order::getNewshipDateInstance()
 {
-	return new utility::datetime();
+	return std::make_shared<utility::datetime>();
 }
-
 
 utility::string_t Order::getStatus() const
 {
@@ -312,11 +307,10 @@ void Order::unsetStatus()
     m_StatusIsSet = false;
 }
 
-utility::string_t* Order::getNewstatusInstance()
+std::shared_ptr<utility::string_t> Order::getNewstatusInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
-
 
 bool Order::isComplete() const
 {
@@ -340,15 +334,13 @@ void Order::unsetComplete()
     m_CompleteIsSet = false;
 }
 
-bool* Order::getNewcompleteInstance()
+std::shared_ptr<bool> Order::getNewcompleteInstance()
 {
-	return new bool();
+	return std::make_shared<bool>();
 }
 
-
 }
 }
 }
 }
-
 

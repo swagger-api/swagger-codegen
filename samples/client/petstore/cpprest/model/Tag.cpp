@@ -13,7 +13,6 @@
 
 
 #include "Tag.h"
-#include "Object.h"
 
 namespace io {
 namespace swagger {
@@ -126,11 +125,10 @@ void Tag::unsetId()
     m_IdIsSet = false;
 }
 
-int64_t* Tag::getNewidInstance()
+std::shared_ptr<int64_t> Tag::getNewidInstance()
 {
-	return new int64_t();
+	return std::make_shared<int64_t>();
 }
-
 
 utility::string_t Tag::getName() const
 {
@@ -154,15 +152,13 @@ void Tag::unsetName()
     m_NameIsSet = false;
 }
 
-utility::string_t* Tag::getNewnameInstance()
+std::shared_ptr<utility::string_t> Tag::getNewnameInstance()
 {
-	return new utility::string_t();
+	return std::make_shared<utility::string_t>();
 }
 
-
 }
 }
 }
 }
-
 

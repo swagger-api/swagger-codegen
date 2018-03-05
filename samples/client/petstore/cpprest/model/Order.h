@@ -16,8 +16,8 @@
  * An order for a pets from the pet store
  */
 
-#ifndef Order_H_
-#define Order_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_Order_H_
+#define IO_SWAGGER_CLIENT_MODEL_Order_H_
 
 
 #include "ModelBase.h"
@@ -57,62 +57,62 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    int64_t getId() const;    
+    int64_t getId() const;
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
     
-    int64_t* getNewidInstance();
+    std::shared_ptr<int64_t> getNewidInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    int64_t getPetId() const;    
+    int64_t getPetId() const;
     bool petIdIsSet() const;
     void unsetPetId();
     void setPetId(int64_t value);
     
-    int64_t* getNewpetIdInstance();
+    std::shared_ptr<int64_t> getNewpetIdInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    int32_t getQuantity() const;    
+    int32_t getQuantity() const;
     bool quantityIsSet() const;
     void unsetQuantity();
     void setQuantity(int32_t value);
     
-    int32_t* getNewquantityInstance();
+    std::shared_ptr<int32_t> getNewquantityInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    utility::datetime getShipDate() const;    
+    utility::datetime getShipDate() const;
     bool shipDateIsSet() const;
     void unsetShipDate();
     void setShipDate(utility::datetime value);
     
-    utility::datetime* getNewshipDateInstance();
+    std::shared_ptr<utility::datetime> getNewshipDateInstance();
        
     /// <summary>
     /// Order Status
     /// </summary>
-    utility::string_t getStatus() const;    
+    utility::string_t getStatus() const;
     bool statusIsSet() const;
     void unsetStatus();
     void setStatus(utility::string_t value);
     
-    utility::string_t* getNewstatusInstance();
+    std::shared_ptr<utility::string_t> getNewstatusInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    bool isComplete() const;    
+    bool isComplete() const;
     bool completeIsSet() const;
     void unsetComplete();
     void setComplete(bool value);
     
-    bool* getNewcompleteInstance();
+    std::shared_ptr<bool> getNewcompleteInstance();
        
 
 protected:
@@ -136,4 +136,3 @@ protected:
 }
 
 #endif /* Order_H_ */
-

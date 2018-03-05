@@ -16,8 +16,8 @@
  * A pet for sale in the pet store
  */
 
-#ifndef Pet_H_
-#define Pet_H_
+#ifndef IO_SWAGGER_CLIENT_MODEL_Pet_H_
+#define IO_SWAGGER_CLIENT_MODEL_Pet_H_
 
 
 #include "ModelBase.h"
@@ -60,30 +60,30 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    int64_t getId() const;    
+    int64_t getId() const;
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
     
-    int64_t* getNewidInstance();
+    std::shared_ptr<int64_t> getNewidInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    std::shared_ptr<Category> getCategory() const;    
+    std::shared_ptr<Category> getCategory() const;
     bool categoryIsSet() const;
     void unsetCategory();
     void setCategory(std::shared_ptr<Category> value);
     
-    Category* getNewcategoryInstance();
+    std::shared_ptr<Category> getNewcategoryInstance();
        
     /// <summary>
     /// 
     /// </summary>
-    utility::string_t getName() const;    
+    utility::string_t getName() const;
         void setName(utility::string_t value);
     
-    utility::string_t* getNewnameInstance();
+    std::shared_ptr<utility::string_t> getNewnameInstance();
        
     /// <summary>
     /// 
@@ -91,7 +91,7 @@ public:
     std::vector<utility::string_t>& getPhotoUrls();
         void setPhotoUrls(std::vector<utility::string_t> value);
     
-    std::vector<utility::string_t>* getNewphotoUrlsInstance();
+    std::shared_ptr<std::vector<utility::string_t>> getNewphotoUrlsInstance();
        
     /// <summary>
     /// 
@@ -101,17 +101,17 @@ public:
     void unsetTags();
     void setTags(std::vector<std::shared_ptr<Tag>> value);
     
-    std::vector<std::shared_ptr<Tag>>* getNewtagsInstance();
+    std::shared_ptr<std::vector<std::shared_ptr<Tag>>> getNewtagsInstance();
        
     /// <summary>
     /// pet status in the store
     /// </summary>
-    utility::string_t getStatus() const;    
+    utility::string_t getStatus() const;
     bool statusIsSet() const;
     void unsetStatus();
     void setStatus(utility::string_t value);
     
-    utility::string_t* getNewstatusInstance();
+    std::shared_ptr<utility::string_t> getNewstatusInstance();
        
 
 protected:
@@ -133,4 +133,3 @@ protected:
 }
 
 #endif /* Pet_H_ */
-
