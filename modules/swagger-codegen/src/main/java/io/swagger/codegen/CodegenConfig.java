@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Helper;
-import com.samskivert.mustache.Mustache.Compiler;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
@@ -126,8 +124,6 @@ public interface CodegenConfig {
     void preprocessOpenAPI(OpenAPI openAPI);
 
     void processOpenAPI(OpenAPI openAPI);
-
-    Compiler processCompiler(Compiler compiler);
 
     String sanitizeTag(String tag);
 
