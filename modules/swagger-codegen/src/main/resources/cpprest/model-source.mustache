@@ -2,7 +2,6 @@
 {{#models}}{{#model}}
 
 #include "{{classname}}.h"
-#include "Object.h"
 
 {{#modelNamespaceDeclarations}}
 namespace {{this}} {
@@ -287,8 +286,7 @@ void {{classname}}::fromJson(web::json::value& val)
         {{^isDateTime}}
         if(!val[utility::conversions::to_string_t("{{baseName}}")].is_null())
         {        	
-           	{{{datatype}}} newItem(getNew{{nameInCamelCase}}Instance());
-           	           	
+           	{{{datatype}}} newItem = getNew{{nameInCamelCase}}Instance();
            	newItem->fromJson(val[utility::conversions::to_string_t("{{baseName}}")]);
            	{{setter}}( newItem );      
         }
@@ -661,26 +659,25 @@ void {{classname}}::unset{{name}}()
 }
 
 {{#isString}}
-{{{datatype}}}* {{classname}}::getNew{{nameInCamelCase}}Instance()
+std::shared_ptr<{{{datatype}}}> {{classname}}::getNew{{nameInCamelCase}}Instance()
 {
-	return new {{{datatype}}}();
+	return std::make_shared<{{{datatype}}}>();
 }
 {{/isString}}
 {{#isContainer}}
-{{{datatype}}}* {{classname}}::getNew{{nameInCamelCase}}Instance()
+std::shared_ptr<{{{datatype}}}> {{classname}}::getNew{{nameInCamelCase}}Instance()
 {
-	return new {{{datatype}}}();
+	return std::make_shared<{{{datatype}}}>();
 }
 {{/isContainer}}
 {{^isString}}
 {{^isContainer}}
-{{baseType}}* {{classname}}::getNew{{nameInCamelCase}}Instance()
+std::shared_ptr<{{baseType}}> {{classname}}::getNew{{nameInCamelCase}}Instance()
 {
-	return new {{baseType}}();
+	return std::make_shared<{{baseType}}>();
 }
 {{/isContainer}}
 {{/isString}}
-
 
 {{/required}}
 {{/isInherited}}
@@ -691,4 +688,3 @@ void {{classname}}::unset{{name}}()
 
 {{/model}}
 {{/models}}
-

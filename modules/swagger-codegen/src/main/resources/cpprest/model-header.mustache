@@ -5,8 +5,8 @@
  * {{description}}
  */
 
-#ifndef {{classname}}_H_
-#define {{classname}}_H_
+#ifndef {{modelHeaderGuardPrefix}}_{{classname}}_H_
+#define {{modelHeaderGuardPrefix}}_{{classname}}_H_
 
 {{^parent}}
 {{{defaultInclude}}}
@@ -51,21 +51,21 @@ public:
     /// {{description}}
     /// </summary>
     {{^isNotContainer}}{{{datatype}}}& {{getter}}();
-    {{/isNotContainer}}{{#isNotContainer}}{{{datatype}}} {{getter}}() const;    
+    {{/isNotContainer}}{{#isNotContainer}}{{{datatype}}} {{getter}}() const;
     {{/isNotContainer}}{{^required}}bool {{nameInCamelCase}}IsSet() const;
     void unset{{name}}();
     {{/required}}
     void {{setter}}({{{datatype}}} value);
     
     {{#isString}}
-    {{{datatype}}}* getNew{{nameInCamelCase}}Instance();
+    std::shared_ptr<{{{datatype}}}> getNew{{nameInCamelCase}}Instance();
     {{/isString}}
     {{#isContainer}}
-    {{{datatype}}}* getNew{{nameInCamelCase}}Instance();
+    std::shared_ptr<{{{datatype}}}> getNew{{nameInCamelCase}}Instance();
     {{/isContainer}}
     {{^isString}}
     {{^isContainer}}
-    {{baseType}}* getNew{{nameInCamelCase}}Instance();
+    std::shared_ptr<{{baseType}}> getNew{{nameInCamelCase}}Instance();
     {{/isContainer}}
     {{/isString}}
        
@@ -89,4 +89,3 @@ protected:
 #endif /* {{classname}}_H_ */
 {{/model}}
 {{/models}}
-
