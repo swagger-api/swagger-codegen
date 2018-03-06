@@ -97,32 +97,26 @@ void User::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("username")))
     {
         setUsername(ModelBase::stringFromJson(val[utility::conversions::to_string_t("username")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("firstName")))
     {
         setFirstName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("firstName")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("lastName")))
     {
         setLastName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("lastName")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("email")))
     {
         setEmail(ModelBase::stringFromJson(val[utility::conversions::to_string_t("email")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("password")))
     {
         setPassword(ModelBase::stringFromJson(val[utility::conversions::to_string_t("password")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("phone")))
     {
         setPhone(ModelBase::stringFromJson(val[utility::conversions::to_string_t("phone")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("userStatus")))
     {
@@ -245,7 +239,7 @@ void User::unsetId()
 
 std::shared_ptr<int64_t> User::getNewidInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 utility::string_t User::getUsername() const
@@ -272,7 +266,7 @@ void User::unsetUsername()
 
 std::shared_ptr<utility::string_t> User::getNewusernameInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getFirstName() const
@@ -299,7 +293,7 @@ void User::unsetFirstName()
 
 std::shared_ptr<utility::string_t> User::getNewfirstNameInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getLastName() const
@@ -326,7 +320,7 @@ void User::unsetLastName()
 
 std::shared_ptr<utility::string_t> User::getNewlastNameInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getEmail() const
@@ -353,7 +347,7 @@ void User::unsetEmail()
 
 std::shared_ptr<utility::string_t> User::getNewemailInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getPassword() const
@@ -380,7 +374,7 @@ void User::unsetPassword()
 
 std::shared_ptr<utility::string_t> User::getNewpasswordInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getPhone() const
@@ -407,7 +401,7 @@ void User::unsetPhone()
 
 std::shared_ptr<utility::string_t> User::getNewphoneInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 int32_t User::getUserStatus() const
@@ -434,7 +428,7 @@ void User::unsetUserStatus()
 
 std::shared_ptr<int32_t> User::getNewuserStatusInstance()
 {
-	return std::make_shared<int32_t>();
+    return std::make_shared<int32_t>();
 }
 
 }

@@ -93,12 +93,10 @@ void Order::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("shipDate")))
     {
         setShipDate(ModelBase::dateFromJson(val[utility::conversions::to_string_t("shipDate")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("status")))
     {
         setStatus(ModelBase::stringFromJson(val[utility::conversions::to_string_t("status")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("complete")))
     {
@@ -201,7 +199,7 @@ void Order::unsetId()
 
 std::shared_ptr<int64_t> Order::getNewidInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 int64_t Order::getPetId() const
@@ -228,7 +226,7 @@ void Order::unsetPetId()
 
 std::shared_ptr<int64_t> Order::getNewpetIdInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 int32_t Order::getQuantity() const
@@ -255,7 +253,7 @@ void Order::unsetQuantity()
 
 std::shared_ptr<int32_t> Order::getNewquantityInstance()
 {
-	return std::make_shared<int32_t>();
+    return std::make_shared<int32_t>();
 }
 
 utility::datetime Order::getShipDate() const
@@ -282,7 +280,7 @@ void Order::unsetShipDate()
 
 std::shared_ptr<utility::datetime> Order::getNewshipDateInstance()
 {
-	return std::make_shared<utility::datetime>();
+    return std::make_shared<utility::datetime>();
 }
 
 utility::string_t Order::getStatus() const
@@ -309,7 +307,7 @@ void Order::unsetStatus()
 
 std::shared_ptr<utility::string_t> Order::getNewstatusInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 bool Order::isComplete() const
@@ -336,7 +334,7 @@ void Order::unsetComplete()
 
 std::shared_ptr<bool> Order::getNewcompleteInstance()
 {
-	return std::make_shared<bool>();
+    return std::make_shared<bool>();
 }
 
 }

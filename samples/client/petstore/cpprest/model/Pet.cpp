@@ -88,12 +88,11 @@ void Pet::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("category")))
     {
         if(!val[utility::conversions::to_string_t("category")].is_null())
-        {        	
-           	std::shared_ptr<Category> newItem = getNewcategoryInstance();
-           	newItem->fromJson(val[utility::conversions::to_string_t("category")]);
-           	setCategory( newItem );      
+        {
+            std::shared_ptr<Category> newItem = getNewcategoryInstance();
+            newItem->fromJson(val[utility::conversions::to_string_t("category")]);
+            setCategory( newItem );
         }
-
     }
     setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
     {
@@ -127,7 +126,6 @@ void Pet::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("status")))
     {
         setStatus(ModelBase::stringFromJson(val[utility::conversions::to_string_t("status")]));
-
     }
 
 }
@@ -262,7 +260,7 @@ void Pet::unsetId()
 
 std::shared_ptr<int64_t> Pet::getNewidInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 std::shared_ptr<Category> Pet::getCategory() const
@@ -289,7 +287,7 @@ void Pet::unsetCategory()
 
 std::shared_ptr<Category> Pet::getNewcategoryInstance()
 {
-	return std::make_shared<Category>();
+    return std::make_shared<Category>();
 }
 
 utility::string_t Pet::getName() const
@@ -338,7 +336,7 @@ void Pet::unsetTags()
 
 std::shared_ptr<std::vector<std::shared_ptr<Tag>>> Pet::getNewtagsInstance()
 {
-	return std::make_shared<std::vector<std::shared_ptr<Tag>>>();
+    return std::make_shared<std::vector<std::shared_ptr<Tag>>>();
 }
 
 utility::string_t Pet::getStatus() const
@@ -365,7 +363,7 @@ void Pet::unsetStatus()
 
 std::shared_ptr<utility::string_t> Pet::getNewstatusInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 }

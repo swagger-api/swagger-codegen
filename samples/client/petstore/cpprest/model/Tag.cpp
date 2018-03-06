@@ -61,7 +61,6 @@ void Tag::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("name")))
     {
         setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
-
     }
 
 }
@@ -127,7 +126,7 @@ void Tag::unsetId()
 
 std::shared_ptr<int64_t> Tag::getNewidInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 utility::string_t Tag::getName() const
@@ -154,7 +153,7 @@ void Tag::unsetName()
 
 std::shared_ptr<utility::string_t> Tag::getNewnameInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 }

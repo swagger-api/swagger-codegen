@@ -61,7 +61,6 @@ void Category::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("name")))
     {
         setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
-
     }
 
 }
@@ -127,7 +126,7 @@ void Category::unsetId()
 
 std::shared_ptr<int64_t> Category::getNewidInstance()
 {
-	return std::make_shared<int64_t>();
+    return std::make_shared<int64_t>();
 }
 
 utility::string_t Category::getName() const
@@ -154,7 +153,7 @@ void Category::unsetName()
 
 std::shared_ptr<utility::string_t> Category::getNewnameInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 }

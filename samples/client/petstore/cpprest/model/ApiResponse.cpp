@@ -67,12 +67,10 @@ void ApiResponse::fromJson(web::json::value& val)
     if(val.has_field(utility::conversions::to_string_t("type")))
     {
         setType(ModelBase::stringFromJson(val[utility::conversions::to_string_t("type")]));
-
     }
     if(val.has_field(utility::conversions::to_string_t("message")))
     {
         setMessage(ModelBase::stringFromJson(val[utility::conversions::to_string_t("message")]));
-
     }
 
 }
@@ -147,7 +145,7 @@ void ApiResponse::unsetCode()
 
 std::shared_ptr<int32_t> ApiResponse::getNewcodeInstance()
 {
-	return std::make_shared<int32_t>();
+    return std::make_shared<int32_t>();
 }
 
 utility::string_t ApiResponse::getType() const
@@ -174,7 +172,7 @@ void ApiResponse::unsetType()
 
 std::shared_ptr<utility::string_t> ApiResponse::getNewtypeInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t ApiResponse::getMessage() const
@@ -201,7 +199,7 @@ void ApiResponse::unsetMessage()
 
 std::shared_ptr<utility::string_t> ApiResponse::getNewmessageInstance()
 {
-	return std::make_shared<utility::string_t>();
+    return std::make_shared<utility::string_t>();
 }
 
 }
