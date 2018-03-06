@@ -304,4 +304,9 @@ public class CodegenConstants {
     public static final String HAS_REFERENCE_EXT_NAME = PREFIX_HAS + "reference";
     public static final String HAS_HEADERS_EXT_NAME = PREFIX_HAS + "headers";
 
+    public static final String MODEL_DOCS_OPTION = "--model-docs";
+    public static final String API_DOCS_OPTION = "--api-docs";
+    public static final String MODEL_TESTS_OPTION = "--model-tests";
+    public static final String API_TESTS_OPTION = "--api-tests";
+
 }
