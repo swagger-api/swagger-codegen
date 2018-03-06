@@ -99,4 +99,4 @@ protected:
 }
 }
 
-#endif /* IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
+#endif /* IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_ */

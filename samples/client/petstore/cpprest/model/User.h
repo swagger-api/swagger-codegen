@@ -159,4 +159,4 @@ protected:
 }
 }
 
-#endif /* IO_SWAGGER_CLIENT_MODEL_User_H_
+#endif /* IO_SWAGGER_CLIENT_MODEL_User_H_ */
