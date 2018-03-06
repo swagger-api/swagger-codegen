@@ -8,10 +8,13 @@ import {{invokerPackage}}.ApiClient;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpContent;
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.http.HttpMethods;
 import com.google.api.client.http.HttpResponse;
+import com.google.api.client.json.Json;
 
 import javax.ws.rs.core.UriBuilder;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -91,7 +94,15 @@ public class {{classname}} {
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");{{#hasQueryParams}}
         {{#queryParams}}
         if ({{paramName}} != null) {
-            uriBuilder = uriBuilder.queryParam("{{baseName}}", {{paramName}});
+            String key = "{{baseName}}";
+            Object value = {{paramName}};
+            if (value instanceof Collection) {
+                uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+            } else if (value instanceof Object[]) {
+                uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
+            } else {
+                uriBuilder = uriBuilder.queryParam(key, value);
+            }
         }{{/queryParams}}{{/hasQueryParams}}
 
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
@@ -99,7 +110,38 @@ public class {{classname}} {
 
         HttpContent content = {{#bodyParam}}{{paramName}} == null ? null : apiClient.new JacksonJsonHttpContent({{paramName}}){{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
-    }
+    }{{#bodyParam}}
+
+      public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{#isBodyParam}}InputStream {{paramName}}{{/isBodyParam}}{{^isBodyParam}}{{{dataType}}} {{paramName}}{{/isBodyParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
+          {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
+              if ({{paramName}} == null) {
+              throw new IllegalArgumentException("Missing the required parameter '{{paramName}}' when calling {{operationId}}");
+              }{{/required}}{{/allParams}}
+          {{#hasPathParams}}
+                  // create a map of path variables
+                  final Map<String, Object> uriVariables = new HashMap<String, Object>();{{#pathParams}}
+                      uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}
+          {{/hasPathParams}}
+              UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "{{{path}}}");{{#hasQueryParams}}
+              {{#queryParams}}
+              if ({{paramName}} != null) {
+                  String key = "{{baseName}}";
+                  Object value = {{paramName}};
+                  if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                  } else if (value instanceof Object[]) {
+                    uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
+                  } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
+                  }
+              }{{/queryParams}}{{/hasQueryParams}}
+
+              String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
+              GenericUrl genericUrl = new GenericUrl(url);
+
+              HttpContent content = {{#bodyParam}}{{paramName}} == null ? null : new InputStreamContent(Json.MEDIA_TYPE, {{paramName}}){{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+              return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
+      }{{/bodyParam}}
 
     public HttpResponse {{operationId}}ForHttpResponse({{#bodyParam}}{{^required}}{{{dataType}}} {{paramName}}, {{/required}}{{/bodyParam}}{{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}{{#hasRequiredParams}}, {{/hasRequiredParams}}Map<String, Object> params) throws IOException {
         {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
@@ -125,6 +167,8 @@ public class {{classname}} {
             if (key != null && value != null) {
                 if (value instanceof Collection) {
                     uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else if (value instanceof Object[]) {
+                    uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
                 } else {
                     uriBuilder = uriBuilder.queryParam(key, value);
                 }
