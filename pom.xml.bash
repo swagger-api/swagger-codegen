@@ -708,7 +708,6 @@
                 <module>samples/client/petstore/typescript-node/npm</module>
             </modules>
         </profile>
-        <!--
         <profile>
             <id>python-client</id>
             <activation>
@@ -721,7 +720,6 @@
                 <module>samples/client/petstore/python</module>
             </modules>
         </profile>
-        -->
         <profile>
             <id>ruby-client</id>
             <activation>
