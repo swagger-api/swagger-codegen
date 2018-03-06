@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -177,10 +178,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         // model/api tests and documentation options rely on parent generate options (api or model) and no other options.
         // They default to true in all scenarios and can only be marked false explicitly
-        generateModelTests = System.getProperty(CodegenConstants.MODEL_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
-        generateModelDocumentation = System.getProperty(CodegenConstants.MODEL_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
-        generateApiTests = System.getProperty(CodegenConstants.API_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
-        generateApiDocumentation = System.getProperty(CodegenConstants.API_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
+        final Boolean generateModelTestsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_TESTS_OPTION);
+        final Boolean generateModelDocsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_DOCS_OPTION);
+        final Boolean generateAPITestsOption = getCustomOptionBooleanValue(CodegenConstants.API_TESTS_OPTION);
+        final Boolean generateAPIDocsOption = getCustomOptionBooleanValue(CodegenConstants.API_DOCS_OPTION);
+
+        generateModelTests = generateModelTestsOption != null ? generateModelTestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
+        generateModelDocumentation = generateModelDocsOption != null ? generateModelDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
+        generateApiTests = generateAPITestsOption != null ? generateAPITestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
+        generateApiDocumentation = generateAPIDocsOption != null ? generateAPIDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
 
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
@@ -1022,5 +1028,20 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private boolean isJavaCodegen(String name) {
         return name.equalsIgnoreCase("java")
                 || name.equalsIgnoreCase("inflector");
+    }
+
+    private Boolean getCustomOptionBooleanValue(String option) {
+        List<CodegenArgument> languageArguments = config.getLanguageArguments();
+        if (languageArguments == null || languageArguments.isEmpty()) {
+            return null;
+        }
+        Optional<CodegenArgument> optionalCodegenArgument = languageArguments.stream()
+                .filter(argument -> option.equalsIgnoreCase(argument.getOption()))
+                .findFirst();
+
+        if (!optionalCodegenArgument.isPresent()) {
+            return null;
+        }
+        return Boolean.valueOf(optionalCodegenArgument.get().getValue());
     }
 }
