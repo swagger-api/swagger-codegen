@@ -155,7 +155,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
             if (operations != null) {
 
                 // collect paths
-                List<String> allPaths = new ArrayList<>();
+                SortedSet<String> allPaths = new TreeSet<>();
                 @SuppressWarnings("unchecked")
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
                 for (CodegenOperation operation: ops) {
@@ -169,7 +169,8 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
                 if (!allPaths.isEmpty()) {
                     // find common prefix
                     StringBuilder basePathSB = new StringBuilder();
-                    String firstPath = allPaths.remove(0);
+                    String firstPath = allPaths.first();
+                    allPaths.remove(firstPath);
                     String[] parts = firstPath.split("/");
                     partsLoop:
                     for (String part : parts) {
