@@ -13,7 +13,6 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.Json;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -318,7 +317,7 @@ public class StoreApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse placeOrderForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse placeOrderForHttpResponse(java.io.InputStream body) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling placeOrder");

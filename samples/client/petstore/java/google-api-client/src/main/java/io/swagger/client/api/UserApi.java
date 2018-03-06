@@ -13,7 +13,6 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.Json;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,7 +77,7 @@ public class UserApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUserForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse createUserForHttpResponse(java.io.InputStream body) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUser");
@@ -162,7 +161,7 @@ public class UserApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUsersWithArrayInputForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse createUsersWithArrayInputForHttpResponse(java.io.InputStream body) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUsersWithArrayInput");
@@ -246,7 +245,7 @@ public class UserApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUsersWithListInputForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse createUsersWithListInputForHttpResponse(java.io.InputStream body) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUsersWithListInput");
@@ -677,7 +676,7 @@ public class UserApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
     }
 
-      public HttpResponse updateUserForHttpResponse(String username, InputStream body) throws IOException {
+      public HttpResponse updateUserForHttpResponse(String username, java.io.InputStream body) throws IOException {
           // verify the required parameter 'username' is set
               if (username == null) {
               throw new IllegalArgumentException("Missing the required parameter 'username' when calling updateUser");

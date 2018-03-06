@@ -14,7 +14,6 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.Json;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -112,7 +111,7 @@ public class {{classname}} {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }{{#bodyParam}}
 
-      public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{#isBodyParam}}InputStream {{paramName}}{{/isBodyParam}}{{^isBodyParam}}{{{dataType}}} {{paramName}}{{/isBodyParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
+      public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{#isBodyParam}}java.io.InputStream {{paramName}}{{/isBodyParam}}{{^isBodyParam}}{{{dataType}}} {{paramName}}{{/isBodyParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
           {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
               if ({{paramName}} == null) {
               throw new IllegalArgumentException("Missing the required parameter '{{paramName}}' when calling {{operationId}}");

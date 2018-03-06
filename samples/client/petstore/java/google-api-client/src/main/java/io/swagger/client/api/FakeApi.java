@@ -17,7 +17,6 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.json.Json;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -82,7 +81,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse fakeOuterBooleanSerializeForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse fakeOuterBooleanSerializeForHttpResponse(java.io.InputStream body) throws IOException {
           
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/outer/boolean");
 
@@ -160,7 +159,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse fakeOuterCompositeSerializeForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse fakeOuterCompositeSerializeForHttpResponse(java.io.InputStream body) throws IOException {
           
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/outer/composite");
 
@@ -238,7 +237,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse fakeOuterNumberSerializeForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse fakeOuterNumberSerializeForHttpResponse(java.io.InputStream body) throws IOException {
           
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/outer/number");
 
@@ -316,7 +315,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse fakeOuterStringSerializeForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse fakeOuterStringSerializeForHttpResponse(java.io.InputStream body) throws IOException {
           
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/outer/string");
 
@@ -400,7 +399,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PATCH, genericUrl, content).execute();
     }
 
-      public HttpResponse testClientModelForHttpResponse(InputStream body) throws IOException {
+      public HttpResponse testClientModelForHttpResponse(java.io.InputStream body) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling testClientModel");
@@ -693,7 +692,7 @@ public class FakeApi {
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse testInlineAdditionalPropertiesForHttpResponse(InputStream param) throws IOException {
+      public HttpResponse testInlineAdditionalPropertiesForHttpResponse(java.io.InputStream param) throws IOException {
           // verify the required parameter 'param' is set
               if (param == null) {
               throw new IllegalArgumentException("Missing the required parameter 'param' when calling testInlineAdditionalProperties");
