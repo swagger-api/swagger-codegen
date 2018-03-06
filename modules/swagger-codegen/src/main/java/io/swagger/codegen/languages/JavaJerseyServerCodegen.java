@@ -142,10 +142,77 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         return objs;
     }
 
+    /* (non-Javadoc)
+     * @see io.swagger.codegen.languages.AbstractJavaJAXRSServerCodegen#postProcessOperations(java.util.Map)
+     */
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        objs = super.postProcessOperations(objs);
+
+        if (useTags) {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+            if (operations != null) {
+
+                // collect paths
+                List<String> allPaths = new ArrayList<>();
+                @SuppressWarnings("unchecked")
+                List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+                for (CodegenOperation operation: ops) {
+                    String path = operation.path;
+                    if (path.startsWith("/")) {
+                        path = path.substring(1);
+                    }
+                    allPaths.add(path);
+                }
+
+                if (!allPaths.isEmpty()) {
+                    // find common prefix
+                    StringBuilder basePathSB = new StringBuilder();
+                    String firstPath = allPaths.remove(0);
+                    String[] parts = firstPath.split("/");
+                    partsLoop:
+                    for (String part : parts) {
+                        for (String path : allPaths) {
+                            if (!path.startsWith(basePathSB.toString() + part)) {
+                                break partsLoop;
+                            }
+                        }
+                        basePathSB.append(part).append("/");
+                    }
+                    String basePath = basePathSB.toString();
+                    if (basePath.endsWith("/")) {
+                        basePath = basePath.substring(0, basePath.length() - 1);
+                    }
+
+                    if (basePath.length() > 0) {
+                        // update operations
+                        for (CodegenOperation operation: ops) {
+                            operation.path = operation.path.substring(basePath.length() + (operation.path.startsWith("/") ? 1 : 0));
+                            operation.baseName = basePath;
+                            operation.subresourceOperation = !operation.path.isEmpty();
+                        }
+
+                        // save base path in objects
+                        objs.put("apiBasePath", basePath);
+                    }
+                }
+            }
+        }
+
+        return objs;
+    }
+
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         if (useTags) {
-            super.addOperationToGroup(tag, resourcePath, operation, co, operations);
+            // only add operations to group; base path extraction is done in postProcessOperations
+            List<CodegenOperation> opList = operations.get(tag);
+            if (opList == null) {
+                opList = new ArrayList<CodegenOperation>();
+                operations.put(tag, opList);
+            }
+            opList.add(co);
         } else  {
             String basePath = resourcePath;
             if (basePath.startsWith("/")) {
