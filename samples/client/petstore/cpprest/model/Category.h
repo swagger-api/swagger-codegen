@@ -87,4 +87,4 @@ protected:
 }
 }
 
-#endif /* Category_H_ */
+#endif /* IO_SWAGGER_CLIENT_MODEL_Category_H_

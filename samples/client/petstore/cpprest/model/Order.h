@@ -135,4 +135,4 @@ protected:
 }
 }
 
-#endif /* Order_H_ */
+#endif /* IO_SWAGGER_CLIENT_MODEL_Order_H_

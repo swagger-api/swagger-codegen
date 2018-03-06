@@ -132,4 +132,4 @@ protected:
 }
 }
 
-#endif /* Pet_H_ */
+#endif /* IO_SWAGGER_CLIENT_MODEL_Pet_H_
