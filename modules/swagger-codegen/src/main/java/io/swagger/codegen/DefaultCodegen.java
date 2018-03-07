@@ -1,8 +1,6 @@
 package io.swagger.codegen;
 
 import com.github.jknack.handlebars.Handlebars;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import com.samskivert.mustache.Mustache.Compiler;
 import io.swagger.codegen.languages.helpers.HasHelper;
 import io.swagger.codegen.languages.helpers.HasNotHelper;
@@ -41,14 +39,11 @@ import io.swagger.v3.oas.models.security.OAuthFlow;
 import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,15 +61,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static io.swagger.codegen.CodegenHelper.getDefaultIncludes;
-import static io.swagger.codegen.CodegenHelper.getImportMappings;
-import static io.swagger.codegen.CodegenHelper.getTypeMappings;
-import static io.swagger.codegen.CodegenHelper.initalizeSpecialCharacterMapping;
 import static io.swagger.codegen.CodegenConstants.HAS_ONLY_READ_ONLY_EXT_NAME;
 import static io.swagger.codegen.CodegenConstants.HAS_OPTIONAL_EXT_NAME;
 import static io.swagger.codegen.CodegenConstants.HAS_REQUIRED_EXT_NAME;
 import static io.swagger.codegen.CodegenConstants.IS_ARRAY_MODEL_EXT_NAME;
 import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.CodegenHelper.getDefaultIncludes;
+import static io.swagger.codegen.CodegenHelper.getImportMappings;
+import static io.swagger.codegen.CodegenHelper.getTypeMappings;
+import static io.swagger.codegen.CodegenHelper.initalizeSpecialCharacterMapping;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 import static io.swagger.codegen.utils.ModelUtils.processCodegenModels;
 import static io.swagger.codegen.utils.ModelUtils.processModelEnums;
@@ -2818,13 +2813,9 @@ public class DefaultCodegen implements CodegenConfig {
      * @return camelized string
      */
     protected String removeNonNameElementToCamelCase(final String name, final String nonNameElementPattern) {
-        String result = StringUtils.join(Lists.transform(Lists.newArrayList(name.split(nonNameElementPattern)), new Function<String, String>() {
-            @Nullable
-            @Override
-            public String apply(String input) {
-                return StringUtils.capitalize(input);
-            }
-        }), "");
+        String result = Arrays.stream(name.split(nonNameElementPattern))
+                .map(StringUtils::capitalize)
+                .collect(Collectors.joining(""));
         if (result.length() > 0) {
             result = result.substring(0, 1).toLowerCase() + result.substring(1);
         }
