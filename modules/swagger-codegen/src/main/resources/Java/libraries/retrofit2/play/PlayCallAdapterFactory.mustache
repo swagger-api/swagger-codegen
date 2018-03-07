@@ -98,7 +98,7 @@ public class PlayCallAdapterFactory extends CallAdapter.Factory {
         @Override
         public {{#play24}}F.Promise{{/play24}}{{^play24}}CompletionStage{{/play24}}<R> adapt(final Call<R> call) {
 {{#play24}}
-            final F.RedeemablePromise<R> promise = new F.RedeemablePromise.empty();
+            final F.RedeemablePromise<R> promise = F.RedeemablePromise.empty();
 {{/play24}}
 {{^play24}}
             final CompletableFuture<R> promise = new CompletableFuture();

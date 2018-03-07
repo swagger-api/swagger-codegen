@@ -274,6 +274,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             }
 
             apiTemplateFiles.remove("api.mustache");
+            apiTemplateFiles.put("play/api.mustache", ".java");
 
             if (PLAY_25.equals(playVersion) || PLAY_26.equals(playVersion)) {
                 additionalProperties.put("java8", "true");
