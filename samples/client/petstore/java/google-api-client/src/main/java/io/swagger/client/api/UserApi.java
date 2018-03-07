@@ -336,7 +336,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.DELETE, genericUrl, content).execute();
     }
 
@@ -371,7 +371,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.DELETE, genericUrl, content).execute();
     }
 
@@ -422,7 +422,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -457,7 +457,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -529,7 +529,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -568,7 +568,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -601,7 +601,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -630,7 +630,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
+        HttpContent content = null;
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 

@@ -107,7 +107,7 @@ public class {{classname}} {
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}});
+        HttpContent content = {{#isBodyAllowed}}apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}){{/isBodyAllowed}}{{^isBodyAllowed}}null{{/isBodyAllowed}};
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }{{#bodyParam}}
 
@@ -179,7 +179,7 @@ public class {{classname}} {
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}});
+        HttpContent content = {{#isBodyAllowed}}apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}){{/isBodyAllowed}}{{^isBodyAllowed}}null{{/isBodyAllowed}};
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }
 
