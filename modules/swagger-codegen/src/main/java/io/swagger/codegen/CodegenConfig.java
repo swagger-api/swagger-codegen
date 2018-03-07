@@ -87,6 +87,10 @@ public interface CodegenConfig {
 
     void setOutputDir(String dir);
 
+    String getBooleanGetterPrefix();
+
+    void setBooleanGetterPrefix(String prefix);
+
     CodegenModel fromModel(String name, Model model);
 
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);

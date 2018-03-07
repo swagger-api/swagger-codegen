@@ -715,7 +715,23 @@ public class JavaModelTest {
         Assert.assertEquals(cp.baseType, "Boolean");
         Assert.assertTrue(cp.isNotContainer);
         Assert.assertTrue(cp.isBoolean);
-        Assert.assertEquals(cp.getter, "Property");
+        Assert.assertEquals(cp.getter, "getProperty");
+    }
+
+    @Test(description = "choose a custom boolean prefix, where default is 'get'")
+    public void booleanParameterWithCustomBooleanPrefixTest() {
+        final BooleanProperty property = new BooleanProperty();
+        final DefaultCodegen codegen = new JavaClientCodegen();
+        codegen.setBooleanGetterPrefix("is");
+        final CodegenProperty cp = codegen.fromProperty("property", property);
+
+        Assert.assertEquals(cp.baseName, "property");
+        Assert.assertEquals(cp.datatype, "Boolean");
+        Assert.assertEquals(cp.name, "property");
+        Assert.assertEquals(cp.baseType, "Boolean");
+        Assert.assertTrue(cp.isNotContainer);
+        Assert.assertTrue(cp.isBoolean);
+        Assert.assertEquals(cp.getter, "isProperty");
     }
 
 }

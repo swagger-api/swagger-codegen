@@ -172,6 +172,10 @@ public class Generate implements Runnable {
             description = CodegenConstants.REMOVE_OPERATION_ID_PREFIX_DESC)
     private Boolean removeOperationIdPrefix;
 
+    @Option(name = {"--boolean-getter-prefix"}, title = "overwrite the boolean getter prefix",
+            description = CodegenConstants.BOOLEAN_GETTER_PREFIX_DESC)
+    private String booleanGetterPrefix;
+
     @Override
     public void run() {
 
@@ -271,6 +275,10 @@ public class Generate implements Runnable {
 
         if (removeOperationIdPrefix != null) {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
+        if (booleanGetterPrefix != null) {
+            configurator.setBooleanGetterPrefix(booleanGetterPrefix);
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);

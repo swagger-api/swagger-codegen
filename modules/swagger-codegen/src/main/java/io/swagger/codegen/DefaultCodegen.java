@@ -92,6 +92,7 @@ public class DefaultCodegen {
     protected List<CliOption> cliOptions = new ArrayList<CliOption>();
     protected boolean skipOverwrite;
     protected boolean removeOperationIdPrefix;
+    protected String booleanGetterPrefix;
     protected boolean supportsInheritance;
     protected boolean supportsMixins;
     protected Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
@@ -154,6 +155,11 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.BOOLEAN_GETTER_PREFIX)) {
+            this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.BOOLEAN_GETTER_PREFIX).toString()));
         }
     }
 
@@ -1232,7 +1238,9 @@ public class DefaultCodegen {
      * @return getter name based on naming convention
      */
     public String toBooleanGetter(String name) {
-        return "get" + getterAndSetterCapitalize(name);
+        return getBooleanGetterPrefix() == null
+                ? toGetter(name)
+                : getBooleanGetterPrefix() + getterAndSetterCapitalize(name);
     }
 
     /**
@@ -3367,6 +3375,16 @@ public class DefaultCodegen {
 
     public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+    }
+
+    public String getBooleanGetterPrefix() {
+        return booleanGetterPrefix;
+    }
+
+    public void setBooleanGetterPrefix(String prefix) {
+        if (prefix != null) {
+            this.booleanGetterPrefix = prefix;
+        }
     }
 
     /**
