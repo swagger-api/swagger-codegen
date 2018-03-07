@@ -20,7 +20,7 @@ public class StoreApiControllerImp implements StoreApiControllerImpInterface {
     public CompletionStage<Map<String, Integer>> getInventory() throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new HashMap<String, Integer>();
+           return new HashMap<String, Integer>();
         });
     }
 
@@ -28,7 +28,7 @@ public class StoreApiControllerImp implements StoreApiControllerImpInterface {
     public CompletionStage<Order> getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new Order();
+           return new Order();
         });
     }
 
@@ -36,7 +36,7 @@ public class StoreApiControllerImp implements StoreApiControllerImpInterface {
     public CompletionStage<Order> placeOrder(Order body) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new Order();
+           return new Order();
         });
     }
 

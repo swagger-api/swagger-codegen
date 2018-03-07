@@ -35,7 +35,7 @@ public class UserApiControllerImp implements UserApiControllerImpInterface {
     public CompletionStage<User> getUserByName(String username) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new User();
+           return new User();
         });
     }
 
@@ -43,7 +43,7 @@ public class UserApiControllerImp implements UserApiControllerImpInterface {
     public CompletionStage<String> loginUser( @NotNull String username,  @NotNull String password) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new String();
+           return new String();
         });
     }
 

@@ -51,10 +51,9 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.createUser(body)
-        return ok();
+            return ok();
         });
     }
 
@@ -72,10 +71,9 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithArrayInput(body)
-        return ok();
+            return ok();
         });
     }
 
@@ -93,33 +91,31 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.createUsersWithListInput(body)
-        return ok();
+            return ok();
         });
     }
 
     @ApiAction
     public CompletionStage<Result> deleteUser(String username) throws Exception {
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteUser(username)
-        return ok();
+            return ok();
         });
     }
 
     @ApiAction
     public CompletionStage<Result> getUserByName(String username) throws Exception {
         CompletionStage<User> stage = imp.getUserByName(username).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            SwaggerUtils.validate(obj);
-        }
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                SwaggerUtils.validate(obj);
+            }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
@@ -143,17 +139,16 @@ public class UserApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
     @ApiAction
     public CompletionStage<Result> logoutUser() throws Exception {
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.logoutUser()
-        return ok();
+            return ok();
         });
     }
 
@@ -169,10 +164,9 @@ public class UserApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.updateUser(username, body)
-        return ok();
+            return ok();
         });
     }
 }

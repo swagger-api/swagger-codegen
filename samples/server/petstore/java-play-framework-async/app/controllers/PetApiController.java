@@ -52,10 +52,9 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.addPet(body)
-        return ok();
+            return ok();
         });
     }
 
@@ -68,10 +67,9 @@ public class PetApiController extends Controller {
         } else {
             apiKey = null;
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.deletePet(petId, apiKey)
-        return ok();
+            return ok();
         });
     }
 
@@ -90,16 +88,16 @@ public class PetApiController extends Controller {
             }
         }
         CompletionStage<List<Pet>> stage = imp.findPetsByStatus(status).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            for (Pet curItem : obj) {
-                SwaggerUtils.validate(curItem);
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                for (Pet curItem : obj) {
+                    SwaggerUtils.validate(curItem);
+                }
             }
-        }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
@@ -118,30 +116,30 @@ public class PetApiController extends Controller {
             }
         }
         CompletionStage<List<Pet>> stage = imp.findPetsByTags(tags).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            for (Pet curItem : obj) {
-                SwaggerUtils.validate(curItem);
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                for (Pet curItem : obj) {
+                    SwaggerUtils.validate(curItem);
+                }
             }
-        }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
     @ApiAction
     public CompletionStage<Result> getPetById(Long petId) throws Exception {
         CompletionStage<Pet> stage = imp.getPetById(petId).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            SwaggerUtils.validate(obj);
-        }
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                SwaggerUtils.validate(obj);
+            }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
@@ -157,10 +155,9 @@ public class PetApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePet(body)
-        return ok();
+            return ok();
         });
     }
 
@@ -180,10 +177,9 @@ public class PetApiController extends Controller {
         } else {
             status = null;
         }
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePetWithForm(petId, name, status)
-        return ok();
+            return ok();
         });
     }
 
@@ -198,14 +194,14 @@ public class PetApiController extends Controller {
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
         CompletionStage<ModelApiResponse> stage = imp.uploadFile(petId, additionalMetadata, file).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            SwaggerUtils.validate(obj);
-        }
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                SwaggerUtils.validate(obj);
+            }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 }

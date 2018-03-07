@@ -26,7 +26,7 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     public CompletionStage<List<Pet>> findPetsByStatus( @NotNull List<String> status) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new ArrayList<Pet>();
+           return new ArrayList<Pet>();
         });
     }
 
@@ -34,7 +34,7 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     public CompletionStage<List<Pet>> findPetsByTags( @NotNull List<String> tags) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new ArrayList<Pet>();
+           return new ArrayList<Pet>();
         });
     }
 
@@ -42,7 +42,7 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     public CompletionStage<Pet> getPetById(Long petId) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new Pet();
+           return new Pet();
         });
     }
 
@@ -60,7 +60,7 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     public CompletionStage<ModelApiResponse> uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) throws Exception {
         //Do your magic!!!
         return CompletableFuture.supplyAsync(() -> {
-        return new ModelApiResponse();
+           return new ModelApiResponse();
         });
     }
 

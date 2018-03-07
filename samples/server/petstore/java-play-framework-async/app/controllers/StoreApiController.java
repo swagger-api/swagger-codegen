@@ -41,10 +41,9 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public CompletionStage<Result> deleteOrder(String orderId) throws Exception {
-        
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteOrder(orderId)
-        return ok();
+            return ok();
         });
     }
 
@@ -54,22 +53,22 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
     @ApiAction
     public CompletionStage<Result> getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
         CompletionStage<Order> stage = imp.getOrderById(orderId).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            SwaggerUtils.validate(obj);
-        }
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                SwaggerUtils.validate(obj);
+            }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 
@@ -86,14 +85,14 @@ public class StoreApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         CompletionStage<Order> stage = imp.placeOrder(body).thenApply(obj -> { 
-        if (configuration.getBoolean("useOutputBeanValidation")) {
-            SwaggerUtils.validate(obj);
-        }
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                SwaggerUtils.validate(obj);
+            }
             return obj;
         });
         stage.thenApply(obj -> {
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+            JsonNode result = mapper.valueToTree(obj);
+            return ok(result);
         });
     }
 }
