@@ -187,7 +187,7 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
                        }
 
                    });
-                   
+
             for (Map.Entry<String, List<String>> entry : r.getAllHeaders().entrySet()) {
                 for (String value : entry.getValue()) {
                     builder.addHeader(entry.getKey(), value);

@@ -116,6 +116,7 @@ dependencies {
     compile "org.threeten:threetenbp:$threetenbp_version"
 
     compile "com.typesafe.play:play-ws_2.12:$play_version"
+    compile "javax.validation:validation-api:2.0.1.Final"
     compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"

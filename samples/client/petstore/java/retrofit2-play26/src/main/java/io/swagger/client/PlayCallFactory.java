@@ -149,7 +149,7 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
             for(Map.Entry<String, List<String>> entry : request.headers().toMultimap().entrySet()) {
                 List<String> values = entry.getValue();
                 for (String value : values) {
-                    wsRequest.setHeader(entry.getKey(), value);
+                    wsRequest.addHeader(entry.getKey(), value);
                 }
             }
         }
@@ -190,8 +190,8 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
                        }
 
                    });
-                   
-            for (Map.Entry<String, List<String>> entry : r.getAllHeaders().entrySet()) {
+
+            for (Map.Entry<String, List<String>> entry : r.getHeaders().entrySet()) {
                 for (String value : entry.getValue()) {
                     builder.addHeader(entry.getKey(), value);
                 }
