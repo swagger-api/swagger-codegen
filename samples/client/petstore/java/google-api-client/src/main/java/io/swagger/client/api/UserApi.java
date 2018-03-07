@@ -73,11 +73,11 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUserForHttpResponse(java.io.InputStream body) throws IOException {
+      public HttpResponse createUserForHttpResponse(java.io.InputStream body, String mediaType) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUser");
@@ -87,7 +87,9 @@ public class UserApi {
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = body == null ? null : new InputStreamContent(Json.MEDIA_TYPE, body);
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
       }
 
@@ -119,7 +121,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
@@ -157,11 +159,11 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUsersWithArrayInputForHttpResponse(java.io.InputStream body) throws IOException {
+      public HttpResponse createUsersWithArrayInputForHttpResponse(java.io.InputStream body, String mediaType) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUsersWithArrayInput");
@@ -171,7 +173,9 @@ public class UserApi {
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = body == null ? null : new InputStreamContent(Json.MEDIA_TYPE, body);
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
       }
 
@@ -203,7 +207,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
@@ -241,11 +245,11 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
-      public HttpResponse createUsersWithListInputForHttpResponse(java.io.InputStream body) throws IOException {
+      public HttpResponse createUsersWithListInputForHttpResponse(java.io.InputStream body, String mediaType) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling createUsersWithListInput");
@@ -255,7 +259,9 @@ public class UserApi {
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = body == null ? null : new InputStreamContent(Json.MEDIA_TYPE, body);
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
       }
 
@@ -287,7 +293,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
     }
 
@@ -330,7 +336,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.DELETE, genericUrl, content).execute();
     }
 
@@ -365,7 +371,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.DELETE, genericUrl, content).execute();
     }
 
@@ -416,7 +422,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -451,7 +457,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -523,7 +529,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -562,7 +568,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -595,7 +601,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -624,7 +630,7 @@ public class UserApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = null;
+        HttpContent content = apiClient.new JacksonJsonHttpContent(null);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.GET, genericUrl, content).execute();
     }
 
@@ -672,11 +678,11 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
     }
 
-      public HttpResponse updateUserForHttpResponse(String username, java.io.InputStream body) throws IOException {
+      public HttpResponse updateUserForHttpResponse(String username, java.io.InputStream body, String mediaType) throws IOException {
           // verify the required parameter 'username' is set
               if (username == null) {
               throw new IllegalArgumentException("Missing the required parameter 'username' when calling updateUser");
@@ -692,7 +698,9 @@ public class UserApi {
               String url = uriBuilder.buildFromMap(uriVariables).toString();
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = body == null ? null : new InputStreamContent(Json.MEDIA_TYPE, body);
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
       }
 
@@ -730,7 +738,7 @@ public class UserApi {
         String url = uriBuilder.buildFromMap(uriVariables).toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
     }
 

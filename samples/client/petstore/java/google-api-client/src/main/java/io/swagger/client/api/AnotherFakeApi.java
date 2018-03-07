@@ -79,11 +79,11 @@ public class AnotherFakeApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PATCH, genericUrl, content).execute();
     }
 
-      public HttpResponse testSpecialTagsForHttpResponse(java.io.InputStream body) throws IOException {
+      public HttpResponse testSpecialTagsForHttpResponse(java.io.InputStream body, String mediaType) throws IOException {
           // verify the required parameter 'body' is set
               if (body == null) {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling testSpecialTags");
@@ -93,7 +93,9 @@ public class AnotherFakeApi {
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = body == null ? null : new InputStreamContent(Json.MEDIA_TYPE, body);
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PATCH, genericUrl, content).execute();
       }
 
@@ -125,7 +127,7 @@ public class AnotherFakeApi {
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = body == null ? null : apiClient.new JacksonJsonHttpContent(body);
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PATCH, genericUrl, content).execute();
     }
 

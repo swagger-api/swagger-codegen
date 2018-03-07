@@ -107,11 +107,11 @@ public class {{classname}} {
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = {{#bodyParam}}{{paramName}} == null ? null : apiClient.new JacksonJsonHttpContent({{paramName}}){{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+        HttpContent content = apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}});
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }{{#bodyParam}}
 
-      public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{#isBodyParam}}java.io.InputStream {{paramName}}{{/isBodyParam}}{{^isBodyParam}}{{{dataType}}} {{paramName}}{{/isBodyParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws IOException {
+      public HttpResponse {{operationId}}ForHttpResponse({{#allParams}}{{#isBodyParam}}java.io.InputStream {{paramName}}{{/isBodyParam}}{{^isBodyParam}}{{{dataType}}} {{paramName}}{{/isBodyParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}}, String mediaType) throws IOException {
           {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
               if ({{paramName}} == null) {
               throw new IllegalArgumentException("Missing the required parameter '{{paramName}}' when calling {{operationId}}");
@@ -138,7 +138,9 @@ public class {{classname}} {
               String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
               GenericUrl genericUrl = new GenericUrl(url);
 
-              HttpContent content = {{#bodyParam}}{{paramName}} == null ? null : new InputStreamContent(Json.MEDIA_TYPE, {{paramName}}){{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+              HttpContent content = {{#bodyParam}}{{paramName}} == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, {{paramName}}){{/bodyParam}};
               return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
       }{{/bodyParam}}
 
@@ -177,7 +179,7 @@ public class {{classname}} {
         String url = uriBuilder{{#hasPathParams}}.buildFromMap(uriVariables).toString();{{/hasPathParams}}{{^hasPathParams}}.build().toString();{{/hasPathParams}}
         GenericUrl genericUrl = new GenericUrl(url);
 
-        HttpContent content = {{#bodyParam}}{{paramName}} == null ? null : apiClient.new JacksonJsonHttpContent({{paramName}}){{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+        HttpContent content = apiClient.new JacksonJsonHttpContent({{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}});
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.{{httpMethod}}, genericUrl, content).execute();
     }
 
