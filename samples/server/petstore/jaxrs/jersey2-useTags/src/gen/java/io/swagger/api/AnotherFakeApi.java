@@ -25,7 +25,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/AnotherFake")
+@Path("/another-fake/dummy")
+
 
 
 @io.swagger.annotations.Api(description = "the AnotherFake API")

@@ -27,7 +27,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/Pet")
+@Path("/pet")
+
 
 
 @io.swagger.annotations.Api(description = "the Pet API")
@@ -74,7 +75,7 @@ public class PetApi  {
         return delegate.addPet(body,securityContext);
     }
     @DELETE
-    
+    @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, authorizations = {
@@ -92,7 +93,7 @@ public class PetApi  {
         return delegate.deletePet(petId,apiKey,securityContext);
     }
     @GET
-    
+    @Path("/findByStatus")
     
     @Produces({ "application/xml", "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", authorizations = {
@@ -111,7 +112,7 @@ public class PetApi  {
         return delegate.findPetsByStatus(status,securityContext);
     }
     @GET
-    
+    @Path("/findByTags")
     
     @Produces({ "application/xml", "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
@@ -130,7 +131,7 @@ public class PetApi  {
         return delegate.findPetsByTags(tags,securityContext);
     }
     @GET
-    
+    @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, authorizations = {
@@ -169,7 +170,7 @@ public class PetApi  {
         return delegate.updatePet(body,securityContext);
     }
     @POST
-    
+    @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
     @Produces({ "application/xml", "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = Void.class, authorizations = {
@@ -188,7 +189,7 @@ public class PetApi  {
         return delegate.updatePetWithForm(petId,name,status,securityContext);
     }
     @POST
-    
+    @Path("/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "uploads an image", notes = "", response = ModelApiResponse.class, authorizations = {
