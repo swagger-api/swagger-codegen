@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -174,10 +175,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         // model/api tests and documentation options rely on parent generate options (api or model) and no other options.
         // They default to true in all scenarios and can only be marked false explicitly
-        generateModelTests = System.getProperty(CodegenConstants.MODEL_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
-        generateModelDocumentation = System.getProperty(CodegenConstants.MODEL_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
-        generateApiTests = System.getProperty(CodegenConstants.API_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_TESTS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
-        generateApiDocumentation = System.getProperty(CodegenConstants.API_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_DOCS)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
+        final Boolean generateModelTestsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_TESTS_OPTION);
+        final Boolean generateModelDocsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_DOCS_OPTION);
+        final Boolean generateAPITestsOption = getCustomOptionBooleanValue(CodegenConstants.API_TESTS_OPTION);
+        final Boolean generateAPIDocsOption = getCustomOptionBooleanValue(CodegenConstants.API_DOCS_OPTION);
+
+        generateModelTests = generateModelTestsOption != null ? generateModelTestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
+        generateModelDocumentation = generateModelDocsOption != null ? generateModelDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
+        generateApiTests = generateAPITestsOption != null ? generateAPITestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
+        generateApiDocumentation = generateAPIDocsOption != null ? generateAPIDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
 
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
@@ -317,12 +323,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         String modelNames = System.getProperty("models");
         Set<String> modelsToGenerate = null;
         if(modelNames != null && !modelNames.isEmpty()) {
-            modelsToGenerate = new HashSet<String>(Arrays.asList(modelNames.split(",")));
+            modelsToGenerate = new HashSet<>(Arrays.asList(modelNames.split(",")));
         }
 
         Set<String> modelKeys = schemas.keySet();
         if(modelsToGenerate != null && !modelsToGenerate.isEmpty()) {
-            Set<String> updatedKeys = new HashSet<String>();
+            Set<String> updatedKeys = new HashSet<>();
             for(String m : modelKeys) {
                 if(modelsToGenerate.contains(m)) {
                     updatedKeys.add(m);
@@ -332,7 +338,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
 
         // store all processed models
-        Map<String,Object> allProcessedModels = new TreeMap<String, Object>(new Comparator<String>() {
+        Map<String,Object> allProcessedModels = new TreeMap<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return ObjectUtils.compare(config.toModelName(o1), config.toModelName(o2));
@@ -422,7 +428,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             apisToGenerate = new HashSet<String>(Arrays.asList(apiNames.split(",")));
         }
         if(apisToGenerate != null && !apisToGenerate.isEmpty()) {
-            Map<String, List<CodegenOperation>> updatedPaths = new TreeMap<String, List<CodegenOperation>>();
+            Map<String, List<CodegenOperation>> updatedPaths = new TreeMap<>();
             for(String m : paths.keySet()) {
                 if(apisToGenerate.contains(m)) {
                     updatedPaths.put(m, paths.get(m));
@@ -463,7 +469,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
                 operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
 
-                allOperations.add(new HashMap<String, Object>(operation));
+                allOperations.add(new HashMap<>(operation));
                 for (int i = 0; i < allOperations.size(); i++) {
                     Map<String, Object> oo = (Map<String, Object>) allOperations.get(i);
                     if (i < (allOperations.size() - 1)) {
@@ -536,7 +542,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Set<String> supportingFilesToGenerate = null;
         String supportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES);
         if (supportingFiles != null && !supportingFiles.isEmpty()) {
-            supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
+            supportingFilesToGenerate = new HashSet<>(Arrays.asList(supportingFiles.split(",")));
         }
 
         for (SupportingFile support : config.supportingFiles()) {
@@ -658,11 +664,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     private Map<String, Object> buildSupportFileBundle(List<Object> allOperations, List<Object> allModels) {
 
-        Map<String, Object> bundle = new HashMap<String, Object>();
+        Map<String, Object> bundle = new HashMap<>();
         bundle.putAll(config.additionalProperties());
         bundle.put("apiPackage", config.apiPackage());
 
-        Map<String, Object> apis = new HashMap<String, Object>();
+        Map<String, Object> apis = new HashMap<>();
         apis.put("apis", allOperations);
 
         URL url = URLPathUtil.getServerURL(openAPI);
@@ -717,12 +723,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         configureGeneratorProperties();
         configureSwaggerInfo();
 
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
         // models
-        List<Object> allModels = new ArrayList<Object>();
+        List<Object> allModels = new ArrayList<>();
         generateModels(files, allModels);
         // apis
-        List<Object> allOperations = new ArrayList<Object>();
+        List<Object> allOperations = new ArrayList<>();
         generateApis(files, allOperations, allModels);
 
         // supporting files
@@ -750,10 +756,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (mimeTypeList == null || mimeTypeList.isEmpty()){
             return;
         }
-        List<Map<String, String>> c = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> c = new ArrayList<>();
         int count = 0;
         for (String key : mimeTypeList) {
-            Map<String, String> mediaType = new HashMap<String, String>();
+            Map<String, String> mediaType = new HashMap<>();
             mediaType.put("mediaType", key);
             count += 1;
             if (count < mimeTypeList.size()) {
@@ -770,7 +776,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     public Map<String, List<CodegenOperation>> processPaths(Paths paths) {
-        Map<String, List<CodegenOperation>> ops = new TreeMap<String, List<CodegenOperation>>();
+        Map<String, List<CodegenOperation>> ops = new TreeMap<>();
         for (String resourcePath : paths.keySet()) {
             PathItem path = paths.get(resourcePath);
             processOperation(resourcePath, "get", path.getGet(), ops, path);
@@ -827,7 +833,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
          per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
           i'm assuming "location" == "in"
         */
-        Set<String> operationParameters = new HashSet<String>();
+        Set<String> operationParameters = new HashSet<>();
         if (operation.getParameters() != null) {
             for (Parameter parameter : operation.getParameters()) {
                 operationParameters.add(generateParameterId(parameter));
@@ -886,13 +892,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
 
     private Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops, List<Object> allModels) {
-        Map<String, Object> operations = new HashMap<String, Object>();
-        Map<String, Object> objs = new HashMap<String, Object>();
+        Map<String, Object> operations = new HashMap<>();
+        Map<String, Object> objs = new HashMap<>();
         objs.put("classname", config.toApiName(tag));
         objs.put("pathPrefix", config.toApiVarName(tag));
 
         // check for operationId uniqueness
-        Set<String> opIds = new HashSet<String>();
+        Set<String> opIds = new HashSet<>();
         int counter = 0;
         for (CodegenOperation op : ops) {
             String opId = op.nickname;
@@ -908,14 +914,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         operations.put("package", config.apiPackage());
 
 
-        Set<String> allImports = new TreeSet<String>();
+        Set<String> allImports = new TreeSet<>();
         for (CodegenOperation op : ops) {
             allImports.addAll(op.imports);
         }
 
-        List<Map<String, String>> imports = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> imports = new ArrayList<>();
         for (String nextImport : allImports) {
-            Map<String, String> im = new LinkedHashMap<String, String>();
+            Map<String, String> im = new LinkedHashMap<>();
             String mapping = config.importMapping().get(nextImport);
             if (mapping == null) {
                 mapping = config.toModelImport(nextImport);
@@ -962,7 +968,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             allImports.addAll(cm.imports);
         }
         objs.put("models", models);
-        Set<String> importSet = new TreeSet<String>();
+        Set<String> importSet = new TreeSet<>();
         for (String nextImport : allImports) {
             String mapping = config.importMapping().get(nextImport);
             if (mapping == null) {
@@ -977,9 +983,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 importSet.add(mapping);
             }
         }
-        List<Map<String, String>> imports = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> imports = new ArrayList<>();
         for(String s: importSet) {
-            Map<String, String> item = new HashMap<String, String>();
+            Map<String, String> item = new HashMap<>();
             item.put("import", s);
             imports.add(item);
         }
@@ -1019,5 +1025,20 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private boolean isJavaCodegen(String name) {
         return name.equalsIgnoreCase("java")
                 || name.equalsIgnoreCase("inflector");
+    }
+
+    private Boolean getCustomOptionBooleanValue(String option) {
+        List<CodegenArgument> languageArguments = config.getLanguageArguments();
+        if (languageArguments == null || languageArguments.isEmpty()) {
+            return null;
+        }
+        Optional<CodegenArgument> optionalCodegenArgument = languageArguments.stream()
+                .filter(argument -> option.equalsIgnoreCase(argument.getOption()))
+                .findFirst();
+
+        if (!optionalCodegenArgument.isPresent()) {
+            return null;
+        }
+        return Boolean.valueOf(optionalCodegenArgument.get().getValue());
     }
 }
