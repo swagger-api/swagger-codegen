@@ -200,13 +200,17 @@ public class {{classname}}Controller extends Controller {
         {{/collectionFormat}}
         {{/headerParams}}
         {{^controllerOnly}}
-        {{^returnType}}{{#supportAsync}}
+        {{^returnType}}
+        {{#supportAsync}}
         return CompletableFuture.supplyAsync(() -> {
-            {{/supportAsync}}{{/returnType}}{{#returnType}}{{#supportAsync}}CompletionStage<{{>returnTypesNoVoid}}> stage = {{/supportAsync}}{{^supportAsync}}{{>returnTypesNoVoid}} obj = {{/supportAsync}}{{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#returnType}}{{#supportAsync}}.thenApply(obj -> { {{/supportAsync}}{{/returnType}}{{^supportAsync}};{{/supportAsync}}
+        {{/supportAsync}}
+        {{/returnType}}
+        {{#returnType}}{{#supportAsync}}CompletionStage<{{>returnTypesNoVoid}}> stage = {{/supportAsync}}{{^supportAsync}}{{>returnTypesNoVoid}} obj = {{/supportAsync}}{{/returnType}}{{^returnType}}{{#supportAsync}}    {{/supportAsync}}{{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#returnType}}{{#supportAsync}}.thenApply(obj -> { {{/supportAsync}}{{/returnType}}{{^supportAsync}};{{/supportAsync}}
         {{#returnType}}
         {{^isResponseFile}}
         {{^returnTypeIsPrimitive}}
         {{#useBeanValidation}}
+        {{^supportAsync}}
         if (configuration.getBoolean("useOutputBeanValidation")) {
             {{#isListContainer}}
             for ({{{returnType}}} curItem : obj) {
@@ -222,6 +226,24 @@ public class {{classname}}Controller extends Controller {
             SwaggerUtils.validate(obj);
             {{/returnContainer}}
         }
+        {{/supportAsync}}
+        {{#supportAsync}}
+            if (configuration.getBoolean("useOutputBeanValidation")) {
+                {{#isListContainer}}
+                for ({{{returnType}}} curItem : obj) {
+                    SwaggerUtils.validate(curItem);
+                }
+                {{/isListContainer}}
+                {{#isMapContainer}}
+                for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
+                    SwaggerUtils.validate(entry.getValue());
+                }
+                {{/isMapContainer}}
+                {{^returnContainer}}
+                SwaggerUtils.validate(obj);
+                {{/returnContainer}}
+            }
+        {{/supportAsync}}
         {{/useBeanValidation}}
         {{/returnTypeIsPrimitive}}
         {{/isResponseFile}}
@@ -235,15 +257,15 @@ public class {{classname}}Controller extends Controller {
         stage.thenApply(obj -> {
         {{/supportAsync}}
         {{^isResponseFile}}
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        {{#supportAsync}}    {{/supportAsync}}JsonNode result = mapper.valueToTree(obj);
+        {{#supportAsync}}    {{/supportAsync}}return ok(result);
         {{/isResponseFile}}
         {{#isResponseFile}}
-        return ok(obj);
+        {{#supportAsync}}    {{/supportAsync}}return ok(obj);
         {{/isResponseFile}}
         {{/returnType}}
         {{^returnType}}
-        return ok();
+        {{#supportAsync}}    {{/supportAsync}}return ok();
         {{/returnType}}
         {{#supportAsync}}
         });
