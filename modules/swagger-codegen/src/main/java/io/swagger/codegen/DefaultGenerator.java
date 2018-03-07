@@ -61,9 +61,6 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
 //import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.codegen.utils.ImplementationVersion;
