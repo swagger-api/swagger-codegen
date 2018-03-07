@@ -158,8 +158,8 @@ public class DefaultCodegen {
         }
 
         if (additionalProperties.containsKey(CodegenConstants.BOOLEAN_GETTER_PREFIX)) {
-            this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
-                    .get(CodegenConstants.BOOLEAN_GETTER_PREFIX).toString()));
+            this.setBooleanGetterPrefix(
+                    String.valueOf(additionalProperties.get(CodegenConstants.BOOLEAN_GETTER_PREFIX)));
         }
     }
 
