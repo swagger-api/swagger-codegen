@@ -95,13 +95,12 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
         private final WSClient wsClient;
         private WSRequest wsRequest;
         private List<WSRequestFilter> filters;
-
         private final Request request;
 
         public PlayWSCall(WSClient wsClient, List<WSRequestFilter> filters, Request request) {
             this.wsClient = wsClient;
-            this.request = request;
             this.filters = filters;
+            this.request = request;
         }
 
         @Override
@@ -115,12 +114,12 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
             final CompletionStage<WSResponse> promise = executeAsync();
 
             promise.whenCompleteAsync((wsResponse, throwable) -> { 
-                if (throwable != null) {
-                    if (throwable instanceof IOException) {
-                        responseCallback.onFailure(call, (IOException) throwable);
-                    } else {
-                        responseCallback.onFailure(call, new IOException(throwable));
-                    }
+                    if (throwable != null) {
+                        if (throwable instanceof IOException) {
+                            responseCallback.onFailure(call, (IOException) throwable);
+                        } else {
+                            responseCallback.onFailure(call, new IOException(throwable));
+                        }
                } else {
                     try {
                             responseCallback.onResponse(call, PlayWSCall.this.toWSResponse(wsResponse));

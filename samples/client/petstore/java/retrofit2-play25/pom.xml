@@ -258,7 +258,7 @@
             </dependency>
             <dependency>
                 <groupId>com.typesafe.play</groupId>
-                <artifactId>play-java-ws_2.11</artifactId>
+		<artifactId>play-java-ws_2.11</artifactId>
                 <version>${play-version}</version>
             </dependency>
 

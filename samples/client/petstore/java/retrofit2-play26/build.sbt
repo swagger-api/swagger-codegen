@@ -11,7 +11,7 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       "com.squareup.retrofit2" % "retrofit" % "2.3.0" % "compile",
       "com.squareup.retrofit2" % "converter-scalars" % "2.3.0" % "compile",
-      "com.typesafe.play" % "play-java-ws_2.11" % "2.5.15" % "compile",
+      "com.typesafe.play" % "play-ws_2.12" % "2.6.12" % "compile",
       "com.fasterxml.jackson.core" % "jackson-core" % "2.7.8" % "compile",
       "com.fasterxml.jackson.core" % "jackson-annotations" % "2.7.8" % "compile",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.8" % "compile",

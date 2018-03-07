@@ -2,11 +2,12 @@ package io.swagger.client.api;
 
 import io.swagger.client.CollectionFormats.*;
 
-import rx.Observable;
+
+
+import retrofit2.Call;
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 import io.swagger.client.model.User;
 
@@ -15,15 +16,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import play.libs.F;
+
+import retrofit2.Response;
+
 public interface UserApi {
   /**
    * Create user
    * This can only be done by the logged in user.
    * @param body Created user object (required)
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @POST("user")
-  Observable<Void> createUser(
+  F.Promise<Response<Void>> createUser(
     @retrofit2.http.Body User body
   );
 
@@ -31,10 +36,10 @@ public interface UserApi {
    * Creates list of users with given input array
    * 
    * @param body List of user object (required)
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @POST("user/createWithArray")
-  Observable<Void> createUsersWithArrayInput(
+  F.Promise<Response<Void>> createUsersWithArrayInput(
     @retrofit2.http.Body List<User> body
   );
 
@@ -42,10 +47,10 @@ public interface UserApi {
    * Creates list of users with given input array
    * 
    * @param body List of user object (required)
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @POST("user/createWithList")
-  Observable<Void> createUsersWithListInput(
+  F.Promise<Response<Void>> createUsersWithListInput(
     @retrofit2.http.Body List<User> body
   );
 
@@ -53,10 +58,10 @@ public interface UserApi {
    * Delete user
    * This can only be done by the logged in user.
    * @param username The name that needs to be deleted (required)
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @DELETE("user/{username}")
-  Observable<Void> deleteUser(
+  F.Promise<Response<Void>> deleteUser(
     @retrofit2.http.Path("username") String username
   );
 
@@ -64,10 +69,10 @@ public interface UserApi {
    * Get user by user name
    * 
    * @param username The name that needs to be fetched. Use user1 for testing. (required)
-   * @return Observable&lt;User&gt;
+   * @return Call&lt;User&gt;
    */
   @GET("user/{username}")
-  Observable<User> getUserByName(
+  F.Promise<Response<User>> getUserByName(
     @retrofit2.http.Path("username") String username
   );
 
@@ -76,20 +81,20 @@ public interface UserApi {
    * 
    * @param username The user name for login (required)
    * @param password The password for login in clear text (required)
-   * @return Observable&lt;String&gt;
+   * @return Call&lt;String&gt;
    */
   @GET("user/login")
-  Observable<String> loginUser(
+  F.Promise<Response<String>> loginUser(
     @retrofit2.http.Query("username") String username, @retrofit2.http.Query("password") String password
   );
 
   /**
    * Logs out current logged in user session
    * 
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @GET("user/logout")
-  Observable<Void> logoutUser();
+  F.Promise<Response<Void>> logoutUser();
     
 
   /**
@@ -97,10 +102,10 @@ public interface UserApi {
    * This can only be done by the logged in user.
    * @param username name that need to be deleted (required)
    * @param body Updated user object (required)
-   * @return Observable&lt;Void&gt;
+   * @return Call&lt;Void&gt;
    */
   @PUT("user/{username}")
-  Observable<Void> updateUser(
+  F.Promise<Response<Void>> updateUser(
     @retrofit2.http.Path("username") String username, @retrofit2.http.Body User body
   );
 

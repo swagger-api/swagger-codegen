@@ -88,14 +88,11 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
 
         private final WSClient wsClient;
         private WSRequest wsRequest;
-        private List<WSRequestFilter> filters;
-
         private final Request request;
 
-        public PlayWSCall(WSClient wsClient, List<WSRequestFilter> filters, Request request) {
+        public PlayWSCall(WSClient wsClient, Request request) {
             this.wsClient = wsClient;
             this.request = request;
-            this.filters = filters;
         }
 
         @Override
@@ -108,23 +105,24 @@ public class PlayCallFactory implements okhttp3.Call.Factory {
             final Call call = this;
             final F.Promise<WSResponse> promise = executeAsync();
 
-            promise.onFailure(new F.Callback<WSResponse>() {
+            promise.onFailure(new F.Callback<Throwable>() {
 
                 @Override
                 public void invoke(Throwable throwable) throws Throwable {
                   
-                if (throwable != null) {
-                    if (throwable instanceof IOException) {
-                        responseCallback.onFailure(call, (IOException) throwable);
-                    } else {
-                        responseCallback.onFailure(call, new IOException(throwable));
+                    if (throwable != null) {
+                        if (throwable instanceof IOException) {
+                            responseCallback.onFailure(call, (IOException) throwable);
+                        } else {
+                            responseCallback.onFailure(call, new IOException(throwable));
+                        }
                     }
-                   }
-               });
-                   promise.onRedeem(new F.Callback<WSResponse>() {
+                }
+            });
+            promise.onRedeem(new F.Callback<WSResponse>() {
 
-                       @Override
-                       public void invoke(WSResponse wsResponse) {
+                @Override
+                public void invoke(WSResponse wsResponse) {
                     try {
                             responseCallback.onResponse(call, PlayWSCall.this.toWSResponse(wsResponse));
                         } catch (IOException e) {

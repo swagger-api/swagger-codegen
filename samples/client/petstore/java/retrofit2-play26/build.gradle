@@ -97,7 +97,7 @@ ext {
     oltu_version = "1.0.1"
     retrofit_version = "2.3.0"
     jackson_version = "2.7.8"
-    play_version = "2.5.14"
+    play_version = "2.6.12"
     swagger_annotations_version = "1.5.17"
     junit_version = "4.12"
     threetenbp_version = "1.3.5"
@@ -114,7 +114,8 @@ dependencies {
     }
     compile "io.gsonfire:gson-fire:$json_fire_version"
     compile "org.threeten:threetenbp:$threetenbp_version"
-    compile "com.typesafe.play:play-java-ws_2.11:$play_version"
+
+    compile "com.typesafe.play:play-ws_2.12:$play_version"
     compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
