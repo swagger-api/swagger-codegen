@@ -21,6 +21,8 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     protected static Logger LOGGER = LoggerFactory.getLogger(AbstractGoCodegen.class);
 
+    protected boolean withXml = false;
+
     protected String packageName = "swagger";
 
     public AbstractGoCodegen() {
@@ -84,7 +86,6 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 .defaultValue("swagger"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
-
     }
 
     /**
@@ -152,11 +153,15 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
     public String toModelName(String name) {
         // camelize the model name
         // phone_number => PhoneNumber
-        return camelize(toModelFilename(name));
+        return camelize(toModel(name));
     }
 
     @Override
     public String toModelFilename(String name) {
+      return toModel("model_" + name);
+    }
+
+    public String toModel(String name) {
         if (!StringUtils.isEmpty(modelNamePrefix)) {
             name = modelNamePrefix + "_" + name;
         }
@@ -188,7 +193,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // e.g. PetApi.go => pet_api.go
-        return underscore(name) + "_api";
+        return "api_" + underscore(name);
     }
 
     /**
@@ -301,10 +306,12 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 iterator.remove();
         }
 
-        // if their is a return type, import encoding/json
+        // if their is a return type, import encoding/json and if needed encoding/xml
         for (CodegenOperation operation : operations) {
             if(operation.returnBaseType != null ) {
                 imports.add(createMapping("import", "encoding/json"));
+                if (withXml)
+                    imports.add(createMapping("import", "encoding/xml"));
                 break; //just need to import once
             }
         }
@@ -466,4 +473,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         }
     }
 
+    public void setWithXml(boolean withXml) {
+        this.withXml = withXml;
+    }
 }

@@ -31,20 +31,20 @@ namespace IO.Swagger.Model
     public partial class MapTest :  IEquatable<MapTest>, IValidatableObject
     {
         /// <summary>
-        /// Gets or Sets Inner
+        /// Defines Inner
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum InnerEnum
         {
             
             /// <summary>
-            /// Enum UPPER for "UPPER"
+            /// Enum UPPER for value: UPPER
             /// </summary>
             [EnumMember(Value = "UPPER")]
             UPPER = 1,
             
             /// <summary>
-            /// Enum Lower for "lower"
+            /// Enum Lower for value: lower
             /// </summary>
             [EnumMember(Value = "lower")]
             Lower = 2
@@ -59,12 +59,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
-        /// <param name="MapMapOfString">MapMapOfString.</param>
-        /// <param name="MapOfEnumString">MapOfEnumString.</param>
-        public MapTest(Dictionary<string, Dictionary<string, string>> MapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> MapOfEnumString = default(Dictionary<string, InnerEnum>))
+        /// <param name="mapMapOfString">mapMapOfString.</param>
+        /// <param name="mapOfEnumString">mapOfEnumString.</param>
+        public MapTest(Dictionary<string, Dictionary<string, string>> mapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> mapOfEnumString = default(Dictionary<string, InnerEnum>))
         {
-            this.MapMapOfString = MapMapOfString;
-            this.MapOfEnumString = MapOfEnumString;
+            this.MapMapOfString = mapMapOfString;
+            this.MapOfEnumString = mapOfEnumString;
         }
         
         /// <summary>
@@ -92,7 +92,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

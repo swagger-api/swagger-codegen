@@ -501,7 +501,7 @@ paths:
       parameters:
         - name: username
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'The name that needs to be fetched. Use user1 for testing.'
           required: true
           type: string
       responses:
@@ -565,7 +565,7 @@ paths:
       tags:
         - "fake_classname_tags 123#$%^"
       summary: To test class name in snake case
-      descriptions: To test class name in snake case
+      description: To test class name in snake case
       operationId: testClassname
       consumes:
         - application/json
