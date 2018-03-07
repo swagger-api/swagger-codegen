@@ -19,6 +19,11 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.v3.core.util.Json;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.java.JavaJAXRSSpecServerCodegen</code> instead.
+ */
+@Deprecated
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 {
 
