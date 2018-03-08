@@ -75,8 +75,16 @@ public class FakeClassnameTags123Api {
     }
 
     /**
+    * Customise request specification
+    */
+    public FakeClassnameTags123Api reqSpec(Consumer<RequestSpecBuilder> consumer) {
+        consumer.accept(reqSpec);
+        return this;
+    }
+
+    /**
      * To test class name in snake case
-     * 
+     * To test class name in snake case
      *
      * @see #body client model (required)
      * return Client
