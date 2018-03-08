@@ -197,6 +197,12 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             importMapping.put("SWGHttpRequestInputFileElement", "#include \"" + modelNamePrefix + "HttpRequest.h\"");
             additionalProperties().put("prefix", modelNamePrefix);
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_PROJECT_FILE)) {
+            setOptionalProjectFileFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_PROJECT_FILE));
+        } else {
+            additionalProperties.put(CodegenConstants.OPTIONAL_PROJECT_FILE, optionalProjectFileFlag);
+        }
     }
 
     /**
