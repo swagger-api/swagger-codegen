@@ -108,6 +108,8 @@ public class DefaultCodegen {
     protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
     // When a model is an alias for a simple type
     protected Map<String, String> typeAliases = null;
+    // The extension of the generated documentation files (defaults to markdown .md)
+    protected String docExtension;
 
     protected String ignoreFilePathOverride;
 
@@ -154,6 +156,11 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.DOCEXTENSION)){
+            this.setDocExtension(String.valueOf(additionalProperties
+                    .get(CodegenConstants.DOCEXTENSION).toString()));
         }
     }
 
@@ -3332,7 +3339,8 @@ public class DefaultCodegen {
      * @return the API documentation file name with full path
      */
     public String apiDocFilename(String templateName, String tag) {
-        String suffix = apiDocTemplateFiles().get(templateName);
+        String docExtension = getDocExtension();
+        String suffix = docExtension != null ? docExtension: apiDocTemplateFiles().get(templateName);
         return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
     }
 
@@ -3460,6 +3468,25 @@ public class DefaultCodegen {
     public String getReleaseNote() {
         return releaseNote;
     }
+
+    /**
+     * Documentation files extension
+     *
+     * @return Documentation files extension
+     */
+    public String getDocExtension() {
+        return docExtension;
+    }
+
+    /**
+     * Set Documentation files extension
+     *
+     * @param userDocExtension documentation files extension
+     */
+    public void setDocExtension(String userDocExtension) {
+        this.docExtension = userDocExtension;
+    }
+
 
     /**
      * Set HTTP user agent.
