@@ -225,17 +225,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("GzipRequestInterceptor.mustache", invokerFolder, "GzipRequestInterceptor.java"));
             additionalProperties.put("gson", "true");
         } else if (usesAnyRetrofitLibrary()) {
-            Object useJackson = additionalProperties.get(USE_JACKSON);
-            if (useJackson != null && Boolean.valueOf(useJackson.toString())) {
-                additionalProperties.put("jackson", true);
-            } else {
-                additionalProperties.put("gson", true);
-                if ("retrofit2".equals(getLibrary())) {
+            supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
+            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
+            additionalProperties.put("gson", true);
+            if ("retrofit2".equals(getLibrary())) {
+                Object useJackson = additionalProperties.get(USE_JACKSON);
+                if (useJackson != null && Boolean.valueOf(useJackson.toString())) {
+                    additionalProperties.remove("gson");
+                    additionalProperties.put("jackson", true);
+                } else {
                     supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
                 }
             }
-            supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
-            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
         } else if ("jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));

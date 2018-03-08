@@ -42,7 +42,7 @@ public class ApiClient {
   private ObjectMapper mapper = new ObjectMapper();
 
   public ApiClient() {
-    apiAuthorizations = new LinkedHashMap<>();
+    apiAuthorizations = new LinkedHashMap<String, Interceptor>();
     createDefaultAdapter();
   }
 
