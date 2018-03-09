@@ -164,7 +164,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     private String implFileFolder(String output) {
-        return (outputFolder + File.separator + output + File.separator + apiPackage()).replace('.', File.separatorChar);
+        return outputFolder + File.separator + output + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
     /**
