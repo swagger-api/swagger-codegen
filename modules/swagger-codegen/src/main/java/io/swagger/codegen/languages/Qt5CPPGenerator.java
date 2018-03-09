@@ -118,7 +118,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
         supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
         if (optionalProjectFileFlag) {
-            supportingFiles.add(new SupportingFile("Project.mustache", "", "client.pri"));
+            supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder, "client.pri"));
         }
 
         super.typeMapping = new HashMap<String, String>();
