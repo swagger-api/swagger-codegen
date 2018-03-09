@@ -53,6 +53,42 @@ public enum EnumStringEnum {
   private EnumStringEnum enumString = null;
 
 
+@XmlType(name="EnumStringRequiredEnum")
+@XmlEnum(String.class)
+public enum EnumStringRequiredEnum {
+
+@XmlEnumValue("UPPER") UPPER(String.valueOf("UPPER")), @XmlEnumValue("lower") LOWER(String.valueOf("lower")), @XmlEnumValue("") EMPTY(String.valueOf(""));
+
+
+    private String value;
+
+    EnumStringRequiredEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static EnumStringRequiredEnum fromValue(String v) {
+        for (EnumStringRequiredEnum b : EnumStringRequiredEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
+
+  @ApiModelProperty(required = true, value = "")
+  private EnumStringRequiredEnum enumStringRequired = null;
+
+
 @XmlType(name="EnumIntegerEnum")
 @XmlEnum(Integer.class)
 public enum EnumIntegerEnum {
@@ -149,6 +185,28 @@ public enum EnumNumberEnum {
   }
 
  /**
+   * Get enumStringRequired
+   * @return enumStringRequired
+  **/
+  @JsonProperty("enum_string_required")
+  @NotNull
+  public String getEnumStringRequired() {
+    if (enumStringRequired == null) {
+      return null;
+    }
+    return enumStringRequired.value();
+  }
+
+  public void setEnumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
+  }
+
+  public EnumTest enumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
+    return this;
+  }
+
+ /**
    * Get enumInteger
    * @return enumInteger
   **/
@@ -215,6 +273,7 @@ public enum EnumNumberEnum {
     sb.append("class EnumTest {\n");
     
     sb.append("    enumString: ").append(toIndentedString(enumString)).append("\n");
+    sb.append("    enumStringRequired: ").append(toIndentedString(enumStringRequired)).append("\n");
     sb.append("    enumInteger: ").append(toIndentedString(enumInteger)).append("\n");
     sb.append("    enumNumber: ").append(toIndentedString(enumNumber)).append("\n");
     sb.append("    outerEnum: ").append(toIndentedString(outerEnum)).append("\n");

@@ -32,7 +32,7 @@ public class Capitalization  {
 
   @ApiModelProperty(value = "Name of the pet ")
  /**
-   * Name of the pet   
+   * Name of the pet 
   **/
   private String ATT_NAME = null;
  /**
