@@ -161,7 +161,10 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
             }
 
             System.out.println(codegenModel.classname + " implements PagedResource");
-            codegenModel.pagedResourceType = entitiesProperty.get().complexType;
+
+            // datatypeWithEnum has the correct type including generics. complexType drops them.
+            // E.g. datatypeWithEnum=Map<Object, String> and complexType=Map
+            codegenModel.pagedResourceType = entitiesProperty.get().datatypeWithEnum;
             codegenModel.imports.add("PagedResource");
         }
 
