@@ -61,6 +61,8 @@ before_install:
   - cat /etc/hosts
   # show java version
   - java -version
+  - python --version
+  - python3 --version
 
 install:
   # Add Godeps dependencies to GOPATH and PATH
