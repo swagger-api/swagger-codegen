@@ -75,10 +75,8 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Respo
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -131,10 +129,8 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -187,10 +183,8 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -242,10 +236,8 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -253,7 +245,7 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 /* UserApiService Get user by user name
 
  * @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The name that needs to be fetched. Use user1 for testing. 
+@param username The name that needs to be fetched. Use user1 for testing.
 @return User*/
 func (a *UserApiService) GetUserByName(ctx context.Context, username string) (User, *http.Response, error) {
 	var (
@@ -298,10 +290,8 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -361,10 +351,8 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -419,10 +407,8 @@ func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error)
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -477,10 +463,9 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
+

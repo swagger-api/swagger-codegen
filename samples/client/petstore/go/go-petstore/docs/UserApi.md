@@ -137,7 +137,7 @@ Get user by user name
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
+  **username** | **string**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 
