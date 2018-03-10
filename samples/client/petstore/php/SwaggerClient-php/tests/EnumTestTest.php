@@ -23,7 +23,12 @@ class EnumTestTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertFalse($enum->valid());
-        $this->assertSame(["invalid value for 'enum_string', must be one of 'UPPER', 'lower', ''"], $enum->listInvalidProperties());
+
+        $expected = [
+            "invalid value for 'enum_string', must be one of 'UPPER', 'lower', ''",
+            "'enum_string_required' can't be null",
+        ];
+        $this->assertSame($expected, $enum->listInvalidProperties());
     }
 
     /**
