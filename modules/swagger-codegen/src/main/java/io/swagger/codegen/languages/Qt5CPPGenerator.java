@@ -153,13 +153,6 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         systemIncludes.add("QByteArray");
     }
 
-    protected void addOption(String key, String description, String defaultValue) {
-        CliOption option = new CliOption(key, description);
-        if (defaultValue != null)
-            option.defaultValue(defaultValue);
-        cliOptions.add(option);
-    }
-
     @Override
     public void processOpts() {
         super.processOpts();
