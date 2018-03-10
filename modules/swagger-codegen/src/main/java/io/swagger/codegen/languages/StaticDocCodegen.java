@@ -9,6 +9,11 @@ import io.swagger.codegen.SupportingFile;
 
 import java.io.File;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.html.StaticDocCodegen</code> instead.
+ */
+@Deprecated
 public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
