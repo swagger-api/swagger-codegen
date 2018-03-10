@@ -34,4 +34,20 @@ class EnumTestTest extends \PHPUnit_Framework_TestCase
         $enum = new EnumTest();
         $enum->setEnumString(0);
     }
+
+    public function testNonRequiredPropertyIsOptional()
+    {
+        $enum = new EnumTest([
+            'enum_string_required' => 'UPPER',
+        ]);
+        $this->assertSame([], $enum->listInvalidProperties());
+        $this->assertTrue($enum->valid());
+    }
+
+    public function testRequiredProperty()
+    {
+        $enum = new EnumTest();
+        $this->assertSame(["'enum_string_required' can't be null"], $enum->listInvalidProperties());
+        $this->assertFalse($enum->valid());
+    }
 }
