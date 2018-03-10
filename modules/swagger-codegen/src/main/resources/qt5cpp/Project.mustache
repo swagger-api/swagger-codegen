@@ -16,10 +16,10 @@ HEADERS += \
 {{/apis}}
 {{/apiInfo}}
 # Others
-    $${PWD}/SWGHelpers.h \
-    $${PWD}/SWGHttpRequest.h \
-    $${PWD}/SWGModelFactory.h \
-    $${PWD}/SWGObject.h
+    $${PWD}/{{prefix}}Helpers.h \
+    $${PWD}/{{prefix}}HttpRequest.h \
+    $${PWD}/{{prefix}}ModelFactory.h \
+    $${PWD}/{{prefix}}Object.h
 
 SOURCES += \
 # Models
@@ -37,6 +37,6 @@ SOURCES += \
 {{/apis}}
 {{/apiInfo}}
 # Others
-    $${PWD}/SWGHelpers.cpp \
-    $${PWD}/SWGHttpRequest.cpp
+    $${PWD}/{{prefix}}Helpers.cpp \
+    $${PWD}/{{prefix}}HttpRequest.cpp
 
