@@ -38,13 +38,13 @@ public:
 
     void cleanup();
 
-    String asJson ();
+    String asJson () override;
 
-    JsonObject* asJsonObject();
+    JsonObject* asJsonObject() override;
 
-    void fromJsonObject(IJsonValue* json);
+    void fromJsonObject(IJsonValue* json) override;
 
-    {{classname}}* fromJson(String* obj);
+    {{classname}}* fromJson(String* obj) override;
 
     {{#vars}}
     {{datatype}} {{getter}}();
