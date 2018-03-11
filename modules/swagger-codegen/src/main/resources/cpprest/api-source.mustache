@@ -205,7 +205,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
             multipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("{{paramName}}"), web::json::value::array(jsonArray), utility::conversions::to_string_t("application/json")));
         }{{/isListContainer}}
         {{^isListContainer}}{{#isString}}multipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("{{paramName}}"), {{paramName}}));
-        {{/isString}}{{^isString}}if({{^required}}{{paramName}} && {{/required}}{{paramName}}.get())
+        {{/isString}}{{^isString}}if({{^required}}{{paramName}} && (*{{paramName}}){{/required}}{{#required}}{{paramName}}{{/required}}.get())
         {
             {{^required}}(*{{/required}}{{paramName}}{{^required}}){{/required}}->toMultipart(multipart, utility::conversions::to_string_t("{{paramName}}"));
         }

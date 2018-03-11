@@ -109,9 +109,7 @@ std::shared_ptr<HttpContent> ModelBase::toHttpContent( const utility::string_t& 
     content->setName( name );
     content->setContentDisposition( utility::conversions::to_string_t("form-data") );
     content->setContentType( contentType );
-    std::stringstream* valueAsStringStream = new std::stringstream();
-    (*valueAsStringStream) << json_array;
-    content->setData( std::shared_ptr<std::istream>( valueAsStringStream ) );
+    content->setData( std::shared_ptr<std::istream>( new std::stringstream( utility::conversions::to_utf8string(json_array.serialize()) ) ) );
     return content;
 }
 
