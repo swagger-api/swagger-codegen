@@ -43,17 +43,17 @@ class PetAPITests: XCTestCase {
     func test2GetPet() {
         let expectation = self.expectation(description: "testGetPet")
         PetAPI.getPetById(petId: 1000).subscribe(onNext: { pet in
-            XCTAssert(pet.id == 1000, "invalid id")
+            XCTAssert(pet._id == 1000, "invalid id")
             XCTAssert(pet.name == "Fluffy", "invalid name")
-            XCTAssert(pet.category!.id == 1234, "invalid category id")
+            XCTAssert(pet.category!._id == 1234, "invalid category id")
             XCTAssert(pet.category!.name == "eyeColor", "invalid category name")
 
             let tag1 = pet.tags![0]
-            XCTAssert(tag1.id == 1234, "invalid tag id")
+            XCTAssert(tag1._id == 1234, "invalid tag id")
             XCTAssert(tag1.name == "New York", "invalid tag name")
 
             let tag2 = pet.tags![1]
-            XCTAssert(tag2.id == 124321, "invalid tag id")
+            XCTAssert(tag2._id == 124321, "invalid tag id")
             XCTAssert(tag2.name == "Jose", "invalid tag name")
 
             XCTAssert(pet.photoUrls[0] == "https://petstore.com/sample/photo1.jpg")

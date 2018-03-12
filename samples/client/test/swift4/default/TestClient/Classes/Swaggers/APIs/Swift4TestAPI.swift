@@ -125,7 +125,7 @@ open class Swift4TestAPI {
         let URLString = TestClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
+        var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "client_id": clientId
         ])

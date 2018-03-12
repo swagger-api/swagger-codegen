@@ -16,6 +16,11 @@ public struct EnumTest: Codable {
         case lower = "lower"
         case empty = ""
     }
+    public enum EnumStringRequired: String, Codable { 
+        case upper = "UPPER"
+        case lower = "lower"
+        case empty = ""
+    }
     public enum EnumInteger: Int, Codable { 
         case _1 = 1
         case number1 = -1
@@ -25,6 +30,7 @@ public struct EnumTest: Codable {
         case number12 = -1.2
     }
     public var enumString: EnumString?
+    public var enumStringRequired: EnumStringRequired
     public var enumInteger: EnumInteger?
     public var enumNumber: EnumNumber?
     public var outerEnum: OuterEnum?
@@ -32,6 +38,7 @@ public struct EnumTest: Codable {
 
     public enum CodingKeys: String, CodingKey { 
         case enumString = "enum_string"
+        case enumStringRequired = "enum_string_required"
         case enumInteger = "enum_integer"
         case enumNumber = "enum_number"
         case outerEnum
