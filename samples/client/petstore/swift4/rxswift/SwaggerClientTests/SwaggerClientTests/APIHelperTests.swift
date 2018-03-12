@@ -43,7 +43,7 @@ class APIHelperTests: XCTestCase {
         XCTAssert(NSDictionary(dictionary: actual).isEqual(to: expected))
     }
 
-    func testMapValuesTpQueryItems() {
+    func testMapValuesToQueryItems() {
         let source: [String: Any] = ["a": 1, "c": ["1", nil, "2"], "d": true, "e": false]
         let expected: [URLQueryItem] = [URLQueryItem(name: "a", value: "1"),
                                       URLQueryItem(name: "c", value: "1,2"),
