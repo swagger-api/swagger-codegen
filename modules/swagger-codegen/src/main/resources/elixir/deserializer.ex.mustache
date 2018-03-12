@@ -24,7 +24,7 @@ defmodule {{moduleName}}.Deserializer do
     value = Map.get(model, field)
     case is_binary(value) do
       true -> case DateTime.from_iso8601(value) do
-                {:ok, datetime} ->
+                {:ok, datetime, _offset} ->
                   Map.put(model, field, datetime)
                 _ ->
                   model
