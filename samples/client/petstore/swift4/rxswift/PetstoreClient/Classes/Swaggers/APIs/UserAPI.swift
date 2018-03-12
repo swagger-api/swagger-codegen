@@ -375,7 +375,7 @@ open class UserAPI {
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "username": username, 
             "password": password
         ])

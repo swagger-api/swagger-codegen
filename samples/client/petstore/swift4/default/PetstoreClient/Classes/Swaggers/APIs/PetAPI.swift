@@ -218,7 +218,7 @@ open class PetAPI {
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "status": status
         ])
 
@@ -342,7 +342,7 @@ open class PetAPI {
         let parameters: [String:Any]? = nil
         
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "tags": tags
         ])
 

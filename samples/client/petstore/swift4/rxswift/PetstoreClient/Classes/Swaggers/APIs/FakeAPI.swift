@@ -531,7 +531,7 @@ open class FakeAPI {
         let parameters = APIHelper.convertBoolToString(nonNullParameters)
         
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "enum_query_string_array": enumQueryStringArray, 
             "enum_query_string": enumQueryString?.rawValue, 
             "enum_query_integer": enumQueryInteger?.rawValue
