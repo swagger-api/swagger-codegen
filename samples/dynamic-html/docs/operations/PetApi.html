@@ -2,10 +2,12 @@
   <h2><a name=""></a></h2>
   <p>This is the  API</p>
 
+  
+  
   <h2><a name="addPet"></a>addPet</h2>
   <hr>
   <p></p>
-  <p></p>
+  
   <h3 class="section">URL</h3>
   <code>http://petstore.swagger.io/v2/pet</code>
   <h3 class="section">HTTP Method</h3>
@@ -14,6 +16,7 @@
   <div class="model" data-model=""><a href=""></a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -21,15 +24,17 @@
       
       <span class="param-in">Body: </span>
       <span class="param-name">body</span>
-      <span class="param-type">Pet(Pet)</span>
+      <span class="param-type">Pet</span>
       
       <p class="param-description">Pet object that needs to be added to the store</p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="deletePet"></a>deletePet</h2>
   <hr>
   <p></p>
-  <p></p>
+  
   <h3 class="section">URL</h3>
   <code>http://petstore.swagger.io/v2/pet/{petId}</code>
   <h3 class="section">HTTP Method</h3>
@@ -38,6 +43,7 @@
   <div class="model" data-model=""><a href=""></a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -45,10 +51,11 @@
       
       
       <span class="param-name">petId</span>
-      <span class="param-type">Long</span>
+      <span class="param-type">Integer</span>
       
       <p class="param-description">Pet id to delete</p>
 	  </li>
+    
 	  <li class="parameter">
       
       
@@ -60,7 +67,9 @@
       
       <p class="param-description"></p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="findPetsByStatus"></a>findPetsByStatus</h2>
   <hr>
   <p></p>
@@ -73,6 +82,7 @@
   <div class="model" data-model="Pet"><a href="">List</a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       <span class="param-in">Query: </span>
@@ -84,7 +94,9 @@
       
       <p class="param-description">Status values that need to be considered for filter</p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="findPetsByTags"></a>findPetsByTags</h2>
   <hr>
   <p></p>
@@ -97,6 +109,7 @@
   <div class="model" data-model="Pet"><a href="">List</a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       <span class="param-in">Query: </span>
@@ -108,7 +121,9 @@
       
       <p class="param-description">Tags to filter by</p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="getPetById"></a>getPetById</h2>
   <hr>
   <p></p>
@@ -121,6 +136,7 @@
   <div class="model" data-model="Pet"><a href="">Pet</a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -128,15 +144,17 @@
       
       
       <span class="param-name">petId</span>
-      <span class="param-type">Long</span>
+      <span class="param-type">Integer</span>
       
       <p class="param-description">ID of pet to return</p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="updatePet"></a>updatePet</h2>
   <hr>
   <p></p>
-  <p></p>
+  
   <h3 class="section">URL</h3>
   <code>http://petstore.swagger.io/v2/pet</code>
   <h3 class="section">HTTP Method</h3>
@@ -145,6 +163,7 @@
   <div class="model" data-model=""><a href=""></a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -152,15 +171,17 @@
       
       <span class="param-in">Body: </span>
       <span class="param-name">body</span>
-      <span class="param-type">Pet(Pet)</span>
+      <span class="param-type">Pet</span>
       
       <p class="param-description">Pet object that needs to be added to the store</p>
 	  </li>
+    
   </ul>
+  
   <h2><a name="updatePetWithForm"></a>updatePetWithForm</h2>
   <hr>
   <p></p>
-  <p></p>
+  
   <h3 class="section">URL</h3>
   <code>http://petstore.swagger.io/v2/pet/{petId}</code>
   <h3 class="section">HTTP Method</h3>
@@ -169,6 +190,7 @@
   <div class="model" data-model=""><a href=""></a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -176,37 +198,29 @@
       
       
       <span class="param-name">petId</span>
-      <span class="param-type">Long</span>
+      <span class="param-type">Integer</span>
       
       <p class="param-description">ID of pet that needs to be updated</p>
 	  </li>
+    
 	  <li class="parameter">
-      <span class="param-in">Form: </span>
       
       
       
       
-      <span class="param-name">name</span>
-      <span class="param-type">String</span>
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type"></span>
       
-      <p class="param-description">Updated name of the pet</p>
+      <p class="param-description"></p>
 	  </li>
-	  <li class="parameter">
-      <span class="param-in">Form: </span>
-      
-      
-      
-      
-      <span class="param-name">status</span>
-      <span class="param-type">String</span>
-      
-      <p class="param-description">Updated status of the pet</p>
-	  </li>
+    
   </ul>
+  
   <h2><a name="uploadFile"></a>uploadFile</h2>
   <hr>
   <p></p>
-  <p></p>
+  
   <h3 class="section">URL</h3>
   <code>http://petstore.swagger.io/v2/pet/{petId}/uploadImage</code>
   <h3 class="section">HTTP Method</h3>
@@ -215,6 +229,7 @@
   <div class="model" data-model="ApiResponse"><a href="">ApiResponse</a></div>
   <h3 class="section">Parameters</h3>
   <ul>
+  	
 	  <li class="parameter">
       
       
@@ -222,31 +237,24 @@
       
       
       <span class="param-name">petId</span>
-      <span class="param-type">Long</span>
+      <span class="param-type">Integer</span>
       
       <p class="param-description">ID of pet to update</p>
 	  </li>
+    
 	  <li class="parameter">
-      <span class="param-in">Form: </span>
       
       
       
       
-      <span class="param-name">additionalMetadata</span>
-      <span class="param-type">String</span>
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type"></span>
       
-      <p class="param-description">Additional data to pass to server</p>
+      <p class="param-description"></p>
 	  </li>
-	  <li class="parameter">
-      <span class="param-in">Form: </span>
-      
-      
-      
-      
-      <span class="param-name">file</span>
-      <span class="param-type">File</span>
-      
-      <p class="param-description">file to upload</p>
-	  </li>
+    
   </ul>
+  
+  
 </div>
