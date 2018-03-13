@@ -302,6 +302,35 @@ export const {{classname}}Factory = function (configuration?: Configuration, fet
     };
 };
 
+
+{{#withInterfaces}}
+/**
+ * {{classname}} - interface{{#description}}
+ * {{&description}}{{/description}}
+ * @export
+ * @interface {{classname}}
+ */
+export interface {{classname}}Interface {
+{{#operation}}
+    /**
+     * {{&notes}}
+     {{#summary}}
+     * @summary {{&summary}}
+     {{/summary}}
+     {{#allParams}}
+     * @param {{=<% %>=}}{<%%dataType%%>}<%={{ }}=%> {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
+     {{/allParams}}
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof {{classname}}Interface
+     */
+    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>;
+
+{{/operation}}
+}
+{{/withInterfaces}}
+
+
 /**
  * {{classname}} - object-oriented interface{{#description}}
  * {{{description}}}{{/description}}
@@ -309,7 +338,12 @@ export const {{classname}}Factory = function (configuration?: Configuration, fet
  * @class {{classname}}
  * @extends {BaseAPI}
  */
+{{#withInterfaces}}
+export class {{classname}} extends BaseAPI implements {{classname}}Interface {
+{{/withInterfaces}}
+{{^withInterfaces}}
 export class {{classname}} extends BaseAPI {
+{{/withInterfaces}}
     {{#operation}}
     /**
      * {{&notes}}
