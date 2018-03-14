@@ -13,6 +13,11 @@ import java.util.Map;
 
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.handlebars.helpers.JavaHelper</code> instead.
+ */
+@Deprecated
 public class JavaHelper {
 
     public CharSequence getClassDefinition(CodegenModel codegenModel, Options options) throws IOException {
