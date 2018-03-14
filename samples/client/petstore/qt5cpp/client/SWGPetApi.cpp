@@ -220,15 +220,17 @@ SWGPetApi::findPetsByStatusCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-
+    auto opdeleter = new ObjLaterDeleter<QList<SWGPet*>*> (output);
+    opdeleter->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
+        auto objdeleter = new ObjLaterDeleter<SWGPet*> (o);
+        objdeleter->deleteLater();
         output->append(o);
     }
-
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -325,15 +327,17 @@ SWGPetApi::findPetsByTagsCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-
+    auto opdeleter = new ObjLaterDeleter<QList<SWGPet*>*> (output);
+    opdeleter->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
+        auto objdeleter = new ObjLaterDeleter<SWGPet*> (o);
+        objdeleter->deleteLater();
         output->append(o);
     }
-
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -385,9 +389,10 @@ SWGPetApi::getPetByIdCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-
     QString json(worker->response);
     SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
+    auto opdeleter = new ObjLaterDeleter<SWGPet*> (output);
+    opdeleter->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -554,9 +559,10 @@ SWGPetApi::uploadFileCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-
     QString json(worker->response);
     SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
+    auto opdeleter = new ObjLaterDeleter<SWGApiResponse*> (output);
+    opdeleter->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {

@@ -13,6 +13,7 @@
 #ifndef SWG_HELPERS_H
 #define SWG_HELPERS_H
 
+#include <QObject>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QList>
@@ -29,6 +30,19 @@ namespace Swagger {
     QString stringValue(qint32 value);
     QString stringValue(qint64 value);
     QString stringValue(bool value);
+
+    template <typename ObjPtrT>
+    class ObjLaterDeleter : public QObject{
+        public:
+            ObjLaterDeleter(ObjPtrT ptr){
+                data = ptr;
+            }
+            ~ObjLaterDeleter(){
+                delete data;
+            }
+        private :
+            ObjPtrT data;
+    };
 
 }
 
