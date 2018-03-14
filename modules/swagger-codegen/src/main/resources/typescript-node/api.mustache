@@ -148,7 +148,7 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
     static discriminator = '{{discriminator}}';
     {{/discriminator}}
     {{^discriminator}}
-    static discriminator : any = undefined;
+    static discriminator: string = undefined;
     {{/discriminator}}
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
