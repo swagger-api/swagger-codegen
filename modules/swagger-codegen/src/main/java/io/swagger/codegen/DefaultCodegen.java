@@ -263,21 +263,25 @@ public class DefaultCodegen {
     }
 
     /**
-     * Returns the common prefix of variables for enum naming
+     * Returns the common prefix of variables for enum naming if 
+     * two or more variables are present
      *
      * @param vars List of variable names
      * @return the common prefix for naming
      */
     public String findCommonPrefixOfVars(List<Object> vars) {
-        try {
-            String[] listStr = vars.toArray(new String[vars.size()]);
-            String prefix = StringUtils.getCommonPrefix(listStr);
-            // exclude trailing characters that should be part of a valid variable
-            // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
-            return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
-        } catch (ArrayStoreException e) {
-            return "";
+        if (vars.size() > 1) {
+            try {
+                String[] listStr = vars.toArray(new String[vars.size()]);
+                String prefix = StringUtils.getCommonPrefix(listStr);
+                // exclude trailing characters that should be part of a valid variable
+                // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
+                return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
+            } catch (ArrayStoreException e) {
+                // do nothing, just return default value
+            }
         }
+        return "";
     }
 
     /**
@@ -3320,7 +3324,7 @@ public class DefaultCodegen {
 
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
-        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
     }
 
     /**
@@ -3333,7 +3337,7 @@ public class DefaultCodegen {
      */
     public String apiDocFilename(String templateName, String tag) {
         String suffix = apiDocTemplateFiles().get(templateName);
-        return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
+        return apiDocFileFolder() + File.separator + toApiDocFilename(tag) + suffix;
     }
 
     /**
@@ -3346,7 +3350,7 @@ public class DefaultCodegen {
      */
     public String apiTestFilename(String templateName, String tag) {
         String suffix = apiTestTemplateFiles().get(templateName);
-        return apiTestFileFolder() + '/' + toApiTestFilename(tag) + suffix;
+        return apiTestFileFolder() + File.separator + toApiTestFilename(tag) + suffix;
     }
 
     public boolean shouldOverwrite(String filename) {

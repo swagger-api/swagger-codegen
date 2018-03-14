@@ -748,6 +748,7 @@ Companies/Projects using Swagger Codegen
 ----------------------------------------
 Here are some companies/projects using Swagger Codegen in production. To add your company/project to the list, please visit [README.md](https://github.com/swagger-api/swagger-codegen/blob/master/README.md) and click on the icon to edit the page.
 - [Accengage](https://www.accengage.com/)
+- [Accruent](https://www.accruent.com/)
 - [Activehours](https://www.activehours.com/)
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
@@ -784,6 +785,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Finder](http://en.finder.pl/)
 - [Fitwell](https://fitwell.co/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
+- [FormAPI](https://formapi.io/)
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [General Electric](https://www.ge.com/)
@@ -944,16 +946,18 @@ Presentations/Videos/Tutorials/Books
 - 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
 - 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
 - 2018/02/03 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada) by [Stephane Carrez](https://github.com/stcarrez) at [FOSDEM 2018](https://fosdem.org/2018)
-
+- 2018/02/28 - [OpenAPI–An eBay Perspective](https://www.ebayinc.com/stories/blogs/tech/openapi-an-ebay-perspective/) by Shekhar Banerjee (eBay)
 
 # Swagger Codegen Core Team
 
 Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
 ## Core Team Members
-* [@jimschubert](https://github.com/jimschubert)
-* [@cbornet](https://github.com/cbornet)
-* [@jaz-ah](https://github.com/jaz-ah)
+* [@jimschubert](https://github.com/jimschubert) (2016/05)
+* [@cbornet](https://github.com/cbornet) (2016/05)
+* [@jaz-ah](https://github.com/jaz-ah) (2016/05)
+* [@ackintosh](https://github.com/ackintosh) (2018/02)
+* [@JFCote](https://github.com/JFCote) (2018/03)
 
 ## Template Creator
 Here is a list of template creators:
@@ -1071,10 +1075,11 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | Languages     | Member (join date) |
 |:-------------|:-------------|
 | ActionScript |      |
+| Ada | @stcarrez (2018/02) @micheleISEP (2018/02) |
 | Android | @jaz-ah (2017/09) |
 | Apex  |     |
 | Bash  | @frol (2017/07) @bkryza (2017/08) @kenjones-cisco (2017/09) |
-| C++      | @ravinikam (2017/07) @stkrwork (2017/07) @fvarose (2017/11) |
+| C++      | @ravinikam (2017/07) @stkrwork (2017/07) @fvarose (2017/11) @etherealjoy (2018/02) |
 | C#        | @mandrean (2017/08) @jimschubert (2017/09) |
 | Clojure   |  |
 | Dart      | @ircecho (2017/07) |
@@ -1096,7 +1101,7 @@ If you want to join the committee, please kindly apply by sending an email to wi
 | R        |  |
 | Ruby      | @cliffano (2017/07) @zlx (2017/09) |
 | Rust      | @frol (2017/07) @farcaller (2017/08) @bjgill (2017/12) |
-| Scala     | @clasnake (2017/07) @jimschubert (2017/09) @shijinkui  (2018/01) |
+| Scala     | @clasnake (2017/07) @jimschubert (2017/09) @shijinkui  (2018/01) @ramzimaalej (2018/03) |
 | Swift     | @jgavris (2017/07) @ehyche (2017/08) @Edubits (2017/09) @jaz-ah (2017/09) |
 | TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) @macjohnny (2018/01) |
 
