@@ -26,6 +26,7 @@ import java.util.Set;
 public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig {
     public static final String CPP_NAMESPACE = "cppNamespace";
     public static final String CPP_NAMESPACE_DESC = "C++ namespace (convention: name::space::for::api).";
+    public static final String OPTIONAL_PROJECT_FILE_DESC = "Generate client.pri.";
 
     protected final String PREFIX = "SWG";
     protected Set<String> foundationClasses = new HashSet<String>();
@@ -35,6 +36,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
     protected Map<String, String> namespaces = new HashMap<String, String>();
     protected Set<String> systemIncludes = new HashSet<String>();
     protected String cppNamespace = "Swagger";
+    protected boolean optionalProjectFileFlag = true;
 
     public Qt5CPPGenerator() {
         super();
@@ -82,6 +84,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
         // CLI options
         addOption(CPP_NAMESPACE, CPP_NAMESPACE_DESC, this.cppNamespace);
+        addSwitch(CodegenConstants.OPTIONAL_PROJECT_FILE, OPTIONAL_PROJECT_FILE_DESC, this.optionalProjectFileFlag);
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -115,6 +118,10 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
         supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
         supportingFiles.add(new SupportingFile("QObjectWrapper.h.mustache", sourceFolder, PREFIX + "QObjectWrapper.h"));
+        if (optionalProjectFileFlag) {
+            supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder, "client.pri"));
+        }
+
         super.typeMapping = new HashMap<String, String>();
 
         typeMapping.put("date", "QDate");
@@ -160,6 +167,14 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         cliOptions.add(option);
     }
 
+    protected void addSwitch(String key, String description, Boolean defaultValue) {
+        CliOption option = CliOption.newBoolean(key, description);
+        if (defaultValue != null)
+           option.defaultValue(defaultValue.toString());
+        cliOptions.add(option);
+    }
+
+
     @Override
     public void processOpts() {
         super.processOpts();
@@ -183,6 +198,12 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             typeMapping.put("file", modelNamePrefix + "HttpRequestInputFileElement");
             importMapping.put("SWGHttpRequestInputFileElement", "#include \"" + modelNamePrefix + "HttpRequest.h\"");
             additionalProperties().put("prefix", modelNamePrefix);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_PROJECT_FILE)) {
+            setOptionalProjectFileFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_PROJECT_FILE));
+        } else {
+            additionalProperties.put(CodegenConstants.OPTIONAL_PROJECT_FILE, optionalProjectFileFlag);
         }
     }
 
@@ -425,5 +446,9 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    public void setOptionalProjectFileFlag(boolean flag) {
+        this.optionalProjectFileFlag = flag;
     }
 }
