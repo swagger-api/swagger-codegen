@@ -210,13 +210,13 @@ export interface Pet {
     name: string;
     /**
      * 
-     * @type {Array&lt;string&gt;}
+     * @type {Array<string>}
      * @memberof Pet
      */
     photoUrls: Array<string>;
     /**
      * 
-     * @type {Array&lt;Tag&gt;}
+     * @type {Array<Tag>}
      * @memberof Pet
      */
     tags?: Array<Tag>;
@@ -414,7 +414,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -455,7 +455,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
         /**
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          * @summary Finds Pets by tags
-         * @param {Array&lt;string&gt;} tags Tags to filter by
+         * @param {Array<string>} tags Tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -726,7 +726,7 @@ export const PetApiFp = function(configuration?: Configuration) {
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -745,7 +745,7 @@ export const PetApiFp = function(configuration?: Configuration) {
         /**
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          * @summary Finds Pets by tags
-         * @param {Array&lt;string&gt;} tags Tags to filter by
+         * @param {Array<string>} tags Tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -874,7 +874,7 @@ export const PetApiFactory = function (configuration?: Configuration, fetch?: Fe
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array&lt;&#39;available&#39; | &#39;pending&#39; | &#39;sold&#39;&gt;} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -884,7 +884,7 @@ export const PetApiFactory = function (configuration?: Configuration, fetch?: Fe
         /**
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          * @summary Finds Pets by tags
-         * @param {Array&lt;string&gt;} tags Tags to filter by
+         * @param {Array<string>} tags Tags to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -938,7 +938,6 @@ export const PetApiFactory = function (configuration?: Configuration, fetch?: Fe
     };
 };
 
-
 /**
  * PetApi - interface
  * @export
@@ -948,7 +947,7 @@ export interface PetApiInterface {
     /**
      * 
      * @summary Add a new pet to the store
-     * @param {} body Pet object that needs to be added to the store
+     * @param {Pet} body Pet object that needs to be added to the store
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -958,8 +957,8 @@ export interface PetApiInterface {
     /**
      * 
      * @summary Deletes a pet
-     * @param {} petId Pet id to delete
-     * @param {} [apiKey] 
+     * @param {number} petId Pet id to delete
+     * @param {string} [apiKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -969,7 +968,7 @@ export interface PetApiInterface {
     /**
      * Multiple status values can be provided with comma separated strings
      * @summary Finds Pets by status
-     * @param {} status Status values that need to be considered for filter
+     * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -979,7 +978,7 @@ export interface PetApiInterface {
     /**
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @summary Finds Pets by tags
-     * @param {} tags Tags to filter by
+     * @param {Array<string>} tags Tags to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -989,7 +988,7 @@ export interface PetApiInterface {
     /**
      * Returns a single pet
      * @summary Find pet by ID
-     * @param {} petId ID of pet to return
+     * @param {number} petId ID of pet to return
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -999,7 +998,7 @@ export interface PetApiInterface {
     /**
      * 
      * @summary Update an existing pet
-     * @param {} body Pet object that needs to be added to the store
+     * @param {Pet} body Pet object that needs to be added to the store
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -1009,9 +1008,9 @@ export interface PetApiInterface {
     /**
      * 
      * @summary Updates a pet in the store with form data
-     * @param {} petId ID of pet that needs to be updated
-     * @param {} [name] Updated name of the pet
-     * @param {} [status] Updated status of the pet
+     * @param {number} petId ID of pet that needs to be updated
+     * @param {string} [name] Updated name of the pet
+     * @param {string} [status] Updated status of the pet
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -1021,9 +1020,9 @@ export interface PetApiInterface {
     /**
      * 
      * @summary uploads an image
-     * @param {} petId ID of pet to update
-     * @param {} [additionalMetadata] Additional data to pass to server
-     * @param {} [file] file to upload
+     * @param {number} petId ID of pet to update
+     * @param {string} [additionalMetadata] Additional data to pass to server
+     * @param {any} [file] file to upload
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
@@ -1031,7 +1030,6 @@ export interface PetApiInterface {
     uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): Promise<ApiResponse>;
 
 }
-
 
 /**
  * PetApi - object-oriented interface
@@ -1043,101 +1041,101 @@ export class PetApi extends BaseAPI implements PetApiInterface {
     /**
      * 
      * @summary Add a new pet to the store
-     * @param {} body Pet object that needs to be added to the store
+     * @param {Pet} body Pet object that needs to be added to the store
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public addPet(body: Pet, options?: any): Promise<{}> {
+    public addPet(body: Pet, options?: any) {
         return PetApiFp(this.configuration).addPet(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Deletes a pet
-     * @param {} petId Pet id to delete
-     * @param {} [apiKey] 
+     * @param {number} petId Pet id to delete
+     * @param {string} [apiKey] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public deletePet(petId: number, apiKey?: string, options?: any): Promise<{}> {
+    public deletePet(petId: number, apiKey?: string, options?: any) {
         return PetApiFp(this.configuration).deletePet(petId, apiKey, options)(this.fetch, this.basePath);
     }
 
     /**
      * Multiple status values can be provided with comma separated strings
      * @summary Finds Pets by status
-     * @param {} status Status values that need to be considered for filter
+     * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): Promise<Array<Pet>> {
+    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
         return PetApiFp(this.configuration).findPetsByStatus(status, options)(this.fetch, this.basePath);
     }
 
     /**
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @summary Finds Pets by tags
-     * @param {} tags Tags to filter by
+     * @param {Array<string>} tags Tags to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public findPetsByTags(tags: Array<string>, options?: any): Promise<Array<Pet>> {
+    public findPetsByTags(tags: Array<string>, options?: any) {
         return PetApiFp(this.configuration).findPetsByTags(tags, options)(this.fetch, this.basePath);
     }
 
     /**
      * Returns a single pet
      * @summary Find pet by ID
-     * @param {} petId ID of pet to return
+     * @param {number} petId ID of pet to return
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public getPetById(petId: number, options?: any): Promise<Pet> {
+    public getPetById(petId: number, options?: any) {
         return PetApiFp(this.configuration).getPetById(petId, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Update an existing pet
-     * @param {} body Pet object that needs to be added to the store
+     * @param {Pet} body Pet object that needs to be added to the store
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public updatePet(body: Pet, options?: any): Promise<{}> {
+    public updatePet(body: Pet, options?: any) {
         return PetApiFp(this.configuration).updatePet(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Updates a pet in the store with form data
-     * @param {} petId ID of pet that needs to be updated
-     * @param {} [name] Updated name of the pet
-     * @param {} [status] Updated status of the pet
+     * @param {number} petId ID of pet that needs to be updated
+     * @param {string} [name] Updated name of the pet
+     * @param {string} [status] Updated status of the pet
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public updatePetWithForm(petId: number, name?: string, status?: string, options?: any): Promise<{}> {
+    public updatePetWithForm(petId: number, name?: string, status?: string, options?: any) {
         return PetApiFp(this.configuration).updatePetWithForm(petId, name, status, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary uploads an image
-     * @param {} petId ID of pet to update
-     * @param {} [additionalMetadata] Additional data to pass to server
-     * @param {} [file] file to upload
+     * @param {number} petId ID of pet to update
+     * @param {string} [additionalMetadata] Additional data to pass to server
+     * @param {any} [file] file to upload
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): Promise<ApiResponse> {
+    public uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any) {
         return PetApiFp(this.configuration).uploadFile(petId, additionalMetadata, file, options)(this.fetch, this.basePath);
     }
 
@@ -1405,7 +1403,6 @@ export const StoreApiFactory = function (configuration?: Configuration, fetch?: 
     };
 };
 
-
 /**
  * StoreApi - interface
  * @export
@@ -1415,7 +1412,7 @@ export interface StoreApiInterface {
     /**
      * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
      * @summary Delete purchase order by ID
-     * @param {} orderId ID of the order that needs to be deleted
+     * @param {string} orderId ID of the order that needs to be deleted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApiInterface
@@ -1434,7 +1431,7 @@ export interface StoreApiInterface {
     /**
      * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      * @summary Find purchase order by ID
-     * @param {} orderId ID of pet that needs to be fetched
+     * @param {number} orderId ID of pet that needs to be fetched
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApiInterface
@@ -1444,7 +1441,7 @@ export interface StoreApiInterface {
     /**
      * 
      * @summary Place an order for a pet
-     * @param {} body order placed for purchasing the pet
+     * @param {Order} body order placed for purchasing the pet
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApiInterface
@@ -1452,7 +1449,6 @@ export interface StoreApiInterface {
     placeOrder(body: Order, options?: any): Promise<Order>;
 
 }
-
 
 /**
  * StoreApi - object-oriented interface
@@ -1464,12 +1460,12 @@ export class StoreApi extends BaseAPI implements StoreApiInterface {
     /**
      * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
      * @summary Delete purchase order by ID
-     * @param {} orderId ID of the order that needs to be deleted
+     * @param {string} orderId ID of the order that needs to be deleted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public deleteOrder(orderId: string, options?: any): Promise<{}> {
+    public deleteOrder(orderId: string, options?: any) {
         return StoreApiFp(this.configuration).deleteOrder(orderId, options)(this.fetch, this.basePath);
     }
 
@@ -1480,31 +1476,31 @@ export class StoreApi extends BaseAPI implements StoreApiInterface {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getInventory(options?: any): Promise<{ [key: string]: number; }> {
+    public getInventory(options?: any) {
         return StoreApiFp(this.configuration).getInventory(options)(this.fetch, this.basePath);
     }
 
     /**
      * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      * @summary Find purchase order by ID
-     * @param {} orderId ID of pet that needs to be fetched
+     * @param {number} orderId ID of pet that needs to be fetched
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getOrderById(orderId: number, options?: any): Promise<Order> {
+    public getOrderById(orderId: number, options?: any) {
         return StoreApiFp(this.configuration).getOrderById(orderId, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Place an order for a pet
-     * @param {} body order placed for purchasing the pet
+     * @param {Order} body order placed for purchasing the pet
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public placeOrder(body: Order, options?: any): Promise<Order> {
+    public placeOrder(body: Order, options?: any) {
         return StoreApiFp(this.configuration).placeOrder(body, options)(this.fetch, this.basePath);
     }
 
@@ -1551,7 +1547,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1583,7 +1579,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1803,7 +1799,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1822,7 +1818,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1956,7 +1952,7 @@ export const UserApiFactory = function (configuration?: Configuration, fetch?: F
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1966,7 +1962,7 @@ export const UserApiFactory = function (configuration?: Configuration, fetch?: F
         /**
          * 
          * @summary Creates list of users with given input array
-         * @param {Array&lt;User&gt;} body List of user object
+         * @param {Array<User>} body List of user object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2027,7 +2023,6 @@ export const UserApiFactory = function (configuration?: Configuration, fetch?: F
     };
 };
 
-
 /**
  * UserApi - interface
  * @export
@@ -2037,7 +2032,7 @@ export interface UserApiInterface {
     /**
      * This can only be done by the logged in user.
      * @summary Create user
-     * @param {} body Created user object
+     * @param {User} body Created user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2047,7 +2042,7 @@ export interface UserApiInterface {
     /**
      * 
      * @summary Creates list of users with given input array
-     * @param {} body List of user object
+     * @param {Array<User>} body List of user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2057,7 +2052,7 @@ export interface UserApiInterface {
     /**
      * 
      * @summary Creates list of users with given input array
-     * @param {} body List of user object
+     * @param {Array<User>} body List of user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2067,7 +2062,7 @@ export interface UserApiInterface {
     /**
      * This can only be done by the logged in user.
      * @summary Delete user
-     * @param {} username The name that needs to be deleted
+     * @param {string} username The name that needs to be deleted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2077,7 +2072,7 @@ export interface UserApiInterface {
     /**
      * 
      * @summary Get user by user name
-     * @param {} username The name that needs to be fetched. Use user1 for testing.
+     * @param {string} username The name that needs to be fetched. Use user1 for testing.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2087,8 +2082,8 @@ export interface UserApiInterface {
     /**
      * 
      * @summary Logs user into the system
-     * @param {} username The user name for login
-     * @param {} password The password for login in clear text
+     * @param {string} username The user name for login
+     * @param {string} password The password for login in clear text
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2107,8 +2102,8 @@ export interface UserApiInterface {
     /**
      * This can only be done by the logged in user.
      * @summary Updated user
-     * @param {} username name that need to be deleted
-     * @param {} body Updated user object
+     * @param {string} username name that need to be deleted
+     * @param {User} body Updated user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApiInterface
@@ -2116,7 +2111,6 @@ export interface UserApiInterface {
     updateUser(username: string, body: User, options?: any): Promise<{}>;
 
 }
-
 
 /**
  * UserApi - object-oriented interface
@@ -2128,73 +2122,73 @@ export class UserApi extends BaseAPI implements UserApiInterface {
     /**
      * This can only be done by the logged in user.
      * @summary Create user
-     * @param {} body Created user object
+     * @param {User} body Created user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public createUser(body: User, options?: any): Promise<{}> {
+    public createUser(body: User, options?: any) {
         return UserApiFp(this.configuration).createUser(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Creates list of users with given input array
-     * @param {} body List of user object
+     * @param {Array<User>} body List of user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public createUsersWithArrayInput(body: Array<User>, options?: any): Promise<{}> {
+    public createUsersWithArrayInput(body: Array<User>, options?: any) {
         return UserApiFp(this.configuration).createUsersWithArrayInput(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Creates list of users with given input array
-     * @param {} body List of user object
+     * @param {Array<User>} body List of user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public createUsersWithListInput(body: Array<User>, options?: any): Promise<{}> {
+    public createUsersWithListInput(body: Array<User>, options?: any) {
         return UserApiFp(this.configuration).createUsersWithListInput(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * This can only be done by the logged in user.
      * @summary Delete user
-     * @param {} username The name that needs to be deleted
+     * @param {string} username The name that needs to be deleted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public deleteUser(username: string, options?: any): Promise<{}> {
+    public deleteUser(username: string, options?: any) {
         return UserApiFp(this.configuration).deleteUser(username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Get user by user name
-     * @param {} username The name that needs to be fetched. Use user1 for testing.
+     * @param {string} username The name that needs to be fetched. Use user1 for testing.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public getUserByName(username: string, options?: any): Promise<User> {
+    public getUserByName(username: string, options?: any) {
         return UserApiFp(this.configuration).getUserByName(username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary Logs user into the system
-     * @param {} username The user name for login
-     * @param {} password The password for login in clear text
+     * @param {string} username The user name for login
+     * @param {string} password The password for login in clear text
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public loginUser(username: string, password: string, options?: any): Promise<string> {
+    public loginUser(username: string, password: string, options?: any) {
         return UserApiFp(this.configuration).loginUser(username, password, options)(this.fetch, this.basePath);
     }
 
@@ -2205,20 +2199,20 @@ export class UserApi extends BaseAPI implements UserApiInterface {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public logoutUser(options?: any): Promise<{}> {
+    public logoutUser(options?: any) {
         return UserApiFp(this.configuration).logoutUser(options)(this.fetch, this.basePath);
     }
 
     /**
      * This can only be done by the logged in user.
      * @summary Updated user
-     * @param {} username name that need to be deleted
-     * @param {} body Updated user object
+     * @param {string} username name that need to be deleted
+     * @param {User} body Updated user object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public updateUser(username: string, body: User, options?: any): Promise<{}> {
+    public updateUser(username: string, body: User, options?: any) {
         return UserApiFp(this.configuration).updateUser(username, body, options)(this.fetch, this.basePath);
     }
 
