@@ -9,6 +9,7 @@ import io.swagger.jaxrs.*;
 
 import io.swagger.model.Client;
 
+
 import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -23,12 +24,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+
 import javax.validation.constraints.*;
+
 
 @Path("/AnotherFake")
 
 
 @io.swagger.annotations.Api(description = "the AnotherFake API")
+
 
 public class AnotherFakeApi  {
    private final AnotherFakeApiService delegate;
@@ -54,6 +58,7 @@ public class AnotherFakeApi  {
       this.delegate = delegate;
    }
 
+
     @PATCH
     
     @Consumes({ "application/json" })
@@ -61,9 +66,11 @@ public class AnotherFakeApi  {
     @io.swagger.annotations.ApiOperation(value = "To test special tags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Response testSpecialTags(@ApiParam(value = "client model" ,required=true) Client body
+    public Response testSpecialTags(@ApiParam(value = "client model" ,required=true) Client client
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testSpecialTags(body,securityContext);
+        return delegate.testSpecialTags(client,securityContext);
     }
+
 }
+

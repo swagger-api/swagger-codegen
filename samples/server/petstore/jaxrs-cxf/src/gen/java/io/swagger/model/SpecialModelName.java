@@ -1,6 +1,13 @@
 package io.swagger.model;
 
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,35 +19,56 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class SpecialModelName  {
   
+
   @ApiModelProperty(value = "")
-  private Long specialPropertyName = null;
+
+
+
+  private Long $specialPropertyName = null;
+
+  
+  
  /**
-   * Get specialPropertyName
-   * @return specialPropertyName
+  
+  
+   * Get $specialPropertyName
+  
+  
+  
+   * @return $specialPropertyName
   **/
   @JsonProperty("$special[property.name]")
-  public Long getSpecialPropertyName() {
-    return specialPropertyName;
+
+
+  public Long get$SpecialPropertyName() {
+    return $specialPropertyName;
   }
 
-  public void setSpecialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  
+  public void set$SpecialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
   }
 
-  public SpecialModelName specialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SpecialModelName {\n");
     
-    sb.append("    specialPropertyName: ").append(toIndentedString(specialPropertyName)).append("\n");
+    sb.append("    $specialPropertyName: ").append(toIndentedString($specialPropertyName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -56,4 +84,7 @@ public class SpecialModelName  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

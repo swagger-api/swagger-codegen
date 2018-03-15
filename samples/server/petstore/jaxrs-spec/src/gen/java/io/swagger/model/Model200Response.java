@@ -1,14 +1,21 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
 
 
 /**
  * Model for testing model name starting with number
  **/
+
 import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,7 +26,11 @@ public class Model200Response  implements Serializable {
   private @Valid Integer name = null;
   private @Valid String propertyClass = null;
 
+  
   /**
+   
+   
+   
    **/
   public Model200Response name(Integer name) {
     this.name = name;
@@ -29,6 +40,7 @@ public class Model200Response  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("name")
+
   public Integer getName() {
     return name;
   }
@@ -36,7 +48,11 @@ public class Model200Response  implements Serializable {
     this.name = name;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
@@ -46,6 +62,7 @@ public class Model200Response  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("class")
+
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -53,6 +70,7 @@ public class Model200Response  implements Serializable {
     this.propertyClass = propertyClass;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -94,4 +112,6 @@ public class Model200Response  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

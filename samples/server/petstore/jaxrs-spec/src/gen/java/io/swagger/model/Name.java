@@ -1,14 +1,21 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
 
 
 /**
  * Model for testing model name same as property name
  **/
+
 import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +28,11 @@ public class Name  implements Serializable {
   private @Valid String property = null;
   private @Valid Integer _123Number = null;
 
+  
   /**
+   
+   
+   
    **/
   public Name name(Integer name) {
     this.name = name;
@@ -31,7 +42,9 @@ public class Name  implements Serializable {
   
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("name")
+
   @NotNull
+
   public Integer getName() {
     return name;
   }
@@ -39,7 +52,11 @@ public class Name  implements Serializable {
     this.name = name;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Name snakeCase(Integer snakeCase) {
     this.snakeCase = snakeCase;
@@ -49,6 +66,7 @@ public class Name  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("snake_case")
+
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -56,7 +74,11 @@ public class Name  implements Serializable {
     this.snakeCase = snakeCase;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Name property(String property) {
     this.property = property;
@@ -66,6 +88,7 @@ public class Name  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("property")
+
   public String getProperty() {
     return property;
   }
@@ -73,7 +96,11 @@ public class Name  implements Serializable {
     this.property = property;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Name _123Number(Integer _123Number) {
     this._123Number = _123Number;
@@ -83,6 +110,7 @@ public class Name  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("123Number")
+
   public Integer get123Number() {
     return _123Number;
   }
@@ -90,6 +118,7 @@ public class Name  implements Serializable {
     this._123Number = _123Number;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -135,4 +164,6 @@ public class Name  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 
