@@ -59,6 +59,7 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
                         "inline",
                         "int",
                         "long",
+                        "linux",
                         "mutable",
                         "namespace",
                         "new",
