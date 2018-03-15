@@ -13,6 +13,7 @@
 #include "SWGUserApi.h"
 #include "SWGHelpers.h"
 #include "SWGModelFactory.h"
+#include "SWGQObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -286,8 +287,8 @@ SWGUserApi::getUserByNameCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGUser* output = static_cast<SWGUser*>(create(json, QString("SWGUser")));
-    auto opdeleter = new ObjLaterDeleter<SWGUser*> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<SWGUser*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -355,8 +356,8 @@ SWGUserApi::loginUserCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     QString* output = static_cast<QString*>(create(json, QString("QString")));
-    auto opdeleter = new ObjLaterDeleter<QString*> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<QString*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {

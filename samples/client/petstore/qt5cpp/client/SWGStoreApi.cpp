@@ -13,6 +13,7 @@
 #include "SWGStoreApi.h"
 #include "SWGHelpers.h"
 #include "SWGModelFactory.h"
+#include "SWGQObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -182,8 +183,8 @@ SWGStoreApi::getOrderByIdCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    auto opdeleter = new ObjLaterDeleter<SWGOrder*> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<SWGOrder*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -238,8 +239,8 @@ SWGStoreApi::placeOrderCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    auto opdeleter = new ObjLaterDeleter<SWGOrder*> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<SWGOrder*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {

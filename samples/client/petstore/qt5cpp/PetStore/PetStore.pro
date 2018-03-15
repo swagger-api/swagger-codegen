@@ -45,4 +45,5 @@ HEADERS += \
     ../client/SWGUserApi.h \
     PetApiTests.h \
     ../client/SWGApiResponse.h \
-    ../client/SWGModelFactory.h
+    ../client/SWGModelFactory.h \
+    ../client/SWGQObjectWrapper.h

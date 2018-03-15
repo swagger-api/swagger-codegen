@@ -2,6 +2,7 @@
 #include "{{classname}}.h"
 #include "{{prefix}}Helpers.h"
 #include "{{prefix}}ModelFactory.h"
+#include "{{prefix}}QObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -150,15 +151,15 @@ void
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-    auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         {{{returnBaseType}}}* o = new {{returnBaseType}}();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
-        auto objdeleter = new ObjLaterDeleter<{{{returnBaseType}}}*> (o);
-        objdeleter->deleteLater();
+        auto objwrapper = new QObjectWrapper<{{{returnBaseType}}}*> (o);
+        objwrapper->deleteLater();
         output->append(o);
     }
     {{/isListContainer}}
@@ -166,14 +167,14 @@ void
     {{^isMapContainer}}
     {{#returnTypeIsPrimitive}}
     {{{returnType}}} output;  // TODO add primitive output support
-    {{#isByteArray}}auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();{{/isByteArray}}
-    {{#isDateTime}}auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();{{/isDateTime}}
-    {{#isDate}}auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();{{/isDate}}
-    {{#isString}}auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();{{/isString}}
+    {{#isByteArray}}auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isByteArray}}
+    {{#isDateTime}}auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isDateTime}}
+    {{#isDate}}auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isDate}}
+    {{#isString}}auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isString}}
     {{/returnTypeIsPrimitive}}
     {{/isMapContainer}}
     {{#isMapContainer}}
@@ -193,8 +194,8 @@ void
     {{^returnTypeIsPrimitive}}
     QString json(worker->response);
     {{{returnType}}} output = static_cast<{{{returnType}}}>(create(json, QString("{{{returnBaseType}}}")));
-    auto opdeleter = new ObjLaterDeleter<{{{returnType}}}> (output);
-    opdeleter->deleteLater();
+    auto wrapper = new QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();
     {{/returnTypeIsPrimitive}}
     {{/isMapContainer}}
     {{/isListContainer}}
