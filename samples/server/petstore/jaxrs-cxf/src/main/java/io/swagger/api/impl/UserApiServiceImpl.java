@@ -1,8 +1,8 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
-import java.util.List;
 import io.swagger.model.User;
+
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,108 +17,143 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 
+
+
+
+
 /**
  * Swagger Petstore
  *
+ 
  * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ 
  *
  */
+
 public class UserApiServiceImpl implements UserApi {
+
+
+    
     /**
      * Create user
      *
+     
      * This can only be done by the logged in user.
      *
+     
      */
-    public void createUser(User body) {
+    
+    public void createUser(User user) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Creates list of users with given input array
      *
-     * 
-     *
+     
      */
+    
     public void createUsersWithArrayInput(List<User> body) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Creates list of users with given input array
      *
-     * 
-     *
+     
      */
+    
     public void createUsersWithListInput(List<User> body) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Delete user
      *
+     
      * This can only be done by the logged in user.
      *
+     
      */
+    
     public void deleteUser(String username) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Get user by user name
      *
-     * 
-     *
+     
      */
+    
     public User getUserByName(String username) {
         // TODO: Implement...
         
         return null;
     }
     
+
+    
     /**
      * Logs user into the system
      *
-     * 
-     *
+     
      */
+    
     public String loginUser(String username, String password) {
         // TODO: Implement...
         
         return null;
     }
     
+
+    
     /**
      * Logs out current logged in user session
      *
-     * 
-     *
+     
      */
+    
     public void logoutUser() {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Updated user
      *
+     
      * This can only be done by the logged in user.
      *
+     
      */
-    public void updateUser(String username, User body) {
+    
+    public void updateUser(User user, String username) {
         // TODO: Implement...
         
         
     }
     
+
 }
+
 

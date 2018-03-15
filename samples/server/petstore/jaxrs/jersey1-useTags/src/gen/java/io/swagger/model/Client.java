@@ -13,39 +13,76 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * Client
  */
 
 public class Client   {
+  
+    
+    
+  
   @JsonProperty("client")
+  
+  
+  
+  
   private String client = null;
+  
 
+  
+  
+  
   public Client client(String client) {
     this.client = client;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get client
+  
+  
+  
    * @return client
    **/
+ 
+  
   @JsonProperty("client")
+  
   @ApiModelProperty(value = "")
+
   public String getClient() {
     return client;
   }
+  
 
   public void setClient(String client) {
     this.client = client;
   }
+  
+
+  
 
 
   @Override
@@ -64,6 +101,8 @@ public class Client   {
   public int hashCode() {
     return Objects.hash(client);
   }
+
+
 
 
   @Override
@@ -87,4 +126,6 @@ public class Client   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

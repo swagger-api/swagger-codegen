@@ -3,9 +3,14 @@ package io.swagger.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
+
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -13,11 +18,15 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ArrayOfNumberOnly  implements Serializable {
+public class ArrayOfNumberOnly   {
   
   private @Valid List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
 
+  
   /**
+   
+   
+   
    **/
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
@@ -27,6 +36,7 @@ public class ArrayOfNumberOnly  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("ArrayNumber")
+
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
@@ -34,6 +44,7 @@ public class ArrayOfNumberOnly  implements Serializable {
     this.arrayNumber = arrayNumber;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -73,4 +84,6 @@ public class ArrayOfNumberOnly  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

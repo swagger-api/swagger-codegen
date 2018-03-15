@@ -1,7 +1,14 @@
 package io.swagger.model;
 
 import java.math.BigDecimal;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,19 +20,36 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class NumberOnly  {
   
+
   @ApiModelProperty(value = "")
+
+
+
   private BigDecimal justNumber = null;
+
+  
+  
  /**
+  
+  
    * Get justNumber
+  
+  
+  
    * @return justNumber
   **/
   @JsonProperty("JustNumber")
+
+
   public BigDecimal getJustNumber() {
     return justNumber;
   }
 
+  
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
@@ -34,7 +58,11 @@ public class NumberOnly  {
     this.justNumber = justNumber;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -57,4 +85,7 @@ public class NumberOnly  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

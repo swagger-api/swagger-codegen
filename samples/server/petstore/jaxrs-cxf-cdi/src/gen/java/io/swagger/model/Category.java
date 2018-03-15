@@ -3,7 +3,11 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
+
+
 import javax.validation.constraints.*;
+
+
 
 /**
  * A category for a pet
@@ -21,7 +25,11 @@ public class Category   {
   private Long id = null;
   private String name = null;
 
+  
   /**
+   
+   
+   
    **/
   public Category id(Long id) {
     this.id = id;
@@ -31,6 +39,7 @@ public class Category   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -38,7 +47,11 @@ public class Category   {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Category name(String name) {
     this.name = name;
@@ -48,6 +61,7 @@ public class Category   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("name")
+
   public String getName() {
     return name;
   }
@@ -55,6 +69,7 @@ public class Category   {
     this.name = name;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -96,4 +111,6 @@ public class Category   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

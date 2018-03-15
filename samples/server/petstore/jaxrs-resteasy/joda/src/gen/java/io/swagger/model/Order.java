@@ -7,12 +7,21 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import org.joda.time.DateTime;
+
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 import io.swagger.annotations.*;
 
 @ApiModel(description="An order for a pets from the pet store")
 
 public class Order   {
+
   
   private Long id = null;
   private Long petId = null;
@@ -23,11 +32,20 @@ public class Order   {
    * Order Status
    */
   public enum StatusEnum {
+    
+    
     PLACED("placed"),
 
-        APPROVED("approved"),
+    
+    
+    APPROVED("approved"),
 
-        DELIVERED("delivered");
+    
+    
+    DELIVERED("delivered");
+    
+    
+    
     private String value;
 
     StatusEnum(String value) {
@@ -44,11 +62,16 @@ public class Order   {
   private StatusEnum status = null;
   private Boolean complete = false;
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -56,11 +79,16 @@ public class Order   {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("petId")
+
   public Long getPetId() {
     return petId;
   }
@@ -68,11 +96,16 @@ public class Order   {
     this.petId = petId;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("quantity")
+
   public Integer getQuantity() {
     return quantity;
   }
@@ -80,11 +113,16 @@ public class Order   {
     this.quantity = quantity;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+
   public DateTime getShipDate() {
     return shipDate;
   }
@@ -92,12 +130,18 @@ public class Order   {
     this.shipDate = shipDate;
   }
 
+  
   /**
+   
    * Order Status
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "Order Status")
   @JsonProperty("status")
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -105,18 +149,24 @@ public class Order   {
     this.status = status;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("complete")
-  public Boolean isComplete() {
+
+  public Boolean isisComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -166,4 +216,7 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

@@ -9,12 +9,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.List;
+
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 import io.swagger.annotations.*;
 
 @ApiModel(description="A pet for sale in the pet store")
 
 public class Pet   {
+
   
   private Long id = null;
   private Category category = null;
@@ -26,11 +35,20 @@ public class Pet   {
    * pet status in the store
    */
   public enum StatusEnum {
+    
+    
     AVAILABLE("available"),
 
-        PENDING("pending"),
+    
+    
+    PENDING("pending"),
 
-        SOLD("sold");
+    
+    
+    SOLD("sold");
+    
+    
+    
     private String value;
 
     StatusEnum(String value) {
@@ -46,11 +64,32 @@ public class Pet   {
 
   private StatusEnum status = null;
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public Long getId() {
     return id;
   }
@@ -58,11 +97,32 @@ public class Pet   {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("category")
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public Category getCategory() {
     return category;
   }
@@ -70,12 +130,34 @@ public class Pet   {
     this.category = category;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
+
   @NotNull
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public String getName() {
     return name;
   }
@@ -83,12 +165,34 @@ public class Pet   {
     this.name = name;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("photoUrls")
+
   @NotNull
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -96,11 +200,32 @@ public class Pet   {
     this.photoUrls = photoUrls;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public List<Tag> getTags() {
     return tags;
   }
@@ -108,12 +233,34 @@ public class Pet   {
     this.tags = tags;
   }
 
+  
   /**
+   
    * pet status in the store
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "pet status in the store")
   @JsonProperty("status")
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -121,6 +268,7 @@ public class Pet   {
     this.status = status;
   }
 
+  
 
   @Override
   public boolean equals(Object o) {
@@ -170,4 +318,7 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

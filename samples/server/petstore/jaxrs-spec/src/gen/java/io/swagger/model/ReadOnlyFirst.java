@@ -1,8 +1,15 @@
 package io.swagger.model;
 
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -15,7 +22,11 @@ public class ReadOnlyFirst  implements Serializable {
   private @Valid String bar = null;
   private @Valid String baz = null;
 
+  
   /**
+   
+   
+   
    **/
   public ReadOnlyFirst bar(String bar) {
     this.bar = bar;
@@ -25,6 +36,7 @@ public class ReadOnlyFirst  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("bar")
+
   public String getBar() {
     return bar;
   }
@@ -32,7 +44,11 @@ public class ReadOnlyFirst  implements Serializable {
     this.bar = bar;
   }
 
+  
   /**
+   
+   
+   
    **/
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
@@ -42,6 +58,7 @@ public class ReadOnlyFirst  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("baz")
+
   public String getBaz() {
     return baz;
   }
@@ -49,6 +66,7 @@ public class ReadOnlyFirst  implements Serializable {
     this.baz = baz;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -90,4 +108,6 @@ public class ReadOnlyFirst  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

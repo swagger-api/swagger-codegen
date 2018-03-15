@@ -1,7 +1,14 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,23 +20,41 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 /**
   * Model for testing reserved words
  **/
 @ApiModel(description="Model for testing reserved words")
+
 public class ModelReturn  {
   
+
   @ApiModelProperty(value = "")
+
+
+
   private Integer _return = null;
+
+  
+  
  /**
+  
+  
    * Get _return
+  
+  
+  
    * @return _return
   **/
   @JsonProperty("return")
+
+
   public Integer getReturn() {
     return _return;
   }
 
+  
   public void setReturn(Integer _return) {
     this._return = _return;
   }
@@ -38,7 +63,11 @@ public class ModelReturn  {
     this._return = _return;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -61,4 +90,7 @@ public class ModelReturn  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 
