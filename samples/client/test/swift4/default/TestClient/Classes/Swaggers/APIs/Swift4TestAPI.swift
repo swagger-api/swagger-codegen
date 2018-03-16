@@ -124,12 +124,11 @@ open class Swift4TestAPI {
         let path = "/allModels"
         let URLString = TestClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-
+        
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
             "client_id": clientId
         ])
-        
 
         let requestBuilder: RequestBuilder<GetAllModelsResult>.Type = TestClientAPI.requestBuilderFactory.getBuilder()
 
