@@ -3688,6 +3688,12 @@ public class DefaultCodegen {
                     enumName = value.toString();
                 }
             }
+
+            //if word contains cyrillic letters so change their to lat lettters
+            if(enumName.matches(".*[А-Яа-яёЁ].*")){
+                enumName = cyr2lat(enumName);
+            }
+
             enumVar.put("name", toEnumVarName(enumName, var.datatype));
             enumVar.put("value", toEnumValue(value.toString(), var.datatype));
             enumVars.add(enumVar);
@@ -3778,5 +3784,52 @@ public class DefaultCodegen {
 
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
+    }
+
+    private static String cyrCharToLatinChar(char ch){
+        switch (ch){
+            case 'А': return "A";
+            case 'Б': return "B";
+            case 'В': return "V";
+            case 'Г': return "G";
+            case 'Д': return "D";
+            case 'Е': return "E";
+            case 'Ё': return "E";
+            case 'Ж': return "ZH";
+            case 'З': return "Z";
+            case 'И': return "I";
+            case 'Й': return "Y";
+            case 'К': return "K";
+            case 'Л': return "L";
+            case 'М': return "M";
+            case 'Н': return "N";
+            case 'О': return "O";
+            case 'П': return "P";
+            case 'Р': return "R";
+            case 'С': return "S";
+            case 'Т': return "T";
+            case 'У': return "U";
+            case 'Ф': return "F";
+            case 'Х': return "KH";
+            case 'Ц': return "TS";
+            case 'Ч': return "CH";
+            case 'Ш': return "SH";
+            case 'Щ': return "CSH";
+            case 'Ь': return "";
+            case 'Ы': return "IY";
+            case 'Ъ': return "";
+            case 'Э': return "IE";
+            case 'Ю': return "YU";
+            case 'Я': return "YA";
+            default: return String.valueOf(ch);
+        }
+    }
+
+    public static String cyr2lat(String s){
+        StringBuilder sb = new StringBuilder(s.length()*2);
+        for(char ch: s.toCharArray()){
+            sb.append(cyrCharToLatinChar(Character.toUpperCase(ch)));
+        }
+        return sb.toString();
     }
 }
