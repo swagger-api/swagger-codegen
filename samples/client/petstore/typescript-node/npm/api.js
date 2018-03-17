@@ -558,7 +558,7 @@ var PetApi = (function () {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
         if (status !== undefined) {
-            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<string>");
+            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<'available' | 'pending' | 'sold'>");
         }
         var localVarUseFormData = false;
         var localVarRequestOptions = {
