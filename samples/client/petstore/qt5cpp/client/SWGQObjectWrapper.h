@@ -18,12 +18,12 @@
 namespace Swagger {
 
     template <typename ObjectPtrT>
-    class QObjectWrapper : public QObject {
+    class SWGQObjectWrapper : public QObject {
         public:
-            QObjectWrapper(ObjectPtrT ptr){
+            SWGQObjectWrapper(ObjectPtrT ptr){
                 data = ptr;
             }
-            ~QObjectWrapper(){
+            ~SWGQObjectWrapper(){
                 delete data;
             }
         private :

@@ -9,12 +9,12 @@ namespace {{this}} {
 {{/cppNamespaceDeclarations}}
 
     template <typename ObjectPtrT>
-    class QObjectWrapper : public QObject {
+    class {{prefix}}QObjectWrapper : public QObject {
         public:
-            QObjectWrapper(ObjectPtrT ptr){
+            {{prefix}}QObjectWrapper(ObjectPtrT ptr){
                 data = ptr;
             }
-            ~QObjectWrapper(){
+            ~{{prefix}}QObjectWrapper(){
                 delete data;
             }
         private :

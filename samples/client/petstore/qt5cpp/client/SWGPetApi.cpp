@@ -221,14 +221,14 @@ SWGPetApi::findPetsByStatusCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-    auto wrapper = new QObjectWrapper<QList<SWGPet*>*> (output);
+    auto wrapper = new SWGQObjectWrapper<QList<SWGPet*>*> (output);
     wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
-        auto objwrapper = new QObjectWrapper<SWGPet*> (o);
+        auto objwrapper = new SWGQObjectWrapper<SWGPet*> (o);
         objwrapper->deleteLater();
         output->append(o);
     }
@@ -328,14 +328,14 @@ SWGPetApi::findPetsByTagsCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-    auto wrapper = new QObjectWrapper<QList<SWGPet*>*> (output);
+    auto wrapper = new SWGQObjectWrapper<QList<SWGPet*>*> (output);
     wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
-        auto objwrapper = new QObjectWrapper<SWGPet*> (o);
+        auto objwrapper = new SWGQObjectWrapper<SWGPet*> (o);
         objwrapper->deleteLater();
         output->append(o);
     }
@@ -392,7 +392,7 @@ SWGPetApi::getPetByIdCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
-    auto wrapper = new QObjectWrapper<SWGPet*> (output);
+    auto wrapper = new SWGQObjectWrapper<SWGPet*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
 
@@ -562,7 +562,7 @@ SWGPetApi::uploadFileCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
-    auto wrapper = new QObjectWrapper<SWGApiResponse*> (output);
+    auto wrapper = new SWGQObjectWrapper<SWGApiResponse*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
 

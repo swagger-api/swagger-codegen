@@ -183,7 +183,7 @@ SWGStoreApi::getOrderByIdCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    auto wrapper = new QObjectWrapper<SWGOrder*> (output);
+    auto wrapper = new SWGQObjectWrapper<SWGOrder*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
 
@@ -239,7 +239,7 @@ SWGStoreApi::placeOrderCallback(SWGHttpRequestWorker * worker) {
 
     QString json(worker->response);
     SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    auto wrapper = new QObjectWrapper<SWGOrder*> (output);
+    auto wrapper = new SWGQObjectWrapper<SWGOrder*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
 
