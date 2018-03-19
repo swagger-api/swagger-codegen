@@ -12,6 +12,7 @@ public class Qt5CPPOptionsProvider implements OptionsProvider {
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
     public static final String CPP_NAMESPACE_VALUE = "Swagger";
+    public static final String OPTIONAL_PROJECT_FILE_VALUE = "true";
 
 
     @Override
@@ -27,6 +28,7 @@ public class Qt5CPPOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(Qt5CPPGenerator.CPP_NAMESPACE, CPP_NAMESPACE_VALUE)
                 .put(CodegenConstants.SUPPORTS_MODEL_EXTENSION, OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE)
+                .put(CodegenConstants.OPTIONAL_PROJECT_FILE, OPTIONAL_PROJECT_FILE_VALUE)
                 .build();
     }
 

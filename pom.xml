@@ -838,14 +838,14 @@
             </activation>
             <modules>
                 <!-- <module>samples/server/petstore/erlang-server</module> note: make sample compilation work -->
-				<!-- clients -->
+                <!-- clients -->
                 <module>samples/client/petstore/php/SwaggerClient-php</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/scala</module>
                 <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/javascript</module>
                 <module>samples/client/petstore/python</module>
-                <module>samples/client/petstore/python-tornado</module>
+                <!--<module>samples/client/petstore/python-tornado</module>-->
                 <module>samples/client/petstore/python-asyncio</module>
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>

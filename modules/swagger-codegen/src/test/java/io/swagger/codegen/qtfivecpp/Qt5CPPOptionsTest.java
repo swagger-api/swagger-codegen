@@ -31,6 +31,8 @@ public class Qt5CPPOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setSupportsModelExtension(Boolean.valueOf(OptionsProvider.SUPPORTS_MODEL_EXTENSION_VALUE));
             times = 1;
+            clientCodegen.setOptionalProjectFileFlag(true);
+            times = 1;
         }};
     }
 }

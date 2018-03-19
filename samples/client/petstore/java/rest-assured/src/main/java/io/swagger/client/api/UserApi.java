@@ -103,6 +103,14 @@ public class UserApi {
     }
 
     /**
+    * Customise request specification
+    */
+    public UserApi reqSpec(Consumer<RequestSpecBuilder> consumer) {
+        consumer.accept(reqSpec);
+        return this;
+    }
+
+    /**
      * Create user
      * This can only be done by the logged in user.
      *
@@ -340,7 +348,7 @@ public class UserApi {
      * Get user by user name
      * 
      *
-     * @see #usernamePath The name that needs to be fetched. Use user1 for testing.  (required)
+     * @see #usernamePath The name that needs to be fetched. Use user1 for testing. (required)
      * return User
      */
     public class GetUserByNameOper {
@@ -380,7 +388,7 @@ public class UserApi {
         }
 
         /**
-         * @param username (String) The name that needs to be fetched. Use user1 for testing.  (required)
+         * @param username (String) The name that needs to be fetched. Use user1 for testing. (required)
          */
         public GetUserByNameOper usernamePath(Object username) {
             reqSpec.addPathParam("username", username);
