@@ -14,7 +14,11 @@ import java.io.File;
  * Similar to the original JAXRS generator, this creates API and Service classes
  * in /src/gen/java and a sample ServiceImpl in /src/main/java. The API uses CDI
  * to get an instance of ServiceImpl that implements the Service interface.
+ * 
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.java.JavaJAXRSCXFCDIServerCodegen</code> instead.
  */
+@Deprecated
 public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen implements BeanValidationFeatures {
     
     protected boolean useBeanValidation = true;
