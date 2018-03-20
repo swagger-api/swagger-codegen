@@ -1,14 +1,16 @@
 package io.swagger.codegen.ignore;
 
-import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ignore.rules.DirectoryRule;
 import io.swagger.codegen.ignore.rules.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -173,10 +175,10 @@ public class CodegenIgnoreProcessor {
     /**
      * Allows a consumer to manually inspect explicit "inclusion rules". That is, patterns in the ignore file which have been negated.
      *
-     * @return A {@link ImmutableList#copyOf(Collection)} of rules which possibly negate exclusion rules in the ignore file.
+     * @return A unmodifiable {@link java.util.List} of rules which possibly negate exclusion rules in the ignore file.
      */
     public List<Rule> getInclusionRules() {
-        return ImmutableList.copyOf(inclusionRules);
+        return Collections.unmodifiableList(inclusionRules);
     }
 
     /**
@@ -185,9 +187,9 @@ public class CodegenIgnoreProcessor {
      *
      * NOTE: Existence in this list doesn't mean a file is excluded. The rule can be overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
      *
-     * @return A {@link ImmutableList#copyOf(Collection)} of rules which define exclusions by patterns in the ignore file.
+     * @return A unmodifiable {@link java.util.List} of rules which define exclusions by patterns in the ignore file.
      */
     public List<Rule> getExclusionRules() {
-        return ImmutableList.copyOf(exclusionRules);
+        return Collections.unmodifiableList(exclusionRules);
     }
 }
