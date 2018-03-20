@@ -33,6 +33,7 @@ mod mimetypes;
 pub use swagger::{ApiError, Context, ContextWrapper};
 
 pub const BASE_PATH: &'static str = "{{basePathWithoutHost}}";
+pub const API_VERSION: &'static str = "{{apiVersion}}";
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{^isResponseFile}}
