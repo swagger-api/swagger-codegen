@@ -38,8 +38,8 @@ public interface StoreApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Delete purchase order by ID", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = .class),
-        @ApiResponse(code = 404, message = "Order not found", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied"),
+        @ApiResponse(code = 404, message = "Order not found") })
     public void deleteOrder(@PathParam("orderId") String orderId);
 
     /**
@@ -53,7 +53,7 @@ public interface StoreApi  {
     @Produces({ "application/json" })
     @ApiOperation(value = "Returns pet inventories by status", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "map") })
+        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
     public Map<String, Integer> getInventory();
 
     /**
@@ -68,8 +68,8 @@ public interface StoreApi  {
     @ApiOperation(value = "Find purchase order by ID", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = .class),
-        @ApiResponse(code = 404, message = "Order not found", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied"),
+        @ApiResponse(code = 404, message = "Order not found") })
     public Order getOrderById(@PathParam("orderId") Long orderId);
 
     /**
@@ -84,7 +84,7 @@ public interface StoreApi  {
     @ApiOperation(value = "Place an order for a pet", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid Order", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid Order") })
     public Order placeOrder(Order body);
 }
 

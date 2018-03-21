@@ -38,7 +38,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Create user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 0, message = "successful operation", response = .class) })
+        @ApiResponse(code = 200, message = "successful operation") })
     public void createUser(User body);
 
     /**
@@ -52,7 +52,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 0, message = "successful operation", response = .class) })
+        @ApiResponse(code = 200, message = "successful operation") })
     public void createUsersWithArrayInput(List<User> body);
 
     /**
@@ -66,7 +66,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 0, message = "successful operation", response = .class) })
+        @ApiResponse(code = 200, message = "successful operation") })
     public void createUsersWithListInput(List<User> body);
 
     /**
@@ -80,8 +80,8 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Delete user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = .class),
-        @ApiResponse(code = 404, message = "User not found", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid username supplied"),
+        @ApiResponse(code = 404, message = "User not found") })
     public void deleteUser(@PathParam("username") String username);
 
     /**
@@ -96,8 +96,8 @@ public interface UserApi  {
     @ApiOperation(value = "Get user by user name", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = User.class),
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = .class),
-        @ApiResponse(code = 404, message = "User not found", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid username supplied"),
+        @ApiResponse(code = 404, message = "User not found") })
     public User getUserByName(@PathParam("username") String username);
 
     /**
@@ -112,7 +112,7 @@ public interface UserApi  {
     @ApiOperation(value = "Logs user into the system", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
-        @ApiResponse(code = 400, message = "Invalid username/password supplied", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid username/password supplied") })
     public String loginUser(@QueryParam("username")String username, @QueryParam("password")String password);
 
     /**
@@ -126,7 +126,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Logs out current logged in user session", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 0, message = "successful operation", response = .class) })
+        @ApiResponse(code = 200, message = "successful operation") })
     public void logoutUser();
 
     /**
@@ -140,8 +140,8 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Updated user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid user supplied", response = .class),
-        @ApiResponse(code = 404, message = "User not found", response = .class) })
+        @ApiResponse(code = 400, message = "Invalid user supplied"),
+        @ApiResponse(code = 404, message = "User not found") })
     public void updateUser(@PathParam("username") String username, User body);
 }
 
