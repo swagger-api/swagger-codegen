@@ -11,7 +11,6 @@ extern crate chrono;
 extern crate lazy_static;
 #[macro_use]
 extern crate log;
-extern crate semver;
 
 // Logically this should be in the client and server modules, but rust doesn't allow `macro_use` from a module.
 #[cfg(any(feature = "client", feature = "server"))]
@@ -34,10 +33,7 @@ mod mimetypes;
 pub use swagger::{ApiError, Context, ContextWrapper};
 
 pub const BASE_PATH: &'static str = "/v2";
-
-lazy_static! {
-    pub static ref API_VERSION: Result<semver::Version, semver::SemVerError> = semver::Version::parse("1.0.0");
-}
+pub const API_VERSION: &'static str = "1.0.0";
 
 
 #[derive(Debug, PartialEq)]
