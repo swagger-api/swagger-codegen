@@ -48,6 +48,14 @@ class Controller
     protected $serializer;
     protected $apiServer;
     protected $debugMode=false;
+    protected $binaryFormats=array(
+        'application/pdf',
+        'application/zip',
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/*'
+    );
 
     public function setDebugMode($debugMode)
     {
@@ -112,7 +120,14 @@ class Controller
      */
     protected function serialize($data, $format)
     {
-        return $this->serializer->serialize($data, $format);
+        //Do not try and serialize binary formats
+        if(!in_array($format, $this->binaryFormats)){
+            return $this->serializer->serialize($data, $format);
+        }
+        else{
+            //If binary return is as is
+            return $data;
+        }
     }
 
     /**
@@ -161,6 +176,8 @@ class Controller
         return [
             'message'  => $exception->getMessage(),
             'type'     => get_class($exception),
+            'file'     => $exception->getFile(),
+            'line'     => $exception->getLine(),
             'previous' => $this->exceptionToArray($exception->getPrevious()),
         ];
     }
@@ -186,6 +203,13 @@ class Controller
 
         if (in_array('application/xml', $accept) && in_array('application/xml', $produced)) {
             return 'application/xml';
+        }
+
+        //Binary formats
+        foreach($this->binaryFormats as $binaryFormat){
+            if (in_array($binaryFormat, $accept) && in_array($binaryFormat, $produced)) {
+                return $binaryFormat;
+            }
         }
 
         // If we reach this point, we don't have a common ground between server and client

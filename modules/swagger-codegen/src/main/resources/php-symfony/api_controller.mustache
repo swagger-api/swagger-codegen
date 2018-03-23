@@ -174,7 +174,7 @@ class {{controllerName}} extends Controller
             }
 
             return new Response(
-                $result!=null?$this->serialize($result, $responseFormat):'',
+                !is_null($result)?$this->serialize($result, $responseFormat):'',
                 $responseCode,
                 array_merge(
                     $responseHeaders,
