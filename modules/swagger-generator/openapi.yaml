@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: /v2
+  - url: /
 info:
   description: codegen generator server API
   version: "1.0.0"
