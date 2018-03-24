@@ -28,6 +28,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     protected String implFolder = "service";
     public static final String GOOGLE_CLOUD_FUNCTIONS = "googleCloudFunctions";
     public static final String EXPORTED_NAME = "exportedName";
+    public static final String SERVER_PORT = "serverPort";
 
     protected String apiVersion = "1.0.0";
     protected int serverPort = 8080;
@@ -96,6 +97,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                 "When the generated code will be deployed to Google Cloud Functions, this option can be "
                         + "used to update the name of the exported function. By default, it refers to the "
                         + "basePath. This does not affect normal standalone nodejs server code."));
+        cliOptions.add(new CliOption(SERVER_PORT,
+                "TCP port to listen on."));
     }
 
     @Override
