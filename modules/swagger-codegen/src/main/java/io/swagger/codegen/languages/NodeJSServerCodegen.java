@@ -83,7 +83,6 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("implFolder", implFolder);
 
         supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", File.separator), "writer.js"));
@@ -334,6 +333,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             LOGGER.warn("'host' in the specification is empty or undefined. Default to http://localhost.");
         }
 
+        if (additionalProperties.containsKey(SERVER_PORT)) {
+            port = additionalProperties.get(SERVER_PORT).toString();
+        }
         this.additionalProperties.put("serverPort", port);
 
         if (swagger.getInfo() != null) {
