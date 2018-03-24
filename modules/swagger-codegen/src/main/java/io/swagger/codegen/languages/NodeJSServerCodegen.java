@@ -336,7 +336,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         if (additionalProperties.containsKey(SERVER_PORT)) {
             port = additionalProperties.get(SERVER_PORT).toString();
         }
-        this.additionalProperties.put("serverPort", port);
+        this.additionalProperties.put(SERVER_PORT, port);
 
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
