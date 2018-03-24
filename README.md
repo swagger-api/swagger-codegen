@@ -158,7 +158,7 @@ Once built, `run-in-docker.sh` will act as an executable for swagger-codegen-cli
 ```sh
 ./run-in-docker.sh help # Executes 'help' command for swagger-codegen-cli
 ./run-in-docker.sh langs # Executes 'langs' command for swagger-codegen-cli
-./run-in-docker.sh /gen/bin/go-petstore.sh  # Builds the Go client
+./run-in-docker.sh bin/go-petstore.sh  # Builds the Go client
 ./run-in-docker.sh generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml \
     -l go -o /gen/out/go-petstore -DpackageName=petstore # generates go client, outputs locally to ./out/go-petstore
 ```
