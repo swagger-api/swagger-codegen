@@ -31,8 +31,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     public static final String SERVER_PORT = "serverPort";
 
     protected String apiVersion = "1.0.0";
-    protected int serverPort = 8080;
     protected String projectName = "swagger-server";
+    protected String defaultServerPort = "8080";
 
     protected boolean googleCloudFunctions;
     protected String exportedName;
@@ -320,7 +320,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public void preprocessSwagger(Swagger swagger) {
         String host = swagger.getHost();
-        String port = "8080";
+        String port = defaultServerPort;
 
         if (!StringUtils.isEmpty(host)) {
             String[] parts = host.split(":");
