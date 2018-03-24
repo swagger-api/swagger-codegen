@@ -49,14 +49,14 @@ public class GeneratorController {
         Collections.sort(SERVERS, String.CASE_INSENSITIVE_ORDER);
     }
 
-    public ResponseContext getClients(RequestContext requestContext) {
+    public ResponseContext clientOptions(RequestContext requestContext) {
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
                 .entity(CLIENTS);
 
     }
 
-    public ResponseContext getServers(RequestContext requestContext) {
+    public ResponseContext serverOptions(RequestContext requestContext) {
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
                 .entity(SERVERS);
