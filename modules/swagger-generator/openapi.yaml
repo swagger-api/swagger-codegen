@@ -13,6 +13,8 @@ info:
 tags:
   - name: developers
     description: Operations available to regular developers
+  - name: clients
+  - name: servers
 paths:
   /generate:
     get:
@@ -82,8 +84,10 @@ paths:
 
   /clients:
     get:
+      tags:
+      - "clients"
       x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
-      operationId: getClients
+      operationId: clientOptions
       responses:
         200:
           description: successful operation
@@ -95,8 +99,10 @@ paths:
                   type: string
   /servers:
     get:
+      tags:
+      - "servers"
       x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
-      operationId: getServers
+      operationId: serverOptions
       responses:
         200:
           description: successful operation
