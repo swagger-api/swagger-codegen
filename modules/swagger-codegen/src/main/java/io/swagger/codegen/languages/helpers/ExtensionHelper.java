@@ -8,6 +8,11 @@ import io.swagger.codegen.VendorExtendable;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.handlebars.helpers.ExtensionHelper</code> instead.
+ */
+@Deprecated
 public abstract class ExtensionHelper implements Helper<VendorExtendable> {
 
     public abstract String getPreffix();

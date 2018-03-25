@@ -9,6 +9,11 @@ import java.io.IOException;
 import static io.swagger.codegen.VendorExtendable.PREFIX_IS;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.handlebars.helpers.NoneExtensionHelper</code> instead.
+ */
+@Deprecated
 public abstract class NoneExtensionHelper implements Helper<VendorExtendable> {
 
     public abstract String getPreffix();
