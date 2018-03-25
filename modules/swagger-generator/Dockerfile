@@ -1,7 +1,8 @@
 FROM openjdk:8-jre-alpine
 
 WORKDIR /generator
-
+COPY inflector.yaml /generator/
+COPY openapi.yaml /generator/
 COPY target/lib/jetty-runner* /generator/jetty-runner.jar
 COPY target/*.war /generator/swagger-generator.war
 

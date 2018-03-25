@@ -34,6 +34,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>${project.build.directory}/swagger-ui-master/dist</directory>
+                            <excludes>
+                                <exclude>index.html</exclude>
+                            </excludes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
@@ -174,6 +190,11 @@
             <version>${inflector-version}</version>
         </dependency>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>
@@ -187,5 +208,6 @@
         <junit-version>4.8.2</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
         <swagger-codegen-generators-version>1.0.0-SNAPSHOT</swagger-codegen-generators-version>
+        <servlet-api.version>2.5</servlet-api.version>
     </properties>
 </project>
