@@ -4,7 +4,7 @@ import "whatwg-fetch";
 import HttpResponse from "./HttpResponse";
 import {injectable} from "inversify";
 import "rxjs/add/observable/fromPromise";
-import { Headers } from "./Headers"
+import { Headers } from "./Headers";
 
 @injectable()
 class HttpClient implements IHttpClient {

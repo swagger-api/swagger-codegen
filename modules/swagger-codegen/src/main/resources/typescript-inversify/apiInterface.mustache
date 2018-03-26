@@ -1,10 +1,7 @@
 {{>licenseInfo}}
-import { Headers }                                           from '@angular/http';
-
-import { Observable }                                        from 'rxjs/Observable';
-
-import * as models                                           from '../model/models';
-import { Configuration }                                     from '../configuration';
+import { Headers } from "../Headers";
+import { Observable } from "rxjs/Observable";
+import * as models from "../model/models";
 
 {{#operations}}
 
@@ -14,8 +11,6 @@ import { Configuration }                                     from '../configurat
     */
 {{/description}}
 export interface {{classname}}Interface {
-    defaultHeaders: Headers;
-    configuration: Configuration;
     [others: string]: any;
 
 {{#operation}}
@@ -24,7 +19,7 @@ export interface {{classname}}Interface {
     * {{notes}}
     {{#allParams}}* @param {{paramName}} {{description}}
     {{/allParams}}*/
-    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Dictionary<string> = {}): Promise<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>
+    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Headers = {}): Promise<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>
 
 {{/operation}}
 }
