@@ -12,6 +12,8 @@
 package io.swagger.client.models
 
 
+
+
 /**
  * A category for a pet
  * @param id 

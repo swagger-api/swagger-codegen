@@ -13,6 +13,8 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
+
+
 /**
  * A User who is purchasing from the pet store
  * @param id 

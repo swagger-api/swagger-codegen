@@ -14,6 +14,8 @@ package io.swagger.client.models
 import io.swagger.client.models.Category
 import io.swagger.client.models.Tag
 
+import com.squareup.moshi.Json
+
 /**
  * A pet for sale in the pet store
  * @param id 
@@ -39,11 +41,11 @@ data class Pet (
     */
     enum class Status(val value: kotlin.String){
     
-        available("available"),
+        @Json(name = "available") available("available"),
     
-        pending("pending"),
+        @Json(name = "pending") pending("pending"),
     
-        sold("sold");
+        @Json(name = "sold") sold("sold");
     
     }
 

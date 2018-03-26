@@ -13,6 +13,8 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
+
+
 /**
  * A category for a pet
  * @param id 
