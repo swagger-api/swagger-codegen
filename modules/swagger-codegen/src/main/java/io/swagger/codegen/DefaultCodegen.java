@@ -61,6 +61,7 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
+import static io.swagger.codegen.CodegenConstants.X_ROOT_ANCESTOR;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -1388,10 +1389,8 @@ public class DefaultCodegen {
                     if (allDefinitions != null) {
                         interfaceModel = allDefinitions.get(_interface.getSimpleRef());
                     }
-                    // set first interface with discriminator found as parent
-                    if (parent == null
-                            && ((interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null)
-                            || (interfaceModel instanceof ComposedModel && isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions)))) {
+                    // set first interface found with discriminator or "x-root-ancestor" VE as parent
+                    if (parent == null && isInheritanceDefined(interfaceModel, allDefinitions)) {
                         parent = _interface;
                     } else {
                         final String interfaceRef = toModelName(_interface.getSimpleRef());
@@ -1464,24 +1463,37 @@ public class DefaultCodegen {
     }
 
     /**
-     * Recursively look for a discriminator in the interface tree
+     * Check whether the model can be inherited as parent model. Inheritance may
+     * be defined either by discriminator or by "x-ancestor-class" [true|false]
+     * vendor extension property.
      */
-    private boolean isDiscriminatorInInterfaceTree(ComposedModel model, Map<String, Model> allDefinitions) {
-        if (model == null || allDefinitions == null)
+    private boolean isInheritanceDefined(Model model, Map<String, Model> allDefinitions) {
+        if (model == null || model instanceof ArrayModel) {
             return false;
-
-        Model child = model.getChild();
-        if (child instanceof ModelImpl && ((ModelImpl) child).getDiscriminator() != null) {
-            return true;
         }
-        for (RefModel _interface : model.getInterfaces()) {
-            Model interfaceModel = allDefinitions.get(_interface.getSimpleRef());
-            if (interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+        if (model.getVendorExtensions().containsKey(X_ROOT_ANCESTOR)) {
+            String isAncestorValue = String.valueOf(model.getVendorExtensions().get(X_ROOT_ANCESTOR));
+            if ("true".equalsIgnoreCase(isAncestorValue)) {
                 return true;
             }
-            if (interfaceModel instanceof ComposedModel) {
-
-                return isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions);
+        }
+        if (model instanceof ModelImpl) {
+            ModelImpl modelImpl = (ModelImpl) model;
+            if (modelImpl.getDiscriminator() != null) {
+                return true;
+            }
+        }
+        if (model instanceof ComposedModel) {
+            ComposedModel composedModel = (ComposedModel) model;
+            Model child = composedModel.getChild();
+            if (child instanceof ModelImpl && ((ModelImpl) child).getDiscriminator() != null) {
+                return true;
+            }
+            for (RefModel _interface : composedModel.getInterfaces()) {
+                Model interfaceModel = allDefinitions.get(_interface.getSimpleRef());
+                if (isInheritanceDefined(interfaceModel, allDefinitions)) {
+                   return true;
+                }
             }
         }
         return false;
