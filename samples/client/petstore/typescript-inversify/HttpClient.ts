@@ -3,26 +3,25 @@ import { Observable } from "rxjs/Observable";
 import "whatwg-fetch";
 import HttpResponse from "./HttpResponse";
 import {injectable} from "inversify";
-import * as _ from "lodash";
-import 'rxjs/add/operator/fromPromise';
-
+import "rxjs/add/observable/fromPromise";
+import { Headers } from "./Headers"
 
 @injectable()
 class HttpClient implements IHttpClient {
 
-    get(url: string, headers?: _.Dictionary<string>): Observable<HttpResponse> {
+    get(url:string, headers?: Headers):Observable<HttpResponse> {
         return this.performNetworkCall(url, "get", undefined, headers);
     }
 
-    post(url: string, body: {}|FormData, headers?: _.Dictionary<string>): Observable<HttpResponse> {
+    post(url: string, body: {}|FormData, headers?: Headers): Observable<HttpResponse> {
         return this.performNetworkCall(url, "post", this.getJsonBody(body), this.addJsonHeaders(headers));
     }
 
-    put(url: string, body: {}, headers?: _.Dictionary<string>): Observable<HttpResponse> {
+    put(url: string, body: {}, headers?: Headers): Observable<HttpResponse> {
         return this.performNetworkCall(url, "put", this.getJsonBody(body), this.addJsonHeaders(headers));
     }
 
-    delete(url: string, headers?: _.Dictionary<string>): Observable<HttpResponse> {
+    delete(url: string, headers?: Headers): Observable<HttpResponse> {
         return this.performNetworkCall(url, "delete", undefined, headers);
     }
 
@@ -30,20 +29,20 @@ class HttpClient implements IHttpClient {
         return !(body instanceof FormData) ? JSON.stringify(body) : body;
     }
 
-    private addJsonHeaders(headers: _.Dictionary<string>) {
-        return _.merge({}, {
+    private addJsonHeaders(headers: Headers) {
+        return Object.assign({}, {
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, headers);
     };
 
-    private performNetworkCall(url: string, method: string, body?: any, headers?: _.Dictionary<string>): Observable<HttpResponse> {
+    private performNetworkCall(url: string, method: string, body?: any, headers?: Headers): Observable<HttpResponse> {
         let promise = window.fetch(url, {
             method: method,
             body: body,
             headers: <any>headers
         }).then(response => {
-            let headers: _.Dictionary<string> = {};
+            let headers: Headers = {};
             response.headers.forEach((value, name) => {
                 headers[name.toString().toLowerCase()] = value;
             });

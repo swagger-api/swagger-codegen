@@ -11,11 +11,13 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable, map, toPromise } from "rx";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Dictionary } from "lodash";
+import { Headers } from "../Headers"
 
 import { User } from '../model/user';
 
@@ -27,7 +29,7 @@ import { COLLECTION_FORMATS }  from '../variables';
 export class UserService {
     private basePath: string = 'http://petstore.swagger.io/v2';
 
-    constructor(@inject("IHttpClient") private httpClient: IHttpClient,
+    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
         @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
         if(this.APIConfiguration.basePath)
             this.basePath = this.APIConfiguration.basePath;
@@ -41,7 +43,7 @@ export class UserService {
      
      */
 
-    public createUser(body: User, headers: Dictionary<string> = {}): Promise<any> {
+    public createUser(body: User, headers: Headers = {}): Promise<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -63,7 +65,7 @@ export class UserService {
      
      */
 
-    public createUsersWithArrayInput(body: Array<User>, headers: Dictionary<string> = {}): Promise<any> {
+    public createUsersWithArrayInput(body: Array<User>, headers: Headers = {}): Promise<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -85,7 +87,7 @@ export class UserService {
      
      */
 
-    public createUsersWithListInput(body: Array<User>, headers: Dictionary<string> = {}): Promise<any> {
+    public createUsersWithListInput(body: Array<User>, headers: Headers = {}): Promise<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -107,7 +109,7 @@ export class UserService {
      
      */
 
-    public deleteUser(username: string, headers: Dictionary<string> = {}): Promise<any> {
+    public deleteUser(username: string, headers: Headers = {}): Promise<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
@@ -128,7 +130,7 @@ export class UserService {
      
      */
 
-    public getUserByName(username: string, headers: Dictionary<string> = {}): Promise<User> {
+    public getUserByName(username: string, headers: Headers = {}): Promise<User> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
@@ -150,7 +152,7 @@ export class UserService {
      
      */
 
-    public loginUser(username: string, password: string, headers: Dictionary<string> = {}): Promise<string> {
+    public loginUser(username: string, password: string, headers: Headers = {}): Promise<string> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
@@ -159,17 +161,17 @@ export class UserService {
         }
         let queryParameters: string[] = [];
         if (username !== undefined) {
-            queryParameters.push("username="+String(username));
+            queryParameters.push("username="+encodeURIComponent(String(username)));
         }
         if (password !== undefined) {
-            queryParameters.push("password="+String(password));
+            queryParameters.push("password="+encodeURIComponent(String(password)));
         }
 
 
         headers['Accept'] = 'application/xml';
 
 
-        return this.httpClient.get(`${this.basePath}/user/login?${encodeURIComponent(queryParameters.join('&'))}`, headers)
+        return this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers)
                     .map(httpResponse => <string>(httpResponse.response))
                     .toPromise();
     }
@@ -181,7 +183,7 @@ export class UserService {
      
      */
 
-    public logoutUser(headers: Dictionary<string> = {}): Promise<any> {
+    public logoutUser(headers: Headers = {}): Promise<any> {
 
         headers['Accept'] = 'application/xml';
 
@@ -200,7 +202,7 @@ export class UserService {
      
      */
 
-    public updateUser(username: string, body: User, headers: Dictionary<string> = {}): Promise<any> {
+    public updateUser(username: string, body: User, headers: Headers = {}): Promise<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }

@@ -1,8 +1,7 @@
-import Dictionary from "lodash";
+import { Headers } from "./Headers"
 
 class HttpResponse<T = any> {
-    constructor(public response: T, public status:number, public headers?:Dictionary<string>) {
-
+    constructor(public response: T, public status:number, public headers?: Headers) {
     }
 }
 

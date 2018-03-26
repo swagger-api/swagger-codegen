@@ -11,11 +11,13 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable, map, toPromise } from "rx";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Dictionary } from "lodash";
+import { Headers } from "../Headers"
 
 import { Order } from '../model/order';
 
@@ -27,7 +29,7 @@ import { COLLECTION_FORMATS }  from '../variables';
 export class StoreService {
     private basePath: string = 'http://petstore.swagger.io/v2';
 
-    constructor(@inject("IHttpClient") private httpClient: IHttpClient,
+    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
         @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
         if(this.APIConfiguration.basePath)
             this.basePath = this.APIConfiguration.basePath;
@@ -41,7 +43,7 @@ export class StoreService {
      
      */
 
-    public deleteOrder(orderId: string, headers: Dictionary<string> = {}): Promise<any> {
+    public deleteOrder(orderId: string, headers: Headers = {}): Promise<any> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
@@ -61,7 +63,7 @@ export class StoreService {
      
      */
 
-    public getInventory(headers: Dictionary<string> = {}): Promise<{ [key: string]: number; }> {
+    public getInventory(headers: Headers = {}): Promise<{ [key: string]: number; }> {
 
         // authentication (api_key) required
         if (this.APIConfiguration.apiKeys["api_key"]) {
@@ -83,7 +85,7 @@ export class StoreService {
      
      */
 
-    public getOrderById(orderId: number, headers: Dictionary<string> = {}): Promise<Order> {
+    public getOrderById(orderId: number, headers: Headers = {}): Promise<Order> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
@@ -104,7 +106,7 @@ export class StoreService {
      
      */
 
-    public placeOrder(body: Order, headers: Dictionary<string> = {}): Promise<Order> {
+    public placeOrder(body: Order, headers: Headers = {}): Promise<Order> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }

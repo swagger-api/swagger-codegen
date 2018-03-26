@@ -11,11 +11,13 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable, map, toPromise } from "rx";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Dictionary } from "lodash";
+import { Headers } from "../Headers"
 
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
@@ -28,7 +30,7 @@ import { COLLECTION_FORMATS }  from '../variables';
 export class PetService {
     private basePath: string = 'http://petstore.swagger.io/v2';
 
-    constructor(@inject("IHttpClient") private httpClient: IHttpClient,
+    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
         @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
         if(this.APIConfiguration.basePath)
             this.basePath = this.APIConfiguration.basePath;
@@ -42,7 +44,7 @@ export class PetService {
      
      */
 
-    public addPet(body: Pet, headers: Dictionary<string> = {}): Promise<any> {
+    public addPet(body: Pet, headers: Headers = {}): Promise<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
@@ -72,7 +74,7 @@ export class PetService {
      
      */
 
-    public deletePet(petId: number, apiKey?: string, headers: Dictionary<string> = {}): Promise<any> {
+    public deletePet(petId: number, apiKey?: string, headers: Headers = {}): Promise<any> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
@@ -103,13 +105,13 @@ export class PetService {
      
      */
 
-    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, headers: Dictionary<string> = {}): Promise<Array<Pet>> {
+    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, headers: Headers = {}): Promise<Array<Pet>> {
         if (!status){
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
         let queryParameters: string[] = [];
         if (status) {
-            queryParameters.push("status="+status.join(COLLECTION_FORMATS['csv']));
+            queryParameters.push("status="+encodeURIComponent(status.join(COLLECTION_FORMATS['csv'])));
         }
 
 
@@ -123,7 +125,7 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
 
-        return this.httpClient.get(`${this.basePath}/pet/findByStatus?${encodeURIComponent(queryParameters.join('&'))}`, headers)
+        return this.httpClient.get(`${this.basePath}/pet/findByStatus?${queryParameters.join('&')}`, headers)
                     .map(httpResponse => <Array<Pet>>(httpResponse.response))
                     .toPromise();
     }
@@ -136,13 +138,13 @@ export class PetService {
      
      */
 
-    public findPetsByTags(tags: Array<string>, headers: Dictionary<string> = {}): Promise<Array<Pet>> {
+    public findPetsByTags(tags: Array<string>, headers: Headers = {}): Promise<Array<Pet>> {
         if (!tags){
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
         let queryParameters: string[] = [];
         if (tags) {
-            queryParameters.push("tags="+tags.join(COLLECTION_FORMATS['csv']));
+            queryParameters.push("tags="+encodeURIComponent(tags.join(COLLECTION_FORMATS['csv'])));
         }
 
 
@@ -156,7 +158,7 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
 
-        return this.httpClient.get(`${this.basePath}/pet/findByTags?${encodeURIComponent(queryParameters.join('&'))}`, headers)
+        return this.httpClient.get(`${this.basePath}/pet/findByTags?${queryParameters.join('&')}`, headers)
                     .map(httpResponse => <Array<Pet>>(httpResponse.response))
                     .toPromise();
     }
@@ -169,7 +171,7 @@ export class PetService {
      
      */
 
-    public getPetById(petId: number, headers: Dictionary<string> = {}): Promise<Pet> {
+    public getPetById(petId: number, headers: Headers = {}): Promise<Pet> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
@@ -194,7 +196,7 @@ export class PetService {
      
      */
 
-    public updatePet(body: Pet, headers: Dictionary<string> = {}): Promise<any> {
+    public updatePet(body: Pet, headers: Headers = {}): Promise<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
@@ -225,7 +227,7 @@ export class PetService {
      
      */
 
-    public updatePetWithForm(petId: number, name?: string, status?: string, headers: Dictionary<string> = {}): Promise<any> {
+    public updatePetWithForm(petId: number, name?: string, status?: string, headers: Headers = {}): Promise<any> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
@@ -264,7 +266,7 @@ export class PetService {
      
      */
 
-    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, headers: Dictionary<string> = {}): Promise<ApiResponse> {
+    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, headers: Headers = {}): Promise<ApiResponse> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }

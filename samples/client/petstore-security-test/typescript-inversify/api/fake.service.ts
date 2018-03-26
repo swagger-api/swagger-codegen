@@ -11,11 +11,13 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable, map, toPromise } from "rx";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Dictionary } from "lodash";
+import { Headers } from "../Headers"
 
 
 import { COLLECTION_FORMATS }  from '../variables';
@@ -26,7 +28,7 @@ import { COLLECTION_FORMATS }  from '../variables';
 export class FakeService {
     private basePath: string = 'https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r';
 
-    constructor(@inject("IHttpClient") private httpClient: IHttpClient,
+    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
         @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
         if(this.APIConfiguration.basePath)
             this.basePath = this.APIConfiguration.basePath;
@@ -40,7 +42,7 @@ export class FakeService {
      
      */
 
-    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, headers: Dictionary<string> = {}): Promise<any> {
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, headers: Headers = {}): Promise<any> {
 
         headers['Accept'] = 'application/json';
 

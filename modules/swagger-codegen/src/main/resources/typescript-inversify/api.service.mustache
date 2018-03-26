@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Dictionary } from "lodash";
+import { Headers } from "../Headers"
 
 {{#imports}}
 import { {{classname}} } from '../{{filename}}';
@@ -51,7 +51,7 @@ export class {{classname}} {
      * @param reportProgress flag to report request and response progress.{{/useHttpClient}}
      */
 
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Dictionary<string> = {}): Promise<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}> {
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Headers = {}): Promise<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}> {
 {{#allParams}}
 {{#required}}
         if (!{{paramName}}){

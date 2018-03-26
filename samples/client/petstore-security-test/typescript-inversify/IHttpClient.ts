@@ -1,12 +1,12 @@
-import * as Rx from "rx";
+import { Observable } from "rxjs/Observable";
 import HttpResponse from "./HttpResponse";
-import { Dictionary } from "lodash";
+import { Headers } from "./Headers"
 
 interface IHttpClient {
-    get(url:string, headers?:Dictionary<string>):Rx.Observable<HttpResponse>
-    post(url:string, body:{}|FormData, headers?:Dictionary<string>):Rx.Observable<HttpResponse>
-    put(url:string, body:{}, headers?:Dictionary<string>):Rx.Observable<HttpResponse>
-    delete(url:string, headers?:Dictionary<string>):Rx.Observable<HttpResponse>
+    get(url:string, headers?: Headers):Observable<HttpResponse>
+    post(url:string, body:{}|FormData, headers?: Headers):Observable<HttpResponse>
+    put(url:string, body:{}, headers?: Headers):Observable<HttpResponse>
+    delete(url:string, headers?: Headers):Observable<HttpResponse>
 }
 
 export default IHttpClient

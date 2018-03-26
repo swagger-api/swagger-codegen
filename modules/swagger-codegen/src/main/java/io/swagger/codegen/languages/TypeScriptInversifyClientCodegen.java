@@ -86,6 +86,7 @@ public class TypeScriptInversifyClientCodegen extends AbstractTypeScriptClientCo
         supportingFiles.add(new SupportingFile("IAPIConfiguration.mustache", getIndexDirectory(), "IAPIConfiguration.ts"));
         supportingFiles.add(new SupportingFile("HttpClient.mustache", getIndexDirectory(), "HttpClient.ts"));
         supportingFiles.add(new SupportingFile("HttpResponse.mustache", getIndexDirectory(), "HttpResponse.ts"));
+        supportingFiles.add(new SupportingFile("Headers.mustache", getIndexDirectory(), "Headers.ts"));
 
         supportingFiles.add(new SupportingFile("ApiServiceBinder.mustache", getIndexDirectory(), "ApiServiceBinder.ts"));
         supportingFiles.add(new SupportingFile("variables.mustache", getIndexDirectory(), "variables.ts"));
