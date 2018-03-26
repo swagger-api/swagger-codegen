@@ -72,9 +72,6 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         if (additionalProperties.containsKey(API_CONFIG_CLASS_NAME)) {
             setApiConfigClassName(additionalProperties.get(API_CONFIG_CLASS_NAME).toString());
         } else {
-            //this.apiConfigClassName = apiConfigClassName; //"Configuration"; //setApiConfigClassName("Configuration");
-            //apiConfigClassName = "Configuration";
-            //setApiConfigClassName(apiConfigClassName);
             additionalProperties.put(API_CONFIG_CLASS_NAME, "Configuration");
         }
 

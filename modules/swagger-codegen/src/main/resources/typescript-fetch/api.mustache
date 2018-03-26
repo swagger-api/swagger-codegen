@@ -4,7 +4,7 @@
 
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
-import { {{apiConfigClassName}} } from "./configuration";
+import { {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}} } from "./configuration";
 
 const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
@@ -44,9 +44,9 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}: {{apiConfigClassName}};
+    protected {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}};
 
-    constructor({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{apiConfigClassName}}, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
+    constructor({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}) {
             this.{{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} = {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}};
             this.basePath = {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.basePath || this.basePath;
@@ -76,7 +76,7 @@ export class RequiredError extends Error {
  * {{&description}}{{/description}}
  * @export
  */
-export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{apiConfigClassName}}) {
+export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
     return {
     {{#operation}}
         /**
@@ -246,7 +246,7 @@ export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{a
  * {{{description}}}{{/description}}
  * @export
  */
-export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{apiConfigClassName}}) {
+export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
     return {
     {{#operation}}
         /**
@@ -281,7 +281,7 @@ export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassNam
  * {{&description}}{{/description}}
  * @export
  */
-export const {{classname}}Factory = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{apiConfigClassName}}, fetch?: FetchAPI, basePath?: string) {
+export const {{classname}}Factory = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, fetch?: FetchAPI, basePath?: string) {
     return {
     {{#operation}}
         /**
