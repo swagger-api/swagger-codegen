@@ -41,13 +41,13 @@ npm link {{npmName}}@{{npmVersion}}
 ```
 
 ## Requirements
-Services require a `IHttpClient` and a `IApiConfiguration`. The `HttpClient` is necessary to manage http's call and with the `IApiConfiguration` you can provide settings for the Authentication.
+Services require a `IHttpClient` and a `IApiConfiguration`. The `IHttpClient` is necessary to manage http's call and with the `IApiConfiguration` you can provide settings for the Authentication.
 For the sake of simplicity an implementation of `IHttpClient` is already provided, but if you want you can override it.
 For these reasons you have to manually bind these two services:
 
 ```typescript
 let container = new Container();
-container.bind<IHttpClient>("IHttpClient").to(HttpClient).inSingletonScope();
+container.bind<IHttpClient>("IApiHttpClient").to(HttpClient).inSingletonScope();
 container.bind<IApiConfiguration>("IApiConfiguration").to(ApiConfiguration).inSingletonScope();
 ```
 
@@ -63,7 +63,7 @@ ApiServiceBinder.with(container);
 
 ```typescript
 let container = new Container();
-container.bind<IHttpClient>("IHttpClient").to(HttpClient).inSingletonScope();
+container.bind<IHttpClient>("IApiHttpClient").to(HttpClient).inSingletonScope();
 container.bind<IApiConfiguration>("IApiConfiguration").to(ApiConfiguration).inSingletonScope();
 ApiServiceBinder.with(container);
 ```

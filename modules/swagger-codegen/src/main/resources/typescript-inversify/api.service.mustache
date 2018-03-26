@@ -1,7 +1,9 @@
 {{>licenseInfo}}
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable, map, toPromise } from "rx";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration"
@@ -33,7 +35,7 @@ export class {{classname}} {
 {{/withInterfaces}}
     private basePath: string = '{{{basePath}}}';
 
-    constructor(@inject("IHttpClient") private httpClient: IHttpClient,
+    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
         @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
         if(this.APIConfiguration.basePath)
             this.basePath = this.APIConfiguration.basePath;
@@ -64,21 +66,21 @@ export class {{classname}} {
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                queryParameters.push("{{paramName}}="+String({{paramName}}));
+                queryParameters.push("{{paramName}}="+encodeURIComponent(String({{paramName}})));
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            queryParameters.push("{{paramName}}="+{{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            queryParameters.push("{{paramName}}="+encodeURIComponent({{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])));
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
         {{#isDateTime}}
-           queryParameters.push("{{paramName}}="+<any>{{paramName}}.toISOString());
+           queryParameters.push("{{paramName}}="+encodeURIComponent(<any>{{paramName}}.toISOString()));
         {{/isDateTime}}
         {{^isDateTime}}
-            queryParameters.push("{{paramName}}="+String({{paramName}}));
+            queryParameters.push("{{paramName}}="+encodeURIComponent(String({{paramName}})));
         {{/isDateTime}}
         }
         {{/isListContainer}}
@@ -108,9 +110,8 @@ export class {{classname}} {
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
         if (this.APIConfiguration.apiKeys["{{keyParamName}}"]) {
-            queryParameters.set('{{keyParamName}}', this.APIConfiguration.apiKeys["{{keyParamName}}"]);
+            queryParameters.push("{{paramName}}="+encodeURIComponent(String(this.APIConfiguration.apiKeys["{{keyParamName}}"])));
         }
-
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{#isBasic}}
@@ -168,7 +169,7 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 
-        return this.httpClient.{{httpMethod}}(`${this.basePath}{{{path}}}{{#hasQueryParams}}?${encodeURIComponent(queryParameters.join('&'))}{{/hasQueryParams}}`{{#bodyParam}}, {{paramName}} {{/bodyParam}}{{#hasFormParams}}, body{{/hasFormParams}}, headers)
+        return this.httpClient.{{httpMethod}}(`${this.basePath}{{{path}}}{{#hasQueryParams}}?${queryParameters.join('&')}{{/hasQueryParams}}`{{#bodyParam}}, {{paramName}} {{/bodyParam}}{{#hasFormParams}}, body{{/hasFormParams}}, headers)
                     .map(httpResponse => <{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>(httpResponse.response))
                     .toPromise();
     }
