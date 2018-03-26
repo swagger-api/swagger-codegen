@@ -1,7 +1,7 @@
 // tslint:disable
 {{>licenseInfo}}
 
-export interface ConfigurationParameters {
+export interface {{apiConfigClassName}}Parameters {
     apiKey?: string | ((name: string) => string);
     username?: string;
     password?: string;
@@ -9,43 +9,43 @@ export interface ConfigurationParameters {
     basePath?: string;
 }
 
-export class Configuration {
+export class {{apiConfigClassName}} {
     /**
      * parameter for apiKey security
      * @param name security name
-     * @memberof Configuration
+     * @memberof {{apiConfigClassName}}
      */
     apiKey?: string | ((name: string) => string);
     /**
      * parameter for basic security
      * 
      * @type {string}
-     * @memberof Configuration
+     * @memberof {{apiConfigClassName}}
      */
     username?: string;
     /**
      * parameter for basic security
      * 
      * @type {string}
-     * @memberof Configuration
+     * @memberof {{apiConfigClassName}}
      */
     password?: string;
     /**
      * parameter for oauth2 security
      * @param name security name
      * @param scopes oauth2 scope
-     * @memberof Configuration
+     * @memberof {{apiConfigClassName}}
      */
     accessToken?: string | ((name: string, scopes?: string[]) => string);
     /**
      * override base path
      * 
      * @type {string}
-     * @memberof Configuration
+     * @memberof {{apiConfigClassName}}
      */
     basePath?: string;
 
-    constructor(param: ConfigurationParameters = {}) {
+    constructor(param: {{apiConfigClassName}}Parameters = {}) {
         this.apiKey = param.apiKey;
         this.username = param.username;
         this.password = param.password;
