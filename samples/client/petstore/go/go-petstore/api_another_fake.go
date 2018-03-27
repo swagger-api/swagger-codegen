@@ -75,10 +75,8 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -87,3 +85,4 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 
 	return successPayload, localVarHttpResponse, err
 }
+

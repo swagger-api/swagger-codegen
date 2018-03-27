@@ -74,10 +74,8 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 	return localVarHttpResponse, err
 }
@@ -140,10 +138,8 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -207,10 +203,8 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -269,10 +263,8 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return successPayload, localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
@@ -281,3 +273,4 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 
 	return successPayload, localVarHttpResponse, err
 }
+

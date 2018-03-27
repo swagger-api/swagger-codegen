@@ -209,10 +209,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	if err != nil || localVarHttpResponse == nil {
 		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, reportError("Status: %v", localVarHttpResponse.Status)
 	}
 {{#returnType}}
 	{{#withXml}}
