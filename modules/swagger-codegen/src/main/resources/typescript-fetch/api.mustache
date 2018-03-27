@@ -44,12 +44,12 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}};
+    protected {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}};
 
-    constructor({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
-        if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}) {
-            this.{{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} = {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}};
-            this.basePath = {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.basePath || this.basePath;
+    constructor({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
+        if ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}) {
+            this.{{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}} = {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}};
+            this.basePath = {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.basePath || this.basePath;
         }
     }
 };
@@ -76,7 +76,7 @@ export class RequiredError extends Error {
  * {{&description}}{{/description}}
  * @export
  */
-export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
+export const {{classname}}FetchParamCreator = function ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
     return {
     {{#operation}}
         /**
@@ -113,34 +113,34 @@ export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{a
             // authentication {{name}} required
             {{#isApiKey}}
             {{#isKeyInHeader}}
-            if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} && {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey) {
-                const localVarApiKeyValue = typeof {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey === 'function'
-					? {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey("{{keyParamName}}")
-					: {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey;
+            if ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}} && {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey) {
+                const localVarApiKeyValue = typeof {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey === 'function'
+					? {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey("{{keyParamName}}")
+					: {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey;
                 localVarHeaderParameter["{{keyParamName}}"] = localVarApiKeyValue;
             }
             {{/isKeyInHeader}}
             {{#isKeyInQuery}}
-            if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} && {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey) {
-                const localVarApiKeyValue = typeof {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey === 'function'
-					? {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey("{{keyParamName}}")
-					: {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.apiKey;
+            if ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}} && {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey) {
+                const localVarApiKeyValue = typeof {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey === 'function'
+					? {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey("{{keyParamName}}")
+					: {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.apiKey;
                 localVarQueryParameter["{{keyParamName}}"] = localVarApiKeyValue;
             }
             {{/isKeyInQuery}}
             {{/isApiKey}}
             {{#isBasic}}
             // http basic authentication required
-            if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} && ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.username || {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.password)) {
-                localVarHeaderParameter["Authorization"] = "Basic " + btoa({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.username + ":" + {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.password);
+            if ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}} && ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.username || {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.password)) {
+                localVarHeaderParameter["Authorization"] = "Basic " + btoa({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.username + ":" + {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.password);
             }
             {{/isBasic}}
             {{#isOAuth}}
             // oauth required
-            if ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}} && {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.accessToken) {
-				const localVarAccessTokenValue = typeof {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.accessToken === 'function'
-					? {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
-					: {{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}.accessToken;
+            if ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}} && {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.accessToken) {
+				const localVarAccessTokenValue = typeof {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.accessToken === 'function'
+					? {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.accessToken("{{name}}", [{{#scopes}}"{{{scope}}}"{{^-last}}, {{/-last}}{{/scopes}}])
+					: {{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
             {{/isOAuth}}
@@ -246,7 +246,7 @@ export const {{classname}}FetchParamCreator = function ({{#lambda.lowercase}}{{a
  * {{{description}}}{{/description}}
  * @export
  */
-export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
+export const {{classname}}Fp = function({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}) {
     return {
     {{#operation}}
         /**
@@ -261,7 +261,7 @@ export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassNam
          * @throws {RequiredError}
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
-            const localVarFetchArgs = {{classname}}FetchParamCreator({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
+            const localVarFetchArgs = {{classname}}FetchParamCreator({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -281,7 +281,7 @@ export const {{classname}}Fp = function({{#lambda.lowercase}}{{apiConfigClassNam
  * {{&description}}{{/description}}
  * @export
  */
-export const {{classname}}Factory = function ({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, fetch?: FetchAPI, basePath?: string) {
+export const {{classname}}Factory = function ({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}?: {{#lambda.titlecase}}{{apiConfigClassName}}{{/lambda.titlecase}}, fetch?: FetchAPI, basePath?: string) {
     return {
     {{#operation}}
         /**
@@ -296,7 +296,7 @@ export const {{classname}}Factory = function ({{#lambda.lowercase}}{{apiConfigCl
          * @throws {RequiredError}
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
-            return {{classname}}Fp({{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(fetch, basePath);
+            return {{classname}}Fp({{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(fetch, basePath);
         },
     {{/operation}}
     };
@@ -356,7 +356,7 @@ export class {{classname}} extends BaseAPI {
      * @memberof {{classname}}
      */
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
-        return {{classname}}Fp(this.{{#lambda.lowercase}}{{apiConfigClassName}}{{/lambda.lowercase}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(this.fetch, this.basePath);
+        return {{classname}}Fp(this.{{#lambda.camelcase_param}}{{apiConfigClassName}}{{/lambda.camelcase_param}}).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(this.fetch, this.basePath);
     }
 
     {{/operation}}
