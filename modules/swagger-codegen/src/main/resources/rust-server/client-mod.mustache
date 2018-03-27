@@ -38,7 +38,7 @@ use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 
-use swagger::{Context, ApiError, XSpanId, XSpanIdString, Has};
+use swagger::{Context, ApiError, XSpanId, XSpanIdString, Has, AuthData};
 
 use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
      {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
@@ -204,9 +204,9 @@ impl Client {
     }
 }
 
-impl Api<Context> for Client {
+impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<AuthData>{
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {
+    fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &C) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {
 {{#queryParams}}{{#-first}}
         // Query parameters
 {{/-first}}{{#required}}        let query_{{paramName}} = format!("{{baseName}}={{=<% %>=}}{<% paramName %>}<%={{ }}=%>&", {{paramName}}=param_{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}{{^isListContainer}}.to_string(){{/isListContainer}});
@@ -294,13 +294,11 @@ impl Api<Context> for Client {
 {{/bodyParam}}
         request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
         //context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
-{{#authMethods}}{{#isBasic}}        context.auth_data.as_ref().map(|auth_data| {
-            if let &swagger::AuthData::Basic(ref basic_header) = auth_data {
-                request.headers_mut().set(hyper::header::Authorization(
-                    basic_header.clone(),
-                ))
-            }
-        });{{/isBasic}}{{/authMethods}}{{#headerParams}}{{#-first}}
+{{#authMethods}}{{#isBasic}}        if let &AuthData::Basic(ref basic_header) = Has::<AuthData>::get(context) {
+            request.headers_mut().set(hyper::header::Authorization(
+                basic_header.clone(),
+            ));
+        }{{/isBasic}}{{/authMethods}}{{#headerParams}}{{#-first}}
         // Header parameters
 {{/-first}}{{^isMapContainer}}        header! { (Request{{vendorExtensions.typeName}}, "{{baseName}}") => {{#isListContainer}}({{{baseType}}})*{{/isListContainer}}{{^isListContainer}}[{{{dataType}}}]{{/isListContainer}} }
 {{#required}}        request.headers_mut().set(Request{{vendorExtensions.typeName}}(param_{{paramName}}{{#isListContainer}}.clone(){{/isListContainer}}));

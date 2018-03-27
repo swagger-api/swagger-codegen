@@ -13,6 +13,7 @@ extern crate url;
 
 
 use std::sync::Arc;
+use std::marker::PhantomData;
 use futures::{Future, future, Stream, stream};
 use hyper;
 use hyper::{Request, Response, Error, StatusCode};
@@ -148,39 +149,41 @@ mod paths {
     }
 }
 
-pub struct NewService<T> {
+pub struct NewService<T, C> {
     api_impl: Arc<T>,
+    marker: PhantomData<C>,
 }
 
-impl<T> NewService<T> where T: Api<Context> + Clone + 'static {
-    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T> {
-        NewService{api_impl: api_impl.into()}
+impl<T, C> NewService<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T, C> {
+        NewService{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T> hyper::server::NewService for NewService<T> where T: Api<Context> + Clone + 'static {
-    type Request = (Request, Context);
+impl<T, C> hyper::server::NewService for NewService<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+    type Request = (Request, C);
     type Response = Response;
     type Error = Error;
-    type Instance = Service<T>;
+    type Instance = Service<T, C>;
 
     fn new_service(&self) -> Result<Self::Instance, io::Error> {
         Ok(Service::new(self.api_impl.clone()))
     }
 }
 
-pub struct Service<T> {
+pub struct Service<T, C> {
     api_impl: Arc<T>,
+    marker: PhantomData<C>,
 }
 
-impl<T> Service<T> where T: Api<Context> + Clone + 'static {
-    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T> {
-        Service{api_impl: api_impl.into()}
+impl<T, C> Service<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T, C> {
+        Service{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 'static {
-    type Request = (Request, Context);
+impl<T, C> hyper::server::Service for Service<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+    type Request = (Request, C);
     type Response = Response;
     type Error = Error;
     type Future = Box<Future<Item=Response, Error=Error>>;
@@ -812,9 +815,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1116,9 +1119,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1215,9 +1218,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1323,9 +1326,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1419,9 +1422,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1516,9 +1519,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1613,9 +1616,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1709,9 +1712,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1831,9 +1834,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1927,9 +1930,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -2141,9 +2144,9 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                     context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
                 }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
