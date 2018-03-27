@@ -353,8 +353,6 @@ namespace {{packageName}}.{{apiPackage}}
         {
              {{#returnType}}ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#allParams.0}}, cancellationToken{{/allParams.0}}{{^allParams.0}}cancellationToken{{/allParams.0}});
              return localVarResponse.Data;{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#allParams.0}}, cancellationToken{{/allParams.0}}{{^allParams.0}}cancellationToken{{/allParams.0}});{{/returnType}}
-
-
         }
 
         /// <summary>
@@ -367,7 +365,6 @@ namespace {{packageName}}.{{apiPackage}}
         {
              {{#returnType}}return await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#allParams.0}}, System.Threading.CancellationToken.None{{/allParams.0}}{{^allParams.0}}System.Threading.CancellationToken.None{{/allParams.0}});{{/returnType}}
              {{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#allParams.0}}, System.Threading.CancellationToken.None{{/allParams.0}}{{^allParams.0}}System.Threading.CancellationToken.None{{/allParams.0}});{{/returnType}}
-
         }
 
         /// <summary>
