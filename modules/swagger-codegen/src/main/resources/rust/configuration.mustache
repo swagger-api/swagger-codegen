@@ -6,7 +6,6 @@ pub struct Configuration<C: hyper::client::Connect> {
   pub base_path: String,
   pub user_agent: Option<String>,
   pub client: hyper::client::Client<C>,
-
   pub basic_auth: Option<BasicAuth>,
   pub oauth_access_token: Option<String>,
   pub api_key: Option<ApiKey>,

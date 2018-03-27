@@ -45,52 +45,39 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
         let mut auth_query = HashMap::<String, String>::new();
 {{#authMethods}}
 {{#isApiKey}}
-        match configuration.api_key {
-            None => (),
-            Some(ref apikey) => {
-                let key = apikey.key.clone();
-                let val = match apikey.prefix {
-                    Some(ref prefix) => format!("{} {}", prefix, key),
-                    None => key,
-                };
-            {{#isKeyInHeader}}
-                auth_headers.insert("{{keyParamName}}".to_owned(), val);
-            {{/isKeyInHeader}}
-            {{#isKeyInQuery}}
-                auth_query.insert("{{keyParamName}}".to_owned(), val);
-            {{/isKeyInQuery}}
-            }
+        if let Some(ref apikey) = configuration.api_key {
+            let key = apikey.key.clone();
+            let val = match apikey.prefix {
+                Some(ref prefix) => format!("{} {}", prefix, key),
+                None => key,
+            };
+        {{#isKeyInHeader}}
+            auth_headers.insert("{{keyParamName}}".to_owned(), val);
+        {{/isKeyInHeader}}
+        {{#isKeyInQuery}}
+            auth_query.insert("{{keyParamName}}".to_owned(), val);
+        {{/isKeyInQuery}}
         };
 {{/isApiKey}}
 {{#isBasic}}
-        {
-            match configuration.basic_auth {
-                Some(ref auth_conf) => {
-                    let auth = hyper::header::Authorization(
-                        hyper::header::Basic {
-                            username: auth_conf.0.to_owned(),
-                            password: auth_conf.1.to_owned(),
-                        }
-                    );
-                    auth_headers.insert("Authorization".to_owned(), format!("{}", auth));
+        if let Some(ref auth_conf) = configuration.basic_auth {
+            let auth = hyper::header::Authorization(
+                hyper::header::Basic {
+                    username: auth_conf.0.to_owned(),
+                    password: auth_conf.1.to_owned(),
                 }
-                None => {}
-            }
+            );
+            auth_headers.insert("Authorization".to_owned(), auth.to_string());
         };
 {{/isBasic}}
 {{#isOAuth}}
-        {
-            match configuration.oauth_access_token {
-                Some(ref token) => {
-                    let auth = hyper::header::Authorization(
-                        hyper::header::Bearer {
-                            token: token.to_owned(),
-                        }
-                    );
-                    auth_headers.insert("Authorization".to_owned(), format!("{}", auth));
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = hyper::header::Authorization(
+                hyper::header::Bearer {
+                    token: token.to_owned(),
                 }
-                None => {}
-            }
+            );
+            auth_headers.insert("Authorization".to_owned(), auth.to_string());
         };
 {{/isOAuth}}
 {{/authMethods}}
@@ -107,9 +94,9 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
                 query.append_pair(key, val);
             }
 {{/hasAuthMethods}} 
-            format!("?{}", query.finish())
+            query.finish()
         };
-        let uri_str = format!("{}{{{path}}}{}", configuration.base_path, query_string{{#pathParams}}, {{baseName}}={{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}}{{/pathParams}});
+        let uri_str = format!("{}{{{path}}}?{}", configuration.base_path, query_string{{#pathParams}}, {{baseName}}={{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}}{{/pathParams}});
 
         // TODO(farcaller): handle error
         // if let Err(e) = uri {
