@@ -178,9 +178,9 @@ export namespace Order {
      * @enum {string}
      */
     export enum StatusEnum {
-        Placed = "placed",
-        Approved = "approved",
-        Delivered = "delivered"
+        Placed = 'placed',
+        Approved = 'approved',
+        Delivered = 'delivered'
     }
 }
 
@@ -238,9 +238,9 @@ export namespace Pet {
      * @enum {string}
      */
     export enum StatusEnum {
-        Available = "available",
-        Pending = "pending",
-        Sold = "sold"
+        Available = 'available',
+        Pending = 'pending',
+        Sold = 'sold'
     }
 }
 
@@ -414,11 +414,11 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array<"available" | "pending" | "sold">} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<"available" | "pending" | "sold">, options: any = {}): FetchArgs {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options: any = {}): FetchArgs {
             // verify required parameter 'status' is not null or undefined
             if (status === null || status === undefined) {
                 throw new RequiredError('status','Required parameter status was null or undefined when calling findPetsByStatus.');
@@ -726,11 +726,11 @@ export const PetApiFp = function(configuration?: Configuration) {
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array<"available" | "pending" | "sold">} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<"available" | "pending" | "sold">, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -874,11 +874,11 @@ export const PetApiFactory = function (configuration?: Configuration, fetch?: Fe
         /**
          * Multiple status values can be provided with comma separated strings
          * @summary Finds Pets by status
-         * @param {Array<"available" | "pending" | "sold">} status Status values that need to be considered for filter
+         * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPetsByStatus(status: Array<"available" | "pending" | "sold">, options?: any) {
+        findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
             return PetApiFp(configuration).findPetsByStatus(status, options)(fetch, basePath);
         },
         /**
@@ -968,12 +968,12 @@ export interface PetApiInterface {
     /**
      * Multiple status values can be provided with comma separated strings
      * @summary Finds Pets by status
-     * @param {Array<"available" | "pending" | "sold">} status Status values that need to be considered for filter
+     * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApiInterface
      */
-    findPetsByStatus(status: Array<"available" | "pending" | "sold">, options?: any): Promise<Array<Pet>>;
+    findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): Promise<Array<Pet>>;
 
     /**
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -1066,12 +1066,12 @@ export class PetApi extends BaseAPI implements PetApiInterface {
     /**
      * Multiple status values can be provided with comma separated strings
      * @summary Finds Pets by status
-     * @param {Array<"available" | "pending" | "sold">} status Status values that need to be considered for filter
+     * @param {Array<'available' | 'pending' | 'sold'>} status Status values that need to be considered for filter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PetApi
      */
-    public findPetsByStatus(status: Array<"available" | "pending" | "sold">, options?: any) {
+    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
         return PetApiFp(this.configuration).findPetsByStatus(status, options)(this.fetch, this.basePath);
     }
 
