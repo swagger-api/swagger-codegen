@@ -35,7 +35,7 @@ use std::io;
 use std::collections::BTreeSet;
 
 pub use swagger::auth::Authorization;
-use swagger::{ApiError, Context, XSpanId};
+use swagger::{ApiError, Context, XSpanId, XSpanIdString, Has};
 use swagger::auth::Scopes;
 
 use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
@@ -113,9 +113,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
             // {{operationId}} - {{httpMethod}} {{path}}
             &hyper::Method::{{vendorExtensions.HttpMethod}} if path.matched(paths::ID_{{vendorExtensions.PATH_ID}}) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
+                context.set(XSpanIdString(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string())));
+                //if context.x_span_id.is_none() {
+                //    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
+                //}
 {{#hasAuthMethods}}
                 {
                     let authorization = match context.authorization.as_ref() {
@@ -315,7 +316,8 @@ impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 's
                                 Box::new(api_impl.{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}param_{{paramName}}{{#isListContainer}}.as_ref(){{/isListContainer}}, {{/allParams}}&context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
+                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 {{#bodyParams}}{{#vendorExtensions}}{{^consumesPlainText}}
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));

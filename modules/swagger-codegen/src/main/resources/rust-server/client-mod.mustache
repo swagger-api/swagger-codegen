@@ -38,7 +38,7 @@ use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 
-use swagger::{Context, ApiError, XSpanId};
+use swagger::{Context, ApiError, XSpanId, XSpanIdString, Has};
 
 use {Api{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
      {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
@@ -292,7 +292,8 @@ impl Api<Context> for Client {
 
         request.headers_mut().set(ContentType(mimetypes::requests::{{#vendorExtensions}}{{uppercase_operation_id}}{{/vendorExtensions}}.clone()));
 {{/bodyParam}}
-        context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
+        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        //context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
 {{#authMethods}}{{#isBasic}}        context.auth_data.as_ref().map(|auth_data| {
             if let &swagger::AuthData::Basic(ref basic_header) = auth_data {
                 request.headers_mut().set(hyper::header::Authorization(
