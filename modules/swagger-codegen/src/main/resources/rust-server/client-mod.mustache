@@ -204,7 +204,7 @@ impl Client {
     }
 }
 
-impl Api for Client {
+impl Api<Context> for Client {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {
 {{#queryParams}}{{#-first}}

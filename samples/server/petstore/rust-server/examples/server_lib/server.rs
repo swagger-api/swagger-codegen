@@ -49,7 +49,7 @@ use petstore_api::models;
 #[derive(Copy, Clone)]
 pub struct Server;
 
-impl Api for Server {
+impl Api<Context> for Server {
 
     /// To test special tags
     fn test_special_tags(&self, body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>> {

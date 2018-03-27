@@ -18,7 +18,7 @@ use {{externCrateName}}::models;
 #[derive(Copy, Clone)]
 pub struct Server;
 
-impl Api for Server {
+impl Api<Context> for Server {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
 {{#summary}}    /// {{{summary}}}{{/summary}}
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &Context) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {

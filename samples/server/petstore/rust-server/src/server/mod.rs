@@ -152,13 +152,13 @@ pub struct NewService<T> {
     api_impl: Arc<T>,
 }
 
-impl<T> NewService<T> where T: Api + Clone + 'static {
+impl<T> NewService<T> where T: Api<Context> + Clone + 'static {
     pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T> {
         NewService{api_impl: api_impl.into()}
     }
 }
 
-impl<T> hyper::server::NewService for NewService<T> where T: Api + Clone + 'static {
+impl<T> hyper::server::NewService for NewService<T> where T: Api<Context> + Clone + 'static {
     type Request = (Request, Context);
     type Response = Response;
     type Error = Error;
@@ -173,13 +173,13 @@ pub struct Service<T> {
     api_impl: Arc<T>,
 }
 
-impl<T> Service<T> where T: Api + Clone + 'static {
+impl<T> Service<T> where T: Api<Context> + Clone + 'static {
     pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T> {
         Service{api_impl: api_impl.into()}
     }
 }
 
-impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
+impl<T> hyper::server::Service for Service<T> where T: Api<Context> + Clone + 'static {
     type Request = (Request, Context);
     type Response = Response;
     type Error = Error;

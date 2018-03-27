@@ -235,7 +235,7 @@ impl Client {
     }
 }
 
-impl Api for Client {
+impl Api<Context> for Client {
 
     fn test_special_tags(&self, param_body: models::Client, context: &Context) -> Box<Future<Item=TestSpecialTagsResponse, Error=ApiError>> {
 
