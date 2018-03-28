@@ -15,7 +15,7 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
     private static final String NMP_VERSION = "1.0.0";
     private static final String NPM_REPOSITORY = "https://registry.npmjs.org";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
-
+    public static final Boolean PUT_PARAMETERS_IN_OBJECT = false;
 
     @Override
     public String getLanguage() {
@@ -35,6 +35,7 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
                 .put(TypeScriptFetchClientCodegen.SNAPSHOT, Boolean.FALSE.toString())
                 .put(TypeScriptFetchClientCodegen.WITH_INTERFACES, Boolean.FALSE.toString())
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(TypeScriptFetchClientCodegen.PUT_PARAMETERS_IN_OBJECT, Boolean.FALSE.toString())
                 .build();
     }
 
