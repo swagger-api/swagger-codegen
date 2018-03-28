@@ -21,6 +21,7 @@ public class TypescriptInversifyPestoreIntegrationTest extends AbstractIntegrati
         properties.put("npmName", "petstore-integration-test");
         properties.put("npmVersion", "1.0.3");
         properties.put("snapshot", "false");
+        properties.put("usePromise", "false");
 
         return properties;
     }
