@@ -16,8 +16,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Headers } from "../Headers"
+import { IAPIConfiguration } from "../IAPIConfiguration";
+import { Headers } from "../Headers";
 
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
@@ -44,7 +44,7 @@ export class PetService {
      
      */
 
-    public addPet(body: Pet, headers: Headers = {}): Promise<any> {
+    public addPet(body: Pet, headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
@@ -61,8 +61,7 @@ export class PetService {
 
 
         return this.httpClient.post(`${this.basePath}/pet`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -74,7 +73,7 @@ export class PetService {
      
      */
 
-    public deletePet(petId: number, apiKey?: string, headers: Headers = {}): Promise<any> {
+    public deletePet(petId: number, apiKey?: string, headers: Headers = {}): Observable<any> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
@@ -93,8 +92,7 @@ export class PetService {
 
 
         return this.httpClient.delete(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -105,7 +103,7 @@ export class PetService {
      
      */
 
-    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, headers: Headers = {}): Promise<Array<Pet>> {
+    public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, headers: Headers = {}): Observable<Array<Pet>> {
         if (!status){
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
@@ -126,8 +124,7 @@ export class PetService {
 
 
         return this.httpClient.get(`${this.basePath}/pet/findByStatus?${queryParameters.join('&')}`, headers)
-                    .map(httpResponse => <Array<Pet>>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <Array<Pet>>(httpResponse.response));
     }
 
 
@@ -138,7 +135,7 @@ export class PetService {
      
      */
 
-    public findPetsByTags(tags: Array<string>, headers: Headers = {}): Promise<Array<Pet>> {
+    public findPetsByTags(tags: Array<string>, headers: Headers = {}): Observable<Array<Pet>> {
         if (!tags){
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
@@ -159,8 +156,7 @@ export class PetService {
 
 
         return this.httpClient.get(`${this.basePath}/pet/findByTags?${queryParameters.join('&')}`, headers)
-                    .map(httpResponse => <Array<Pet>>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <Array<Pet>>(httpResponse.response));
     }
 
 
@@ -171,7 +167,7 @@ export class PetService {
      
      */
 
-    public getPetById(petId: number, headers: Headers = {}): Promise<Pet> {
+    public getPetById(petId: number, headers: Headers = {}): Observable<Pet> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
@@ -184,8 +180,7 @@ export class PetService {
 
 
         return this.httpClient.get(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, headers)
-                    .map(httpResponse => <Pet>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <Pet>(httpResponse.response));
     }
 
 
@@ -196,7 +191,7 @@ export class PetService {
      
      */
 
-    public updatePet(body: Pet, headers: Headers = {}): Promise<any> {
+    public updatePet(body: Pet, headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
@@ -213,8 +208,7 @@ export class PetService {
 
 
         return this.httpClient.put(`${this.basePath}/pet`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -227,7 +221,7 @@ export class PetService {
      
      */
 
-    public updatePetWithForm(petId: number, name?: string, status?: string, headers: Headers = {}): Promise<any> {
+    public updatePetWithForm(petId: number, name?: string, status?: string, headers: Headers = {}): Observable<any> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
@@ -252,8 +246,7 @@ export class PetService {
 
 
         return this.httpClient.post(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, body, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -266,7 +259,7 @@ export class PetService {
      
      */
 
-    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, headers: Headers = {}): Promise<ApiResponse> {
+    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, headers: Headers = {}): Observable<ApiResponse> {
         if (!petId){
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
@@ -291,8 +284,7 @@ export class PetService {
 
 
         return this.httpClient.post(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, body, headers)
-                    .map(httpResponse => <ApiResponse>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <ApiResponse>(httpResponse.response));
     }
 
 }

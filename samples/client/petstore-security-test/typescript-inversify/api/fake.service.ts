@@ -16,8 +16,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Headers } from "../Headers"
+import { IAPIConfiguration } from "../IAPIConfiguration";
+import { Headers } from "../Headers";
 
 
 import { COLLECTION_FORMATS }  from '../variables';
@@ -42,7 +42,7 @@ export class FakeService {
      
      */
 
-    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, headers: Headers = {}): Promise<any> {
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, headers: Headers = {}): Observable<any> {
 
         headers['Accept'] = 'application/json';
 
@@ -54,8 +54,7 @@ export class FakeService {
 
 
         return this.httpClient.put(`${this.basePath}/fake`, body, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 }

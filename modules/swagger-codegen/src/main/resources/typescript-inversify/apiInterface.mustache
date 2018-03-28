@@ -11,15 +11,13 @@ import * as models from "../model/models";
     */
 {{/description}}
 export interface {{classname}}Interface {
-    [others: string]: any;
-
 {{#operation}}
     /**
     * {{summary}}
     * {{notes}}
     {{#allParams}}* @param {{paramName}} {{description}}
     {{/allParams}}*/
-    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Headers = {}): Promise<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>
+    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}headers: Headers = {}): {{#usePromise}}Promise{{/usePromise}}{{^usePromise}}Observable{{/usePromise}}<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>
 
 {{/operation}}
 }

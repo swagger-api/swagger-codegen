@@ -16,8 +16,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Headers } from "../Headers"
+import { IAPIConfiguration } from "../IAPIConfiguration";
+import { Headers } from "../Headers";
 
 import { Order } from '../model/order';
 
@@ -43,7 +43,7 @@ export class StoreService {
      
      */
 
-    public deleteOrder(orderId: string, headers: Headers = {}): Promise<any> {
+    public deleteOrder(orderId: string, headers: Headers = {}): Observable<any> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
@@ -52,8 +52,7 @@ export class StoreService {
 
 
         return this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -63,7 +62,7 @@ export class StoreService {
      
      */
 
-    public getInventory(headers: Headers = {}): Promise<{ [key: string]: number; }> {
+    public getInventory(headers: Headers = {}): Observable<{ [key: string]: number; }> {
 
         // authentication (api_key) required
         if (this.APIConfiguration.apiKeys["api_key"]) {
@@ -73,8 +72,7 @@ export class StoreService {
 
 
         return this.httpClient.get(`${this.basePath}/store/inventory`, headers)
-                    .map(httpResponse => <{ [key: string]: number; }>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <{ [key: string]: number; }>(httpResponse.response));
     }
 
 
@@ -85,7 +83,7 @@ export class StoreService {
      
      */
 
-    public getOrderById(orderId: number, headers: Headers = {}): Promise<Order> {
+    public getOrderById(orderId: number, headers: Headers = {}): Observable<Order> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
@@ -94,8 +92,7 @@ export class StoreService {
 
 
         return this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers)
-                    .map(httpResponse => <Order>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <Order>(httpResponse.response));
     }
 
 
@@ -106,7 +103,7 @@ export class StoreService {
      
      */
 
-    public placeOrder(body: Order, headers: Headers = {}): Promise<Order> {
+    public placeOrder(body: Order, headers: Headers = {}): Observable<Order> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }
@@ -116,8 +113,7 @@ export class StoreService {
 
 
         return this.httpClient.post(`${this.basePath}/store/order`, body , headers)
-                    .map(httpResponse => <Order>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <Order>(httpResponse.response));
     }
 
 }

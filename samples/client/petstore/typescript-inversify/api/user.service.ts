@@ -16,8 +16,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration"
-import { Headers } from "../Headers"
+import { IAPIConfiguration } from "../IAPIConfiguration";
+import { Headers } from "../Headers";
 
 import { User } from '../model/user';
 
@@ -43,7 +43,7 @@ export class UserService {
      
      */
 
-    public createUser(body: User, headers: Headers = {}): Promise<any> {
+    public createUser(body: User, headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -53,8 +53,7 @@ export class UserService {
 
 
         return this.httpClient.post(`${this.basePath}/user`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -65,7 +64,7 @@ export class UserService {
      
      */
 
-    public createUsersWithArrayInput(body: Array<User>, headers: Headers = {}): Promise<any> {
+    public createUsersWithArrayInput(body: Array<User>, headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -75,8 +74,7 @@ export class UserService {
 
 
         return this.httpClient.post(`${this.basePath}/user/createWithArray`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -87,7 +85,7 @@ export class UserService {
      
      */
 
-    public createUsersWithListInput(body: Array<User>, headers: Headers = {}): Promise<any> {
+    public createUsersWithListInput(body: Array<User>, headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -97,8 +95,7 @@ export class UserService {
 
 
         return this.httpClient.post(`${this.basePath}/user/createWithList`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -109,7 +106,7 @@ export class UserService {
      
      */
 
-    public deleteUser(username: string, headers: Headers = {}): Promise<any> {
+    public deleteUser(username: string, headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
@@ -118,8 +115,7 @@ export class UserService {
 
 
         return this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -130,7 +126,7 @@ export class UserService {
      
      */
 
-    public getUserByName(username: string, headers: Headers = {}): Promise<User> {
+    public getUserByName(username: string, headers: Headers = {}): Observable<User> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
@@ -139,8 +135,7 @@ export class UserService {
 
 
         return this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers)
-                    .map(httpResponse => <User>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <User>(httpResponse.response));
     }
 
 
@@ -152,7 +147,7 @@ export class UserService {
      
      */
 
-    public loginUser(username: string, password: string, headers: Headers = {}): Promise<string> {
+    public loginUser(username: string, password: string, headers: Headers = {}): Observable<string> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
@@ -172,8 +167,7 @@ export class UserService {
 
 
         return this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers)
-                    .map(httpResponse => <string>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <string>(httpResponse.response));
     }
 
 
@@ -183,14 +177,13 @@ export class UserService {
      
      */
 
-    public logoutUser(headers: Headers = {}): Promise<any> {
+    public logoutUser(headers: Headers = {}): Observable<any> {
 
         headers['Accept'] = 'application/xml';
 
 
         return this.httpClient.get(`${this.basePath}/user/logout`, headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 
@@ -202,7 +195,7 @@ export class UserService {
      
      */
 
-    public updateUser(username: string, body: User, headers: Headers = {}): Promise<any> {
+    public updateUser(username: string, body: User, headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
@@ -215,8 +208,7 @@ export class UserService {
 
 
         return this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response))
-                    .toPromise();
+                    .map(httpResponse => <any>(httpResponse.response));
     }
 
 }

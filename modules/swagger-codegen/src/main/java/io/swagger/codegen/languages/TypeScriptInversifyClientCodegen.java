@@ -28,6 +28,7 @@ public class TypeScriptInversifyClientCodegen extends AbstractTypeScriptClientCo
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
     public static final String WITH_INTERFACES = "withInterfaces";
+    public static final String USE_PROMISE = "usePromise";
     public static final String TAGGED_UNIONS ="taggedUnions";
 
     protected String npmVersion = null;
@@ -56,6 +57,9 @@ public class TypeScriptInversifyClientCodegen extends AbstractTypeScriptClientCo
                 BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(WITH_INTERFACES,
                 "Setting this property to true will generate interfaces next to the default class implementations.",
+                BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
+        this.cliOptions.add(new CliOption(USE_PROMISE,
+                "Setting this property to use promise instead of observable inside every service.",
                 BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(TAGGED_UNIONS,
                 "Use discriminators to create tagged unions instead of extending interfaces.",
