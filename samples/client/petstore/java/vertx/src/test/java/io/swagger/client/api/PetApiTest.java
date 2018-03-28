@@ -12,9 +12,9 @@
 
 package io.swagger.client.api;
 
-import io.vertx.core.file.AsyncFile;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+
 
 import io.swagger.client.Configuration;
 
@@ -33,10 +33,12 @@ import io.vertx.ext.unit.junit.RunTestOnContext;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.Async;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for PetApi
@@ -68,8 +70,10 @@ public class PetApiTest {
     @Test
     public void addPetTest(TestContext context) {
         Async async = context.async();
-        Pet body = null;
-        api.addPet(body, result -> {
+        
+        Pet pet = null;
+        
+        api.addPet(pet, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -84,8 +88,11 @@ public class PetApiTest {
     @Test
     public void deletePetTest(TestContext context) {
         Async async = context.async();
-        Long petId = null;
+        
+        Integer petId = null;
+        
         String apiKey = null;
+        
         api.deletePet(petId, apiKey, result -> {
             // TODO: test validations
             async.complete();
@@ -101,7 +108,9 @@ public class PetApiTest {
     @Test
     public void findPetsByStatusTest(TestContext context) {
         Async async = context.async();
+        
         List<String> status = null;
+        
         api.findPetsByStatus(status, result -> {
             // TODO: test validations
             async.complete();
@@ -117,7 +126,9 @@ public class PetApiTest {
     @Test
     public void findPetsByTagsTest(TestContext context) {
         Async async = context.async();
+        
         List<String> tags = null;
+        
         api.findPetsByTags(tags, result -> {
             // TODO: test validations
             async.complete();
@@ -133,7 +144,9 @@ public class PetApiTest {
     @Test
     public void getPetByIdTest(TestContext context) {
         Async async = context.async();
-        Long petId = null;
+        
+        Integer petId = null;
+        
         api.getPetById(petId, result -> {
             // TODO: test validations
             async.complete();
@@ -149,8 +162,10 @@ public class PetApiTest {
     @Test
     public void updatePetTest(TestContext context) {
         Async async = context.async();
-        Pet body = null;
-        api.updatePet(body, result -> {
+        
+        Pet pet = null;
+        
+        api.updatePet(pet, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -165,10 +180,12 @@ public class PetApiTest {
     @Test
     public void updatePetWithFormTest(TestContext context) {
         Async async = context.async();
-        Long petId = null;
-        String name = null;
-        String status = null;
-        api.updatePetWithForm(petId, name, status, result -> {
+        
+        Integer petId = null;
+        
+        Object body = null;
+        
+        api.updatePetWithForm(petId, body, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -183,10 +200,12 @@ public class PetApiTest {
     @Test
     public void uploadFileTest(TestContext context) {
         Async async = context.async();
-        Long petId = null;
-        String additionalMetadata = null;
-        AsyncFile file = null;
-        api.uploadFile(petId, additionalMetadata, file, result -> {
+        
+        Integer petId = null;
+        
+        Object body = null;
+        
+        api.uploadFile(petId, body, result -> {
             // TODO: test validations
             async.complete();
         });

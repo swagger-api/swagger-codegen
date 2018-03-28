@@ -3,16 +3,17 @@ package io.swagger.client.api;
 import io.swagger.client.ApiClient;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+
 import org.junit.Before;
 import org.junit.Test;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for FakeApi
@@ -34,12 +35,15 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterBooleanSerializeTest() {
+        
         Boolean body = null;
+        
         // Boolean response = api.fakeOuterBooleanSerialize(body);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * 
@@ -48,12 +52,15 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterCompositeSerializeTest() {
-        OuterComposite body = null;
-        // OuterComposite response = api.fakeOuterCompositeSerialize(body);
+        
+        OuterComposite outercomposite = null;
+        
+        // OuterComposite response = api.fakeOuterCompositeSerialize(outercomposite);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * 
@@ -62,12 +69,15 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterNumberSerializeTest() {
+        
         BigDecimal body = null;
+        
         // BigDecimal response = api.fakeOuterNumberSerialize(body);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * 
@@ -76,12 +86,15 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterStringSerializeTest() {
+        
         String body = null;
+        
         // String response = api.fakeOuterStringSerialize(body);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * To test \&quot;client\&quot; model
@@ -90,12 +103,15 @@ public class FakeApiTest {
      */
     @Test
     public void testClientModelTest() {
-        Client body = null;
-        // Client response = api.testClientModel(body);
+        
+        Client client = null;
+        
+        // Client response = api.testClientModel(client);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -104,25 +120,15 @@ public class FakeApiTest {
      */
     @Test
     public void testEndpointParametersTest() {
-        BigDecimal number = null;
-        Double _double = null;
-        String patternWithoutDelimiter = null;
-        byte[] _byte = null;
-        Integer integer = null;
-        Integer int32 = null;
-        Long int64 = null;
-        Float _float = null;
-        String string = null;
-        byte[] binary = null;
-        LocalDate date = null;
-        OffsetDateTime dateTime = null;
-        String password = null;
-        String paramCallback = null;
-        // api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+        
+        Object body = null;
+        
+        // api.testEndpointParameters(body);
 
         // TODO: test validations
     }
 
+        
     
     /**
      * To test enum parameters
@@ -131,19 +137,25 @@ public class FakeApiTest {
      */
     @Test
     public void testEnumParametersTest() {
-        List<String> enumFormStringArray = null;
-        String enumFormString = null;
+        
+        Object body = null;
+        
         List<String> enumHeaderStringArray = null;
+        
         String enumHeaderString = null;
+        
         List<String> enumQueryStringArray = null;
+        
         String enumQueryString = null;
+        
         Integer enumQueryInteger = null;
-        Double enumQueryDouble = null;
-        // api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+        
+        // api.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
 
         // TODO: test validations
     }
 
+        
     /**
      * To test enum parameters
      *
@@ -154,18 +166,71 @@ public class FakeApiTest {
      */
     @Test
     public void testEnumParametersTestQueryMap() {
-        List<String> enumFormStringArray = null;
-        String enumFormString = null;
+          
+            
+        Object body = null;
+            
+          
+            
         List<String> enumHeaderStringArray = null;
+            
+          
+            
         String enumHeaderString = null;
-        Double enumQueryDouble = null;
+            
+          
+            
+          
+            
+          
+            
+          
         FakeApi.TestEnumParametersQueryParams queryParams = new FakeApi.TestEnumParametersQueryParams()
+          
             .enumQueryStringArray(null)
+          
             .enumQueryString(null)
+          
             .enumQueryInteger(null);
-        // api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryDouble, queryParams);
+          
+        // api.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, queryParams);
 
     // TODO: test validations
     }
+        
+    
+    /**
+     * test inline additionalProperties
+     *
+     * 
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest() {
+        
+        Map<String, String> body = null;
+        
+        // api.testInlineAdditionalProperties(body);
+
+        // TODO: test validations
+    }
+
+        
+    
+    /**
+     * test json serialization of form data
+     *
+     * 
+     */
+    @Test
+    public void testJsonFormDataTest() {
+        
+        Object body = null;
+        
+        // api.testJsonFormData(body);
+
+        // TODO: test validations
+    }
+
+        
     
 }

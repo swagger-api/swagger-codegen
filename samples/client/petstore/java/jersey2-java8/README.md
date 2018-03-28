@@ -69,11 +69,16 @@ import java.util.*;
 public class AnotherFakeApiExample {
 
     public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
         
+        
+
         AnotherFakeApi apiInstance = new AnotherFakeApi();
-        Client body = new Client(); // Client | client model
+        
+        Client client = ; // Client | client model
+        
         try {
-            Client result = apiInstance.testSpecialTags(body);
+            Client result = apiInstance.testSpecialTags(client);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AnotherFakeApi#testSpecialTags");
@@ -127,14 +132,15 @@ Class | Method | HTTP request | Description
 
  - [AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
  - [Animal](docs/Animal.md)
- - [AnimalFarm](docs/AnimalFarm.md)
  - [ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/ArrayTest.md)
  - [Capitalization](docs/Capitalization.md)
+ - [Cat](docs/Cat.md)
  - [Category](docs/Category.md)
  - [ClassModel](docs/ClassModel.md)
  - [Client](docs/Client.md)
+ - [Dog](docs/Dog.md)
  - [EnumArrays](docs/EnumArrays.md)
  - [EnumClass](docs/EnumClass.md)
  - [EnumTest](docs/EnumTest.md)
@@ -155,8 +161,6 @@ Class | Method | HTTP request | Description
  - [SpecialModelName](docs/SpecialModelName.md)
  - [Tag](docs/Tag.md)
  - [User](docs/User.md)
- - [Cat](docs/Cat.md)
- - [Dog](docs/Dog.md)
 
 
 ## Documentation for Authorization
@@ -168,24 +172,37 @@ Authentication schemes defined for the API:
 - **API key parameter name**: api_key
 - **Location**: HTTP header
 
+
+
+
 ### api_key_query
 
 - **Type**: API key
 - **API key parameter name**: api_key_query
 - **Location**: URL query string
 
+
+
+
 ### http_basic_test
+
 
 - **Type**: HTTP basic authentication
 
+
+
 ### petstore_auth
+
+
 
 - **Type**: OAuth
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
-  - write:pets: modify pets in your account
-  - read:pets: read your pets
+  - : 
+
+
+
 
 
 ## Recommendation

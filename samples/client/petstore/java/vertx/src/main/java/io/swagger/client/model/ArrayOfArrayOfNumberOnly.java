@@ -28,36 +28,37 @@ import java.util.List;
  */
 
 public class ArrayOfArrayOfNumberOnly {
+
   @JsonProperty("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;
-
+  
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;
   }
 
   public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
+    
     if (this.arrayArrayNumber == null) {
-      this.arrayArrayNumber = new ArrayList<List<BigDecimal>>();
+      this.arrayArrayNumber = new ArrayList<>();
     }
+    
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
-
-   /**
-   * Get arrayArrayNumber
-   * @return arrayArrayNumber
+  
+  /**
+  * Get arrayArrayNumber
+  * @return arrayArrayNumber
   **/
   @ApiModelProperty(value = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
-
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -74,8 +75,7 @@ public class ArrayOfArrayOfNumberOnly {
   public int hashCode() {
     return Objects.hash(arrayArrayNumber);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -97,5 +97,8 @@ public class ArrayOfArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

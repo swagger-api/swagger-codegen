@@ -1,6 +1,6 @@
 /*
  * Swagger Petstore
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -15,16 +15,21 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.User;
+
 import org.junit.Test;
+import org.junit.Ignore;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * API tests for UserApi
  */
+@Ignore
 public class UserApiTest {
 
     private final UserApi api = new UserApi();
@@ -40,8 +45,10 @@ public class UserApiTest {
      */
     @Test
     public void createUserTest() throws ApiException {
-        User body = null;
-        // api.createUser(body);
+        
+        User user = null;
+        
+        api.createUser(user);
 
         // TODO: test validations
     }
@@ -56,8 +63,10 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithArrayInputTest() throws ApiException {
+        
         List<User> body = null;
-        // api.createUsersWithArrayInput(body);
+        
+        api.createUsersWithArrayInput(body);
 
         // TODO: test validations
     }
@@ -72,8 +81,10 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithListInputTest() throws ApiException {
+        
         List<User> body = null;
-        // api.createUsersWithListInput(body);
+        
+        api.createUsersWithListInput(body);
 
         // TODO: test validations
     }
@@ -88,8 +99,10 @@ public class UserApiTest {
      */
     @Test
     public void deleteUserTest() throws ApiException {
+        
         String username = null;
-        // api.deleteUser(username);
+        
+        api.deleteUser(username);
 
         // TODO: test validations
     }
@@ -104,8 +117,10 @@ public class UserApiTest {
      */
     @Test
     public void getUserByNameTest() throws ApiException {
+        
         String username = null;
-        // User response = api.getUserByName(username);
+        
+        User response = api.getUserByName(username);
 
         // TODO: test validations
     }
@@ -120,9 +135,12 @@ public class UserApiTest {
      */
     @Test
     public void loginUserTest() throws ApiException {
+        
         String username = null;
+        
         String password = null;
-        // String response = api.loginUser(username, password);
+        
+        String response = api.loginUser(username, password);
 
         // TODO: test validations
     }
@@ -137,7 +155,8 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() throws ApiException {
-        // api.logoutUser();
+        
+        api.logoutUser();
 
         // TODO: test validations
     }
@@ -152,9 +171,12 @@ public class UserApiTest {
      */
     @Test
     public void updateUserTest() throws ApiException {
+        
+        User user = null;
+        
         String username = null;
-        User body = null;
-        // api.updateUser(username, body);
+        
+        api.updateUser(user, username);
 
         // TODO: test validations
     }
