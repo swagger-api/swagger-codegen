@@ -4,6 +4,7 @@ import io.swagger.client.ApiClient;
 
 import io.swagger.client.model.User;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.springframework.http.MediaType;
 
 
 @Component("io.swagger.client.api.UserApi")
+
 public class UserApi {
     private ApiClient apiClient;
 
@@ -45,19 +47,21 @@ public class UserApi {
         this.apiClient = apiClient;
     }
 
+    
     /**
      * Create user
      * This can only be done by the logged in user.
      * <p><b>0</b> - successful operation
-     * @param body Created user object
+     * @param user Created user object
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
-    public void createUser(User body) throws RestClientException {
-        Object postBody = body;
+    public void createUser(User user) throws RestClientException {
+        Object postBody = user;
         
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling createUser");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'user' when calling createUser");
         }
         
         String path = UriComponentsBuilder.fromPath("/user").build().toUriString();
@@ -66,11 +70,11 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = { 
+            "*/*"
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -78,12 +82,14 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Creates list of users with given input array
      * 
      * <p><b>0</b> - successful operation
      * @param body List of user object
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public void createUsersWithArrayInput(List<User> body) throws RestClientException {
         Object postBody = body;
@@ -99,11 +105,11 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = { 
+            "*/*"
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -111,12 +117,14 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Creates list of users with given input array
      * 
      * <p><b>0</b> - successful operation
      * @param body List of user object
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public void createUsersWithListInput(List<User> body) throws RestClientException {
         Object postBody = body;
@@ -132,11 +140,11 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = { 
+            "*/*"
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -144,6 +152,7 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -151,6 +160,7 @@ public class UserApi {
      * <p><b>404</b> - User not found
      * @param username The name that needs to be deleted
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public void deleteUser(String username) throws RestClientException {
         Object postBody = null;
@@ -169,11 +179,9 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = {  };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -181,6 +189,7 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Get user by user name
      * 
@@ -190,6 +199,7 @@ public class UserApi {
      * @param username The name that needs to be fetched. Use user1 for testing. 
      * @return User
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public User getUserByName(String username) throws RestClientException {
         Object postBody = null;
@@ -210,9 +220,9 @@ public class UserApi {
 
         final String[] accepts = { 
             "application/xml", "application/json"
-        };
+         };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = {  };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -220,6 +230,7 @@ public class UserApi {
         ParameterizedTypeReference<User> returnType = new ParameterizedTypeReference<User>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Logs user into the system
      * 
@@ -229,6 +240,7 @@ public class UserApi {
      * @param password The password for login in clear text
      * @return String
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public String loginUser(String username, String password) throws RestClientException {
         Object postBody = null;
@@ -254,9 +266,9 @@ public class UserApi {
 
         final String[] accepts = { 
             "application/xml", "application/json"
-        };
+         };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = {  };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -264,11 +276,13 @@ public class UserApi {
         ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Logs out current logged in user session
      * 
      * <p><b>0</b> - successful operation
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
     public void logoutUser() throws RestClientException {
         Object postBody = null;
@@ -279,11 +293,9 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = {  };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -291,26 +303,28 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
     /**
      * Updated user
      * This can only be done by the logged in user.
      * <p><b>400</b> - Invalid user supplied
      * <p><b>404</b> - User not found
+     * @param user Updated user object
      * @param username name that need to be deleted
-     * @param body Updated user object
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
-    public void updateUser(String username, User body) throws RestClientException {
-        Object postBody = body;
+    public void updateUser(User user, String username) throws RestClientException {
+        Object postBody = user;
+        
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'user' when calling updateUser");
+        }
         
         // verify the required parameter 'username' is set
         if (username == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'username' when calling updateUser");
-        }
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updateUser");
         }
         
         // create path and map variables
@@ -322,11 +336,11 @@ public class UserApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
-            "application/xml", "application/json"
-        };
+        final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { };
+        final String[] contentTypes = { 
+            "*/*"
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -334,4 +348,6 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
 }
+

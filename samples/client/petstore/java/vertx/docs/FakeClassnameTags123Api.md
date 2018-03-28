@@ -7,33 +7,28 @@ Method | HTTP request | Description
 [**testClassname**](FakeClassnameTags123Api.md#testClassname) | **PATCH** /fake_classname_test | To test class name in snake case
 
 
+
+
 <a name="testClassname"></a>
 # **testClassname**
-> Client testClassname(body)
+> Client testClassname(client)
 
 To test class name in snake case
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
 //import io.swagger.client.api.FakeClassnameTags123Api;
 
-ApiClient defaultClient = Configuration.getDefaultApiClient();
 
-// Configure API key authorization: api_key_query
-ApiKeyAuth api_key_query = (ApiKeyAuth) defaultClient.getAuthentication("api_key_query");
-api_key_query.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//api_key_query.setApiKeyPrefix("Token");
 
 FakeClassnameTags123Api apiInstance = new FakeClassnameTags123Api();
-Client body = new Client(); // Client | client model
+
+Client client = ; // Client | client model
+
 try {
-    Client result = apiInstance.testClassname(body);
+    Client result = apiInstance.testClassname(client);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeClassnameTags123Api#testClassname");
@@ -45,7 +40,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md)| client model |
+ **client** | [**Client**](.md)| client model |
+
 
 ### Return type
 
@@ -59,4 +55,6 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+
 

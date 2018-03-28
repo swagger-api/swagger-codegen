@@ -14,9 +14,11 @@ Method | HTTP request | Description
 [**updateUser**](UserApi.md#updateUser) | **PUT** /user/{username} | Updated user
 
 
+
+
 <a name="createUser"></a>
 # **createUser**
-> createUser(body)
+> createUser(user)
 
 Create user
 
@@ -29,10 +31,13 @@ This can only be done by the logged in user.
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-User body = new User(); // User | Created user object
+
+User user = ; // User | Created user object
+
 try {
-    apiInstance.createUser(body);
+    apiInstance.createUser(user);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#createUser");
     e.printStackTrace();
@@ -43,7 +48,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**User**](User.md)| Created user object |
+ **user** | [**User**](.md)| Created user object |
+
 
 ### Return type
 
@@ -55,16 +61,15 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
+
 
 <a name="createUsersWithArrayInput"></a>
 # **createUsersWithArrayInput**
 > createUsersWithArrayInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```java
@@ -73,8 +78,11 @@ Creates list of users with given input array
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-List<User> body = Arrays.asList(new User()); // List<User> | List of user object
+
+List<User> body = ; // List<User> | List of user object
+
 try {
     apiInstance.createUsersWithArrayInput(body);
 } catch (ApiException e) {
@@ -89,6 +97,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**List&lt;User&gt;**](User.md)| List of user object |
 
+
 ### Return type
 
 null (empty response body)
@@ -99,16 +108,15 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
+
 
 <a name="createUsersWithListInput"></a>
 # **createUsersWithListInput**
 > createUsersWithListInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```java
@@ -117,8 +125,11 @@ Creates list of users with given input array
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-List<User> body = Arrays.asList(new User()); // List<User> | List of user object
+
+List<User> body = ; // List<User> | List of user object
+
 try {
     apiInstance.createUsersWithListInput(body);
 } catch (ApiException e) {
@@ -133,6 +144,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**List&lt;User&gt;**](User.md)| List of user object |
 
+
 ### Return type
 
 null (empty response body)
@@ -143,8 +155,9 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
+
 
 <a name="deleteUser"></a>
 # **deleteUser**
@@ -161,8 +174,11 @@ This can only be done by the logged in user.
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | The name that needs to be deleted
+
+String username = Arrays.asList("username_example"); // String | The name that needs to be deleted
+
 try {
     apiInstance.deleteUser(username);
 } catch (ApiException e) {
@@ -175,7 +191,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be deleted |
+ **username** | [**String**](.md)| The name that needs to be deleted |
+
 
 ### Return type
 
@@ -188,15 +205,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
+
 
 <a name="getUserByName"></a>
 # **getUserByName**
 > User getUserByName(username)
 
 Get user by user name
-
-
 
 ### Example
 ```java
@@ -205,8 +221,11 @@ Get user by user name
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+
+String username = Arrays.asList("username_example"); // String | The name that needs to be fetched. Use user1 for testing. 
+
 try {
     User result = apiInstance.getUserByName(username);
     System.out.println(result);
@@ -220,7 +239,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  |
+ **username** | [**String**](.md)| The name that needs to be fetched. Use user1 for testing.  |
+
 
 ### Return type
 
@@ -235,13 +255,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
 
+
 <a name="loginUser"></a>
 # **loginUser**
 > String loginUser(username, password)
 
 Logs user into the system
-
-
 
 ### Example
 ```java
@@ -250,9 +269,13 @@ Logs user into the system
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | The user name for login
-String password = "password_example"; // String | The password for login in clear text
+
+String username = Arrays.asList("username_example"); // String | The user name for login
+
+String password = Arrays.asList("password_example"); // String | The password for login in clear text
+
 try {
     String result = apiInstance.loginUser(username, password);
     System.out.println(result);
@@ -266,8 +289,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The user name for login |
- **password** | **String**| The password for login in clear text |
+ **username** | [**String**](.md)| The user name for login |
+ **password** | [**String**](.md)| The password for login in clear text |
+
 
 ### Return type
 
@@ -282,13 +306,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
 
+
 <a name="logoutUser"></a>
 # **logoutUser**
 > logoutUser()
 
 Logs out current logged in user session
-
-
 
 ### Example
 ```java
@@ -297,7 +320,9 @@ Logs out current logged in user session
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
+
 try {
     apiInstance.logoutUser();
 } catch (ApiException e) {
@@ -308,6 +333,7 @@ try {
 
 ### Parameters
 This endpoint does not need any parameter.
+
 
 ### Return type
 
@@ -320,11 +346,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
+
 
 <a name="updateUser"></a>
 # **updateUser**
-> updateUser(username, body)
+> updateUser(user, username)
 
 Updated user
 
@@ -337,11 +364,15 @@ This can only be done by the logged in user.
 //import io.swagger.client.api.UserApi;
 
 
+
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | name that need to be deleted
-User body = new User(); // User | Updated user object
+
+User user = ; // User | Updated user object
+
+String username = Arrays.asList("username_example"); // String | name that need to be deleted
+
 try {
-    apiInstance.updateUser(username, body);
+    apiInstance.updateUser(user, username);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#updateUser");
     e.printStackTrace();
@@ -352,8 +383,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| name that need to be deleted |
- **body** | [**User**](User.md)| Updated user object |
+ **user** | [**User**](.md)| Updated user object |
+ **username** | [**String**](.md)| name that need to be deleted |
+
 
 ### Return type
 
@@ -365,6 +397,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
+
+
 

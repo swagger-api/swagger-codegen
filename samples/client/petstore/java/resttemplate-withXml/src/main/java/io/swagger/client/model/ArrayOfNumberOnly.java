@@ -33,40 +33,41 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ArrayOfNumberOnly")
 public class ArrayOfNumberOnly {
-  @JsonProperty("ArrayNumber")
-  // Is a container wrapped=false
-  // items.name=arrayNumber items.baseName=arrayNumber items.xmlName= items.xmlNamespace=
-  // items.example= items.type=BigDecimal
-  @XmlElement(name = "arrayNumber")
-  private List<BigDecimal> arrayNumber = null;
 
+  @JsonProperty("ArrayNumber")
+  
+  
+  @XmlElement(name="null")
+  
+  private List<BigDecimal> arrayNumber = null;
+  
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
   }
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
+    
     if (this.arrayNumber == null) {
       this.arrayNumber = new ArrayList<BigDecimal>();
     }
+    
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
-
-   /**
-   * Get arrayNumber
-   * @return arrayNumber
+  
+  /**
+  * Get arrayNumber
+  * @return arrayNumber
   **/
   @ApiModelProperty(value = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
-
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -83,8 +84,7 @@ public class ArrayOfNumberOnly {
   public int hashCode() {
     return Objects.hash(arrayNumber);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -106,5 +106,8 @@ public class ArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

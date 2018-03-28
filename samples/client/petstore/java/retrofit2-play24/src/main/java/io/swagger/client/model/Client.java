@@ -27,28 +27,33 @@ import javax.validation.Valid;
  */
 
 public class Client {
+
   @JsonProperty("client")
   private String client = null;
-
+  
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-   /**
-   * Get client
-   * @return client
+  
+  /**
+  * Get client
+  * @return client
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public String getClient() {
     return client;
   }
-
   public void setClient(String client) {
     this.client = client;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,8 +70,7 @@ public class Client {
   public int hashCode() {
     return Objects.hash(client);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -88,5 +92,8 @@ public class Client {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

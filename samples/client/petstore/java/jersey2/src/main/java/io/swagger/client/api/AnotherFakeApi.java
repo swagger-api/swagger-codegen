@@ -9,10 +9,14 @@ import javax.ws.rs.core.GenericType;
 
 import io.swagger.client.model.Client;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 
 public class AnotherFakeApi {
@@ -34,19 +38,27 @@ public class AnotherFakeApi {
     this.apiClient = apiClient;
   }
 
+  
   /**
    * To test special tags
    * To test special tags
-   * @param body client model (required)
+   
+   * @param client client model (required)
+   
+   
    * @return Client
+   
    * @throws ApiException if fails to make API call
+   
+   
    */
-  public Client testSpecialTags(Client body) throws ApiException {
-    Object localVarPostBody = body;
+  
+  public Client testSpecialTags(Client client) throws ApiException {
+    Object localVarPostBody = client;
     
-    // verify the required parameter 'body' is set
-    if (body == null) {
-      throw new ApiException(400, "Missing the required parameter 'body' when calling testSpecialTags");
+    // verify the required parameter 'client' is set
+    if (client == null) {
+      throw new ApiException(400, "Missing the required parameter 'client' when calling testSpecialTags");
     }
     
     // create path and map variables
@@ -57,9 +69,12 @@ public class AnotherFakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
+
     
+
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -72,7 +87,11 @@ public class AnotherFakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+    
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
     return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+    
+  }
+  
 }
+

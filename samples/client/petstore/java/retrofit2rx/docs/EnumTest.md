@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **outerEnum** | [**OuterEnum**](OuterEnum.md) |  |  [optional]
 
 
+
 <a name="EnumStringEnum"></a>
 ## Enum: EnumStringEnum
 Name | Value
