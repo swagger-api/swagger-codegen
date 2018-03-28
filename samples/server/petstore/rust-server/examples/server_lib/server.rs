@@ -12,11 +12,11 @@ use swagger;
 
 use petstore_api::{Api, ApiError, Context,
                       TestSpecialTagsResponse,
-                      TestBodyWithQueryParamsResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
                       FakeOuterStringSerializeResponse,
+                      TestBodyWithQueryParamsResponse,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
@@ -59,13 +59,6 @@ impl Api<Context> for Server {
     }
 
 
-    fn test_body_with_query_params(&self, body: models::User, query: String, context: &Context) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
-        let context = context.clone();
-        println!("test_body_with_query_params({:?}, \"{}\") - X-Span-ID: {:?}", body, query, context.x_span_id.unwrap_or(String::from("<none>")).clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-
     fn fake_outer_boolean_serialize(&self, body: Option<models::OuterBoolean>, context: &Context) -> Box<Future<Item=FakeOuterBooleanSerializeResponse, Error=ApiError>> {
         let context = context.clone();
         println!("fake_outer_boolean_serialize({:?}) - X-Span-ID: {:?}", body, context.x_span_id.unwrap_or(String::from("<none>")).clone());
@@ -90,6 +83,13 @@ impl Api<Context> for Server {
     fn fake_outer_string_serialize(&self, body: Option<models::OuterString>, context: &Context) -> Box<Future<Item=FakeOuterStringSerializeResponse, Error=ApiError>> {
         let context = context.clone();
         println!("fake_outer_string_serialize({:?}) - X-Span-ID: {:?}", body, context.x_span_id.unwrap_or(String::from("<none>")).clone());
+        Box::new(futures::failed("Generic failure".into()))
+    }
+
+
+    fn test_body_with_query_params(&self, body: models::User, query: String, context: &Context) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
+        let context = context.clone();
+        println!("test_body_with_query_params({:?}, \"{}\") - X-Span-ID: {:?}", body, query, context.x_span_id.unwrap_or(String::from("<none>")).clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 

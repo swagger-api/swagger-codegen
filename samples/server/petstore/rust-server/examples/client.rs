@@ -17,11 +17,11 @@ use tokio_core::reactor;
 use petstore_api::{ApiNoContext, ContextWrapperExt,
                       ApiError,
                       TestSpecialTagsResponse,
-                      TestBodyWithQueryParamsResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
                       FakeOuterStringSerializeResponse,
+                      TestBodyWithQueryParamsResponse,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
@@ -123,12 +123,6 @@ fn main() {
         //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
         //  },
 
-        // Disabled because there's no example.
-        // Some("TestBodyWithQueryParams") => {
-        //     let result = core.run(client.test_body_with_query_params(???, "query_example".to_string()));
-        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
-        //  },
-
         Some("FakeOuterBooleanSerialize") => {
             let result = core.run(client.fake_outer_boolean_serialize(None));
             println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
@@ -148,6 +142,12 @@ fn main() {
             let result = core.run(client.fake_outer_string_serialize(None));
             println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
          },
+
+        // Disabled because there's no example.
+        // Some("TestBodyWithQueryParams") => {
+        //     let result = core.run(client.test_body_with_query_params(???, "query_example".to_string()));
+        //     println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
+        //  },
 
         // Disabled because there's no example.
         // Some("TestClientModel") => {
