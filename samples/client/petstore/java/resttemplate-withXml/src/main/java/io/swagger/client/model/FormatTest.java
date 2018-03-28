@@ -34,316 +34,310 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "FormatTest")
 public class FormatTest {
+
   @JsonProperty("integer")
   @JacksonXmlProperty(localName = "integer")
-  @XmlElement(name = "integer")
+  @XmlElement(name="integer")
   private Integer integer = null;
-
+  
   @JsonProperty("int32")
   @JacksonXmlProperty(localName = "int32")
-  @XmlElement(name = "int32")
+  @XmlElement(name="int32")
   private Integer int32 = null;
-
+  
   @JsonProperty("int64")
   @JacksonXmlProperty(localName = "int64")
-  @XmlElement(name = "int64")
+  @XmlElement(name="int64")
   private Long int64 = null;
-
+  
   @JsonProperty("number")
   @JacksonXmlProperty(localName = "number")
-  @XmlElement(name = "number")
+  @XmlElement(name="number")
   private BigDecimal number = null;
-
+  
   @JsonProperty("float")
   @JacksonXmlProperty(localName = "float")
-  @XmlElement(name = "float")
+  @XmlElement(name="float")
   private Float _float = null;
-
+  
   @JsonProperty("double")
   @JacksonXmlProperty(localName = "double")
-  @XmlElement(name = "double")
+  @XmlElement(name="double")
   private Double _double = null;
-
+  
   @JsonProperty("string")
   @JacksonXmlProperty(localName = "string")
-  @XmlElement(name = "string")
+  @XmlElement(name="string")
   private String string = null;
-
+  
   @JsonProperty("byte")
   @JacksonXmlProperty(localName = "byte")
-  @XmlElement(name = "byte")
-  private byte[] _byte = null;
-
+  @XmlElement(name="byte")
+  private String _byte = null;
+  
   @JsonProperty("binary")
   @JacksonXmlProperty(localName = "binary")
-  @XmlElement(name = "binary")
-  private byte[] binary = null;
-
+  @XmlElement(name="binary")
+  private String binary = null;
+  
   @JsonProperty("date")
   @JacksonXmlProperty(localName = "date")
-  @XmlElement(name = "date")
+  @XmlElement(name="date")
   private LocalDate date = null;
-
+  
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
-  @XmlElement(name = "dateTime")
+  @XmlElement(name="dateTime")
   private OffsetDateTime dateTime = null;
-
+  
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
-  @XmlElement(name = "uuid")
+  @XmlElement(name="uuid")
   private UUID uuid = null;
-
+  
   @JsonProperty("password")
   @JacksonXmlProperty(localName = "password")
-  @XmlElement(name = "password")
+  @XmlElement(name="password")
   private String password = null;
-
+  
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;
   }
 
-   /**
-   * Get integer
-   * minimum: 10
-   * maximum: 100
-   * @return integer
+  
+  /**
+  * Get integer
+  * minimum: 10
+  * maximum: 100
+  * @return integer
   **/
   @ApiModelProperty(value = "")
   public Integer getInteger() {
     return integer;
   }
-
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
-
+  
   public FormatTest int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
 
-   /**
-   * Get int32
-   * minimum: 20
-   * maximum: 200
-   * @return int32
+  
+  /**
+  * Get int32
+  * minimum: 20
+  * maximum: 200
+  * @return int32
   **/
   @ApiModelProperty(value = "")
   public Integer getInt32() {
     return int32;
   }
-
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
-
+  
   public FormatTest int64(Long int64) {
     this.int64 = int64;
     return this;
   }
 
-   /**
-   * Get int64
-   * @return int64
+  
+  /**
+  * Get int64
+  * @return int64
   **/
   @ApiModelProperty(value = "")
   public Long getInt64() {
     return int64;
   }
-
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
-
+  
   public FormatTest number(BigDecimal number) {
     this.number = number;
     return this;
   }
 
-   /**
-   * Get number
-   * minimum: 32.1
-   * maximum: 543.2
-   * @return number
+  
+  /**
+  * Get number
+  * @return number
   **/
   @ApiModelProperty(required = true, value = "")
   public BigDecimal getNumber() {
     return number;
   }
-
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
-
+  
   public FormatTest _float(Float _float) {
     this._float = _float;
     return this;
   }
 
-   /**
-   * Get _float
-   * minimum: 54.3
-   * maximum: 987.6
-   * @return _float
+  
+  /**
+  * Get _float
+  * @return _float
   **/
   @ApiModelProperty(value = "")
   public Float getFloat() {
     return _float;
   }
-
   public void setFloat(Float _float) {
     this._float = _float;
   }
-
+  
   public FormatTest _double(Double _double) {
     this._double = _double;
     return this;
   }
 
-   /**
-   * Get _double
-   * minimum: 67.8
-   * maximum: 123.4
-   * @return _double
+  
+  /**
+  * Get _double
+  * @return _double
   **/
   @ApiModelProperty(value = "")
   public Double getDouble() {
     return _double;
   }
-
   public void setDouble(Double _double) {
     this._double = _double;
   }
-
+  
   public FormatTest string(String string) {
     this.string = string;
     return this;
   }
 
-   /**
-   * Get string
-   * @return string
+  
+  /**
+  * Get string
+  * @return string
   **/
   @ApiModelProperty(value = "")
   public String getString() {
     return string;
   }
-
   public void setString(String string) {
     this.string = string;
   }
-
-  public FormatTest _byte(byte[] _byte) {
+  
+  public FormatTest _byte(String _byte) {
     this._byte = _byte;
     return this;
   }
 
-   /**
-   * Get _byte
-   * @return _byte
+  
+  /**
+  * Get _byte
+  * @return _byte
   **/
   @ApiModelProperty(required = true, value = "")
-  public byte[] getByte() {
+  public String getByte() {
     return _byte;
   }
-
-  public void setByte(byte[] _byte) {
+  public void setByte(String _byte) {
     this._byte = _byte;
   }
-
-  public FormatTest binary(byte[] binary) {
+  
+  public FormatTest binary(String binary) {
     this.binary = binary;
     return this;
   }
 
-   /**
-   * Get binary
-   * @return binary
+  
+  /**
+  * Get binary
+  * @return binary
   **/
   @ApiModelProperty(value = "")
-  public byte[] getBinary() {
+  public String getBinary() {
     return binary;
   }
-
-  public void setBinary(byte[] binary) {
+  public void setBinary(String binary) {
     this.binary = binary;
   }
-
+  
   public FormatTest date(LocalDate date) {
     this.date = date;
     return this;
   }
 
-   /**
-   * Get date
-   * @return date
+  
+  /**
+  * Get date
+  * @return date
   **/
   @ApiModelProperty(required = true, value = "")
   public LocalDate getDate() {
     return date;
   }
-
   public void setDate(LocalDate date) {
     this.date = date;
   }
-
+  
   public FormatTest dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-   /**
-   * Get dateTime
-   * @return dateTime
+  
+  /**
+  * Get dateTime
+  * @return dateTime
   **/
   @ApiModelProperty(value = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
-
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
-
+  
   public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-   /**
-   * Get uuid
-   * @return uuid
+  
+  /**
+  * Get uuid
+  * @return uuid
   **/
   @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;
   }
-
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
-
+  
   public FormatTest password(String password) {
     this.password = password;
     return this;
   }
 
-   /**
-   * Get password
-   * @return password
+  
+  /**
+  * Get password
+  * @return password
   **/
   @ApiModelProperty(required = true, value = "")
   public String getPassword() {
     return password;
   }
-
   public void setPassword(String password) {
     this.password = password;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -372,8 +366,7 @@ public class FormatTest {
   public int hashCode() {
     return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -407,5 +400,8 @@ public class FormatTest {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

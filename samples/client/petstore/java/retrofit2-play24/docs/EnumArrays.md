@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **arrayEnum** | [**List&lt;ArrayEnumEnum&gt;**](#List&lt;ArrayEnumEnum&gt;) |  |  [optional]
 
 
+
 <a name="JustSymbolEnum"></a>
 ## Enum: JustSymbolEnum
 Name | Value
@@ -20,8 +21,6 @@ DOLLAR | &quot;$&quot;
 ## Enum: List&lt;ArrayEnumEnum&gt;
 Name | Value
 ---- | -----
-FISH | &quot;fish&quot;
-CRAB | &quot;crab&quot;
 
 
 

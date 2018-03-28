@@ -24,32 +24,36 @@ import javax.validation.Valid;
 
 /**
  * Model for testing reserved words
- */
-@ApiModel(description = "Model for testing reserved words")
+ */@ApiModel(description = "Model for testing reserved words")
 
 public class ModelReturn {
+
   @JsonProperty("return")
   private Integer _return = null;
-
+  
   public ModelReturn _return(Integer _return) {
     this._return = _return;
     return this;
   }
 
-   /**
-   * Get _return
-   * @return _return
+  
+  /**
+  * Get _return
+  * @return _return
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public Integer getReturn() {
     return _return;
   }
-
   public void setReturn(Integer _return) {
     this._return = _return;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -66,8 +70,7 @@ public class ModelReturn {
   public int hashCode() {
     return Objects.hash(_return);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -89,5 +92,8 @@ public class ModelReturn {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

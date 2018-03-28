@@ -14,6 +14,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.model.Order;
 
+
 import io.swagger.client.Configuration;
 
 import org.junit.Test;
@@ -31,10 +32,12 @@ import io.vertx.ext.unit.junit.RunTestOnContext;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.Async;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for StoreApi
@@ -66,7 +69,9 @@ public class StoreApiTest {
     @Test
     public void deleteOrderTest(TestContext context) {
         Async async = context.async();
+        
         String orderId = null;
+        
         api.deleteOrder(orderId, result -> {
             // TODO: test validations
             async.complete();
@@ -82,6 +87,7 @@ public class StoreApiTest {
     @Test
     public void getInventoryTest(TestContext context) {
         Async async = context.async();
+        
         api.getInventory(result -> {
             // TODO: test validations
             async.complete();
@@ -97,7 +103,9 @@ public class StoreApiTest {
     @Test
     public void getOrderByIdTest(TestContext context) {
         Async async = context.async();
-        Long orderId = null;
+        
+        Integer orderId = null;
+        
         api.getOrderById(orderId, result -> {
             // TODO: test validations
             async.complete();
@@ -113,8 +121,10 @@ public class StoreApiTest {
     @Test
     public void placeOrderTest(TestContext context) {
         Async async = context.async();
-        Order body = null;
-        api.placeOrder(body, result -> {
+        
+        Order order = null;
+        
+        api.placeOrder(order, result -> {
             // TODO: test validations
             async.complete();
         });

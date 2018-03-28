@@ -30,96 +30,120 @@ import javax.validation.Valid;
  */
 
 public class ArrayTest {
+
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = null;
-
+  
   @JsonProperty("array_array_of_integer")
   private List<List<Long>> arrayArrayOfInteger = null;
-
+  
   @JsonProperty("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-
+  
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
   }
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
+    
     if (this.arrayOfString == null) {
       this.arrayOfString = new ArrayList<>();
     }
+    
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
-
-   /**
-   * Get arrayOfString
-   * @return arrayOfString
+  
+  /**
+  * Get arrayOfString
+  * @return arrayOfString
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
-
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
-
+  
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
   }
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
+    
     if (this.arrayArrayOfInteger == null) {
       this.arrayArrayOfInteger = new ArrayList<>();
     }
+    
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
-
-   /**
-   * Get arrayArrayOfInteger
-   * @return arrayArrayOfInteger
+  
+  /**
+  * Get arrayArrayOfInteger
+  * @return arrayArrayOfInteger
   **/
+  
+
+
+
   @Valid
-  @ApiModelProperty(value = "")
+
+
+
+
+@ApiModelProperty(value = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
-
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
-
+  
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
   }
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
+    
     if (this.arrayArrayOfModel == null) {
       this.arrayArrayOfModel = new ArrayList<>();
     }
+    
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
-
-   /**
-   * Get arrayArrayOfModel
-   * @return arrayArrayOfModel
+  
+  /**
+  * Get arrayArrayOfModel
+  * @return arrayArrayOfModel
   **/
+  
+
+
+
   @Valid
-  @ApiModelProperty(value = "")
+
+
+
+
+@ApiModelProperty(value = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
-
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -138,8 +162,7 @@ public class ArrayTest {
   public int hashCode() {
     return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -163,5 +186,8 @@ public class ArrayTest {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 
