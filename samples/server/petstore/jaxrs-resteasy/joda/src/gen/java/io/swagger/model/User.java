@@ -5,12 +5,21 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
+
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 import io.swagger.annotations.*;
 
 @ApiModel(description="A User who is purchasing from the pet store")
 
 public class User   {
+
   
   private Long id = null;
   private String username = null;
@@ -21,11 +30,16 @@ public class User   {
   private String phone = null;
   private Integer userStatus = null;
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -33,11 +47,16 @@ public class User   {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("username")
+
   public String getUsername() {
     return username;
   }
@@ -45,11 +64,16 @@ public class User   {
     this.username = username;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("firstName")
+
   public String getFirstName() {
     return firstName;
   }
@@ -57,11 +81,16 @@ public class User   {
     this.firstName = firstName;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("lastName")
+
   public String getLastName() {
     return lastName;
   }
@@ -69,11 +98,16 @@ public class User   {
     this.lastName = lastName;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("email")
+
   public String getEmail() {
     return email;
   }
@@ -81,11 +115,16 @@ public class User   {
     this.email = email;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("password")
+
   public String getPassword() {
     return password;
   }
@@ -93,11 +132,16 @@ public class User   {
     this.password = password;
   }
 
+  
   /**
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "")
   @JsonProperty("phone")
+
   public String getPhone() {
     return phone;
   }
@@ -105,12 +149,18 @@ public class User   {
     this.phone = phone;
   }
 
+  
   /**
+   
    * User Status
+   
+   
+   
    **/
   
   @ApiModelProperty(value = "User Status")
   @JsonProperty("userStatus")
+
   public Integer getUserStatus() {
     return userStatus;
   }
@@ -118,6 +168,7 @@ public class User   {
     this.userStatus = userStatus;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -171,4 +222,7 @@ public class User   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

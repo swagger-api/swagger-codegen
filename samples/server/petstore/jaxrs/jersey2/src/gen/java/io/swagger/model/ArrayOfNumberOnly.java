@@ -13,7 +13,10 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -21,42 +24,79 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * ArrayOfNumberOnly
  */
 
 public class ArrayOfNumberOnly   {
+  
+    
+    
+  
   @JsonProperty("ArrayNumber")
+  
+  
+  
   private List<BigDecimal> arrayNumber = null;
+  
+  
 
+  
+  
+  
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
   }
+  
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
+    
     if (this.arrayNumber == null) {
       this.arrayNumber = new ArrayList<BigDecimal>();
     }
+    
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get arrayNumber
+  
+  
+  
    * @return arrayNumber
    **/
+ 
+  
   @JsonProperty("ArrayNumber")
+  
   @ApiModelProperty(value = "")
+
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
+  
 
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
+  
+
+  
 
 
   @Override
@@ -75,6 +115,8 @@ public class ArrayOfNumberOnly   {
   public int hashCode() {
     return Objects.hash(arrayNumber);
   }
+
+
 
 
   @Override
@@ -98,4 +140,6 @@ public class ArrayOfNumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

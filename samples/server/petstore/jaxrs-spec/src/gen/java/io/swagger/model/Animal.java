@@ -2,9 +2,16 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -17,7 +24,11 @@ public class Animal  implements Serializable {
   private @Valid String className = null;
   private @Valid String color = "red";
 
+  
   /**
+   
+   
+   
    **/
   public Animal className(String className) {
     this.className = className;
@@ -27,7 +38,9 @@ public class Animal  implements Serializable {
   
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("className")
+
   @NotNull
+
   public String getClassName() {
     return className;
   }
@@ -35,7 +48,11 @@ public class Animal  implements Serializable {
     this.className = className;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Animal color(String color) {
     this.color = color;
@@ -45,6 +62,7 @@ public class Animal  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("color")
+
   public String getColor() {
     return color;
   }
@@ -52,6 +70,7 @@ public class Animal  implements Serializable {
     this.color = color;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -93,4 +112,6 @@ public class Animal  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

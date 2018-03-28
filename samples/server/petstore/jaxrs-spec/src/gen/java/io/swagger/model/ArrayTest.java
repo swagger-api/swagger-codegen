@@ -3,9 +3,16 @@ package io.swagger.model;
 import io.swagger.model.ReadOnlyFirst;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -19,7 +26,11 @@ public class ArrayTest  implements Serializable {
   private @Valid List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
   private @Valid List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
 
+  
   /**
+   
+   
+   
    **/
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
@@ -29,6 +40,7 @@ public class ArrayTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_of_string")
+
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -36,7 +48,11 @@ public class ArrayTest  implements Serializable {
     this.arrayOfString = arrayOfString;
   }
 
+  
   /**
+   
+   
+   
    **/
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
@@ -46,6 +62,7 @@ public class ArrayTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_integer")
+
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -53,7 +70,11 @@ public class ArrayTest  implements Serializable {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
 
+  
   /**
+   
+   
+   
    **/
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
@@ -63,6 +84,7 @@ public class ArrayTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_model")
+
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
@@ -70,6 +92,7 @@ public class ArrayTest  implements Serializable {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -113,4 +136,6 @@ public class ArrayTest  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 
