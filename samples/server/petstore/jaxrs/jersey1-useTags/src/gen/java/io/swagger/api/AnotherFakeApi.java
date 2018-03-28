@@ -8,9 +8,12 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
 import com.sun.jersey.multipart.FormDataParam;
+
 import javax.validation.constraints.*;
 
+
 import io.swagger.model.Client;
+
 
 import java.util.Map;
 import java.util.List;
@@ -31,8 +34,10 @@ import javax.ws.rs.*;
 
 @io.swagger.annotations.Api(description = "the AnotherFake API")
 
+
 public class AnotherFakeApi  {
    private final AnotherFakeApiService delegate = AnotherFakeApiServiceFactory.getAnotherFakeApi();
+
 
     @PATCH
     
@@ -42,9 +47,12 @@ public class AnotherFakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testSpecialTags(
-        @ApiParam(value = "client model" ,required=true) Client body,
+        @ApiParam(value = "client model" ,required=true) Client client
+,
         @Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testSpecialTags(body,securityContext);
+        return delegate.testSpecialTags(client,securityContext);
     }
+
 }
+

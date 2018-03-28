@@ -1,6 +1,13 @@
 package io.swagger.model;
 
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,22 +19,44 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class Tag  {
   
-  @ApiModelProperty(value = "")
-  private Long id = null;
 
   @ApiModelProperty(value = "")
+
+
+
+  private Long id = null;
+
+  
+
+  @ApiModelProperty(value = "")
+
+
+
   private String name = null;
+
+  
+  
  /**
+  
+  
    * Get id
+  
+  
+  
    * @return id
   **/
   @JsonProperty("id")
+
+
   public Long getId() {
     return id;
   }
 
+  
   public void setId(Long id) {
     this.id = id;
   }
@@ -36,16 +65,28 @@ public class Tag  {
     this.id = id;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get name
+  
+  
+  
    * @return name
   **/
   @JsonProperty("name")
+
+
   public String getName() {
     return name;
   }
 
+  
   public void setName(String name) {
     this.name = name;
   }
@@ -54,7 +95,11 @@ public class Tag  {
     this.name = name;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -78,4 +123,7 @@ public class Tag  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

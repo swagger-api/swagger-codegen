@@ -8,6 +8,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import java.util.Map;
 import io.swagger.model.Order;
 
+
 import java.util.List;
 
 import java.io.InputStream;
@@ -18,25 +19,32 @@ import javax.ws.rs.core.SecurityContext;
 
 @RequestScoped
 
+
 public class StoreApiServiceImpl implements StoreApiService {
+  
       @Override
       public Response deleteOrder(String orderId, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
+  
       @Override
       public Response getInventory(SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
+  
       @Override
-      public Response getOrderById(Long orderId, SecurityContext securityContext) {
+      public Response getOrderById(Integer orderId, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
+  
       @Override
-      public Response placeOrder(Order body, SecurityContext securityContext) {
+      public Response placeOrder(Order order, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
+  
 }
+

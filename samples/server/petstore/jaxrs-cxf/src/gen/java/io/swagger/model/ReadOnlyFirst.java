@@ -1,6 +1,13 @@
 package io.swagger.model;
 
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,32 +19,74 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class ReadOnlyFirst  {
   
-  @ApiModelProperty(value = "")
-  private String bar = null;
 
   @ApiModelProperty(value = "")
+
+
+
+  private String bar = null;
+
+  
+
+  @ApiModelProperty(value = "")
+
+
+
   private String baz = null;
+
+  
+  
  /**
+  
+  
    * Get bar
+  
+  
+  
    * @return bar
   **/
   @JsonProperty("bar")
+
+
   public String getBar() {
     return bar;
   }
 
+  
+  public void setBar(String bar) {
+    this.bar = bar;
+  }
 
+  public ReadOnlyFirst bar(String bar) {
+    this.bar = bar;
+    return this;
+  }
+  
+  
+  
+
+  
  /**
+  
+  
    * Get baz
+  
+  
+  
    * @return baz
   **/
   @JsonProperty("baz")
+
+
   public String getBaz() {
     return baz;
   }
 
+  
   public void setBaz(String baz) {
     this.baz = baz;
   }
@@ -46,7 +95,11 @@ public class ReadOnlyFirst  {
     this.baz = baz;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -70,4 +123,7 @@ public class ReadOnlyFirst  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

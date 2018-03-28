@@ -13,29 +13,50 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.OuterEnum;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * EnumTest
  */
 
 public class EnumTest   {
+  
+    
+    
   /**
    * Gets or Sets enumString
    */
   public enum EnumStringEnum {
+    
+    
+        
+            
     UPPER("UPPER"),
     
+            
     LOWER("lower"),
     
+            
     EMPTY("");
+            
+        
+    
 
     private String value;
 
@@ -60,16 +81,36 @@ public class EnumTest   {
     }
   }
 
+    
+    
+    
+  
   @JsonProperty("enum_string")
+  
+  
+  
+  
   private EnumStringEnum enumString = null;
+  
 
+  
+    
+    
   /**
    * Gets or Sets enumInteger
    */
   public enum EnumIntegerEnum {
+    
+    
+        
+            
     NUMBER_1(1),
     
+            
     NUMBER_MINUS_1(-1);
+            
+        
+    
 
     private Integer value;
 
@@ -94,16 +135,36 @@ public class EnumTest   {
     }
   }
 
+    
+    
+    
+  
   @JsonProperty("enum_integer")
+  
+  
+  
+  
   private EnumIntegerEnum enumInteger = null;
+  
 
+  
+    
+    
   /**
    * Gets or Sets enumNumber
    */
   public enum EnumNumberEnum {
+    
+    
+        
+            
     NUMBER_1_DOT_1(1.1),
     
+            
     NUMBER_MINUS_1_DOT_2(-1.2);
+            
+        
+    
 
     private Double value;
 
@@ -128,87 +189,172 @@ public class EnumTest   {
     }
   }
 
+    
+    
+    
+  
   @JsonProperty("enum_number")
+  
+  
+  
+  
   private EnumNumberEnum enumNumber = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("outerEnum")
+  
+  
+  
+  
   private OuterEnum outerEnum = null;
+  
 
+  
+  
+  
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get enumString
+  
+  
+  
    * @return enumString
    **/
+ 
+  
   @JsonProperty("enum_string")
+  
   @ApiModelProperty(value = "")
+
   public EnumStringEnum getEnumString() {
     return enumString;
   }
+  
 
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
+  
 
+  
+  
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get enumInteger
+  
+  
+  
    * @return enumInteger
    **/
+ 
+  
   @JsonProperty("enum_integer")
+  
   @ApiModelProperty(value = "")
+
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
+  
 
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
+  
 
+  
+  
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get enumNumber
+  
+  
+  
    * @return enumNumber
    **/
+ 
+  
   @JsonProperty("enum_number")
+  
   @ApiModelProperty(value = "")
+
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
+  
 
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
+  
 
+  
+  
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get outerEnum
+  
+  
+  
    * @return outerEnum
    **/
+ 
+  
   @JsonProperty("outerEnum")
+  
   @ApiModelProperty(value = "")
+
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
+  
 
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
+  
+
+  
 
 
   @Override
@@ -230,6 +376,8 @@ public class EnumTest   {
   public int hashCode() {
     return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
+
+
 
 
   @Override
@@ -256,4 +404,6 @@ public class EnumTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

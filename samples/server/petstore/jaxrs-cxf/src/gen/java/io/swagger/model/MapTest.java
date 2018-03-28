@@ -3,7 +3,14 @@ package io.swagger.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,17 +22,26 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class MapTest  {
   
+
   @ApiModelProperty(value = "")
+
+
   private Map<String, Map<String, String>> mapMapOfString = null;
 
+
+  
 
 @XmlType(name="InnerEnum")
 @XmlEnum(String.class)
 public enum InnerEnum {
 
+    
 @XmlEnumValue("UPPER") UPPER(String.valueOf("UPPER")), @XmlEnumValue("lower") LOWER(String.valueOf("lower"));
+    
 
 
     private String value;
@@ -53,17 +69,32 @@ public enum InnerEnum {
     }
 }
 
+
   @ApiModelProperty(value = "")
+
+
   private Map<String, InnerEnum> mapOfEnumString = null;
+
+
+  
+  
  /**
+  
+  
    * Get mapMapOfString
+  
+  
+  
    * @return mapMapOfString
   **/
   @JsonProperty("map_map_of_string")
+
+
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
 
+  
   public void setMapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
   }
@@ -72,21 +103,34 @@ public enum InnerEnum {
     this.mapMapOfString = mapMapOfString;
     return this;
   }
+  
+  
 
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
+  
+  
 
+  
  /**
+  
+  
    * Get mapOfEnumString
+  
+  
+  
    * @return mapOfEnumString
   **/
   @JsonProperty("map_of_enum_string")
+
+
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
 
+  
   public void setMapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
   }
@@ -95,12 +139,17 @@ public enum InnerEnum {
     this.mapOfEnumString = mapOfEnumString;
     return this;
   }
+  
+  
 
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -124,4 +173,7 @@ public enum InnerEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

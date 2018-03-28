@@ -13,193 +13,405 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * User
  */
 
 public class User   {
+  
+    
+    
+  
   @JsonProperty("id")
+  
+  
+  
+  
   private Long id = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("username")
+  
+  
+  
+  
   private String username = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("firstName")
+  
+  
+  
+  
   private String firstName = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("lastName")
+  
+  
+  
+  
   private String lastName = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("email")
+  
+  
+  
+  
   private String email = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("password")
+  
+  
+  
+  
   private String password = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("phone")
+  
+  
+  
+  
   private String phone = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("userStatus")
+  
+  
+  
+  
   private Integer userStatus = null;
+  
 
+  
+  
+  
   public User id(Long id) {
     this.id = id;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get id
+  
+  
+  
    * @return id
    **/
+ 
+  
   @JsonProperty("id")
+  
   @ApiModelProperty(value = "")
+
   public Long getId() {
     return id;
   }
+  
 
   public void setId(Long id) {
     this.id = id;
   }
+  
 
+  
+  
   public User username(String username) {
     this.username = username;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get username
+  
+  
+  
    * @return username
    **/
+ 
+  
   @JsonProperty("username")
+  
   @ApiModelProperty(value = "")
+
   public String getUsername() {
     return username;
   }
+  
 
   public void setUsername(String username) {
     this.username = username;
   }
+  
 
+  
+  
   public User firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get firstName
+  
+  
+  
    * @return firstName
    **/
+ 
+  
   @JsonProperty("firstName")
+  
   @ApiModelProperty(value = "")
+
   public String getFirstName() {
     return firstName;
   }
+  
 
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
+  
 
+  
+  
   public User lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get lastName
+  
+  
+  
    * @return lastName
    **/
+ 
+  
   @JsonProperty("lastName")
+  
   @ApiModelProperty(value = "")
+
   public String getLastName() {
     return lastName;
   }
+  
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
+  
 
+  
+  
   public User email(String email) {
     this.email = email;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get email
+  
+  
+  
    * @return email
    **/
+ 
+  
   @JsonProperty("email")
+  
   @ApiModelProperty(value = "")
+
   public String getEmail() {
     return email;
   }
+  
 
   public void setEmail(String email) {
     this.email = email;
   }
+  
 
+  
+  
   public User password(String password) {
     this.password = password;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get password
+  
+  
+  
    * @return password
    **/
+ 
+  
   @JsonProperty("password")
+  
   @ApiModelProperty(value = "")
+
   public String getPassword() {
     return password;
   }
+  
 
   public void setPassword(String password) {
     this.password = password;
   }
+  
 
+  
+  
   public User phone(String phone) {
     this.phone = phone;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get phone
+  
+  
+  
    * @return phone
    **/
+ 
+  
   @JsonProperty("phone")
+  
   @ApiModelProperty(value = "")
+
   public String getPhone() {
     return phone;
   }
+  
 
   public void setPhone(String phone) {
     this.phone = phone;
   }
+  
 
+  
+  
   public User userStatus(Integer userStatus) {
     this.userStatus = userStatus;
     return this;
   }
+  
+  
 
+  
   /**
+  
    * User Status
+  
+  
+  
+  
    * @return userStatus
    **/
+ 
+  
   @JsonProperty("userStatus")
+  
   @ApiModelProperty(value = "User Status")
+
   public Integer getUserStatus() {
     return userStatus;
   }
+  
 
   public void setUserStatus(Integer userStatus) {
     this.userStatus = userStatus;
   }
+  
+
+  
 
 
   @Override
@@ -225,6 +437,8 @@ public class User   {
   public int hashCode() {
     return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
+
+
 
 
   @Override
@@ -255,4 +469,6 @@ public class User   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 
