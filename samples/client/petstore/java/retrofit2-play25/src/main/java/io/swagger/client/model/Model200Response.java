@@ -24,53 +24,62 @@ import javax.validation.Valid;
 
 /**
  * Model for testing model name starting with number
- */
-@ApiModel(description = "Model for testing model name starting with number")
+ */@ApiModel(description = "Model for testing model name starting with number")
 
 public class Model200Response {
+
   @JsonProperty("name")
   private Integer name = null;
-
+  
   @JsonProperty("class")
   private String propertyClass = null;
-
+  
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-   /**
-   * Get name
-   * @return name
+  
+  /**
+  * Get name
+  * @return name
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public Integer getName() {
     return name;
   }
-
   public void setName(Integer name) {
     this.name = name;
   }
-
+  
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-   /**
-   * Get propertyClass
-   * @return propertyClass
+  
+  /**
+  * Get propertyClass
+  * @return propertyClass
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public String getPropertyClass() {
     return propertyClass;
   }
-
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -88,8 +97,7 @@ public class Model200Response {
   public int hashCode() {
     return Objects.hash(name, propertyClass);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -112,5 +120,8 @@ public class Model200Response {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

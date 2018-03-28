@@ -32,8 +32,11 @@ if(hasProperty('target') && target == 'android') {
             targetSdkVersion 25
         }
         compileOptions {
+            
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
+            
+            
         }
 
         // Rename the aar correctly
@@ -94,27 +97,46 @@ if(hasProperty('target') && target == 'android') {
 }
 
 ext {
-    oltu_version = "1.0.1"
+    oltu_version = "1.0.2"
     retrofit_version = "2.3.0"
+    
+    
+    
     jackson_version = "2.7.8"
     play_version = "2.5.14"
+    
+    
     swagger_annotations_version = "1.5.15"
     junit_version = "4.12"
+    
+    
+    
+    
     threetenbp_version = "1.3.5"
+    
+    json_fire_version = "1.8.0"
 }
 
 dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-scalars:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    
+    
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    compile "io.gsonfire:gson-fire:$json_fire_version"
+    
+    
     compile "org.threeten:threetenbp:$threetenbp_version"
+    
+    
     compile "com.typesafe.play:play-java-ws_2.11:$play_version"
     compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
+    
 
     testCompile "junit:junit:$junit_version"
 }

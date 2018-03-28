@@ -11,27 +11,43 @@ import okhttp3.RequestBody;
 
 import io.swagger.client.model.Client;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import java.util.concurrent.*;
 import retrofit2.Response;
 
+
 public interface AnotherFakeApi {
+  
   /**
    * To test special tags
    * To test special tags
-   * @param body client model (required)
+
+   * @param client client model (required)
+
    * @return Call&lt;Client&gt;
    */
+  
+  
+  
+  
   @Headers({
     "Content-Type:application/json"
   })
+  
+  
+    
   @PATCH("another-fake/dummy")
   CompletionStage<Response<Client>> testSpecialTags(
-    @retrofit2.http.Body Client body
+    @retrofit2.http.Body Client client
   );
 
+  
 }
+
