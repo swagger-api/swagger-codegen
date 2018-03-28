@@ -10,6 +10,8 @@ extern crate uuid;
 extern crate clap;
 extern crate tokio_core;
 
+use swagger::context::{ContextExtension, ExtendsWith, XSpanIdString, Has};
+
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
 use tokio_core::reactor;
@@ -61,14 +63,16 @@ fn main() {
     };
 
     // Using a non-default `Context` is not required; this is just an example!
-    let client = client.with_context({{externCrateName}}::Context::new_with_span_id(self::uuid::Uuid::new_v4().to_string()));
+    let context = ContextExtension::new((), XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
+    let context = ContextExtension::new(context, None);
+    let client = client.with_context(context);
 
     match matches.value_of("operation") {
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
         {{#vendorExtensions}}{{#noClientExample}}// Disabled because there's no example.
         // {{/noClientExample}}Some("{{operationId}}") => {
         {{#noClientExample}}// {{/noClientExample}}    let result = core.run(client.{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{^-first}}, {{/-first}}{{#vendorExtensions}}{{{example}}}{{/vendorExtensions}}{{/allParams}}));
-        {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}}    println!("{:?} (X-Span-ID: {:?})", result, client.context().x_span_id.clone().unwrap_or(String::from("<none>")));
+        {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}}    println!("{:?} (X-Span-ID: {:?})", result, Has::<XSpanIdString>::get(client.context()).clone());
         {{#vendorExtensions}}{{#noClientExample}}// {{/noClientExample}}{{/vendorExtensions}} },
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
         _ => {
