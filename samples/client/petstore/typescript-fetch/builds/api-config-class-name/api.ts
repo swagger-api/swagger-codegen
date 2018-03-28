@@ -55,12 +55,12 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected apiconfiguration: ApiConfiguration;
+    protected apiConfiguration: ApiConfiguration;
 
-    constructor(apiconfiguration?: ApiConfiguration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
-        if (apiconfiguration) {
-            this.apiconfiguration = apiconfiguration;
-            this.basePath = apiconfiguration.basePath || this.basePath;
+    constructor(apiConfiguration?: ApiConfiguration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
+        if (apiConfiguration) {
+            this.apiConfiguration = apiConfiguration;
+            this.basePath = apiConfiguration.basePath || this.basePath;
         }
     }
 };
@@ -325,7 +325,7 @@ export interface User {
  * PetApi - fetch parameter creator
  * @export
  */
-export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfiguration) {
+export const PetApiFetchParamCreator = function (apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * 
@@ -347,10 +347,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -390,10 +390,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -431,10 +431,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -472,10 +472,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -513,10 +513,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
             const localVarQueryParameter = {} as any;
 
             // authentication api_key required
-            if (apiconfiguration && apiconfiguration.apiKey) {
-                const localVarApiKeyValue = typeof apiconfiguration.apiKey === 'function'
-					? apiconfiguration.apiKey("api_key")
-					: apiconfiguration.apiKey;
+            if (apiConfiguration && apiConfiguration.apiKey) {
+                const localVarApiKeyValue = typeof apiConfiguration.apiKey === 'function'
+					? apiConfiguration.apiKey("api_key")
+					: apiConfiguration.apiKey;
                 localVarHeaderParameter["api_key"] = localVarApiKeyValue;
             }
 
@@ -550,10 +550,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -595,10 +595,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -647,10 +647,10 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
 
             // authentication petstore_auth required
             // oauth required
-            if (apiconfiguration && apiconfiguration.accessToken) {
-				const localVarAccessTokenValue = typeof apiconfiguration.accessToken === 'function'
-					? apiconfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
-					: apiconfiguration.accessToken;
+            if (apiConfiguration && apiConfiguration.accessToken) {
+				const localVarAccessTokenValue = typeof apiConfiguration.accessToken === 'function'
+					? apiConfiguration.accessToken("petstore_auth", ["write:pets", "read:pets"])
+					: apiConfiguration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
@@ -682,7 +682,7 @@ export const PetApiFetchParamCreator = function (apiconfiguration?: ApiConfigura
  * PetApi - functional programming interface
  * @export
  */
-export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
+export const PetApiFp = function(apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * 
@@ -692,7 +692,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).addPet(body, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).addPet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -712,7 +712,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).deletePet(petId, apiKey, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).deletePet(petId, apiKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -731,7 +731,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).findPetsByStatus(status, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -750,7 +750,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         findPetsByTags(tags: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).findPetsByTags(tags, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).findPetsByTags(tags, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -769,7 +769,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         getPetById(petId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Pet> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).getPetById(petId, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).getPetById(petId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -788,7 +788,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).updatePet(body, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).updatePet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -809,7 +809,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).updatePetWithForm(petId, name, status, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).updatePetWithForm(petId, name, status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -830,7 +830,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApiResponse> {
-            const localVarFetchArgs = PetApiFetchParamCreator(apiconfiguration).uploadFile(petId, additionalMetadata, file, options);
+            const localVarFetchArgs = PetApiFetchParamCreator(apiConfiguration).uploadFile(petId, additionalMetadata, file, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -848,7 +848,7 @@ export const PetApiFp = function(apiconfiguration?: ApiConfiguration) {
  * PetApi - factory interface
  * @export
  */
-export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
+export const PetApiFactory = function (apiConfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -858,7 +858,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         addPet(body: Pet, options?: any) {
-            return PetApiFp(apiconfiguration).addPet(body, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).addPet(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -869,7 +869,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         deletePet(petId: number, apiKey?: string, options?: any) {
-            return PetApiFp(apiconfiguration).deletePet(petId, apiKey, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).deletePet(petId, apiKey, options)(fetch, basePath);
         },
         /**
          * Multiple status values can be provided with comma separated strings
@@ -879,7 +879,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
-            return PetApiFp(apiconfiguration).findPetsByStatus(status, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).findPetsByStatus(status, options)(fetch, basePath);
         },
         /**
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -889,7 +889,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         findPetsByTags(tags: Array<string>, options?: any) {
-            return PetApiFp(apiconfiguration).findPetsByTags(tags, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).findPetsByTags(tags, options)(fetch, basePath);
         },
         /**
          * Returns a single pet
@@ -899,7 +899,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         getPetById(petId: number, options?: any) {
-            return PetApiFp(apiconfiguration).getPetById(petId, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).getPetById(petId, options)(fetch, basePath);
         },
         /**
          * 
@@ -909,7 +909,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         updatePet(body: Pet, options?: any) {
-            return PetApiFp(apiconfiguration).updatePet(body, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).updatePet(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -921,7 +921,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any) {
-            return PetApiFp(apiconfiguration).updatePetWithForm(petId, name, status, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).updatePetWithForm(petId, name, status, options)(fetch, basePath);
         },
         /**
          * 
@@ -933,7 +933,7 @@ export const PetApiFactory = function (apiconfiguration?: ApiConfiguration, fetc
          * @throws {RequiredError}
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any) {
-            return PetApiFp(apiconfiguration).uploadFile(petId, additionalMetadata, file, options)(fetch, basePath);
+            return PetApiFp(apiConfiguration).uploadFile(petId, additionalMetadata, file, options)(fetch, basePath);
         },
     };
 };
@@ -954,7 +954,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public addPet(body: Pet, options?: any) {
-        return PetApiFp(this.apiconfiguration).addPet(body, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).addPet(body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -967,7 +967,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public deletePet(petId: number, apiKey?: string, options?: any) {
-        return PetApiFp(this.apiconfiguration).deletePet(petId, apiKey, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).deletePet(petId, apiKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -979,7 +979,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any) {
-        return PetApiFp(this.apiconfiguration).findPetsByStatus(status, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).findPetsByStatus(status, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -991,7 +991,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public findPetsByTags(tags: Array<string>, options?: any) {
-        return PetApiFp(this.apiconfiguration).findPetsByTags(tags, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).findPetsByTags(tags, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1003,7 +1003,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public getPetById(petId: number, options?: any) {
-        return PetApiFp(this.apiconfiguration).getPetById(petId, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).getPetById(petId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1015,7 +1015,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public updatePet(body: Pet, options?: any) {
-        return PetApiFp(this.apiconfiguration).updatePet(body, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).updatePet(body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1029,7 +1029,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public updatePetWithForm(petId: number, name?: string, status?: string, options?: any) {
-        return PetApiFp(this.apiconfiguration).updatePetWithForm(petId, name, status, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).updatePetWithForm(petId, name, status, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1043,7 +1043,7 @@ export class PetApi extends BaseAPI {
      * @memberof PetApi
      */
     public uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any) {
-        return PetApiFp(this.apiconfiguration).uploadFile(petId, additionalMetadata, file, options)(this.fetch, this.basePath);
+        return PetApiFp(this.apiConfiguration).uploadFile(petId, additionalMetadata, file, options)(this.fetch, this.basePath);
     }
 
 }
@@ -1052,7 +1052,7 @@ export class PetApi extends BaseAPI {
  * StoreApi - fetch parameter creator
  * @export
  */
-export const StoreApiFetchParamCreator = function (apiconfiguration?: ApiConfiguration) {
+export const StoreApiFetchParamCreator = function (apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1097,10 +1097,10 @@ export const StoreApiFetchParamCreator = function (apiconfiguration?: ApiConfigu
             const localVarQueryParameter = {} as any;
 
             // authentication api_key required
-            if (apiconfiguration && apiconfiguration.apiKey) {
-                const localVarApiKeyValue = typeof apiconfiguration.apiKey === 'function'
-					? apiconfiguration.apiKey("api_key")
-					: apiconfiguration.apiKey;
+            if (apiConfiguration && apiConfiguration.apiKey) {
+                const localVarApiKeyValue = typeof apiConfiguration.apiKey === 'function'
+					? apiConfiguration.apiKey("api_key")
+					: apiConfiguration.apiKey;
                 localVarHeaderParameter["api_key"] = localVarApiKeyValue;
             }
 
@@ -1182,7 +1182,7 @@ export const StoreApiFetchParamCreator = function (apiconfiguration?: ApiConfigu
  * StoreApi - functional programming interface
  * @export
  */
-export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
+export const StoreApiFp = function(apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1192,7 +1192,7 @@ export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = StoreApiFetchParamCreator(apiconfiguration).deleteOrder(orderId, options);
+            const localVarFetchArgs = StoreApiFetchParamCreator(apiConfiguration).deleteOrder(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1210,7 +1210,7 @@ export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         getInventory(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
-            const localVarFetchArgs = StoreApiFetchParamCreator(apiconfiguration).getInventory(options);
+            const localVarFetchArgs = StoreApiFetchParamCreator(apiConfiguration).getInventory(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1229,7 +1229,7 @@ export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         getOrderById(orderId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
-            const localVarFetchArgs = StoreApiFetchParamCreator(apiconfiguration).getOrderById(orderId, options);
+            const localVarFetchArgs = StoreApiFetchParamCreator(apiConfiguration).getOrderById(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1248,7 +1248,7 @@ export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         placeOrder(body: Order, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
-            const localVarFetchArgs = StoreApiFetchParamCreator(apiconfiguration).placeOrder(body, options);
+            const localVarFetchArgs = StoreApiFetchParamCreator(apiConfiguration).placeOrder(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1266,7 +1266,7 @@ export const StoreApiFp = function(apiconfiguration?: ApiConfiguration) {
  * StoreApi - factory interface
  * @export
  */
-export const StoreApiFactory = function (apiconfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
+export const StoreApiFactory = function (apiConfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -1276,7 +1276,7 @@ export const StoreApiFactory = function (apiconfiguration?: ApiConfiguration, fe
          * @throws {RequiredError}
          */
         deleteOrder(orderId: string, options?: any) {
-            return StoreApiFp(apiconfiguration).deleteOrder(orderId, options)(fetch, basePath);
+            return StoreApiFp(apiConfiguration).deleteOrder(orderId, options)(fetch, basePath);
         },
         /**
          * Returns a map of status codes to quantities
@@ -1285,7 +1285,7 @@ export const StoreApiFactory = function (apiconfiguration?: ApiConfiguration, fe
          * @throws {RequiredError}
          */
         getInventory(options?: any) {
-            return StoreApiFp(apiconfiguration).getInventory(options)(fetch, basePath);
+            return StoreApiFp(apiConfiguration).getInventory(options)(fetch, basePath);
         },
         /**
          * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
@@ -1295,7 +1295,7 @@ export const StoreApiFactory = function (apiconfiguration?: ApiConfiguration, fe
          * @throws {RequiredError}
          */
         getOrderById(orderId: number, options?: any) {
-            return StoreApiFp(apiconfiguration).getOrderById(orderId, options)(fetch, basePath);
+            return StoreApiFp(apiConfiguration).getOrderById(orderId, options)(fetch, basePath);
         },
         /**
          * 
@@ -1305,7 +1305,7 @@ export const StoreApiFactory = function (apiconfiguration?: ApiConfiguration, fe
          * @throws {RequiredError}
          */
         placeOrder(body: Order, options?: any) {
-            return StoreApiFp(apiconfiguration).placeOrder(body, options)(fetch, basePath);
+            return StoreApiFp(apiConfiguration).placeOrder(body, options)(fetch, basePath);
         },
     };
 };
@@ -1326,7 +1326,7 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public deleteOrder(orderId: string, options?: any) {
-        return StoreApiFp(this.apiconfiguration).deleteOrder(orderId, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.apiConfiguration).deleteOrder(orderId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1337,7 +1337,7 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public getInventory(options?: any) {
-        return StoreApiFp(this.apiconfiguration).getInventory(options)(this.fetch, this.basePath);
+        return StoreApiFp(this.apiConfiguration).getInventory(options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1349,7 +1349,7 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public getOrderById(orderId: number, options?: any) {
-        return StoreApiFp(this.apiconfiguration).getOrderById(orderId, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.apiConfiguration).getOrderById(orderId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1361,7 +1361,7 @@ export class StoreApi extends BaseAPI {
      * @memberof StoreApi
      */
     public placeOrder(body: Order, options?: any) {
-        return StoreApiFp(this.apiconfiguration).placeOrder(body, options)(this.fetch, this.basePath);
+        return StoreApiFp(this.apiConfiguration).placeOrder(body, options)(this.fetch, this.basePath);
     }
 
 }
@@ -1370,7 +1370,7 @@ export class StoreApi extends BaseAPI {
  * UserApi - fetch parameter creator
  * @export
  */
-export const UserApiFetchParamCreator = function (apiconfiguration?: ApiConfiguration) {
+export const UserApiFetchParamCreator = function (apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1635,7 +1635,7 @@ export const UserApiFetchParamCreator = function (apiconfiguration?: ApiConfigur
  * UserApi - functional programming interface
  * @export
  */
-export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
+export const UserApiFp = function(apiConfiguration?: ApiConfiguration) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1645,7 +1645,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).createUser(body, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).createUser(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1664,7 +1664,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).createUsersWithArrayInput(body, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).createUsersWithArrayInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1683,7 +1683,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).createUsersWithListInput(body, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).createUsersWithListInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1702,7 +1702,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).deleteUser(username, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).deleteUser(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1721,7 +1721,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         getUserByName(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).getUserByName(username, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).getUserByName(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1741,7 +1741,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         loginUser(username: string, password: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).loginUser(username, password, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).loginUser(username, password, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1759,7 +1759,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).logoutUser(options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).logoutUser(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1779,7 +1779,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
          * @throws {RequiredError}
          */
         updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UserApiFetchParamCreator(apiconfiguration).updateUser(username, body, options);
+            const localVarFetchArgs = UserApiFetchParamCreator(apiConfiguration).updateUser(username, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1797,7 +1797,7 @@ export const UserApiFp = function(apiconfiguration?: ApiConfiguration) {
  * UserApi - factory interface
  * @export
  */
-export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
+export const UserApiFactory = function (apiConfiguration?: ApiConfiguration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * This can only be done by the logged in user.
@@ -1807,7 +1807,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         createUser(body: User, options?: any) {
-            return UserApiFp(apiconfiguration).createUser(body, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).createUser(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -1817,7 +1817,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         createUsersWithArrayInput(body: Array<User>, options?: any) {
-            return UserApiFp(apiconfiguration).createUsersWithArrayInput(body, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).createUsersWithArrayInput(body, options)(fetch, basePath);
         },
         /**
          * 
@@ -1827,7 +1827,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         createUsersWithListInput(body: Array<User>, options?: any) {
-            return UserApiFp(apiconfiguration).createUsersWithListInput(body, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).createUsersWithListInput(body, options)(fetch, basePath);
         },
         /**
          * This can only be done by the logged in user.
@@ -1837,7 +1837,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         deleteUser(username: string, options?: any) {
-            return UserApiFp(apiconfiguration).deleteUser(username, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).deleteUser(username, options)(fetch, basePath);
         },
         /**
          * 
@@ -1847,7 +1847,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         getUserByName(username: string, options?: any) {
-            return UserApiFp(apiconfiguration).getUserByName(username, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).getUserByName(username, options)(fetch, basePath);
         },
         /**
          * 
@@ -1858,7 +1858,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         loginUser(username: string, password: string, options?: any) {
-            return UserApiFp(apiconfiguration).loginUser(username, password, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).loginUser(username, password, options)(fetch, basePath);
         },
         /**
          * 
@@ -1867,7 +1867,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         logoutUser(options?: any) {
-            return UserApiFp(apiconfiguration).logoutUser(options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).logoutUser(options)(fetch, basePath);
         },
         /**
          * This can only be done by the logged in user.
@@ -1878,7 +1878,7 @@ export const UserApiFactory = function (apiconfiguration?: ApiConfiguration, fet
          * @throws {RequiredError}
          */
         updateUser(username: string, body: User, options?: any) {
-            return UserApiFp(apiconfiguration).updateUser(username, body, options)(fetch, basePath);
+            return UserApiFp(apiConfiguration).updateUser(username, body, options)(fetch, basePath);
         },
     };
 };
@@ -1899,7 +1899,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUser(body: User, options?: any) {
-        return UserApiFp(this.apiconfiguration).createUser(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).createUser(body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1911,7 +1911,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUsersWithArrayInput(body: Array<User>, options?: any) {
-        return UserApiFp(this.apiconfiguration).createUsersWithArrayInput(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).createUsersWithArrayInput(body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1923,7 +1923,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public createUsersWithListInput(body: Array<User>, options?: any) {
-        return UserApiFp(this.apiconfiguration).createUsersWithListInput(body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).createUsersWithListInput(body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1935,7 +1935,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public deleteUser(username: string, options?: any) {
-        return UserApiFp(this.apiconfiguration).deleteUser(username, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).deleteUser(username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1947,7 +1947,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public getUserByName(username: string, options?: any) {
-        return UserApiFp(this.apiconfiguration).getUserByName(username, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).getUserByName(username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1960,7 +1960,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public loginUser(username: string, password: string, options?: any) {
-        return UserApiFp(this.apiconfiguration).loginUser(username, password, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).loginUser(username, password, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1971,7 +1971,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public logoutUser(options?: any) {
-        return UserApiFp(this.apiconfiguration).logoutUser(options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).logoutUser(options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1984,7 +1984,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public updateUser(username: string, body: User, options?: any) {
-        return UserApiFp(this.apiconfiguration).updateUser(username, body, options)(this.fetch, this.basePath);
+        return UserApiFp(this.apiConfiguration).updateUser(username, body, options)(this.fetch, this.basePath);
     }
 
 }
