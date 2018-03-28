@@ -57,7 +57,6 @@ Check out [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) 
     - [Customizing the generator](#customizing-the-generator)
     - [Validating your OpenAPI Spec](#validating-your-openapi-spec)
     - [Generating dynamic html api documentation](#generating-dynamic-html-api-documentation)
-    - [Generating static html api documentation](#generating-static-html-api-documentation)
     - [To build a server stub](#to-build-a-server-stub)
     - [To build the codegen library](#to-build-the-codegen-library)
   - [Workflow Integration](#workflow-integration)
@@ -459,15 +458,16 @@ Editor support for `.swagger-codegen-ignore` files is available in IntelliJ via 
 
 ### Customizing the generator
 
-There are different aspects of customizing the code generator beyond just creating or modifying templates.  Each language has a supporting configuration file to handle different type mappings, etc:
+There are different aspects of customizing the code generator (located in this version at [swagger codegen generator repo](https://github.com/swagger-api/swagger-codegen-generators)) beyond just creating or modifying templates.  Each language has a supporting configuration file to handle different type mappings, etc:
 
 ```sh
-$ ls -1 modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/
+at https://github.com/swagger-api/swagger-codegen-generators/tree/master/src/main/java/io/swagger/codegen/languages/java/
+ 
+AbstractJavaCodegen.java
 AbstractJavaJAXRSServerCodegen.java
-AbstractTypeScriptClientCodegen.java
-... (results omitted)
-TypeScriptAngularClientCodegen.java
-TypeScriptNodeClientCodegen.java
+...
+JavaClientCodegen.java
+JavaJAXRSSpecServerCodegen.java
 ```
 
 Each of these files creates reasonable defaults so you can get running quickly.  But if you want to configure package names, prefixes, model folders, etc. you can use a json config file to pass the values.
@@ -591,17 +591,6 @@ node .
 
 Which launches a node.js server so the AJAX calls have a place to go.
 
-
-### Generating static html api documentation
-
-To do so, just use the `-l html` flag when reading a spec file.  This creates a single, simple HTML file with embedded css so you can ship it as an email attachment, or load it from your filesystem:
-
-```sh
-cd samples/html/
-open index.html
-```
-
-
 ### To build a server stub
 
 Please refer to https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO for more information.
@@ -722,7 +711,7 @@ Guidelines for Contribution
 ---------------------------
 
 Please refer to this [page.](https://github.com/swagger-api/swagger-codegen/blob/master/CONTRIBUTING.md)
-Also for `swagger-codegen version 3` templates and classes for code generation are being migrated to[swagger-codegen-generators](https://github.com/swagger-api/swagger-codegen-generators)
+Also for `swagger-codegen version 3` templates and classes for code generation are being migrated to [swagger-codegen-generators](https://github.com/swagger-api/swagger-codegen-generators)
 repo. In order to know this migration process you can refer this [page.](https://github.com/swagger-api/swagger-codegen/wiki/Swagger-Codegen-migration-(swagger-codegen-generators-repository))
 
 # License information on Generated Code
