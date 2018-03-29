@@ -18,6 +18,7 @@ import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration";
 import { Headers } from "../Headers";
+import HttpResponse from "../HttpResponse";
 
 import { Order } from '../model/order';
 
@@ -35,24 +36,25 @@ export class StoreService {
             this.basePath = this.APIConfiguration.basePath;
     }
 
-
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      * @param orderId ID of the order that needs to be deleted
      
      */
-
-    public deleteOrder(orderId: string, headers: Headers = {}): Observable<any> {
+    public deleteOrder(orderId: string, observe?: 'body', headers?: Headers): Observable<any>;
+    public deleteOrder(orderId: string, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public deleteOrder(orderId: string, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -61,18 +63,19 @@ export class StoreService {
      * Returns a map of status codes to quantities
      
      */
-
-    public getInventory(headers: Headers = {}): Observable<{ [key: string]: number; }> {
-
+    public getInventory(observe?: 'body', headers?: Headers): Observable<{ [key: string]: number; }>;
+    public getInventory(observe?: 'response', headers?: Headers): Observable<HttpResponse<{ [key: string]: number; }>>;
+    public getInventory(observe: any = 'body', headers: Headers = {}): Observable<any> {
         // authentication (api_key) required
         if (this.APIConfiguration.apiKeys["api_key"]) {
             headers['api_key'] = this.APIConfiguration.apiKeys["api_key"];
         }
         headers['Accept'] = 'application/json';
 
-
-        return this.httpClient.get(`${this.basePath}/store/inventory`, headers)
-                    .map(httpResponse => <{ [key: string]: number; }>(httpResponse.response));
+        const response: Observable<HttpResponse<{ [key: string]: number; }>> = this.httpClient.get(`${this.basePath}/store/inventory`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <{ [key: string]: number; }>(httpResponse.response));
+        return response;
     }
 
 
@@ -82,17 +85,19 @@ export class StoreService {
      * @param orderId ID of pet that needs to be fetched
      
      */
-
-    public getOrderById(orderId: number, headers: Headers = {}): Observable<Order> {
+    public getOrderById(orderId: number, observe?: 'body', headers?: Headers): Observable<Order>;
+    public getOrderById(orderId: number, observe?: 'response', headers?: Headers): Observable<HttpResponse<Order>>;
+    public getOrderById(orderId: number, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!orderId){
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers)
-                    .map(httpResponse => <Order>(httpResponse.response));
+        const response: Observable<HttpResponse<Order>> = this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <Order>(httpResponse.response));
+        return response;
     }
 
 
@@ -102,8 +107,9 @@ export class StoreService {
      * @param body order placed for purchasing the pet
      
      */
-
-    public placeOrder(body: Order, headers: Headers = {}): Observable<Order> {
+    public placeOrder(body: Order, observe?: 'body', headers?: Headers): Observable<Order>;
+    public placeOrder(body: Order, observe?: 'response', headers?: Headers): Observable<HttpResponse<Order>>;
+    public placeOrder(body: Order, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }
@@ -111,9 +117,10 @@ export class StoreService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-
-        return this.httpClient.post(`${this.basePath}/store/order`, body , headers)
-                    .map(httpResponse => <Order>(httpResponse.response));
+        const response: Observable<HttpResponse<Order>> = this.httpClient.post(`${this.basePath}/store/order`, body , headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <Order>(httpResponse.response));
+        return response;
     }
 
 }

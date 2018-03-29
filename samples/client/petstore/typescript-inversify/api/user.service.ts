@@ -18,6 +18,7 @@ import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration";
 import { Headers } from "../Headers";
+import HttpResponse from "../HttpResponse";
 
 import { User } from '../model/user';
 
@@ -35,15 +36,15 @@ export class UserService {
             this.basePath = this.APIConfiguration.basePath;
     }
 
-
     /**
      * Create user
      * This can only be done by the logged in user.
      * @param body Created user object
      
      */
-
-    public createUser(body: User, headers: Headers = {}): Observable<any> {
+    public createUser(body: User, observe?: 'body', headers?: Headers): Observable<any>;
+    public createUser(body: User, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public createUser(body: User, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -51,9 +52,10 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-
-        return this.httpClient.post(`${this.basePath}/user`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user`, body , headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -63,8 +65,9 @@ export class UserService {
      * @param body List of user object
      
      */
-
-    public createUsersWithArrayInput(body: Array<User>, headers: Headers = {}): Observable<any> {
+    public createUsersWithArrayInput(body: Array<User>, observe?: 'body', headers?: Headers): Observable<any>;
+    public createUsersWithArrayInput(body: Array<User>, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public createUsersWithArrayInput(body: Array<User>, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -72,9 +75,10 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-
-        return this.httpClient.post(`${this.basePath}/user/createWithArray`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithArray`, body , headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -84,8 +88,9 @@ export class UserService {
      * @param body List of user object
      
      */
-
-    public createUsersWithListInput(body: Array<User>, headers: Headers = {}): Observable<any> {
+    public createUsersWithListInput(body: Array<User>, observe?: 'body', headers?: Headers): Observable<any>;
+    public createUsersWithListInput(body: Array<User>, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public createUsersWithListInput(body: Array<User>, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -93,9 +98,10 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-
-        return this.httpClient.post(`${this.basePath}/user/createWithList`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithList`, body , headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -105,17 +111,19 @@ export class UserService {
      * @param username The name that needs to be deleted
      
      */
-
-    public deleteUser(username: string, headers: Headers = {}): Observable<any> {
+    public deleteUser(username: string, observe?: 'body', headers?: Headers): Observable<any>;
+    public deleteUser(username: string, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public deleteUser(username: string, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -125,17 +133,19 @@ export class UserService {
      * @param username The name that needs to be fetched. Use user1 for testing.
      
      */
-
-    public getUserByName(username: string, headers: Headers = {}): Observable<User> {
+    public getUserByName(username: string, observe?: 'body', headers?: Headers): Observable<User>;
+    public getUserByName(username: string, observe?: 'response', headers?: Headers): Observable<HttpResponse<User>>;
+    public getUserByName(username: string, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers)
-                    .map(httpResponse => <User>(httpResponse.response));
+        const response: Observable<HttpResponse<User>> = this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <User>(httpResponse.response));
+        return response;
     }
 
 
@@ -146,14 +156,17 @@ export class UserService {
      * @param password The password for login in clear text
      
      */
-
-    public loginUser(username: string, password: string, headers: Headers = {}): Observable<string> {
+    public loginUser(username: string, password: string, observe?: 'body', headers?: Headers): Observable<string>;
+    public loginUser(username: string, password: string, observe?: 'response', headers?: Headers): Observable<HttpResponse<string>>;
+    public loginUser(username: string, password: string, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
+
         if (!password){
             throw new Error('Required parameter password was null or undefined when calling loginUser.');
         }
+
         let queryParameters: string[] = [];
         if (username !== undefined) {
             queryParameters.push("username="+encodeURIComponent(String(username)));
@@ -162,12 +175,12 @@ export class UserService {
             queryParameters.push("password="+encodeURIComponent(String(password)));
         }
 
-
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers)
-                    .map(httpResponse => <string>(httpResponse.response));
+        const response: Observable<HttpResponse<string>> = this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <string>(httpResponse.response));
+        return response;
     }
 
 
@@ -176,14 +189,15 @@ export class UserService {
      * 
      
      */
-
-    public logoutUser(headers: Headers = {}): Observable<any> {
-
+    public logoutUser(observe?: 'body', headers?: Headers): Observable<any>;
+    public logoutUser(observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public logoutUser(observe: any = 'body', headers: Headers = {}): Observable<any> {
         headers['Accept'] = 'application/xml';
 
-
-        return this.httpClient.get(`${this.basePath}/user/logout`, headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.get(`${this.basePath}/user/logout`, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 
@@ -194,11 +208,13 @@ export class UserService {
      * @param body Updated user object
      
      */
-
-    public updateUser(username: string, body: User, headers: Headers = {}): Observable<any> {
+    public updateUser(username: string, body: User, observe?: 'body', headers?: Headers): Observable<any>;
+    public updateUser(username: string, body: User, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public updateUser(username: string, body: User, observe: any = 'body', headers: Headers = {}): Observable<any> {
         if (!username){
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
+
         if (!body){
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }
@@ -206,9 +222,10 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-
-        return this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body , headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body , headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 }

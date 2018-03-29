@@ -18,6 +18,7 @@ import IHttpClient from "../IHttpClient";
 import { inject, injectable } from "inversify";
 import { IAPIConfiguration } from "../IAPIConfiguration";
 import { Headers } from "../Headers";
+import HttpResponse from "../HttpResponse";
 
 
 import { COLLECTION_FORMATS }  from '../variables';
@@ -34,16 +35,15 @@ export class FakeService {
             this.basePath = this.APIConfiguration.basePath;
     }
 
-
     /**
      * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      * 
      * @param testCodeInjectEndRnNR To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      
      */
-
-    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, headers: Headers = {}): Observable<any> {
-
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe?: 'body', headers?: Headers): Observable<any>;
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe?: 'response', headers?: Headers): Observable<HttpResponse<any>>;
+    public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe: any = 'body', headers: Headers = {}): Observable<any> {
         headers['Accept'] = 'application/json';
 
         let formData: FormData = new FormData();
@@ -52,9 +52,10 @@ export class FakeService {
             formData.append('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>testCodeInjectEndRnNR);
         }
 
-
-        return this.httpClient.put(`${this.basePath}/fake`, body, headers)
-                    .map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/fake`, body, headers);
+        if(observe == 'body')
+               return response.map(httpResponse => <any>(httpResponse.response));
+        return response;
     }
 
 }
