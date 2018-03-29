@@ -53,8 +53,9 @@ export class UserService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -76,8 +77,9 @@ export class UserService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithArray`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -99,8 +101,9 @@ export class UserService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithList`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -121,8 +124,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -143,8 +147,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<User>> = this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <User>(httpResponse.response));
+        }
         return response;
     }
 
@@ -178,8 +183,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<string>> = this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <string>(httpResponse.response));
+        }
         return response;
     }
 
@@ -195,8 +201,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.get(`${this.basePath}/user/logout`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -223,8 +230,9 @@ export class UserService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 

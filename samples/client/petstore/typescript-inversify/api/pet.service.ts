@@ -61,8 +61,9 @@ export class PetService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/pet`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -95,8 +96,9 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -129,8 +131,9 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<Array<Pet>>> = this.httpClient.get(`${this.basePath}/pet/findByStatus?${queryParameters.join('&')}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <Array<Pet>>(httpResponse.response));
+        }
         return response;
     }
 
@@ -163,8 +166,9 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<Array<Pet>>> = this.httpClient.get(`${this.basePath}/pet/findByTags?${queryParameters.join('&')}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <Array<Pet>>(httpResponse.response));
+        }
         return response;
     }
 
@@ -189,8 +193,9 @@ export class PetService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<Pet>> = this.httpClient.get(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <Pet>(httpResponse.response));
+        }
         return response;
     }
 
@@ -219,8 +224,9 @@ export class PetService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/pet`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -259,8 +265,9 @@ export class PetService {
         }
 
         const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, body, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -299,8 +306,9 @@ export class PetService {
         }
 
         const response: Observable<HttpResponse<ApiResponse>> = this.httpClient.post(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, body, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <ApiResponse>(httpResponse.response));
+        }
         return response;
     }
 

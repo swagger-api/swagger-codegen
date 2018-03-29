@@ -52,8 +52,9 @@ export class StoreService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
@@ -73,8 +74,9 @@ export class StoreService {
         headers['Accept'] = 'application/json';
 
         const response: Observable<HttpResponse<{ [key: string]: number; }>> = this.httpClient.get(`${this.basePath}/store/inventory`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <{ [key: string]: number; }>(httpResponse.response));
+        }
         return response;
     }
 
@@ -95,8 +97,9 @@ export class StoreService {
         headers['Accept'] = 'application/xml';
 
         const response: Observable<HttpResponse<Order>> = this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <Order>(httpResponse.response));
+        }
         return response;
     }
 
@@ -118,8 +121,9 @@ export class StoreService {
         headers['Content-Type'] = 'application/json';
 
         const response: Observable<HttpResponse<Order>> = this.httpClient.post(`${this.basePath}/store/order`, body , headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <Order>(httpResponse.response));
+        }
         return response;
     }
 
