@@ -108,7 +108,7 @@ impl<T, C, D, E> hyper::server::Service for Service<T, C, D, E>
     type Future = T::Future;
 
     fn call(&self, req: Self::Request) -> Self::Future {
-        let context = D::new(C::default(), XSpanIdString("hello".to_string()));
+        let context = D::new(C::default(), XSpanIdString::get_or_generate(&req));
 
         {{#authMethods}}
         {{#isBasic}}

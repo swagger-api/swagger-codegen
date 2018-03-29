@@ -116,10 +116,6 @@ impl<T, C> hyper::server::Service for Service<T, C> where T: Api<C> + Clone + 's
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
             // {{operationId}} - {{httpMethod}} {{path}}
             &hyper::Method::{{vendorExtensions.HttpMethod}} if path.matched(paths::ID_{{vendorExtensions.PATH_ID}}) => {
-                context.set(XSpanIdString(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string())));
-                //if context.x_span_id.is_none() {
-                //    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                //}
 {{#hasAuthMethods}}
                 {
                     let authorization = match Has::<Option<Authorization>>::get(&context) {
