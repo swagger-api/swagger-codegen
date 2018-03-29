@@ -53,8 +53,9 @@ export class FakeService {
         }
 
         const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/fake`, body, headers);
-        if(observe == 'body')
+        if (observe == 'body') {
                return response.map(httpResponse => <any>(httpResponse.response));
+        }
         return response;
     }
 
