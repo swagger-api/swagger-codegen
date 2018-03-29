@@ -27,53 +27,50 @@ import android.os.Parcel;
 
 /**
  * Model for testing model name starting with number
- */
-@ApiModel(description = "Model for testing model name starting with number")
+ */@ApiModel(description = "Model for testing model name starting with number")
 
-public class Model200Response implements Parcelable {
-  @SerializedName("name")
+public class Model200Response {
+@SerializedName("name")
   private Integer name = null;
-
   @SerializedName("class")
   private String propertyClass = null;
-
+  
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-   /**
-   * Get name
-   * @return name
+  
+  /**
+  * Get name
+  * @return name
   **/
   @ApiModelProperty(value = "")
   public Integer getName() {
     return name;
   }
-
   public void setName(Integer name) {
     this.name = name;
   }
-
+  
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-   /**
-   * Get propertyClass
-   * @return propertyClass
+  
+  /**
+  * Get propertyClass
+  * @return propertyClass
   **/
   @ApiModelProperty(value = "")
   public String getPropertyClass() {
     return propertyClass;
   }
-
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -91,8 +88,7 @@ public class Model200Response implements Parcelable {
   public int hashCode() {
     return Objects.hash(name, propertyClass);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -115,11 +111,12 @@ public class Model200Response implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(name);
-
     out.writeValue(propertyClass);
+    
   }
 
   public Model200Response() {
@@ -128,8 +125,7 @@ public class Model200Response implements Parcelable {
 
   Model200Response(Parcel in) {
     
-    name = (Integer)in.readValue(null);
-    propertyClass = (String)in.readValue(null);
+    name = (Integer)in.readValue(null);propertyClass = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -145,4 +141,6 @@ public class Model200Response implements Parcelable {
     }
   };
 }
+
+
 

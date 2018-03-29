@@ -29,134 +29,128 @@ import android.os.Parcel;
  * Capitalization
  */
 
-public class Capitalization implements Parcelable {
-  @SerializedName("smallCamel")
+public class Capitalization {
+@SerializedName("smallCamel")
   private String smallCamel = null;
-
   @SerializedName("CapitalCamel")
   private String capitalCamel = null;
-
   @SerializedName("small_Snake")
   private String smallSnake = null;
-
   @SerializedName("Capital_Snake")
   private String capitalSnake = null;
-
   @SerializedName("SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
-
   @SerializedName("ATT_NAME")
   private String ATT_NAME = null;
-
+  
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
 
-   /**
-   * Get smallCamel
-   * @return smallCamel
+  
+  /**
+  * Get smallCamel
+  * @return smallCamel
   **/
   @ApiModelProperty(value = "")
   public String getSmallCamel() {
     return smallCamel;
   }
-
   public void setSmallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
   }
-
+  
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
     return this;
   }
 
-   /**
-   * Get capitalCamel
-   * @return capitalCamel
+  
+  /**
+  * Get capitalCamel
+  * @return capitalCamel
   **/
   @ApiModelProperty(value = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
-
   public void setCapitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
   }
-
+  
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
     return this;
   }
 
-   /**
-   * Get smallSnake
-   * @return smallSnake
+  
+  /**
+  * Get smallSnake
+  * @return smallSnake
   **/
   @ApiModelProperty(value = "")
   public String getSmallSnake() {
     return smallSnake;
   }
-
   public void setSmallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
   }
-
+  
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
     return this;
   }
 
-   /**
-   * Get capitalSnake
-   * @return capitalSnake
+  
+  /**
+  * Get capitalSnake
+  * @return capitalSnake
   **/
   @ApiModelProperty(value = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
-
   public void setCapitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
   }
-
+  
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
     return this;
   }
 
-   /**
-   * Get scAETHFlowPoints
-   * @return scAETHFlowPoints
+  
+  /**
+  * Get scAETHFlowPoints
+  * @return scAETHFlowPoints
   **/
   @ApiModelProperty(value = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
-
   public void setScAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
-
+  
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
   }
 
-   /**
-   * Name of the pet 
-   * @return ATT_NAME
+  
+  /**
+  * Name of the pet 
+  * @return ATT_NAME
   **/
   @ApiModelProperty(value = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
-
   public void setATTNAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -178,8 +172,7 @@ public class Capitalization implements Parcelable {
   public int hashCode() {
     return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -206,19 +199,16 @@ public class Capitalization implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(smallCamel);
-
     out.writeValue(capitalCamel);
-
     out.writeValue(smallSnake);
-
     out.writeValue(capitalSnake);
-
     out.writeValue(scAETHFlowPoints);
-
     out.writeValue(ATT_NAME);
+    
   }
 
   public Capitalization() {
@@ -227,12 +217,7 @@ public class Capitalization implements Parcelable {
 
   Capitalization(Parcel in) {
     
-    smallCamel = (String)in.readValue(null);
-    capitalCamel = (String)in.readValue(null);
-    smallSnake = (String)in.readValue(null);
-    capitalSnake = (String)in.readValue(null);
-    scAETHFlowPoints = (String)in.readValue(null);
-    ATT_NAME = (String)in.readValue(null);
+    smallCamel = (String)in.readValue(null);capitalCamel = (String)in.readValue(null);smallSnake = (String)in.readValue(null);capitalSnake = (String)in.readValue(null);scAETHFlowPoints = (String)in.readValue(null);ATT_NAME = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -248,4 +233,6 @@ public class Capitalization implements Parcelable {
     }
   };
 }
+
+
 

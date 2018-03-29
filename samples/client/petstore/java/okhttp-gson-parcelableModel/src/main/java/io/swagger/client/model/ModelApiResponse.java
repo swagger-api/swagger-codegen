@@ -29,71 +29,68 @@ import android.os.Parcel;
  * ModelApiResponse
  */
 
-public class ModelApiResponse implements Parcelable {
-  @SerializedName("code")
+public class ModelApiResponse {
+@SerializedName("code")
   private Integer code = null;
-
   @SerializedName("type")
   private String type = null;
-
   @SerializedName("message")
   private String message = null;
-
+  
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-   /**
-   * Get code
-   * @return code
+  
+  /**
+  * Get code
+  * @return code
   **/
   @ApiModelProperty(value = "")
   public Integer getCode() {
     return code;
   }
-
   public void setCode(Integer code) {
     this.code = code;
   }
-
+  
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
 
-   /**
-   * Get type
-   * @return type
+  
+  /**
+  * Get type
+  * @return type
   **/
   @ApiModelProperty(value = "")
   public String getType() {
     return type;
   }
-
   public void setType(String type) {
     this.type = type;
   }
-
+  
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
 
-   /**
-   * Get message
-   * @return message
+  
+  /**
+  * Get message
+  * @return message
   **/
   @ApiModelProperty(value = "")
   public String getMessage() {
     return message;
   }
-
   public void setMessage(String message) {
     this.message = message;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -112,8 +109,7 @@ public class ModelApiResponse implements Parcelable {
   public int hashCode() {
     return Objects.hash(code, type, message);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -137,13 +133,13 @@ public class ModelApiResponse implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(code);
-
     out.writeValue(type);
-
     out.writeValue(message);
+    
   }
 
   public ModelApiResponse() {
@@ -152,9 +148,7 @@ public class ModelApiResponse implements Parcelable {
 
   ModelApiResponse(Parcel in) {
     
-    code = (Integer)in.readValue(null);
-    type = (String)in.readValue(null);
-    message = (String)in.readValue(null);
+    code = (Integer)in.readValue(null);type = (String)in.readValue(null);message = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -170,4 +164,6 @@ public class ModelApiResponse implements Parcelable {
     }
   };
 }
+
+
 

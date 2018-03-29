@@ -30,28 +30,24 @@ import android.os.Parcel;
  * Order
  */
 
-public class Order implements Parcelable {
-  @SerializedName("id")
+public class Order {
+@SerializedName("id")
   private Long id = null;
-
   @SerializedName("petId")
   private Long petId = null;
-
   @SerializedName("quantity")
   private Integer quantity = null;
-
   @SerializedName("shipDate")
   private OffsetDateTime shipDate = null;
-
-  /**
+  
+    /**
    * Order Status
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
+    
     PLACED("placed"),
-    
     APPROVED("approved"),
-    
     DELIVERED("delivered");
 
     private String value;
@@ -59,7 +55,7 @@ public class Order implements Parcelable {
     StatusEnum(String value) {
       this.value = value;
     }
-
+    
     public String getValue() {
       return value;
     }
@@ -68,7 +64,7 @@ public class Order implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static StatusEnum fromValue(String text) {
       for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -77,7 +73,7 @@ public class Order implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<StatusEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
@@ -91,122 +87,120 @@ public class Order implements Parcelable {
       }
     }
   }
-
+  
   @SerializedName("status")
   private StatusEnum status = null;
-
   @SerializedName("complete")
   private Boolean complete = false;
-
+  
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-   /**
-   * Get id
-   * @return id
+  
+  /**
+  * Get id
+  * @return id
   **/
   @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
-
   public void setId(Long id) {
     this.id = id;
   }
-
+  
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
-   /**
-   * Get petId
-   * @return petId
+  
+  /**
+  * Get petId
+  * @return petId
   **/
   @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
-
   public void setPetId(Long petId) {
     this.petId = petId;
   }
-
+  
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
-   /**
-   * Get quantity
-   * @return quantity
+  
+  /**
+  * Get quantity
+  * @return quantity
   **/
   @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
-
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
-
+  
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-   /**
-   * Get shipDate
-   * @return shipDate
+  
+  /**
+  * Get shipDate
+  * @return shipDate
   **/
   @ApiModelProperty(value = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
-
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
-
+  
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-   /**
-   * Order Status
-   * @return status
+  
+  /**
+  * Order Status
+  * @return status
   **/
   @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
-
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-
+  
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
-   /**
-   * Get complete
-   * @return complete
+  
+  /**
+  * Get complete
+  * @return complete
   **/
   @ApiModelProperty(value = "")
   public Boolean isComplete() {
     return complete;
   }
-
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -228,8 +222,7 @@ public class Order implements Parcelable {
   public int hashCode() {
     return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -256,19 +249,16 @@ public class Order implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(id);
-
     out.writeValue(petId);
-
     out.writeValue(quantity);
-
     out.writeValue(shipDate);
-
     out.writeValue(status);
-
     out.writeValue(complete);
+    
   }
 
   public Order() {
@@ -277,12 +267,7 @@ public class Order implements Parcelable {
 
   Order(Parcel in) {
     
-    id = (Long)in.readValue(null);
-    petId = (Long)in.readValue(null);
-    quantity = (Integer)in.readValue(null);
-    shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
-    status = (StatusEnum)in.readValue(null);
-    complete = (Boolean)in.readValue(null);
+    id = (Long)in.readValue(null);petId = (Long)in.readValue(null);quantity = (Integer)in.readValue(null);shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());status = (StatusEnum)in.readValue(null);complete = (Boolean)in.readValue(null);
   }
 
   public int describeContents() {
@@ -298,4 +283,6 @@ public class Order implements Parcelable {
     }
   };
 }
+
+
 
