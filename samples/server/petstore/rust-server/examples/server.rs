@@ -28,9 +28,18 @@ use openssl::error::ErrorStack;
 use hyper::server::Http;
 use tokio_proto::TcpServer;
 use clap::{App, Arg};
-use swagger::auth::AllowAllAuthenticator;
+use swagger::auth::{AllowAllAuthenticator, AuthData, Authorization};
+use swagger::{Context, XSpanIdString};
 
 mod server_lib;
+
+type Context1 = Context<(), XSpanIdString>;
+type Context2 = Context<Context1, Option<AuthData>>;
+type Context3 = Context<Context2, Option<Authorization>>;
+
+type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context1, Context2>;
+type NewService2 = AllowAllAuthenticator<NewService3, Context2, Context3>;
+type NewService3 = server_lib::NewService<Context3>;
 
 // Builds an SSL implementation for Simple HTTPS from some hard-coded file names
 fn ssl() -> Result<SslAcceptorBuilder, ErrorStack> {
@@ -53,10 +62,10 @@ fn main() {
             .help("Whether to use HTTPS or not"))
         .get_matches();
 
-    let service_fn =
+    let service_fn : NewService1 =
         petstore_api::server::auth::NewService::new(
             AllowAllAuthenticator::new(
-                server_lib::NewService,
+                server_lib::NewService::new(),
                 "cosmo"
             )
         );

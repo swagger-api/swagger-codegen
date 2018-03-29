@@ -10,7 +10,7 @@ extern crate uuid;
 extern crate clap;
 extern crate tokio_core;
 
-use swagger::context::{ContextExtension, ExtendsWith, XSpanIdString, Has};
+use swagger::context::{Context, ExtendsWith, XSpanIdString, Has};
 
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
@@ -63,8 +63,8 @@ fn main() {
     };
 
     // Using a non-default `Context` is not required; this is just an example!
-    let context = ContextExtension::new((), XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
-    let context = ContextExtension::new(context, None);
+    let context = Context::new((), XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
+    let context = Context::new(context, None);
     let client = client.with_context(context);
 
     match matches.value_of("operation") {
