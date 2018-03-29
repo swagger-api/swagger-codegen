@@ -1,41 +1,35 @@
-package {{invokerPackage}};
+package io.swagger.client;
 
-{{#gson}}{{>gson/apiClientImports}}{{/gson}}
-{{#jackson}}{{>jackson/apiClientImports}}{{/jackson}}
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import retrofit2.converter.jackson.JacksonConverterFactory;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import org.threeten.bp.Instant;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZonedDateTime;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.AuthenticationRequestBuilder;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuilder;
-{{#joda}}
-import org.joda.time.format.DateTimeFormatter;
-{{/joda}}
-{{#threetenbp}}
 import org.threeten.bp.format.DateTimeFormatter;
-{{/threetenbp}}
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-{{#useRxJava}}
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-{{/useRxJava}}
-{{#useRxJava2}}
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-{{/useRxJava2}}
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import {{invokerPackage}}.auth.HttpBasicAuth;
-import {{invokerPackage}}.auth.ApiKeyAuth;
-import {{invokerPackage}}.auth.OAuth;
-import {{invokerPackage}}.auth.OAuth.AccessTokenListener;
-import {{invokerPackage}}.auth.OAuthFlow;
+import io.swagger.client.auth.HttpBasicAuth;
+import io.swagger.client.auth.ApiKeyAuth;
+import io.swagger.client.auth.OAuth;
+import io.swagger.client.auth.OAuth.AccessTokenListener;
+import io.swagger.client.auth.OAuthFlow;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
-{{#java8}}
-import java.time.format.DateTimeFormatter;
-{{/java8}}
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
@@ -45,12 +39,7 @@ public class ApiClient {
   private Map<String, Interceptor> apiAuthorizations;
   private OkHttpClient.Builder okBuilder;
   private Retrofit.Builder adapterBuilder;
-  {{#gson}}
-  private JSON json = new JSON();
-  {{/gson}}
-  {{#jackson}}
   private ObjectMapper mapper = new ObjectMapper();
-  {{/jackson}}
 
   public ApiClient() {
     apiAuthorizations = new LinkedHashMap<String, Interceptor>();
@@ -60,27 +49,20 @@ public class ApiClient {
   public ApiClient(String[] authNames) {
     this();
     for(String authName : authNames) {
-      {{#hasAuthMethods}}
       Interceptor auth;
-      {{#authMethods}}if ("{{name}}".equals(authName)) {
-        {{#isBasic}}
+      if ("api_key".equals(authName)) {
+        auth = new ApiKeyAuth("header", "api_key");
+      } else if ("api_key_query".equals(authName)) {
+        auth = new ApiKeyAuth("query", "api_key_query");
+      } else if ("http_basic_test".equals(authName)) {
         auth = new HttpBasicAuth();
-        {{/isBasic}}
-        {{#isApiKey}}
-        auth = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");
-        {{/isApiKey}}
-        {{#isOAuth}}
-        auth = new OAuth(OAuthFlow.{{flow}}, "{{authorizationUrl}}", "{{tokenUrl}}", "{{#scopes}}{{scope}}{{#hasMore}}, {{/hasMore}}{{/scopes}}");
-        {{/isOAuth}}
-      } else {{/authMethods}}{
+      } else if ("petstore_auth".equals(authName)) {
+        auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
+      } else {
         throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
       }
 
       addAuthorization(authName, auth);
-      {{/hasAuthMethods}}
-      {{^hasAuthMethods}}
-      throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
-      {{/hasAuthMethods}}
     }
   }
 
@@ -133,18 +115,13 @@ public class ApiClient {
   public void createDefaultAdapter() {
     okBuilder = new OkHttpClient.Builder();
 
-    String baseUrl = "{{{basePath}}}";
+    String baseUrl = "http://petstore.swagger.io:80/v2";
     if (!baseUrl.endsWith("/"))
       baseUrl = baseUrl + "/";
 
     adapterBuilder = new Retrofit
       .Builder()
       .baseUrl(baseUrl)
-      {{#useRxJava}}
-      .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-      {{/useRxJava}}{{#useRxJava2}}
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      {{/useRxJava2}}
       .addConverterFactory(ScalarsConverterFactory.create());
     adapterBuilder = addMappingConverterFactory(adapterBuilder);
   }
@@ -156,8 +133,23 @@ public class ApiClient {
       .create(serviceClass);
   }
 
-{{#gson}}{{>gson/mappingConverterFactory}}{{/gson}}
-{{#jackson}}{{>jackson/mappingConverterFactory}}{{/jackson}}
+
+  private Retrofit.Builder addMappingConverterFactory(Retrofit.Builder builder) {
+    ThreeTenModule module = new ThreeTenModule();
+    module.addDeserializer(Instant.class, CustomInstantDeserializer.INSTANT);
+    module.addDeserializer(OffsetDateTime.class, CustomInstantDeserializer.OFFSET_DATE_TIME);
+    module.addDeserializer(ZonedDateTime.class, CustomInstantDeserializer.ZONED_DATE_TIME);
+    mapper.registerModule(module);
+    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+    mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+    return builder.addConverterFactory(JacksonConverterFactory.create(mapper));
+  }
+
+  public ApiClient setDateFormat(DateFormat dateFormat) {
+    mapper = mapper.setDateFormat(dateFormat);
+    return this;
+  }
 
   /**
    * Helper method to configure the first api key found

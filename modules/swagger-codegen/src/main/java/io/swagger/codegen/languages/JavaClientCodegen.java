@@ -29,6 +29,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String USE_RX_JAVA = "useRxJava";
     public static final String USE_RX_JAVA2 = "useRxJava2";
     public static final String DO_NOT_USE_RX = "doNotUseRx";
+    public static final String USE_JACKSON = "useJackson";
     public static final String USE_PLAY_WS = "usePlayWS";
     public static final String PLAY_VERSION = "playVersion";
     public static final String PARCELABLE_MODEL = "parcelableModel";
@@ -65,6 +66,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
+        cliOptions.add(CliOption.newBoolean(USE_JACKSON, "Use Jackson object parsing with the retrofit2 library instead of Gson."));
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_PLAY_WS, "Use Play! Async HTTP client (Play WS API)"));
         cliOptions.add(CliOption.newString(PLAY_VERSION, "Version of Play! Framework (possible values \"play24\", \"play25\")"));
@@ -225,9 +227,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         } else if (usesAnyRetrofitLibrary()) {
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
-            additionalProperties.put("gson", "true");
-            if ("retrofit2".equals(getLibrary()) && !usePlayWS) {
-                supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+            additionalProperties.put("gson", true);
+            if ("retrofit2".equals(getLibrary())) {
+                Object useJackson = additionalProperties.get(USE_JACKSON);
+                if (useJackson != null && Boolean.valueOf(useJackson.toString())) {
+                    additionalProperties.remove("gson");
+                    additionalProperties.put("jackson", true);
+                } else {
+                    supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+                }
             }
         } else if ("jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
