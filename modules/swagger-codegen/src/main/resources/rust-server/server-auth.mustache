@@ -12,7 +12,7 @@ pub struct NewService<T, C, D>
     where
         T: hyper::server::NewService<Request=(Request, D), Response=Response, Error=Error>,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     inner: T,
     marker1: PhantomData<C>,
@@ -23,7 +23,7 @@ impl<T, C, D> NewService<T, C, D>
     where
         T: hyper::server::NewService<Request=(Request, D), Response=Response, Error=Error> + 'static,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     pub fn new(inner: T) -> NewService<T, C, D> {
         NewService{inner, marker1: PhantomData, marker2: PhantomData}
@@ -34,7 +34,7 @@ impl<T, C, D> hyper::server::NewService for NewService<T, C, D>
     where
         T: hyper::server::NewService<Request=(Request, D), Response=Response, Error=Error> + 'static,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     type Request = Request;
     type Response = Response;
@@ -51,7 +51,7 @@ pub struct Service<T, C, D>
     where
         T: hyper::server::Service<Request=(Request, D), Response=Response, Error=Error>,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     inner: T,
     marker1: PhantomData<C>,
@@ -62,7 +62,7 @@ impl<T, C, D> Service<T, C, D>
     where
         T: hyper::server::Service<Request=(Request, D), Response=Response, Error=Error>,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     pub fn new(inner: T) -> Service<T, C, D> {
         Service{inner, marker1: PhantomData, marker2: PhantomData}
@@ -73,7 +73,7 @@ impl<T, C, D> hyper::server::Service for Service<T, C, D>
     where
         T: hyper::server::Service<Request=(Request, D), Response=Response, Error=Error>,
         C: Default,
-        D: ExtendsWith<C, Option<AuthData>>,
+        D: ExtendsWith<Inner=C, Ext=Option<AuthData>>,
 {
     type Request = Request;
     type Response = Response;
