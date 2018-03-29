@@ -29,29 +29,28 @@ import android.os.Parcel;
  * SpecialModelName
  */
 
-public class SpecialModelName implements Parcelable {
-  @SerializedName("$special[property.name]")
-  private Long specialPropertyName = null;
-
-  public SpecialModelName specialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+public class SpecialModelName {
+@SerializedName("$special[property.name]")
+  private Long $specialPropertyName = null;
+  
+  public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-   /**
-   * Get specialPropertyName
-   * @return specialPropertyName
+  
+  /**
+  * Get $specialPropertyName
+  * @return $specialPropertyName
   **/
   @ApiModelProperty(value = "")
-  public Long getSpecialPropertyName() {
-    return specialPropertyName;
+  public Long get$SpecialPropertyName() {
+    return $specialPropertyName;
   }
-
-  public void setSpecialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  public void set$SpecialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -60,22 +59,21 @@ public class SpecialModelName implements Parcelable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SpecialModelName specialModelName = (SpecialModelName) o;
-    return Objects.equals(this.specialPropertyName, specialModelName.specialPropertyName);
+    SpecialModelName $specialModelName = (SpecialModelName) o;
+    return Objects.equals(this.$specialPropertyName, $specialModelName.$specialPropertyName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(specialPropertyName);
+    return Objects.hash($specialPropertyName);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SpecialModelName {\n");
     
-    sb.append("    specialPropertyName: ").append(toIndentedString(specialPropertyName)).append("\n");
+    sb.append("    $specialPropertyName: ").append(toIndentedString($specialPropertyName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -91,9 +89,11 @@ public class SpecialModelName implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
-    out.writeValue(specialPropertyName);
+    
+    out.writeValue($specialPropertyName);
+    
   }
 
   public SpecialModelName() {
@@ -102,7 +102,7 @@ public class SpecialModelName implements Parcelable {
 
   SpecialModelName(Parcel in) {
     
-    specialPropertyName = (Long)in.readValue(null);
+    $specialPropertyName = (Long)in.readValue(null);
   }
 
   public int describeContents() {
@@ -118,4 +118,6 @@ public class SpecialModelName implements Parcelable {
     }
   };
 }
+
+
 

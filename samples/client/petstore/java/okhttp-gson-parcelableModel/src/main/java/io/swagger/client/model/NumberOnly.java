@@ -30,29 +30,28 @@ import android.os.Parcel;
  * NumberOnly
  */
 
-public class NumberOnly implements Parcelable {
-  @SerializedName("JustNumber")
+public class NumberOnly {
+@SerializedName("JustNumber")
   private BigDecimal justNumber = null;
-
+  
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-   /**
-   * Get justNumber
-   * @return justNumber
+  
+  /**
+  * Get justNumber
+  * @return justNumber
   **/
   @ApiModelProperty(value = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
-
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -69,8 +68,7 @@ public class NumberOnly implements Parcelable {
   public int hashCode() {
     return Objects.hash(justNumber);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -92,9 +90,11 @@ public class NumberOnly implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(justNumber);
+    
   }
 
   public NumberOnly() {
@@ -119,4 +119,6 @@ public class NumberOnly implements Parcelable {
     }
   };
 }
+
+
 
