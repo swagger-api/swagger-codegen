@@ -476,7 +476,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken, );
+        System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Logs out current logged in user session
@@ -496,7 +496,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, );
+        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Updated user
         /// </summary>
@@ -1714,7 +1714,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task LogoutUserAsync ()
         {
              
-             await LogoutUserAsync(System.Threading.CancellationToken.None, );
+             await LogoutUserAsync(System.Threading.CancellationToken.None);
 
         }
 
@@ -1723,9 +1723,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken, )
+        public async System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken)
         {
-             await LogoutUserAsyncWithHttpInfo(cancellationToken, );
+             await LogoutUserAsyncWithHttpInfo(cancellationToken);
         }
 
         /// <summary>
@@ -1736,7 +1736,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ()
         {
              
-             await LogoutUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, );
+             await LogoutUserAsyncWithHttpInfo(System.Threading.CancellationToken.None);
         }
 
         /// <summary>
@@ -1744,7 +1744,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, )
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken)
         {
 
             var localVarPath = "./user/logout";

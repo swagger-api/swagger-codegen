@@ -169,7 +169,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
-        System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken, );
+        System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -189,7 +189,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, );
+        System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
@@ -605,7 +605,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
         public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync ()
         {
-             return await GetInventoryAsync(System.Threading.CancellationToken.None, );
+             return await GetInventoryAsync(System.Threading.CancellationToken.None);
              
 
         }
@@ -615,9 +615,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
-        public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken, )
+        public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken)
         {
-             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo(cancellationToken, );
+             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo(cancellationToken);
              return localVarResponse.Data;
         }
 
@@ -628,7 +628,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo ()
         {
-             return await GetInventoryAsyncWithHttpInfo(System.Threading.CancellationToken.None, );
+             return await GetInventoryAsyncWithHttpInfo(System.Threading.CancellationToken.None);
              
         }
 
@@ -637,7 +637,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, )
+        public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken)
         {
 
             var localVarPath = "./store/inventory";
