@@ -66,8 +66,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To test special tags
+        /// </summary>
+        /// <remarks>
+        /// To test special tags
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body);
+
+        /// <summary>
+        /// To test special tags
+        /// </summary>
+        /// <remarks>
+        /// To test special tags
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
         #endregion Asynchronous Operations
     }
 
@@ -250,8 +272,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(body);
+             return await TestSpecialTagsAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// To test special tags To test special tags
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        public async System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<ModelClient> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -262,6 +298,19 @@ namespace IO.Swagger.Api
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body)
+        {
+             return await TestSpecialTagsAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// To test special tags To test special tags
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -302,7 +351,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 

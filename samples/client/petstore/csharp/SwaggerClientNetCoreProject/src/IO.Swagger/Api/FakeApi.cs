@@ -276,8 +276,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
+        /// <returns>Task of OuterBoolean</returns>
+        System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer boolean types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input boolean as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterBoolean)</returns>
         System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer boolean types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input boolean as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterBoolean)</returns>
+        System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// 
         /// </summary>
@@ -297,8 +319,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input composite as post body (optional)</param>
+        /// <returns>Task of OuterComposite</returns>
+        System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of object with outer number type
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input composite as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterComposite)</returns>
         System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of object with outer number type
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input composite as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterComposite)</returns>
+        System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// 
         /// </summary>
@@ -318,8 +362,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
+        /// <returns>Task of OuterNumber</returns>
+        System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer number types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input number as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterNumber)</returns>
         System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer number types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input number as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterNumber)</returns>
+        System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// 
         /// </summary>
@@ -339,8 +405,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
+        /// <returns>Task of OuterString</returns>
+        System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer string types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterString)</returns>
         System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Test serialization of outer string types
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input string as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterString)</returns>
+        System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// To test \&quot;client\&quot; model
         /// </summary>
@@ -360,8 +448,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To test \&quot;client\&quot; model
+        /// </summary>
+        /// <remarks>
+        /// To test \&quot;client\&quot; model
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body);
+
+        /// <summary>
+        /// To test \&quot;client\&quot; model
+        /// </summary>
+        /// <remarks>
+        /// To test \&quot;client\&quot; model
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -407,8 +517,56 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </summary>
+        /// <remarks>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="number">None</param>
+        /// <param name="_double">None</param>
+        /// <param name="patternWithoutDelimiter">None</param>
+        /// <param name="_byte">None</param>
+        /// <param name="integer">None (optional)</param>
+        /// <param name="int32">None (optional)</param>
+        /// <param name="int64">None (optional)</param>
+        /// <param name="_float">None (optional)</param>
+        /// <param name="_string">None (optional)</param>
+        /// <param name="binary">None (optional)</param>
+        /// <param name="date">None (optional)</param>
+        /// <param name="dateTime">None (optional)</param>
+        /// <param name="password">None (optional)</param>
+        /// <param name="callback">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
+
+        /// <summary>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </summary>
+        /// <remarks>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="number">None</param>
+        /// <param name="_double">None</param>
+        /// <param name="patternWithoutDelimiter">None</param>
+        /// <param name="_byte">None</param>
+        /// <param name="integer">None (optional)</param>
+        /// <param name="int32">None (optional)</param>
+        /// <param name="int64">None (optional)</param>
+        /// <param name="_float">None (optional)</param>
+        /// <param name="_string">None (optional)</param>
+        /// <param name="binary">None (optional)</param>
+        /// <param name="date">None (optional)</param>
+        /// <param name="dateTime">None (optional)</param>
+        /// <param name="password">None (optional)</param>
+        /// <param name="callback">None (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// To test enum parameters
         /// </summary>
@@ -442,8 +600,44 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To test enum parameters
+        /// </summary>
+        /// <remarks>
+        /// To test enum parameters
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="enumFormStringArray">Form parameter enum test (string array) (optional)</param>
+        /// <param name="enumFormString">Form parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
+        /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null);
+
+        /// <summary>
+        /// To test enum parameters
+        /// </summary>
+        /// <remarks>
+        /// To test enum parameters
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="enumFormStringArray">Form parameter enum test (string array) (optional)</param>
+        /// <param name="enumFormString">Form parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
+        /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// test inline additionalProperties
         /// </summary>
@@ -463,8 +657,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">request body</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// test inline additionalProperties
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">request body</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param);
+
+        /// <summary>
+        /// test inline additionalProperties
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">request body</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// test json serialization of form data
         /// </summary>
@@ -486,8 +702,32 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">field1</param>
         /// <param name="param2">field2</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// test json serialization of form data
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">field1</param>
+        /// <param name="param2">field2</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2);
+
+        /// <summary>
+        /// test json serialization of form data
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">field1</param>
+        /// <param name="param2">field2</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2, System.Threading.CancellationToken cancellationToken);
         #endregion Asynchronous Operations
     }
 
@@ -504,7 +744,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public FakeApi(String basePath)
         {
-            this.Configuration = new Configuration { BasePath = basePath };
+            this.Configuration = new IO.Swagger.Client.Configuration { BasePath = basePath };
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
         }
@@ -515,10 +755,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public FakeApi(Configuration configuration = null)
+        public FakeApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = IO.Swagger.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
@@ -548,7 +788,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -612,7 +852,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/outer/boolean";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -620,18 +860,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -640,7 +880,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -654,7 +894,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterBoolean>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterBoolean) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
+                (OuterBoolean) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
         }
 
         /// <summary>
@@ -665,8 +905,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterBoolean</returns>
         public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null)
         {
-             ApiResponse<OuterBoolean> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(body);
+             return await FakeOuterBooleanSerializeAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer boolean types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input boolean as post body (optional)</param>
+        /// <returns>Task of OuterBoolean</returns>
+        public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<OuterBoolean> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -678,11 +932,24 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterBoolean)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null)
         {
+             return await FakeOuterBooleanSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer boolean types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input boolean as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterBoolean)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./fake/outer/boolean";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -690,18 +957,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -710,9 +977,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -724,7 +991,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterBoolean>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterBoolean) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
+                (OuterBoolean) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
         }
 
         /// <summary>
@@ -751,7 +1018,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/outer/composite";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -759,18 +1026,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -779,7 +1046,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -793,7 +1060,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterComposite>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterComposite) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterComposite)));
+                (OuterComposite) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterComposite)));
         }
 
         /// <summary>
@@ -804,8 +1071,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterComposite</returns>
         public async System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null)
         {
-             ApiResponse<OuterComposite> localVarResponse = await FakeOuterCompositeSerializeAsyncWithHttpInfo(body);
+             return await FakeOuterCompositeSerializeAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of object with outer number type
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input composite as post body (optional)</param>
+        /// <returns>Task of OuterComposite</returns>
+        public async System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<OuterComposite> localVarResponse = await FakeOuterCompositeSerializeAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -817,11 +1098,24 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterComposite)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null)
         {
+             return await FakeOuterCompositeSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of object with outer number type
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input composite as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterComposite)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null, System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./fake/outer/composite";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -829,18 +1123,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -849,9 +1143,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -863,7 +1157,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterComposite>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterComposite) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterComposite)));
+                (OuterComposite) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterComposite)));
         }
 
         /// <summary>
@@ -890,7 +1184,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/outer/number";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -898,18 +1192,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -918,7 +1212,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -932,7 +1226,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterNumber>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterNumber) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
+                (OuterNumber) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
         }
 
         /// <summary>
@@ -943,8 +1237,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterNumber</returns>
         public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null)
         {
-             ApiResponse<OuterNumber> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(body);
+             return await FakeOuterNumberSerializeAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer number types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input number as post body (optional)</param>
+        /// <returns>Task of OuterNumber</returns>
+        public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<OuterNumber> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -956,11 +1264,24 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterNumber)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null)
         {
+             return await FakeOuterNumberSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer number types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input number as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterNumber)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null, System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./fake/outer/number";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -968,18 +1289,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -988,9 +1309,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1002,7 +1323,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterNumber>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterNumber) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
+                (OuterNumber) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
         }
 
         /// <summary>
@@ -1029,7 +1350,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/outer/string";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1037,18 +1358,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -1057,7 +1378,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1071,7 +1392,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterString>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterString) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
+                (OuterString) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
         }
 
         /// <summary>
@@ -1082,8 +1403,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterString</returns>
         public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null)
         {
-             ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body);
+             return await FakeOuterStringSerializeAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer string types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input string as post body (optional)</param>
+        /// <returns>Task of OuterString</returns>
+        public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -1095,11 +1430,24 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterString)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null)
         {
+             return await FakeOuterStringSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        ///  Test serialization of outer string types
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Input string as post body (optional)</param>
+        /// <returns>Task of ApiResponse (OuterString)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null, System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./fake/outer/string";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1107,18 +1455,18 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -1127,9 +1475,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1141,7 +1489,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<OuterString>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (OuterString) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
+                (OuterString) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
         }
 
         /// <summary>
@@ -1171,7 +1519,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1180,19 +1528,19 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -1201,7 +1549,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1215,7 +1563,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
+                (ModelClient) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
         }
 
         /// <summary>
@@ -1226,8 +1574,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body);
+             return await TestClientModelAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// To test \&quot;client\&quot; model To test \&quot;client\&quot; model
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -1239,6 +1601,19 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body)
         {
+             return await TestClientModelAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// To test \&quot;client\&quot; model To test \&quot;client\&quot; model
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling FakeApi->TestClientModel");
@@ -1246,7 +1621,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1255,19 +1630,19 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -1276,9 +1651,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1290,7 +1665,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (ModelClient) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
+                (ModelClient) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
         }
 
         /// <summary>
@@ -1354,7 +1729,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1364,41 +1739,41 @@ namespace IO.Swagger.Api
                 "application/xml; charset=utf-8", 
                 "application/json; charset=utf-8"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml; charset=utf-8",
                 "application/json; charset=utf-8"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (integer != null) localVarFormParams.Add("integer", Configuration.ApiClient.ParameterToString(integer)); // form parameter
-            if (int32 != null) localVarFormParams.Add("int32", Configuration.ApiClient.ParameterToString(int32)); // form parameter
-            if (int64 != null) localVarFormParams.Add("int64", Configuration.ApiClient.ParameterToString(int64)); // form parameter
-            if (number != null) localVarFormParams.Add("number", Configuration.ApiClient.ParameterToString(number)); // form parameter
-            if (_float != null) localVarFormParams.Add("float", Configuration.ApiClient.ParameterToString(_float)); // form parameter
-            if (_double != null) localVarFormParams.Add("double", Configuration.ApiClient.ParameterToString(_double)); // form parameter
-            if (_string != null) localVarFormParams.Add("string", Configuration.ApiClient.ParameterToString(_string)); // form parameter
-            if (patternWithoutDelimiter != null) localVarFormParams.Add("pattern_without_delimiter", Configuration.ApiClient.ParameterToString(patternWithoutDelimiter)); // form parameter
-            if (_byte != null) localVarFormParams.Add("byte", Configuration.ApiClient.ParameterToString(_byte)); // form parameter
-            if (binary != null) localVarFormParams.Add("binary", Configuration.ApiClient.ParameterToString(binary)); // form parameter
-            if (date != null) localVarFormParams.Add("date", Configuration.ApiClient.ParameterToString(date)); // form parameter
-            if (dateTime != null) localVarFormParams.Add("dateTime", Configuration.ApiClient.ParameterToString(dateTime)); // form parameter
-            if (password != null) localVarFormParams.Add("password", Configuration.ApiClient.ParameterToString(password)); // form parameter
-            if (callback != null) localVarFormParams.Add("callback", Configuration.ApiClient.ParameterToString(callback)); // form parameter
+            if (integer != null) localVarFormParams.Add("integer", this.Configuration.ApiClient.ParameterToString(integer)); // form parameter
+            if (int32 != null) localVarFormParams.Add("int32", this.Configuration.ApiClient.ParameterToString(int32)); // form parameter
+            if (int64 != null) localVarFormParams.Add("int64", this.Configuration.ApiClient.ParameterToString(int64)); // form parameter
+            if (number != null) localVarFormParams.Add("number", this.Configuration.ApiClient.ParameterToString(number)); // form parameter
+            if (_float != null) localVarFormParams.Add("float", this.Configuration.ApiClient.ParameterToString(_float)); // form parameter
+            if (_double != null) localVarFormParams.Add("double", this.Configuration.ApiClient.ParameterToString(_double)); // form parameter
+            if (_string != null) localVarFormParams.Add("string", this.Configuration.ApiClient.ParameterToString(_string)); // form parameter
+            if (patternWithoutDelimiter != null) localVarFormParams.Add("pattern_without_delimiter", this.Configuration.ApiClient.ParameterToString(patternWithoutDelimiter)); // form parameter
+            if (_byte != null) localVarFormParams.Add("byte", this.Configuration.ApiClient.ParameterToString(_byte)); // form parameter
+            if (binary != null) localVarFormParams.Add("binary", this.Configuration.ApiClient.ParameterToString(binary)); // form parameter
+            if (date != null) localVarFormParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // form parameter
+            if (dateTime != null) localVarFormParams.Add("dateTime", this.Configuration.ApiClient.ParameterToString(dateTime)); // form parameter
+            if (password != null) localVarFormParams.Add("password", this.Configuration.ApiClient.ParameterToString(password)); // form parameter
+            if (callback != null) localVarFormParams.Add("callback", this.Configuration.ApiClient.ParameterToString(callback)); // form parameter
 
             // authentication (http_basic_test) required
             // http basic authentication required
-            if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
             }
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1436,7 +1811,34 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
-             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
+             
+             await TestEndpointParametersAsync(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="number">None</param>
+        /// <param name="_double">None</param>
+        /// <param name="patternWithoutDelimiter">None</param>
+        /// <param name="_byte">None</param>
+        /// <param name="integer">None (optional)</param>
+        /// <param name="int32">None (optional)</param>
+        /// <param name="int64">None (optional)</param>
+        /// <param name="_float">None (optional)</param>
+        /// <param name="_string">None (optional)</param>
+        /// <param name="binary">None (optional)</param>
+        /// <param name="date">None (optional)</param>
+        /// <param name="dateTime">None (optional)</param>
+        /// <param name="password">None (optional)</param>
+        /// <param name="callback">None (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken)
+        {
+             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, cancellationToken);
+
 
         }
 
@@ -1461,6 +1863,32 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
+             
+             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="number">None</param>
+        /// <param name="_double">None</param>
+        /// <param name="patternWithoutDelimiter">None</param>
+        /// <param name="_byte">None</param>
+        /// <param name="integer">None (optional)</param>
+        /// <param name="int32">None (optional)</param>
+        /// <param name="int64">None (optional)</param>
+        /// <param name="_float">None (optional)</param>
+        /// <param name="_string">None (optional)</param>
+        /// <param name="binary">None (optional)</param>
+        /// <param name="date">None (optional)</param>
+        /// <param name="dateTime">None (optional)</param>
+        /// <param name="password">None (optional)</param>
+        /// <param name="callback">None (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'number' is set
             if (number == null)
                 throw new ApiException(400, "Missing required parameter 'number' when calling FakeApi->TestEndpointParameters");
@@ -1477,7 +1905,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1487,43 +1915,43 @@ namespace IO.Swagger.Api
                 "application/xml; charset=utf-8", 
                 "application/json; charset=utf-8"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml; charset=utf-8",
                 "application/json; charset=utf-8"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (integer != null) localVarFormParams.Add("integer", Configuration.ApiClient.ParameterToString(integer)); // form parameter
-            if (int32 != null) localVarFormParams.Add("int32", Configuration.ApiClient.ParameterToString(int32)); // form parameter
-            if (int64 != null) localVarFormParams.Add("int64", Configuration.ApiClient.ParameterToString(int64)); // form parameter
-            if (number != null) localVarFormParams.Add("number", Configuration.ApiClient.ParameterToString(number)); // form parameter
-            if (_float != null) localVarFormParams.Add("float", Configuration.ApiClient.ParameterToString(_float)); // form parameter
-            if (_double != null) localVarFormParams.Add("double", Configuration.ApiClient.ParameterToString(_double)); // form parameter
-            if (_string != null) localVarFormParams.Add("string", Configuration.ApiClient.ParameterToString(_string)); // form parameter
-            if (patternWithoutDelimiter != null) localVarFormParams.Add("pattern_without_delimiter", Configuration.ApiClient.ParameterToString(patternWithoutDelimiter)); // form parameter
-            if (_byte != null) localVarFormParams.Add("byte", Configuration.ApiClient.ParameterToString(_byte)); // form parameter
-            if (binary != null) localVarFormParams.Add("binary", Configuration.ApiClient.ParameterToString(binary)); // form parameter
-            if (date != null) localVarFormParams.Add("date", Configuration.ApiClient.ParameterToString(date)); // form parameter
-            if (dateTime != null) localVarFormParams.Add("dateTime", Configuration.ApiClient.ParameterToString(dateTime)); // form parameter
-            if (password != null) localVarFormParams.Add("password", Configuration.ApiClient.ParameterToString(password)); // form parameter
-            if (callback != null) localVarFormParams.Add("callback", Configuration.ApiClient.ParameterToString(callback)); // form parameter
+            if (integer != null) localVarFormParams.Add("integer", this.Configuration.ApiClient.ParameterToString(integer)); // form parameter
+            if (int32 != null) localVarFormParams.Add("int32", this.Configuration.ApiClient.ParameterToString(int32)); // form parameter
+            if (int64 != null) localVarFormParams.Add("int64", this.Configuration.ApiClient.ParameterToString(int64)); // form parameter
+            if (number != null) localVarFormParams.Add("number", this.Configuration.ApiClient.ParameterToString(number)); // form parameter
+            if (_float != null) localVarFormParams.Add("float", this.Configuration.ApiClient.ParameterToString(_float)); // form parameter
+            if (_double != null) localVarFormParams.Add("double", this.Configuration.ApiClient.ParameterToString(_double)); // form parameter
+            if (_string != null) localVarFormParams.Add("string", this.Configuration.ApiClient.ParameterToString(_string)); // form parameter
+            if (patternWithoutDelimiter != null) localVarFormParams.Add("pattern_without_delimiter", this.Configuration.ApiClient.ParameterToString(patternWithoutDelimiter)); // form parameter
+            if (_byte != null) localVarFormParams.Add("byte", this.Configuration.ApiClient.ParameterToString(_byte)); // form parameter
+            if (binary != null) localVarFormParams.Add("binary", this.Configuration.ApiClient.ParameterToString(binary)); // form parameter
+            if (date != null) localVarFormParams.Add("date", this.Configuration.ApiClient.ParameterToString(date)); // form parameter
+            if (dateTime != null) localVarFormParams.Add("dateTime", this.Configuration.ApiClient.ParameterToString(dateTime)); // form parameter
+            if (password != null) localVarFormParams.Add("password", this.Configuration.ApiClient.ParameterToString(password)); // form parameter
+            if (callback != null) localVarFormParams.Add("callback", this.Configuration.ApiClient.ParameterToString(callback)); // form parameter
 
             // authentication (http_basic_test) required
             // http basic authentication required
-            if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
             }
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1575,7 +2003,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1584,28 +2012,28 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "*/*"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "*/*"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (enumQueryStringArray != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "enum_query_string_array", enumQueryStringArray)); // query parameter
-            if (enumQueryString != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_string", enumQueryString)); // query parameter
-            if (enumQueryInteger != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_integer", enumQueryInteger)); // query parameter
-            if (enumHeaderStringArray != null) localVarHeaderParams.Add("enum_header_string_array", Configuration.ApiClient.ParameterToString(enumHeaderStringArray)); // header parameter
-            if (enumHeaderString != null) localVarHeaderParams.Add("enum_header_string", Configuration.ApiClient.ParameterToString(enumHeaderString)); // header parameter
-            if (enumFormStringArray != null) localVarFormParams.Add("enum_form_string_array", Configuration.ApiClient.ParameterToString(enumFormStringArray)); // form parameter
-            if (enumFormString != null) localVarFormParams.Add("enum_form_string", Configuration.ApiClient.ParameterToString(enumFormString)); // form parameter
-            if (enumQueryDouble != null) localVarFormParams.Add("enum_query_double", Configuration.ApiClient.ParameterToString(enumQueryDouble)); // form parameter
+            if (enumQueryStringArray != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("csv", "enum_query_string_array", enumQueryStringArray)); // query parameter
+            if (enumQueryString != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_string", enumQueryString)); // query parameter
+            if (enumQueryInteger != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_integer", enumQueryInteger)); // query parameter
+            if (enumHeaderStringArray != null) localVarHeaderParams.Add("enum_header_string_array", this.Configuration.ApiClient.ParameterToString(enumHeaderStringArray)); // header parameter
+            if (enumHeaderString != null) localVarHeaderParams.Add("enum_header_string", this.Configuration.ApiClient.ParameterToString(enumHeaderString)); // header parameter
+            if (enumFormStringArray != null) localVarFormParams.Add("enum_form_string_array", this.Configuration.ApiClient.ParameterToString(enumFormStringArray)); // form parameter
+            if (enumFormString != null) localVarFormParams.Add("enum_form_string", this.Configuration.ApiClient.ParameterToString(enumFormString)); // form parameter
+            if (enumQueryDouble != null) localVarFormParams.Add("enum_query_double", this.Configuration.ApiClient.ParameterToString(enumQueryDouble)); // form parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1637,7 +2065,28 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
-             await TestEnumParametersAsyncWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+             
+             await TestEnumParametersAsync(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// To test enum parameters To test enum parameters
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="enumFormStringArray">Form parameter enum test (string array) (optional)</param>
+        /// <param name="enumFormString">Form parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
+        /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken)
+        {
+             await TestEnumParametersAsyncWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, cancellationToken);
+
 
         }
 
@@ -1656,11 +2105,31 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
+             
+             await TestEnumParametersAsyncWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// To test enum parameters To test enum parameters
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="enumFormStringArray">Form parameter enum test (string array) (optional)</param>
+        /// <param name="enumFormString">Form parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
+        /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
+        /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./fake";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1669,30 +2138,30 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "*/*"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "*/*"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (enumQueryStringArray != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "enum_query_string_array", enumQueryStringArray)); // query parameter
-            if (enumQueryString != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_string", enumQueryString)); // query parameter
-            if (enumQueryInteger != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_integer", enumQueryInteger)); // query parameter
-            if (enumHeaderStringArray != null) localVarHeaderParams.Add("enum_header_string_array", Configuration.ApiClient.ParameterToString(enumHeaderStringArray)); // header parameter
-            if (enumHeaderString != null) localVarHeaderParams.Add("enum_header_string", Configuration.ApiClient.ParameterToString(enumHeaderString)); // header parameter
-            if (enumFormStringArray != null) localVarFormParams.Add("enum_form_string_array", Configuration.ApiClient.ParameterToString(enumFormStringArray)); // form parameter
-            if (enumFormString != null) localVarFormParams.Add("enum_form_string", Configuration.ApiClient.ParameterToString(enumFormString)); // form parameter
-            if (enumQueryDouble != null) localVarFormParams.Add("enum_query_double", Configuration.ApiClient.ParameterToString(enumQueryDouble)); // form parameter
+            if (enumQueryStringArray != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("csv", "enum_query_string_array", enumQueryStringArray)); // query parameter
+            if (enumQueryString != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_string", enumQueryString)); // query parameter
+            if (enumQueryInteger != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "enum_query_integer", enumQueryInteger)); // query parameter
+            if (enumHeaderStringArray != null) localVarHeaderParams.Add("enum_header_string_array", this.Configuration.ApiClient.ParameterToString(enumHeaderStringArray)); // header parameter
+            if (enumHeaderString != null) localVarHeaderParams.Add("enum_header_string", this.Configuration.ApiClient.ParameterToString(enumHeaderString)); // header parameter
+            if (enumFormStringArray != null) localVarFormParams.Add("enum_form_string_array", this.Configuration.ApiClient.ParameterToString(enumFormStringArray)); // form parameter
+            if (enumFormString != null) localVarFormParams.Add("enum_form_string", this.Configuration.ApiClient.ParameterToString(enumFormString)); // form parameter
+            if (enumQueryDouble != null) localVarFormParams.Add("enum_query_double", this.Configuration.ApiClient.ParameterToString(enumQueryDouble)); // form parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1733,7 +2202,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/inline-additionalProperties";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1742,18 +2211,18 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (param != null && param.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(param); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(param); // http body (model) parameter
             }
             else
             {
@@ -1762,7 +2231,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1787,7 +2256,21 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param)
         {
-             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(param);
+             
+             await TestInlineAdditionalPropertiesAsync(param, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// test inline additionalProperties 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">request body</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param, System.Threading.CancellationToken cancellationToken)
+        {
+             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(param, cancellationToken);
+
 
         }
 
@@ -1799,6 +2282,19 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param)
         {
+             
+             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(param, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// test inline additionalProperties 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">request body</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'param' is set
             if (param == null)
                 throw new ApiException(400, "Missing required parameter 'param' when calling FakeApi->TestInlineAdditionalProperties");
@@ -1806,7 +2302,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/inline-additionalProperties";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1815,18 +2311,18 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (param != null && param.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(param); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(param); // http body (model) parameter
             }
             else
             {
@@ -1835,9 +2331,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1883,7 +2379,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/jsonFormData";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1892,21 +2388,21 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (param != null) localVarFormParams.Add("param", Configuration.ApiClient.ParameterToString(param)); // form parameter
-            if (param2 != null) localVarFormParams.Add("param2", Configuration.ApiClient.ParameterToString(param2)); // form parameter
+            if (param != null) localVarFormParams.Add("param", this.Configuration.ApiClient.ParameterToString(param)); // form parameter
+            if (param2 != null) localVarFormParams.Add("param2", this.Configuration.ApiClient.ParameterToString(param2)); // form parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -1932,7 +2428,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2)
         {
-             await TestJsonFormDataAsyncWithHttpInfo(param, param2);
+             
+             await TestJsonFormDataAsync(param, param2, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// test json serialization of form data 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">field1</param>
+        /// <param name="param2">field2</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2, System.Threading.CancellationToken cancellationToken)
+        {
+             await TestJsonFormDataAsyncWithHttpInfo(param, param2, cancellationToken);
+
 
         }
 
@@ -1945,6 +2456,20 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2)
         {
+             
+             await TestJsonFormDataAsyncWithHttpInfo(param, param2, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// test json serialization of form data 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="param">field1</param>
+        /// <param name="param2">field2</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'param' is set
             if (param == null)
                 throw new ApiException(400, "Missing required parameter 'param' when calling FakeApi->TestJsonFormData");
@@ -1955,7 +2480,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./fake/jsonFormData";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -1964,23 +2489,23 @@ namespace IO.Swagger.Api
             String[] localVarHttpContentTypes = new String[] {
                 "application/json"
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (param != null) localVarFormParams.Add("param", Configuration.ApiClient.ParameterToString(param)); // form parameter
-            if (param2 != null) localVarFormParams.Add("param2", Configuration.ApiClient.ParameterToString(param2)); // form parameter
+            if (param != null) localVarFormParams.Add("param", this.Configuration.ApiClient.ParameterToString(param)); // form parameter
+            if (param2 != null) localVarFormParams.Add("param2", this.Configuration.ApiClient.ParameterToString(param2)); // form parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 

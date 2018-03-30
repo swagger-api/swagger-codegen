@@ -28,7 +28,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -39,7 +39,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -51,7 +51,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -62,12 +62,34 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// To test class name in snake case
+        /// </summary>
+        /// <remarks>
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body);
+
+        /// <summary>
+        /// To test class name in snake case
+        /// </summary>
+        /// <remarks>
+        /// To test class name in snake case
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
         #endregion Asynchronous Operations
     }
 
@@ -169,7 +191,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -181,7 +203,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -248,25 +270,52 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(body);
-             return localVarResponse.Data;
+             return await TestClassnameAsync(body, System.Threading.CancellationToken.None);
+             
 
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ModelClient</returns>
+        public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(body, cancellationToken);
+             return localVarResponse.Data;
+
+
+        }
+
+        /// <summary>
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body)
+        {
+             return await TestClassnameAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// To test class name in snake case To test class name in snake case
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">client model</param>
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -312,7 +361,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 

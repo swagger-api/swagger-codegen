@@ -223,8 +223,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task AddPetAsync (Pet body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Add a new pet to the store
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body);
+
+        /// <summary>
+        /// Add a new pet to the store
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Deletes a pet
         /// </summary>
@@ -246,8 +268,32 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"> (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeletePetAsync (long? petId, string apiKey = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Deletes a pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null);
+
+        /// <summary>
+        /// Deletes a pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"> (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Finds Pets by status
         /// </summary>
@@ -267,8 +313,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>Task of List&lt;Pet&gt;</returns>
+        System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Finds Pets by status
+        /// </summary>
+        /// <remarks>
+        /// Multiple status values can be provided with comma separated strings
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status);
+
+        /// <summary>
+        /// Finds Pets by status
+        /// </summary>
+        /// <remarks>
+        /// Multiple status values can be provided with comma separated strings
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
@@ -288,8 +356,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
+        /// <returns>Task of List&lt;Pet&gt;</returns>
+        System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Finds Pets by tags
+        /// </summary>
+        /// <remarks>
+        /// Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tags">Tags to filter by</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags);
+
+        /// <summary>
+        /// Finds Pets by tags
+        /// </summary>
+        /// <remarks>
+        /// Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tags">Tags to filter by</param>
+        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -309,8 +399,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
+        /// <returns>Task of Pet</returns>
+        System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Find pet by ID
+        /// </summary>
+        /// <remarks>
+        /// Returns a single pet
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to return</param>
         /// <returns>Task of ApiResponse (Pet)</returns>
         System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
+
+        /// <summary>
+        /// Find pet by ID
+        /// </summary>
+        /// <remarks>
+        /// Returns a single pet
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to return</param>
+        /// <returns>Task of ApiResponse (Pet)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -330,8 +442,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task UpdatePetAsync (Pet body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update an existing pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body);
+
+        /// <summary>
+        /// Update an existing pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
@@ -355,8 +489,34 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="name">Updated name of the pet (optional)</param>
         /// <param name="status">Updated status of the pet (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Updates a pet in the store with form data
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name">Updated name of the pet (optional)</param>
+        /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null);
+
+        /// <summary>
+        /// Updates a pet in the store with form data
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name">Updated name of the pet (optional)</param>
+        /// <param name="status">Updated status of the pet (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// uploads an image
         /// </summary>
@@ -380,8 +540,34 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// uploads an image
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
+        /// <param name="file">file to upload (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+
+        /// <summary>
+        /// uploads an image
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
+        /// <param name="file">file to upload (optional)</param>
+        /// <returns>Task of ApiResponse (ApiResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null, System.Threading.CancellationToken cancellationToken);
         #endregion Asynchronous Operations
     }
 
@@ -571,7 +757,21 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task AddPetAsync (Pet body)
         {
-             await AddPetAsyncWithHttpInfo(body);
+             
+             await AddPetAsync(body, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Add a new pet to the store 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task AddPetAsync (Pet body, System.Threading.CancellationToken cancellationToken)
+        {
+             await AddPetAsyncWithHttpInfo(body, cancellationToken);
+
 
         }
 
@@ -582,6 +782,19 @@ namespace IO.Swagger.Api
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body)
+        {
+             
+             await AddPetAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Add a new pet to the store 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -630,7 +843,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -729,7 +942,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DeletePetAsync (long? petId, string apiKey = null)
         {
-             await DeletePetAsyncWithHttpInfo(petId, apiKey);
+             
+             await DeletePetAsync(petId, apiKey, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Deletes a pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"> (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeletePetAsync (long? petId, string apiKey = null, System.Threading.CancellationToken cancellationToken)
+        {
+             await DeletePetAsyncWithHttpInfo(petId, apiKey, cancellationToken);
+
 
         }
 
@@ -741,6 +969,20 @@ namespace IO.Swagger.Api
         /// <param name="apiKey"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null)
+        {
+             
+             await DeletePetAsyncWithHttpInfo(petId, apiKey, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Deletes a pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"> (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -781,7 +1023,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -877,8 +1119,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
+             return await FindPetsByStatusAsync(status, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Finds Pets by status Multiple status values can be provided with comma separated strings
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>Task of List&lt;Pet&gt;</returns>
+        public async System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -889,6 +1145,19 @@ namespace IO.Swagger.Api
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status)
+        {
+             return await FindPetsByStatusAsyncWithHttpInfo(status, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Finds Pets by status Multiple status values can be provided with comma separated strings
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'status' is set
             if (status == null)
@@ -928,7 +1197,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1024,8 +1293,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
+             return await FindPetsByTagsAsync(tags, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tags">Tags to filter by</param>
+        /// <returns>Task of List&lt;Pet&gt;</returns>
+        public async System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -1036,6 +1319,19 @@ namespace IO.Swagger.Api
         /// <param name="tags">Tags to filter by</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags)
+        {
+             return await FindPetsByTagsAsyncWithHttpInfo(tags, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tags">Tags to filter by</param>
+        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'tags' is set
             if (tags == null)
@@ -1075,7 +1371,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1170,8 +1466,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of Pet</returns>
         public async System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
+             return await GetPetByIdAsync(petId, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Find pet by ID Returns a single pet
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to return</param>
+        /// <returns>Task of Pet</returns>
+        public async System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -1182,6 +1492,19 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Task of ApiResponse (Pet)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
+        {
+             return await GetPetByIdAsyncWithHttpInfo(petId, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Find pet by ID Returns a single pet
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to return</param>
+        /// <returns>Task of ApiResponse (Pet)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1220,7 +1543,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1324,7 +1647,21 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task UpdatePetAsync (Pet body)
         {
-             await UpdatePetAsyncWithHttpInfo(body);
+             
+             await UpdatePetAsync(body, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Update an existing pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task UpdatePetAsync (Pet body, System.Threading.CancellationToken cancellationToken)
+        {
+             await UpdatePetAsyncWithHttpInfo(body, cancellationToken);
+
 
         }
 
@@ -1335,6 +1672,19 @@ namespace IO.Swagger.Api
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body)
+        {
+             
+             await UpdatePetAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Update an existing pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1383,7 +1733,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1487,7 +1837,23 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null)
         {
-             await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status);
+             
+             await UpdatePetWithFormAsync(petId, name, status, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Updates a pet in the store with form data 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name">Updated name of the pet (optional)</param>
+        /// <param name="status">Updated status of the pet (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null, System.Threading.CancellationToken cancellationToken)
+        {
+             await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status, cancellationToken);
+
 
         }
 
@@ -1500,6 +1866,21 @@ namespace IO.Swagger.Api
         /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null)
+        {
+             
+             await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Updates a pet in the store with form data 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name">Updated name of the pet (optional)</param>
+        /// <param name="status">Updated status of the pet (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1542,7 +1923,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -1646,8 +2027,24 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
+             return await UploadFileAsync(petId, additionalMetadata, file, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// uploads an image 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
+        /// <param name="file">file to upload (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -1660,6 +2057,21 @@ namespace IO.Swagger.Api
         /// <param name="file">file to upload (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        {
+             return await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// uploads an image 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
+        /// <param name="file">file to upload (optional)</param>
+        /// <returns>Task of ApiResponse (ApiResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null, System.Threading.CancellationToken cancellationToken)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1701,7 +2113,7 @@ namespace IO.Swagger.Api
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 

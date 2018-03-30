@@ -127,8 +127,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeleteOrderAsync (string orderId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete purchase order by ID
+        /// </summary>
+        /// <remarks>
+        /// For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of the order that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId);
+
+        /// <summary>
+        /// Delete purchase order by ID
+        /// </summary>
+        /// <remarks>
+        /// For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of the order that needs to be deleted</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Returns pet inventories by status
         /// </summary>
@@ -146,8 +168,28 @@ namespace IO.Swagger.Api
         /// Returns a map of status codes to quantities
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
+        System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns pet inventories by status
+        /// </summary>
+        /// <remarks>
+        /// Returns a map of status codes to quantities
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo ();
+
+        /// <summary>
+        /// Returns pet inventories by status
+        /// </summary>
+        /// <remarks>
+        /// Returns a map of status codes to quantities
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
@@ -167,8 +209,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <returns>Task of Order</returns>
+        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Find purchase order by ID
+        /// </summary>
+        /// <remarks>
+        /// For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of ApiResponse (Order)</returns>
         System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId);
+
+        /// <summary>
+        /// Find purchase order by ID
+        /// </summary>
+        /// <remarks>
+        /// For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <returns>Task of ApiResponse (Order)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId, System.Threading.CancellationToken cancellationToken);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -188,8 +252,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
+        /// <returns>Task of Order</returns>
+        System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Place an order for a pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">order placed for purchasing the pet</param>
         /// <returns>Task of ApiResponse (Order)</returns>
         System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body);
+
+        /// <summary>
+        /// Place an order for a pet
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">order placed for purchasing the pet</param>
+        /// <returns>Task of ApiResponse (Order)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body, System.Threading.CancellationToken cancellationToken);
         #endregion Asynchronous Operations
     }
 
@@ -206,7 +292,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public StoreApi(String basePath)
         {
-            this.Configuration = new Configuration { BasePath = basePath };
+            this.Configuration = new IO.Swagger.Client.Configuration { BasePath = basePath };
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
         }
@@ -217,10 +303,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public StoreApi(Configuration configuration = null)
+        public StoreApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = IO.Swagger.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
@@ -250,7 +336,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -316,7 +402,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order/{order_id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -324,22 +410,22 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
+            if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -364,7 +450,21 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DeleteOrderAsync (string orderId)
         {
-             await DeleteOrderAsyncWithHttpInfo(orderId);
+             
+             await DeleteOrderAsync(orderId, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Delete purchase order by ID For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of the order that needs to be deleted</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeleteOrderAsync (string orderId, System.Threading.CancellationToken cancellationToken)
+        {
+             await DeleteOrderAsyncWithHttpInfo(orderId, cancellationToken);
+
 
         }
 
@@ -376,6 +476,19 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId)
         {
+             
+             await DeleteOrderAsyncWithHttpInfo(orderId, System.Threading.CancellationToken.None);
+
+        }
+
+        /// <summary>
+        /// Delete purchase order by ID For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of the order that needs to be deleted</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->DeleteOrder");
@@ -383,7 +496,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order/{order_id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -391,24 +504,24 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
+            if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -445,7 +558,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/inventory";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -453,25 +566,25 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
             // authentication (api_key) required
-            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key")))
             {
-                localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
+                localVarHeaderParams["api_key"] = this.Configuration.GetApiKeyWithPrefix("api_key");
             }
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -485,7 +598,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Dictionary<string, int?>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
+                (Dictionary<string, int?>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
         }
 
         /// <summary>
@@ -495,8 +608,21 @@ namespace IO.Swagger.Api
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
         public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync ()
         {
-             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo();
+             return await GetInventoryAsync(System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Returns pet inventories by status Returns a map of status codes to quantities
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
+        public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo(cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -507,11 +633,23 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo ()
         {
+             return await GetInventoryAsyncWithHttpInfo(System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Returns pet inventories by status Returns a map of status codes to quantities
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken)
+        {
 
             var localVarPath = "./store/inventory";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -519,27 +657,27 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
             // authentication (api_key) required
-            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key")))
             {
-                localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
+                localVarHeaderParams["api_key"] = this.Configuration.GetApiKeyWithPrefix("api_key");
             }
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -551,7 +689,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Dictionary<string, int?>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
+                (Dictionary<string, int?>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
         }
 
         /// <summary>
@@ -581,7 +719,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order/{order_id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -589,22 +727,22 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
+            if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -618,7 +756,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
         /// <summary>
@@ -629,8 +767,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId)
         {
-             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
+             return await GetOrderByIdAsync(orderId, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Find purchase order by ID For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <returns>Task of Order</returns>
+        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -642,6 +794,19 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
         {
+             return await GetOrderByIdAsyncWithHttpInfo(orderId, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Find purchase order by ID For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <returns>Task of ApiResponse (Order)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->GetOrderById");
@@ -649,7 +814,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order/{order_id}";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -657,24 +822,24 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
+            if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -686,7 +851,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
         /// <summary>
@@ -716,7 +881,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -724,20 +889,20 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -746,7 +911,7 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
@@ -760,7 +925,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
         /// <summary>
@@ -771,8 +936,22 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body)
         {
-             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
+             return await PlaceOrderAsync(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Place an order for a pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">order placed for purchasing the pet</param>
+        /// <returns>Task of Order</returns>
+        public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body, System.Threading.CancellationToken cancellationToken)
+        {
+             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body, cancellationToken);
              return localVarResponse.Data;
+
 
         }
 
@@ -784,6 +963,19 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body)
         {
+             return await PlaceOrderAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             
+
+        }
+
+        /// <summary>
+        /// Place an order for a pet 
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">order placed for purchasing the pet</param>
+        /// <returns>Task of ApiResponse (Order)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body, System.Threading.CancellationToken cancellationToken)
+        {
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling StoreApi->PlaceOrder");
@@ -791,7 +983,7 @@ namespace IO.Swagger.Api
             var localVarPath = "./store/order";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
             Object localVarPostBody = null;
@@ -799,20 +991,20 @@ namespace IO.Swagger.Api
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
                 "application/xml",
                 "application/json"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (body != null && body.GetType() != typeof(byte[]))
             {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
             }
             else
             {
@@ -821,9 +1013,9 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
+                localVarPathParams, localVarHttpContentType, cancellationToken);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
@@ -835,7 +1027,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
     }

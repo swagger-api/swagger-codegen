@@ -98,7 +98,7 @@ namespace IO.Swagger.Client
         /// <value>An instance of the IReadableConfiguration.</value>
         /// <remarks>
         /// <see cref="IReadableConfiguration"/> helps us to avoid modifying possibly global
-        /// configuration values from within a given client. It does not gaurantee thread-safety
+        /// configuration values from within a given client. It does not guarantee thread-safety
         /// of the <see cref="Configuration"/> instance in any way.
         /// </remarks>
         public IReadableConfiguration Configuration { get; set; }
@@ -197,18 +197,19 @@ namespace IO.Swagger.Client
         /// <param name="fileParams">File parameters.</param>
         /// <param name="pathParams">Path parameters.</param>
         /// <param name="contentType">Content type.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The Task instance.</returns>
         public async System.Threading.Tasks.Task<Object> CallApiAsync(
             String path, Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
+            String contentType, System.Threading.CancellationToken cancellationToken)
         {
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
             InterceptRequest(request);
-            var response = await RestClient.Execute(request);
+            var response = await RestClient.Execute(request, cancellationToken);
             InterceptResponse(request, response);
             return (Object)response;
         }
