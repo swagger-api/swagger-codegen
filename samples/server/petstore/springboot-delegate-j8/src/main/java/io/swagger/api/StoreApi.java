@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "store", description = "the store API")
+@RequestMapping(value = "/v2")
 public interface StoreApi {
 
     StoreApiDelegate getDelegate();

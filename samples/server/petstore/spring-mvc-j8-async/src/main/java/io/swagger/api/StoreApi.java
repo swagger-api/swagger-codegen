@@ -32,6 +32,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Api(value = "store", description = "the store API")
+@RequestMapping(value = "/v2")
 public interface StoreApi {
 
     Logger log = LoggerFactory.getLogger(StoreApi.class);
