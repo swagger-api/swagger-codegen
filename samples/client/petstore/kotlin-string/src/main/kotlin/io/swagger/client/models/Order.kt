@@ -13,7 +13,6 @@ package io.swagger.client.models
 
 
 import com.squareup.moshi.Json
-
 /**
  * An order for a pets from the pet store
  * @param id 

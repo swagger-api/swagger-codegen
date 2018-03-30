@@ -13,8 +13,6 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
-
-
 /**
  * Describes the result of uploading an image resource
  * @param code 

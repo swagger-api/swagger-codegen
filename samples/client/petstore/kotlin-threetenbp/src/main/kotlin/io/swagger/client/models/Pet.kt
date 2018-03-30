@@ -16,7 +16,6 @@ import io.swagger.client.models.Tag
 import org.threeten.bp.LocalDateTime
 
 import com.squareup.moshi.Json
-
 /**
  * A pet for sale in the pet store
  * @param id 

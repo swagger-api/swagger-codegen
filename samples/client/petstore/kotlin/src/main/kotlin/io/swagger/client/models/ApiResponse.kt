@@ -12,8 +12,6 @@
 package io.swagger.client.models
 
 
-
-
 /**
  * Describes the result of uploading an image resource
  * @param code 

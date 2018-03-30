@@ -12,8 +12,6 @@
 package io.swagger.client.models
 
 
-
-
 /**
  * A User who is purchasing from the pet store
  * @param id 
