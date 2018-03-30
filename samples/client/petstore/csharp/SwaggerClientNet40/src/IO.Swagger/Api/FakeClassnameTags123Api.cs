@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IFakeClassnameTags123Api : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// To test class name in snake case
         /// </summary>

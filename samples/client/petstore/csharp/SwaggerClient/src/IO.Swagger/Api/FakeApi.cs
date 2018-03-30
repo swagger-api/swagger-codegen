@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IFakeApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// 
         /// </summary>
@@ -277,7 +277,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
         /// <returns>Task of OuterBoolean</returns>
-        System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterBoolean body = null);
 
         /// <summary>
         /// 
@@ -299,7 +299,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterBoolean)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterBoolean body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -320,7 +320,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input composite as post body (optional)</param>
         /// <returns>Task of OuterComposite</returns>
-        System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterComposite body = null);
 
         /// <summary>
         /// 
@@ -342,7 +342,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input composite as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterComposite)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterComposite body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -363,7 +363,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
         /// <returns>Task of OuterNumber</returns>
-        System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterNumber body = null);
 
         /// <summary>
         /// 
@@ -385,7 +385,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterNumber)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterNumber body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -406,7 +406,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of OuterString</returns>
-        System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterString body = null);
 
         /// <summary>
         /// 
@@ -428,7 +428,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterString)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterString body = null);
         /// <summary>
         /// To test \&quot;client\&quot; model
         /// </summary>
@@ -449,7 +449,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (System.Threading.CancellationToken cancellationToken, ModelClient body);
 
         /// <summary>
         /// To test \&quot;client\&quot; model
@@ -471,7 +471,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -518,7 +518,7 @@ namespace IO.Swagger.Api
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task TestEndpointParametersAsync (System.Threading.CancellationToken cancellationToken, decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
 
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -566,7 +566,7 @@ namespace IO.Swagger.Api
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
         /// <summary>
         /// To test enum parameters
         /// </summary>
@@ -601,7 +601,7 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task TestEnumParametersAsync (System.Threading.CancellationToken cancellationToken, List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null);
 
         /// <summary>
         /// To test enum parameters
@@ -637,7 +637,7 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null);
         /// <summary>
         /// test inline additionalProperties
         /// </summary>
@@ -658,7 +658,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">request body</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (System.Threading.CancellationToken cancellationToken, Object param);
 
         /// <summary>
         /// test inline additionalProperties
@@ -680,7 +680,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">request body</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, Object param);
         /// <summary>
         /// test json serialization of form data
         /// </summary>
@@ -703,7 +703,7 @@ namespace IO.Swagger.Api
         /// <param name="param">field1</param>
         /// <param name="param2">field2</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task TestJsonFormDataAsync (System.Threading.CancellationToken cancellationToken, string param, string param2);
 
         /// <summary>
         /// test json serialization of form data
@@ -727,7 +727,7 @@ namespace IO.Swagger.Api
         /// <param name="param">field1</param>
         /// <param name="param2">field2</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string param, string param2);
         #endregion Asynchronous Operations
     }
 
@@ -905,7 +905,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterBoolean</returns>
         public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null)
         {
-             return await FakeOuterBooleanSerializeAsync(body, System.Threading.CancellationToken.None);
+             return await FakeOuterBooleanSerializeAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -916,12 +916,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
         /// <returns>Task of OuterBoolean</returns>
-        public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterBoolean body = null)
         {
-             ApiResponse<OuterBoolean> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<OuterBoolean> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -932,9 +930,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterBoolean)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null)
         {
-             return await FakeOuterBooleanSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await FakeOuterBooleanSerializeAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -943,7 +940,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterBoolean)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (OuterBoolean body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterBoolean body = null)
         {
 
             var localVarPath = "/fake/outer/boolean";
@@ -1071,7 +1068,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterComposite</returns>
         public async System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null)
         {
-             return await FakeOuterCompositeSerializeAsync(body, System.Threading.CancellationToken.None);
+             return await FakeOuterCompositeSerializeAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -1082,12 +1079,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input composite as post body (optional)</param>
         /// <returns>Task of OuterComposite</returns>
-        public async System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (OuterComposite body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OuterComposite> FakeOuterCompositeSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterComposite body = null)
         {
-             ApiResponse<OuterComposite> localVarResponse = await FakeOuterCompositeSerializeAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<OuterComposite> localVarResponse = await FakeOuterCompositeSerializeAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1098,9 +1093,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterComposite)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null)
         {
-             return await FakeOuterCompositeSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await FakeOuterCompositeSerializeAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -1109,7 +1103,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input composite as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterComposite)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (OuterComposite body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<OuterComposite>> FakeOuterCompositeSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterComposite body = null)
         {
 
             var localVarPath = "/fake/outer/composite";
@@ -1237,7 +1231,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterNumber</returns>
         public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null)
         {
-             return await FakeOuterNumberSerializeAsync(body, System.Threading.CancellationToken.None);
+             return await FakeOuterNumberSerializeAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -1248,12 +1242,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
         /// <returns>Task of OuterNumber</returns>
-        public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (OuterNumber body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterNumber body = null)
         {
-             ApiResponse<OuterNumber> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<OuterNumber> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1264,9 +1256,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterNumber)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null)
         {
-             return await FakeOuterNumberSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await FakeOuterNumberSerializeAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -1275,7 +1266,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterNumber)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (OuterNumber body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterNumber body = null)
         {
 
             var localVarPath = "/fake/outer/number";
@@ -1403,7 +1394,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of OuterString</returns>
         public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null)
         {
-             return await FakeOuterStringSerializeAsync(body, System.Threading.CancellationToken.None);
+             return await FakeOuterStringSerializeAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -1414,12 +1405,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of OuterString</returns>
-        public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (OuterString body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (System.Threading.CancellationToken cancellationToken, OuterString body = null)
         {
-             ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1430,9 +1419,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (OuterString)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null)
         {
-             return await FakeOuterStringSerializeAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await FakeOuterStringSerializeAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -1441,7 +1429,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of ApiResponse (OuterString)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (OuterString body = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, OuterString body = null)
         {
 
             var localVarPath = "/fake/outer/string";
@@ -1574,7 +1562,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body)
         {
-             return await TestClientModelAsync(body, System.Threading.CancellationToken.None);
+             return await TestClientModelAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -1585,12 +1573,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1601,9 +1587,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body)
         {
-             return await TestClientModelAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await TestClientModelAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -1612,7 +1597,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1812,7 +1797,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
              
-             await TestEndpointParametersAsync(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, System.Threading.CancellationToken.None);
+             await TestEndpointParametersAsync(System.Threading.CancellationToken.None, number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
 
         }
 
@@ -1835,11 +1820,9 @@ namespace IO.Swagger.Api
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task TestEndpointParametersAsync (System.Threading.CancellationToken cancellationToken, decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
-             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, cancellationToken);
-
-
+             await TestEndpointParametersAsyncWithHttpInfo(cancellationToken, number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
         }
 
         /// <summary>
@@ -1864,8 +1847,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
              
-             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, System.Threading.CancellationToken.None);
-
+             await TestEndpointParametersAsyncWithHttpInfo(System.Threading.CancellationToken.None, number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
         }
 
         /// <summary>
@@ -1887,7 +1869,7 @@ namespace IO.Swagger.Api
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
         {
             // verify the required parameter 'number' is set
             if (number == null)
@@ -2066,7 +2048,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
              
-             await TestEnumParametersAsync(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, System.Threading.CancellationToken.None);
+             await TestEnumParametersAsync(System.Threading.CancellationToken.None, enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
 
         }
 
@@ -2083,11 +2065,9 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task TestEnumParametersAsync (System.Threading.CancellationToken cancellationToken, List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
-             await TestEnumParametersAsyncWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, cancellationToken);
-
-
+             await TestEnumParametersAsyncWithHttpInfo(cancellationToken, enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
         }
 
         /// <summary>
@@ -2106,8 +2086,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
              
-             await TestEnumParametersAsyncWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, System.Threading.CancellationToken.None);
-
+             await TestEnumParametersAsyncWithHttpInfo(System.Threading.CancellationToken.None, enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
         }
 
         /// <summary>
@@ -2123,7 +2102,7 @@ namespace IO.Swagger.Api
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <param name="enumQueryDouble">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
         {
 
             var localVarPath = "/fake";
@@ -2257,7 +2236,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param)
         {
              
-             await TestInlineAdditionalPropertiesAsync(param, System.Threading.CancellationToken.None);
+             await TestInlineAdditionalPropertiesAsync(System.Threading.CancellationToken.None, param);
 
         }
 
@@ -2267,11 +2246,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">request body</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (Object param, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task TestInlineAdditionalPropertiesAsync (System.Threading.CancellationToken cancellationToken, Object param)
         {
-             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(param, cancellationToken);
-
-
+             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(cancellationToken, param);
         }
 
         /// <summary>
@@ -2283,8 +2260,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param)
         {
              
-             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(param, System.Threading.CancellationToken.None);
-
+             await TestInlineAdditionalPropertiesAsyncWithHttpInfo(System.Threading.CancellationToken.None, param);
         }
 
         /// <summary>
@@ -2293,7 +2269,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="param">request body</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (Object param, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestInlineAdditionalPropertiesAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, Object param)
         {
             // verify the required parameter 'param' is set
             if (param == null)
@@ -2429,7 +2405,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2)
         {
              
-             await TestJsonFormDataAsync(param, param2, System.Threading.CancellationToken.None);
+             await TestJsonFormDataAsync(System.Threading.CancellationToken.None, param, param2);
 
         }
 
@@ -2440,11 +2416,9 @@ namespace IO.Swagger.Api
         /// <param name="param">field1</param>
         /// <param name="param2">field2</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TestJsonFormDataAsync (string param, string param2, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task TestJsonFormDataAsync (System.Threading.CancellationToken cancellationToken, string param, string param2)
         {
-             await TestJsonFormDataAsyncWithHttpInfo(param, param2, cancellationToken);
-
-
+             await TestJsonFormDataAsyncWithHttpInfo(cancellationToken, param, param2);
         }
 
         /// <summary>
@@ -2457,8 +2431,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2)
         {
              
-             await TestJsonFormDataAsyncWithHttpInfo(param, param2, System.Threading.CancellationToken.None);
-
+             await TestJsonFormDataAsyncWithHttpInfo(System.Threading.CancellationToken.None, param, param2);
         }
 
         /// <summary>
@@ -2468,7 +2441,7 @@ namespace IO.Swagger.Api
         /// <param name="param">field1</param>
         /// <param name="param2">field2</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (string param, string param2, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestJsonFormDataAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string param, string param2)
         {
             // verify the required parameter 'param' is set
             if (param == null)

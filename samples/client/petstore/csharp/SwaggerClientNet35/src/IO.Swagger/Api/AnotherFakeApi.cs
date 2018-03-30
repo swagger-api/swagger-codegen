@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IAnotherFakeApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// To test special tags
         /// </summary>

@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IPetApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// Add a new pet to the store
         /// </summary>

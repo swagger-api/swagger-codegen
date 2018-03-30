@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IAnotherFakeApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// To test special tags
         /// </summary>
@@ -67,7 +67,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (System.Threading.CancellationToken cancellationToken, ModelClient body);
 
         /// <summary>
         /// To test special tags
@@ -89,7 +89,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body);
         #endregion Asynchronous Operations
     }
 
@@ -272,7 +272,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body)
         {
-             return await TestSpecialTagsAsync(body, System.Threading.CancellationToken.None);
+             return await TestSpecialTagsAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -283,12 +283,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        public async System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ModelClient> TestSpecialTagsAsync (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<ModelClient> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -299,9 +297,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body)
         {
-             return await TestSpecialTagsAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await TestSpecialTagsAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -310,7 +307,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestSpecialTagsAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)

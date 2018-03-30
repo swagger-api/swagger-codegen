@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IUserApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// Create user
         /// </summary>
@@ -216,7 +216,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task CreateUserAsync (User body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CreateUserAsync (System.Threading.CancellationToken cancellationToken, User body);
 
         /// <summary>
         /// Create user
@@ -238,7 +238,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, User body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -259,7 +259,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task CreateUsersWithArrayInputAsync (List<User> body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CreateUsersWithArrayInputAsync (System.Threading.CancellationToken cancellationToken, List<User> body);
 
         /// <summary>
         /// Creates list of users with given input array
@@ -281,7 +281,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<User> body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -302,7 +302,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task CreateUsersWithListInputAsync (List<User> body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CreateUsersWithListInputAsync (System.Threading.CancellationToken cancellationToken, List<User> body);
 
         /// <summary>
         /// Creates list of users with given input array
@@ -324,7 +324,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<User> body);
         /// <summary>
         /// Delete user
         /// </summary>
@@ -345,7 +345,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeleteUserAsync (string username, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteUserAsync (System.Threading.CancellationToken cancellationToken, string username);
 
         /// <summary>
         /// Delete user
@@ -367,7 +367,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username);
         /// <summary>
         /// Get user by user name
         /// </summary>
@@ -388,7 +388,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>Task of User</returns>
-        System.Threading.Tasks.Task<User> GetUserByNameAsync (string username, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<User> GetUserByNameAsync (System.Threading.CancellationToken cancellationToken, string username);
 
         /// <summary>
         /// Get user by user name
@@ -410,7 +410,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>Task of ApiResponse (User)</returns>
-        System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username);
         /// <summary>
         /// Logs user into the system
         /// </summary>
@@ -433,7 +433,7 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> LoginUserAsync (string username, string password, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<string> LoginUserAsync (System.Threading.CancellationToken cancellationToken, string username, string password);
 
         /// <summary>
         /// Logs user into the system
@@ -457,7 +457,7 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username, string password);
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
@@ -476,7 +476,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken, );
 
         /// <summary>
         /// Logs out current logged in user session
@@ -496,7 +496,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, );
         /// <summary>
         /// Updated user
         /// </summary>
@@ -519,7 +519,7 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UpdateUserAsync (string username, User body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task UpdateUserAsync (System.Threading.CancellationToken cancellationToken, string username, User body);
 
         /// <summary>
         /// Updated user
@@ -543,7 +543,7 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username, User body);
         #endregion Asynchronous Operations
     }
 
@@ -726,7 +726,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task CreateUserAsync (User body)
         {
              
-             await CreateUserAsync(body, System.Threading.CancellationToken.None);
+             await CreateUserAsync(System.Threading.CancellationToken.None, body);
 
         }
 
@@ -736,11 +736,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task CreateUserAsync (User body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CreateUserAsync (System.Threading.CancellationToken cancellationToken, User body)
         {
-             await CreateUserAsyncWithHttpInfo(body, cancellationToken);
-
-
+             await CreateUserAsyncWithHttpInfo(cancellationToken, body);
         }
 
         /// <summary>
@@ -752,8 +750,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body)
         {
              
-             await CreateUserAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
-
+             await CreateUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
         }
 
         /// <summary>
@@ -762,7 +759,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, User body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -900,7 +897,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task CreateUsersWithArrayInputAsync (List<User> body)
         {
              
-             await CreateUsersWithArrayInputAsync(body, System.Threading.CancellationToken.None);
+             await CreateUsersWithArrayInputAsync(System.Threading.CancellationToken.None, body);
 
         }
 
@@ -910,11 +907,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task CreateUsersWithArrayInputAsync (List<User> body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CreateUsersWithArrayInputAsync (System.Threading.CancellationToken cancellationToken, List<User> body)
         {
-             await CreateUsersWithArrayInputAsyncWithHttpInfo(body, cancellationToken);
-
-
+             await CreateUsersWithArrayInputAsyncWithHttpInfo(cancellationToken, body);
         }
 
         /// <summary>
@@ -926,8 +921,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body)
         {
              
-             await CreateUsersWithArrayInputAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
-
+             await CreateUsersWithArrayInputAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
         }
 
         /// <summary>
@@ -936,7 +930,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1074,7 +1068,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task CreateUsersWithListInputAsync (List<User> body)
         {
              
-             await CreateUsersWithListInputAsync(body, System.Threading.CancellationToken.None);
+             await CreateUsersWithListInputAsync(System.Threading.CancellationToken.None, body);
 
         }
 
@@ -1084,11 +1078,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task CreateUsersWithListInputAsync (List<User> body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CreateUsersWithListInputAsync (System.Threading.CancellationToken cancellationToken, List<User> body)
         {
-             await CreateUsersWithListInputAsyncWithHttpInfo(body, cancellationToken);
-
-
+             await CreateUsersWithListInputAsyncWithHttpInfo(cancellationToken, body);
         }
 
         /// <summary>
@@ -1100,8 +1092,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body)
         {
              
-             await CreateUsersWithListInputAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
-
+             await CreateUsersWithListInputAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
         }
 
         /// <summary>
@@ -1110,7 +1101,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1241,7 +1232,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task DeleteUserAsync (string username)
         {
              
-             await DeleteUserAsync(username, System.Threading.CancellationToken.None);
+             await DeleteUserAsync(System.Threading.CancellationToken.None, username);
 
         }
 
@@ -1251,11 +1242,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeleteUserAsync (string username, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task DeleteUserAsync (System.Threading.CancellationToken cancellationToken, string username)
         {
-             await DeleteUserAsyncWithHttpInfo(username, cancellationToken);
-
-
+             await DeleteUserAsyncWithHttpInfo(cancellationToken, username);
         }
 
         /// <summary>
@@ -1267,8 +1256,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username)
         {
              
-             await DeleteUserAsyncWithHttpInfo(username, System.Threading.CancellationToken.None);
-
+             await DeleteUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, username);
         }
 
         /// <summary>
@@ -1277,7 +1265,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
@@ -1401,7 +1389,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of User</returns>
         public async System.Threading.Tasks.Task<User> GetUserByNameAsync (string username)
         {
-             return await GetUserByNameAsync(username, System.Threading.CancellationToken.None);
+             return await GetUserByNameAsync(System.Threading.CancellationToken.None, username);
              
 
         }
@@ -1412,12 +1400,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>Task of User</returns>
-        public async System.Threading.Tasks.Task<User> GetUserByNameAsync (string username, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<User> GetUserByNameAsync (System.Threading.CancellationToken cancellationToken, string username)
         {
-             ApiResponse<User> localVarResponse = await GetUserByNameAsyncWithHttpInfo(username, cancellationToken);
+             ApiResponse<User> localVarResponse = await GetUserByNameAsyncWithHttpInfo(cancellationToken, username);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1428,9 +1414,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (User)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username)
         {
-             return await GetUserByNameAsyncWithHttpInfo(username, System.Threading.CancellationToken.None);
+             return await GetUserByNameAsyncWithHttpInfo(System.Threading.CancellationToken.None, username);
              
-
         }
 
         /// <summary>
@@ -1439,7 +1424,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>Task of ApiResponse (User)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
@@ -1570,7 +1555,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> LoginUserAsync (string username, string password)
         {
-             return await LoginUserAsync(username, password, System.Threading.CancellationToken.None);
+             return await LoginUserAsync(System.Threading.CancellationToken.None, username, password);
              
 
         }
@@ -1582,12 +1567,10 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> LoginUserAsync (string username, string password, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<string> LoginUserAsync (System.Threading.CancellationToken cancellationToken, string username, string password)
         {
-             ApiResponse<string> localVarResponse = await LoginUserAsyncWithHttpInfo(username, password, cancellationToken);
+             ApiResponse<string> localVarResponse = await LoginUserAsyncWithHttpInfo(cancellationToken, username, password);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -1599,9 +1582,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (string)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password)
         {
-             return await LoginUserAsyncWithHttpInfo(username, password, System.Threading.CancellationToken.None);
+             return await LoginUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, username, password);
              
-
         }
 
         /// <summary>
@@ -1611,7 +1593,7 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username, string password)
         {
             // verify the required parameter 'username' is set
             if (username == null)
@@ -1732,7 +1714,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task LogoutUserAsync ()
         {
              
-             await LogoutUserAsync(System.Threading.CancellationToken.None);
+             await LogoutUserAsync(System.Threading.CancellationToken.None, );
 
         }
 
@@ -1741,11 +1723,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task LogoutUserAsync (System.Threading.CancellationToken cancellationToken, )
         {
-             await LogoutUserAsyncWithHttpInfo(cancellationToken);
-
-
+             await LogoutUserAsyncWithHttpInfo(cancellationToken, );
         }
 
         /// <summary>
@@ -1756,8 +1736,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ()
         {
              
-             await LogoutUserAsyncWithHttpInfo(System.Threading.CancellationToken.None);
-
+             await LogoutUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, );
         }
 
         /// <summary>
@@ -1765,7 +1744,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, )
         {
 
             var localVarPath = "./user/logout";
@@ -1899,7 +1878,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task UpdateUserAsync (string username, User body)
         {
              
-             await UpdateUserAsync(username, body, System.Threading.CancellationToken.None);
+             await UpdateUserAsync(System.Threading.CancellationToken.None, username, body);
 
         }
 
@@ -1910,11 +1889,9 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UpdateUserAsync (string username, User body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task UpdateUserAsync (System.Threading.CancellationToken cancellationToken, string username, User body)
         {
-             await UpdateUserAsyncWithHttpInfo(username, body, cancellationToken);
-
-
+             await UpdateUserAsyncWithHttpInfo(cancellationToken, username, body);
         }
 
         /// <summary>
@@ -1927,8 +1904,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body)
         {
              
-             await UpdateUserAsyncWithHttpInfo(username, body, System.Threading.CancellationToken.None);
-
+             await UpdateUserAsyncWithHttpInfo(System.Threading.CancellationToken.None, username, body);
         }
 
         /// <summary>
@@ -1938,7 +1914,7 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string username, User body)
         {
             // verify the required parameter 'username' is set
             if (username == null)

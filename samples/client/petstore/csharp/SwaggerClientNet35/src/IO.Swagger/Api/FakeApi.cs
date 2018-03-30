@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IFakeApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// 
         /// </summary>

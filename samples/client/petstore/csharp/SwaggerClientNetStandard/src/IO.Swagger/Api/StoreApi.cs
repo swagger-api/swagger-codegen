@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IStoreApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// Delete purchase order by ID
         /// </summary>
@@ -128,7 +128,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeleteOrderAsync (string orderId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteOrderAsync (System.Threading.CancellationToken cancellationToken, string orderId);
 
         /// <summary>
         /// Delete purchase order by ID
@@ -150,7 +150,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string orderId);
         /// <summary>
         /// Returns pet inventories by status
         /// </summary>
@@ -169,7 +169,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
-        System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken, );
 
         /// <summary>
         /// Returns pet inventories by status
@@ -189,7 +189,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, );
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
@@ -210,7 +210,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (System.Threading.CancellationToken cancellationToken, long? orderId);
 
         /// <summary>
         /// Find purchase order by ID
@@ -232,7 +232,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, long? orderId);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -253,7 +253,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
         /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Order> PlaceOrderAsync (System.Threading.CancellationToken cancellationToken, Order body);
 
         /// <summary>
         /// Place an order for a pet
@@ -275,7 +275,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, Order body);
         #endregion Asynchronous Operations
     }
 
@@ -451,7 +451,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task DeleteOrderAsync (string orderId)
         {
              
-             await DeleteOrderAsync(orderId, System.Threading.CancellationToken.None);
+             await DeleteOrderAsync(System.Threading.CancellationToken.None, orderId);
 
         }
 
@@ -461,11 +461,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeleteOrderAsync (string orderId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task DeleteOrderAsync (System.Threading.CancellationToken cancellationToken, string orderId)
         {
-             await DeleteOrderAsyncWithHttpInfo(orderId, cancellationToken);
-
-
+             await DeleteOrderAsyncWithHttpInfo(cancellationToken, orderId);
         }
 
         /// <summary>
@@ -477,8 +475,7 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId)
         {
              
-             await DeleteOrderAsyncWithHttpInfo(orderId, System.Threading.CancellationToken.None);
-
+             await DeleteOrderAsyncWithHttpInfo(System.Threading.CancellationToken.None, orderId);
         }
 
         /// <summary>
@@ -487,7 +484,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, string orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -608,7 +605,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
         public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync ()
         {
-             return await GetInventoryAsync(System.Threading.CancellationToken.None);
+             return await GetInventoryAsync(System.Threading.CancellationToken.None, );
              
 
         }
@@ -618,12 +615,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
-        public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync (System.Threading.CancellationToken cancellationToken, )
         {
-             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo(cancellationToken);
+             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo(cancellationToken, );
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -633,9 +628,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo ()
         {
-             return await GetInventoryAsyncWithHttpInfo(System.Threading.CancellationToken.None);
+             return await GetInventoryAsyncWithHttpInfo(System.Threading.CancellationToken.None, );
              
-
         }
 
         /// <summary>
@@ -643,7 +637,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, )
         {
 
             var localVarPath = "./store/inventory";
@@ -767,7 +761,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId)
         {
-             return await GetOrderByIdAsync(orderId, System.Threading.CancellationToken.None);
+             return await GetOrderByIdAsync(System.Threading.CancellationToken.None, orderId);
              
 
         }
@@ -778,12 +772,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (System.Threading.CancellationToken cancellationToken, long? orderId)
         {
-             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId, cancellationToken);
+             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(cancellationToken, orderId);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -794,9 +786,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
         {
-             return await GetOrderByIdAsyncWithHttpInfo(orderId, System.Threading.CancellationToken.None);
+             return await GetOrderByIdAsyncWithHttpInfo(System.Threading.CancellationToken.None, orderId);
              
-
         }
 
         /// <summary>
@@ -805,7 +796,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -936,7 +927,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body)
         {
-             return await PlaceOrderAsync(body, System.Threading.CancellationToken.None);
+             return await PlaceOrderAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -947,12 +938,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
         /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (System.Threading.CancellationToken cancellationToken, Order body)
         {
-             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -963,9 +952,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body)
         {
-             return await PlaceOrderAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await PlaceOrderAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -974,7 +962,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">order placed for purchasing the pet</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, Order body)
         {
             // verify the required parameter 'body' is set
             if (body == null)

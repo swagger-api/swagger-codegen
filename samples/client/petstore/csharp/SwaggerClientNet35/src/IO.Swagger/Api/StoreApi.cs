@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IStoreApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// Delete purchase order by ID
         /// </summary>

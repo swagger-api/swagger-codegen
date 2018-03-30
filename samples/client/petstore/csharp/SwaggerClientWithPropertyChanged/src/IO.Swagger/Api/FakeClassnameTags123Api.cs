@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IFakeClassnameTags123Api : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// To test class name in snake case
         /// </summary>
@@ -67,7 +67,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (System.Threading.CancellationToken cancellationToken, ModelClient body);
 
         /// <summary>
         /// To test class name in snake case
@@ -89,7 +89,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body);
         #endregion Asynchronous Operations
     }
 
@@ -277,7 +277,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ModelClient</returns>
         public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body)
         {
-             return await TestClassnameAsync(body, System.Threading.CancellationToken.None);
+             return await TestClassnameAsync(System.Threading.CancellationToken.None, body);
              
 
         }
@@ -288,12 +288,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ModelClient</returns>
-        public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ModelClient> TestClassnameAsync (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
-             ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(body, cancellationToken);
+             ApiResponse<ModelClient> localVarResponse = await TestClassnameAsyncWithHttpInfo(cancellationToken, body);
              return localVarResponse.Data;
-
-
         }
 
         /// <summary>
@@ -304,9 +302,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ModelClient)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body)
         {
-             return await TestClassnameAsyncWithHttpInfo(body, System.Threading.CancellationToken.None);
+             return await TestClassnameAsyncWithHttpInfo(System.Threading.CancellationToken.None, body);
              
-
         }
 
         /// <summary>
@@ -315,7 +312,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
         /// <returns>Task of ApiResponse (ModelClient)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (ModelClient body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClassnameAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken, ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)

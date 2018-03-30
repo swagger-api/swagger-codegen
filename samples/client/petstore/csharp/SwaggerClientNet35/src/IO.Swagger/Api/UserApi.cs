@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public interface IUserApi : IApiAccessor
     {
-        #region Synchronous Operations
+        #region Synchronous Operations 
         /// <summary>
         /// Create user
         /// </summary>
