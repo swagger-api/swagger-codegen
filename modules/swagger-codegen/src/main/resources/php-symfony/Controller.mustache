@@ -223,20 +223,20 @@ class Controller extends BaseController
 	/**
 	 * Converts an exception to a serializable array.
 	 *
-	 * @param \Exception|null $exception
+	 * @param \Throwable|null $throwable
 	 *
 	 * @return array
 	 */
-	private function exceptionToArray(\Exception $exception = null)
+	private function exceptionToArray(\Throwable $throwable = null)
 	{
-		if (null === $exception) {
+		if (null === $throwable) {
 			return null;
 		}
 
 		return [
-			'message'  => $exception->getMessage(),
-			'type'     => get_class($exception),
-			'previous' => $this->exceptionToArray($exception->getPrevious()),
+			'message'  => $throwable->getMessage(),
+			'type'     => get_class($throwable),
+			'previous' => $this->exceptionToArray($throwable->getPrevious()),
 		];
 	}
 }
