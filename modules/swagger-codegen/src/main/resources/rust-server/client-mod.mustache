@@ -204,7 +204,7 @@ impl Client {
     }
 }
 
-impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
+impl<C> Api<C> for Client where C: Has<XSpanIdString> {{#hasAuthMethods}}+ Has<Option<AuthData>>{{/hasAuthMethods}}{
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, param_{{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &C) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {
 {{#queryParams}}{{#-first}}
@@ -293,7 +293,6 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
         request.headers_mut().set(ContentType(mimetypes::requests::{{#vendorExtensions}}{{uppercase_operation_id}}{{/vendorExtensions}}.clone()));
 {{/bodyParam}}
         request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
-        //context.x_span_id.as_ref().map(|header| request.headers_mut().set(XSpanId(header.clone())));
 {{#authMethods}}{{#isBasic}}        Has::<Option<AuthData>>::get(context).as_ref().map(|auth_data| {
             if let &AuthData::Basic(ref basic_header) = auth_data {
                 request.headers_mut().set(hyper::header::Authorization(
