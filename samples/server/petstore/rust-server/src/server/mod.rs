@@ -262,7 +262,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -324,7 +323,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -401,7 +399,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -462,7 +459,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -534,7 +530,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -603,7 +598,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -692,7 +686,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -753,7 +746,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -829,7 +821,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -912,7 +903,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -995,7 +985,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1078,7 +1067,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1164,7 +1152,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1251,7 +1238,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1337,7 +1323,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1395,7 +1380,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1477,7 +1461,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1591,7 +1574,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1692,7 +1674,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1772,7 +1753,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1867,7 +1847,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1954,7 +1933,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2075,7 +2053,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2190,7 +2167,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2318,7 +2294,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2393,7 +2368,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2456,7 +2430,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2527,7 +2500,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2622,7 +2594,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2717,7 +2688,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2797,7 +2767,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2877,7 +2846,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2947,7 +2915,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -3017,7 +2984,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -3109,7 +3075,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -3180,7 +3145,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -3269,7 +3233,6 @@ where
                                     .then(move |result| {
                                         let mut response = Response::new();
                                         response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
-                                        //context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
