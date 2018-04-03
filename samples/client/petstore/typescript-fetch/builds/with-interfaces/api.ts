@@ -17,8 +17,6 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
-
 /**
  *
  * @export
@@ -57,10 +55,10 @@ export interface FetchArgs {
 export class BaseAPI {
     protected configuration: Configuration;
 
-    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
+    constructor(configuration: Configuration = Configuration.DEFAULT_INSTANCE, protected basePath: string = Configuration.DEFAULT_INSTANCE.basePath, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
             this.configuration = configuration;
-            this.basePath = configuration.basePath || this.basePath;
+            this.basePath = configuration.basePath || this.basePath || '';
         }
     }
 };
@@ -693,7 +691,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -713,7 +711,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -732,7 +730,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -751,7 +749,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         findPetsByTags(tags: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByTags(tags, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -770,7 +768,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         getPetById(petId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Pet> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).getPetById(petId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -789,7 +787,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -810,7 +808,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -831,7 +829,7 @@ export const PetApiFp = function(configuration?: Configuration) {
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApiResponse> {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).uploadFile(petId, additionalMetadata, file, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1286,7 +1284,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          */
         deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1304,7 +1302,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          */
         getInventory(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getInventory(options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1323,7 +1321,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          */
         getOrderById(orderId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getOrderById(orderId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1342,7 +1340,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          */
         placeOrder(body: Order, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).placeOrder(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1786,7 +1784,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1805,7 +1803,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1824,7 +1822,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1843,7 +1841,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1862,7 +1860,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         getUserByName(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).getUserByName(username, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1882,7 +1880,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         loginUser(username: string, password: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).loginUser(username, password, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1900,7 +1898,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
@@ -1920,7 +1918,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          */
         updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;

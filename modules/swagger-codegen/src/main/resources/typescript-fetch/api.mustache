@@ -5,7 +5,6 @@
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
-import { GlobalConfiguration } from "./globalConfiguration";
 
 /**
  *
@@ -45,10 +44,10 @@ export interface FetchArgs {
 export class BaseAPI {
     protected configuration: Configuration;
 
-    constructor(configuration?: Configuration, protected basePath: string = GlobalConfiguration.basePath, protected fetch: FetchAPI = portableFetch) {
+    constructor(configuration: Configuration = Configuration.DEFAULT_INSTANCE, protected basePath: string = Configuration.DEFAULT_INSTANCE.basePath, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
             this.configuration = configuration;
-            this.basePath = configuration.basePath || this.basePath;
+            this.basePath = configuration.basePath || this.basePath || '';
         }
     }
 };
@@ -261,7 +260,7 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
             const localVarFetchArgs = {{classname}}FetchParamCreator(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = GlobalConfiguration.basePath) => {
+            return (fetch: FetchAPI = portableFetch, basePath: string = Configuration.DEFAULT_INSTANCE.basePath) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response{{#returnType}}.json(){{/returnType}};
