@@ -29,41 +29,40 @@ import android.os.Parcel;
  * ReadOnlyFirst
  */
 
-public class ReadOnlyFirst implements Parcelable {
-  @SerializedName("bar")
+public class ReadOnlyFirst {
+@SerializedName("bar")
   private String bar = null;
-
   @SerializedName("baz")
   private String baz = null;
-
-   /**
-   * Get bar
-   * @return bar
+  
+  
+  /**
+  * Get bar
+  * @return bar
   **/
   @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-
+  
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-   /**
-   * Get baz
-   * @return baz
+  
+  /**
+  * Get baz
+  * @return baz
   **/
   @ApiModelProperty(value = "")
   public String getBaz() {
     return baz;
   }
-
   public void setBaz(String baz) {
     this.baz = baz;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -81,8 +80,7 @@ public class ReadOnlyFirst implements Parcelable {
   public int hashCode() {
     return Objects.hash(bar, baz);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -105,11 +103,12 @@ public class ReadOnlyFirst implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(bar);
-
     out.writeValue(baz);
+    
   }
 
   public ReadOnlyFirst() {
@@ -118,8 +117,7 @@ public class ReadOnlyFirst implements Parcelable {
 
   ReadOnlyFirst(Parcel in) {
     
-    bar = (String)in.readValue(null);
-    baz = (String)in.readValue(null);
+    bar = (String)in.readValue(null);baz = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -135,4 +133,6 @@ public class ReadOnlyFirst implements Parcelable {
     }
   };
 }
+
+
 

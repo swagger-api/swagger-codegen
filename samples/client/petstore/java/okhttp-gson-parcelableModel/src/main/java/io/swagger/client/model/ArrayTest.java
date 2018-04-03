@@ -32,95 +32,95 @@ import android.os.Parcel;
  * ArrayTest
  */
 
-public class ArrayTest implements Parcelable {
-  @SerializedName("array_of_string")
+public class ArrayTest {
+@SerializedName("array_of_string")
   private List<String> arrayOfString = null;
-
   @SerializedName("array_array_of_integer")
   private List<List<Long>> arrayArrayOfInteger = null;
-
   @SerializedName("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-
+  
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
   }
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
+    
     if (this.arrayOfString == null) {
       this.arrayOfString = new ArrayList<String>();
     }
+    
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
-
-   /**
-   * Get arrayOfString
-   * @return arrayOfString
+  
+  /**
+  * Get arrayOfString
+  * @return arrayOfString
   **/
   @ApiModelProperty(value = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
-
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
-
+  
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
   }
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
+    
     if (this.arrayArrayOfInteger == null) {
       this.arrayArrayOfInteger = new ArrayList<List<Long>>();
     }
+    
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
-
-   /**
-   * Get arrayArrayOfInteger
-   * @return arrayArrayOfInteger
+  
+  /**
+  * Get arrayArrayOfInteger
+  * @return arrayArrayOfInteger
   **/
   @ApiModelProperty(value = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
-
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
-
+  
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
   }
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
+    
     if (this.arrayArrayOfModel == null) {
       this.arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
     }
+    
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
-
-   /**
-   * Get arrayArrayOfModel
-   * @return arrayArrayOfModel
+  
+  /**
+  * Get arrayArrayOfModel
+  * @return arrayArrayOfModel
   **/
   @ApiModelProperty(value = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
-
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -139,8 +139,7 @@ public class ArrayTest implements Parcelable {
   public int hashCode() {
     return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -164,13 +163,13 @@ public class ArrayTest implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(arrayOfString);
-
     out.writeValue(arrayArrayOfInteger);
-
     out.writeValue(arrayArrayOfModel);
+    
   }
 
   public ArrayTest() {
@@ -179,9 +178,7 @@ public class ArrayTest implements Parcelable {
 
   ArrayTest(Parcel in) {
     
-    arrayOfString = (List<String>)in.readValue(null);
-    arrayArrayOfInteger = (List<List<Long>>)in.readValue(List.class.getClassLoader());
-    arrayArrayOfModel = (List<List<ReadOnlyFirst>>)in.readValue(List.class.getClassLoader());
+    arrayOfString = (List<String>)in.readValue(null);arrayArrayOfInteger = (List<List<Long>>)in.readValue(List.class.getClassLoader());arrayArrayOfModel = (List<List<ReadOnlyFirst>>)in.readValue(List.class.getClassLoader());
   }
 
   public int describeContents() {
@@ -197,4 +194,6 @@ public class ArrayTest implements Parcelable {
     }
   };
 }
+
+
 

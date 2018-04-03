@@ -32,66 +32,64 @@ import android.os.Parcel;
  * AdditionalPropertiesClass
  */
 
-public class AdditionalPropertiesClass implements Parcelable {
-  @SerializedName("map_property")
+public class AdditionalPropertiesClass {
+@SerializedName("map_property")
   private Map<String, String> mapProperty = null;
-
   @SerializedName("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
-
+  
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;
   }
 
   public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+    
     if (this.mapProperty == null) {
       this.mapProperty = new HashMap<String, String>();
     }
+    
     this.mapProperty.put(key, mapPropertyItem);
     return this;
   }
-
-   /**
-   * Get mapProperty
-   * @return mapProperty
+  /**
+  * Get mapProperty
+  * @return mapProperty
   **/
   @ApiModelProperty(value = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
-
   public void setMapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
   }
-
+  
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
     return this;
   }
 
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+    
     if (this.mapOfMapProperty == null) {
       this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
     }
+    
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
   }
-
-   /**
-   * Get mapOfMapProperty
-   * @return mapOfMapProperty
+  /**
+  * Get mapOfMapProperty
+  * @return mapOfMapProperty
   **/
   @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
-
   public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -109,8 +107,7 @@ public class AdditionalPropertiesClass implements Parcelable {
   public int hashCode() {
     return Objects.hash(mapProperty, mapOfMapProperty);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -133,11 +130,12 @@ public class AdditionalPropertiesClass implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(mapProperty);
-
     out.writeValue(mapOfMapProperty);
+    
   }
 
   public AdditionalPropertiesClass() {
@@ -146,8 +144,7 @@ public class AdditionalPropertiesClass implements Parcelable {
 
   AdditionalPropertiesClass(Parcel in) {
     
-    mapProperty = (Map<String, String>)in.readValue(null);
-    mapOfMapProperty = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
+    mapProperty = (Map<String, String>)in.readValue(null);mapOfMapProperty = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
   }
 
   public int describeContents() {
@@ -163,4 +160,6 @@ public class AdditionalPropertiesClass implements Parcelable {
     }
   };
 }
+
+
 

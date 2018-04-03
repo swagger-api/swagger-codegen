@@ -15,13 +15,16 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.Client;
+
 import org.junit.Test;
 import org.junit.Ignore;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for AnotherFakeApi
@@ -42,8 +45,10 @@ public class AnotherFakeApiTest {
      */
     @Test
     public void testSpecialTagsTest() throws ApiException {
-        Client body = null;
-        Client response = api.testSpecialTags(body);
+        
+        Client client = null;
+        
+        Client response = api.testSpecialTags(client);
 
         // TODO: test validations
     }

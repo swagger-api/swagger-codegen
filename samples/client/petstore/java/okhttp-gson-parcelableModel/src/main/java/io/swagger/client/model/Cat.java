@@ -30,29 +30,68 @@ import android.os.Parcel;
  * Cat
  */
 
-public class Cat extends Animal implements Parcelable {
+public class Cat extends Animal {
+@SerializedName("className")
+  private String className = null;
+  @SerializedName("color")
+  private String color = "red";
   @SerializedName("declawed")
   private Boolean declawed = null;
+  
+  public Cat className(String className) {
+    this.className = className;
+    return this;
+  }
 
+  
+  /**
+  * Get className
+  * @return className
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public String getClassName() {
+    return className;
+  }
+  public void setClassName(String className) {
+    this.className = className;
+  }
+  
+  public Cat color(String color) {
+    this.color = color;
+    return this;
+  }
+
+  
+  /**
+  * Get color
+  * @return color
+  **/
+  @ApiModelProperty(value = "")
+  public String getColor() {
+    return color;
+  }
+  public void setColor(String color) {
+    this.color = color;
+  }
+  
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-   /**
-   * Get declawed
-   * @return declawed
+  
+  /**
+  * Get declawed
+  * @return declawed
   **/
   @ApiModelProperty(value = "")
   public Boolean isDeclawed() {
     return declawed;
   }
-
   public void setDeclawed(Boolean declawed) {
     this.declawed = declawed;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -62,21 +101,24 @@ public class Cat extends Animal implements Parcelable {
       return false;
     }
     Cat cat = (Cat) o;
-    return Objects.equals(this.declawed, cat.declawed) &&
+    return Objects.equals(this.className, cat.className) &&
+        Objects.equals(this.color, cat.color) &&
+        Objects.equals(this.declawed, cat.declawed) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(declawed, super.hashCode());
+    return Objects.hash(className, color, declawed, super.hashCode());
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Cat {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    className: ").append(toIndentedString(className)).append("\n");
+    sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -93,9 +135,13 @@ public class Cat extends Animal implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     super.writeToParcel(out, flags);  
+     super.writeToParcel(out, flags); 
+    out.writeValue(className);
+    out.writeValue(color);
     out.writeValue(declawed);
+    
   }
 
   public Cat() {
@@ -104,7 +150,7 @@ public class Cat extends Animal implements Parcelable {
 
   Cat(Parcel in) {
      super(in); 
-    declawed = (Boolean)in.readValue(null);
+    className = (String)in.readValue(null);color = (String)in.readValue(null);declawed = (Boolean)in.readValue(null);
   }
 
   public int describeContents() {
@@ -120,4 +166,6 @@ public class Cat extends Animal implements Parcelable {
     }
   };
 }
+
+
 
