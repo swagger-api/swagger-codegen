@@ -165,13 +165,21 @@ pub struct NewService<T, C> {
     marker: PhantomData<C>,
 }
 
-impl<T, C> NewService<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+impl<T, C> NewService<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
     pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T, C> {
         NewService{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T, C> hyper::server::NewService for NewService<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+impl<T, C> hyper::server::NewService for NewService<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
     type Request = (Request, C);
     type Response = Response;
     type Error = Error;
@@ -187,13 +195,20 @@ pub struct Service<T, C> {
     marker: PhantomData<C>,
 }
 
-impl<T, C> Service<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+impl<T, C> Service<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
     pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T, C> {
         Service{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T, C> hyper::server::Service for Service<T, C> where T: Api<C> + Clone + 'static, C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+impl<T, C> hyper::server::Service for Service<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
     type Request = (Request, C);
     type Response = Response;
     type Error = Error;
