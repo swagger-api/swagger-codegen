@@ -27,32 +27,30 @@ import android.os.Parcel;
 
 /**
  * Model for testing reserved words
- */
-@ApiModel(description = "Model for testing reserved words")
+ */@ApiModel(description = "Model for testing reserved words")
 
-public class ModelReturn implements Parcelable {
-  @SerializedName("return")
+public class ModelReturn {
+@SerializedName("return")
   private Integer _return = null;
-
+  
   public ModelReturn _return(Integer _return) {
     this._return = _return;
     return this;
   }
 
-   /**
-   * Get _return
-   * @return _return
+  
+  /**
+  * Get _return
+  * @return _return
   **/
   @ApiModelProperty(value = "")
   public Integer getReturn() {
     return _return;
   }
-
   public void setReturn(Integer _return) {
     this._return = _return;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -69,8 +67,7 @@ public class ModelReturn implements Parcelable {
   public int hashCode() {
     return Objects.hash(_return);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -92,9 +89,11 @@ public class ModelReturn implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(_return);
+    
   }
 
   public ModelReturn() {
@@ -119,4 +118,6 @@ public class ModelReturn implements Parcelable {
     }
   };
 }
+
+
 

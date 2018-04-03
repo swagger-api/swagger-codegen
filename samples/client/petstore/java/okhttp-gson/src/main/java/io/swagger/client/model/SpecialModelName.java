@@ -28,28 +28,27 @@ import java.io.IOException;
  */
 
 public class SpecialModelName {
-  @SerializedName("$special[property.name]")
-  private Long specialPropertyName = null;
-
-  public SpecialModelName specialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+@SerializedName("$special[property.name]")
+  private Long $specialPropertyName = null;
+  
+  public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-   /**
-   * Get specialPropertyName
-   * @return specialPropertyName
+  
+  /**
+  * Get $specialPropertyName
+  * @return $specialPropertyName
   **/
   @ApiModelProperty(value = "")
-  public Long getSpecialPropertyName() {
-    return specialPropertyName;
+  public Long get$SpecialPropertyName() {
+    return $specialPropertyName;
   }
-
-  public void setSpecialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  public void set$SpecialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -58,22 +57,21 @@ public class SpecialModelName {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SpecialModelName specialModelName = (SpecialModelName) o;
-    return Objects.equals(this.specialPropertyName, specialModelName.specialPropertyName);
+    SpecialModelName $specialModelName = (SpecialModelName) o;
+    return Objects.equals(this.$specialPropertyName, $specialModelName.$specialPropertyName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(specialPropertyName);
+    return Objects.hash($specialPropertyName);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SpecialModelName {\n");
     
-    sb.append("    specialPropertyName: ").append(toIndentedString(specialPropertyName)).append("\n");
+    sb.append("    $specialPropertyName: ").append(toIndentedString($specialPropertyName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -89,5 +87,8 @@ public class SpecialModelName {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

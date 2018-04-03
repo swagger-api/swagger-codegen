@@ -31,5 +31,4 @@ ags="$@ generate --artifact-id swagger-petstore-jersey2-java6 -i modules/swagger
 echo "Removing files and folders under samples/client/petstore/java/jersey2/src/main"
 rm -rf samples/client/petstore/java/jersey2-java6/src/main
 find samples/client/petstore/java/jersey2-java6 -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
-# TODO: uncomment the java commmand when the issue with this script is fixed, see https://github.com/swagger-api/swagger-codegen-generators/issues/52
-# java $JAVA_OPTS -jar $executable $ags
+java $JAVA_OPTS -jar $executable $ags

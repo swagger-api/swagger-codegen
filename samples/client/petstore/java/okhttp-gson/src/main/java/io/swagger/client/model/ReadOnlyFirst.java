@@ -28,40 +28,39 @@ import java.io.IOException;
  */
 
 public class ReadOnlyFirst {
-  @SerializedName("bar")
+@SerializedName("bar")
   private String bar = null;
-
   @SerializedName("baz")
   private String baz = null;
-
-   /**
-   * Get bar
-   * @return bar
+  
+  
+  /**
+  * Get bar
+  * @return bar
   **/
   @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-
+  
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-   /**
-   * Get baz
-   * @return baz
+  
+  /**
+  * Get baz
+  * @return baz
   **/
   @ApiModelProperty(value = "")
   public String getBaz() {
     return baz;
   }
-
   public void setBaz(String baz) {
     this.baz = baz;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -79,8 +78,7 @@ public class ReadOnlyFirst {
   public int hashCode() {
     return Objects.hash(bar, baz);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -103,5 +101,8 @@ public class ReadOnlyFirst {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 
