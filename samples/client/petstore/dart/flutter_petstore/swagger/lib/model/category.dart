@@ -32,7 +32,7 @@ class Category {
   }
 
   static List<Category> listFromJson(List<dynamic> json) {
-    return json.map((value) => new Category.fromJson(value)).toList();
+    return json == null ? new List<Category>() : json.map((value) => new Category.fromJson(value)).toList();
   }
 
   static Map<String, Category> mapFromJson(Map<String, Map<String, dynamic>> json) {

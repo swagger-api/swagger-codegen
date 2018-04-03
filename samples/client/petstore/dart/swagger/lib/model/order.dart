@@ -58,7 +58,7 @@ class Order {
   }
 
   static List<Order> listFromJson(List<dynamic> json) {
-    return json.map((value) => new Order.fromJson(value)).toList();
+    return json == null ? new List<Order>() : json.map((value) => new Order.fromJson(value)).toList();
   }
 
   static Map<String, Order> mapFromJson(Map<String, Map<String, dynamic>> json) {

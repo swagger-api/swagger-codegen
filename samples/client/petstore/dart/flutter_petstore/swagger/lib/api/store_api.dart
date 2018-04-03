@@ -54,7 +54,7 @@ class StoreApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -103,7 +103,7 @@ class StoreApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'Map<String, int>') as Map<String, int> ;
+          new Map<String, int>.from(apiClient.deserialize(response.body, 'Map<String, int>')) ;
     } else {
       return null;
     }
@@ -155,7 +155,7 @@ class StoreApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'Order') as Order ;
+          apiClient.deserialize(response.body, 'Order') as Order ;
     } else {
       return null;
     }
@@ -207,7 +207,7 @@ class StoreApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'Order') as Order ;
+          apiClient.deserialize(response.body, 'Order') as Order ;
     } else {
       return null;
     }

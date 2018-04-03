@@ -74,7 +74,7 @@ class User {
   }
 
   static List<User> listFromJson(List<dynamic> json) {
-    return json.map((value) => new User.fromJson(value)).toList();
+    return json == null ? new List<User>() : json.map((value) => new User.fromJson(value)).toList();
   }
 
   static Map<String, User> mapFromJson(Map<String, Map<String, dynamic>> json) {

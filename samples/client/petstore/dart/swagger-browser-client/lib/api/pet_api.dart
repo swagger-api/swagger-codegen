@@ -54,7 +54,7 @@ class PetApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -107,7 +107,7 @@ class PetApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -265,7 +265,7 @@ class PetApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'Pet') as Pet ;
+          apiClient.deserialize(response.body, 'Pet') as Pet ;
     } else {
       return null;
     }
@@ -317,7 +317,7 @@ class PetApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -383,7 +383,7 @@ if (status != null)
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -449,7 +449,7 @@ if (status != null)
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
+          apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
     } else {
       return null;
     }

@@ -39,7 +39,7 @@ class ApiResponse {
   }
 
   static List<ApiResponse> listFromJson(List<dynamic> json) {
-    return json.map((value) => new ApiResponse.fromJson(value)).toList();
+    return json == null ? new List<ApiResponse>() : json.map((value) => new ApiResponse.fromJson(value)).toList();
   }
 
   static Map<String, ApiResponse> mapFromJson(Map<String, Map<String, dynamic>> json) {

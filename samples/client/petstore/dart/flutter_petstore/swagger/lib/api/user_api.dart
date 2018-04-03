@@ -54,7 +54,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -106,7 +106,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -158,7 +158,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -210,7 +210,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -262,7 +262,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'User') as User ;
+          apiClient.deserialize(response.body, 'User') as User ;
     } else {
       return null;
     }
@@ -319,7 +319,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        apiClient.deserialize(response.body, 'String') as String ;
+          apiClient.deserialize(response.body, 'String') as String ;
     } else {
       return null;
     }
@@ -368,7 +368,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }
@@ -423,7 +423,7 @@ class UserApi {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
       return 
-        ;
+          ;
     } else {
       return ;
     }

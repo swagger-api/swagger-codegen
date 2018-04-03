@@ -62,7 +62,7 @@ class Pet {
   }
 
   static List<Pet> listFromJson(List<dynamic> json) {
-    return json.map((value) => new Pet.fromJson(value)).toList();
+    return json == null ? new List<Pet>() : json.map((value) => new Pet.fromJson(value)).toList();
   }
 
   static Map<String, Pet> mapFromJson(Map<String, Map<String, dynamic>> json) {
