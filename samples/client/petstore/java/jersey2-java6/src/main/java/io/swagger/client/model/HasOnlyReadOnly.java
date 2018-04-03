@@ -25,31 +25,34 @@ import io.swagger.annotations.ApiModelProperty;
  */
 
 public class HasOnlyReadOnly {
+
   @JsonProperty("bar")
   private String bar = null;
-
+  
   @JsonProperty("foo")
   private String foo = null;
-
-   /**
-   * Get bar
-   * @return bar
+  
+  
+  /**
+  * Get bar
+  * @return bar
   **/
   @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-
-   /**
-   * Get foo
-   * @return foo
+  
+  
+  /**
+  * Get foo
+  * @return foo
   **/
   @ApiModelProperty(value = "")
   public String getFoo() {
     return foo;
   }
-
-
+  
+  
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -67,8 +70,6 @@ public class HasOnlyReadOnly {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(bar, foo);
   }
-
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -91,5 +92,8 @@ public class HasOnlyReadOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

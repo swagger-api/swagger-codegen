@@ -1,8 +1,15 @@
 package io.swagger.model;
 
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -19,7 +26,11 @@ public class Capitalization  implements Serializable {
   private @Valid String scAETHFlowPoints = null;
   private @Valid String ATT_NAME = null;
 
+  
   /**
+   
+   
+   
    **/
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
@@ -29,6 +40,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("smallCamel")
+
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -36,7 +48,11 @@ public class Capitalization  implements Serializable {
     this.smallCamel = smallCamel;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
@@ -46,6 +62,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("CapitalCamel")
+
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -53,7 +70,11 @@ public class Capitalization  implements Serializable {
     this.capitalCamel = capitalCamel;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
@@ -63,6 +84,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("small_Snake")
+
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -70,7 +92,11 @@ public class Capitalization  implements Serializable {
     this.smallSnake = smallSnake;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
@@ -80,6 +106,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("Capital_Snake")
+
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -87,7 +114,11 @@ public class Capitalization  implements Serializable {
     this.capitalSnake = capitalSnake;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
@@ -97,6 +128,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("SCA_ETH_Flow_Points")
+
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -104,8 +136,13 @@ public class Capitalization  implements Serializable {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
 
+  
   /**
+   
    * Name of the pet 
+   
+   
+   
    **/
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
@@ -115,6 +152,7 @@ public class Capitalization  implements Serializable {
   
   @ApiModelProperty(value = "Name of the pet ")
   @JsonProperty("ATT_NAME")
+
   public String getATTNAME() {
     return ATT_NAME;
   }
@@ -122,6 +160,7 @@ public class Capitalization  implements Serializable {
     this.ATT_NAME = ATT_NAME;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -171,4 +210,6 @@ public class Capitalization  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

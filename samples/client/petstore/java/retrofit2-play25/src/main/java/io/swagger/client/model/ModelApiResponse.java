@@ -27,70 +27,85 @@ import javax.validation.Valid;
  */
 
 public class ModelApiResponse {
+
   @JsonProperty("code")
   private Integer code = null;
-
+  
   @JsonProperty("type")
   private String type = null;
-
+  
   @JsonProperty("message")
   private String message = null;
-
+  
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-   /**
-   * Get code
-   * @return code
+  
+  /**
+  * Get code
+  * @return code
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public Integer getCode() {
     return code;
   }
-
   public void setCode(Integer code) {
     this.code = code;
   }
-
+  
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
 
-   /**
-   * Get type
-   * @return type
+  
+  /**
+  * Get type
+  * @return type
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public String getType() {
     return type;
   }
-
   public void setType(String type) {
     this.type = type;
   }
-
+  
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
 
-   /**
-   * Get message
-   * @return message
+  
+  /**
+  * Get message
+  * @return message
   **/
-  @ApiModelProperty(value = "")
+  
+
+
+
+
+@ApiModelProperty(value = "")
   public String getMessage() {
     return message;
   }
-
   public void setMessage(String message) {
     this.message = message;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -109,8 +124,7 @@ public class ModelApiResponse {
   public int hashCode() {
     return Objects.hash(code, type, message);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -134,5 +148,8 @@ public class ModelApiResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

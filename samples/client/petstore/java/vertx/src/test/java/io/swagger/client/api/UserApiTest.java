@@ -14,6 +14,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.model.User;
 
+
 import io.swagger.client.Configuration;
 
 import org.junit.Test;
@@ -31,10 +32,12 @@ import io.vertx.ext.unit.junit.RunTestOnContext;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.Async;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for UserApi
@@ -66,8 +69,10 @@ public class UserApiTest {
     @Test
     public void createUserTest(TestContext context) {
         Async async = context.async();
-        User body = null;
-        api.createUser(body, result -> {
+        
+        User user = null;
+        
+        api.createUser(user, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -82,7 +87,9 @@ public class UserApiTest {
     @Test
     public void createUsersWithArrayInputTest(TestContext context) {
         Async async = context.async();
+        
         List<User> body = null;
+        
         api.createUsersWithArrayInput(body, result -> {
             // TODO: test validations
             async.complete();
@@ -98,7 +105,9 @@ public class UserApiTest {
     @Test
     public void createUsersWithListInputTest(TestContext context) {
         Async async = context.async();
+        
         List<User> body = null;
+        
         api.createUsersWithListInput(body, result -> {
             // TODO: test validations
             async.complete();
@@ -114,7 +123,9 @@ public class UserApiTest {
     @Test
     public void deleteUserTest(TestContext context) {
         Async async = context.async();
+        
         String username = null;
+        
         api.deleteUser(username, result -> {
             // TODO: test validations
             async.complete();
@@ -130,7 +141,9 @@ public class UserApiTest {
     @Test
     public void getUserByNameTest(TestContext context) {
         Async async = context.async();
+        
         String username = null;
+        
         api.getUserByName(username, result -> {
             // TODO: test validations
             async.complete();
@@ -146,8 +159,11 @@ public class UserApiTest {
     @Test
     public void loginUserTest(TestContext context) {
         Async async = context.async();
+        
         String username = null;
+        
         String password = null;
+        
         api.loginUser(username, password, result -> {
             // TODO: test validations
             async.complete();
@@ -163,6 +179,7 @@ public class UserApiTest {
     @Test
     public void logoutUserTest(TestContext context) {
         Async async = context.async();
+        
         api.logoutUser(result -> {
             // TODO: test validations
             async.complete();
@@ -178,9 +195,12 @@ public class UserApiTest {
     @Test
     public void updateUserTest(TestContext context) {
         Async async = context.async();
+        
+        User user = null;
+        
         String username = null;
-        User body = null;
-        api.updateUser(username, body, result -> {
+        
+        api.updateUser(user, username, result -> {
             // TODO: test validations
             async.complete();
         });

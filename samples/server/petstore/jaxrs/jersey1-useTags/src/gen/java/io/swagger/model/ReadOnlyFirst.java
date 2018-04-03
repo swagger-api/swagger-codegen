@@ -13,52 +13,123 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * ReadOnlyFirst
  */
 
 public class ReadOnlyFirst   {
+  
+    
+    
+  
   @JsonProperty("bar")
+  
+  
+  
+  
   private String bar = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("baz")
+  
+  
+  
+  
   private String baz = null;
+  
 
+  
+  
+  
+  public ReadOnlyFirst bar(String bar) {
+    this.bar = bar;
+    return this;
+  }
+  
+  
+
+  
   /**
+  
+  
    * Get bar
+  
+  
+  
    * @return bar
    **/
+ 
+  
   @JsonProperty("bar")
+  
   @ApiModelProperty(value = "")
+
   public String getBar() {
     return bar;
   }
+  
 
+  public void setBar(String bar) {
+    this.bar = bar;
+  }
+  
+
+  
+  
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get baz
+  
+  
+  
    * @return baz
    **/
+ 
+  
   @JsonProperty("baz")
+  
   @ApiModelProperty(value = "")
+
   public String getBaz() {
     return baz;
   }
+  
 
   public void setBaz(String baz) {
     this.baz = baz;
   }
+  
+
+  
 
 
   @Override
@@ -78,6 +149,8 @@ public class ReadOnlyFirst   {
   public int hashCode() {
     return Objects.hash(bar, baz);
   }
+
+
 
 
   @Override
@@ -102,4 +175,6 @@ public class ReadOnlyFirst   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

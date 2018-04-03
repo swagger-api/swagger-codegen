@@ -13,41 +13,98 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * Order
  */
 
 public class Order   {
+  
+    
+    
+  
   @JsonProperty("id")
+  
+  
+  
+  
   private Long id = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("petId")
+  
+  
+  
+  
   private Long petId = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("quantity")
+  
+  
+  
+  
   private Integer quantity = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("shipDate")
+  
+  
+  
+  
   private Date shipDate = null;
+  
 
+  
+    
+    
   /**
    * Order Status
    */
   public enum StatusEnum {
+    
+    
+        
+            
     PLACED("placed"),
     
+            
     APPROVED("approved"),
     
+            
     DELIVERED("delivered");
+            
+        
+    
 
     private String value;
 
@@ -72,125 +129,242 @@ public class Order   {
     }
   }
 
+    
+    
+    
+  
   @JsonProperty("status")
+  
+  
+  
+  
   private StatusEnum status = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("complete")
+  
+  
+  
+  
   private Boolean complete = false;
+  
 
+  
+  
+  
   public Order id(Long id) {
     this.id = id;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get id
+  
+  
+  
    * @return id
    **/
+ 
+  
   @JsonProperty("id")
+  
   @ApiModelProperty(value = "")
+
   public Long getId() {
     return id;
   }
+  
 
   public void setId(Long id) {
     this.id = id;
   }
+  
 
+  
+  
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get petId
+  
+  
+  
    * @return petId
    **/
+ 
+  
   @JsonProperty("petId")
+  
   @ApiModelProperty(value = "")
+
   public Long getPetId() {
     return petId;
   }
+  
 
   public void setPetId(Long petId) {
     this.petId = petId;
   }
+  
 
+  
+  
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get quantity
+  
+  
+  
    * @return quantity
    **/
+ 
+  
   @JsonProperty("quantity")
+  
   @ApiModelProperty(value = "")
+
   public Integer getQuantity() {
     return quantity;
   }
+  
 
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+  
 
+  
+  
   public Order shipDate(Date shipDate) {
     this.shipDate = shipDate;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get shipDate
+  
+  
+  
    * @return shipDate
    **/
+ 
+  
   @JsonProperty("shipDate")
+  
   @ApiModelProperty(value = "")
+
   public Date getShipDate() {
     return shipDate;
   }
+  
 
   public void setShipDate(Date shipDate) {
     this.shipDate = shipDate;
   }
+  
 
+  
+  
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
+  
+  
 
+  
   /**
+  
    * Order Status
+  
+  
+  
+  
    * @return status
    **/
+ 
+  
   @JsonProperty("status")
+  
   @ApiModelProperty(value = "Order Status")
+
   public StatusEnum getStatus() {
     return status;
   }
+  
 
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+  
 
+  
+  
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get complete
+  
+  
+  
    * @return complete
    **/
+ 
+  
   @JsonProperty("complete")
+  
   @ApiModelProperty(value = "")
-  public Boolean isComplete() {
+
+  public Boolean isisComplete() {
     return complete;
   }
+  
 
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
+  
+
+  
 
 
   @Override
@@ -214,6 +388,8 @@ public class Order   {
   public int hashCode() {
     return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
+
+
 
 
   @Override
@@ -242,4 +418,6 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

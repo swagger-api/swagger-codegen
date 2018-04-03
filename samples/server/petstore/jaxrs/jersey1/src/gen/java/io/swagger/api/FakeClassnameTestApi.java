@@ -8,9 +8,12 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
 import com.sun.jersey.multipart.FormDataParam;
+
 import javax.validation.constraints.*;
 
+
 import io.swagger.model.Client;
+
 
 import java.util.Map;
 import java.util.List;
@@ -31,22 +34,25 @@ import javax.ws.rs.*;
 
 @io.swagger.annotations.Api(description = "the fake_classname_test API")
 
+
 public class FakeClassnameTestApi  {
    private final FakeClassnameTestApiService delegate = FakeClassnameTestApiServiceFactory.getFakeClassnameTestApi();
+
 
     @PATCH
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test class name in snake case", notes = "", response = Client.class, authorizations = {
-        @io.swagger.annotations.Authorization(value = "api_key_query")
-    }, tags={ "fake_classname_tags 123#$%^" })
+    @io.swagger.annotations.ApiOperation(value = "To test class name in snake case", notes = "", response = Client.class, tags={ "fake_classname_tags 123#$%^" })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testClassname(
-        @ApiParam(value = "client model" ,required=true) Client body,
+        @ApiParam(value = "client model" ,required=true) Client client
+,
         @Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testClassname(body,securityContext);
+        return delegate.testClassname(client,securityContext);
     }
+
 }
+

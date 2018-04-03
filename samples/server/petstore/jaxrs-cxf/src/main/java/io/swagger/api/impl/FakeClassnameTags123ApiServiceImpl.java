@@ -3,6 +3,7 @@ package io.swagger.api.impl;
 import io.swagger.api.*;
 import io.swagger.model.Client;
 
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -16,22 +17,36 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 
+
+
+
+
 /**
  * Swagger Petstore
  *
+ 
  * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ 
  *
  */
+
 public class FakeClassnameTags123ApiServiceImpl implements FakeClassnameTags123Api {
+
+
+    
     /**
      * To test class name in snake case
      *
+     
      */
-    public Client testClassname(Client body) {
+    
+    public Client testClassname(Client client) {
         // TODO: Implement...
         
         return null;
     }
     
+
 }
+
 

@@ -1,8 +1,15 @@
 package io.swagger.model;
 
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -14,7 +21,11 @@ public class Client  implements Serializable {
   
   private @Valid String client = null;
 
+  
   /**
+   
+   
+   
    **/
   public Client client(String client) {
     this.client = client;
@@ -24,6 +35,7 @@ public class Client  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("client")
+
   public String getClient() {
     return client;
   }
@@ -31,6 +43,7 @@ public class Client  implements Serializable {
     this.client = client;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -70,4 +83,6 @@ public class Client  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

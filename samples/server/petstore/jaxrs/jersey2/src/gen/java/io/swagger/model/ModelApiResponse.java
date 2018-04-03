@@ -13,83 +13,170 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * ModelApiResponse
  */
 
 public class ModelApiResponse   {
+  
+    
+    
+  
   @JsonProperty("code")
+  
+  
+  
+  
   private Integer code = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("type")
+  
+  
+  
+  
   private String type = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("message")
+  
+  
+  
+  
   private String message = null;
+  
 
+  
+  
+  
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get code
+  
+  
+  
    * @return code
    **/
+ 
+  
   @JsonProperty("code")
+  
   @ApiModelProperty(value = "")
+
   public Integer getCode() {
     return code;
   }
+  
 
   public void setCode(Integer code) {
     this.code = code;
   }
+  
 
+  
+  
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get type
+  
+  
+  
    * @return type
    **/
+ 
+  
   @JsonProperty("type")
+  
   @ApiModelProperty(value = "")
+
   public String getType() {
     return type;
   }
+  
 
   public void setType(String type) {
     this.type = type;
   }
+  
 
+  
+  
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get message
+  
+  
+  
    * @return message
    **/
+ 
+  
   @JsonProperty("message")
+  
   @ApiModelProperty(value = "")
+
   public String getMessage() {
     return message;
   }
+  
 
   public void setMessage(String message) {
     this.message = message;
   }
+  
+
+  
 
 
   @Override
@@ -110,6 +197,8 @@ public class ModelApiResponse   {
   public int hashCode() {
     return Objects.hash(code, type, message);
   }
+
+
 
 
   @Override
@@ -135,4 +224,6 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

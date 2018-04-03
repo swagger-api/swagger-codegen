@@ -2,13 +2,16 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 import io.swagger.client.model.Client;
+
 import org.junit.Before;
 import org.junit.Test;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for FakeClassnameTags123Api
@@ -23,6 +26,7 @@ public class FakeClassnameTags123ApiTest {
     }
 
     
+    
     /**
      * To test class name in snake case
      *
@@ -30,10 +34,13 @@ public class FakeClassnameTags123ApiTest {
      */
     @Test
     public void testClassnameTest() {
-        Client body = null;
-        // Client response = api.testClassname(body);
+        
+        Client client = null;
+        
+        // Client response = api.testClassname(client);
 
         // TODO: test validations
     }
+    
     
 }

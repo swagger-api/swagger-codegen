@@ -7,7 +7,11 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import javax.validation.constraints.*;
+
+
 
 /**
  * A pet for sale in the pet store
@@ -32,7 +36,9 @@ public class Pet   {
 @XmlEnum(String.class)
 public enum StatusEnum {
 
+    
     @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
+    
 
 
     private String value;
@@ -62,7 +68,11 @@ public enum StatusEnum {
 
   private StatusEnum status = null;
 
+  
   /**
+   
+   
+   
    **/
   public Pet id(Long id) {
     this.id = id;
@@ -72,6 +82,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -79,7 +90,11 @@ public enum StatusEnum {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Pet category(Category category) {
     this.category = category;
@@ -89,6 +104,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("category")
+
   public Category getCategory() {
     return category;
   }
@@ -96,7 +112,11 @@ public enum StatusEnum {
     this.category = category;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Pet name(String name) {
     this.name = name;
@@ -106,7 +126,9 @@ public enum StatusEnum {
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
+
   @NotNull
+
   public String getName() {
     return name;
   }
@@ -114,7 +136,11 @@ public enum StatusEnum {
     this.name = name;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
@@ -124,7 +150,9 @@ public enum StatusEnum {
   
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("photoUrls")
+
   @NotNull
+
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -132,7 +160,11 @@ public enum StatusEnum {
     this.photoUrls = photoUrls;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
@@ -142,6 +174,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
+
   public List<Tag> getTags() {
     return tags;
   }
@@ -149,8 +182,13 @@ public enum StatusEnum {
     this.tags = tags;
   }
 
+  
   /**
+   
    * pet status in the store
+   
+   
+   
    **/
   public Pet status(StatusEnum status) {
     this.status = status;
@@ -160,6 +198,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "pet status in the store")
   @JsonProperty("status")
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -167,6 +206,7 @@ public enum StatusEnum {
     this.status = status;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -216,4 +256,6 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

@@ -29,29 +29,28 @@ import android.os.Parcel;
  * Client
  */
 
-public class Client implements Parcelable {
-  @SerializedName("client")
+public class Client {
+@SerializedName("client")
   private String client = null;
-
+  
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-   /**
-   * Get client
-   * @return client
+  
+  /**
+  * Get client
+  * @return client
   **/
   @ApiModelProperty(value = "")
   public String getClient() {
     return client;
   }
-
   public void setClient(String client) {
     this.client = client;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -68,8 +67,7 @@ public class Client implements Parcelable {
   public int hashCode() {
     return Objects.hash(client);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -91,9 +89,11 @@ public class Client implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(client);
+    
   }
 
   public Client() {
@@ -118,4 +118,6 @@ public class Client implements Parcelable {
     }
   };
 }
+
+
 

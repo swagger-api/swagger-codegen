@@ -1,7 +1,9 @@
 package io.swagger.client;
 
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,11 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
+
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,11 +33,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import org.threeten.bp.*;
 import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -114,11 +120,11 @@ public class ApiClient {
         setUserAgent("Java-SDK");
 
         // Setup authentications (key: authentication name, value: authentication).
-        authentications = new HashMap<String, Authentication>();
-        authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
-        authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
-        authentications.put("http_basic_test", new HttpBasicAuth());
-        authentications.put("petstore_auth", new OAuth());
+    authentications = new HashMap<String, Authentication>();
+    authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+    authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
+    authentications.put("http_basic_test", new HttpBasicAuth());
+    authentications.put("petstore_auth", new OAuth());
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
     }
@@ -263,9 +269,6 @@ public class ApiClient {
      * @return ApiClient this client
      */
     public ApiClient addDefaultHeader(String name, String value) {
-        if (defaultHeaders.containsKey(name)) {
-            defaultHeaders.remove(name);
-        }
         defaultHeaders.add(name, value);
         return this;
     }
@@ -317,12 +320,14 @@ public class ApiClient {
      */
     public ApiClient setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
+        
         for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
             if(converter instanceof AbstractJackson2HttpMessageConverter){
                 ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
                 mapper.setDateFormat(dateFormat);
             }
         }
+        
         return this;
     }
     
@@ -583,6 +588,7 @@ public class ApiClient {
 
         RestTemplate restTemplate = new RestTemplate(messageConverters);
         
+        
         for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
             if(converter instanceof AbstractJackson2HttpMessageConverter){
                 ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
@@ -593,6 +599,7 @@ public class ApiClient {
                 mapper.registerModule(module);
             }
         }
+        
         // This allows us to read the response more than once - Necessary for debugging.
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         return restTemplate;

@@ -2,11 +2,13 @@ package io.swagger.client.api.rxjava;
 
 import io.swagger.client.model.User;
 
+
 import java.util.*;
 
 import rx.Single;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+
 
 
 public class UserApi {
@@ -21,31 +23,39 @@ public class UserApi {
 	    return delegate;
 	}
 
+    
     /**
      * Create user
      * This can only be done by the logged in user.
-     * @param body Created user object (required)
+     
+     * @param user Created user object (required)
+     
      * @param resultHandler Asynchronous result handler
      */
-    public void createUser(User body, Handler<AsyncResult<Void>> resultHandler) {
-        delegate.createUser(body, resultHandler);
+    public void createUser(User user, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.createUser(user, resultHandler);
     }
 
     /**
      * Create user
      * This can only be done by the logged in user.
-     * @param body Created user object (required)
+     
+     * @param user Created user object (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
-    public Single<Void> rxCreateUser(User body) {
+    public Single<Void> rxCreateUser(User user) {
         return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
-            delegate.createUser(body, fut);
+            delegate.createUser(user, fut);
         }));
     }
+    
     /**
      * Creates list of users with given input array
      * 
+     
      * @param body List of user object (required)
+     
      * @param resultHandler Asynchronous result handler
      */
     public void createUsersWithArrayInput(List<User> body, Handler<AsyncResult<Void>> resultHandler) {
@@ -55,7 +65,9 @@ public class UserApi {
     /**
      * Creates list of users with given input array
      * 
+     
      * @param body List of user object (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<Void> rxCreateUsersWithArrayInput(List<User> body) {
@@ -63,10 +75,13 @@ public class UserApi {
             delegate.createUsersWithArrayInput(body, fut);
         }));
     }
+    
     /**
      * Creates list of users with given input array
      * 
+     
      * @param body List of user object (required)
+     
      * @param resultHandler Asynchronous result handler
      */
     public void createUsersWithListInput(List<User> body, Handler<AsyncResult<Void>> resultHandler) {
@@ -76,7 +91,9 @@ public class UserApi {
     /**
      * Creates list of users with given input array
      * 
+     
      * @param body List of user object (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<Void> rxCreateUsersWithListInput(List<User> body) {
@@ -84,10 +101,13 @@ public class UserApi {
             delegate.createUsersWithListInput(body, fut);
         }));
     }
+    
     /**
      * Delete user
      * This can only be done by the logged in user.
+     
      * @param username The name that needs to be deleted (required)
+     
      * @param resultHandler Asynchronous result handler
      */
     public void deleteUser(String username, Handler<AsyncResult<Void>> resultHandler) {
@@ -97,7 +117,9 @@ public class UserApi {
     /**
      * Delete user
      * This can only be done by the logged in user.
+     
      * @param username The name that needs to be deleted (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<Void> rxDeleteUser(String username) {
@@ -105,10 +127,13 @@ public class UserApi {
             delegate.deleteUser(username, fut);
         }));
     }
+    
     /**
      * Get user by user name
      * 
+     
      * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+     
      * @param resultHandler Asynchronous result handler
      */
     public void getUserByName(String username, Handler<AsyncResult<User>> resultHandler) {
@@ -118,7 +143,9 @@ public class UserApi {
     /**
      * Get user by user name
      * 
+     
      * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<User> rxGetUserByName(String username) {
@@ -126,11 +153,15 @@ public class UserApi {
             delegate.getUserByName(username, fut);
         }));
     }
+    
     /**
      * Logs user into the system
      * 
+     
      * @param username The user name for login (required)
+     
      * @param password The password for login in clear text (required)
+     
      * @param resultHandler Asynchronous result handler
      */
     public void loginUser(String username, String password, Handler<AsyncResult<String>> resultHandler) {
@@ -140,8 +171,11 @@ public class UserApi {
     /**
      * Logs user into the system
      * 
+     
      * @param username The user name for login (required)
+     
      * @param password The password for login in clear text (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<String> rxLoginUser(String username, String password) {
@@ -149,9 +183,11 @@ public class UserApi {
             delegate.loginUser(username, password, fut);
         }));
     }
+    
     /**
      * Logs out current logged in user session
      * 
+     
      * @param resultHandler Asynchronous result handler
      */
     public void logoutUser(Handler<AsyncResult<Void>> resultHandler) {
@@ -161,6 +197,7 @@ public class UserApi {
     /**
      * Logs out current logged in user session
      * 
+     
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<Void> rxLogoutUser() {
@@ -168,31 +205,40 @@ public class UserApi {
             delegate.logoutUser(fut);
         }));
     }
+    
     /**
      * Updated user
      * This can only be done by the logged in user.
+     
+     * @param user Updated user object (required)
+     
      * @param username name that need to be deleted (required)
-     * @param body Updated user object (required)
+     
      * @param resultHandler Asynchronous result handler
      */
-    public void updateUser(String username, User body, Handler<AsyncResult<Void>> resultHandler) {
-        delegate.updateUser(username, body, resultHandler);
+    public void updateUser(User user, String username, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.updateUser(user, username, resultHandler);
     }
 
     /**
      * Updated user
      * This can only be done by the logged in user.
+     
+     * @param user Updated user object (required)
+     
      * @param username name that need to be deleted (required)
-     * @param body Updated user object (required)
+     
      * @return Asynchronous result handler (RxJava Single)
      */
-    public Single<Void> rxUpdateUser(String username, User body) {
+    public Single<Void> rxUpdateUser(User user, String username) {
         return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
-            delegate.updateUser(username, body, fut);
+            delegate.updateUser(user, username, fut);
         }));
     }
+    
 
     public static UserApi newInstance(io.swagger.client.api.UserApi arg) {
         return arg != null ? new UserApi(arg) : null;
     }
 }
+

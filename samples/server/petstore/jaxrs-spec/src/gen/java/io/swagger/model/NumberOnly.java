@@ -1,9 +1,16 @@
 package io.swagger.model;
 
 import java.math.BigDecimal;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -15,7 +22,11 @@ public class NumberOnly  implements Serializable {
   
   private @Valid BigDecimal justNumber = null;
 
+  
   /**
+   
+   
+   
    **/
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
@@ -25,6 +36,7 @@ public class NumberOnly  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("JustNumber")
+
   public BigDecimal getJustNumber() {
     return justNumber;
   }
@@ -32,6 +44,7 @@ public class NumberOnly  implements Serializable {
     this.justNumber = justNumber;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,4 +84,6 @@ public class NumberOnly  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

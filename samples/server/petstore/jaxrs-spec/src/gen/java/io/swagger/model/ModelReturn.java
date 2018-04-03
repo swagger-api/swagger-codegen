@@ -1,14 +1,21 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
 
 
 /**
  * Model for testing reserved words
  **/
+
 import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +25,11 @@ public class ModelReturn  implements Serializable {
   
   private @Valid Integer _return = null;
 
+  
   /**
+   
+   
+   
    **/
   public ModelReturn _return(Integer _return) {
     this._return = _return;
@@ -28,6 +39,7 @@ public class ModelReturn  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("return")
+
   public Integer getReturn() {
     return _return;
   }
@@ -35,6 +47,7 @@ public class ModelReturn  implements Serializable {
     this._return = _return;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -74,4 +87,6 @@ public class ModelReturn  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

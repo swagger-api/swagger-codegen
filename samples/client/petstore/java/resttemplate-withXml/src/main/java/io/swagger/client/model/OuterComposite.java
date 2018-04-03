@@ -31,76 +31,76 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "OuterComposite")
 public class OuterComposite {
+
   @JsonProperty("my_number")
   @JacksonXmlProperty(localName = "my_number")
-  @XmlElement(name = "my_number")
+  @XmlElement(name="my_number")
   private BigDecimal myNumber = null;
-
+  
   @JsonProperty("my_string")
   @JacksonXmlProperty(localName = "my_string")
-  @XmlElement(name = "my_string")
+  @XmlElement(name="my_string")
   private String myString = null;
-
+  
   @JsonProperty("my_boolean")
   @JacksonXmlProperty(localName = "my_boolean")
-  @XmlElement(name = "my_boolean")
+  @XmlElement(name="my_boolean")
   private Boolean myBoolean = null;
-
+  
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;
   }
 
-   /**
-   * Get myNumber
-   * @return myNumber
+  
+  /**
+  * Get myNumber
+  * @return myNumber
   **/
   @ApiModelProperty(value = "")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
-
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
-
+  
   public OuterComposite myString(String myString) {
     this.myString = myString;
     return this;
   }
 
-   /**
-   * Get myString
-   * @return myString
+  
+  /**
+  * Get myString
+  * @return myString
   **/
   @ApiModelProperty(value = "")
   public String getMyString() {
     return myString;
   }
-
   public void setMyString(String myString) {
     this.myString = myString;
   }
-
+  
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
   }
 
-   /**
-   * Get myBoolean
-   * @return myBoolean
+  
+  /**
+  * Get myBoolean
+  * @return myBoolean
   **/
   @ApiModelProperty(value = "")
   public Boolean getMyBoolean() {
     return myBoolean;
   }
-
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -119,8 +119,7 @@ public class OuterComposite {
   public int hashCode() {
     return Objects.hash(myNumber, myString, myBoolean);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -144,5 +143,8 @@ public class OuterComposite {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 
