@@ -52,8 +52,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     protected boolean useLoggingFeatureForTests = false;
 
-    protected boolean useAnnotatedBasePath = false;
-
     protected boolean generateNonSpringApplication = false;
 
     protected boolean useGenericResponse = false;
@@ -106,8 +104,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions
                 .add(CliOption.newBoolean(ADD_CONSUMES_PRODUCES_JSON, "Add @Consumes/@Produces Json to API interface"));
         
-        cliOptions.add(CliOption.newBoolean(USE_ANNOTATED_BASE_PATH, "Use @Path annotations for basePath"));
-
         cliOptions.add(CliOption.newBoolean(GENERATE_NON_SPRING_APPLICATION, "Generate non-Spring application"));
         cliOptions.add(CliOption.newBoolean(USE_GENERIC_RESPONSE, "Use generic response"));
 
@@ -158,11 +154,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
             boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
                     GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
             this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
-        }
-
-        if (additionalProperties.containsKey(USE_ANNOTATED_BASE_PATH)) {
-            boolean useAnnotatedBasePathProp = convertPropertyToBooleanAndWriteBack(USE_ANNOTATED_BASE_PATH);
-            this.setUseAnnotatedBasePath(useAnnotatedBasePathProp);
         }
 
         if (additionalProperties.containsKey(GENERATE_NON_SPRING_APPLICATION)) {
@@ -296,10 +287,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     public void setAddConsumesProducesJson(boolean addConsumesProducesJson) {
         this.addConsumesProducesJson = addConsumesProducesJson;
-    }
-
-    public void setUseAnnotatedBasePath(boolean useAnnotatedBasePath) {
-        this.useAnnotatedBasePath = useAnnotatedBasePath;
     }
 
     public void setGenerateNonSpringApplication(boolean generateNonSpringApplication) {

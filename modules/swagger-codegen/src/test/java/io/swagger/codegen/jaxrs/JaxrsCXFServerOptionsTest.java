@@ -4,6 +4,7 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
 import io.swagger.codegen.options.JavaCXFServerOptionsProvider;
+import io.swagger.codegen.options.JaxRSServerOptionsProvider;
 import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
@@ -101,6 +102,10 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                 clientCodegen.setAddConsumesProducesJson(
                         Boolean.valueOf(JavaCXFServerOptionsProvider.ADD_CONSUMES_PRODUCES_JSON));
                 times = 1;
+                
+                clientCodegen.setUseAnnotatedBasePath(Boolean.valueOf(JaxRSServerOptionsProvider.USE_ANNOTATED_BASE_PATH));
+                times = 1;
+                
             }
         };
     }

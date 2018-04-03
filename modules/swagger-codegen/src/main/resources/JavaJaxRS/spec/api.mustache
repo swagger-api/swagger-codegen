@@ -13,7 +13,7 @@ import java.util.List;
 {{#useBeanValidation}}import javax.validation.constraints.*;
 import javax.validation.Valid;{{/useBeanValidation}}
 
-@Path("/{{{baseName}}}")
+@Path("{{#useAnnotatedBasePath}}{{contextPath}}{{/useAnnotatedBasePath}}/{{{baseName}}}")
 @Api(description = "the {{{baseName}}} API"){{#hasConsumes}}
 @Consumes({ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }){{/hasConsumes}}{{#hasProduces}}
 @Produces({ {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }){{/hasProduces}}

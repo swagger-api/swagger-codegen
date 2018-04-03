@@ -78,6 +78,8 @@ public class JaxRSServerOptionsTest extends AbstractOptionsTest {
             times = 1;           
             clientCodegen.setUseTags(Boolean.valueOf(JaxRSServerOptionsProvider.USE_TAGS));
             times = 1;
+            clientCodegen.setUseAnnotatedBasePath(Boolean.valueOf(JaxRSServerOptionsProvider.USE_ANNOTATED_BASE_PATH));
+            times = 1;
         }};
     }
 }

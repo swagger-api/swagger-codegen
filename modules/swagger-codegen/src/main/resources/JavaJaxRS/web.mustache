@@ -50,7 +50,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>jersey</servlet-name>
-        <url-pattern>{{contextPath}}/*</url-pattern>
+        <url-pattern>{{^useAnnotatedBasePath}}{{contextPath}}{{/useAnnotatedBasePath}}/*</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>ApiOriginFilter</filter-name>
