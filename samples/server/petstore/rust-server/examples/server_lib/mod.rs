@@ -12,7 +12,7 @@ use std::clone::Clone;
 use std::marker::PhantomData;
 use hyper;
 use petstore_api;
-use swagger::context::{Has, XSpanIdString};
+use swagger::{Has, XSpanIdString};
 use swagger::auth::Authorization;
 
 pub struct NewService<C>{

@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use std::marker::PhantomData;
 {{#apiUsesUuid}}use uuid;{{/apiUsesUuid}}
 use swagger;
-use swagger::context::{Has, XSpanIdString};
+use swagger::{Has, XSpanIdString};
 
 use {{externCrateName}}::{Api, ApiError, Context{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
                       {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}

@@ -10,7 +10,7 @@ use std::io::Error;
 use std::marker::PhantomData;
 use uuid;
 use swagger;
-use swagger::context::{Has, XSpanIdString};
+use swagger::{Has, XSpanIdString};
 
 use petstore_api::{Api, ApiError, Context,
                       TestSpecialTagsResponse,

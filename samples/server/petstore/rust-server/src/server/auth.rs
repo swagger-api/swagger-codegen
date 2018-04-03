@@ -5,7 +5,7 @@ use hyper;
 use hyper::{Request, Response, Error, StatusCode};
 use server::url::form_urlencoded;
 use swagger::auth::{Authorization, AuthData, Scopes};
-use swagger::context::{ExtendsWith, XSpanIdString};
+use swagger::{ExtendsWith, XSpanIdString};
 use Api;
 
 pub struct NewService<T, C, D, E>

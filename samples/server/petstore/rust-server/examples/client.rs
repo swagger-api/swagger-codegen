@@ -10,7 +10,7 @@ extern crate uuid;
 extern crate clap;
 extern crate tokio_core;
 
-use swagger::context::{Context, ExtendsWith, XSpanIdString, Has};
+use swagger::{Context, ExtendsWith, XSpanIdString, Has};
 
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
