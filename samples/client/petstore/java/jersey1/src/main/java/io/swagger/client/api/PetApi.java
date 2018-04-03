@@ -20,7 +20,6 @@ import io.swagger.client.Configuration;
 import io.swagger.client.model.*;
 import io.swagger.client.Pair;
 
-import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 public class PetApi {
@@ -51,17 +51,15 @@ public class PetApi {
   }
 
   /**
-   * Add a new pet to the store
-   * 
-   * @param body Pet object that needs to be added to the store (required)
+   * Add a new pet to the store* * @param pet Pet object that needs to be added to the store (required)
    * @throws ApiException if fails to make API call
    */
-  public void addPet(Pet body) throws ApiException {
-    Object localVarPostBody = body;
+  public void addPet(Pet pet) throws ApiException {
+    Object localVarPostBody = pet;
     
-    // verify the required parameter 'body' is set
-    if (body == null) {
-      throw new ApiException(400, "Missing the required parameter 'body' when calling addPet");
+    // verify the required parameter 'pet' is set
+    if (pet == null) {
+      throw new ApiException(400, "Missing the required parameter 'pet' when calling addPet");
     }
     
     // create path and map variables
@@ -73,11 +71,14 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
+
     
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -88,17 +89,16 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-
+    
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
   }
   /**
-   * Deletes a pet
-   * 
-   * @param petId Pet id to delete (required)
+   * Deletes a pet* * @param petId Pet id to delete (required)
    * @param apiKey  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void deletePet(Long petId, String apiKey) throws ApiException {
+  public void deletePet(Integer petId, String apiKey) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
@@ -116,13 +116,16 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
+    
 
     
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -133,13 +136,12 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-
+    
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
   }
   /**
-   * Finds Pets by status
-   * Multiple status values can be provided with comma separated strings
-   * @param status Status values that need to be considered for filter (required)
+   * Finds Pets by status* Multiple status values can be provided with comma separated strings* @param status Status values that need to be considered for filter (required)
    * @return List&lt;Pet&gt;
    * @throws ApiException if fails to make API call
    */
@@ -160,10 +162,14 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "status", status));
+    
+    localVarQueryParams.addAll(apiClient.parameterToPair("status", status));
+    
 
     
+
     
+
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -176,13 +182,13 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
+    
     GenericType<List<Pet>> localVarReturnType = new GenericType<List<Pet>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+    
+  }
   /**
-   * Finds Pets by tags
-   * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-   * @param tags Tags to filter by (required)
+   * Finds Pets by tags* Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.* @param tags Tags to filter by (required)
    * @return List&lt;Pet&gt;
    * @throws ApiException if fails to make API call
    * @deprecated
@@ -205,10 +211,14 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
+    
+    localVarQueryParams.addAll(apiClient.parameterToPair("tags", tags));
+    
 
     
+
     
+
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -221,17 +231,17 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
+    
     GenericType<List<Pet>> localVarReturnType = new GenericType<List<Pet>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+    
+  }
   /**
-   * Find pet by ID
-   * Returns a single pet
-   * @param petId ID of pet to return (required)
+   * Find pet by ID* Returns a single pet* @param petId ID of pet to return (required)
    * @return Pet
    * @throws ApiException if fails to make API call
    */
-  public Pet getPetById(Long petId) throws ApiException {
+  public Pet getPetById(Integer petId) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
@@ -249,9 +259,12 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
+
     
+
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -264,21 +277,21 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "api_key" };
 
+    
     GenericType<Pet> localVarReturnType = new GenericType<Pet>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+    
+  }
   /**
-   * Update an existing pet
-   * 
-   * @param body Pet object that needs to be added to the store (required)
+   * Update an existing pet* * @param pet Pet object that needs to be added to the store (required)
    * @throws ApiException if fails to make API call
    */
-  public void updatePet(Pet body) throws ApiException {
-    Object localVarPostBody = body;
+  public void updatePet(Pet pet) throws ApiException {
+    Object localVarPostBody = pet;
     
-    // verify the required parameter 'body' is set
-    if (body == null) {
-      throw new ApiException(400, "Missing the required parameter 'body' when calling updatePet");
+    // verify the required parameter 'pet' is set
+    if (pet == null) {
+      throw new ApiException(400, "Missing the required parameter 'pet' when calling updatePet");
     }
     
     // create path and map variables
@@ -290,11 +303,14 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
+
     
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -305,19 +321,17 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-
+    
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
   }
   /**
-   * Updates a pet in the store with form data
-   * 
-   * @param petId ID of pet that needs to be updated (required)
-   * @param name Updated name of the pet (optional)
-   * @param status Updated status of the pet (optional)
+   * Updates a pet in the store with form data* * @param petId ID of pet that needs to be updated (required)
+   * @param body  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void updatePetWithForm(Long petId, String name, String status) throws ApiException {
-    Object localVarPostBody = null;
+  public void updatePetWithForm(Integer petId, Object body) throws ApiException {
+    Object localVarPostBody = body;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -334,15 +348,14 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
-    if (name != null)
-      localVarFormParams.put("name", name);
-if (status != null)
-      localVarFormParams.put("status", status);
+
+    
 
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -353,20 +366,18 @@ if (status != null)
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-
+    
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
   }
   /**
-   * uploads an image
-   * 
-   * @param petId ID of pet to update (required)
-   * @param additionalMetadata Additional data to pass to server (optional)
-   * @param file file to upload (optional)
+   * uploads an image* * @param petId ID of pet to update (required)
+   * @param body  (optional)
    * @return ModelApiResponse
    * @throws ApiException if fails to make API call
    */
-  public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
-    Object localVarPostBody = null;
+  public ModelApiResponse uploadFile(Integer petId, Object body) throws ApiException {
+    Object localVarPostBody = body;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -383,12 +394,11 @@ if (status != null)
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    
 
     
-    if (additionalMetadata != null)
-      localVarFormParams.put("additionalMetadata", additionalMetadata);
-if (file != null)
-      localVarFormParams.put("file", file);
+
+    
 
     final String[] localVarAccepts = {
       "application/json"
@@ -402,7 +412,11 @@ if (file != null)
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
+    
     GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+    
+  }
+  
 }
+

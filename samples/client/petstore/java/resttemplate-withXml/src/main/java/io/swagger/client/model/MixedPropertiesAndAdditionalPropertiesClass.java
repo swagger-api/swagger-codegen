@@ -36,86 +36,86 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "MixedPropertiesAndAdditionalPropertiesClass")
 public class MixedPropertiesAndAdditionalPropertiesClass {
+
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
-  @XmlElement(name = "uuid")
+  @XmlElement(name="uuid")
   private UUID uuid = null;
-
+  
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
-  @XmlElement(name = "dateTime")
+  @XmlElement(name="dateTime")
   private OffsetDateTime dateTime = null;
-
+  
   @JsonProperty("map")
-  // Is a container wrapped=false
-  // items.name=inner items.baseName=inner items.xmlName= items.xmlNamespace=
-  // items.example= items.type=Animal
-  @XmlElement(name = "inner")
+  
+  
+  @XmlElement(name="null")
+  
   private Map<String, Animal> map = null;
-
+  
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-   /**
-   * Get uuid
-   * @return uuid
+  
+  /**
+  * Get uuid
+  * @return uuid
   **/
   @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;
   }
-
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
-
+  
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-   /**
-   * Get dateTime
-   * @return dateTime
+  
+  /**
+  * Get dateTime
+  * @return dateTime
   **/
   @ApiModelProperty(value = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
-
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
-
+  
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    
     if (this.map == null) {
       this.map = new HashMap<String, Animal>();
     }
+    
     this.map.put(key, mapItem);
     return this;
   }
-
-   /**
-   * Get map
-   * @return map
+  /**
+  * Get map
+  * @return map
   **/
   @ApiModelProperty(value = "")
   public Map<String, Animal> getMap() {
     return map;
   }
-
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -134,8 +134,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public int hashCode() {
     return Objects.hash(uuid, dateTime, map);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -159,5 +158,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

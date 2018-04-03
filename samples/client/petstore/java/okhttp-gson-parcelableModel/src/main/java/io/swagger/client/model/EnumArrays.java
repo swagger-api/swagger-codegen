@@ -31,14 +31,15 @@ import android.os.Parcel;
  * EnumArrays
  */
 
-public class EnumArrays implements Parcelable {
-  /**
+public class EnumArrays {
+
+    /**
    * Gets or Sets justSymbol
    */
   @JsonAdapter(JustSymbolEnum.Adapter.class)
   public enum JustSymbolEnum {
-    GREATER_THAN_OR_EQUAL_TO(">="),
     
+    GREATER_THAN_OR_EQUAL_TO(">="),
     DOLLAR("$");
 
     private String value;
@@ -46,7 +47,7 @@ public class EnumArrays implements Parcelable {
     JustSymbolEnum(String value) {
       this.value = value;
     }
-
+    
     public String getValue() {
       return value;
     }
@@ -55,7 +56,7 @@ public class EnumArrays implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static JustSymbolEnum fromValue(String text) {
       for (JustSymbolEnum b : JustSymbolEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -64,7 +65,7 @@ public class EnumArrays implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<JustSymbolEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final JustSymbolEnum enumeration) throws IOException {
@@ -78,17 +79,18 @@ public class EnumArrays implements Parcelable {
       }
     }
   }
-
+  
   @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
-
-  /**
+  
+  
+    /**
    * Gets or Sets arrayEnum
    */
   @JsonAdapter(ArrayEnumEnum.Adapter.class)
   public enum ArrayEnumEnum {
-    FISH("fish"),
     
+    FISH("fish"),
     CRAB("crab");
 
     private String value;
@@ -96,7 +98,7 @@ public class EnumArrays implements Parcelable {
     ArrayEnumEnum(String value) {
       this.value = value;
     }
-
+    
     public String getValue() {
       return value;
     }
@@ -105,7 +107,7 @@ public class EnumArrays implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static ArrayEnumEnum fromValue(String text) {
       for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -114,7 +116,7 @@ public class EnumArrays implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<ArrayEnumEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final ArrayEnumEnum enumeration) throws IOException {
@@ -128,55 +130,54 @@ public class EnumArrays implements Parcelable {
       }
     }
   }
-
   @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
-
+  
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-   /**
-   * Get justSymbol
-   * @return justSymbol
+  
+  /**
+  * Get justSymbol
+  * @return justSymbol
   **/
   @ApiModelProperty(value = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
-
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
-
+  
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
   }
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
+    
     if (this.arrayEnum == null) {
       this.arrayEnum = new ArrayList<ArrayEnumEnum>();
     }
+    
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
-
-   /**
-   * Get arrayEnum
-   * @return arrayEnum
+  
+  /**
+  * Get arrayEnum
+  * @return arrayEnum
   **/
   @ApiModelProperty(value = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
-
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -194,8 +195,7 @@ public class EnumArrays implements Parcelable {
   public int hashCode() {
     return Objects.hash(justSymbol, arrayEnum);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -218,11 +218,12 @@ public class EnumArrays implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(justSymbol);
-
     out.writeValue(arrayEnum);
+    
   }
 
   public EnumArrays() {
@@ -231,8 +232,7 @@ public class EnumArrays implements Parcelable {
 
   EnumArrays(Parcel in) {
     
-    justSymbol = (JustSymbolEnum)in.readValue(null);
-    arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
+    justSymbol = (JustSymbolEnum)in.readValue(null);arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
   }
 
   public int describeContents() {
@@ -248,4 +248,6 @@ public class EnumArrays implements Parcelable {
     }
   };
 }
+
+
 

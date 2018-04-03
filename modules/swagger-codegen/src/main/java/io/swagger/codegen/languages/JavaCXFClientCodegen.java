@@ -20,6 +20,11 @@ import io.swagger.codegen.languages.features.GzipTestFeatures;
 import io.swagger.codegen.languages.features.LoggingTestFeatures;
 import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 
+/**
+ * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators
+ * @deprecated use <code>io.swagger.codegen.languages.java.JavaCXFClientCodegen</code> instead.
+ */
+@Deprecated
 public class JavaCXFClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, UseGenericResponseFeatures, GzipTestFeatures, LoggingTestFeatures {
 

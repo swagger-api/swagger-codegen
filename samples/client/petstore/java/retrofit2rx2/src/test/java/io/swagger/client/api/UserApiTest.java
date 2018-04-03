@@ -2,13 +2,16 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 import io.swagger.client.model.User;
+
 import org.junit.Before;
 import org.junit.Test;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for UserApi
@@ -23,6 +26,7 @@ public class UserApiTest {
     }
 
     
+    
     /**
      * Create user
      *
@@ -30,8 +34,10 @@ public class UserApiTest {
      */
     @Test
     public void createUserTest() {
-        User body = null;
-        // Void response = api.createUser(body);
+        
+        User user = null;
+        
+        // Void response = api.createUser(user);
 
         // TODO: test validations
     }
@@ -43,7 +49,9 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithArrayInputTest() {
+        
         List<User> body = null;
+        
         // Void response = api.createUsersWithArrayInput(body);
 
         // TODO: test validations
@@ -56,7 +64,9 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithListInputTest() {
+        
         List<User> body = null;
+        
         // Void response = api.createUsersWithListInput(body);
 
         // TODO: test validations
@@ -69,7 +79,9 @@ public class UserApiTest {
      */
     @Test
     public void deleteUserTest() {
+        
         String username = null;
+        
         // Void response = api.deleteUser(username);
 
         // TODO: test validations
@@ -82,7 +94,9 @@ public class UserApiTest {
      */
     @Test
     public void getUserByNameTest() {
+        
         String username = null;
+        
         // User response = api.getUserByName(username);
 
         // TODO: test validations
@@ -95,8 +109,11 @@ public class UserApiTest {
      */
     @Test
     public void loginUserTest() {
+        
         String username = null;
+        
         String password = null;
+        
         // String response = api.loginUser(username, password);
 
         // TODO: test validations
@@ -109,6 +126,7 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() {
+        
         // Void response = api.logoutUser();
 
         // TODO: test validations
@@ -121,11 +139,15 @@ public class UserApiTest {
      */
     @Test
     public void updateUserTest() {
+        
+        User user = null;
+        
         String username = null;
-        User body = null;
-        // Void response = api.updateUser(username, body);
+        
+        // Void response = api.updateUser(user, username);
 
         // TODO: test validations
     }
+    
     
 }

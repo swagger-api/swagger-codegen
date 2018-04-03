@@ -30,53 +30,53 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Category")
 public class Category {
+
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
-  @XmlElement(name = "id")
+  @XmlElement(name="id")
   private Long id = null;
-
+  
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
-  @XmlElement(name = "name")
+  @XmlElement(name="name")
   private String name = null;
-
+  
   public Category id(Long id) {
     this.id = id;
     return this;
   }
 
-   /**
-   * Get id
-   * @return id
+  
+  /**
+  * Get id
+  * @return id
   **/
   @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
-
   public void setId(Long id) {
     this.id = id;
   }
-
+  
   public Category name(String name) {
     this.name = name;
     return this;
   }
 
-   /**
-   * Get name
-   * @return name
+  
+  /**
+  * Get name
+  * @return name
   **/
   @ApiModelProperty(value = "")
   public String getName() {
     return name;
   }
-
   public void setName(String name) {
     this.name = name;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -94,8 +94,7 @@ public class Category {
   public int hashCode() {
     return Objects.hash(id, name);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -118,5 +117,8 @@ public class Category {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 

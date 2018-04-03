@@ -1,8 +1,13 @@
 package io.swagger.model;
 
-import java.io.Serializable;
+
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -10,13 +15,17 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ModelApiResponse  implements Serializable {
+public class ModelApiResponse   {
   
   private @Valid Integer code = null;
   private @Valid String type = null;
   private @Valid String message = null;
 
+  
   /**
+   
+   
+   
    **/
   public ModelApiResponse code(Integer code) {
     this.code = code;
@@ -26,6 +35,7 @@ public class ModelApiResponse  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("code")
+
   public Integer getCode() {
     return code;
   }
@@ -33,7 +43,11 @@ public class ModelApiResponse  implements Serializable {
     this.code = code;
   }
 
+  
   /**
+   
+   
+   
    **/
   public ModelApiResponse type(String type) {
     this.type = type;
@@ -43,6 +57,7 @@ public class ModelApiResponse  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("type")
+
   public String getType() {
     return type;
   }
@@ -50,7 +65,11 @@ public class ModelApiResponse  implements Serializable {
     this.type = type;
   }
 
+  
   /**
+   
+   
+   
    **/
   public ModelApiResponse message(String message) {
     this.message = message;
@@ -60,6 +79,7 @@ public class ModelApiResponse  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("message")
+
   public String getMessage() {
     return message;
   }
@@ -67,6 +87,7 @@ public class ModelApiResponse  implements Serializable {
     this.message = message;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -110,4 +131,6 @@ public class ModelApiResponse  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

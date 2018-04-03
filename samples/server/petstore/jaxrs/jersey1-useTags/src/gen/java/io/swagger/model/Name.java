@@ -13,12 +13,21 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * Model for testing model name same as property name
@@ -26,76 +35,198 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Model for testing model name same as property name")
 
 public class Name   {
+  
+    
+    
+  
   @JsonProperty("name")
+  
+  
+  
+  
   private Integer name = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("snake_case")
+  
+  
+  
+  
   private Integer snakeCase = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("property")
+  
+  
+  
+  
   private String property = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("123Number")
+  
+  
+  
+  
   private Integer _123Number = null;
+  
 
+  
+  
+  
   public Name name(Integer name) {
     this.name = name;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get name
+  
+  
+  
    * @return name
    **/
+ 
+  
   @JsonProperty("name")
+  
   @ApiModelProperty(required = true, value = "")
+
   @NotNull
+
   public Integer getName() {
     return name;
   }
+  
 
   public void setName(Integer name) {
     this.name = name;
   }
+  
 
+  
+  
+  public Name snakeCase(Integer snakeCase) {
+    this.snakeCase = snakeCase;
+    return this;
+  }
+  
+  
+
+  
   /**
+  
+  
    * Get snakeCase
+  
+  
+  
    * @return snakeCase
    **/
+ 
+  
   @JsonProperty("snake_case")
+  
   @ApiModelProperty(value = "")
+
   public Integer getSnakeCase() {
     return snakeCase;
   }
+  
 
+  public void setSnakeCase(Integer snakeCase) {
+    this.snakeCase = snakeCase;
+  }
+  
+
+  
+  
   public Name property(String property) {
     this.property = property;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get property
+  
+  
+  
    * @return property
    **/
+ 
+  
   @JsonProperty("property")
+  
   @ApiModelProperty(value = "")
+
   public String getProperty() {
     return property;
   }
+  
 
   public void setProperty(String property) {
     this.property = property;
   }
+  
 
+  
+  
+  public Name _123Number(Integer _123Number) {
+    this._123Number = _123Number;
+    return this;
+  }
+  
+  
+
+  
   /**
+  
+  
    * Get _123Number
+  
+  
+  
    * @return _123Number
    **/
+ 
+  
   @JsonProperty("123Number")
+  
   @ApiModelProperty(value = "")
+
   public Integer get123Number() {
     return _123Number;
   }
+  
+
+  public void set123Number(Integer _123Number) {
+    this._123Number = _123Number;
+  }
+  
+
+  
 
 
   @Override
@@ -117,6 +248,8 @@ public class Name   {
   public int hashCode() {
     return Objects.hash(name, snakeCase, property, _123Number);
   }
+
+
 
 
   @Override
@@ -143,4 +276,6 @@ public class Name   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

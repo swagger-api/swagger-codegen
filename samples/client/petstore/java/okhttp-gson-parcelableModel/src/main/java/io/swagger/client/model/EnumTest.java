@@ -30,16 +30,16 @@ import android.os.Parcel;
  * EnumTest
  */
 
-public class EnumTest implements Parcelable {
-  /**
+public class EnumTest {
+
+    /**
    * Gets or Sets enumString
    */
   @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
+    
     UPPER("UPPER"),
-    
     LOWER("lower"),
-    
     EMPTY("");
 
     private String value;
@@ -47,7 +47,7 @@ public class EnumTest implements Parcelable {
     EnumStringEnum(String value) {
       this.value = value;
     }
-
+    
     public String getValue() {
       return value;
     }
@@ -56,7 +56,7 @@ public class EnumTest implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static EnumStringEnum fromValue(String text) {
       for (EnumStringEnum b : EnumStringEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -65,7 +65,7 @@ public class EnumTest implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<EnumStringEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumStringEnum enumeration) throws IOException {
@@ -79,17 +79,17 @@ public class EnumTest implements Parcelable {
       }
     }
   }
-
+  
   @SerializedName("enum_string")
   private EnumStringEnum enumString = null;
-
-  /**
+  
+    /**
    * Gets or Sets enumInteger
    */
   @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
-    NUMBER_1(1),
     
+    NUMBER_1(1),
     NUMBER_MINUS_1(-1);
 
     private Integer value;
@@ -97,7 +97,7 @@ public class EnumTest implements Parcelable {
     EnumIntegerEnum(Integer value) {
       this.value = value;
     }
-
+    
     public Integer getValue() {
       return value;
     }
@@ -106,7 +106,7 @@ public class EnumTest implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static EnumIntegerEnum fromValue(String text) {
       for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -115,7 +115,7 @@ public class EnumTest implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<EnumIntegerEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumIntegerEnum enumeration) throws IOException {
@@ -129,17 +129,17 @@ public class EnumTest implements Parcelable {
       }
     }
   }
-
+  
   @SerializedName("enum_integer")
   private EnumIntegerEnum enumInteger = null;
-
-  /**
+  
+    /**
    * Gets or Sets enumNumber
    */
   @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
-    NUMBER_1_DOT_1(1.1),
     
+    NUMBER_1_DOT_1(1.1),
     NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;
@@ -147,7 +147,7 @@ public class EnumTest implements Parcelable {
     EnumNumberEnum(Double value) {
       this.value = value;
     }
-
+    
     public Double getValue() {
       return value;
     }
@@ -156,7 +156,7 @@ public class EnumTest implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-
+    
     public static EnumNumberEnum fromValue(String text) {
       for (EnumNumberEnum b : EnumNumberEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -165,7 +165,7 @@ public class EnumTest implements Parcelable {
       }
       return null;
     }
-
+    
     public static class Adapter extends TypeAdapter<EnumNumberEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumNumberEnum enumeration) throws IOException {
@@ -179,86 +179,84 @@ public class EnumTest implements Parcelable {
       }
     }
   }
-
+  
   @SerializedName("enum_number")
   private EnumNumberEnum enumNumber = null;
-
   @SerializedName("outerEnum")
   private OuterEnum outerEnum = null;
-
+  
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-   /**
-   * Get enumString
-   * @return enumString
+  
+  /**
+  * Get enumString
+  * @return enumString
   **/
   @ApiModelProperty(value = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
-
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
-
+  
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
-   /**
-   * Get enumInteger
-   * @return enumInteger
+  
+  /**
+  * Get enumInteger
+  * @return enumInteger
   **/
   @ApiModelProperty(value = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
-
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
-
+  
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
-   /**
-   * Get enumNumber
-   * @return enumNumber
+  
+  /**
+  * Get enumNumber
+  * @return enumNumber
   **/
   @ApiModelProperty(value = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
-
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
-
+  
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
 
-   /**
-   * Get outerEnum
-   * @return outerEnum
+  
+  /**
+  * Get outerEnum
+  * @return outerEnum
   **/
   @ApiModelProperty(value = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
-
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -278,8 +276,7 @@ public class EnumTest implements Parcelable {
   public int hashCode() {
     return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -304,15 +301,14 @@ public class EnumTest implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(enumString);
-
     out.writeValue(enumInteger);
-
     out.writeValue(enumNumber);
-
     out.writeValue(outerEnum);
+    
   }
 
   public EnumTest() {
@@ -321,10 +317,7 @@ public class EnumTest implements Parcelable {
 
   EnumTest(Parcel in) {
     
-    enumString = (EnumStringEnum)in.readValue(null);
-    enumInteger = (EnumIntegerEnum)in.readValue(null);
-    enumNumber = (EnumNumberEnum)in.readValue(null);
-    outerEnum = (OuterEnum)in.readValue(OuterEnum.class.getClassLoader());
+    enumString = (EnumStringEnum)in.readValue(null);enumInteger = (EnumIntegerEnum)in.readValue(null);enumNumber = (EnumNumberEnum)in.readValue(null);outerEnum = (OuterEnum)in.readValue(OuterEnum.class.getClassLoader());
   }
 
   public int describeContents() {
@@ -340,4 +333,6 @@ public class EnumTest implements Parcelable {
     }
   };
 }
+
+
 

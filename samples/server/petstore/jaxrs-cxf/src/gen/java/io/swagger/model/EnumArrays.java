@@ -2,7 +2,14 @@ package io.swagger.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,6 +21,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class EnumArrays  {
   
 
@@ -21,7 +30,9 @@ public class EnumArrays  {
 @XmlEnum(String.class)
 public enum JustSymbolEnum {
 
+    
 @XmlEnumValue(">=") GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), @XmlEnumValue("$") DOLLAR(String.valueOf("$"));
+    
 
 
     private String value;
@@ -49,15 +60,22 @@ public enum JustSymbolEnum {
     }
 }
 
+
   @ApiModelProperty(value = "")
+
+
+
   private JustSymbolEnum justSymbol = null;
 
+  
 
 @XmlType(name="ArrayEnumEnum")
 @XmlEnum(String.class)
 public enum ArrayEnumEnum {
 
+    
 @XmlEnumValue("fish") FISH(String.valueOf("fish")), @XmlEnumValue("crab") CRAB(String.valueOf("crab"));
+    
 
 
     private String value;
@@ -85,13 +103,27 @@ public enum ArrayEnumEnum {
     }
 }
 
+
   @ApiModelProperty(value = "")
+
+
   private List<ArrayEnumEnum> arrayEnum = null;
+
+
+  
+  
  /**
+  
+  
    * Get justSymbol
+  
+  
+  
    * @return justSymbol
   **/
   @JsonProperty("just_symbol")
+
+
   public String getJustSymbol() {
     if (justSymbol == null) {
       return null;
@@ -99,6 +131,7 @@ public enum ArrayEnumEnum {
     return justSymbol.value();
   }
 
+  
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
@@ -107,16 +140,28 @@ public enum ArrayEnumEnum {
     this.justSymbol = justSymbol;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get arrayEnum
+  
+  
+  
    * @return arrayEnum
   **/
   @JsonProperty("array_enum")
+
+
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
 
+  
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
@@ -125,12 +170,17 @@ public enum ArrayEnumEnum {
     this.arrayEnum = arrayEnum;
     return this;
   }
+  
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -154,4 +204,7 @@ public enum ArrayEnumEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

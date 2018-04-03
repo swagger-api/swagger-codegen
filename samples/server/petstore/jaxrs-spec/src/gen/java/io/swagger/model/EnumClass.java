@@ -1,23 +1,35 @@
 package io.swagger.model;
 
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
+
+
+
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+
 
 /**
  * Gets or Sets EnumClass
  */
 public enum EnumClass {
   
+  
+  
   _ABC("_abc"),
   
   _EFG("-efg"),
   
   _XYZ_("(xyz)");
+  
 
   private String value;
 
@@ -41,5 +53,8 @@ public enum EnumClass {
     return null;
   }
 }
+
+
+
 
 

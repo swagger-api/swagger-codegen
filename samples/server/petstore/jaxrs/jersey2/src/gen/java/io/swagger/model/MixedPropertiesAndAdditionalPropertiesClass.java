@@ -13,7 +13,10 @@
 
 package io.swagger.model;
 
+
 import java.util.Objects;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -24,86 +27,173 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+
+
 import javax.validation.constraints.*;
+
+
+
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
+  
+    
+    
+  
   @JsonProperty("uuid")
+  
+  
+  
+  
   private UUID uuid = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("dateTime")
+  
+  
+  
+  
   private Date dateTime = null;
+  
 
+  
+    
+    
+  
   @JsonProperty("map")
+  
+  
+  
   private Map<String, Animal> map = null;
+  
+  
 
+  
+  
+  
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get uuid
+  
+  
+  
    * @return uuid
    **/
+ 
+  
   @JsonProperty("uuid")
+  
   @ApiModelProperty(value = "")
+
   public UUID getUuid() {
     return uuid;
   }
+  
 
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
+  
 
+  
+  
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
+  
+  
 
+  
   /**
+  
+  
    * Get dateTime
+  
+  
+  
    * @return dateTime
    **/
+ 
+  
   @JsonProperty("dateTime")
+  
   @ApiModelProperty(value = "")
+
   public Date getDateTime() {
     return dateTime;
   }
+  
 
   public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
+  
 
+  
+  
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
+  
+  
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    
     if (this.map == null) {
       this.map = new HashMap<String, Animal>();
     }
+    
     this.map.put(key, mapItem);
     return this;
   }
+  
 
+  
   /**
+  
+  
    * Get map
+  
+  
+  
    * @return map
    **/
+ 
+  
   @JsonProperty("map")
+  
   @ApiModelProperty(value = "")
+
   public Map<String, Animal> getMap() {
     return map;
   }
+  
 
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
+  
+
+  
 
 
   @Override
@@ -124,6 +214,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   public int hashCode() {
     return Objects.hash(uuid, dateTime, map);
   }
+
+
 
 
   @Override
@@ -149,4 +241,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

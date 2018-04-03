@@ -30,145 +30,145 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Capitalization")
 public class Capitalization {
+
   @JsonProperty("smallCamel")
   @JacksonXmlProperty(localName = "smallCamel")
-  @XmlElement(name = "smallCamel")
+  @XmlElement(name="smallCamel")
   private String smallCamel = null;
-
+  
   @JsonProperty("CapitalCamel")
   @JacksonXmlProperty(localName = "CapitalCamel")
-  @XmlElement(name = "CapitalCamel")
+  @XmlElement(name="CapitalCamel")
   private String capitalCamel = null;
-
+  
   @JsonProperty("small_Snake")
   @JacksonXmlProperty(localName = "small_Snake")
-  @XmlElement(name = "small_Snake")
+  @XmlElement(name="small_Snake")
   private String smallSnake = null;
-
+  
   @JsonProperty("Capital_Snake")
   @JacksonXmlProperty(localName = "Capital_Snake")
-  @XmlElement(name = "Capital_Snake")
+  @XmlElement(name="Capital_Snake")
   private String capitalSnake = null;
-
+  
   @JsonProperty("SCA_ETH_Flow_Points")
   @JacksonXmlProperty(localName = "SCA_ETH_Flow_Points")
-  @XmlElement(name = "SCA_ETH_Flow_Points")
+  @XmlElement(name="SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
-
+  
   @JsonProperty("ATT_NAME")
   @JacksonXmlProperty(localName = "ATT_NAME")
-  @XmlElement(name = "ATT_NAME")
+  @XmlElement(name="ATT_NAME")
   private String ATT_NAME = null;
-
+  
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
 
-   /**
-   * Get smallCamel
-   * @return smallCamel
+  
+  /**
+  * Get smallCamel
+  * @return smallCamel
   **/
   @ApiModelProperty(value = "")
   public String getSmallCamel() {
     return smallCamel;
   }
-
   public void setSmallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
   }
-
+  
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
     return this;
   }
 
-   /**
-   * Get capitalCamel
-   * @return capitalCamel
+  
+  /**
+  * Get capitalCamel
+  * @return capitalCamel
   **/
   @ApiModelProperty(value = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
-
   public void setCapitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
   }
-
+  
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
     return this;
   }
 
-   /**
-   * Get smallSnake
-   * @return smallSnake
+  
+  /**
+  * Get smallSnake
+  * @return smallSnake
   **/
   @ApiModelProperty(value = "")
   public String getSmallSnake() {
     return smallSnake;
   }
-
   public void setSmallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
   }
-
+  
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
     return this;
   }
 
-   /**
-   * Get capitalSnake
-   * @return capitalSnake
+  
+  /**
+  * Get capitalSnake
+  * @return capitalSnake
   **/
   @ApiModelProperty(value = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
-
   public void setCapitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
   }
-
+  
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
     return this;
   }
 
-   /**
-   * Get scAETHFlowPoints
-   * @return scAETHFlowPoints
+  
+  /**
+  * Get scAETHFlowPoints
+  * @return scAETHFlowPoints
   **/
   @ApiModelProperty(value = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
-
   public void setScAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
-
+  
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
   }
 
-   /**
-   * Name of the pet 
-   * @return ATT_NAME
+  
+  /**
+  * Name of the pet 
+  * @return ATT_NAME
   **/
   @ApiModelProperty(value = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
-
   public void setATTNAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -190,8 +190,7 @@ public class Capitalization {
   public int hashCode() {
     return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -218,5 +217,8 @@ public class Capitalization {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
 }
+
+
 
