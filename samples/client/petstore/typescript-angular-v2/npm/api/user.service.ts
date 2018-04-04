@@ -22,7 +22,7 @@ import '../rxjs-operators';
 
 import { User } from '../model/user';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS, BASE_PATH_OBSERVABLE }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
@@ -33,13 +33,19 @@ export class UserService {
     public defaultHeaders = new Headers();
     public configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected http: Http,
+                @Optional() @Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration,
+                @Optional() @Inject(BASE_PATH_OBSERVABLE) basePath$: Observable<string>) {
         if (basePath) {
             this.basePath = basePath;
         }
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if (basePath$) {
+            basePath$.subscribe(nextBasePath => this.basePath = nextBasePath);
         }
     }
 
@@ -124,7 +130,7 @@ export class UserService {
     /**
      * 
      * @summary Get user by user name
-     * @param username The name that needs to be fetched. Use user1 for testing. 
+     * @param username The name that needs to be fetched. Use user1 for testing.
      */
     public getUserByName(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<User> {
         return this.getUserByNameWithHttpInfo(username, extraHttpRequestParams)
@@ -365,7 +371,7 @@ export class UserService {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing. 
+     * @param username The name that needs to be fetched. Use user1 for testing.
      
      */
     public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {

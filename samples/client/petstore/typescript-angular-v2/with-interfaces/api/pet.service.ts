@@ -23,7 +23,7 @@ import '../rxjs-operators';
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS, BASE_PATH_OBSERVABLE }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { PetServiceInterface }                            from './PetServiceInterface';
 
@@ -35,13 +35,19 @@ export class PetService implements PetServiceInterface {
     public defaultHeaders = new Headers();
     public configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected http: Http,
+                @Optional() @Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration,
+                @Optional() @Inject(BASE_PATH_OBSERVABLE) basePath$: Observable<string>) {
         if (basePath) {
             this.basePath = basePath;
         }
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if (basePath$) {
+            basePath$.subscribe(nextBasePath => this.basePath = nextBasePath);
         }
     }
 

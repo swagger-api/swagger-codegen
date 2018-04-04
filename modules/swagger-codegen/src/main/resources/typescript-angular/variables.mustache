@@ -1,6 +1,8 @@
 import { {{injectionToken}} } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 export const BASE_PATH = new {{injectionToken}}{{#injectionTokenTyped}}<string>{{/injectionTokenTyped}}('basePath');
+export const BASE_PATH_OBSERVABLE = new {{injectionToken}}{{#injectionTokenTyped}}<Observable<string>>{{/injectionTokenTyped}}('basePathObservable');
 export const COLLECTION_FORMATS = {
     'csv': ',',
     'tsv': '   ',

@@ -20,7 +20,7 @@ import { Observable }                                        from 'rxjs/Observab
 
 import { User } from '../model/user';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS, BASE_PATH_OBSERVABLE }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
@@ -31,13 +31,19 @@ export class UserService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient,
+                @Optional() @Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration,
+                @Optional() @Inject(BASE_PATH_OBSERVABLE) basePath$: Observable<string>) {
         if (basePath) {
             this.basePath = basePath;
         }
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
+        }
+        if (basePath$) {
+            basePath$.subscribe(nextBasePath => this.basePath = nextBasePath);
         }
     }
 
@@ -238,7 +244,7 @@ export class UserService {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing. 
+     * @param username The name that needs to be fetched. Use user1 for testing.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
