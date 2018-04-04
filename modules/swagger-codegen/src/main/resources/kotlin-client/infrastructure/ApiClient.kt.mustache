@@ -3,16 +3,13 @@ package {{packageName}}.infrastructure
 import okhttp3.*
 import java.io.File
 
-open class ApiClient(val baseUrl: String) {
+open class ApiClient(val baseUrl: String, val httpClient: OkHttpClient) {
     companion object {
         protected val ContentType = "Content-Type"
         protected val Accept = "Accept"
         protected val JsonMediaType = "application/json"
         protected val FormDataMediaType = "multipart/form-data"
         protected val XmlMediaType = "application/xml"
-
-        @JvmStatic
-        val client : OkHttpClient = OkHttpClient()
 
         @JvmStatic
         var defaultHeaders: Map<String, String> by ApplicationDelegates.setOnce(mapOf(ContentType to JsonMediaType, Accept to JsonMediaType))
@@ -94,7 +91,7 @@ open class ApiClient(val baseUrl: String) {
         headers.forEach { header -> request = request.addHeader(header.key, header.value) }
 
         val realRequest = request.build()
-        val response = client.newCall(realRequest).execute()
+        val response = httpClient.newCall(realRequest).execute()
 
         // TODO: handle specific mapping types. e.g. Map<int, Class<?>>
         when {
