@@ -34,10 +34,13 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
-@SerializedName("uuid")
+
+  @SerializedName("uuid")
   private UUID uuid = null;
+  
   @SerializedName("dateTime")
   private OffsetDateTime dateTime = null;
+  
   @SerializedName("map")
   private Map<String, Animal> map = null;
   

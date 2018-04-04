@@ -38,7 +38,7 @@ import javax.validation.constraints.*;
 public class Order   {
   
     
-    
+      
   
   @JsonProperty("id")
   
@@ -50,7 +50,7 @@ public class Order   {
 
   
     
-    
+      
   
   @JsonProperty("petId")
   
@@ -62,7 +62,7 @@ public class Order   {
 
   
     
-    
+      
   
   @JsonProperty("quantity")
   
@@ -74,7 +74,7 @@ public class Order   {
 
   
     
-    
+      
   
   @JsonProperty("shipDate")
   
@@ -129,9 +129,7 @@ public class Order   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("status")
   
@@ -143,7 +141,7 @@ public class Order   {
 
   
     
-    
+      
   
   @JsonProperty("complete")
   

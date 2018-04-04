@@ -67,7 +67,6 @@ public class Pet  {
 
 
   
-
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {

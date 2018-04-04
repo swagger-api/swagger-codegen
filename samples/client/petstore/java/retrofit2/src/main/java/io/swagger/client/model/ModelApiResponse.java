@@ -28,10 +28,13 @@ import java.io.IOException;
  */
 
 public class ModelApiResponse {
-@SerializedName("code")
+
+  @SerializedName("code")
   private Integer code = null;
+  
   @SerializedName("type")
   private String type = null;
+  
   @SerializedName("message")
   private String message = null;
   

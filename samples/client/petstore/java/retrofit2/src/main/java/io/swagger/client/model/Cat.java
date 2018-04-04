@@ -29,10 +29,13 @@ import java.io.IOException;
  */
 
 public class Cat extends Animal {
-@SerializedName("className")
+
+  @SerializedName("className")
   private String className = null;
+  
   @SerializedName("color")
   private String color = "red";
+  
   @SerializedName("declawed")
   private Boolean declawed = null;
   

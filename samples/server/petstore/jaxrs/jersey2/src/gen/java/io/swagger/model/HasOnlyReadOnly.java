@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class HasOnlyReadOnly   {
   
     
-    
+      
   
   @JsonProperty("bar")
   
@@ -48,7 +48,7 @@ public class HasOnlyReadOnly   {
 
   
     
-    
+      
   
   @JsonProperty("foo")
   

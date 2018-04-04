@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class Client   {
   
     
-    
+      
   
   @JsonProperty("client")
   

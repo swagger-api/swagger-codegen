@@ -34,12 +34,14 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "AdditionalPropertiesClass")
 public class AdditionalPropertiesClass {
 
+  
   @JsonProperty("map_property")
   
   
   @XmlElement(name="null")
   
   private Map<String, String> mapProperty = null;
+  
   
   @JsonProperty("map_of_map_property")
   

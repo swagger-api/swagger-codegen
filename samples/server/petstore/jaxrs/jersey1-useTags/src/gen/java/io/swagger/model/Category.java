@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class Category   {
   
     
-    
+      
   
   @JsonProperty("id")
   
@@ -48,7 +48,7 @@ public class Category   {
 
   
     
-    
+      
   
   @JsonProperty("name")
   

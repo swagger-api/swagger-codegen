@@ -28,7 +28,8 @@ import java.io.IOException;
  */
 
 public class Client {
-@SerializedName("client")
+
+  @SerializedName("client")
   private String client = null;
   
   public Client client(String client) {

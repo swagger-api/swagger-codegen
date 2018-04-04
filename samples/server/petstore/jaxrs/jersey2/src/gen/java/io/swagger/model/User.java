@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class User   {
   
     
-    
+      
   
   @JsonProperty("id")
   
@@ -48,7 +48,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("username")
   
@@ -60,7 +60,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("firstName")
   
@@ -72,7 +72,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("lastName")
   
@@ -84,7 +84,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("email")
   
@@ -96,7 +96,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("password")
   
@@ -108,7 +108,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("phone")
   
@@ -120,7 +120,7 @@ public class User   {
 
   
     
-    
+      
   
   @JsonProperty("userStatus")
   

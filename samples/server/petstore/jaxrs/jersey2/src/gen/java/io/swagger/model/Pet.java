@@ -41,7 +41,7 @@ import javax.validation.constraints.*;
 public class Pet   {
   
     
-    
+      
   
   @JsonProperty("id")
   
@@ -53,7 +53,7 @@ public class Pet   {
 
   
     
-    
+      
   
   @JsonProperty("category")
   
@@ -65,7 +65,7 @@ public class Pet   {
 
   
     
-    
+      
   
   @JsonProperty("name")
   
@@ -77,7 +77,7 @@ public class Pet   {
 
   
     
-    
+      
   
   @JsonProperty("photoUrls")
   
@@ -89,7 +89,7 @@ public class Pet   {
 
   
     
-    
+      
   
   @JsonProperty("tags")
   
@@ -144,9 +144,7 @@ public class Pet   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("status")
   

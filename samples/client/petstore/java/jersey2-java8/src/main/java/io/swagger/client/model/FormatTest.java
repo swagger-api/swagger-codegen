@@ -30,41 +30,54 @@ import java.util.UUID;
 
 public class FormatTest {
 
+  
   @JsonProperty("integer")
   private Integer integer = null;
+  
   
   @JsonProperty("int32")
   private Integer int32 = null;
   
+  
   @JsonProperty("int64")
   private Long int64 = null;
+  
   
   @JsonProperty("number")
   private BigDecimal number = null;
   
+  
   @JsonProperty("float")
   private Float _float = null;
+  
   
   @JsonProperty("double")
   private Double _double = null;
   
+  
   @JsonProperty("string")
   private String string = null;
+  
   
   @JsonProperty("byte")
   private String _byte = null;
   
+  
   @JsonProperty("binary")
   private String binary = null;
+  
   
   @JsonProperty("date")
   private LocalDate date = null;
   
+  
   @JsonProperty("dateTime")
   private OffsetDateTime dateTime = null;
   
+  
   @JsonProperty("uuid")
   private UUID uuid = null;
+  
   
   @JsonProperty("password")
   private String password = null;

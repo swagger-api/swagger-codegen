@@ -32,30 +32,43 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 public class FormatTest {
-@SerializedName("integer")
+
+  @SerializedName("integer")
   private Integer integer = null;
+  
   @SerializedName("int32")
   private Integer int32 = null;
+  
   @SerializedName("int64")
   private Long int64 = null;
+  
   @SerializedName("number")
   private BigDecimal number = null;
+  
   @SerializedName("float")
   private Float _float = null;
+  
   @SerializedName("double")
   private Double _double = null;
+  
   @SerializedName("string")
   private String string = null;
+  
   @SerializedName("byte")
   private String _byte = null;
+  
   @SerializedName("binary")
   private String binary = null;
+  
   @SerializedName("date")
   private LocalDate date = null;
+  
   @SerializedName("dateTime")
   private OffsetDateTime dateTime = null;
+  
   @SerializedName("uuid")
   private UUID uuid = null;
+  
   @SerializedName("password")
   private String password = null;
   

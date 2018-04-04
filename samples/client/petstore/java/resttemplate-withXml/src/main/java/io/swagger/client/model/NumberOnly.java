@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "NumberOnly")
 public class NumberOnly {
 
+  
   @JsonProperty("JustNumber")
   @JacksonXmlProperty(localName = "JustNumber")
   @XmlElement(name="JustNumber")
