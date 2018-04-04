@@ -173,10 +173,9 @@ impl Client {
         C: hyper::client::Connect + hyper::client::Service,
     {
         let connector = connector_fn(&handle);
-        let hyper_client =
-                Box::new(hyper::Client::configure().connector(connector).build(
-                    &handle,
-                ));
+        let hyper_client = Box::new(hyper::Client::configure().connector(connector).build(
+            &handle,
+        ));
 
         Ok(Client {
             hyper_client: Arc::new(hyper_client),
