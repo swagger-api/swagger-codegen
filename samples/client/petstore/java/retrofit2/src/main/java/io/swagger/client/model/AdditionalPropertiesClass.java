@@ -31,8 +31,10 @@ import java.util.Map;
  */
 
 public class AdditionalPropertiesClass {
-@SerializedName("map_property")
+
+  @SerializedName("map_property")
   private Map<String, String> mapProperty = null;
+  
   @SerializedName("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
   

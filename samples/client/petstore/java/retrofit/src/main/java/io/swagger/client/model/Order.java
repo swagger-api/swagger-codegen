@@ -29,16 +29,20 @@ import org.joda.time.DateTime;
  */
 
 public class Order {
-@SerializedName("id")
+
+  @SerializedName("id")
   private Long id = null;
+  
   @SerializedName("petId")
   private Long petId = null;
+  
   @SerializedName("quantity")
   private Integer quantity = null;
+  
   @SerializedName("shipDate")
   private DateTime shipDate = null;
   
-    /**
+  /**
    * Order Status
    */
   @JsonAdapter(StatusEnum.Adapter.class)
@@ -88,6 +92,7 @@ public class Order {
   
   @SerializedName("status")
   private StatusEnum status = null;
+  
   @SerializedName("complete")
   private Boolean complete = false;
   

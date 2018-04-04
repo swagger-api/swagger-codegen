@@ -39,7 +39,7 @@ import javax.validation.constraints.*;
 public class AdditionalPropertiesClass   {
   
     
-    
+      
   
   @JsonProperty("map_property")
   
@@ -51,7 +51,7 @@ public class AdditionalPropertiesClass   {
 
   
     
-    
+      
   
   @JsonProperty("map_of_map_property")
   

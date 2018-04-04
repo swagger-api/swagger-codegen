@@ -33,11 +33,11 @@ import android.os.Parcel;
  */
 
 public class MapTest {
-@SerializedName("map_map_of_string")
+
+  @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
   
-  
-    /**
+  /**
    * Gets or Sets inner
    */
   @JsonAdapter(InnerEnum.Adapter.class)
@@ -83,6 +83,7 @@ public class MapTest {
       }
     }
   }
+  
   @SerializedName("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
   

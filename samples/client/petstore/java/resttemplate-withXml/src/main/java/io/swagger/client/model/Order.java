@@ -32,27 +32,31 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "Order")
 public class Order {
 
+  
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
   @XmlElement(name="id")
   private Long id = null;
+  
   
   @JsonProperty("petId")
   @JacksonXmlProperty(localName = "petId")
   @XmlElement(name="petId")
   private Long petId = null;
   
+  
   @JsonProperty("quantity")
   @JacksonXmlProperty(localName = "quantity")
   @XmlElement(name="quantity")
   private Integer quantity = null;
+  
   
   @JsonProperty("shipDate")
   @JacksonXmlProperty(localName = "shipDate")
   @XmlElement(name="shipDate")
   private OffsetDateTime shipDate = null;
   
-    /**
+  /**
    * Order Status
    */
   public enum StatusEnum {
@@ -96,6 +100,7 @@ public class Order {
   @JacksonXmlProperty(localName = "status")
   @XmlElement(name="status")
   private StatusEnum status = null;
+  
   
   @JsonProperty("complete")
   @JacksonXmlProperty(localName = "complete")

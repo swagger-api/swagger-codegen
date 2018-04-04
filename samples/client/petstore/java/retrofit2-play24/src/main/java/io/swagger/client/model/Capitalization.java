@@ -28,20 +28,26 @@ import javax.validation.Valid;
 
 public class Capitalization {
 
+  
   @JsonProperty("smallCamel")
   private String smallCamel = null;
+  
   
   @JsonProperty("CapitalCamel")
   private String capitalCamel = null;
   
+  
   @JsonProperty("small_Snake")
   private String smallSnake = null;
+  
   
   @JsonProperty("Capital_Snake")
   private String capitalSnake = null;
   
+  
   @JsonProperty("SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
+  
   
   @JsonProperty("ATT_NAME")
   private String ATT_NAME = null;

@@ -35,20 +35,24 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "Pet")
 public class Pet {
 
+  
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
   @XmlElement(name="id")
   private Long id = null;
+  
   
   @JsonProperty("category")
   @JacksonXmlProperty(localName = "category")
   @XmlElement(name="category")
   private Category category = null;
   
+  
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
   @XmlElement(name="name")
   private String name = null;
+  
   
   @JsonProperty("photoUrls")
   
@@ -59,6 +63,7 @@ public class Pet {
   @XmlElementWrapper(name="photoUrl")
   private List<String> photoUrls = new ArrayList<String>();
   
+  
   @JsonProperty("tags")
   
   // items.xmlName=
@@ -68,7 +73,7 @@ public class Pet {
   @XmlElementWrapper(name="tag")
   private List<Tag> tags = null;
   
-    /**
+  /**
    * pet status in the store
    */
   public enum StatusEnum {

@@ -40,7 +40,7 @@ import javax.validation.constraints.*;
 public class MapTest   {
   
     
-    
+      
   
   @JsonProperty("map_map_of_string")
   
@@ -53,10 +53,6 @@ public class MapTest   {
   
     
     
-    
-    
-      
-      
   /**
    * Gets or Sets inner
    */
@@ -97,8 +93,6 @@ public class MapTest   {
   }
 
       
-      
-    
   
   @JsonProperty("map_of_enum_string")
   

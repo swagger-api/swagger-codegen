@@ -29,7 +29,7 @@ import javax.validation.Valid;
 
 public class EnumTest {
 
-    /**
+  /**
    * Gets or Sets enumString
    */
   public enum EnumStringEnum {
@@ -72,7 +72,7 @@ public class EnumTest {
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
   
-    /**
+  /**
    * Gets or Sets enumInteger
    */
   public enum EnumIntegerEnum {
@@ -114,7 +114,7 @@ public class EnumTest {
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
   
-    /**
+  /**
    * Gets or Sets enumNumber
    */
   public enum EnumNumberEnum {
@@ -155,6 +155,7 @@ public class EnumTest {
   
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
+  
   
   @JsonProperty("outerEnum")
   private OuterEnum outerEnum = null;

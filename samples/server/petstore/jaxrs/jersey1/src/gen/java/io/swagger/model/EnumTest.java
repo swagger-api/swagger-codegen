@@ -81,9 +81,7 @@ public class EnumTest   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("enum_string")
   
@@ -135,9 +133,7 @@ public class EnumTest   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("enum_integer")
   
@@ -189,9 +185,7 @@ public class EnumTest   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("enum_number")
   
@@ -203,7 +197,7 @@ public class EnumTest   {
 
   
     
-    
+      
   
   @JsonProperty("outerEnum")
   

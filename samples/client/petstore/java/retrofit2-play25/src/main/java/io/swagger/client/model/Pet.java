@@ -32,22 +32,27 @@ import javax.validation.Valid;
 
 public class Pet {
 
+  
   @JsonProperty("id")
   private Long id = null;
+  
   
   @JsonProperty("category")
   private Category category = null;
   
+  
   @JsonProperty("name")
   private String name = null;
+  
   
   @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<>();
   
+  
   @JsonProperty("tags")
   private List<Tag> tags = null;
   
-    /**
+  /**
    * pet status in the store
    */
   public enum StatusEnum {

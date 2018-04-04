@@ -32,11 +32,14 @@ import java.util.UUID;
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
 
+  
   @JsonProperty("uuid")
   private UUID uuid = null;
   
+  
   @JsonProperty("dateTime")
   private OffsetDateTime dateTime = null;
+  
   
   @JsonProperty("map")
   private Map<String, Animal> map = null;

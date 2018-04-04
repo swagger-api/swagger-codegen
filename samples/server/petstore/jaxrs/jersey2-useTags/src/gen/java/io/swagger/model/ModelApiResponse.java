@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class ModelApiResponse   {
   
     
-    
+      
   
   @JsonProperty("code")
   
@@ -48,7 +48,7 @@ public class ModelApiResponse   {
 
   
     
-    
+      
   
   @JsonProperty("type")
   
@@ -60,7 +60,7 @@ public class ModelApiResponse   {
 
   
     
-    
+      
   
   @JsonProperty("message")
   

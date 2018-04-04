@@ -31,15 +31,18 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "ModelApiResponse")
 public class ModelApiResponse {
 
+  
   @JsonProperty("code")
   @JacksonXmlProperty(localName = "code")
   @XmlElement(name="code")
   private Integer code = null;
   
+  
   @JsonProperty("type")
   @JacksonXmlProperty(localName = "type")
   @XmlElement(name="type")
   private String type = null;
+  
   
   @JsonProperty("message")
   @JacksonXmlProperty(localName = "message")

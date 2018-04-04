@@ -28,8 +28,10 @@ import java.io.IOException;
  */
 
 public class Tag {
-@SerializedName("id")
+
+  @SerializedName("id")
   private Long id = null;
+  
   @SerializedName("name")
   private String name = null;
   

@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 public class Name   {
   
     
-    
+      
   
   @JsonProperty("name")
   
@@ -49,7 +49,7 @@ public class Name   {
 
   
     
-    
+      
   
   @JsonProperty("snake_case")
   
@@ -61,7 +61,7 @@ public class Name   {
 
   
     
-    
+      
   
   @JsonProperty("property")
   
@@ -73,7 +73,7 @@ public class Name   {
 
   
     
-    
+      
   
   @JsonProperty("123Number")
   

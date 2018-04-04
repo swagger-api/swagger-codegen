@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "$special[model.name]")
 public class SpecialModelName {
 
+  
   @JsonProperty("$special[property.name]")
   @JacksonXmlProperty(localName = "$special[property.name]")
   @XmlElement(name="$special[property.name]")

@@ -34,18 +34,23 @@ import android.os.Parcel;
  */
 
 public class Pet {
-@SerializedName("id")
+
+  @SerializedName("id")
   private Long id = null;
+  
   @SerializedName("category")
   private Category category = null;
+  
   @SerializedName("name")
   private String name = null;
+  
   @SerializedName("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
+  
   @SerializedName("tags")
   private List<Tag> tags = null;
   
-    /**
+  /**
    * pet status in the store
    */
   @JsonAdapter(StatusEnum.Adapter.class)

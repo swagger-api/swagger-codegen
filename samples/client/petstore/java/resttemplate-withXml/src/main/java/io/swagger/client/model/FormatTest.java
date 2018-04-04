@@ -35,65 +35,78 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "FormatTest")
 public class FormatTest {
 
+  
   @JsonProperty("integer")
   @JacksonXmlProperty(localName = "integer")
   @XmlElement(name="integer")
   private Integer integer = null;
+  
   
   @JsonProperty("int32")
   @JacksonXmlProperty(localName = "int32")
   @XmlElement(name="int32")
   private Integer int32 = null;
   
+  
   @JsonProperty("int64")
   @JacksonXmlProperty(localName = "int64")
   @XmlElement(name="int64")
   private Long int64 = null;
+  
   
   @JsonProperty("number")
   @JacksonXmlProperty(localName = "number")
   @XmlElement(name="number")
   private BigDecimal number = null;
   
+  
   @JsonProperty("float")
   @JacksonXmlProperty(localName = "float")
   @XmlElement(name="float")
   private Float _float = null;
+  
   
   @JsonProperty("double")
   @JacksonXmlProperty(localName = "double")
   @XmlElement(name="double")
   private Double _double = null;
   
+  
   @JsonProperty("string")
   @JacksonXmlProperty(localName = "string")
   @XmlElement(name="string")
   private String string = null;
+  
   
   @JsonProperty("byte")
   @JacksonXmlProperty(localName = "byte")
   @XmlElement(name="byte")
   private String _byte = null;
   
+  
   @JsonProperty("binary")
   @JacksonXmlProperty(localName = "binary")
   @XmlElement(name="binary")
   private String binary = null;
+  
   
   @JsonProperty("date")
   @JacksonXmlProperty(localName = "date")
   @XmlElement(name="date")
   private LocalDate date = null;
   
+  
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
   @XmlElement(name="dateTime")
   private OffsetDateTime dateTime = null;
   
+  
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
   @XmlElement(name="uuid")
   private UUID uuid = null;
+  
   
   @JsonProperty("password")
   @JacksonXmlProperty(localName = "password")

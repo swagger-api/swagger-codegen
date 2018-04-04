@@ -21,6 +21,8 @@ DOLLAR | &quot;$&quot;
 ## Enum: List&lt;ArrayEnumEnum&gt;
 Name | Value
 ---- | -----
+FISH | &quot;fish&quot;
+CRAB | &quot;crab&quot;
 
 
 
