@@ -150,6 +150,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -370,6 +374,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -590,6 +598,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -810,6 +822,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1050,10 +1066,14 @@ class UserApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\User',
                         $e->getResponseHeaders()
                     );
@@ -1314,10 +1334,14 @@ class UserApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         'string',
                         $e->getResponseHeaders()
                     );
@@ -1568,6 +1592,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1778,6 +1806,10 @@ class UserApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;

@@ -150,6 +150,10 @@ class StoreApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -388,10 +392,14 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         'map[string,int]',
                         $e->getResponseHeaders()
                     );
@@ -638,10 +646,14 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Order',
                         $e->getResponseHeaders()
                     );
@@ -907,10 +919,14 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Order',
                         $e->getResponseHeaders()
                     );

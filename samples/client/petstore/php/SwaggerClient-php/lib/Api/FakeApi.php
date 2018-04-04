@@ -161,10 +161,14 @@ class FakeApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterBoolean',
                         $e->getResponseHeaders()
                     );
@@ -408,10 +412,14 @@ class FakeApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterComposite',
                         $e->getResponseHeaders()
                     );
@@ -655,10 +663,14 @@ class FakeApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterNumber',
                         $e->getResponseHeaders()
                     );
@@ -902,10 +914,14 @@ class FakeApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterString',
                         $e->getResponseHeaders()
                     );
@@ -1153,10 +1169,14 @@ class FakeApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Client',
                         $e->getResponseHeaders()
                     );
@@ -1421,6 +1441,10 @@ class FakeApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1816,6 +1840,10 @@ class FakeApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -2086,6 +2114,10 @@ class FakeApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -2308,6 +2340,10 @@ class FakeApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;

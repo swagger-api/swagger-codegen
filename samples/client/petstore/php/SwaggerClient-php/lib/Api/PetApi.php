@@ -150,6 +150,10 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -376,6 +380,10 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -627,10 +635,14 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Pet[]',
                         $e->getResponseHeaders()
                     );
@@ -892,10 +904,14 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Pet[]',
                         $e->getResponseHeaders()
                     );
@@ -1157,10 +1173,14 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Pet',
                         $e->getResponseHeaders()
                     );
@@ -1409,6 +1429,10 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1637,6 +1661,10 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1899,10 +1927,14 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\ApiResponse',
                         $e->getResponseHeaders()
                     );

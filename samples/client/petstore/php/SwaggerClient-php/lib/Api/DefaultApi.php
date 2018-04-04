@@ -1,6 +1,6 @@
 <?php
 /**
- * AnotherFakeApi
+ * DefaultApi
  * PHP version 5
  *
  * @category Class
@@ -40,14 +40,14 @@ use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
 /**
- * AnotherFakeApi Class Doc Comment
+ * DefaultApi Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class AnotherFakeApi
+class DefaultApi
 {
     /**
      * @var ClientInterface
@@ -88,37 +88,34 @@ class AnotherFakeApi
     }
 
     /**
-     * Operation testSpecialTags
+     * Operation testBodyWithQueryParams
      *
-     * To test special tags
-     *
-     * @param  \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\User $body body (required)
+     * @param  string $query query (required)
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\Client
+     * @return void
      */
-    public function testSpecialTags($body)
+    public function testBodyWithQueryParams($body, $query)
     {
-        list($response) = $this->testSpecialTagsWithHttpInfo($body);
-        return $response;
+        $this->testBodyWithQueryParamsWithHttpInfo($body, $query);
     }
 
     /**
-     * Operation testSpecialTagsWithHttpInfo
+     * Operation testBodyWithQueryParamsWithHttpInfo
      *
-     * To test special tags
-     *
-     * @param  \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\User $body (required)
+     * @param  string $query (required)
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function testSpecialTagsWithHttpInfo($body)
+    public function testBodyWithQueryParamsWithHttpInfo($body, $query)
     {
-        $returnType = '\Swagger\Client\Model\Client';
-        $request = $this->testSpecialTagsRequest($body);
+        $returnType = '';
+        $request = $this->testBodyWithQueryParamsRequest($body, $query);
 
         try {
             $options = $this->createHttpClientOption();
@@ -148,21 +145,7 @@ class AnotherFakeApi
                 );
             }
 
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
+            return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
             $content = $e->getResponseBody();
@@ -170,32 +153,25 @@ class AnotherFakeApi
                 $content = json_decode($content);
             }
             switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $content,
-                        '\Swagger\Client\Model\Client',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
             }
             throw $e;
         }
     }
 
     /**
-     * Operation testSpecialTagsAsync
+     * Operation testBodyWithQueryParamsAsync
      *
-     * To test special tags
+     * 
      *
-     * @param  \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\User $body (required)
+     * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function testSpecialTagsAsync($body)
+    public function testBodyWithQueryParamsAsync($body, $query)
     {
-        return $this->testSpecialTagsAsyncWithHttpInfo($body)
+        return $this->testBodyWithQueryParamsAsyncWithHttpInfo($body, $query)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -204,39 +180,26 @@ class AnotherFakeApi
     }
 
     /**
-     * Operation testSpecialTagsAsyncWithHttpInfo
+     * Operation testBodyWithQueryParamsAsyncWithHttpInfo
      *
-     * To test special tags
+     * 
      *
-     * @param  \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\User $body (required)
+     * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function testSpecialTagsAsyncWithHttpInfo($body)
+    public function testBodyWithQueryParamsAsyncWithHttpInfo($body, $query)
     {
-        $returnType = '\Swagger\Client\Model\Client';
-        $request = $this->testSpecialTagsRequest($body);
+        $returnType = '';
+        $request = $this->testBodyWithQueryParamsRequest($body, $query);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -256,29 +219,40 @@ class AnotherFakeApi
     }
 
     /**
-     * Create request for operation 'testSpecialTags'
+     * Create request for operation 'testBodyWithQueryParams'
      *
-     * @param  \Swagger\Client\Model\Client $body client model (required)
+     * @param  \Swagger\Client\Model\User $body (required)
+     * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function testSpecialTagsRequest($body)
+    protected function testBodyWithQueryParamsRequest($body, $query)
     {
         // verify the required parameter 'body' is set
         if ($body === null || (is_array($body) && count($body) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $body when calling testSpecialTags'
+                'Missing the required parameter $body when calling testBodyWithQueryParams'
+            );
+        }
+        // verify the required parameter 'query' is set
+        if ($query === null || (is_array($query) && count($query) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $query when calling testBodyWithQueryParams'
             );
         }
 
-        $resourcePath = '/another-fake/dummy';
+        $resourcePath = '/fake/body-with-query-params';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        if ($query !== null) {
+            $queryParams['query'] = ObjectSerializer::toQueryValue($query);
+        }
 
 
         // body params
@@ -289,11 +263,11 @@ class AnotherFakeApi
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
+                []
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
+                [],
                 ['application/json']
             );
         }
@@ -341,7 +315,7 @@ class AnotherFakeApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'PATCH',
+            'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

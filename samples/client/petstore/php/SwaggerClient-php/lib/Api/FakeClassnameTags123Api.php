@@ -165,10 +165,14 @@ class FakeClassnameTags123Api
             ];
 
         } catch (ApiException $e) {
+            $content = $e->getResponseBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
             switch ($e->getCode()) {
                 case 200:
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Client',
                         $e->getResponseHeaders()
                     );
