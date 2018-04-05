@@ -144,6 +144,53 @@ export class AppModule {}
 ```
 
 
+### Set dynamic service base path
+If required the base path can be modified throughout the lifecycle of the
+service by injecting an `Observable<string>` using the `BASE_PATH_OBSERVABLE` token.
+
+
+```
+import { BASE_PATH_OBSERVABLE } from '{{npmName}}';
+
+@NgModule({
+    imports: [],
+    declarations: [ AppComponent ],
+    providers: [
+      DynamicBasePathService,
+      {
+        provide: BASE_PATH_OBSERVABLE,
+        useFactory: () => new BehaviorSubject&lt;string&gt;('http://localhost:5000')
+      }
+    ],
+    bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+
+```
+
+An example service defined below allows publishing new basePaths to the api services
+
+```
+
+import {Inject, Injectable} from '@angular/core';
+import {Subject} from 'rxjs/Subject';
+import {BASE_PATH_OBSERVABLE} from '{{npmName}}';
+
+@Injectable()
+export class DynamicBasePathService {
+
+  constructor(@Inject(BASE_PATH_OBSERVABLE) private basePathSubject$: Subject&lt;string&gt;) {
+  }
+
+  public setBasePath(basePath: string): void {
+    this.basePathSubject$.next(basePath);
+  }
+
+}
+
+```
+
+
 #### Using @angular/cli
 First extend your `src/environments/*.ts` files by adding the corresponding base path:
 
