@@ -4,6 +4,7 @@
 ./bin/spring-delegate.sh
 ./bin/spring-delegate-j8.sh
 ./bin/spring-stubs.sh
+./bin/spring-stubs-with-pom.sh
 ./bin/spring-mvc-petstore-j8-async-server.sh
 ./bin/springboot-petstore-server.sh
 ./bin/spring-mvc-petstore-server.sh
