@@ -39,7 +39,7 @@ import javax.validation.constraints.*;
 public class FormatTest   {
   
     
-    
+      
   
   @JsonProperty("integer")
   
@@ -51,7 +51,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("int32")
   
@@ -63,7 +63,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("int64")
   
@@ -75,7 +75,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("number")
   
@@ -87,7 +87,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("float")
   
@@ -99,7 +99,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("double")
   
@@ -111,7 +111,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("string")
   
@@ -123,7 +123,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("byte")
   
@@ -135,7 +135,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("binary")
   
@@ -147,7 +147,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("date")
   
@@ -159,7 +159,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("dateTime")
   
@@ -171,7 +171,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("uuid")
   
@@ -183,7 +183,7 @@ public class FormatTest   {
 
   
     
-    
+      
   
   @JsonProperty("password")
   

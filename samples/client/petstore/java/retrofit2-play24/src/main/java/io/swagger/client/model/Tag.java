@@ -28,8 +28,10 @@ import javax.validation.Valid;
 
 public class Tag {
 
+  
   @JsonProperty("id")
   private Long id = null;
+  
   
   @JsonProperty("name")
   private String name = null;

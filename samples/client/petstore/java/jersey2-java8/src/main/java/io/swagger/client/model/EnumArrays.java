@@ -28,7 +28,7 @@ import java.util.List;
 
 public class EnumArrays {
 
-    /**
+  /**
    * Gets or Sets justSymbol
    */
   public enum JustSymbolEnum {
@@ -70,8 +70,7 @@ public class EnumArrays {
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
   
-  
-    /**
+  /**
    * Gets or Sets arrayEnum
    */
   public enum ArrayEnumEnum {
@@ -108,6 +107,7 @@ public class EnumArrays {
     }
     
   }
+  
   
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;

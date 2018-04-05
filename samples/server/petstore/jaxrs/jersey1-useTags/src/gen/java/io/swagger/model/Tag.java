@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class Tag   {
   
     
-    
+      
   
   @JsonProperty("id")
   
@@ -48,7 +48,7 @@ public class Tag   {
 
   
     
-    
+      
   
   @JsonProperty("name")
   

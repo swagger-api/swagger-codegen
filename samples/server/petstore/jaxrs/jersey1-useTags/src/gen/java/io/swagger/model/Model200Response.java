@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 public class Model200Response   {
   
     
-    
+      
   
   @JsonProperty("name")
   
@@ -49,7 +49,7 @@ public class Model200Response   {
 
   
     
-    
+      
   
   @JsonProperty("class")
   

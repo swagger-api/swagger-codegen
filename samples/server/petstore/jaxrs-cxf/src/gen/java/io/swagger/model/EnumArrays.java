@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EnumArrays  {
   
-
 @XmlType(name="JustSymbolEnum")
 @XmlEnum(String.class)
 public enum JustSymbolEnum {
@@ -68,7 +67,6 @@ public enum JustSymbolEnum {
   private JustSymbolEnum justSymbol = null;
 
   
-
 @XmlType(name="ArrayEnumEnum")
 @XmlEnum(String.class)
 public enum ArrayEnumEnum {

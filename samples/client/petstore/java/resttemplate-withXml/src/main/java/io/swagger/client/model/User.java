@@ -31,40 +31,48 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "User")
 public class User {
 
+  
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
   @XmlElement(name="id")
   private Long id = null;
+  
   
   @JsonProperty("username")
   @JacksonXmlProperty(localName = "username")
   @XmlElement(name="username")
   private String username = null;
   
+  
   @JsonProperty("firstName")
   @JacksonXmlProperty(localName = "firstName")
   @XmlElement(name="firstName")
   private String firstName = null;
+  
   
   @JsonProperty("lastName")
   @JacksonXmlProperty(localName = "lastName")
   @XmlElement(name="lastName")
   private String lastName = null;
   
+  
   @JsonProperty("email")
   @JacksonXmlProperty(localName = "email")
   @XmlElement(name="email")
   private String email = null;
+  
   
   @JsonProperty("password")
   @JacksonXmlProperty(localName = "password")
   @XmlElement(name="password")
   private String password = null;
   
+  
   @JsonProperty("phone")
   @JacksonXmlProperty(localName = "phone")
   @XmlElement(name="phone")
   private String phone = null;
+  
   
   @JsonProperty("userStatus")
   @JacksonXmlProperty(localName = "userStatus")

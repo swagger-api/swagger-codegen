@@ -28,8 +28,10 @@ import javax.validation.Valid;
 
 public class HasOnlyReadOnly {
 
+  
   @JsonProperty("bar")
   private String bar = null;
+  
   
   @JsonProperty("foo")
   private String foo = null;

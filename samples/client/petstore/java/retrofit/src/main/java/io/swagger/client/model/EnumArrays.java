@@ -31,7 +31,7 @@ import java.util.List;
 
 public class EnumArrays {
 
-    /**
+  /**
    * Gets or Sets justSymbol
    */
   @JsonAdapter(JustSymbolEnum.Adapter.class)
@@ -81,8 +81,7 @@ public class EnumArrays {
   @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
   
-  
-    /**
+  /**
    * Gets or Sets arrayEnum
    */
   @JsonAdapter(ArrayEnumEnum.Adapter.class)
@@ -128,6 +127,7 @@ public class EnumArrays {
       }
     }
   }
+  
   @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
   

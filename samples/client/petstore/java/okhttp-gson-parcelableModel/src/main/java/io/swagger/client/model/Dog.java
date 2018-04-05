@@ -31,10 +31,13 @@ import android.os.Parcel;
  */
 
 public class Dog extends Animal {
-@SerializedName("className")
+
+  @SerializedName("className")
   private String className = null;
+  
   @SerializedName("color")
   private String color = "red";
+  
   @SerializedName("breed")
   private String breed = null;
   

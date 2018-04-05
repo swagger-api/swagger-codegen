@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EnumArrays  implements Serializable {
   
-
 public enum JustSymbolEnum {
 
     
@@ -57,7 +56,6 @@ public enum JustSymbolEnum {
 }
 
   private @Valid JustSymbolEnum justSymbol = null;
-
 public enum ArrayEnumEnum {
 
     

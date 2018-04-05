@@ -361,9 +361,9 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**Object**](Object.md)|  | [optional]
- **enumHeaderStringArray** | [**List&lt;String&gt;**](String.md)| Header parameter enum test (string array) | [optional] [enum: ]
+ **enumHeaderStringArray** | [**List&lt;String&gt;**](String.md)| Header parameter enum test (string array) | [optional] [enum: >, $]
  **enumHeaderString** | [**String**](.md)| Header parameter enum test (string) | [optional]
- **enumQueryStringArray** | [**List&lt;String&gt;**](String.md)| Query parameter enum test (string array) | [optional] [enum: ]
+ **enumQueryStringArray** | [**List&lt;String&gt;**](String.md)| Query parameter enum test (string array) | [optional] [enum: >, $]
  **enumQueryString** | [**String**](.md)| Query parameter enum test (string) | [optional]
  **enumQueryInteger** | [**Integer**](.md)| Query parameter enum test (double) | [optional]
 

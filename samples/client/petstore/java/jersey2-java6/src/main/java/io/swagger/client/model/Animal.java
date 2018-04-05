@@ -37,8 +37,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Animal {
 
+  
   @JsonProperty("className")
   private String className = null;
+  
   
   @JsonProperty("color")
   private String color = "red";

@@ -29,8 +29,10 @@ import java.util.Map;
 
 public class AdditionalPropertiesClass {
 
+  
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;
+  
   
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;

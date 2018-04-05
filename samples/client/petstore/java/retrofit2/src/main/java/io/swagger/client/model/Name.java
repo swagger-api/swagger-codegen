@@ -28,12 +28,16 @@ import java.io.IOException;
  */@ApiModel(description = "Model for testing model name same as property name")
 
 public class Name {
-@SerializedName("name")
+
+  @SerializedName("name")
   private Integer name = null;
+  
   @SerializedName("snake_case")
   private Integer snakeCase = null;
+  
   @SerializedName("property")
   private String property = null;
+  
   @SerializedName("123Number")
   private Integer _123Number = null;
   

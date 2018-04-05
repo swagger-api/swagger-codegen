@@ -30,8 +30,10 @@ import android.os.Parcel;
  */
 
 public class Tag {
-@SerializedName("id")
+
+  @SerializedName("id")
   private Long id = null;
+  
   @SerializedName("name")
   private String name = null;
   

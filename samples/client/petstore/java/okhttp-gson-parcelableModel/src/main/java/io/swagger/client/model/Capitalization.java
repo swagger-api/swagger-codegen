@@ -30,16 +30,22 @@ import android.os.Parcel;
  */
 
 public class Capitalization {
-@SerializedName("smallCamel")
+
+  @SerializedName("smallCamel")
   private String smallCamel = null;
+  
   @SerializedName("CapitalCamel")
   private String capitalCamel = null;
+  
   @SerializedName("small_Snake")
   private String smallSnake = null;
+  
   @SerializedName("Capital_Snake")
   private String capitalSnake = null;
+  
   @SerializedName("SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
+  
   @SerializedName("ATT_NAME")
   private String ATT_NAME = null;
   
