@@ -31,10 +31,12 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "Name")
 public class Model200Response {
 
+  
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
   @XmlElement(name="name")
   private Integer name = null;
+  
   
   @JsonProperty("class")
   @JacksonXmlProperty(localName = "class")

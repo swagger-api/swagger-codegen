@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "EnumTest")
 public class EnumTest {
 
-    /**
+  /**
    * Gets or Sets enumString
    */
   public enum EnumStringEnum {
@@ -77,7 +77,7 @@ public class EnumTest {
   @XmlElement(name="enum_string")
   private EnumStringEnum enumString = null;
   
-    /**
+  /**
    * Gets or Sets enumInteger
    */
   public enum EnumIntegerEnum {
@@ -121,7 +121,7 @@ public class EnumTest {
   @XmlElement(name="enum_integer")
   private EnumIntegerEnum enumInteger = null;
   
-    /**
+  /**
    * Gets or Sets enumNumber
    */
   public enum EnumNumberEnum {
@@ -164,6 +164,7 @@ public class EnumTest {
   @JacksonXmlProperty(localName = "enum_number")
   @XmlElement(name="enum_number")
   private EnumNumberEnum enumNumber = null;
+  
   
   @JsonProperty("outerEnum")
   @JacksonXmlProperty(localName = "outerEnum")

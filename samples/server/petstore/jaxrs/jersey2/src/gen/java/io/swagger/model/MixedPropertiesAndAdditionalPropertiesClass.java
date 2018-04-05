@@ -42,7 +42,7 @@ import javax.validation.constraints.*;
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   
     
-    
+      
   
   @JsonProperty("uuid")
   
@@ -54,7 +54,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
 
   
     
-    
+      
   
   @JsonProperty("dateTime")
   
@@ -66,7 +66,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
 
   
     
-    
+      
   
   @JsonProperty("map")
   

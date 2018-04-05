@@ -38,7 +38,7 @@ import javax.validation.constraints.*;
 public class Animal   {
   
     
-    
+      
   
   @JsonProperty("className")
   
@@ -50,7 +50,7 @@ public class Animal   {
 
   
     
-    
+      
   
   @JsonProperty("color")
   

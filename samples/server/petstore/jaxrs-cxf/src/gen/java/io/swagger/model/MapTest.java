@@ -34,7 +34,6 @@ public class MapTest  {
 
 
   
-
 @XmlType(name="InnerEnum")
 @XmlEnum(String.class)
 public enum InnerEnum {

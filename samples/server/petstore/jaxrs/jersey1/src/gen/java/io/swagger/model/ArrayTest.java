@@ -39,7 +39,7 @@ import javax.validation.constraints.*;
 public class ArrayTest   {
   
     
-    
+      
   
   @JsonProperty("array_of_string")
   
@@ -51,7 +51,7 @@ public class ArrayTest   {
 
   
     
-    
+      
   
   @JsonProperty("array_array_of_integer")
   
@@ -63,7 +63,7 @@ public class ArrayTest   {
 
   
     
-    
+      
   
   @JsonProperty("array_array_of_model")
   

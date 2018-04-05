@@ -79,9 +79,7 @@ public class EnumArrays   {
     }
   }
 
-    
-    
-    
+      
   
   @JsonProperty("just_symbol")
   
@@ -94,10 +92,6 @@ public class EnumArrays   {
   
     
     
-    
-    
-      
-      
   /**
    * Gets or Sets arrayEnum
    */
@@ -138,8 +132,6 @@ public class EnumArrays   {
   }
 
       
-      
-    
   
   @JsonProperty("array_enum")
   

@@ -28,6 +28,7 @@ import javax.validation.Valid;
 
 public class ClassModel {
 
+  
   @JsonProperty("_class")
   private String propertyClass = null;
   

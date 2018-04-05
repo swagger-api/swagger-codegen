@@ -32,7 +32,7 @@ import android.os.Parcel;
 
 public class EnumTest {
 
-    /**
+  /**
    * Gets or Sets enumString
    */
   @JsonAdapter(EnumStringEnum.Adapter.class)
@@ -83,7 +83,7 @@ public class EnumTest {
   @SerializedName("enum_string")
   private EnumStringEnum enumString = null;
   
-    /**
+  /**
    * Gets or Sets enumInteger
    */
   @JsonAdapter(EnumIntegerEnum.Adapter.class)
@@ -133,7 +133,7 @@ public class EnumTest {
   @SerializedName("enum_integer")
   private EnumIntegerEnum enumInteger = null;
   
-    /**
+  /**
    * Gets or Sets enumNumber
    */
   @JsonAdapter(EnumNumberEnum.Adapter.class)
@@ -182,6 +182,7 @@ public class EnumTest {
   
   @SerializedName("enum_number")
   private EnumNumberEnum enumNumber = null;
+  
   @SerializedName("outerEnum")
   private OuterEnum outerEnum = null;
   

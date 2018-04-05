@@ -27,7 +27,6 @@ public class Order   {
   private Long petId = null;
   private Integer quantity = null;
   private DateTime shipDate = null;
-
   /**
    * Order Status
    */

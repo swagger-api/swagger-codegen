@@ -39,7 +39,7 @@ import javax.validation.constraints.*;
 public class ArrayOfNumberOnly   {
   
     
-    
+      
   
   @JsonProperty("ArrayNumber")
   

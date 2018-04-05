@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ClassModel {
 
+  
   @JsonProperty("_class")
   private String propertyClass = null;
   

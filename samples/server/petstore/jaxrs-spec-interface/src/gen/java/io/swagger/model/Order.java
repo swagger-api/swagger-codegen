@@ -22,7 +22,6 @@ public class Order   {
   private @Valid Long petId = null;
   private @Valid Integer quantity = null;
   private @Valid Date shipDate = null;
-
 public enum StatusEnum {
 
     

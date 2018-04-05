@@ -28,14 +28,18 @@ import javax.validation.Valid;
 
 public class Name {
 
+  
   @JsonProperty("name")
   private Integer name = null;
+  
   
   @JsonProperty("snake_case")
   private Integer snakeCase = null;
   
+  
   @JsonProperty("property")
   private String property = null;
+  
   
   @JsonProperty("123Number")
   private Integer _123Number = null;

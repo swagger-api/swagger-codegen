@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EnumTest  implements Serializable {
   
-
 public enum EnumStringEnum {
 
     
@@ -56,7 +55,6 @@ public enum EnumStringEnum {
 }
 
   private @Valid EnumStringEnum enumString = null;
-
 public enum EnumIntegerEnum {
 
     
@@ -92,7 +90,6 @@ public enum EnumIntegerEnum {
 }
 
   private @Valid EnumIntegerEnum enumInteger = null;
-
 public enum EnumNumberEnum {
 
     

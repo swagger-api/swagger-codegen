@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "MapTest")
 public class MapTest {
 
+  
   @JsonProperty("map_map_of_string")
   
   
@@ -41,8 +42,7 @@ public class MapTest {
   
   private Map<String, Map<String, String>> mapMapOfString = null;
   
-  
-    /**
+  /**
    * Gets or Sets inner
    */
   public enum InnerEnum {
@@ -79,6 +79,7 @@ public class MapTest {
     }
     
   }
+  
   
   @JsonProperty("map_of_enum_string")
   
