@@ -208,12 +208,11 @@ public class InlineModelResolver {
         if (title == null && operationID ==null) {
             return uniqueName(key);
         } else if (title != null){
-			return uniqueName(title);
+            return uniqueName(title);
         }
-		else
-		{
-			return uniqueName(operationID);
-		}
+        else{
+            return uniqueName(operationID);
+        }
     }
 
     public String matchGenerated(Model model) {
