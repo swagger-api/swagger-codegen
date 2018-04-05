@@ -208,7 +208,7 @@ public class InlineModelResolver {
         if (title == null && operationID ==null) {
             return uniqueName(key);
         } else if (title != null){
-            return uniqueName(title);
+			return uniqueName(title);
         }
 		else
 		{
