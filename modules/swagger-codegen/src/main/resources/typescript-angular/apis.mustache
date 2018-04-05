@@ -4,6 +4,10 @@
 export * from './{{ classFilename }}';
 import { {{ classname }} } from './{{ classFilename }}';
 {{/operations}}
+{{#withInterfaces}}
+export * from './{{ classFilename }}Interface'
+import { {{ classname }}Interface } from './{{ classFilename }}Interface';
+{{/withInterfaces}}
 {{/apis}}
 export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}
