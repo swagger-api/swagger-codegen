@@ -88,6 +88,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}

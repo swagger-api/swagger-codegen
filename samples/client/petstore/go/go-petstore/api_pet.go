@@ -78,6 +78,7 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -153,6 +154,7 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -220,6 +222,7 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -310,6 +313,7 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -412,6 +416,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -503,6 +508,7 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -585,6 +591,7 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -671,6 +678,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}

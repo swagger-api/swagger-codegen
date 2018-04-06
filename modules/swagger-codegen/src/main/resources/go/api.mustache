@@ -209,6 +209,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 	}

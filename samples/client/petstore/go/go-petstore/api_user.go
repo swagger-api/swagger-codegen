@@ -77,6 +77,7 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Respo
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -145,6 +146,7 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -213,6 +215,7 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -280,6 +283,7 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -347,6 +351,7 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -439,6 +444,7 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -527,6 +533,7 @@ func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error)
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
@@ -597,6 +604,7 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}

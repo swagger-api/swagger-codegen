@@ -76,6 +76,7 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}

@@ -77,6 +77,7 @@ func (a *DefaultApiService) TestBodyWithQueryParams(ctx context.Context, body Us
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarHttpResponse, err
 	}
