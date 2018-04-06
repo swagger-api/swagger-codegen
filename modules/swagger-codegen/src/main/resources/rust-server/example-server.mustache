@@ -33,11 +33,11 @@ use swagger::{Context, XSpanIdString};
 
 mod server_lib;
 
-type Context1 = Context<(), XSpanIdString>;
-type Context2 = Context<Context1, Option<AuthData>>;
-type Context3 = Context<Context2, Option<Authorization>>;
+type Context1 = Context<XSpanIdString, ()>;
+type Context2 = Context<Option<AuthData>, Context1>;
+type Context3 = Context<Option<Authorization>, Context2>;
 
-type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context1, Context2>;
+type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context2>;
 type NewService2 = AllowAllAuthenticator<NewService3, Context2, Context3>;
 type NewService3 = server_lib::NewService<Context3>;
 
