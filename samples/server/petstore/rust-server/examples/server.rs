@@ -35,7 +35,7 @@ mod server_lib;
 
 type Context1 = Context<XSpanIdString, ()>;
 type Context2 = Context<Option<AuthData>, Context1>;
-type Context3 = Context<Option<Authorization>, Context2>;
+type Context3 = Context<Option<Authorization>, Context1>;
 
 type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context2>;
 type NewService2 = AllowAllAuthenticator<NewService3, Context2, Context3>;
