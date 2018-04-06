@@ -58,7 +58,11 @@ func TestGetPetById(t *testing.T) {
 func TestGetPetByIdWithInvalidID(t *testing.T) {
 	resp, r, err := client.PetApi.GetPetById(context.Background(), 999999999)
 	if r != nil && r.StatusCode == 404 {
-		return // This is a pass condition. API will return with a 404 error.
+		assertedError, ok := err.(sw.GenericSwaggerError)
+		a := assert.New(t)
+		a.True(ok)
+		a.Contains(string(assertedError.Body()), "type")
+		a.Contains(assertedError.Error(), "Not Found")
 	} else if err != nil {
 		t.Errorf("Error while getting pet by invalid id")
 		t.Log(err)

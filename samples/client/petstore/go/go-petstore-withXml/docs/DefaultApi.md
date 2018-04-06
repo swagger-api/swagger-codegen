@@ -1,37 +1,36 @@
-# \FakeClassnameTags123Api
+# \DefaultApi
 
 All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TestClassname**](FakeClassnameTags123Api.md#TestClassname) | **Patch** /fake_classname_test | To test class name in snake case
+[**TestBodyWithQueryParams**](DefaultApi.md#TestBodyWithQueryParams) | **Put** /fake/body-with-query-params | 
 
 
-# **TestClassname**
-> Client TestClassname(ctx, body)
-To test class name in snake case
+# **TestBodyWithQueryParams**
+> TestBodyWithQueryParams(ctx, body, query)
 
-To test class name in snake case
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **body** | [**Client**](Client.md)| client model | 
+  **body** | [**User**](User.md)|  | 
+  **query** | **string**|  | 
 
 ### Return type
 
-[**Client**](Client.md)
+ (empty response body)
 
 ### Authorization
 
-[api_key_query](../README.md#api_key_query)
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

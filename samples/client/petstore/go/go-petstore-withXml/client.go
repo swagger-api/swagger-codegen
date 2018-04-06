@@ -48,6 +48,8 @@ type APIClient struct {
 
 	AnotherFakeApi *AnotherFakeApiService
 
+	DefaultApi *DefaultApiService
+
 	FakeApi *FakeApiService
 
 	FakeClassnameTags123Api *FakeClassnameTags123ApiService
@@ -76,6 +78,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AnotherFakeApi = (*AnotherFakeApiService)(&c.common)
+	c.DefaultApi = (*DefaultApiService)(&c.common)
 	c.FakeApi = (*FakeApiService)(&c.common)
 	c.FakeClassnameTags123Api = (*FakeClassnameTags123ApiService)(&c.common)
 	c.PetApi = (*PetApiService)(&c.common)
@@ -315,6 +318,21 @@ func (c *APIClient) prepareRequest(
 	return localVarRequest, nil
 }
 
+func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err error) {
+		if strings.Contains(contentType, "application/xml") {
+			if err = xml.Unmarshal(b, v); err != nil {
+				return err
+			}
+			return nil
+		} else if strings.Contains(contentType, "application/json") {
+			if err = json.Unmarshal(b, v); err != nil {
+				return err
+			}
+			return nil
+		}
+	return errors.New("undefined response type")
+}
+
 // Add a file to the multipart request
 func addFile(w *multipart.Writer, fieldName, path string) error {
 	file, err := os.Open(path)
@@ -438,4 +456,21 @@ func CacheExpires(r *http.Response) time.Time {
 
 func strlen(s string) int {
 	return utf8.RuneCountInString(s)
+}
+
+// localDecodeData will hide body and error details on models.
+type GenericSwaggerError struct {
+	body  []byte
+	error string
+	model interface{}
+}
+
+// Error returns non-empty string if there was an error.
+func (e GenericSwaggerError) Error() string {
+	return e.error
+}
+
+// Body returns the raw bytes of the response
+func (e GenericSwaggerError) Body() []byte {
+	return e.body
 }
