@@ -4,6 +4,7 @@ extern crate {{externCrateName}};
 #[allow(unused_extern_crates)]
 extern crate futures;
 #[allow(unused_extern_crates)]
+#[macro_use]
 extern crate swagger;
 #[allow(unused_extern_crates)]
 extern crate uuid;
@@ -63,8 +64,8 @@ fn main() {
     };
 
     // Using a non-default `Context` is not required; this is just an example!
-    let context: Context<XSpanIdString, ()> = Context::construct(XSpanIdString(self::uuid::Uuid::new_v4().to_string()), ());
-    let context: Context<Option<AuthData>, Context<XSpanIdString, ()>> = Context::construct(None, context);
+    let context: make_context_ty!(Context, Option<AuthData>, XSpanIdString) =
+        make_context!(Context, None, XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
     let client = client.with_context(context);
 
     match matches.value_of("operation") {

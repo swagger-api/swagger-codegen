@@ -5,6 +5,7 @@
 // Imports required by this file.
 // extern crate <name of this crate>;
 extern crate petstore_api;
+#[macro_use]
 extern crate swagger;
 extern crate hyper;
 extern crate openssl;
@@ -33,13 +34,12 @@ use swagger::{Context, XSpanIdString};
 
 mod server_lib;
 
-type Context1 = Context<XSpanIdString, ()>;
-type Context2 = Context<Option<AuthData>, Context1>;
-type Context3 = Context<Option<Authorization>, Context1>;
+type Context1 = make_context_ty!(Context, Option<AuthData>, XSpanIdString);
+type Context2 = make_context_ty!(Context, Option<Authorization>, XSpanIdString);
 
-type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context2>;
-type NewService2 = AllowAllAuthenticator<NewService3, Context2, Context3>;
-type NewService3 = server_lib::NewService<Context3>;
+type NewService1 = petstore_api::server::auth::NewService<NewService2, (), Context1>;
+type NewService2 = AllowAllAuthenticator<NewService3, Context1, Context2>;
+type NewService3 = server_lib::NewService<Context2>;
 
 // Builds an SSL implementation for Simple HTTPS from some hard-coded file names
 fn ssl() -> Result<SslAcceptorBuilder, ErrorStack> {
