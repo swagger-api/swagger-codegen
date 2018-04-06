@@ -10,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
