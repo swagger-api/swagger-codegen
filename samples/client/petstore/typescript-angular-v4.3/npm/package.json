@@ -8,8 +8,7 @@
   ],
   "license": "Unlicense",
   "scripts": {
-    "build": "ng-packagr -p ng-package.json",
-    "postinstall": "npm run build"
+    "build": "ng-packagr -p ng-package.json"
   },
   "peerDependencies": {
     "@angular/core": "^4.3.0",

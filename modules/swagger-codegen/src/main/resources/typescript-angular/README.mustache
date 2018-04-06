@@ -5,15 +5,21 @@
 To install the required dependencies and to build the typescript sources run:
 ```
 npm install
+npm run build
 ```
 
 ### publishing
 
+{{#useNgPackagr}}
 First build the package than run ```npm publish dist``` (don't forget to specify the `dist` folder!)
+{{/useNgPackagr}}
+{{^useNgPackagr}}
+First build the package than run ```npm publish```
+{{/useNgPackagr}}
 
 ### consuming
 
-navigate to the folder of your consuming project and run one of next commands.
+Navigate to the folder of your consuming project and run one of next commands.
 
 _published:_
 
@@ -24,12 +30,22 @@ npm install {{npmName}}@{{npmVersion}} --save
 _without publishing (not recommended):_
 
 ```
+{{#useNgPackagr}}
 npm install PATH_TO_GENERATED_PACKAGE/dist --save
+{{/useNgPackagr}}
+{{^useNgPackagr}}
+npm install PATH_TO_GENERATED_PACKAGE --save
+{{/useNgPackagr}}
 ```
 
 _using `npm link`:_
 
+{{#useNgPackagr}}
 In PATH_TO_GENERATED_PACKAGE/dist:
+{{/useNgPackagr}}
+{{^useNgPackagr}}
+In PATH_TO_GENERATED_PACKAGE:
+{{/useNgPackagr}}
 ```
 npm link
 ```

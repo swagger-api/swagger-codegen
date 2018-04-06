@@ -5,6 +5,7 @@
 To install the required dependencies and to build the typescript sources run:
 ```
 npm install
+npm run build
 ```
 
 ### publishing
@@ -13,7 +14,7 @@ First build the package than run ```npm publish dist``` (don't forget to specify
 
 ### consuming
 
-navigate to the folder of your consuming project and run one of next commands.
+Navigate to the folder of your consuming project and run one of next commands.
 
 _published:_
 
