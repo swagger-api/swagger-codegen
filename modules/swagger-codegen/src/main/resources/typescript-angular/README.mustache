@@ -9,7 +9,7 @@ npm install
 
 ### publishing
 
-First build the package than run ```npm publish dist``` (don`t forget to specify the `dist` folder!)
+First build the package than run ```npm publish dist``` (don't forget to specify the `dist` folder!)
 
 ### consuming
 
