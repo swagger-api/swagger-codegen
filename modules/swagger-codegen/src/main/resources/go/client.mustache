@@ -443,7 +443,7 @@ func strlen(s string) int {
 	return utf8.RuneCountInString(s)
 }
 
-// localDecodeData will hide body and error details on models.
+// GenericSwaggerError Provides access to the body, error and model on returned errors.
 type GenericSwaggerError struct {
 	body  []byte
 	error string
@@ -458,4 +458,9 @@ func (e GenericSwaggerError) Error() string {
 // Body returns the raw bytes of the response
 func (e GenericSwaggerError) Body() []byte {
 	return e.body
+}
+
+// Model returns the unpacked model of the error
+func (e GenericSwaggerError) Model() interface{} {
+	return e.model
 }
