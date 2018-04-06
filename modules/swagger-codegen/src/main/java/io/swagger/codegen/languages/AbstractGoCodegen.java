@@ -306,7 +306,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 iterator.remove();
         }
 
-        // if their is a return type, import encoding/json and if needed encoding/xml
+/*        // if their is a return type, import encoding/json and if needed encoding/xml
         for (CodegenOperation operation : operations) {
             if(operation.returnBaseType != null ) {
                 imports.add(createMapping("import", "encoding/json"));
@@ -314,7 +314,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                     imports.add(createMapping("import", "encoding/xml"));
                 break; //just need to import once
             }
-        }
+        }*/
 
         // this will only import "fmt" if there are items in pathParams
         for (CodegenOperation operation : operations) {

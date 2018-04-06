@@ -33,9 +33,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-{{#returnType}}
-		successPayload     {{returnType}}
-{{/returnType}}
+		{{#returnType}}localVarReturnValue {{{returnType}}}{{/returnType}}
 	)
 
 	// create path and map variables
@@ -49,29 +47,29 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	{{^required}}
 	{{#isPrimitiveType}}
 	if err := typeCheckParameter(localVarOptionals["{{paramName}}"], "{{{dataType}}}", "{{paramName}}"); err != nil {
-		return {{#returnType}}successPayload, {{/returnType}}nil, err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, err
 	}
 	{{/isPrimitiveType}}
 	{{/required}}
 	{{#required}}
 	{{#minItems}}
 	if len({{paramName}}) < {{minItems}} {
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minItems}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minItems}} elements")
 	}
 	{{/minItems}}
 	{{#maxItems}}
 	if len({{paramName}}) > {{maxItems}} {
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
 	}
 	{{/maxItems}}
 	{{#minLength}}
 	if strlen({{paramName}}) < {{minLength}} {
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minLength}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minLength}} elements")
 	}
 	{{/minLength}}
 	{{#maxLength}}
 	if strlen({{paramName}}) > {{maxLength}} {
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
 	}
 	{{/maxLength}}
 	{{#minimum}}
@@ -82,7 +80,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	{{^isString}}
 	if {{paramName}} < {{minimum}} {
 	{{/isString}}
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must be greater than {{minimum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must be greater than {{minimum}}")
 	}
 	{{/minimum}}
 	{{#maximum}}
@@ -93,7 +91,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	{{^isString}}
 	if {{paramName}} > {{maximum}} {
 	{{/isString}}
-		return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must be less than {{maximum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must be less than {{maximum}}")
 	}
 	{{/maximum}}
 	{{/required}}
@@ -202,35 +200,54 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 {{/authMethods}}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return {{#returnType}}successPayload, {{/returnType}}nil, err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	if err != nil {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 	}
-{{#returnType}}
-	{{#withXml}}
-	contentType := localVarHttpResponse.Header.Get("content-type")
-	if strings.Contains(contentType, "application/xml") {
-		if err = xml.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-			return successPayload, localVarHttpResponse, err
+
+	{{#returnType}}
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 		}
-
-		return successPayload, localVarHttpResponse, err
 	}
-	{{/withXml}}
+	{{/returnType}}
 
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		{{#responses}}{{#dataType}}
+		if localVarHttpResponse.StatusCode == {{{code}}} {
+			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+			if err != nil {
+				return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
+			}
+
+			var v {{{dataType}}}
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+		}
+		{{/dataType}}{{/responses}}
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
 	}
 
-{{/returnType}}
-	return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
+	return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, nil
 }
 {{/operation}}{{/operations}}
