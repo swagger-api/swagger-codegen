@@ -25,11 +25,14 @@ var (
 
 type DefaultApiService service
 
-/* DefaultApiService
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body
-@param query
-@return */
+/* 
+DefaultApiService
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
+ * @param query
+
+
+*/
 func (a *DefaultApiService) TestBodyWithQueryParams(ctx context.Context, body User, query string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")

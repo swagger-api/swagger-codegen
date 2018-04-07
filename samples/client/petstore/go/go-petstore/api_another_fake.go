@@ -25,11 +25,14 @@ var (
 
 type AnotherFakeApiService service
 
-/* AnotherFakeApiService To test special tags
+/* 
+AnotherFakeApiService To test special tags
 To test special tags
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body client model
-@return Client*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body client model
+
+@return Client
+*/
 func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client) (Client, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")

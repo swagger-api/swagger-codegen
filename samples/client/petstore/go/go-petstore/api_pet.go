@@ -28,11 +28,14 @@ var (
 
 type PetApiService service
 
-/* PetApiService Add a new pet to the store
+/* 
+PetApiService Add a new pet to the store
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body Pet object that needs to be added to the store
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body Pet object that needs to be added to the store
+
+
+*/
 func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
@@ -97,19 +100,19 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 	return localVarHttpResponse, nil
 }
 
-/* PetApiService Deletes a pet
+/* 
+PetApiService Deletes a pet
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param petId Pet id to delete
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "apiKey" (string)
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param petId Pet id to delete
+ * @param optional nil or *DeletePetOpts - Optional Parameters:
+     * @param "ApiKey" (optional.String) - 
 
-type DeletePetOpts struct {
 
+*/
+
+type DeletePetOpts struct { 
 	ApiKey optional.String
-
-
 }
 
 func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals *DeletePetOpts) (*http.Response, error) {
@@ -178,11 +181,14 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	return localVarHttpResponse, nil
 }
 
-/* PetApiService Finds Pets by status
+/* 
+PetApiService Finds Pets by status
 Multiple status values can be provided with comma separated strings
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param status Status values that need to be considered for filter
-@return []Pet*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param status Status values that need to be considered for filter
+
+@return []Pet
+*/
 func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) ([]Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
@@ -269,11 +275,14 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* PetApiService Finds Pets by tags
+/* 
+PetApiService Finds Pets by tags
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param tags Tags to filter by
-@return []Pet*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param tags Tags to filter by
+
+@return []Pet
+*/
 func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
@@ -360,11 +369,14 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* PetApiService Find pet by ID
+/* 
+PetApiService Find pet by ID
 Returns a single pet
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param petId ID of pet to return
-@return Pet*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param petId ID of pet to return
+
+@return Pet
+*/
 func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
@@ -464,11 +476,14 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* PetApiService Update an existing pet
+/* 
+PetApiService Update an existing pet
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body Pet object that needs to be added to the store
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body Pet object that needs to be added to the store
+
+
+*/
 func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
@@ -533,23 +548,21 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
 	return localVarHttpResponse, nil
 }
 
-/* PetApiService Updates a pet in the store with form data
+/* 
+PetApiService Updates a pet in the store with form data
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param petId ID of pet that needs to be updated
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "name" (string) Updated name of the pet
-    @param "status" (string) Updated status of the pet
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param petId ID of pet that needs to be updated
+ * @param optional nil or *UpdatePetWithFormOpts - Optional Parameters:
+     * @param "Name" (optional.String) -  Updated name of the pet
+     * @param "Status" (optional.String) -  Updated status of the pet
 
-type UpdatePetWithFormOpts struct {
 
+*/
+
+type UpdatePetWithFormOpts struct { 
 	Name optional.String
-
-
 	Status optional.String
-
-
 }
 
 func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals *UpdatePetWithFormOpts) (*http.Response, error) {
@@ -621,23 +634,21 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	return localVarHttpResponse, nil
 }
 
-/* PetApiService uploads an image
+/* 
+PetApiService uploads an image
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param petId ID of pet to update
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "additionalMetadata" (string) Additional data to pass to server
-    @param "file" (*os.File) file to upload
-@return ModelApiResponse*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param petId ID of pet to update
+ * @param optional nil or *UploadFileOpts - Optional Parameters:
+     * @param "AdditionalMetadata" (optional.String) -  Additional data to pass to server
+     * @param "File" (optional.Interface of *os.File) -  file to upload
 
-type UploadFileOpts struct {
+@return ModelApiResponse
+*/
 
+type UploadFileOpts struct { 
 	AdditionalMetadata optional.String
-
-
-
 	File optional.Interface
-
 }
 
 func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals *UploadFileOpts) (ModelApiResponse, *http.Response, error) {

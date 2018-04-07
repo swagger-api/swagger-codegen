@@ -20,20 +20,20 @@ var (
 type {{classname}}Service service
 {{#operation}}
 
-/* {{{classname}}}Service{{#summary}} {{.}}{{/summary}}{{#notes}}
+/* 
+{{{classname}}}Service{{#summary}} {{.}}{{/summary}}{{#notes}}
 {{notes}}{{/notes}}
- * @param ctx context.Context for authentication, logging, tracing, etc.
-{{#allParams}}{{#required}}@param {{paramName}}{{#description}} {{.}}{{/description}}
-{{/required}}{{/allParams}}{{#hasOptionalParams}}@param optional (nil or map[string]interface{}) with one or more of:
-{{#allParams}}{{^required}}    @param "{{paramName}}" ({{dataType}}){{#description}} {{.}}{{/description}}
-{{/required}}{{/allParams}}{{/hasOptionalParams}}@return {{#returnType}}{{{returnType}}}{{/returnType}}*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+{{#allParams}}{{#required}} * @param {{paramName}}{{#description}} {{.}}{{/description}}
+{{/required}}{{/allParams}}{{#hasOptionalParams}} * @param optional nil or *{{{nickname}}}Opts - Optional Parameters:
+{{#allParams}}{{^required}}     * @param "{{vendorExtensions.x-exportParamName}}" ({{#isPrimitiveType}}optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}optional.Interface of {{dataType}}{{/isPrimitiveType}}) - {{#description}} {{.}}{{/description}}
+{{/required}}{{/allParams}}{{/hasOptionalParams}}
+{{#returnType}}@return {{{returnType}}}{{/returnType}}
+*/
 {{#hasOptionalParams}}
 
-type {{{nickname}}}Opts struct {
-{{#allParams}}{{^required}}
-{{#isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}
-{{^isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.Interface{{/isPrimitiveType}}
-{{/required}}{{/allParams}}
+type {{{nickname}}}Opts struct { {{#allParams}}{{^required}}
+{{#isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.Interface{{/isPrimitiveType}}{{/required}}{{/allParams}}
 }
 
 {{/hasOptionalParams}}
