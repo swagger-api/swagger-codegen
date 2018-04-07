@@ -15,7 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
+	"context"
 )
 
 // Linger please
@@ -74,6 +74,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 			} else {
 				key = auth.Key
 			}
+			
 			localVarQueryParams.Add("api_key_query", key)
 		}
 	}

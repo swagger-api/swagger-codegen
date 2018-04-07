@@ -15,8 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
-	"time"
+	"context"
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -32,7 +32,15 @@ Test serialization of outer boolean types
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterBoolean) Input boolean as post body
 @return OuterBoolean*/
-func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterBoolean, *http.Response, error) {
+
+type FakeOuterBooleanSerializeOpts struct {
+
+
+	Body optional.Interface
+
+}
+
+func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVarOptionals *FakeOuterBooleanSerializeOpts) (OuterBoolean, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -66,8 +74,13 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["body"].(OuterBoolean); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(OuterBoolean)
+		if !localVarOptionalBodyok {
+				return localVarReturnValue, nil, reportError("body should be OuterBoolean")
+		}
+		localVarPostBody = &localVarOptionalBody
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -127,7 +140,15 @@ Test serialization of object with outer number type
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterComposite) Input composite as post body
 @return OuterComposite*/
-func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterComposite, *http.Response, error) {
+
+type FakeOuterCompositeSerializeOpts struct {
+
+
+	Body optional.Interface
+
+}
+
+func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localVarOptionals *FakeOuterCompositeSerializeOpts) (OuterComposite, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -161,8 +182,13 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["body"].(OuterComposite); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(OuterComposite)
+		if !localVarOptionalBodyok {
+				return localVarReturnValue, nil, reportError("body should be OuterComposite")
+		}
+		localVarPostBody = &localVarOptionalBody
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -222,7 +248,15 @@ Test serialization of outer number types
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterNumber) Input number as post body
 @return OuterNumber*/
-func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterNumber, *http.Response, error) {
+
+type FakeOuterNumberSerializeOpts struct {
+
+
+	Body optional.Interface
+
+}
+
+func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarOptionals *FakeOuterNumberSerializeOpts) (OuterNumber, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -256,8 +290,13 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["body"].(OuterNumber); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(OuterNumber)
+		if !localVarOptionalBodyok {
+				return localVarReturnValue, nil, reportError("body should be OuterNumber")
+		}
+		localVarPostBody = &localVarOptionalBody
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -317,7 +356,15 @@ Test serialization of outer string types
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "body" (OuterString) Input string as post body
 @return OuterString*/
-func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarOptionals map[string]interface{}) (OuterString, *http.Response, error) {
+
+type FakeOuterStringSerializeOpts struct {
+
+
+	Body optional.Interface
+
+}
+
+func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarOptionals *FakeOuterStringSerializeOpts) (OuterString, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -351,8 +398,13 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["body"].(OuterString); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(OuterString)
+		if !localVarOptionalBodyok {
+				return localVarReturnValue, nil, reportError("body should be OuterString")
+		}
+		localVarPostBody = &localVarOptionalBody
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -517,7 +569,42 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
     @param "password" (string) None
     @param "callback" (string) None
 @return */
-func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number float32, double float64, patternWithoutDelimiter string, byte_ string, localVarOptionals map[string]interface{}) (*http.Response, error) {
+
+type TestEndpointParametersOpts struct {
+
+	Integer optional.Int32
+
+
+	Int32_ optional.Int32
+
+
+	Int64_ optional.Int64
+
+
+	Float optional.Float32
+
+
+	String_ optional.String
+
+
+	Binary optional.String
+
+
+	Date optional.String
+
+
+	DateTime optional.Time
+
+
+	Password optional.String
+
+
+	Callback optional.String
+
+
+}
+
+func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number float32, double float64, patternWithoutDelimiter string, byte_ string, localVarOptionals *TestEndpointParametersOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -544,36 +631,6 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	if double > 123.4 {
 		return nil, reportError("double must be less than 123.4")
 	}
-	if err := typeCheckParameter(localVarOptionals["integer"], "int32", "integer"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["int32_"], "int32", "int32_"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["int64_"], "int64", "int64_"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["float"], "float32", "float"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["string_"], "string", "string_"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["binary"], "string", "binary"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["date"], "string", "date"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["dateTime"], "time.Time", "dateTime"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["password"], "string", "password"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["callback"], "string", "callback"); err != nil {
-		return nil, err
-	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/xml; charset=utf-8", "application/json; charset=utf-8"}
@@ -592,39 +649,39 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["integer"].(int32); localVarOk {
-		localVarFormParams.Add("integer", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Integer.IsSet() {
+		localVarFormParams.Add("integer", parameterToString(localVarOptionals.Integer.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["int32_"].(int32); localVarOk {
-		localVarFormParams.Add("int32", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Int32_.IsSet() {
+		localVarFormParams.Add("int32", parameterToString(localVarOptionals.Int32_.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["int64_"].(int64); localVarOk {
-		localVarFormParams.Add("int64", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Int64_.IsSet() {
+		localVarFormParams.Add("int64", parameterToString(localVarOptionals.Int64_.Value(), ""))
 	}
 	localVarFormParams.Add("number", parameterToString(number, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["float"].(float32); localVarOk {
-		localVarFormParams.Add("float", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Float.IsSet() {
+		localVarFormParams.Add("float", parameterToString(localVarOptionals.Float.Value(), ""))
 	}
 	localVarFormParams.Add("double", parameterToString(double, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["string_"].(string); localVarOk {
-		localVarFormParams.Add("string", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.String_.IsSet() {
+		localVarFormParams.Add("string", parameterToString(localVarOptionals.String_.Value(), ""))
 	}
 	localVarFormParams.Add("pattern_without_delimiter", parameterToString(patternWithoutDelimiter, ""))
 	localVarFormParams.Add("byte", parameterToString(byte_, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["binary"].(string); localVarOk {
-		localVarFormParams.Add("binary", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Binary.IsSet() {
+		localVarFormParams.Add("binary", parameterToString(localVarOptionals.Binary.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["date"].(string); localVarOk {
-		localVarFormParams.Add("date", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Date.IsSet() {
+		localVarFormParams.Add("date", parameterToString(localVarOptionals.Date.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["dateTime"].(time.Time); localVarOk {
-		localVarFormParams.Add("dateTime", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.DateTime.IsSet() {
+		localVarFormParams.Add("dateTime", parameterToString(localVarOptionals.DateTime.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["password"].(string); localVarOk {
-		localVarFormParams.Add("password", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Password.IsSet() {
+		localVarFormParams.Add("password", parameterToString(localVarOptionals.Password.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["callback"].(string); localVarOk {
-		localVarFormParams.Add("callback", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Callback.IsSet() {
+		localVarFormParams.Add("callback", parameterToString(localVarOptionals.Callback.Value(), ""))
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -668,7 +725,36 @@ To test enum parameters
     @param "enumQueryInteger" (int32) Query parameter enum test (double)
     @param "enumQueryDouble" (float64) Query parameter enum test (double)
 @return */
-func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptionals map[string]interface{}) (*http.Response, error) {
+
+type TestEnumParametersOpts struct {
+
+
+	EnumFormStringArray optional.Interface
+
+	EnumFormString optional.String
+
+
+
+	EnumHeaderStringArray optional.Interface
+
+	EnumHeaderString optional.String
+
+
+
+	EnumQueryStringArray optional.Interface
+
+	EnumQueryString optional.String
+
+
+	EnumQueryInteger optional.Int32
+
+
+	EnumQueryDouble optional.Float64
+
+
+}
+
+func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptionals *TestEnumParametersOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
@@ -683,30 +769,15 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if err := typeCheckParameter(localVarOptionals["enumFormString"], "string", "enumFormString"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["enumHeaderString"], "string", "enumHeaderString"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["enumQueryString"], "string", "enumQueryString"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["enumQueryInteger"], "int32", "enumQueryInteger"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["enumQueryDouble"], "float64", "enumQueryDouble"); err != nil {
-		return nil, err
-	}
 
-	if localVarTempParam, localVarOk := localVarOptionals["enumQueryStringArray"].([]string); localVarOk {
-		localVarQueryParams.Add("enum_query_string_array", parameterToString(localVarTempParam, "csv"))
+	if localVarOptionals != nil && localVarOptionals.EnumQueryStringArray.IsSet() {
+		localVarQueryParams.Add("enum_query_string_array", parameterToString(localVarOptionals.EnumQueryStringArray.Value(), "csv"))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumQueryString"].(string); localVarOk {
-		localVarQueryParams.Add("enum_query_string", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.EnumQueryString.IsSet() {
+		localVarQueryParams.Add("enum_query_string", parameterToString(localVarOptionals.EnumQueryString.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumQueryInteger"].(int32); localVarOk {
-		localVarQueryParams.Add("enum_query_integer", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.EnumQueryInteger.IsSet() {
+		localVarQueryParams.Add("enum_query_integer", parameterToString(localVarOptionals.EnumQueryInteger.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"*/*"}
@@ -725,20 +796,20 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumHeaderStringArray"].([]string); localVarOk {
-		localVarHeaderParams["enum_header_string_array"] = parameterToString(localVarTempParam, "csv")
+	if localVarOptionals != nil && localVarOptionals.EnumHeaderStringArray.IsSet() {
+		localVarHeaderParams["enum_header_string_array"] = parameterToString(localVarOptionals.EnumHeaderStringArray.Value(), "csv")
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumHeaderString"].(string); localVarOk {
-		localVarHeaderParams["enum_header_string"] = parameterToString(localVarTempParam, "")
+	if localVarOptionals != nil && localVarOptionals.EnumHeaderString.IsSet() {
+		localVarHeaderParams["enum_header_string"] = parameterToString(localVarOptionals.EnumHeaderString.Value(), "")
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumFormStringArray"].([]string); localVarOk {
-		localVarFormParams.Add("enum_form_string_array", parameterToString(localVarTempParam, "csv"))
+	if localVarOptionals != nil && localVarOptionals.EnumFormStringArray.IsSet() {
+		localVarFormParams.Add("enum_form_string_array", parameterToString(localVarOptionals.EnumFormStringArray.Value(), "csv"))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumFormString"].(string); localVarOk {
-		localVarFormParams.Add("enum_form_string", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.EnumFormString.IsSet() {
+		localVarFormParams.Add("enum_form_string", parameterToString(localVarOptionals.EnumFormString.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["enumQueryDouble"].(float64); localVarOk {
-		localVarFormParams.Add("enum_query_double", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.EnumQueryDouble.IsSet() {
+		localVarFormParams.Add("enum_query_double", parameterToString(localVarOptionals.EnumQueryDouble.Value(), ""))
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {

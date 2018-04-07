@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
+	"context"
 {{#imports}}	"{{import}}"
 {{/imports}}
 )
@@ -27,7 +27,17 @@ type {{classname}}Service service
 {{/required}}{{/allParams}}{{#hasOptionalParams}}@param optional (nil or map[string]interface{}) with one or more of:
 {{#allParams}}{{^required}}    @param "{{paramName}}" ({{dataType}}){{#description}} {{.}}{{/description}}
 {{/required}}{{/allParams}}{{/hasOptionalParams}}@return {{#returnType}}{{{returnType}}}{{/returnType}}*/
-func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}}, {{/hasParams}}{{#allParams}}{{#required}}{{paramName}} {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}}{{#hasOptionalParams}}localVarOptionals map[string]interface{}{{/hasOptionalParams}}) ({{#returnType}}{{{returnType}}}, {{/returnType}}*http.Response, error) {
+{{#hasOptionalParams}}
+
+type {{{nickname}}}Opts struct {
+{{#allParams}}{{^required}}
+{{#isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}
+{{^isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.Interface{{/isPrimitiveType}}
+{{/required}}{{/allParams}}
+}
+
+{{/hasOptionalParams}}
+func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}}, {{/hasParams}}{{#allParams}}{{#required}}{{paramName}} {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}}{{#hasOptionalParams}}localVarOptionals *{{{nickname}}}Opts{{/hasOptionalParams}}) ({{#returnType}}{{{returnType}}}, {{/returnType}}*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("{{httpMethod}}")
 		localVarPostBody   interface{}
@@ -44,13 +54,6 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	{{#allParams}}
-	{{^required}}
-	{{#isPrimitiveType}}
-	if err := typeCheckParameter(localVarOptionals["{{paramName}}"], "{{{dataType}}}", "{{paramName}}"); err != nil {
-		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, err
-	}
-	{{/isPrimitiveType}}
-	{{/required}}
 	{{#required}}
 	{{#minItems}}
 	if len({{paramName}}) < {{minItems}} {
@@ -103,8 +106,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarQueryParams.Add("{{baseName}}", parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	{{/required}}
 	{{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarQueryParams.Add("{{baseName}}", parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarQueryParams.Add("{{baseName}}", parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	}
 	{{/required}}
 	{{/queryParams}}
@@ -136,8 +139,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarHeaderParams["{{baseName}}"] = parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
 	{{/required}}
 	{{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarHeaderParams["{{baseName}}"] = parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarHeaderParams["{{baseName}}"] = parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
 	}
 	{{/required}}
 {{/headerParams}}
@@ -146,9 +149,13 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 {{#formParams}}
 {{#isFile}}
 {{^required}}
-	var localVarFile ({{dataType}})
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarFile = localVarTempParam
+	var localVarFile {{dataType}}
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarFileOk := false
+		localVarFile, localVarFileOk = localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value().({{dataType}})
+		if !localVarFileOk {
+				return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} should be {{dataType}}")
+		}
 	}
 {{/required}}
 	if localVarFile != nil {
@@ -163,8 +170,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarFormParams.Add("{{baseName}}", parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 {{/required}}
 {{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarFormParams.Add("{{baseName}}", parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarFormParams.Add("{{baseName}}", parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	}
 {{/required}}
 {{/isFile}}
@@ -176,8 +183,13 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	localVarPostBody = &{{paramName}}
 {{/required}}
 {{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		{{#isPrimitiveType}}localVarPostBody = &localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(){{/isPrimitiveType}}
+		{{^isPrimitiveType}}localVarOptional{{vendorExtensions.x-exportParamName}}, localVarOptional{{vendorExtensions.x-exportParamName}}ok := localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value().({{{dataType}}})
+		if !localVarOptional{{vendorExtensions.x-exportParamName}}ok {
+				return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} should be {{dataType}}")
+		}
+		localVarPostBody = &localVarOptional{{vendorExtensions.x-exportParamName}}{{/isPrimitiveType}}
 	}
 {{/required}}
 {{/bodyParams}}
@@ -193,7 +205,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 			} else {
 				key = auth.Key
 			}
-			{{#isKeyInHeader}}localVarHeaderParams["{{keyParamName}}"] = key{{/isKeyInHeader}}{{#isKeyInQuery}}localVarQueryParams.Add("{{keyParamName}}", key){{/isKeyInQuery}}
+			{{#isKeyInHeader}}localVarHeaderParams["{{keyParamName}}"] = key{{/isKeyInHeader}}
+			{{#isKeyInQuery}}localVarQueryParams.Add("{{keyParamName}}", key){{/isKeyInQuery}}
 		}
 	}
 {{/isApiKey}}

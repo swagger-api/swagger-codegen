@@ -15,7 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
+	"context"
 	"fmt"
 )
 
@@ -141,6 +141,7 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 				key = auth.Key
 			}
 			localVarHeaderParams["api_key"] = key
+			
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)

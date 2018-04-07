@@ -15,9 +15,10 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
-	"os"
+	"context"
 	"fmt"
+	"github.com/antihax/optional"
+	"os"
 )
 
 // Linger please
@@ -103,7 +104,15 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 @param optional (nil or map[string]interface{}) with one or more of:
     @param "apiKey" (string)
 @return */
-func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (*http.Response, error) {
+
+type DeletePetOpts struct {
+
+	ApiKey optional.String
+
+
+}
+
+func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals *DeletePetOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -119,9 +128,6 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if err := typeCheckParameter(localVarOptionals["apiKey"], "string", "apiKey"); err != nil {
-		return nil, err
-	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -140,8 +146,8 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["apiKey"].(string); localVarOk {
-		localVarHeaderParams["api_key"] = parameterToString(localVarTempParam, "")
+	if localVarOptionals != nil && localVarOptionals.ApiKey.IsSet() {
+		localVarHeaderParams["api_key"] = parameterToString(localVarOptionals.ApiKey.Value(), "")
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -403,6 +409,7 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 				key = auth.Key
 			}
 			localVarHeaderParams["api_key"] = key
+			
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -534,7 +541,18 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
     @param "name" (string) Updated name of the pet
     @param "status" (string) Updated status of the pet
 @return */
-func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (*http.Response, error) {
+
+type UpdatePetWithFormOpts struct {
+
+	Name optional.String
+
+
+	Status optional.String
+
+
+}
+
+func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals *UpdatePetWithFormOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -550,12 +568,6 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if err := typeCheckParameter(localVarOptionals["name"], "string", "name"); err != nil {
-		return nil, err
-	}
-	if err := typeCheckParameter(localVarOptionals["status"], "string", "status"); err != nil {
-		return nil, err
-	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/x-www-form-urlencoded"}
@@ -574,11 +586,11 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["name"].(string); localVarOk {
-		localVarFormParams.Add("name", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
+		localVarFormParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["status"].(string); localVarOk {
-		localVarFormParams.Add("status", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.Status.IsSet() {
+		localVarFormParams.Add("status", parameterToString(localVarOptionals.Status.Value(), ""))
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -617,7 +629,18 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
     @param "additionalMetadata" (string) Additional data to pass to server
     @param "file" (*os.File) file to upload
 @return ModelApiResponse*/
-func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals map[string]interface{}) (ModelApiResponse, *http.Response, error) {
+
+type UploadFileOpts struct {
+
+	AdditionalMetadata optional.String
+
+
+
+	File optional.Interface
+
+}
+
+func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals *UploadFileOpts) (ModelApiResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -633,9 +656,6 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if err := typeCheckParameter(localVarOptionals["additionalMetadata"], "string", "additionalMetadata"); err != nil {
-		return localVarReturnValue, nil, err
-	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"multipart/form-data"}
@@ -654,12 +674,16 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["additionalMetadata"].(string); localVarOk {
-		localVarFormParams.Add("additionalMetadata", parameterToString(localVarTempParam, ""))
+	if localVarOptionals != nil && localVarOptionals.AdditionalMetadata.IsSet() {
+		localVarFormParams.Add("additionalMetadata", parameterToString(localVarOptionals.AdditionalMetadata.Value(), ""))
 	}
-	var localVarFile (*os.File)
-	if localVarTempParam, localVarOk := localVarOptionals["file"].(*os.File); localVarOk {
-		localVarFile = localVarTempParam
+	var localVarFile *os.File
+	if localVarOptionals != nil && localVarOptionals.File.IsSet() {
+		localVarFileOk := false
+		localVarFile, localVarFileOk = localVarOptionals.File.Value().(*os.File)
+		if !localVarFileOk {
+				return localVarReturnValue, nil, reportError("file should be *os.File")
+		}
 	}
 	if localVarFile != nil {
 		fbs, _ := ioutil.ReadAll(localVarFile)
