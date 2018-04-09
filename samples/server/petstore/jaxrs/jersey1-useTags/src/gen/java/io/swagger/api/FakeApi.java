@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.util.Map;
 import java.util.List;
@@ -38,7 +39,7 @@ public class FakeApi  {
    private final FakeApiService delegate = FakeApiServiceFactory.getFakeApi();
 
     @POST
-    
+    @Path("/outer/boolean")
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake",  })
@@ -51,7 +52,7 @@ public class FakeApi  {
         return delegate.fakeOuterBooleanSerialize(body,securityContext);
     }
     @POST
-    
+    @Path("/outer/composite")
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake",  })
@@ -64,7 +65,7 @@ public class FakeApi  {
         return delegate.fakeOuterCompositeSerialize(body,securityContext);
     }
     @POST
-    
+    @Path("/outer/number")
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake",  })
@@ -77,7 +78,7 @@ public class FakeApi  {
         return delegate.fakeOuterNumberSerialize(body,securityContext);
     }
     @POST
-    
+    @Path("/outer/string")
     
     
     @io.swagger.annotations.ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake",  })
@@ -88,6 +89,20 @@ public class FakeApi  {
         @Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.fakeOuterStringSerialize(body,securityContext);
+    }
+    @PUT
+    @Path("/body-with-query-params")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "", response = Void.class, tags={ "fake",  })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Success", response = Void.class) })
+    public Response testBodyWithQueryParams(
+        @ApiParam(value = "" ,required=true) User body,
+        @ApiParam(value = "",required=true) @QueryParam("query") String query,
+        @Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.testBodyWithQueryParams(body,query,securityContext);
     }
     @PATCH
     
@@ -153,7 +168,7 @@ public class FakeApi  {
         return delegate.testEnumParameters(enumFormStringArray,enumFormString,enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,enumQueryDouble,securityContext);
     }
     @POST
-    
+    @Path("/inline-additionalProperties")
     @Consumes({ "application/json" })
     
     @io.swagger.annotations.ApiOperation(value = "test inline additionalProperties", notes = "", response = Void.class, tags={ "fake",  })
@@ -166,7 +181,7 @@ public class FakeApi  {
         return delegate.testInlineAdditionalProperties(param,securityContext);
     }
     @GET
-    
+    @Path("/jsonFormData")
     @Consumes({ "application/json" })
     
     @io.swagger.annotations.ApiOperation(value = "test json serialization of form data", notes = "", response = Void.class, tags={ "fake" })
