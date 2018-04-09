@@ -795,6 +795,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             if (mm.getAdditionalProperties() != null) {
                 codegenModel.vendorExtensions.put("x-isMap", true);
                 codegenModel.vendorExtensions.put("x-itemType", getSwaggerType(mm.getAdditionalProperties()));
+            } else {
+                String type = mm.getType();
+                if (type != null && (type.equals("number") || type.equals("integer") || type.equals("string") || type.equals("boolean") || type.equals("null"))) {
+                    codegenModel.vendorExtensions.put("x-isPrimitive", true);
+                }
             }
         }
 
