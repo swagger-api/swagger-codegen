@@ -96,6 +96,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         supportingFiles.add(new SupportingFile("encoder.mustache", getIndexDirectory(), "encoder.ts"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
 
         // determine NG version
         SemVer ngVersion;
@@ -129,9 +130,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (!ngVersion.atLeast("4.3.0")) {
             supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         }
-
-        // the current text makes only sence when using it as an npm/angular package
-        supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
     }
 
     private void addNpmPackageGeneration(SemVer ngVersion) {
