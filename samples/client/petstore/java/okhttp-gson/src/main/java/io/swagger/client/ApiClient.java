@@ -52,7 +52,7 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String host = "petstore.swagger.io:80";
+    private String host = "http://petstore.swagger.io:80";
     private String basePath = "/v2";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -110,7 +110,7 @@ public class ApiClient {
     /**
      * Set host
      *
-     * @param host (e.g petstore.swagger.io:80)
+     * @param host (e.g "http://petstore.swagger.io:80";)
      * @return An instance of OkHttpClient
      */
     public ApiClient setHost(String host) {
@@ -130,7 +130,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g /v2)
+     * @param basePath Base path of the URL (e.g "/v2")
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
@@ -1041,7 +1041,7 @@ public class ApiClient {
      */
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
-        url.append("http://").append(host).append(basePath).append(path);
+        url.append(host).append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
