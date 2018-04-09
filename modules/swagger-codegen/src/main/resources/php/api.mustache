@@ -177,14 +177,14 @@ use {{invokerPackage}}\ObjectSerializer;
             {{/returnType}}
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
         {{#responses}}
             {{#dataType}}
                 {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
+                    $content = $e->getResponseBody();
+                    if ('{{dataType}}' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '{{dataType}}',

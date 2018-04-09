@@ -150,10 +150,6 @@ class StoreApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -392,12 +388,12 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('map[string,int]' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         'map[string,int]',
@@ -646,12 +642,12 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Order' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\Order',
@@ -919,12 +915,12 @@ class StoreApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Order' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\Order',

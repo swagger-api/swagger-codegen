@@ -150,10 +150,6 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -380,10 +376,6 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -635,12 +627,12 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Pet[]' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\Pet[]',
@@ -904,12 +896,12 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Pet[]' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\Pet[]',
@@ -1173,12 +1165,12 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Pet' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\Pet',
@@ -1429,10 +1421,6 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1661,10 +1649,6 @@ class PetApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
@@ -1927,12 +1911,12 @@ class PetApi
             ];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\ApiResponse' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
                         $content,
                         '\Swagger\Client\Model\ApiResponse',

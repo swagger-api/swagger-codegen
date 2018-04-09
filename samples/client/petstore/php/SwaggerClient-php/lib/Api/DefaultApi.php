@@ -148,10 +148,6 @@ class DefaultApi
             return [null, $statusCode, $response->getHeaders()];
 
         } catch (ApiException $e) {
-            $content = $e->getResponseBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
             switch ($e->getCode()) {
             }
             throw $e;
