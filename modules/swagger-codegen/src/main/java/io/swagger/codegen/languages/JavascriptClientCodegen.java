@@ -797,7 +797,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
                 codegenModel.vendorExtensions.put("x-itemType", getSwaggerType(mm.getAdditionalProperties()));
             } else {
                 String type = mm.getType();
-                if (type != null && (type.equals("number") || type.equals("integer") || type.equals("string") || type.equals("boolean") || type.equals("null"))) {
+                if (isPrimitiveType(type)){
                     codegenModel.vendorExtensions.put("x-isPrimitive", true);
                 }
             }
@@ -882,6 +882,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     private boolean isModelledType(CodegenOperation co) {
         // This seems to be the only way to tell whether an operation return type is modelled.
         return !Boolean.TRUE.equals(co.returnTypeIsPrimitive);
+    }
+
+    private boolean isPrimitiveType(String type) {
+        final String[] primitives = {"number", "integer", "string", "boolean", "null"};
+        return Arrays.asList(primitives).contains(type);
     }
 
     @SuppressWarnings("unchecked")
