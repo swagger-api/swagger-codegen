@@ -13,7 +13,7 @@ public class JavascriptClientCodegenTest {
         final JavascriptClientCodegen codegen = new JavascriptClientCodegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), "true");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
     }
 
     @Test

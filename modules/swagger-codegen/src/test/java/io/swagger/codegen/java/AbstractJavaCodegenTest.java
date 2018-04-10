@@ -91,7 +91,7 @@ public class AbstractJavaCodegenTest {
         final AbstractJavaCodegen codegen = new P_AbstractJavaCodegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), null);
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
     }
 
     @Test

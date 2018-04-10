@@ -13,7 +13,7 @@ public class PythonClientCodegenTest {
         final PythonClientCodegen codegen = new PythonClientCodegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), "true");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
     }
 
     @Test

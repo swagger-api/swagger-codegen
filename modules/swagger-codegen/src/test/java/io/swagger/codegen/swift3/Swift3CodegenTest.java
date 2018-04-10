@@ -128,7 +128,7 @@ public class Swift3CodegenTest {
         final Swift3Codegen codegen = new Swift3Codegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), "true");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
     }
 
     @Test

@@ -14,7 +14,7 @@ public class AbstractEiffelCodegenTest {
         final AbstractEiffelCodegen codegen = new P_AbstractEiffelCodegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), null);
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
     }
 
     @Test

@@ -14,7 +14,7 @@ public class AbstractGoCodegenTest {
         final AbstractGoCodegen codegen = new P_AbstractGoCodegen();
         codegen.processOpts();
 
-        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), null);
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
     }
 
     @Test

@@ -69,7 +69,7 @@ public class RubyClientCodegenTest {
       final RubyClientCodegen codegen = new RubyClientCodegen();
       codegen.processOpts();
 
-      Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), "true");
+      Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
   }
 
   @Test
