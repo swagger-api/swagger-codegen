@@ -18,6 +18,15 @@ public class AbstractGoCodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final AbstractGoCodegen codegen = new P_AbstractGoCodegen();
+        codegen.setHideGenerationTimestamp(true);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final AbstractGoCodegen codegen = new P_AbstractGoCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);

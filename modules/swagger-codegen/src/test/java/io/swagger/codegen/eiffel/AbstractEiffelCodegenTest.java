@@ -18,6 +18,15 @@ public class AbstractEiffelCodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final AbstractEiffelCodegen codegen = new P_AbstractEiffelCodegen();
+        codegen.setHideGenerationTimestamp(true);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final AbstractEiffelCodegen codegen = new P_AbstractEiffelCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);

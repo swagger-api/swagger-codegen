@@ -73,6 +73,15 @@ public class RubyClientCodegenTest {
   }
 
   @Test
+  public void testSettersForConfigValues() throws Exception {
+      final RubyClientCodegen codegen = new RubyClientCodegen();
+      codegen.setHideGenerationTimestamp(false);
+      codegen.processOpts();
+
+      Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+  }
+
+  @Test
   public void testAdditionalPropertiesPutForConfigValues() throws Exception {
       final RubyClientCodegen codegen = new RubyClientCodegen();
       codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);

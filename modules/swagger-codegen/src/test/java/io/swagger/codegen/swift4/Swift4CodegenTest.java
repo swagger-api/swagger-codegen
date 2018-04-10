@@ -132,6 +132,15 @@ public class Swift4CodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final Swift4Codegen codegen = new Swift4Codegen();
+        codegen.setHideGenerationTimestamp(false);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final Swift4Codegen codegen = new Swift4Codegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);

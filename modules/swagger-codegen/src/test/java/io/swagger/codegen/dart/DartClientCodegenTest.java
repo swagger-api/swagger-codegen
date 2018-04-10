@@ -17,6 +17,15 @@ public class DartClientCodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final DartClientCodegen codegen = new DartClientCodegen();
+        codegen.setHideGenerationTimestamp(false);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final DartClientCodegen codegen = new DartClientCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);

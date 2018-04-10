@@ -95,6 +95,15 @@ public class AbstractJavaCodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final AbstractJavaCodegen codegen = new P_AbstractJavaCodegen();
+        codegen.setHideGenerationTimestamp(true);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final AbstractJavaCodegen codegen = new P_AbstractJavaCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);

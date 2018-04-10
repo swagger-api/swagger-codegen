@@ -17,6 +17,15 @@ public class EiffelClientCodegenTest {
     }
 
     @Test
+    public void testSettersForConfigValues() throws Exception {
+        final EiffelClientCodegen codegen = new EiffelClientCodegen();
+        codegen.setHideGenerationTimestamp(false);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+    }
+
+    @Test
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final EiffelClientCodegen codegen = new EiffelClientCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);
