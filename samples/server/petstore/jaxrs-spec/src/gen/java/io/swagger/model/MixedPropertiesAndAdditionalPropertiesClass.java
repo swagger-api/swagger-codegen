@@ -6,9 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -22,7 +29,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   private @Valid Date dateTime = null;
   private @Valid Map<String, Animal> map = new HashMap<String, Animal>();
 
+  
   /**
+   
+   
+   
    **/
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
@@ -32,6 +43,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   
   @ApiModelProperty(value = "")
   @JsonProperty("uuid")
+
   public UUID getUuid() {
     return uuid;
   }
@@ -39,7 +51,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
     this.uuid = uuid;
   }
 
+  
   /**
+   
+   
+   
    **/
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(Date dateTime) {
     this.dateTime = dateTime;
@@ -49,6 +65,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   
   @ApiModelProperty(value = "")
   @JsonProperty("dateTime")
+
   public Date getDateTime() {
     return dateTime;
   }
@@ -56,7 +73,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
     this.dateTime = dateTime;
   }
 
+  
   /**
+   
+   
+   
    **/
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
@@ -66,6 +87,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   
   @ApiModelProperty(value = "")
   @JsonProperty("map")
+
   public Map<String, Animal> getMap() {
     return map;
   }
@@ -73,6 +95,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
     this.map = map;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -116,4 +139,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

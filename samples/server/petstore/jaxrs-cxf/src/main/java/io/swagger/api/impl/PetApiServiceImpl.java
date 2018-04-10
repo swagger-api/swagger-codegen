@@ -1,9 +1,9 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,108 +18,143 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 
+
+
+
+
 /**
  * Swagger Petstore
  *
+ 
  * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ 
  *
  */
+
 public class PetApiServiceImpl implements PetApi {
+
+
+    
     /**
      * Add a new pet to the store
      *
-     * 
-     *
+     
      */
-    public void addPet(Pet body) {
+    
+    public void addPet(Pet pet) {
         // TODO: Implement...
         
         
     }
+    
+
     
     /**
      * Deletes a pet
      *
-     * 
-     *
+     
      */
-    public void deletePet(Long petId, String apiKey) {
+    
+    public void deletePet(Integer petId, String apiKey) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * Finds Pets by status
      *
+     
      * Multiple status values can be provided with comma separated strings
      *
+     
      */
+    
     public List<Pet> findPetsByStatus(List<String> status) {
         // TODO: Implement...
         
         return null;
     }
     
+
+    
     /**
      * Finds Pets by tags
      *
+     
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      *
+     
      */
+    
     public List<Pet> findPetsByTags(List<String> tags) {
         // TODO: Implement...
         
         return null;
     }
     
+
+    
     /**
      * Find pet by ID
      *
+     
      * Returns a single pet
      *
+     
      */
-    public Pet getPetById(Long petId) {
+    
+    public Pet getPetById(Integer petId) {
         // TODO: Implement...
         
         return null;
     }
+    
+
     
     /**
      * Update an existing pet
      *
-     * 
-     *
+     
      */
-    public void updatePet(Pet body) {
+    
+    public void updatePet(Pet pet) {
         // TODO: Implement...
         
         
     }
+    
+
     
     /**
      * Updates a pet in the store with form data
      *
-     * 
-     *
+     
      */
-    public void updatePetWithForm(Long petId, String name, String status) {
+    
+    public void updatePetWithForm(Integer petId, Object body) {
         // TODO: Implement...
         
         
     }
     
+
+    
     /**
      * uploads an image
      *
-     * 
-     *
+     
      */
-    public ModelApiResponse uploadFile(Long petId, String additionalMetadata,  Attachment fileDetail) {
+    
+    public ModelApiResponse uploadFile(Integer petId, Object body) {
         // TODO: Implement...
         
         return null;
     }
     
+
 }
+
 

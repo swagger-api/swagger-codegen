@@ -7,9 +7,11 @@ Method | HTTP request | Description
 [**testSpecialTags**](AnotherFakeApi.md#testSpecialTags) | **PATCH** /another-fake/dummy | To test special tags
 
 
+
+
 <a name="testSpecialTags"></a>
 # **testSpecialTags**
-> Client testSpecialTags(body)
+> Client testSpecialTags(client)
 
 To test special tags
 
@@ -22,10 +24,13 @@ To test special tags
 //import io.swagger.client.api.AnotherFakeApi;
 
 
+
 AnotherFakeApi apiInstance = new AnotherFakeApi();
-Client body = new Client(); // Client | client model
+
+Client client = ; // Client | client model
+
 try {
-    Client result = apiInstance.testSpecialTags(body);
+    Client result = apiInstance.testSpecialTags(client);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling AnotherFakeApi#testSpecialTags");
@@ -37,7 +42,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md)| client model |
+ **client** | [**Client**](.md)| client model |
+
 
 ### Return type
 
@@ -51,4 +57,6 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+
 

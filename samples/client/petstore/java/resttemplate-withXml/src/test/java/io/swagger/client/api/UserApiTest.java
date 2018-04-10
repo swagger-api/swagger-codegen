@@ -14,13 +14,16 @@
 package io.swagger.client.api;
 
 import io.swagger.client.model.User;
+
 import org.junit.Test;
 import org.junit.Ignore;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for UserApi
@@ -41,8 +44,10 @@ public class UserApiTest {
      */
     @Test
     public void createUserTest() {
-        User body = null;
-        api.createUser(body);
+        
+        User user = null;
+        
+        api.createUser(user);
 
         // TODO: test validations
     }
@@ -57,7 +62,9 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithArrayInputTest() {
+        
         List<User> body = null;
+        
         api.createUsersWithArrayInput(body);
 
         // TODO: test validations
@@ -73,7 +80,9 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithListInputTest() {
+        
         List<User> body = null;
+        
         api.createUsersWithListInput(body);
 
         // TODO: test validations
@@ -89,7 +98,9 @@ public class UserApiTest {
      */
     @Test
     public void deleteUserTest() {
+        
         String username = null;
+        
         api.deleteUser(username);
 
         // TODO: test validations
@@ -105,7 +116,9 @@ public class UserApiTest {
      */
     @Test
     public void getUserByNameTest() {
+        
         String username = null;
+        
         User response = api.getUserByName(username);
 
         // TODO: test validations
@@ -121,8 +134,11 @@ public class UserApiTest {
      */
     @Test
     public void loginUserTest() {
+        
         String username = null;
+        
         String password = null;
+        
         String response = api.loginUser(username, password);
 
         // TODO: test validations
@@ -138,6 +154,7 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() {
+        
         api.logoutUser();
 
         // TODO: test validations
@@ -153,9 +170,12 @@ public class UserApiTest {
      */
     @Test
     public void updateUserTest() {
+        
+        User user = null;
+        
         String username = null;
-        User body = null;
-        api.updateUser(username, body);
+        
+        api.updateUser(user, username);
 
         // TODO: test validations
     }

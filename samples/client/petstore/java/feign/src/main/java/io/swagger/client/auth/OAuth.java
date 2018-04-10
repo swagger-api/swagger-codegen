@@ -1,9 +1,11 @@
 package io.swagger.client.auth;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.apache.oltu.oauth2.client.HttpClient;
 import org.apache.oltu.oauth2.client.OAuthClient;
@@ -186,6 +188,10 @@ public class OAuth implements RequestInterceptor {
                     body,
                     contentType,
                     feignResponse.status(),
+                    feignResponse.headers().entrySet().stream().collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> new ArrayList<>(e.getValue())
+                    )),
                     responseClass
             );
         }

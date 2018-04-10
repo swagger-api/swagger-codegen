@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **arrayEnum** | [**List&lt;ArrayEnumEnum&gt;**](#List&lt;ArrayEnumEnum&gt;) |  |  [optional]
 
 
+
 <a name="JustSymbolEnum"></a>
 ## Enum: JustSymbolEnum
 Name | Value

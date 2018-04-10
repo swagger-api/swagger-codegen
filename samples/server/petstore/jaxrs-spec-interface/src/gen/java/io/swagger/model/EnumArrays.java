@@ -2,9 +2,14 @@ package io.swagger.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
+
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -12,12 +17,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class EnumArrays  implements Serializable {
+public class EnumArrays   {
   
-
 public enum JustSymbolEnum {
 
+    
     GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), DOLLAR(String.valueOf("$"));
+    
 
 
     private String value;
@@ -31,10 +37,12 @@ public enum JustSymbolEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static JustSymbolEnum fromValue(String v) {
         for (JustSymbolEnum b : JustSymbolEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -46,10 +54,11 @@ public enum JustSymbolEnum {
 }
 
   private @Valid JustSymbolEnum justSymbol = null;
-
 public enum ArrayEnumEnum {
 
+    
     FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
+    
 
 
     private String value;
@@ -63,10 +72,12 @@ public enum ArrayEnumEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static ArrayEnumEnum fromValue(String v) {
         for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -79,7 +90,11 @@ public enum ArrayEnumEnum {
 
   private @Valid List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
+  
   /**
+   
+   
+   
    **/
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
@@ -89,6 +104,7 @@ public enum ArrayEnumEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("just_symbol")
+
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -96,7 +112,11 @@ public enum ArrayEnumEnum {
     this.justSymbol = justSymbol;
   }
 
+  
   /**
+   
+   
+   
    **/
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
@@ -106,6 +126,7 @@ public enum ArrayEnumEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_enum")
+
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
@@ -113,6 +134,7 @@ public enum ArrayEnumEnum {
     this.arrayEnum = arrayEnum;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -154,4 +176,6 @@ public enum ArrayEnumEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

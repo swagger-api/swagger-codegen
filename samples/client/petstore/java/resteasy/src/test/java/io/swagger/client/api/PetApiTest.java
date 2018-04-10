@@ -1,6 +1,6 @@
 /*
  * Swagger Petstore
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -14,19 +14,23 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+
 import org.junit.Test;
+import org.junit.Ignore;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * API tests for PetApi
  */
+@Ignore
 public class PetApiTest {
 
     private final PetApi api = new PetApi();
@@ -42,8 +46,10 @@ public class PetApiTest {
      */
     @Test
     public void addPetTest() throws ApiException {
-        Pet body = null;
-        // api.addPet(body);
+        
+        Pet pet = null;
+        
+        api.addPet(pet);
 
         // TODO: test validations
     }
@@ -58,9 +64,12 @@ public class PetApiTest {
      */
     @Test
     public void deletePetTest() throws ApiException {
-        Long petId = null;
+        
+        Integer petId = null;
+        
         String apiKey = null;
-        // api.deletePet(petId, apiKey);
+        
+        api.deletePet(petId, apiKey);
 
         // TODO: test validations
     }
@@ -75,8 +84,10 @@ public class PetApiTest {
      */
     @Test
     public void findPetsByStatusTest() throws ApiException {
+        
         List<String> status = null;
-        // List<Pet> response = api.findPetsByStatus(status);
+        
+        List<Pet> response = api.findPetsByStatus(status);
 
         // TODO: test validations
     }
@@ -84,15 +95,17 @@ public class PetApiTest {
     /**
      * Finds Pets by tags
      *
-     * Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      *
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void findPetsByTagsTest() throws ApiException {
+        
         List<String> tags = null;
-        // List<Pet> response = api.findPetsByTags(tags);
+        
+        List<Pet> response = api.findPetsByTags(tags);
 
         // TODO: test validations
     }
@@ -107,8 +120,10 @@ public class PetApiTest {
      */
     @Test
     public void getPetByIdTest() throws ApiException {
-        Long petId = null;
-        // Pet response = api.getPetById(petId);
+        
+        Integer petId = null;
+        
+        Pet response = api.getPetById(petId);
 
         // TODO: test validations
     }
@@ -123,8 +138,10 @@ public class PetApiTest {
      */
     @Test
     public void updatePetTest() throws ApiException {
-        Pet body = null;
-        // api.updatePet(body);
+        
+        Pet pet = null;
+        
+        api.updatePet(pet);
 
         // TODO: test validations
     }
@@ -139,10 +156,12 @@ public class PetApiTest {
      */
     @Test
     public void updatePetWithFormTest() throws ApiException {
-        Long petId = null;
-        String name = null;
-        String status = null;
-        // api.updatePetWithForm(petId, name, status);
+        
+        Integer petId = null;
+        
+        Object body = null;
+        
+        api.updatePetWithForm(petId, body);
 
         // TODO: test validations
     }
@@ -157,10 +176,12 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() throws ApiException {
-        Long petId = null;
-        String additionalMetadata = null;
-        File file = null;
-        // ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
+        
+        Integer petId = null;
+        
+        Object body = null;
+        
+        ModelApiResponse response = api.uploadFile(petId, body);
 
         // TODO: test validations
     }

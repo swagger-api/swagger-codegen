@@ -1,9 +1,16 @@
 package io.swagger.model;
 
 import java.math.BigDecimal;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -17,7 +24,11 @@ public class OuterComposite  implements Serializable {
   private @Valid String myString = null;
   private @Valid Boolean myBoolean = null;
 
+  
   /**
+   
+   
+   
    **/
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
@@ -27,6 +38,7 @@ public class OuterComposite  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("my_number")
+
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -34,7 +46,11 @@ public class OuterComposite  implements Serializable {
     this.myNumber = myNumber;
   }
 
+  
   /**
+   
+   
+   
    **/
   public OuterComposite myString(String myString) {
     this.myString = myString;
@@ -44,6 +60,7 @@ public class OuterComposite  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("my_string")
+
   public String getMyString() {
     return myString;
   }
@@ -51,7 +68,11 @@ public class OuterComposite  implements Serializable {
     this.myString = myString;
   }
 
+  
   /**
+   
+   
+   
    **/
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
@@ -61,6 +82,7 @@ public class OuterComposite  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("my_boolean")
+
   public Boolean getMyBoolean() {
     return myBoolean;
   }
@@ -68,6 +90,7 @@ public class OuterComposite  implements Serializable {
     this.myBoolean = myBoolean;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -111,4 +134,6 @@ public class OuterComposite  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

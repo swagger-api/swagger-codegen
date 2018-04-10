@@ -3,9 +3,16 @@ package io.swagger.model;
 import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -16,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AnimalFarm extends ArrayList<Animal> implements Serializable {
   
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -54,4 +62,6 @@ public class AnimalFarm extends ArrayList<Animal> implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

@@ -3,7 +3,11 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
+
+
 import javax.validation.constraints.*;
+
+
 
 /**
  * An order for a pets from the pet store
@@ -22,12 +26,13 @@ public class Order   {
   private Long petId = null;
   private Integer quantity = null;
   private java.util.Date shipDate = null;
-
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {
 
+    
     @XmlEnumValue("placed") PLACED(String.valueOf("placed")), @XmlEnumValue("approved") APPROVED(String.valueOf("approved")), @XmlEnumValue("delivered") DELIVERED(String.valueOf("delivered"));
+    
 
 
     private String value;
@@ -58,7 +63,11 @@ public enum StatusEnum {
   private StatusEnum status = null;
   private Boolean complete = false;
 
+  
   /**
+   
+   
+   
    **/
   public Order id(Long id) {
     this.id = id;
@@ -68,6 +77,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -75,7 +85,11 @@ public enum StatusEnum {
     this.id = id;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Order petId(Long petId) {
     this.petId = petId;
@@ -85,6 +99,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("petId")
+
   public Long getPetId() {
     return petId;
   }
@@ -92,7 +107,11 @@ public enum StatusEnum {
     this.petId = petId;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
@@ -102,6 +121,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("quantity")
+
   public Integer getQuantity() {
     return quantity;
   }
@@ -109,7 +129,11 @@ public enum StatusEnum {
     this.quantity = quantity;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Order shipDate(java.util.Date shipDate) {
     this.shipDate = shipDate;
@@ -119,6 +143,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+
   public java.util.Date getShipDate() {
     return shipDate;
   }
@@ -126,8 +151,13 @@ public enum StatusEnum {
     this.shipDate = shipDate;
   }
 
+  
   /**
+   
    * Order Status
+   
+   
+   
    **/
   public Order status(StatusEnum status) {
     this.status = status;
@@ -137,6 +167,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "Order Status")
   @JsonProperty("status")
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -144,7 +175,11 @@ public enum StatusEnum {
     this.status = status;
   }
 
+  
   /**
+   
+   
+   
    **/
   public Order complete(Boolean complete) {
     this.complete = complete;
@@ -154,13 +189,15 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("complete")
-  public Boolean isComplete() {
+
+  public Boolean isisComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -210,4 +247,6 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

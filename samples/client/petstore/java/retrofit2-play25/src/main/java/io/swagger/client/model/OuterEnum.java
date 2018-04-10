@@ -13,16 +13,17 @@
 
 package io.swagger.client.model;
 
-import java.util.Objects;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
+
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+
+
 /**
  * Gets or Sets OuterEnum
  */
+
 public enum OuterEnum {
   
   PLACED("placed"),
@@ -37,7 +38,9 @@ public enum OuterEnum {
     this.value = value;
   }
 
+
   @JsonValue
+
   public String getValue() {
     return value;
   }
@@ -47,7 +50,9 @@ public enum OuterEnum {
     return String.valueOf(value);
   }
 
+
   @JsonCreator
+
   public static OuterEnum fromValue(String text) {
     for (OuterEnum b : OuterEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
@@ -56,5 +61,8 @@ public enum OuterEnum {
     }
     return null;
   }
+
 }
+
+
 

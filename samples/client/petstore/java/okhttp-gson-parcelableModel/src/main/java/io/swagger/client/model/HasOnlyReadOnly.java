@@ -29,32 +29,34 @@ import android.os.Parcel;
  * HasOnlyReadOnly
  */
 
-public class HasOnlyReadOnly implements Parcelable {
+public class HasOnlyReadOnly {
+
   @SerializedName("bar")
   private String bar = null;
-
+  
   @SerializedName("foo")
   private String foo = null;
-
-   /**
-   * Get bar
-   * @return bar
+  
+  
+  /**
+  * Get bar
+  * @return bar
   **/
   @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-
-   /**
-   * Get foo
-   * @return foo
+  
+  
+  /**
+  * Get foo
+  * @return foo
   **/
   @ApiModelProperty(value = "")
   public String getFoo() {
     return foo;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -72,8 +74,7 @@ public class HasOnlyReadOnly implements Parcelable {
   public int hashCode() {
     return Objects.hash(bar, foo);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -96,11 +97,12 @@ public class HasOnlyReadOnly implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(bar);
-
     out.writeValue(foo);
+    
   }
 
   public HasOnlyReadOnly() {
@@ -109,8 +111,7 @@ public class HasOnlyReadOnly implements Parcelable {
 
   HasOnlyReadOnly(Parcel in) {
     
-    bar = (String)in.readValue(null);
-    foo = (String)in.readValue(null);
+    bar = (String)in.readValue(null);foo = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -126,4 +127,6 @@ public class HasOnlyReadOnly implements Parcelable {
     }
   };
 }
+
+
 

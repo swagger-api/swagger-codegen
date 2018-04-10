@@ -4,6 +4,7 @@ import io.swagger.client.ApiClient;
 
 import io.swagger.client.model.Client;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.springframework.http.MediaType;
 
 
 @Component("io.swagger.client.api.AnotherFakeApi")
+
 public class AnotherFakeApi {
     private ApiClient apiClient;
 
@@ -45,20 +47,22 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
+    
     /**
      * To test special tags
      * To test special tags
      * <p><b>200</b> - successful operation
-     * @param body client model
+     * @param client client model
      * @return Client
      * @throws RestClientException if an error occurs while attempting to invoke the API
+
      */
-    public Client testSpecialTags(Client body) throws RestClientException {
-        Object postBody = body;
+    public Client testSpecialTags(Client client) throws RestClientException {
+        Object postBody = client;
         
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testSpecialTags");
+        // verify the required parameter 'client' is set
+        if (client == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'client' when calling testSpecialTags");
         }
         
         String path = UriComponentsBuilder.fromPath("/another-fake/dummy").build().toUriString();
@@ -69,11 +73,11 @@ public class AnotherFakeApi {
 
         final String[] accepts = { 
             "application/json"
-        };
+         };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
         final String[] contentTypes = { 
             "application/json"
-        };
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };
@@ -81,4 +85,6 @@ public class AnotherFakeApi {
         ParameterizedTypeReference<Client> returnType = new ParameterizedTypeReference<Client>() {};
         return apiClient.invokeAPI(path, HttpMethod.PATCH, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    
 }
+
