@@ -40,6 +40,13 @@ In your project:
 npm link @swagger/angular2-typescript-petstore
 ```
 
+__Note for Windows users:__ The Angular CLI has troubles to use linked npm packages.
+Please refer to this issue https://github.com/angular/angular-cli/issues/8284 for a solution / workaround.
+Published packages are not effected by this issue.
+
+
+#### General usage
+
 In your Angular project:
 
 
