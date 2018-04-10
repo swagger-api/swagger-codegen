@@ -79,7 +79,7 @@ public class ApiClient {
     authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
     authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
     authentications.put("http_basic_test", new HttpBasicAuth());
-    authentications.put("petstore_auth", new OAuth());
+        authentications.put("petstore_auth", new OAuth());
     // Prevent the authentications from being modified.
     authentications = Collections.unmodifiableMap(authentications);
   }
@@ -510,7 +510,10 @@ public class ApiClient {
   public File downloadFileFromResponse(Response response) throws ApiException {
     try {
       File file = prepareDownloadFile(response);
+
       Files.copy(response.readEntity(InputStream.class), file.toPath());
+
+
       return file;
     } catch (IOException e) {
       throw new ApiException(e);
@@ -584,18 +587,18 @@ public class ApiClient {
 
     Invocation.Builder invocationBuilder = target.request().accept(accept);
 
-    for (Entry<String, String> headerParamsEnrty : headerParams.entrySet()) {
-      String value = headerParamsEnrty.getValue();
+    for (String key : headerParams.keySet()) {
+      String value = headerParams.get(key);
       if (value != null) {
-        invocationBuilder = invocationBuilder.header(headerParamsEnrty.getKey(), value);
+        invocationBuilder = invocationBuilder.header(key, value);
       }
     }
 
-    for (Entry<String, String> defaultHeaderEnrty: defaultHeaderMap.entrySet()) {
-      if (!headerParams.containsKey(defaultHeaderEnrty.getKey())) {
-        String value = defaultHeaderEnrty.getKey();
+    for (String key : defaultHeaderMap.keySet()) {
+      if (!headerParams.containsKey(key)) {
+        String value = defaultHeaderMap.get(key);
         if (value != null) {
-          invocationBuilder = invocationBuilder.header(defaultHeaderEnrty.getKey(), value);
+          invocationBuilder = invocationBuilder.header(key, value);
         }
       }
     }

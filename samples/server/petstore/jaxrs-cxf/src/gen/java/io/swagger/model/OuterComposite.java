@@ -1,7 +1,14 @@
 package io.swagger.model;
 
 import java.math.BigDecimal;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,25 +20,52 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 public class OuterComposite  {
   
+
   @ApiModelProperty(value = "")
+
+
+
   private BigDecimal myNumber = null;
 
-  @ApiModelProperty(value = "")
-  private String myString = null;
+  
 
   @ApiModelProperty(value = "")
+
+
+
+  private String myString = null;
+
+  
+
+  @ApiModelProperty(value = "")
+
+
+
   private Boolean myBoolean = null;
+
+  
+  
  /**
+  
+  
    * Get myNumber
+  
+  
+  
    * @return myNumber
   **/
   @JsonProperty("my_number")
+
+
   public BigDecimal getMyNumber() {
     return myNumber;
   }
 
+  
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
@@ -40,16 +74,28 @@ public class OuterComposite  {
     this.myNumber = myNumber;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get myString
+  
+  
+  
    * @return myString
   **/
   @JsonProperty("my_string")
+
+
   public String getMyString() {
     return myString;
   }
 
+  
   public void setMyString(String myString) {
     this.myString = myString;
   }
@@ -58,16 +104,28 @@ public class OuterComposite  {
     this.myString = myString;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get myBoolean
+  
+  
+  
    * @return myBoolean
   **/
   @JsonProperty("my_boolean")
+
+
   public Boolean getMyBoolean() {
     return myBoolean;
   }
 
+  
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
@@ -76,7 +134,11 @@ public class OuterComposite  {
     this.myBoolean = myBoolean;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -101,4 +163,7 @@ public class OuterComposite  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

@@ -1,7 +1,14 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+
+
 import javax.validation.constraints.*;
+
+
+
+
+
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,41 +20,101 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+
 /**
   * A User who is purchasing from the pet store
  **/
 @ApiModel(description="A User who is purchasing from the pet store")
+
 public class User  {
   
+
   @ApiModelProperty(value = "")
+
+
+
   private Long id = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String username = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String firstName = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String lastName = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String email = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String password = null;
+
+  
+
   @ApiModelProperty(value = "")
+
+
+
   private String phone = null;
+
+  
+
   @ApiModelProperty(value = "User Status")
+
  /**
    * User Status  
   **/
+
+
+
   private Integer userStatus = null;
 
+  
+  
  /**
+  
+  
    * Get id
+  
+  
+  
    * @return id
   **/
   @JsonProperty("id")
+
+
   public Long getId() {
     return id;
   }
 
+  
   public void setId(Long id) {
     this.id = id;
   }
@@ -56,16 +123,28 @@ public class User  {
     this.id = id;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get username
+  
+  
+  
    * @return username
   **/
   @JsonProperty("username")
+
+
   public String getUsername() {
     return username;
   }
 
+  
   public void setUsername(String username) {
     this.username = username;
   }
@@ -74,16 +153,28 @@ public class User  {
     this.username = username;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get firstName
+  
+  
+  
    * @return firstName
   **/
   @JsonProperty("firstName")
+
+
   public String getFirstName() {
     return firstName;
   }
 
+  
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
@@ -92,16 +183,28 @@ public class User  {
     this.firstName = firstName;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get lastName
+  
+  
+  
    * @return lastName
   **/
   @JsonProperty("lastName")
+
+
   public String getLastName() {
     return lastName;
   }
 
+  
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
@@ -110,16 +213,28 @@ public class User  {
     this.lastName = lastName;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get email
+  
+  
+  
    * @return email
   **/
   @JsonProperty("email")
+
+
   public String getEmail() {
     return email;
   }
 
+  
   public void setEmail(String email) {
     this.email = email;
   }
@@ -128,16 +243,28 @@ public class User  {
     this.email = email;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get password
+  
+  
+  
    * @return password
   **/
   @JsonProperty("password")
+
+
   public String getPassword() {
     return password;
   }
 
+  
   public void setPassword(String password) {
     this.password = password;
   }
@@ -146,16 +273,28 @@ public class User  {
     this.password = password;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
+  
    * Get phone
+  
+  
+  
    * @return phone
   **/
   @JsonProperty("phone")
+
+
   public String getPhone() {
     return phone;
   }
 
+  
   public void setPhone(String phone) {
     this.phone = phone;
   }
@@ -164,16 +303,28 @@ public class User  {
     this.phone = phone;
     return this;
   }
+  
+  
+  
 
+  
  /**
+  
    * User Status
+  
+  
+  
+  
    * @return userStatus
   **/
   @JsonProperty("userStatus")
+
+
   public Integer getUserStatus() {
     return userStatus;
   }
 
+  
   public void setUserStatus(Integer userStatus) {
     this.userStatus = userStatus;
   }
@@ -182,7 +333,11 @@ public class User  {
     this.userStatus = userStatus;
     return this;
   }
+  
+  
+  
 
+  
 
   @Override
   public String toString() {
@@ -212,4 +367,7 @@ public class User  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
+
 

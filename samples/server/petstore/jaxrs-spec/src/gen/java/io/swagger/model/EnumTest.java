@@ -1,9 +1,16 @@
 package io.swagger.model;
 
 import io.swagger.model.OuterEnum;
+
+
 import java.io.Serializable;
+
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+
+
+
 
 
 import io.swagger.annotations.*;
@@ -13,10 +20,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EnumTest  implements Serializable {
   
-
 public enum EnumStringEnum {
 
+    
     UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));
+    
 
 
     private String value;
@@ -30,10 +38,12 @@ public enum EnumStringEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumStringEnum fromValue(String v) {
         for (EnumStringEnum b : EnumStringEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -45,10 +55,11 @@ public enum EnumStringEnum {
 }
 
   private @Valid EnumStringEnum enumString = null;
-
 public enum EnumIntegerEnum {
 
+    
     NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_1(Integer.valueOf(-1));
+    
 
 
     private Integer value;
@@ -62,10 +73,12 @@ public enum EnumIntegerEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumIntegerEnum fromValue(String v) {
         for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -77,10 +90,11 @@ public enum EnumIntegerEnum {
 }
 
   private @Valid EnumIntegerEnum enumInteger = null;
-
 public enum EnumNumberEnum {
 
+    
     NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
+    
 
 
     private Double value;
@@ -94,10 +108,12 @@ public enum EnumNumberEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static EnumNumberEnum fromValue(String v) {
         for (EnumNumberEnum b : EnumNumberEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -111,7 +127,11 @@ public enum EnumNumberEnum {
   private @Valid EnumNumberEnum enumNumber = null;
   private @Valid OuterEnum outerEnum = null;
 
+  
   /**
+   
+   
+   
    **/
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
@@ -121,6 +141,7 @@ public enum EnumNumberEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("enum_string")
+
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -128,7 +149,11 @@ public enum EnumNumberEnum {
     this.enumString = enumString;
   }
 
+  
   /**
+   
+   
+   
    **/
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
@@ -138,6 +163,7 @@ public enum EnumNumberEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("enum_integer")
+
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -145,7 +171,11 @@ public enum EnumNumberEnum {
     this.enumInteger = enumInteger;
   }
 
+  
   /**
+   
+   
+   
    **/
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
@@ -155,6 +185,7 @@ public enum EnumNumberEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("enum_number")
+
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -162,7 +193,11 @@ public enum EnumNumberEnum {
     this.enumNumber = enumNumber;
   }
 
+  
   /**
+   
+   
+   
    **/
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
@@ -172,6 +207,7 @@ public enum EnumNumberEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("outerEnum")
+
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
@@ -179,6 +215,7 @@ public enum EnumNumberEnum {
     this.outerEnum = outerEnum;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -224,4 +261,6 @@ public enum EnumNumberEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+
 

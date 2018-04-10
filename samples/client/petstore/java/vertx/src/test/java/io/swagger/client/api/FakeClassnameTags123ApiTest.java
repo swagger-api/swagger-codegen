@@ -14,6 +14,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.model.Client;
 
+
 import io.swagger.client.Configuration;
 
 import org.junit.Test;
@@ -31,10 +32,12 @@ import io.vertx.ext.unit.junit.RunTestOnContext;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.Async;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for FakeClassnameTags123Api
@@ -66,8 +69,10 @@ public class FakeClassnameTags123ApiTest {
     @Test
     public void testClassnameTest(TestContext context) {
         Async async = context.async();
-        Client body = null;
-        api.testClassname(body, result -> {
+        
+        Client client = null;
+        
+        api.testClassname(client, result -> {
             // TODO: test validations
             async.complete();
         });

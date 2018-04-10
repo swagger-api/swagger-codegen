@@ -77,6 +77,7 @@
             <version>[1.5.3,1.5.16]</version>
         </dependency>
         
+
        <!-- Bean Validation API support -->
        <dependency>
            <groupId>javax.validation</groupId>
@@ -84,6 +85,7 @@
            <version>1.1.0.Final</version>
            <scope>provided</scope>
        </dependency>
+
 
     </dependencies>
 

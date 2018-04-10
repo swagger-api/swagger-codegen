@@ -1,8 +1,13 @@
 package io.swagger.client;
 
+
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
+
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+
+
 
 import java.text.DateFormat;
 
@@ -21,7 +26,11 @@ public class JSON implements ContextResolver<ObjectMapper> {
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
     mapper.setDateFormat(new RFC3339DateFormat());
+    
     mapper.registerModule(new JavaTimeModule());
+    
+    
+    
   }
 
   /**

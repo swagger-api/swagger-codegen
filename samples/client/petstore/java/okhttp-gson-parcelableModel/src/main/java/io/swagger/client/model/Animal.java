@@ -30,50 +30,50 @@ import android.os.Parcel;
  */
 
 
-public class Animal implements Parcelable {
+public class Animal {
+
   @SerializedName("className")
   private String className = null;
-
+  
   @SerializedName("color")
   private String color = "red";
-
+  
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-   /**
-   * Get className
-   * @return className
+  
+  /**
+  * Get className
+  * @return className
   **/
   @ApiModelProperty(required = true, value = "")
   public String getClassName() {
     return className;
   }
-
   public void setClassName(String className) {
     this.className = className;
   }
-
+  
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
-   /**
-   * Get color
-   * @return color
+  
+  /**
+  * Get color
+  * @return color
   **/
   @ApiModelProperty(value = "")
   public String getColor() {
     return color;
   }
-
   public void setColor(String color) {
     this.color = color;
   }
-
-
+  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -91,8 +91,7 @@ public class Animal implements Parcelable {
   public int hashCode() {
     return Objects.hash(className, color);
   }
-
-
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -115,11 +114,12 @@ public class Animal implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+  
   public void writeToParcel(Parcel out, int flags) {
-     
+    
     out.writeValue(className);
-
     out.writeValue(color);
+    
   }
 
   public Animal() {
@@ -128,8 +128,7 @@ public class Animal implements Parcelable {
 
   Animal(Parcel in) {
     
-    className = (String)in.readValue(null);
-    color = (String)in.readValue(null);
+    className = (String)in.readValue(null);color = (String)in.readValue(null);
   }
 
   public int describeContents() {
@@ -145,4 +144,6 @@ public class Animal implements Parcelable {
     }
   };
 }
+
+
 

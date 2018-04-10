@@ -14,9 +14,8 @@ package io.swagger.client.api;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+
 
 import io.swagger.client.Configuration;
 
@@ -35,10 +34,12 @@ import io.vertx.ext.unit.junit.RunTestOnContext;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.Async;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for FakeApi
@@ -70,7 +71,9 @@ public class FakeApiTest {
     @Test
     public void fakeOuterBooleanSerializeTest(TestContext context) {
         Async async = context.async();
+        
         Boolean body = null;
+        
         api.fakeOuterBooleanSerialize(body, result -> {
             // TODO: test validations
             async.complete();
@@ -86,8 +89,10 @@ public class FakeApiTest {
     @Test
     public void fakeOuterCompositeSerializeTest(TestContext context) {
         Async async = context.async();
-        OuterComposite body = null;
-        api.fakeOuterCompositeSerialize(body, result -> {
+        
+        OuterComposite outercomposite = null;
+        
+        api.fakeOuterCompositeSerialize(outercomposite, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -102,7 +107,9 @@ public class FakeApiTest {
     @Test
     public void fakeOuterNumberSerializeTest(TestContext context) {
         Async async = context.async();
+        
         BigDecimal body = null;
+        
         api.fakeOuterNumberSerialize(body, result -> {
             // TODO: test validations
             async.complete();
@@ -118,7 +125,9 @@ public class FakeApiTest {
     @Test
     public void fakeOuterStringSerializeTest(TestContext context) {
         Async async = context.async();
+        
         String body = null;
+        
         api.fakeOuterStringSerialize(body, result -> {
             // TODO: test validations
             async.complete();
@@ -134,8 +143,10 @@ public class FakeApiTest {
     @Test
     public void testClientModelTest(TestContext context) {
         Async async = context.async();
-        Client body = null;
-        api.testClientModel(body, result -> {
+        
+        Client client = null;
+        
+        api.testClientModel(client, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -150,21 +161,10 @@ public class FakeApiTest {
     @Test
     public void testEndpointParametersTest(TestContext context) {
         Async async = context.async();
-        BigDecimal number = null;
-        Double _double = null;
-        String patternWithoutDelimiter = null;
-        byte[] _byte = null;
-        Integer integer = null;
-        Integer int32 = null;
-        Long int64 = null;
-        Float _float = null;
-        String string = null;
-        byte[] binary = null;
-        LocalDate date = null;
-        OffsetDateTime dateTime = null;
-        String password = null;
-        String paramCallback = null;
-        api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, result -> {
+        
+        Object body = null;
+        
+        api.testEndpointParameters(body, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -179,15 +179,38 @@ public class FakeApiTest {
     @Test
     public void testEnumParametersTest(TestContext context) {
         Async async = context.async();
-        List<String> enumFormStringArray = null;
-        String enumFormString = null;
+        
+        Object body = null;
+        
         List<String> enumHeaderStringArray = null;
+        
         String enumHeaderString = null;
+        
         List<String> enumQueryStringArray = null;
+        
         String enumQueryString = null;
+        
         Integer enumQueryInteger = null;
-        Double enumQueryDouble = null;
-        api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, result -> {
+        
+        api.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, result -> {
+            // TODO: test validations
+            async.complete();
+        });
+    }
+    
+    /**
+     * test inline additionalProperties
+     * 
+     *
+     * @param context Vertx test context for doing assertions
+     */
+    @Test
+    public void testInlineAdditionalPropertiesTest(TestContext context) {
+        Async async = context.async();
+        
+        Map<String, String> body = null;
+        
+        api.testInlineAdditionalProperties(body, result -> {
             // TODO: test validations
             async.complete();
         });
@@ -202,9 +225,10 @@ public class FakeApiTest {
     @Test
     public void testJsonFormDataTest(TestContext context) {
         Async async = context.async();
-        String param = null;
-        String param2 = null;
-        api.testJsonFormData(param, param2, result -> {
+        
+        Object body = null;
+        
+        api.testJsonFormData(body, result -> {
             // TODO: test validations
             async.complete();
         });
