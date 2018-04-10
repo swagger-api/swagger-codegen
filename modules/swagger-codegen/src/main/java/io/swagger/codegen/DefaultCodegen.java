@@ -3378,6 +3378,10 @@ public class DefaultCodegen {
     public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
     }
+    
+    public boolean isHideGenerationTimestamp() {
+        return hideGenerationTimestamp;
+    }
 
     public void setHideGenerationTimestamp(boolean hideGenerationTimestamp) {
         this.hideGenerationTimestamp = hideGenerationTimestamp;
