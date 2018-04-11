@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
-public class ApexClientCodegen extends AbstractJavaCodegen {
+public class ApexClientCodegen extends AbstractApexCodegen {
 
     private static final String CLASS_PREFIX = "classPrefix";
     private static final String API_VERSION = "apiVersion";
@@ -21,25 +21,22 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
     private static final String NAMED_CREDENTIAL = "namedCredential";
     private static final Logger LOGGER = LoggerFactory.getLogger(ApexClientCodegen.class);
     private String classPrefix = "Swag";
-    private String apiVersion = "39.0";
+    private String apiVersion = "42.0";
     private String buildMethod = "sfdx";
     private String namedCredential = classPrefix;
     private String srcPath = "force-app/main/default/";
+    private String sfdxConfigPath = "config/";
 
     public ApexClientCodegen() {
         super();
 
         importMapping.clear();
 
-        testFolder = sourceFolder = srcPath;
-
         embeddedTemplateDir = templateDir = "apex";
         outputFolder = "generated-code" + File.separator + "apex";
-        apiPackage = "classes";
-        modelPackage = "classes";
+        modelPackage = apiPackage = srcPath + "classes";
         testPackage = "force-app.main.default.classes";
         modelNamePrefix = classPrefix;
-        dateLibrary = "";
 
         apiTemplateFiles.put("api.mustache", ".cls");
         apiTemplateFiles.put("cls-meta.mustache", ".cls-meta.xml");
@@ -77,7 +74,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             Arrays.asList("abstract", "activate", "and", "any", "array", "as", "asc", "autonomous",
                 "begin", "bigdecimal", "blob", "break", "bulk", "by", "byte", "case", "cast",
                 "catch", "char", "class", "collect", "commit", "const", "continue",
-                "convertcurrency", "date", "decimal", "default", "delete", "desc", "do", "else",
+                "convertcurrency", "date", "datetime", "decimal", "default", "delete", "desc", "do", "else",
                 "end", "enum", "exception", "exit", "export", "extends", "false", "final",
                 "finally", "float", "for", "from", "future", "global", "goto", "group", "having",
                 "hint", "if", "implements", "import", "inner", "insert", "instanceof", "int",
@@ -88,7 +85,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
                 "pragma", "private", "protected", "public", "retrieve", "return", "returning",
                 "rollback", "savepoint", "search", "select", "set", "short", "sort", "stat",
                 "static", "super", "switch", "synchronized", "system", "testmethod", "then", "this",
-                "this_month", "this_week", "throw", "today", "tolabel", "tomorrow", "transaction",
+                "this_month", "this_week", "throw", "time", "today", "tolabel", "tomorrow", "transaction",
                 "trigger", "true", "try", "type", "undelete", "update", "upsert", "using",
                 "virtual", "webservice", "when", "where", "while", "yesterday"
             ));
@@ -97,6 +94,10 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             Arrays.asList("Blob", "Boolean", "Date", "Datetime", "Decimal", "Double", "ID",
                 "Integer", "Long", "Object", "String", "Time"
             ));
+        
+        instantiationTypes.put("array", "List");
+        instantiationTypes.put("map", "Map");
+
     }
 
     @Override
@@ -124,6 +125,48 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         additionalProperties.put(NAMED_CREDENTIAL, namedCredential);
 
         postProcessOpts();
+    }
+
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        Info info = swagger.getInfo();
+        String calloutLabel = info.getTitle();
+        additionalProperties.put("calloutLabel", calloutLabel);
+        String sanitized = sanitizeName(calloutLabel);
+        additionalProperties.put("calloutName", sanitized);
+        supportingFiles.add(new SupportingFile("namedCredential.mustache", srcPath + "/namedCredentials",
+            sanitized + ".namedCredential-meta.xml"
+        ));
+
+        if (additionalProperties.get(BUILD_METHOD).equals("sfdx")) {
+            generateSfdxSupportingFiles();
+        } else if (additionalProperties.get(BUILD_METHOD).equals("ant")) {
+            generateAntSupportingFiles();
+        }
+    }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        return input.replace("'", "\\'");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    @Override
+    public String escapeText(String input) {
+        if (input == null) {
+            return input;
+        }
+
+        return input.replace("'", "\\'").replace("\n", "\\n").replace("\r", "\\r").replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    @Override
+    public String toApiName(String name) {
+        return camelize(classPrefix + super.toApiName(name));
     }
 
     @Override
@@ -176,137 +219,12 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         return "null".equals(out) ? null : out;
     }
 
-    @Override
-    public void setParameterExampleValue(CodegenParameter p) {
-        if (Boolean.TRUE.equals(p.isLong)) {
-            p.example = "2147483648L";
-        } else if (Boolean.TRUE.equals(p.isFile)) {
-            p.example = "Blob.valueOf('Sample text file\\nContents')";
-        } else if (Boolean.TRUE.equals(p.isDate)) {
-            p.example = "Date.newInstance(1960, 2, 17)";
-        } else if (Boolean.TRUE.equals(p.isDateTime)) {
-            p.example = "Datetime.newInstanceGmt(2013, 11, 12, 3, 3, 3)";
-        } else if (Boolean.TRUE.equals(p.isListContainer)) {
-            p.example = "new " + p.dataType + "{" + p.items.example + "}";
-        } else if (Boolean.TRUE.equals(p.isMapContainer)) {
-            p.example = "new " + p.dataType + "{" + p.items.example + "}";
-        } else if (Boolean.TRUE.equals(p.isString)) {
-            p.example = "'" + p.example + "'";
-        } else if ("".equals(p.example) || p.example == null) {
-            // Get an example object from the generated model
-            p.example = p.dataType + ".getExample()";
-        }
-    }
-
-    @Override
-    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
-        CodegenModel cm = super.fromModel(name, model, allDefinitions);
-        if (cm.interfaces == null) {
-            cm.interfaces = new ArrayList<String>();
-        }
-
-        Boolean hasDefaultValues = false;
-
-        // for (de)serializing properties renamed for Apex (e.g. reserved words)
-        List<Map<String, String>> propertyMappings = new ArrayList<>();
-        for (CodegenProperty p : cm.allVars) {
-            hasDefaultValues |= p.defaultValue != null;
-            if (!p.baseName.equals(p.name)) {
-                Map<String, String> mapping = new HashMap<>();
-                mapping.put("externalName", p.baseName);
-                mapping.put("internalName", p.name);
-                propertyMappings.add(mapping);
-            }
-        }
-
-        cm.vendorExtensions.put("hasPropertyMappings", !propertyMappings.isEmpty());
-        cm.vendorExtensions.put("hasDefaultValues", hasDefaultValues);
-        cm.vendorExtensions.put("propertyMappings", propertyMappings);
-
-        if (!propertyMappings.isEmpty()) {
-            cm.interfaces.add("Swagger.MappedProperties");
-        }
-        return cm;
-    }
-
-    @Override
-    public void postProcessParameter(CodegenParameter parameter) {
-        if (parameter.isBodyParam && parameter.isListContainer) {
-            // items of array bodyParams are being nested an extra level too deep for some reason
-            parameter.items = parameter.items.items;
-            setParameterExampleValue(parameter);
-        }
-    }
-
-    @Override
-    public void preprocessSwagger(Swagger swagger) {
-        Info info = swagger.getInfo();
-        String calloutLabel = info.getTitle();
-        additionalProperties.put("calloutLabel", calloutLabel);
-        String sanitized = sanitizeName(calloutLabel);
-        additionalProperties.put("calloutName", sanitized);
-        supportingFiles.add(new SupportingFile("namedCredential.mustache", srcPath + "/namedCredentials",
-            sanitized + ".namedCredential"
-        ));
-
-        if (additionalProperties.get(BUILD_METHOD).equals("sfdx")) {
-            generateSfdxSupportingFiles();
-        } else if (additionalProperties.get(BUILD_METHOD).equals("ant")) {
-            generateAntSupportingFiles();
-        }
-
-    }
-
-    @Override
-    public CodegenOperation fromOperation(String path,
-                                          String httpMethod,
-                                          Operation operation,
-                                          Map<String, Model> definitions,
-                                          Swagger swagger) {
-        Boolean hasFormParams = false;
-        for (Parameter p : operation.getParameters()) {
-            if ("formData".equals(p.getIn())) {
-                hasFormParams = true;
-                break;
-            }
-        }
-
-        // only support serialization into JSON and urlencoded forms for now
-        operation.setConsumes(
-            Collections.singletonList(hasFormParams
-                ? "application/x-www-form-urlencoded"
-                : "application/json"));
-
-        // only support deserialization from JSON for now
-        operation.setProduces(Collections.singletonList("application/json"));
-
-        CodegenOperation op = super.fromOperation(
-            path, httpMethod, operation, definitions, swagger);
-        if (op.getHasExamples()) {
-            // prepare examples for Apex test classes
-            Property responseProperty = findMethodResponse(operation.getResponses()).getSchema();
-            String deserializedExample = toExampleValue(responseProperty);
-            for (Map<String, String> example : op.examples) {
-                example.put("example", escapeText(example.get("example")));
-                example.put("deserializedExample", deserializedExample);
-            }
-        }
-
-        return op;
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        return input.replace("'", "\\'");
-    }
-
     public void setBuildMethod(String buildMethod) {
         if (buildMethod.equals("ant")) {
             this.srcPath = "deploy/";
         } else {
             this.srcPath = "src/";
         }
-        testFolder = sourceFolder = srcPath;
         this.buildMethod = buildMethod;
     }
 
@@ -342,117 +260,6 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
     }
 
     @Override
-    public String escapeText(String input) {
-        if (input == null) {
-            return input;
-        }
-
-        return input.replace("'", "\\'").replace("\n", "\\n").replace("\r", "\\r");
-    }
-
-    @Override
-    public String toModelTestFilename(String name) {
-        return toModelName(name) + "Test";
-    }
-
-    @Override
-    public String toExampleValue(Property p) {
-        if (p == null) {
-            return "";
-        }
-        Object obj = p.getExample();
-        String example = obj == null ? "" : obj.toString();
-        if (p instanceof ArrayProperty) {
-            example = "new " + getTypeDeclaration(p) + "{" + toExampleValue(
-                ((ArrayProperty) p).getItems()) + "}";
-        } else if (p instanceof BooleanProperty) {
-            example = String.valueOf(!"false".equals(example));
-        } else if (p instanceof ByteArrayProperty) {
-            if (example.isEmpty()) {
-                example = "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu";
-            }
-            ((ByteArrayProperty) p).setExample(example);
-            example = "EncodingUtil.base64Decode('" + example + "')";
-        } else if (p instanceof DateProperty) {
-            if (example.matches("^\\d{4}(-\\d{2}){2}")) {
-                example = example.substring(0, 10).replaceAll("-0?", ", ");
-            } else if (example.isEmpty()) {
-                example = "2000, 1, 23";
-            } else {
-                LOGGER.warn(String.format("The example provided for property '%s' is not a valid RFC3339 date. Defaulting to '2000-01-23'. [%s]", p
-                    .getName(), example));
-                example = "2000, 1, 23";
-            }
-            example = "Date.newInstance(" + example + ")";
-        } else if (p instanceof DateTimeProperty) {
-            if (example.matches("^\\d{4}([-T:]\\d{2}){5}.+")) {
-                example = example.substring(0, 19).replaceAll("[-T:]0?", ", ");
-            } else if (example.isEmpty()) {
-                example = "2000, 1, 23, 4, 56, 7";
-            } else {
-                LOGGER.warn(String.format("The example provided for property '%s' is not a valid RFC3339 datetime. Defaulting to '2000-01-23T04-56-07Z'. [%s]", p
-                    .getName(), example));
-                example = "2000, 1, 23, 4, 56, 7";
-            }
-            example = "Datetime.newInstanceGmt(" + example + ")";
-        } else if (p instanceof DecimalProperty) {
-            example = example.replaceAll("[^-0-9.]", "");
-            example = example.isEmpty() ? "1.3579" : example;
-        } else if (p instanceof FileProperty) {
-            if (example.isEmpty()) {
-                example = "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu";
-                ((FileProperty) p).setExample(example);
-            }
-            example = "EncodingUtil.base64Decode(" + example + ")";
-        } else if (p instanceof EmailProperty) {
-            if (example.isEmpty()) {
-                example = "example@example.com";
-                ((EmailProperty) p).setExample(example);
-            }
-            example = "'" + example + "'";
-        } else if (p instanceof LongProperty) {
-            example = example.isEmpty() ? "123456789L" : example + "L";
-        } else if (p instanceof MapProperty) {
-            example = "new " + getTypeDeclaration(p) + "{'key'=>" + toExampleValue(
-                ((MapProperty) p).getAdditionalProperties()) + "}";
-        } else if (p instanceof ObjectProperty) {
-            example = example.isEmpty() ? "null" : example;
-        } else if (p instanceof PasswordProperty) {
-            example = example.isEmpty() ? "password123" : escapeText(example);
-            ((PasswordProperty) p).setExample(example);
-            example = "'" + example + "'";
-        } else if (p instanceof RefProperty) {
-            example = getTypeDeclaration(p) + ".getExample()";
-        } else if (p instanceof StringProperty) {
-            StringProperty sp = (StringProperty) p;
-            List<String> enums = sp.getEnum();
-            if (enums != null && example.isEmpty()) {
-                example = enums.get(0);
-                sp.setExample(example);
-            } else if (example.isEmpty()) {
-                example = "aeiou";
-            } else {
-                example = escapeText(example);
-                sp.setExample(example);
-            }
-            example = "'" + example + "'";
-        } else if (p instanceof UUIDProperty) {
-            example = example.isEmpty()
-                ? "'046b6c7f-0b8a-43b9-b35d-6489e6daee91'"
-                : "'" + escapeText(example) + "'";
-        } else if (p instanceof BaseIntegerProperty) {
-            example = example.matches("^-?\\d+$") ? example : "123";
-        }
-
-        return example;
-    }
-
-    @Override
-    public String toApiName(String name) {
-        return camelize(classPrefix + super.toApiName(name));
-    }
-
-    @Override
     public void updateCodegenPropertyEnum(CodegenProperty var) {
         super.updateCodegenPropertyEnum(var);
         if (var.isEnum && var.example != null) {
@@ -460,21 +267,6 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             example = toEnumVarName(example, var.datatype);
             var.example = toEnumDefaultValue(example, var.datatypeWithEnum);
         }
-    }
-
-    @Override
-    public CodegenType getTag() {
-        return CodegenType.CLIENT;
-    }
-
-    @Override
-    public String getName() {
-        return "apex";
-    }
-
-    @Override
-    public String getHelp() {
-        return "Generates an Apex API client library (beta).";
     }
 
     private void generateAntSupportingFiles() {
@@ -493,7 +285,8 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
 
     private void generateSfdxSupportingFiles() {
 
-        supportingFiles.add(new SupportingFile("sfdx.mustache", "", "sfdx-oss-manifest.json"));
+        supportingFiles.add(new SupportingFile("sfdx-project-scratch-def.json", sfdxConfigPath, "project-scratch-def.json"));
+        supportingFiles.add(new SupportingFile("sfdx-project.json.mustache", "sfdx-project.json"));
 
         writeOptional(outputFolder, new SupportingFile("README_sfdx.mustache", "README.md"));
 
