@@ -5,52 +5,43 @@ use hyper;
 use hyper::{Request, Response, Error, StatusCode};
 use server::url::form_urlencoded;
 use swagger::auth::{Authorization, AuthData, Scopes};
-use swagger::{Has, XSpanIdString};
+use swagger::{Has, Pop, Push, XSpanIdString};
 use Api;
 
-pub struct NewService<T, C, D>
+pub struct NewService<T, C>
 where
-    T: hyper::server::NewService<Request = (Request, D), Response = Response, Error = Error>,
-    C: Default,
-    D: Has<Option<AuthData>>,
-    <D as Has<Option<AuthData>>>::Remainder : Has<XSpanIdString, Remainder=C>,
+    C: Default + Push<XSpanIdString>,
+    C::Result: Push<Option<AuthData>>,
+    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     inner: T,
-    marker1: PhantomData<C>,
-    marker2: PhantomData<D>,
+    marker: PhantomData<C>,
 }
 
-impl<T, C, D> NewService<T, C, D>
+impl<T, C> NewService<T, C>
 where
-    T: hyper::server::NewService<
-        Request = (Request, D),
-        Response = Response,
-        Error = Error,
-    > + 'static,
-    C: Default,
-    D: Has<Option<AuthData>>,
-    <D as Has<Option<AuthData>>>::Remainder : Has<XSpanIdString, Remainder=C>,
+    C: Default + Push<XSpanIdString>,
+    C::Result: Push<Option<AuthData>>,
+    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
 {
-    pub fn new(inner: T) -> NewService<T, C, D> {
+    pub fn new(inner: T) -> NewService<T, C> {
         NewService {
             inner,
-            marker1: PhantomData,
-            marker2: PhantomData,
+            marker: PhantomData,
         }
     }
 }
 
-impl<T, C, D> hyper::server::NewService for NewService<T, C, D>
+impl<T, C> hyper::server::NewService for NewService<T, C>
     where
-        T: hyper::server::NewService<Request=(Request, D), Response=Response, Error=Error> + 'static,
-        C: Default,
-        D: Has<Option<AuthData>>,
-        <D as Has<Option<AuthData>>>::Remainder : Has<XSpanIdString, Remainder=C>,
+    C: Default + Push<XSpanIdString>,
+    C::Result: Push<Option<AuthData>>,
+    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
 {
     type Request = Request;
     type Response = Response;
     type Error = Error;
-    type Instance = Service<T::Instance, C, D>;
+    type Instance = Service<T::Instance, C>;
 
     fn new_service(&self) -> Result<Self::Instance, io::Error> {
         self.inner.new_service().map(|s| Service::new(s))
@@ -58,44 +49,35 @@ impl<T, C, D> hyper::server::NewService for NewService<T, C, D>
 }
 
 /// Middleware to extract authentication data from request
-pub struct Service<T, C, D>
+pub struct Service<T, C>
 where
-    T: hyper::server::Service<Request = (Request, D), Response = Response, Error = Error>,
-    C: Default,
-    D: Has<Option<AuthData>>,
-    D::Remainder : Has<XSpanIdString, Remainder=C>,
+    C: Default + Push<XSpanIdString>,
+    C::Result: Push<Option<AuthData>>,
+    T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     inner: T,
-    marker1: PhantomData<C>,
-    marker2: PhantomData<D>,
+    marker: PhantomData<C>,
 }
 
-impl<T, C, D> Service<T, C, D>
+impl<T, C> Service<T, C>
 where
-    T: hyper::server::Service<
-        Request = (Request, D),
-        Response = Response,
-        Error = Error,
-    >,
-    C: Default,
-    D: Has<Option<AuthData>>,
-    D::Remainder : Has<XSpanIdString, Remainder=C>,
+    C: Default + Push<XSpanIdString>,
+    C::Result: Push<Option<AuthData>>,
+    T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
-    pub fn new(inner: T) -> Service<T, C, D> {
+    pub fn new(inner: T) -> Service<T, C> {
         Service {
             inner,
-            marker1: PhantomData,
-            marker2: PhantomData,
+            marker: PhantomData,
         }
     }
 }
 
-impl<T, C, D> hyper::server::Service for Service<T, C, D>
+impl<T, C> hyper::server::Service for Service<T, C>
     where
-        T: hyper::server::Service<Request=(Request, D), Response=Response, Error=Error>,
-        C: Default,
-        D: Has<Option<AuthData>>,
-        D::Remainder : Has<XSpanIdString, Remainder=C>,
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     type Request = Request;
     type Response = Response;
@@ -103,13 +85,13 @@ impl<T, C, D> hyper::server::Service for Service<T, C, D>
     type Future = T::Future;
 
     fn call(&self, req: Self::Request) -> Self::Future {
-        let context = D::Remainder::construct(XSpanIdString::get_or_generate(&req), C::default());
+        let context = C::default().push(XSpanIdString::get_or_generate(&req));
 
         {
             header! { (ApiKey1, "api_key") => [String] }
             if let Some(header) = req.headers().get::<ApiKey1>().cloned() {
                 let auth_data = AuthData::ApiKey(header.0);
-                let context = D::construct(Some(auth_data), context);
+                let context = context.push(Some(auth_data));
                 return self.inner.call((req, context));
             }
         }
@@ -120,7 +102,7 @@ impl<T, C, D> hyper::server::Service for Service<T, C, D>
                 .nth(0);
             if let Some(key) = key {
                 let auth_data = AuthData::ApiKey(key);
-                let context = D::construct(Some(auth_data), context);
+                let context = context.push(Some(auth_data));
                 return self.inner.call((req, context));
             }
         }
@@ -129,7 +111,7 @@ impl<T, C, D> hyper::server::Service for Service<T, C, D>
             use std::ops::Deref;
             if let Some(basic) = req.headers().get::<Authorization<Basic>>().cloned() {
                 let auth_data = AuthData::Basic(basic.deref().clone());
-                let context = D::construct(Some(auth_data), context);
+                let context = context.push(Some(auth_data));
                 return self.inner.call((req, context));
             }
         }
@@ -138,12 +120,12 @@ impl<T, C, D> hyper::server::Service for Service<T, C, D>
             use std::ops::Deref;
             if let Some(bearer) = req.headers().get::<Authorization<Bearer>>().cloned() {
                 let auth_data = AuthData::Bearer(bearer.deref().clone());
-                let context = D::construct(Some(auth_data), context);
+                let context = context.push(Some(auth_data));
                 return self.inner.call((req, context));
             }
         }
 
-        let context = D::construct(None, context);
+        let context = context.push(None);
         return self.inner.call((req, context));
     }
 }
