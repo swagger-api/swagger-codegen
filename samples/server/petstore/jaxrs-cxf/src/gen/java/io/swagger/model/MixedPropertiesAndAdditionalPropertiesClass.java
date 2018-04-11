@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,11 +23,13 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
   private UUID uuid = null;
+
   @ApiModelProperty(value = "")
   private Date dateTime = null;
-  @ApiModelProperty(value = "")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
 
+  @ApiModelProperty(value = "")
+  @Valid
+  private Map<String, Animal> map = null;
  /**
    * Get uuid
    * @return uuid

@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,9 +17,9 @@ public class Tag  {
   
   @ApiModelProperty(value = "")
   private Long id = null;
+
   @ApiModelProperty(value = "")
   private String name = null;
-
  /**
    * Get id
    * @return id

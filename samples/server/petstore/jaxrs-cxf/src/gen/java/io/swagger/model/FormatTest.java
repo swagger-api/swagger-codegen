@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 import org.joda.time.LocalDate;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,31 +21,43 @@ public class FormatTest  {
   
   @ApiModelProperty(value = "")
   private Integer integer = null;
+
   @ApiModelProperty(value = "")
   private Integer int32 = null;
+
   @ApiModelProperty(value = "")
   private Long int64 = null;
+
   @ApiModelProperty(required = true, value = "")
+  @Valid
   private BigDecimal number = null;
+
   @ApiModelProperty(value = "")
   private Float _float = null;
+
   @ApiModelProperty(value = "")
   private Double _double = null;
+
   @ApiModelProperty(value = "")
   private String string = null;
+
   @ApiModelProperty(required = true, value = "")
   private byte[] _byte = null;
+
   @ApiModelProperty(value = "")
   private byte[] binary = null;
+
   @ApiModelProperty(required = true, value = "")
   private LocalDate date = null;
+
   @ApiModelProperty(value = "")
   private Date dateTime = null;
+
   @ApiModelProperty(value = "")
   private UUID uuid = null;
+
   @ApiModelProperty(required = true, value = "")
   private String password = null;
-
  /**
    * Get integer
    * minimum: 10

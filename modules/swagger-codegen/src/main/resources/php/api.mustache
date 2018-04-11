@@ -50,6 +50,11 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $config;
 
     /**
+     * @var HeaderSelector
+     */
+    protected $headerSelector;
+
+    /**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -131,7 +136,7 @@ use {{invokerPackage}}\ObjectSerializer;
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
                     $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse()->getBody()->getContents()
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -294,7 +299,7 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#allParams}}
         {{#required}}
         // verify the required parameter '{{paramName}}' is set
-        if (${{paramName}} === null) {
+        if (${{paramName}} === null || (is_array(${{paramName}}) && count(${{paramName}}) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter ${{paramName}} when calling {{operationId}}'
             );
@@ -407,7 +412,7 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/bodyParams}}
 
         if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
+            $headers = $this->headerSelector->selectHeadersForMultipart(
                 [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}]
             );
         } else {

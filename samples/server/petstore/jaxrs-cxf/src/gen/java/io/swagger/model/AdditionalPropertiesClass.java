@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,10 +19,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
-  private Map<String, String> mapProperty = new HashMap<String, String>();
-  @ApiModelProperty(value = "")
-  private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
+  private Map<String, String> mapProperty = null;
 
+  @ApiModelProperty(value = "")
+  @Valid
+  private Map<String, Map<String, String>> mapOfMapProperty = null;
  /**
    * Get mapProperty
    * @return mapProperty

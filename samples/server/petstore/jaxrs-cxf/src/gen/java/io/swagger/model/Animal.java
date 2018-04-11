@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,9 +19,9 @@ public class Animal  {
   
   @ApiModelProperty(required = true, value = "")
   private String className = null;
+
   @ApiModelProperty(value = "")
   private String color = "red";
-
  /**
    * Get className
    * @return className

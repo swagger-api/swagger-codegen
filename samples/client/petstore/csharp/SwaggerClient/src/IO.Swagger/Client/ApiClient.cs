@@ -95,7 +95,7 @@ namespace IO.Swagger.Client
         /// <value>An instance of the IReadableConfiguration.</value>
         /// <remarks>
         /// <see cref="IReadableConfiguration"/> helps us to avoid modifying possibly global
-        /// configuration values from within a given client. It does not gaurantee thread-safety
+        /// configuration values from within a given client. It does not guarantee thread-safety
         /// of the <see cref="Configuration"/> instance in any way.
         /// </remarks>
         public IReadableConfiguration Configuration { get; set; }
@@ -139,7 +139,7 @@ namespace IO.Swagger.Client
 
             if (postBody != null) // http body (model or byte[]) parameter
             {
-				request.AddParameter(contentType, postBody, ParameterType.RequestBody);
+                request.AddParameter(contentType, postBody, ParameterType.RequestBody);
             }
 
             return request;
@@ -347,18 +347,18 @@ namespace IO.Swagger.Client
         /// <summary>
         ///Check if the given MIME is a JSON MIME.
         ///JSON MIME examples:
-        ///	   application/json
+        ///    application/json
         ///    application/json; charset=UTF8
         ///    APPLICATION/JSON
         ///    application/vnd.company+json
         /// </summary>
         /// <param name="mime">MIME</param>
-        /// <returns>Returns True if MIME type is json.</returns>		
+        /// <returns>Returns True if MIME type is json.</returns>
         public bool IsJsonMime(String mime)
         {
             var jsonRegex = new Regex("(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
-            return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json", StringComparison.InvariantCultureIgnoreCase));
-        }	
+            return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json"));
+        }
 
         /// <summary>
         /// Select the Content-Type header's value from the given content-type array:
@@ -374,7 +374,7 @@ namespace IO.Swagger.Client
 
             foreach (var contentType in contentTypes)
             {
-                if (IsJsonMime(contentType))
+                if (IsJsonMime(contentType.ToLower()))
                     return contentType;
             }
 

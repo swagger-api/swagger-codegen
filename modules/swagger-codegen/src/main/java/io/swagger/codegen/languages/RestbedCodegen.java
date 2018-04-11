@@ -130,13 +130,6 @@ public class RestbedCodegen extends AbstractCppCodegen {
       importMapping.put("restbed::Bytes", "#include <corvusoft/restbed/byte.hpp>");
   }
 
-  protected void addOption(String key, String description, String defaultValue) {
-      CliOption option = new CliOption(key, description);
-      if (defaultValue != null)
-          option.defaultValue(defaultValue);
-      cliOptions.add(option);
-  }
-
   @Override
   public void processOpts() {
       super.processOpts();
@@ -160,7 +153,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
   /**
    * Escapes a reserved word as defined in the `reservedWords` array. Handle
    * escaping those terms here. This logic is only called if a variable
-   * matches the reseved words
+   * matches the reserved words
    * 
    * @return the escaped term
    */

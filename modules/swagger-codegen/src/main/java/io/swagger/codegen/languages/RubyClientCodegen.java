@@ -73,6 +73,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelTestTemplateFiles.put("model_test.mustache", ".rb");
         apiTestTemplateFiles.put("api_test.mustache", ".rb");
 
+        // default HIDE_GENERATION_TIMESTAMP to true
+        hideGenerationTimestamp = Boolean.TRUE;
+
         setReservedWordsLowerCase(
                 Arrays.asList(
                     // local variable names used in API methods (endpoints)
@@ -161,7 +164,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         cliOptions.add(new CliOption(GEM_AUTHOR_EMAIL, "gem author email (only one is supported)."));
 
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated").
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC).
                 defaultValue(Boolean.TRUE.toString()));
 
     }
@@ -169,14 +172,6 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public void processOpts() {
         super.processOpts();
-
-        // default HIDE_GENERATION_TIMESTAMP to true
-        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
-        }
 
         if (additionalProperties.containsKey(GEM_NAME)) {
             setGemName((String) additionalProperties.get(GEM_NAME));
@@ -252,6 +247,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("Rakefile.mustache", "", "Rakefile"));
         supportingFiles.add(new SupportingFile("Gemfile.mustache", "", "Gemfile"));
+        supportingFiles.add(new SupportingFile("rubocop.mustache", "", ".rubocop.yml"));
 
         // test files should not be overwritten
         writeOptional(outputFolder, new SupportingFile("rspec.mustache", "", ".rspec"));
@@ -411,7 +407,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else if (p instanceof StringProperty) {
             StringProperty sp = (StringProperty) p;
             if (sp.getDefault() != null) {
-                return "\"" + escapeText(sp.getDefault()) + "\"";
+                return "'" + escapeText(sp.getDefault()) + "'";
             }
         }
 
@@ -565,7 +561,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         if ("Integer".equals(datatype) || "Float".equals(datatype)) {
             return value;
         } else {
-            return "\"" + escapeText(value) + "\"";
+            return "'" + escapeText(value) + "'";
         }
     }
 
@@ -658,7 +654,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             if (example == null) {
                 example = p.paramName + "_example";
             }
-            example = "\"" + escapeText(example) + "\"";
+            example = "'" + escapeText(example) + "'";
         } else if ("Integer".equals(type)) {
             if (example == null) {
                 example = "56";
@@ -675,17 +671,17 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             if (example == null) {
                 example = "/path/to/file";
             }
-            example = "File.new(\"" + escapeText(example) + "\")";
+            example = "File.new('" + escapeText(example) + "')";
         } else if ("Date".equals(type)) {
             if (example == null) {
                 example = "2013-10-20";
             }
-            example = "Date.parse(\"" + escapeText(example) + "\")";
+            example = "Date.parse('" + escapeText(example) + "')";
         } else if ("DateTime".equals(type)) {
             if (example == null) {
                 example = "2013-10-20T19:20:30+01:00";
             }
-            example = "DateTime.parse(\"" + escapeText(example) + "\")";
+            example = "DateTime.parse('" + escapeText(example) + "')";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
             example = moduleName + "::" + type + ".new";

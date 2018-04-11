@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -43,6 +44,8 @@ public class Name implements Parcelable {
   @SerializedName("123Number")
   private Integer _123Number = null;
 
+  public Name() {
+  }
   public Name name(Integer name) {
     this.name = name;
     return this;
@@ -143,23 +146,15 @@ public class Name implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(name);
-
     out.writeValue(snakeCase);
-
     out.writeValue(property);
-
     out.writeValue(_123Number);
   }
 
-  public Name() {
-    super();
-  }
-
   Name(Parcel in) {
-    
     name = (Integer)in.readValue(null);
     snakeCase = (Integer)in.readValue(null);
     property = (String)in.readValue(null);

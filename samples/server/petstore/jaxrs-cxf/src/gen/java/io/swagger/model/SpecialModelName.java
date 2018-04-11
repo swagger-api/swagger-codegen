@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,7 +17,6 @@ public class SpecialModelName  {
   
   @ApiModelProperty(value = "")
   private Long specialPropertyName = null;
-
  /**
    * Get specialPropertyName
    * @return specialPropertyName
