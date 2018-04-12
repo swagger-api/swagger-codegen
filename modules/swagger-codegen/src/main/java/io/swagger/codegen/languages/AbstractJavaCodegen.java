@@ -1125,6 +1125,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         return packageName;
     }
 
+    public String getInvokerPackage() {
+        return invokerPackage;
+    }
+
     public void setInvokerPackage(String invokerPackage) {
         this.invokerPackage = invokerPackage;
     }

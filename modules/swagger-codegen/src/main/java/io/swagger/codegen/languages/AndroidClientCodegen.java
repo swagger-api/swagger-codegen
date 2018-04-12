@@ -549,6 +549,10 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
         this.androidBuildToolsVersion = androidBuildToolsVersion;
     }
 
+    public String getInvokerPackage() {
+        return invokerPackage;
+    }
+
     public void setInvokerPackage(String invokerPackage) {
         this.invokerPackage = invokerPackage;
     }
