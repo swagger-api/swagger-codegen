@@ -16,6 +16,9 @@ public class AndroidClientCodegenTest {
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), true);
         Assert.assertEquals(codegen.modelPackage(), "io.swagger.client.model");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.MODEL_PACKAGE), "io.swagger.client.model");
+        Assert.assertEquals(codegen.apiPackage(), "io.swagger.client.api");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.API_PACKAGE), "io.swagger.client.api");
         Assert.assertEquals(codegen.getInvokerPackage(), "io.swagger.client");
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.INVOKER_PACKAGE), "io.swagger.client");
     }
@@ -29,7 +32,9 @@ public class AndroidClientCodegenTest {
         codegen.processOpts();
 
         Assert.assertEquals(codegen.modelPackage(), "xx.yyyyyyyy.model");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.MODEL_PACKAGE), "xx.yyyyyyyy.model");
         Assert.assertEquals(codegen.apiPackage(), "xx.yyyyyyyy.api");
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.API_PACKAGE), "xx.yyyyyyyy.api");
         Assert.assertEquals(codegen.getInvokerPackage(), "xx.yyyyyyyy.invoker");
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.INVOKER_PACKAGE), "xx.yyyyyyyy.invoker");
     }

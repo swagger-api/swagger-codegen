@@ -364,6 +364,14 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
             additionalProperties.put("authPackage", authPackage);
         }
 
+        if (!additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
+            additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
+        }
+
+        if (!additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
+            additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+        }
+
         if (additionalProperties.containsKey(CodegenConstants.GROUP_ID)) {
             this.setGroupId((String) additionalProperties.get(CodegenConstants.GROUP_ID));
         } else {
