@@ -59,3 +59,7 @@
 			return new ResponseEntity("{\"code\": \"ERROR\", \"message\": \"Unable to load the mock Response for {{operationId}}\"}", HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
 {{/hasParams}}
+{{^hasParams}}
+	return new ResponseEntity("{\"code\": \"CASE_NOT_HANDLED\", \"message\":\"Mock NOT SUPPORTED AT this time \"}", HttpStatus.INTERNAL_SERVER_ERROR);
+{{/hasParams}}
+
