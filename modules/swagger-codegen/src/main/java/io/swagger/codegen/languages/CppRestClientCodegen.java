@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.io.File;
+import java.nio.file.Paths;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -47,10 +49,12 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     public static final String DEFAULT_INCLUDE = "defaultInclude";
     public static final String GENERATE_INTERFACES_FOR_APIS = "generateInterfacesForApis";
     public static final String GENERATE_GMOCKS_FOR_APIS = "generateGMocksForApis";
+    public static final String SOURCE_OUTPUT_FOLDER_KEY = "sourceOutputFolder";
 
     protected String packageVersion = "1.0.0";
     protected String declspec = "";
     protected String defaultInclude = "";
+    protected String sourceOutputFolder = "client";
 
     private final Set<String> parentModels = new HashSet<>();
     private final Multimap<String, CodegenModel> childrenByParent = ArrayListMultimap.create();
@@ -116,27 +120,8 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
                 "Generate abstract base classes (interfaces) for APIs. This allows to mocks APIs (e.g. for unit testing).");
         addOption(GENERATE_GMOCKS_FOR_APIS,
                 "Generate Google Mock classes for APIs. Implies generating abstract base classes (interfaces) for APIs.");
+        addOption(SOURCE_OUTPUT_FOLDER_KEY, "Name of the sub-folder in which the generated sources are stored.");
 
-        supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
-        supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
-        supportingFiles.add(new SupportingFile("object-header.mustache", "", "Object.h"));
-        supportingFiles.add(new SupportingFile("object-source.mustache", "", "Object.cpp"));
-        supportingFiles.add(new SupportingFile("apiclient-header.mustache", "", "ApiClient.h"));
-        supportingFiles.add(new SupportingFile("apiclient-source.mustache", "", "ApiClient.cpp"));
-        supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", "", "ApiConfiguration.h"));
-        supportingFiles.add(new SupportingFile("apiconfiguration-source.mustache", "", "ApiConfiguration.cpp"));
-        supportingFiles.add(new SupportingFile("apiexception-header.mustache", "", "ApiException.h"));
-        supportingFiles.add(new SupportingFile("apiexception-source.mustache", "", "ApiException.cpp"));
-        supportingFiles.add(new SupportingFile("ihttpbody-header.mustache", "", "IHttpBody.h"));
-        supportingFiles.add(new SupportingFile("jsonbody-header.mustache", "", "JsonBody.h"));
-        supportingFiles.add(new SupportingFile("jsonbody-source.mustache", "", "JsonBody.cpp"));
-        supportingFiles.add(new SupportingFile("httpcontent-header.mustache", "", "HttpContent.h"));
-        supportingFiles.add(new SupportingFile("httpcontent-source.mustache", "", "HttpContent.cpp"));
-        supportingFiles.add(new SupportingFile("multipart-header.mustache", "", "MultipartFormData.h"));
-        supportingFiles.add(new SupportingFile("multipart-source.mustache", "", "MultipartFormData.cpp"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("cmake-lists.mustache", "", "CMakeLists.txt"));
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
@@ -160,10 +145,38 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         importMapping.put("std::vector", "#include <vector>");
         importMapping.put("std::map", "#include <map>");
         importMapping.put("std::string", "#include <string>");
-        importMapping.put("HttpContent", "#include \"HttpContent.h\"");
-        importMapping.put("ModelBase", "#include \"ModelBase.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
         importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
+        // TODO: handle in processOpts():
+        importMapping.put("HttpContent", "#include \"" + sourceOutputFolder + "/HttpContent.h\"");
+        importMapping.put("ModelBase", "#include \"" + sourceOutputFolder + "/ModelBase.h\"");
+
+        addSupportingFiles();
+    }
+
+    private void addSupportingFiles()
+    {
+        supportingFiles.add(new SupportingFile("modelbase-header.mustache", sourceOutputFolder, "ModelBase.h"));
+        supportingFiles.add(new SupportingFile("modelbase-source.mustache", sourceOutputFolder, "ModelBase.cpp"));
+        supportingFiles.add(new SupportingFile("object-header.mustache", sourceOutputFolder, "Object.h"));
+        supportingFiles.add(new SupportingFile("object-source.mustache", sourceOutputFolder, "Object.cpp"));
+        supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceOutputFolder, "ApiClient.h"));
+        supportingFiles.add(new SupportingFile("apiclient-source.mustache", sourceOutputFolder, "ApiClient.cpp"));
+        supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", sourceOutputFolder, "ApiConfiguration.h"));
+        supportingFiles.add(new SupportingFile("apiconfiguration-source.mustache", sourceOutputFolder, "ApiConfiguration.cpp"));
+        supportingFiles.add(new SupportingFile("apiexception-header.mustache", sourceOutputFolder, "ApiException.h"));
+        supportingFiles.add(new SupportingFile("apiexception-source.mustache", sourceOutputFolder, "ApiException.cpp"));
+        supportingFiles.add(new SupportingFile("ihttpbody-header.mustache", sourceOutputFolder, "IHttpBody.h"));
+        supportingFiles.add(new SupportingFile("jsonbody-header.mustache", sourceOutputFolder, "JsonBody.h"));
+        supportingFiles.add(new SupportingFile("jsonbody-source.mustache", sourceOutputFolder, "JsonBody.cpp"));
+        supportingFiles.add(new SupportingFile("httpcontent-header.mustache", sourceOutputFolder, "HttpContent.h"));
+        supportingFiles.add(new SupportingFile("httpcontent-source.mustache", sourceOutputFolder, "HttpContent.cpp"));
+        supportingFiles.add(new SupportingFile("multipart-header.mustache", sourceOutputFolder, "MultipartFormData.h"));
+        supportingFiles.add(new SupportingFile("multipart-source.mustache", sourceOutputFolder, "MultipartFormData.cpp"));
+
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("cmake-lists.mustache", "", "CMakeLists.txt"));
     }
 
     @Override
@@ -192,6 +205,17 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         additionalProperties.put("apiHeaderGuardPrefix", apiPackage.replaceAll("\\.", "_").toUpperCase());
         additionalProperties.put("declspec", declspec);
         additionalProperties.put("defaultInclude", defaultInclude);
+
+        if (additionalProperties.containsKey(SOURCE_OUTPUT_FOLDER_KEY))
+        {
+            sourceOutputFolder = additionalProperties.get(SOURCE_OUTPUT_FOLDER_KEY).toString();
+            supportingFiles.clear();
+            addSupportingFiles();
+        }
+        else
+        {
+            additionalProperties.put(SOURCE_OUTPUT_FOLDER_KEY, sourceOutputFolder);
+        }
     }
 
     /**
@@ -199,7 +223,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
      * when the class is instantiated
      */
     public String modelFileFolder() {
-        return outputFolder + "/model";
+        return Paths.get(outputFolder, sourceOutputFolder, "model").toString();
     }
 
     /**
@@ -208,7 +232,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
      */
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/api";
+        return Paths.get(outputFolder, sourceOutputFolder, "api").toString();
     }
 
     @Override
@@ -216,7 +240,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         if (importMapping.containsKey(name)) {
             return importMapping.get(name);
         } else {
-            return "#include \"" + name + ".h\"";
+            return "#include \"" + sourceOutputFolder +  "/model/" + name + ".h\"";
         }
     }
 
