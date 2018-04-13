@@ -257,8 +257,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             // Prep a string buffer where we're going to set up our new version of the string.
             StringBuilder pathBuffer = new StringBuilder();
             StringBuilder parameterName = new StringBuilder();
-            /** Whether to skip characters when inside curly braces. Used to skip characters after colon */
-            boolean skipThisAndSubsequentChars = false;
             int insideCurly = 0;
 
             // Iterate through existing string, one character at a time.
@@ -287,14 +285,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 default:
                     char nextChar = op.path.charAt(i);
                     if (insideCurly > 0) {
-                        if (!Character.isLetterOrDigit(nextChar) && nextChar != '_') {
-                            // skip any non-alpha numeric characters (and subsequent parameters)
-                            // not belonging to the parameter name
-                            skipThisAndSubsequentChars = true;
-                        }
-                        if (!skipThisAndSubsequentChars) {
-                            parameterName.append(nextChar);
-                        }
+                        parameterName.append(nextChar);
                     } else {
                         pathBuffer.append(nextChar);
                     }
