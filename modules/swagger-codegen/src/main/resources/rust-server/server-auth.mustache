@@ -9,20 +9,20 @@ use swagger::{Has, Pop, Push, XSpanIdString};
 use Api;
 
 pub struct NewService<T, C>
-where
-    C: Default + Push<XSpanIdString>,
-    C::Result: Push<Option<AuthData>>,
-    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
+    where
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     inner: T,
     marker: PhantomData<C>,
 }
 
 impl<T, C> NewService<T, C>
-where
-    C: Default + Push<XSpanIdString>,
-    C::Result: Push<Option<AuthData>>,
-    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
+    where
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
 {
     pub fn new(inner: T) -> NewService<T, C> {
         NewService {
@@ -34,9 +34,9 @@ where
 
 impl<T, C> hyper::server::NewService for NewService<T, C>
     where
-    C: Default + Push<XSpanIdString>,
-    C::Result: Push<Option<AuthData>>,
-    T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::NewService<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error> + 'static,
 {
     type Request = Request;
     type Response = Response;
@@ -50,20 +50,20 @@ impl<T, C> hyper::server::NewService for NewService<T, C>
 
 /// Middleware to extract authentication data from request
 pub struct Service<T, C>
-where
-    C: Default + Push<XSpanIdString>,
-    C::Result: Push<Option<AuthData>>,
-    T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
+    where
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     inner: T,
     marker: PhantomData<C>,
 }
 
 impl<T, C> Service<T, C>
-where
-    C: Default + Push<XSpanIdString>,
-    C::Result: Push<Option<AuthData>>,
-    T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
+    where
+        C: Default + Push<XSpanIdString>,
+        C::Result: Push<Option<AuthData>>,
+        T: hyper::server::Service<Request = (Request, <C::Result as Push<Option<AuthData>>>::Result), Response = Response, Error = Error>,
 {
     pub fn new(inner: T) -> Service<T, C> {
         Service {
