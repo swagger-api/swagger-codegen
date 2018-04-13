@@ -51,10 +51,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
     public static final String JAVA8_MODE = "java8";
+    public static final String SUPPORT_ASYNC = "supportAsync";
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
 
     protected String dateLibrary = "threetenbp";
+    protected boolean supportAsync = false;
     protected boolean java8Mode = false;
     protected boolean withXml = false;
     protected String invokerPackage = "io.swagger";
@@ -81,7 +83,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String javaUtilPrefix = "";
     protected Boolean serializableModel = false;
     protected boolean serializeBigDecimalAsString = false;
-    protected boolean hideGenerationTimestamp = false;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
@@ -95,6 +96,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
+        hideGenerationTimestamp = false; 
+        
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -173,7 +176,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         java8ModeOptions.put("false", "Various third party libraries as needed");
         java8Mode.setEnum(java8ModeOptions);
         cliOptions.add(java8Mode);
-
     }
 
     @Override
@@ -381,14 +383,21 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(JAVA8_MODE)) {
+        if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
                 additionalProperties.put("java8", "true");
             }
         }
 
-        if(additionalProperties.containsKey(WITH_XML)) {
+        if (additionalProperties.containsKey(SUPPORT_ASYNC)) {
+            setSupportAsync(Boolean.parseBoolean(additionalProperties.get(SUPPORT_ASYNC).toString()));
+            if (supportAsync) {
+                additionalProperties.put(SUPPORT_ASYNC, "true");
+            }
+        }
+
+        if (additionalProperties.containsKey(WITH_XML)) {
             setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
             if ( withXml ) {
                 additionalProperties.put(WITH_XML, "true");
@@ -1215,6 +1224,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setJava8Mode(boolean enabled) {
         this.java8Mode = enabled;
+    }
+
+    public void setSupportAsync(boolean enabled) {
+        this.supportAsync = enabled;
     }
 
     @Override
