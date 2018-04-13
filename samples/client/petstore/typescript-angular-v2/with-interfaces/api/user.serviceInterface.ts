@@ -9,16 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Headers }                                           from '@angular/http';
+import { HttpHeaders }                                       from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+
+import { User } from '../model/user';
+
+
 import { Configuration }                                     from '../configuration';
 
 
 export interface UserServiceInterface {
-    defaultHeaders: Headers;
+    defaultHeaders: HttpHeaders;
     configuration: Configuration;
     [others: string]: any;
 

@@ -9,16 +9,20 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Headers }                                           from '@angular/http';
+import { HttpHeaders }                                       from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+
+import { ApiResponse } from '../model/apiResponse';
+import { Pet } from '../model/pet';
+
+
 import { Configuration }                                     from '../configuration';
 
 
 export interface PetServiceInterface {
-    defaultHeaders: Headers;
+    defaultHeaders: HttpHeaders;
     configuration: Configuration;
     [others: string]: any;
 

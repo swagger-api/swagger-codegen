@@ -1,9 +1,14 @@
 {{>licenseInfo}}
-import { Headers }                                           from '@angular/http';
+import { HttpHeaders }                                       from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+
+{{#imports}}
+import { {{classname}} } from '../{{filename}}';
+{{/imports}}
+
+
 import { Configuration }                                     from '../configuration';
 
 {{#operations}}
@@ -14,7 +19,7 @@ import { Configuration }                                     from '../configurat
     */
 {{/description}}
 export interface {{classname}}Interface {
-    defaultHeaders: Headers;
+    defaultHeaders: HttpHeaders;
     configuration: Configuration;
     [others: string]: any;
 
