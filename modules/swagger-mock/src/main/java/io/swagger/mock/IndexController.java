@@ -8,8 +8,8 @@ public class IndexController {
 	
 	@RequestMapping("/request")
 	public String getIndexPage() {
-		System.out.println("mockmanagement.html");
-		return "redirect:mockmanagement.html";
+		System.out.println("index.html");
+		return "redirect:index.html";
 	}
 	
 }

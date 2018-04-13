@@ -74,6 +74,10 @@ public interface {{classname}} {
     }
 	
 	{{#generateDynamicMock}}
+	default String addQueryParamValue(Object value){
+		return String.join(",", (java.util.List)value);
+	}
+
 	default Optional<MockUtil> getMockUtil() {
         return Optional.empty();
     }

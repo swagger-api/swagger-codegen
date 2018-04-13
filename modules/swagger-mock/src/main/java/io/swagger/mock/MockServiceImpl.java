@@ -32,9 +32,9 @@ public class MockServiceImpl implements MockService {
 		return converterEToR(mockRepository.findOne(id));
 	}
 
-	public void saveMockRequest(MockTransferObject mockRequest) {
-		mockRepository.save(converterRToE(mockRequest));
-	}
+	public MockTransferObject saveMockRequest(MockTransferObject mockRequest) {
+		return  converterEToR(mockRepository.save(converterRToE(mockRequest)));
+	}	
 
 	public void updateMockRequest(MockTransferObject mockRequest) {
 		mockRepository.save(converterRToE(mockRequest));
@@ -59,7 +59,7 @@ public class MockServiceImpl implements MockService {
 					if (availableParamsStr.split("=").length == 2) {
 						availableParams.add(
 								new MockKeyValue(availableParamsStr.split("=")[0], availableParamsStr.split("=")[1]));
-						System.out.println(availableParamsStr.split("=")[0] + "  " + availableParamsStr.split("=")[1]);
+						//System.out.println(availableParamsStr.split("=")[0] + "  " + availableParamsStr.split("=")[1]);
 					}
 				}
 			}
@@ -79,17 +79,21 @@ public class MockServiceImpl implements MockService {
 				}
 			}
 			String availableParamStr = availableParamList.toString();
-			mockEntity.setAvailableParamsList(availableParamStr.substring(0, availableParamStr.lastIndexOf(":_:")));
+			if(availableParamStr.lastIndexOf(":_:") > 0 ) {
+				mockEntity.setAvailableParamsList(availableParamStr.substring(0, availableParamStr.lastIndexOf(":_:")));
+			} else if(availableParamStr != null && availableParamStr.trim().length() > 0) {
+				mockEntity.setAvailableParamsList(availableParamStr);
+			}
 		}
 		return mockEntity;
 	}
 
 	@Override
-	public List<MockTransferObject> readByOperationId(String name) {
+	public List<MockTransferObject> readByOperationId(String resource, String name) {
 		Iterable<MockEntity> mockTransferObjectList = mockRepository.findAll();
 		List<MockTransferObject> requestList = new ArrayList<>();
 		for (MockEntity mockEntity : mockTransferObjectList) {
-			if (mockEntity.getOperationId().equals(name)) {
+			if (mockEntity.getResource().equals(resource) && mockEntity.getOperationId().equals(name)) {
 				requestList.add(converterEToR(mockEntity));
 			}
 		}

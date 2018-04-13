@@ -1,5 +1,11 @@
 'use strict';
+var myApp =  angular
+        .module('myApp', ['ui.router', 'ngMaterial', 'ui.bootstrap', 'angular-json-tree' ]);
 
-var myApp = angular.module('myApp',['ngMaterial']);
-
-
+myApp.filter('start', function () {
+	  return function (input, start) {
+	    if (!input || !input.length) { return; }
+	    start = +start;
+	    return input.slice(start);
+	  };
+	});

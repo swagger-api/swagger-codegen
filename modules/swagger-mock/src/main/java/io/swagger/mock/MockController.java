@@ -1,10 +1,14 @@
 package io.swagger.mock;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +48,8 @@ public class MockController {
 	}
 
 	@RequestMapping(value = "/mockservice/", method = RequestMethod.GET)
-	public ResponseEntity<List<MockTransferObject>> listAllMockLoadRequests() {
-		List<MockTransferObject> MockLoadRequests = mockService.findAllMockRequests();
+	public ResponseEntity<List<MockTransferObject>> listAllMockLoadRequests(){//@RequestParam("resource") String resource, @RequestParam("operationId") String operationId) {
+		List<MockTransferObject> MockLoadRequests = mockService.findAllMockRequests(); //readByOperationId(resource, operationId);
 		if (MockLoadRequests.isEmpty()) {
 			return new ResponseEntity<List<MockTransferObject>>(HttpStatus.NO_CONTENT);
 		}
@@ -84,16 +88,15 @@ public class MockController {
 						new MockStatus("This Mock request already Present, Please change input Data!!!"),
 						HttpStatus.BAD_REQUEST);
 			}
-			mockService.saveMockRequest(mockLoadRequest);
+			MockTransferObject mockTransferObject = mockService.saveMockRequest(mockLoadRequest);
+			return new ResponseEntity<MockStatus>(new MockStatus("Mock created successfully", mockTransferObject), HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<MockStatus>(new MockStatus("Unexpected error please retry....."),
 					HttpStatus.BAD_REQUEST);
 		}
-
 		// HttpHeaders headers = new HttpHeaders();
 		// headers.setLocation(ucBuilder.path("/mockservice/{id}").buildAndExpand(mockLoadRequest.getId()).toUri());
-		return new ResponseEntity<MockStatus>(new MockStatus("Mock created successfully"), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/mockservice/{id}", method = RequestMethod.PUT)
@@ -123,4 +126,31 @@ public class MockController {
 		mockService.deleteMockRequestById(id);
 		return new ResponseEntity<MockTransferObject>(HttpStatus.NO_CONTENT);
 	}
+	
+	
+	@RequestMapping(value = "/swagger-catalogs/{name}", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> readCatalog(@PathVariable("name") String name) {
+		List<String> fileList = new LinkedList<>();
+		try {
+			for (Resource file : getCatalogs(name)) {
+			   fileList.add(file.getFilename());
+			}
+		} catch (IOException e) {
+			return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
+		}
+		if (fileList.size() == 0) {
+			return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<List<String>>(fileList, HttpStatus.OK);
+		}
+	}
+	
+	
+	private Resource[] getCatalogs(String name) throws IOException
+	{
+	    ClassLoader classLoader = MethodHandles.lookup().getClass().getClassLoader();
+	    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(classLoader);
+	    return resolver.getResources("classpath:META-INF/resources/yaml/"+name+"/*.yaml");
+	}
+	
 }

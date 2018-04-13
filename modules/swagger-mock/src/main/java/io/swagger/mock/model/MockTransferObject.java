@@ -17,6 +17,15 @@ public class MockTransferObject {
 	private List<MockKeyValue> availableParams;
 	private Map<String, APIResponse> responseType;
 	private String excludeList;
+	private String resource;
+	
+	public String getResource() {
+		return resource;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
 
 	public Map<String, APIResponse> getResponseType() {
 		return responseType;

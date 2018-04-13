@@ -3,12 +3,18 @@
 	Map<String, String> paramMap =  new HashMap<>();
 	
 	{{#allParams}}
-				{{#isQueryParam}}paramMap.put("{{baseName}}", String.valueOf({{paramName}}));{{/isQueryParam}}
+				{{#isQueryParam}}
+					if({{paramName}} != null && {{paramName}}.getClass().toString().contains("List")) {
+						paramMap.put("{{baseName}}", addQueryParamValue({{paramName}}));
+					} else {
+						paramMap.put("{{baseName}}", String.valueOf({{paramName}}));
+					}
+				{{/isQueryParam}}
 				{{#isPathParam}}paramMap.put("{{baseName}}", String.valueOf({{paramName}}));{{/isPathParam}}
 	{{/allParams}}
 
 		try {
-			Map<MockRequest, MockResponse> mockDataSetupMap =  mockUtil.readDynamicResponse("{{operationId}}");
+			Map<MockRequest, MockResponse> mockDataSetupMap =  mockUtil.readDynamicResponse("{{baseName}}", "{{operationId}}");
 			for (Map.Entry<MockRequest, MockResponse> mockRequestResponse  : mockDataSetupMap.entrySet()) {
 				{{#bodyParams}}
 					{{#pathParams}}
@@ -52,7 +58,4 @@
 			log.error("Unable to load the mock Response for " + "{{operationId}}", e);
 			return new ResponseEntity("{\"code\": \"ERROR\", \"message\": \"Unable to load the mock Response for {{operationId}}\"}", HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
-{{/hasParams}}
-{{^hasParams}}
-	return new ResponseEntity(HttpStatus.OK);
 {{/hasParams}}

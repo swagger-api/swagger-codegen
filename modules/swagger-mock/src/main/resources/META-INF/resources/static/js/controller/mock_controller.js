@@ -1,8 +1,8 @@
 'use strict';
 
-myApp.controller('MockController', ['$scope', 'MockService', function($scope, MockService) {
+myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService', function($scope, $filter,  $modal, MockService) {
     var self = this;
-    self.mockRequest={id:'',operationId:'',input:'',output:'',excludeList:'', httpStatus:'',availableParams:[]};
+    self.mockRequest={id:'',resource:'',operationId:'',input:'',output:'',excludeList:'', httpStatus:'',availableParams:[]};
     self.mockRequests=[];
     self.mockLoadRequests=[];
     self.mockLoadRequest='';
@@ -13,22 +13,57 @@ myApp.controller('MockController', ['$scope', 'MockService', function($scope, Mo
     self.reset = reset;
     self.message ='';
     self.classCode = '';
+    self.filtered = {};
+    self.searchText ='';
+    self.currentPage = 1;
+    self.viewby = 5;
+    self.perPage = 5;
+    self.maxSize = 5;
+	self.prettyJson = '';
+	self.treeJson = '';
     
-    fetchAllMockRequest();
     loadAllMockRequest();
+    
+    self.setPage = function (pageNo) {
+    	self.currentPage = pageNo;
+    };
+    
+    
+   self.jsonObj = JSON.parse("{  \"errorCode\": \"____NOT_FOUND\",  \"errorMessage\": \"sh e tehte besssssg egeh\"}");
+   
+    self.loadJson = function (value) {
+ 		console.log(value);
+ 		self.jsonObj = JSON.parse(value);
+ 		self.jsonStr = JSON.parse(value);
+    }; 
 
+    
+    $scope.$watch(self.searchText, function (term) {
+      var obj = term;
+      self.filterList = $filter('filter')(self.mockRequests, obj);
+      self.currentPage = 1;
+    }); 
+    
+  
+    self.setItemsPerPage = function(num) {
+	    self.perPage = num;
+	    self.currentPage = 1; //reset to first page
+    };
+        
+    self.loadData = fetchAllMockRequest();
+    	  
     function fetchAllMockRequest(){
-        MockService.fetchAllMockRequest()
+    	MockService.fetchAllMockRequest()
             .then(
             function(d) {
                 self.mockRequests = d;
+                self.filterList = self.mockRequests;
             },
             function(errResponse){
                 console.error('Error while fetching Mocks');
             }
         );
-    }
-
+    };
     
     function loadAllMockRequest(){
         MockService.loadAllMockRequest()
@@ -50,7 +85,7 @@ myApp.controller('MockController', ['$scope', 'MockService', function($scope, Mo
     	self.classCode ='valid';
     	MockService.createMockRequest(mockRequest)
             .then(
-            	fetchAllMockRequest,
+            		fetchAllMockRequest,
             function(errResponse){
             	self.message = errResponse.data.code;
             	self.classCode ='invalid';
