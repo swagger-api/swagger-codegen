@@ -58,8 +58,6 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             //times = 1;
             clientCodegen.setInterfaceOnly(Boolean.valueOf(SpringOptionsProvider.INTERFACE_ONLY));
             times = 1;
-            clientCodegen.setInterfaceOnly(Boolean.valueOf(SpringOptionsProvider.GENERATE_META));
-            times = 1;
             clientCodegen.setDelegatePattern(Boolean.valueOf(SpringOptionsProvider.DELEGATE_PATTERN));
             times = 1;
             clientCodegen.setSingleContentTypes(Boolean.valueOf(SpringOptionsProvider.SINGLE_CONTENT_TYPES));

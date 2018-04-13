@@ -23,7 +23,6 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
     public static final String INTERFACE_ONLY = "interfaceOnly";
-    public static final String GENERATE_META = "generateMeta";
     public static final String DELEGATE_PATTERN = "delegatePattern";
     public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
     public static final String JAVA_8 = "java8";
@@ -39,7 +38,6 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected String configPackage = "io.swagger.configuration";
     protected String basePackage = "io.swagger";
     protected boolean interfaceOnly = false;
-    protected boolean generateMeta = false;
     protected boolean delegatePattern = false;
     protected boolean delegateMethod = false;
     protected boolean singleContentTypes = false;
@@ -72,7 +70,6 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
         cliOptions.add(new CliOption(BASE_PACKAGE, "base package (invokerPackage) for generated code"));
         cliOptions.add(CliOption.newBoolean(INTERFACE_ONLY, "Whether to generate only API interface stubs without the server files."));
-        cliOptions.add(CliOption.newBoolean(GENERATE_META,"Use for generating pom.xml and README.md"));
         cliOptions.add(CliOption.newBoolean(DELEGATE_PATTERN, "Whether to generate the server files using the delegate pattern"));
         cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
         cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
@@ -158,10 +155,6 @@ public class SpringCodegen extends AbstractJavaCodegen
             this.setInterfaceOnly(Boolean.valueOf(additionalProperties.get(INTERFACE_ONLY).toString()));
         }
 
-        if (additionalProperties.containsKey(GENERATE_META)) {
-            this.setGenerateMeta(Boolean.valueOf(additionalProperties.get(GENERATE_META).toString()));
-        }
-
         if (additionalProperties.containsKey(DELEGATE_PATTERN)) {
             this.setDelegatePattern(Boolean.valueOf(additionalProperties.get(DELEGATE_PATTERN).toString()));
         }
@@ -223,12 +216,9 @@ public class SpringCodegen extends AbstractJavaCodegen
                                 DELEGATE_PATTERN, INTERFACE_ONLY, JAVA_8));
             }
         }
-        if(this.generateMeta)
-        {
-            supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-            supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
-        }
+        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         if (!this.interfaceOnly) {
 
@@ -606,8 +596,6 @@ public class SpringCodegen extends AbstractJavaCodegen
     }
 
     public void setInterfaceOnly(boolean interfaceOnly) { this.interfaceOnly = interfaceOnly; }
-
-    public void setGenerateMeta(boolean generateMeta) { this.generateMeta = generateMeta; }
 
     public void setDelegatePattern(boolean delegatePattern) { this.delegatePattern = delegatePattern; }
 
