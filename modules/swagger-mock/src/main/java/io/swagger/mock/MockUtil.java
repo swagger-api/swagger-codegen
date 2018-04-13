@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -37,6 +38,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.mock.model.APIResponse;
@@ -59,7 +61,7 @@ public class MockUtil {
 	public Map<String, Map<String, MockTransferObject>> loadMockRequests(RequestMappingHandlerMapping handlerMapping)
 			throws ClassNotFoundException, JsonProcessingException, InstantiationException, IllegalAccessException {
 		
-		Map<String, Map<String, MockTransferObject>> mockLoadChoice = new LinkedHashMap<>();
+		Map<String, Map<String, MockTransferObject>> mockLoadChoice = new TreeMap<>();
 		Map<RequestMappingInfo, HandlerMethod> mapSwaggerAPI = handlerMapping.getHandlerMethods();
 		for (Map.Entry<RequestMappingInfo, HandlerMethod> mapSwaggerAPIEntry : mapSwaggerAPI.entrySet()) {
 			if (mapSwaggerAPIEntry.getValue().getBeanType().toString().matches("class io.swagger.api.*Controller")) {
@@ -67,12 +69,23 @@ public class MockUtil {
 				Class intefaceController = Class.forName(interfaceName);
 				interfaceName = interfaceName.substring(interfaceName.lastIndexOf(".") + 1, interfaceName.length());
 				if (!mockLoadChoice.containsKey(interfaceName)) {
+					String resource = null;
+					Api[] apiOperationAnnos = (Api[]) intefaceController.getAnnotationsByType(Api.class);
+					if(apiOperationAnnos != null){
+						for(Api api : apiOperationAnnos){
+							if(api.value() != null) {
+								resource = api.value();
+							}
+						}
+					}
+					
 					Map<String, MockTransferObject> mockAPILoadChoice = new LinkedHashMap<String, MockTransferObject>();
 					for (Method method : intefaceController.getDeclaredMethods()) {
 						Annotation[][] annotations = method.getParameterAnnotations();
 						Class[] parameterTypes = method.getParameterTypes();
 						RequestMapping[] annotInstance = method.getAnnotationsByType(RequestMapping.class);
 						MockTransferObject mockLoadRequest = new MockTransferObject();
+						mockLoadRequest.setResource(resource);
 						if (annotInstance != null && annotInstance.length > 0) {
 							RequestMapping requestMapping = ((RequestMapping) annotInstance[0]);
 							if (requestMapping.value() != null && requestMapping.value().length > 0) {
@@ -81,15 +94,15 @@ public class MockUtil {
 							if (requestMapping.method() != null && requestMapping.method().length > 0) {
 								mockLoadRequest.setMethod(requestMapping.method()[0].name());
 							}
-
+							
 							ApiResponses[] apiResponsesAnno = method.getAnnotationsByType(ApiResponses.class);
 							if (apiResponsesAnno != null) {
 								Map<String, APIResponse> responseType = new HashMap<>();
-								System.out.println(method.getName());
-								for (ApiResponses apiResponses : apiResponsesAnno) {
+/*								System.out.println(method.getName());
+*/								for (ApiResponses apiResponses : apiResponsesAnno) {
 									for (ApiResponse apiResponse : apiResponses.value()) {
-										System.out.println("apiResponse.response().getCanonicalName() >>"+ apiResponse.response().getCanonicalName() );
-										if (apiResponse.response().getCanonicalName() != null && !apiResponse.response()
+/*										System.out.println("apiResponse.response().getCanonicalName() >>"+ apiResponse.response().getCanonicalName() );
+*/										if (apiResponse.response().getCanonicalName() != null && !apiResponse.response()
 												.getCanonicalName().contains("java.lang.Void")) {
 											responseType
 													.put(String.valueOf(apiResponse.code()),
@@ -172,11 +185,11 @@ public class MockUtil {
 		return jsonObject;
 	}
 
-	public Map<MockRequest, MockResponse> readDynamicResponse(String operationId) throws IOException {
+	public Map<MockRequest, MockResponse> readDynamicResponse(String resource, String operationId) throws IOException {
 
 		Map<MockRequest, MockResponse> mockResponseMap = new HashMap();
 		try {
-			List<MockTransferObject> mockTransferObjectList = mockService.readByOperationId(operationId);
+			List<MockTransferObject> mockTransferObjectList = mockService.readByOperationId(resource, operationId);
 			for (MockTransferObject mockTransferObject : mockTransferObjectList) {
 				String input = mockTransferObject.getInput();
 				String output = mockTransferObject.getOutput();
@@ -196,13 +209,32 @@ public class MockUtil {
 		return mockResponseMap;
 	}
 
+	
+	
 	public boolean compareQueryParams(MockRequest mockRequest, Map<String, String> actualQueryMap) {
+		if(mockRequest.getAvailableParams() == null || mockRequest.getAvailableParams().size()==0) {
+			return isEmptyRequest(actualQueryMap);
+		}  else {
+			return isParameterMatch(mockRequest, actualQueryMap);
+		}
+	}
+
+	private boolean isParameterMatch(MockRequest mockRequest, Map<String, String> actualQueryMap) {
 		for (MockKeyValue mockKeyValueParams : mockRequest.getAvailableParams()) {
 			if (mockRequest.getExcludeSet() == null
 					|| !mockRequest.getExcludeSet().contains(mockKeyValueParams.getKey())) {
 				if (!mockKeyValueParams.getValue().equals(actualQueryMap.get(mockKeyValueParams.getKey()))) {
 					return false;
 				}
+			}
+		}
+		return true;
+	}
+
+	private boolean isEmptyRequest(Map<String, String> actualQueryMap) {
+		for (Map.Entry<String, String> checkEmpty  : actualQueryMap.entrySet()) {
+			if(!"null".equals(checkEmpty.getValue())){
+				return false;
 			}
 		}
 		return true;
@@ -219,7 +251,7 @@ public class MockUtil {
 				}
 			}
 
-			Map<MockRequest, MockResponse> mockDataSetupMap = readDynamicResponse(mockTransferObject.getOperationId());
+			Map<MockRequest, MockResponse> mockDataSetupMap = readDynamicResponse(mockTransferObject.getResource(),  mockTransferObject.getOperationId());
 			for (Map.Entry<MockRequest, MockResponse> mockRequestResponse : mockDataSetupMap.entrySet()) {
 				if (availableParamMap != null && availableParamMap.size() > 0
 						&& mockTransferObject.getInput() != null) {

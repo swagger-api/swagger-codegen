@@ -8,9 +8,9 @@ public interface MockService {
 
 	MockTransferObject findById(long id);
 
-	List<MockTransferObject> readByOperationId(String name);
+	List<MockTransferObject> readByOperationId(String resource, String name);
 
-	void saveMockRequest(MockTransferObject mockRequest);
+	MockTransferObject saveMockRequest(MockTransferObject mockRequest);
 
 	void updateMockRequest(MockTransferObject mockRequest);
 

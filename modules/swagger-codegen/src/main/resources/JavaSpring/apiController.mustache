@@ -111,6 +111,11 @@ public class {{classname}}Controller implements {{classname}} {
     public Optional<MockUtil> getMockUtil() {
         return Optional.ofNullable(mockUtil);
     }
+	
+	public String addQueryParamValue(Object value){
+		return String.join(",", (java.util.List)value);
+	}
+
 	{{/generateDynamicMock}}
 	
     @Override

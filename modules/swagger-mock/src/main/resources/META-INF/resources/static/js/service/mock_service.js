@@ -4,17 +4,35 @@ myApp.factory('MockService', ['$http', '$q', function($http, $q){
 
     var REST_SERVICE_URI = '/mockservice/mockservice/';
     var REST_SERVICE_URI_LOAD = '/mockservice/mockload/';
-
+    var REST_SERVICE_URI_SWAGGER = '/mockservice/swagger-catalogs/';
+    
     var factory = {
     	loadAllMockRequest: loadAllMockRequest,
         fetchAllMockRequest: fetchAllMockRequest,
         createMockRequest: createMockRequest,
         updateMockRequest:updateMockRequest,
-        deleteMockRequest:deleteMockRequest
+        deleteMockRequest:deleteMockRequest,
+        loadSwaggerFiles:loadSwaggerFiles
     };
 
     return factory;
 
+    
+    function loadSwaggerFiles(name) {
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URI_SWAGGER+name)
+            .then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function(errResponse){
+                console.error('Error while loading catalogs');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+    
     function loadAllMockRequest() {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI_LOAD)
@@ -33,7 +51,7 @@ myApp.factory('MockService', ['$http', '$q', function($http, $q){
     
     function fetchAllMockRequest() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
+        $http.get(REST_SERVICE_URI)//+'?operationId='+operationId+'&resource='+resource)
             .then(
             function (response) {
                 deferred.resolve(response.data);

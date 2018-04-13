@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +16,10 @@ public class MockEntity implements Serializable {
 
 	private static final long serialVersionUID = -1801714432822866390L;
 
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="MOCK_SEQ")
+	//@SequenceGenerator(name="MOCK_SEQ", sequenceName="MOCK_SEQ",allocationSize=1)
+
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -31,6 +36,9 @@ public class MockEntity implements Serializable {
 	@Column(name = "httpStatusCode")
 	private String httpStatusCode;
 
+	@Column(name = "resources")
+	private String resource;
+	
 	@Column(name = "excludeList")
 	private String excludeList;
 
@@ -54,6 +62,14 @@ public class MockEntity implements Serializable {
 		this.input = input;
 		this.output = output;
 		this.httpStatusCode = httpStatusCode;
+	}
+
+	public String getResource() {
+		return resource;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 
 	public String getExcludeList() {
