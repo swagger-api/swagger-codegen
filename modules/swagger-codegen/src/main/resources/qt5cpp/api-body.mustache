@@ -2,6 +2,7 @@
 #include "{{classname}}.h"
 #include "{{prefix}}Helpers.h"
 #include "{{prefix}}ModelFactory.h"
+#include "{{prefix}}QObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -33,9 +34,9 @@ void
 
     {{#queryParams}}
     {{^collectionFormat}}
-    if (fullPath.indexOf("?") > 0) 
+    if (fullPath.indexOf("?") > 0)
       fullPath.append("&");
-    else 
+    else
       fullPath.append("?");
     fullPath.append(QUrl::toPercentEncoding("{{baseName}}"))
         .append("=")
@@ -49,7 +50,7 @@ void
         foreach({{{baseType}}} t, *{{paramName}}) {
           if (fullPath.indexOf("?") > 0)
             fullPath.append("&");
-          else 
+          else
             fullPath.append("?");
           fullPath.append("{{{baseName}}}=").append(stringValue(t));
         }
@@ -57,7 +58,7 @@ void
       else if (QString("{{collectionFormat}}").indexOf("ssv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("{{baseName}}=");
         qint32 count = 0;
@@ -71,7 +72,7 @@ void
       else if (QString("{{collectionFormat}}").indexOf("tsv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("{{baseName}}=");
         qint32 count = 0;
@@ -98,10 +99,10 @@ void
 
     {{#bodyParams}}
     {{#isContainer}}
-    auto {{paramName}}_jobj = new QJsonObject();
+    QJsonObject {{paramName}}_jobj;
     toJsonArray((QList<void*>*){{paramName}}, {{paramName}}_jobj, QString("body"), QString("{{prefix}}User*"));
 
-    QJsonDocument doc(*{{paramName}}_jobj);
+    QJsonDocument doc({{paramName}}_jobj);
     QByteArray bytes = doc.toJson();
 
     input.request_body.append(bytes);
@@ -150,21 +151,33 @@ void
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-
+    auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         {{{returnBaseType}}}* o = new {{returnBaseType}}();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
+        auto objwrapper = new {{prefix}}QObjectWrapper<{{{returnBaseType}}}*> (o);
+        objwrapper->deleteLater();
         output->append(o);
     }
     {{/isListContainer}}
-
-    {{^isListContainer}}{{^isMapContainer}}
+    {{^isListContainer}}
+    {{^isMapContainer}}
     {{#returnTypeIsPrimitive}}
     {{{returnType}}} output;  // TODO add primitive output support
-    {{/returnTypeIsPrimitive}}{{/isMapContainer}}
-    {{#isMapContainer}} 
+    {{#isByteArray}}auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isByteArray}}
+    {{#isDateTime}}auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isDateTime}}
+    {{#isDate}}auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isDate}}
+    {{#isString}}auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();{{/isString}}
+    {{/returnTypeIsPrimitive}}
+    {{/isMapContainer}}
+    {{#isMapContainer}}
     {{{returnType}}} output = {{{defaultResponse}}};
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
@@ -172,15 +185,17 @@ void
     QJsonObject obj = doc.object();
 
     foreach(QString key, obj.keys()) {
-        qint32* val;
-        setValue(&val, obj[key], "{{returnBaseType}}", "");
-        output->insert(key, *val);
+        {{returnBaseType}} val;
+        setValue(&val, obj[key], "{{returnBaseType}}", QString());
+        output->insert(key, val);
     }
     {{/isMapContainer}}
     {{^isMapContainer}}
     {{^returnTypeIsPrimitive}}
     QString json(worker->response);
     {{{returnType}}} output = static_cast<{{{returnType}}}>(create(json, QString("{{{returnBaseType}}}")));
+    auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
+    wrapper->deleteLater();
     {{/returnTypeIsPrimitive}}
     {{/isMapContainer}}
     {{/isListContainer}}

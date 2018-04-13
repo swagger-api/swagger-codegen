@@ -128,6 +128,12 @@ public class DefaultCodegen {
             this.setApiPackage((String) additionalProperties.get(CodegenConstants.API_PACKAGE));
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            setHideGenerationTimestamp(convertPropertyToBooleanAndWriteBack(CodegenConstants.HIDE_GENERATION_TIMESTAMP));
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, hideGenerationTimestamp);
+        }
+
         if (additionalProperties.containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
             this.setSortParamsByRequiredFlag(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString()));
@@ -263,21 +269,25 @@ public class DefaultCodegen {
     }
 
     /**
-     * Returns the common prefix of variables for enum naming
+     * Returns the common prefix of variables for enum naming if 
+     * two or more variables are present
      *
      * @param vars List of variable names
      * @return the common prefix for naming
      */
     public String findCommonPrefixOfVars(List<Object> vars) {
-        try {
-            String[] listStr = vars.toArray(new String[vars.size()]);
-            String prefix = StringUtils.getCommonPrefix(listStr);
-            // exclude trailing characters that should be part of a valid variable
-            // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
-            return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
-        } catch (ArrayStoreException e) {
-            return "";
+        if (vars.size() > 1) {
+            try {
+                String[] listStr = vars.toArray(new String[vars.size()]);
+                String prefix = StringUtils.getCommonPrefix(listStr);
+                // exclude trailing characters that should be part of a valid variable
+                // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
+                return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
+            } catch (ArrayStoreException e) {
+                // do nothing, just return default value
+            }
         }
+        return "";
     }
 
     /**
@@ -2023,6 +2033,9 @@ public class DefaultCodegen {
         Set<String> imports = new HashSet<String>();
         op.vendorExtensions = operation.getVendorExtensions();
 
+        // store the original operationId for plug-in
+        op.operationIdOriginal = operation.getOperationId();
+
         String operationId = getOrGenerateOperationId(operation, path, httpMethod);
         // remove prefix in operationId
         if (removeOperationIdPrefix) {
@@ -3317,7 +3330,7 @@ public class DefaultCodegen {
 
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
-        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
     }
 
     /**
@@ -3330,7 +3343,7 @@ public class DefaultCodegen {
      */
     public String apiDocFilename(String templateName, String tag) {
         String suffix = apiDocTemplateFiles().get(templateName);
-        return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
+        return apiDocFileFolder() + File.separator + toApiDocFilename(tag) + suffix;
     }
 
     /**
@@ -3343,7 +3356,7 @@ public class DefaultCodegen {
      */
     public String apiTestFilename(String templateName, String tag) {
         String suffix = apiTestTemplateFiles().get(templateName);
-        return apiTestFileFolder() + '/' + toApiTestFilename(tag) + suffix;
+        return apiTestFileFolder() + File.separator + toApiTestFilename(tag) + suffix;
     }
 
     public boolean shouldOverwrite(String filename) {
@@ -3364,6 +3377,14 @@ public class DefaultCodegen {
 
     public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+    }
+
+    public boolean isHideGenerationTimestamp() {
+        return hideGenerationTimestamp;
+    }
+
+    public void setHideGenerationTimestamp(boolean hideGenerationTimestamp) {
+        this.hideGenerationTimestamp = hideGenerationTimestamp;
     }
 
     /**
@@ -3771,5 +3792,23 @@ public class DefaultCodegen {
 
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
+    }
+
+    protected void addOption(String key, String description) {
+        addOption(key, description, null);
+    }
+
+    protected void addOption(String key, String description, String defaultValue) {
+        CliOption option = new CliOption(key, description);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue);
+        cliOptions.add(option);
+    }
+
+    protected void addSwitch(String key, String description, Boolean defaultValue) {
+        CliOption option = CliOption.newBoolean(key, description);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue.toString());
+        cliOptions.add(option);
     }
 }

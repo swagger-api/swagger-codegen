@@ -21,10 +21,14 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     protected static Logger LOGGER = LoggerFactory.getLogger(AbstractGoCodegen.class);
 
+    protected boolean withXml = false;
+
     protected String packageName = "swagger";
 
     public AbstractGoCodegen() {
         super();
+
+        hideGenerationTimestamp = Boolean.FALSE;
 
         defaultIncludes = new HashSet<String>(
             Arrays.asList(
@@ -82,9 +86,8 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Go package name (convention: lowercase).")
                 .defaultValue("swagger"));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
-
     }
 
     /**
@@ -305,10 +308,12 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 iterator.remove();
         }
 
-        // if their is a return type, import encoding/json
+        // if their is a return type, import encoding/json and if needed encoding/xml
         for (CodegenOperation operation : operations) {
             if(operation.returnBaseType != null ) {
                 imports.add(createMapping("import", "encoding/json"));
+                if (withXml)
+                    imports.add(createMapping("import", "encoding/xml"));
                 break; //just need to import once
             }
         }
@@ -470,4 +475,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         }
     }
 
+    public void setWithXml(boolean withXml) {
+        this.withXml = withXml;
+    }
 }

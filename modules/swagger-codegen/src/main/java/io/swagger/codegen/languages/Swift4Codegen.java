@@ -241,7 +241,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
                                      "Flag to make all the API classes inner-class "
                                      + "of {{projectName}}API"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                                     "hides the timestamp when files were generated")
+                                     CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(LENIENT_TYPE_CAST,
                                      "Accept and cast values for simple types (string->bool, "
@@ -252,17 +252,6 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public void processOpts() {
         super.processOpts();
-
-        // default HIDE_GENERATION_TIMESTAMP to true
-        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                                     Boolean.TRUE.toString());
-        } else {
-            Boolean hide = Boolean.valueOf(additionalProperties()
-                                           .get(CodegenConstants.HIDE_GENERATION_TIMESTAMP)
-                                           .toString());
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, hide);
-        }
 
         // Setup project name
         if (additionalProperties.containsKey(PROJECT_NAME)) {
@@ -710,8 +699,38 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
-        // process enum in models
-        return postProcessModelsEnum(objs);
+        Map<String, Object> postProcessedModelsEnum = postProcessModelsEnum(objs);
+
+        // We iterate through the list of models, and also iterate through each of the
+        // properties for each model. For each property, if:
+        //
+        // CodegenProperty.name != CodegenProperty.baseName
+        //
+        // then we set
+        //
+        // CodegenProperty.vendorExtensions["x-codegen-escaped-property-name"] = true
+        //
+        // Also, if any property in the model has x-codegen-escaped-property-name=true, then we mark:
+        //
+        // CodegenModel.vendorExtensions["x-codegen-has-escaped-property-names"] = true
+        //
+        List<Object> models = (List<Object>) postProcessedModelsEnum.get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            boolean modelHasPropertyWithEscapedName = false;
+            for (CodegenProperty prop : cm.allVars) {
+                if (!prop.name.equals(prop.baseName)) {
+                    prop.vendorExtensions.put("x-codegen-escaped-property-name", true);
+                    modelHasPropertyWithEscapedName = true;
+                }
+            }
+            if (modelHasPropertyWithEscapedName) {
+                cm.vendorExtensions.put("x-codegen-has-escaped-property-names", true);
+            }
+        }
+
+        return postProcessedModelsEnum;
     }
 
     @Override

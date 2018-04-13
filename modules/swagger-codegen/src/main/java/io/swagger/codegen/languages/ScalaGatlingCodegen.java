@@ -196,7 +196,7 @@ public class ScalaGatlingCodegen extends AbstractScalaCodegen implements Codegen
     /**
      * Modifies the swagger doc to make mustache easier to use
      *
-     * @param swagger
+     * @param swagger input swagger document
      */
     @Override
     public void preprocessSwagger(Swagger swagger) {
@@ -252,7 +252,7 @@ public class ScalaGatlingCodegen extends AbstractScalaCodegen implements Codegen
                             operation.setVendorExtension("x-gatling-body-feeder", operation.getOperationId() + "BodyFeeder");
                             operation.setVendorExtension("x-gatling-body-feeder-params", StringUtils.join(sessionBodyVars, ","));
                             try {
-                                FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "BodyParams.csv"), StringUtils.join(bodyFeederParams, ","));
+                                FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "bodyParams.csv"), StringUtils.join(bodyFeederParams, ","));
                             } catch (IOException ioe) {
                                 LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
                             }

@@ -22,9 +22,9 @@
 
 namespace Swagger {
 
-SWGCategory::SWGCategory(QString* json) {
+SWGCategory::SWGCategory(QString json) {
     init();
-    this->fromJson(*json);
+    this->fromJson(json);
 }
 
 SWGCategory::SWGCategory() {
@@ -52,7 +52,7 @@ SWGCategory::cleanup() {
 }
 
 SWGCategory*
-SWGCategory::fromJson(QString &json) {
+SWGCategory::fromJson(QString json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -61,7 +61,7 @@ SWGCategory::fromJson(QString &json) {
 }
 
 void
-SWGCategory::fromJsonObject(QJsonObject &pJson) {
+SWGCategory::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
     
     ::Swagger::setValue(&name, pJson["name"], "QString", "QString");
@@ -71,21 +71,18 @@ SWGCategory::fromJsonObject(QJsonObject &pJson) {
 QString
 SWGCategory::asJson ()
 {
-    QJsonObject* obj = this->asJsonObject();
-    
-    QJsonDocument doc(*obj);
+    QJsonObject obj = this->asJsonObject();
+    QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
     return QString(bytes);
 }
 
-QJsonObject*
+QJsonObject
 SWGCategory::asJsonObject() {
-    QJsonObject* obj = new QJsonObject();
-    
+    QJsonObject obj;
     if(m_id_isSet){
-        obj->insert("id", QJsonValue(id));
+        obj.insert("id", QJsonValue(id));
     }
-    
     if(name != nullptr && *name != QString("")){
         toJsonValue(QString("name"), name, obj, QString("QString"));
     }
@@ -114,7 +111,7 @@ SWGCategory::setName(QString* name) {
 }
 
 
-bool 
+bool
 SWGCategory::isSet(){
     bool isObjectUpdated = false;
     do{

@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -27,10 +28,11 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     protected String implFolder = "service";
     public static final String GOOGLE_CLOUD_FUNCTIONS = "googleCloudFunctions";
     public static final String EXPORTED_NAME = "exportedName";
+    public static final String SERVER_PORT = "serverPort";
 
     protected String apiVersion = "1.0.0";
-    protected int serverPort = 8080;
     protected String projectName = "swagger-server";
+    protected String defaultServerPort = "8080";
 
     protected boolean googleCloudFunctions;
     protected String exportedName;
@@ -81,10 +83,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("implFolder", implFolder);
 
-        supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", "/"), "writer.js"));
+        supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", File.separator), "writer.js"));
 
         cliOptions.add(CliOption.newBoolean(GOOGLE_CLOUD_FUNCTIONS,
                 "When specified, it will generate the code which runs within Google Cloud Functions "
@@ -95,6 +96,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                 "When the generated code will be deployed to Google Cloud Functions, this option can be "
                         + "used to update the name of the exported function. By default, it refers to the "
                         + "basePath. This does not affect normal standalone nodejs server code."));
+        cliOptions.add(new CliOption(SERVER_PORT,
+                "TCP port to listen on."));
     }
 
     @Override
@@ -154,7 +157,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
-        if ( templateName.equals("service.mustache") ) {
+        if (templateName.equals("service.mustache")) {
             String stringToMatch = File.separator + "controllers" + File.separator;
             String replacement = File.separator + implFolder + File.separator;
             result = result.replaceAll(Pattern.quote(stringToMatch), replacement);
@@ -163,7 +166,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     private String implFileFolder(String output) {
-        return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
+        return outputFolder + File.separator + output + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
     /**
@@ -173,7 +176,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -317,14 +320,23 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public void preprocessSwagger(Swagger swagger) {
         String host = swagger.getHost();
-        String port = "8080";
-        if (host != null) {
+        String port = defaultServerPort;
+
+        if (!StringUtils.isEmpty(host)) {
             String[] parts = host.split(":");
             if (parts.length > 1) {
                 port = parts[1];
             }
+        } else {
+            // host is empty, default to https://localhost
+            host = "http://localhost";
+            LOGGER.warn("'host' in the specification is empty or undefined. Default to http://localhost.");
         }
-        this.additionalProperties.put("serverPort", port);
+
+        if (additionalProperties.containsKey(SERVER_PORT)) {
+            port = additionalProperties.get(SERVER_PORT).toString();
+        }
+        this.additionalProperties.put(SERVER_PORT, port);
 
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
