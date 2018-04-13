@@ -1,5 +1,10 @@
 {{>licenseInfo}}
+{{#useHttpClient}}
 import { HttpHeaders }                                       from '@angular/common/http';
+{{/useHttpClient}}
+{{^useHttpClient}}
+import { Headers }                                           from '@angular/http';
+{{/useHttpClient}}
 
 import { Observable }                                        from 'rxjs/Observable';
 
@@ -19,7 +24,7 @@ import { Configuration }                                     from '../configurat
     */
 {{/description}}
 export interface {{classname}}Interface {
-    defaultHeaders: HttpHeaders;
+    defaultHeaders: {{#useHttpClient}}Http{{/useHttpClient}}Headers;
     configuration: Configuration;
     [others: string]: any;
 
