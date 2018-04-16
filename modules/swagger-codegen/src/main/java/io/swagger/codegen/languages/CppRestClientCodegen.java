@@ -142,14 +142,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         typeMapping.put("UUID", "utility::string_t");
 
         super.importMapping = new HashMap<String, String>();
-        importMapping.put("std::vector", "#include <vector>");
-        importMapping.put("std::map", "#include <map>");
-        importMapping.put("std::string", "#include <string>");
-        importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
-        importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
-        // TODO: handle in processOpts():
-        importMapping.put("HttpContent", "#include \"" + sourceOutputFolder + "/HttpContent.h\"");
-        importMapping.put("ModelBase", "#include \"" + sourceOutputFolder + "/ModelBase.h\"");
+        updateImportMapping();
 
         addSupportingFiles();
     }
@@ -177,6 +170,17 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("cmake-lists.mustache", "", "CMakeLists.txt"));
+    }
+
+    private void updateImportMapping()
+    {
+        importMapping.put("std::vector", "#include <vector>");
+        importMapping.put("std::map", "#include <map>");
+        importMapping.put("std::string", "#include <string>");
+        importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
+        importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
+        importMapping.put("HttpContent", "#include <" + sourceOutputFolder + "/HttpContent.h>");
+        importMapping.put("ModelBase", "#include <" + sourceOutputFolder + "/ModelBase.h>");
     }
 
     @Override
@@ -211,6 +215,8 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
             sourceOutputFolder = additionalProperties.get(SOURCE_OUTPUT_FOLDER_KEY).toString();
             supportingFiles.clear();
             addSupportingFiles();
+
+            updateImportMapping();
         }
         else
         {
@@ -240,7 +246,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         if (importMapping.containsKey(name)) {
             return importMapping.get(name);
         } else {
-            return "#include \"" + sourceOutputFolder +  "/model/" + name + ".h\"";
+            return "#include <" + sourceOutputFolder +  "/model/" + name + ".h>";
         }
     }
 
