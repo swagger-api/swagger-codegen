@@ -36,7 +36,8 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
-class  PetApi
+
+class  PetApi 
 {
 public:
     PetApi( std::shared_ptr<ApiClient> apiClient );

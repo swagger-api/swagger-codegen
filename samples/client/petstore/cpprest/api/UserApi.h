@@ -35,7 +35,8 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
-class  UserApi
+
+class  UserApi 
 {
 public:
     UserApi( std::shared_ptr<ApiClient> apiClient );
@@ -86,7 +87,7 @@ public:
     /// <remarks>
     /// 
     /// </remarks>
-    /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+    /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
     pplx::task<std::shared_ptr<User>> getUserByName(
         utility::string_t username
     );

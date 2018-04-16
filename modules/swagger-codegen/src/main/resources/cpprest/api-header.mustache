@@ -22,7 +22,23 @@ namespace {{this}} {
 
 using namespace {{modelNamespace}};
 
-class {{declspec}} {{classname}}
+{{#generateInterfacesForApis}}
+class {{declspec}} I{{classname}}
+{
+public:
+    virtual ~I{{classname}}() = default;
+    {{#operation}}
+    virtual pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {{operationId}}(
+        {{#allParams}}
+        {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}} {{paramName}}{{#hasMore}},{{/hasMore}}
+        {{/allParams}}
+    ) = 0;
+    {{/operation}}
+};
+
+{{/generateInterfacesForApis}}
+
+class {{declspec}} {{classname}} {{#generateInterfacesForApis}}: public I{{classname}}{{/generateInterfacesForApis}}
 {
 public:
     {{classname}}( std::shared_ptr<ApiClient> apiClient );
@@ -41,7 +57,7 @@ public:
         {{#allParams}}
         {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}} {{paramName}}{{#hasMore}},{{/hasMore}}
         {{/allParams}}
-    );
+    ){{#generateInterfacesForApis}} override{{/generateInterfacesForApis}};
     {{/operation}}
 
 protected:

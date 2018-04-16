@@ -35,7 +35,8 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
-class  StoreApi
+
+class  StoreApi 
 {
 public:
     StoreApi( std::shared_ptr<ApiClient> apiClient );
