@@ -58,29 +58,32 @@ namespace IO.Swagger.Models
         /// </summary>
         [DataMember(Name="tags")]
         public List<Tag> Tags { get; set; }
+
         /// <summary>
         /// pet status in the store
         /// </summary>
         /// <value>pet status in the store</value>
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public enum StatusEnum
-        { 
+        {
+            
             /// <summary>
-            /// Enum AvailableEnum for "available"
+            /// Enum AvailableEnum for available
             /// </summary>
             [EnumMember(Value = "available")]
-            AvailableEnum,
+            AvailableEnum = 1,
             
             /// <summary>
-            /// Enum PendingEnum for "pending"
+            /// Enum PendingEnum for pending
             /// </summary>
             [EnumMember(Value = "pending")]
-            PendingEnum,
+            PendingEnum = 2,
             
             /// <summary>
-            /// Enum SoldEnum for "sold"
+            /// Enum SoldEnum for sold
             /// </summary>
             [EnumMember(Value = "sold")]
-            SoldEnum
+            SoldEnum = 3
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ import Foundation
 
 /** This is an empty model with no properties and only additionalProperties of type int32 */
 
-open class ModelWithPropertiesAndAdditionalProperties: Codable {
+public struct ModelWithPropertiesAndAdditionalProperties: Codable {
 
     public var myIntegerReq: Int
     public var myIntegerOpt: Int?
@@ -21,6 +21,16 @@ open class ModelWithPropertiesAndAdditionalProperties: Codable {
     public var myPrimitiveArrayReq: [AllPrimitives]
     public var myPrimitiveArrayOpt: [AllPrimitives]?
 
+    public init(myIntegerReq: Int, myIntegerOpt: Int?, myPrimitiveReq: AllPrimitives, myPrimitiveOpt: AllPrimitives?, myStringArrayReq: [String], myStringArrayOpt: [String]?, myPrimitiveArrayReq: [AllPrimitives], myPrimitiveArrayOpt: [AllPrimitives]?) {
+        self.myIntegerReq = myIntegerReq
+        self.myIntegerOpt = myIntegerOpt
+        self.myPrimitiveReq = myPrimitiveReq
+        self.myPrimitiveOpt = myPrimitiveOpt
+        self.myStringArrayReq = myStringArrayReq
+        self.myStringArrayOpt = myStringArrayOpt
+        self.myPrimitiveArrayReq = myPrimitiveArrayReq
+        self.myPrimitiveArrayOpt = myPrimitiveArrayOpt
+    }
     public var additionalProperties: [String:String] = [:]
 
     public subscript(key: String) -> String? {
@@ -36,17 +46,6 @@ open class ModelWithPropertiesAndAdditionalProperties: Codable {
         }
     }
 
-    public init(myIntegerReq: Int, myIntegerOpt: Int?, myPrimitiveReq: AllPrimitives, myPrimitiveOpt: AllPrimitives?, myStringArrayReq: [String], myStringArrayOpt: [String]?, myPrimitiveArrayReq: [AllPrimitives], myPrimitiveArrayOpt: [AllPrimitives]?) {
-        self.myIntegerReq = myIntegerReq
-        self.myIntegerOpt = myIntegerOpt
-        self.myPrimitiveReq = myPrimitiveReq
-        self.myPrimitiveOpt = myPrimitiveOpt
-        self.myStringArrayReq = myStringArrayReq
-        self.myStringArrayOpt = myStringArrayOpt
-        self.myPrimitiveArrayReq = myPrimitiveArrayReq
-        self.myPrimitiveArrayOpt = myPrimitiveArrayOpt
-    }
-
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
@@ -57,26 +56,26 @@ open class ModelWithPropertiesAndAdditionalProperties: Codable {
         try container.encodeIfPresent(myIntegerOpt, forKey: "myIntegerOpt")
         try container.encode(myPrimitiveReq, forKey: "myPrimitiveReq")
         try container.encodeIfPresent(myPrimitiveOpt, forKey: "myPrimitiveOpt")
-        try container.encodeArray(myStringArrayReq, forKey: "myStringArrayReq")
-        try container.encodeArrayIfPresent(myStringArrayOpt, forKey: "myStringArrayOpt")
-        try container.encodeArray(myPrimitiveArrayReq, forKey: "myPrimitiveArrayReq")
-        try container.encodeArrayIfPresent(myPrimitiveArrayOpt, forKey: "myPrimitiveArrayOpt")
+        try container.encode(myStringArrayReq, forKey: "myStringArrayReq")
+        try container.encodeIfPresent(myStringArrayOpt, forKey: "myStringArrayOpt")
+        try container.encode(myPrimitiveArrayReq, forKey: "myPrimitiveArrayReq")
+        try container.encodeIfPresent(myPrimitiveArrayOpt, forKey: "myPrimitiveArrayOpt")
         try container.encodeMap(additionalProperties)
     }
 
     // Decodable protocol methods
 
-    public required init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: String.self)
 
         myIntegerReq = try container.decode(Int.self, forKey: "myIntegerReq")
         myIntegerOpt = try container.decodeIfPresent(Int.self, forKey: "myIntegerOpt")
         myPrimitiveReq = try container.decode(AllPrimitives.self, forKey: "myPrimitiveReq")
         myPrimitiveOpt = try container.decodeIfPresent(AllPrimitives.self, forKey: "myPrimitiveOpt")
-        myStringArrayReq = try container.decodeArray(String.self, forKey: "myStringArrayReq")
-        myStringArrayOpt = try container.decodeArrayIfPresent(String.self, forKey: "myStringArrayOpt")
-        myPrimitiveArrayReq = try container.decodeArray(AllPrimitives.self, forKey: "myPrimitiveArrayReq")
-        myPrimitiveArrayOpt = try container.decodeArrayIfPresent(AllPrimitives.self, forKey: "myPrimitiveArrayOpt")
+        myStringArrayReq = try container.decode([String].self, forKey: "myStringArrayReq")
+        myStringArrayOpt = try container.decodeIfPresent([String].self, forKey: "myStringArrayOpt")
+        myPrimitiveArrayReq = try container.decode([AllPrimitives].self, forKey: "myPrimitiveArrayReq")
+        myPrimitiveArrayOpt = try container.decodeIfPresent([AllPrimitives].self, forKey: "myPrimitiveArrayOpt")
         var nonAdditionalPropertyKeys = Set<String>()
         nonAdditionalPropertyKeys.insert("myIntegerReq")
         nonAdditionalPropertyKeys.insert("myIntegerOpt")
@@ -88,5 +87,8 @@ open class ModelWithPropertiesAndAdditionalProperties: Codable {
         nonAdditionalPropertyKeys.insert("myPrimitiveArrayOpt")
         additionalProperties = try container.decodeMap(String.self, excludedKeys: nonAdditionalPropertyKeys)
     }
+
+
+
 }
 

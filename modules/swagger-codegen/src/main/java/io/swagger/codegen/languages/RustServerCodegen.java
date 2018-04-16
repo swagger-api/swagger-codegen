@@ -1,13 +1,6 @@
 package io.swagger.codegen.languages;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import io.swagger.codegen.*;
 import io.swagger.models.*;
 import io.swagger.models.parameters.BodyParameter;
@@ -21,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
@@ -33,13 +24,17 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
     private HashMap<String, String> modelXmlNames = new HashMap<String, String>();
 
+    private static final String NO_FORMAT = "%%NO_FORMAT";
+
     protected String apiVersion = "1.0.0";
+    protected String serverHost = "localhost";
     protected int serverPort = 8080;
     protected String projectName = "swagger-server";
     protected String apiPath = "rust-server";
     protected String packageName;
     protected String packageVersion;
     protected String externCrateName;
+    protected Map<String, Map<String, String>> pathSetMap = new HashMap<String, Map<String, String>>();
 
     public RustServerCodegen() {
         super();
@@ -148,7 +143,6 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("apiPath", apiPath);
 
         /*
@@ -162,12 +156,14 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("lib.mustache", "src", "lib.rs"));
         supportingFiles.add(new SupportingFile("models.mustache", "src", "models.rs"));
-        supportingFiles.add(new SupportingFile("server.mustache", "src", "server.rs"));
-        supportingFiles.add(new SupportingFile("client.mustache", "src", "client.rs"));
+        supportingFiles.add(new SupportingFile("server-mod.mustache", "src/server", "mod.rs"));
+        supportingFiles.add(new SupportingFile("server-auth.mustache", "src/server", "auth.rs"));
+        supportingFiles.add(new SupportingFile("client-mod.mustache", "src/client", "mod.rs"));
         supportingFiles.add(new SupportingFile("mimetypes.mustache", "src", "mimetypes.rs"));
         supportingFiles.add(new SupportingFile("example-server.mustache", "examples", "server.rs"));
         supportingFiles.add(new SupportingFile("example-client.mustache", "examples", "client.rs"));
         supportingFiles.add(new SupportingFile("example-server_lib.mustache", "examples/server_lib", "mod.rs"));
+        supportingFiles.add(new SupportingFile("example-server_server.mustache", "examples/server_lib", "server.rs"));
         supportingFiles.add(new SupportingFile("example-ca.pem", "examples", "ca.pem"));
         supportingFiles.add(new SupportingFile("example-server-chain.pem", "examples", "server-chain.pem"));
         supportingFiles.add(new SupportingFile("example-server-key.pem", "examples", "server-key.pem"));
@@ -257,6 +253,23 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             versionComponents.add("0");
         }
         info.setVersion(StringUtils.join(versionComponents, "."));
+
+        String host = swagger.getHost();
+        if (host != null) {
+            String[] parts = host.split(":");
+            if (parts.length > 1) {
+                serverHost = parts[0];
+                try {
+                    serverPort = Integer.valueOf(parts[1]);
+                } catch (NumberFormatException e) {
+                    LOGGER.warn("Port of Swagger host is not an integer : " + host, e);
+                }
+            } else {
+                serverHost = host;
+            }
+        }
+        additionalProperties.put("serverHost", serverHost);
+        additionalProperties.put("serverPort", serverPort);
     }
 
     @Override
@@ -269,7 +282,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * those terms here.  This logic is only called if a variable matches the reserved words
      *
      * @return the escaped term
      */
@@ -429,75 +442,66 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
+    boolean isMimetypeXml(String mimetype) {
+        return mimetype.toLowerCase().startsWith("application/xml");
+    }
+
+    boolean isMimetypePlainText(String mimetype) {
+        return mimetype.toLowerCase().startsWith("text/plain");
+    }
+
+    boolean isMimetypeWwwFormUrlEncoded(String mimetype) {
+        return mimetype.toLowerCase().startsWith("application/x-www-form-urlencoded");
+    }
+
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+
+        // The Rust code will need to contain a series of regular expressions.
+        // For performance, we'll construct these at start-of-day and re-use
+        // them.  That means we need labels for them.
+        //
+        // Construct a Rust constant (uppercase) token name, and ensure it's
+        // unique using a numeric tie-breaker if required.
+        String basePathId = sanitizeName(op.path.replace("/", "_").replace("{", "").replace("}", "").replaceAll("^_", "")).toUpperCase();
+        String pathId = basePathId;
+        int pathIdTiebreaker = 2;
+        boolean found = false;
+        while (pathSetMap.containsKey(pathId)) {
+            Map<String, String> pathSetEntry = pathSetMap.get(pathId);
+            if (pathSetEntry.get("path").equals(op.path)) {
+                found = true;
+                break;
+            }
+            pathId = basePathId + pathIdTiebreaker;
+            pathIdTiebreaker++;
+        }
+
+        // Save off the regular expression and path details in the
+        // "pathSetMap", which we'll add to the source document that will be
+        // processed by the templates.
+        if (!found) {
+            Map<String, String> pathSetEntry = new HashMap<String, String>();
+            pathSetEntry.put("path", op.path);
+            pathSetEntry.put("PATH_ID", pathId);
+            if (!op.pathParams.isEmpty()) {
+                pathSetEntry.put("hasPathParams", "true");
+            }
+            // Don't prefix with '^' so that the templates can put the
+            // basePath on the front.
+            pathSetEntry.put("pathRegEx", op.path.replace("{", "(?P<").replace("}", ">[^/?#]*)") + "$");
+            pathSetMap.put(pathId, pathSetEntry);
+        }
+
         op.vendorExtensions.put("operation_id", underscore(op.operationId));
         op.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
         op.vendorExtensions.put("path", op.path.replace("{", ":").replace("}", ""));
+        op.vendorExtensions.put("PATH_ID", pathId);
+        op.vendorExtensions.put("hasPathParams", !op.pathParams.isEmpty());
         op.vendorExtensions.put("HttpMethod", Character.toUpperCase(op.httpMethod.charAt(0)) + op.httpMethod.substring(1).toLowerCase());
-        op.vendorExtensions.put("httpmethod", op.httpMethod.toLowerCase());
         for (CodegenParameter param : op.allParams) {
-            String example = null;
-
-            if (param.isString) {
-                if (param.dataFormat != null && param.dataFormat.equals("byte")) {
-                    param.vendorExtensions.put("formatString", "\\\"{:?}\\\"");
-                    example = "swagger::ByteArray(\"" + ((param.example != null) ? param.example : "") + "\".to_string().into_bytes())";
-                } else {
-                    param.vendorExtensions.put("formatString", "\\\"{}\\\"");
-                    example = "\"" + ((param.example != null) ? param.example : "") + "\".to_string()";
-                }
-            } else if (param.isPrimitiveType) {
-                if ((param.isByteArray) ||
-                    (param.isBinary)) {
-                    // Binary primitive types don't implement `Display`.
-                    param.vendorExtensions.put("formatString", "{:?}");
-                    example = "swagger::ByteArray(Vec::from(\"" + ((param.example != null) ? param.example : "") + "\"))";
-                } else {
-                    param.vendorExtensions.put("formatString", "{}");
-                    example = (param.example != null) ? param.example : "";
-                }
-            } else if (param.isListContainer) {
-                param.vendorExtensions.put("formatString", "{:?}");
-                example = (param.example != null) ? param.example : "&Vec::new()";
-            } else if (param.isFile) {
-                param.vendorExtensions.put("formatString", "{:?}");
-                op.vendorExtensions.put("hasFile", true);
-                additionalProperties.put("apiHasFile", true);
-                example = "Box::new(stream::once(Ok(b\"hello\".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>";
-            } else {
-                param.vendorExtensions.put("formatString", "{:?}");
-                if (param.example != null) {
-                    example = "serde_json::from_str::<" + param.dataType + ">(\"" + param.example + "\").expect(\"Failed to parse JSON example\")";
-                }
-            }
-
-            if (param.required) {
-                if (example != null) {
-                    param.vendorExtensions.put("example", example);
-                } else if (param.isListContainer) {
-                    // Use the empty list if we don't have an example
-                    param.vendorExtensions.put("example", "&Vec::new()");
-                }
-                else {
-                    // If we don't have an example that we can provide, we need to disable the client example, as it won't build.
-                    param.vendorExtensions.put("example", "???");
-                    op.vendorExtensions.put("noClientExample", Boolean.TRUE);
-                }
-            } else if ((param.dataFormat != null)&&((param.dataFormat.equals("date-time")) || (param.dataFormat.equals("date")))) {
-                param.vendorExtensions.put("formatString", "{:?}");
-                param.vendorExtensions.put("example", "None");
-            } else {
-                // Not required, so override the format string and example
-                param.vendorExtensions.put("formatString", "{:?}");
-                if (param.isFile) {
-                    // Optional file types are wrapped in a future
-                    param.vendorExtensions.put("example", (example != null) ? "Box::new(future::ok(Some(" + example + "))) as Box<Future<Item=_, Error=_> + Send>" : "None");
-                } else {
-                    param.vendorExtensions.put("example", (example != null) ? "Some(" + example + ")" : "None");
-                }
-            }
+            processParam(param, op);
         }
 
         List<String> consumes = new ArrayList<String>();
@@ -512,17 +516,21 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
         }
 
+        boolean consumesPlainText = false;
         boolean consumesXml = false;
         // if "consumes" is defined (per operation or using global definition)
         if (consumes != null && !consumes.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
-            for (String key : consumes) {
+            for (String mimeType : consumes) {
                 Map<String, String> mediaType = new HashMap<String, String>();
-                String mimeType = processMimeType(key);
 
-                if (mimeType.startsWith("Application/Xml")) {
+                if (isMimetypeXml(mimeType)) {
                     additionalProperties.put("usesXml", true);
                     consumesXml = true;
+                } else if (isMimetypePlainText(mimeType)) {
+                    consumesPlainText = true;
+                } else if (isMimetypeWwwFormUrlEncoded(mimeType)) {
+                    additionalProperties.put("usesUrlEncodedForm", true);
                 }
 
                 mediaType.put("mediaType", mimeType);
@@ -545,15 +553,17 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         boolean producesXml = false;
+        boolean producesPlainText = false;
         if (produces != null && !produces.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
-            for (String key : produces) {
+            for (String mimeType : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
-                String mimeType = processMimeType(key);
 
-                if (mimeType.startsWith("Application/Xml")) {
+                if (isMimetypeXml(mimeType)) {
                     additionalProperties.put("usesXml", true);
                     producesXml = true;
+                } else if (isMimetypePlainText(mimeType)) {
+                    producesPlainText = true;
                 }
 
                 mediaType.put("mediaType", mimeType);
@@ -564,7 +574,6 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         if (op.bodyParam != null) {
-
             if (paramHasXmlNamespace(op.bodyParam, definitions)){
                 op.bodyParam.vendorExtensions.put("has_namespace", "true");
             }
@@ -572,13 +581,19 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 op.bodyParam.vendorExtensions.put("model_key", key);
             }
 
+            // Default to consuming json
             op.bodyParam.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
             if (consumesXml) {
                 op.bodyParam.vendorExtensions.put("consumesXml", true);
+            } else if (consumesPlainText) {
+                op.bodyParam.vendorExtensions.put("consumesPlainText", true);
+            } else {
+                op.bodyParam.vendorExtensions.put("consumesJson", true);
             }
 
         }
         for (CodegenParameter param : op.bodyParams) {
+            processParam(param, op);
 
             if (paramHasXmlNamespace(param, definitions)){
                 param.vendorExtensions.put("has_namespace", "true");
@@ -586,23 +601,51 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
 
             param.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
 
+            // Default to producing json if nothing else is specified
             if (consumesXml) {
                 param.vendorExtensions.put("consumesXml", true);
+            } else if (consumesPlainText) {
+                param.vendorExtensions.put("consumesPlainText", true);
+            } else {
+                param.vendorExtensions.put("consumesJson", true);
             }
         }
         for (CodegenParameter param : op.headerParams) {
+            // If a header uses UUIDs, we need to import the UUID package.
+            if (param.dataType.equals("uuid::Uuid")) {
+                additionalProperties.put("apiUsesUuid", true);
+            }
+            processParam(param, op);
+
             // Give header params a name in camel case. CodegenParameters don't have a nameInCamelCase property.
             param.vendorExtensions.put("typeName", toModelName(param.baseName));
         }
+        for (CodegenParameter param : op.formParams) {
+            processParam(param, op);
+        }
         for (CodegenResponse rsp : op.responses) {
-            rsp.message = camelize(rsp.message.split("[^A-Za-z ]")[0].replace(" ", "_"));
+            String[] words = rsp.message.split("[^A-Za-z ]");
+            String responseId;
+            if (rsp.vendorExtensions.containsKey("x-responseId")) {
+                responseId = (String)rsp.vendorExtensions.get("x-responseId");
+            } else if (words.length != 0) {
+                responseId = camelize(words[0].replace(" ", "_"));
+            } else {
+                responseId = "Status" + rsp.code;
+            }
+            rsp.vendorExtensions.put("x-responseId", responseId);
+            rsp.vendorExtensions.put("x-uppercaseResponseId", underscore(responseId).toUpperCase());
             rsp.vendorExtensions.put("uppercase_operation_id", underscore(op.operationId).toUpperCase());
-            rsp.vendorExtensions.put("uppercase_message", underscore(rsp.message).toUpperCase());
             if (rsp.dataType != null) {
                 rsp.vendorExtensions.put("uppercase_data_type", (rsp.dataType.replace("models::", "")).toUpperCase());
 
+                // Default to producing json if nothing else is specified
                 if (producesXml) {
                     rsp.vendorExtensions.put("producesXml", true);
+                } else if (producesPlainText) {
+                    rsp.vendorExtensions.put("producesPlainText", true);
+                } else {
+                    rsp.vendorExtensions.put("producesJson", true);
                 }
 
                 // Check whether we're returning an object with a defined XML namespace.
@@ -626,10 +669,16 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 }
             }
             for (CodegenProperty header : rsp.headers) {
+                if (header.datatype.equals("uuid::Uuid")) {
+                    additionalProperties.put("apiUsesUuid", true);
+                }
                 header.nameInCamelCase = toModelName(header.baseName);
             }
         }
         for (CodegenProperty header : op.responseHeaders) {
+            if (header.datatype.equals("uuid::Uuid")) {
+                    additionalProperties.put("apiUsesUuid", true);
+            }
             header.nameInCamelCase = toModelName(header.baseName);
         }
 
@@ -813,6 +862,27 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
                 LOGGER.error(e.getMessage(), e);
             }
         }
+
+        // We previously built a mapping from path to path ID and regular
+        // expression - see fromOperation for details.  Sort it and add an
+        // index, and then add it to the objects that we're about to pass to
+        // the templates to process.
+        List<Map.Entry<String, Map<String, String>>> pathSetEntryList = new ArrayList(pathSetMap.entrySet());
+        Collections.sort(pathSetEntryList, new Comparator<Map.Entry<String, Map<String, String>>>() {
+            public int compare(Map.Entry<String, Map<String, String>> a, Map.Entry<String, Map<String, String>> b) {
+                return a.getValue().get("path").compareTo(b.getValue().get("path"));
+            }
+        });
+        List pathSet = new ArrayList<Map<String, String>>();
+        int index = 0;
+        for (Map.Entry<String, Map<String, String>> pathSetEntry : pathSetEntryList) {
+            Map<String, String> pathSetEntryValue = pathSetEntry.getValue();
+            pathSetEntryValue.put("index", Integer.toString(index));
+            index++;
+            pathSet.add(pathSetEntryValue);
+        }
+        objs.put("pathSet", pathSet);
+
         return super.postProcessSupportingFileData(objs);
     }
 
@@ -869,12 +939,47 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             }
         }
 
-        // Handle custom unsigned integer formats.
         if ("integer".equals(property.baseType)) {
+            // custom integer formats (legacy)
             if ("uint32".equals(property.dataFormat)) {
                 property.datatype = "u32";
             } else if ("uint64".equals(property.dataFormat)) {
                 property.datatype = "u64";
+
+            } else {
+                // match int type to schema constraints
+                Long inclusiveMinimum = property.minimum != null ? Long.parseLong(property.minimum): null;
+                if (inclusiveMinimum != null && property.exclusiveMinimum) {
+                    inclusiveMinimum++;
+                }
+
+                // a signed int is required unless a minimum greater than zero is set
+                boolean unsigned = inclusiveMinimum != null && inclusiveMinimum >= 0;
+
+                Long inclusiveMaximum = property.maximum != null ? Long.parseLong(property.maximum): null;
+                if (inclusiveMaximum != null && property.exclusiveMaximum) {
+                    inclusiveMaximum--;
+                }
+
+                switch (property.dataFormat == null ? NO_FORMAT : property.dataFormat) {
+                    // standard swagger formats
+                    case "int32":
+                        property.datatype = unsigned ? "u32" : "i32";
+                        break;
+
+                    case "int64":
+                        property.datatype = unsigned ? "u64" : "i64";
+                        break;
+
+                    case NO_FORMAT:
+                        property.datatype = matchingIntType(unsigned, inclusiveMinimum, inclusiveMaximum);
+                        break;
+
+                    default:
+                        // unknown format
+                        LOGGER.warn("The integer format '{}' is not recognized and will be ignored.", property.dataFormat);
+                        property.datatype = matchingIntType(unsigned, inclusiveMinimum, inclusiveMaximum);
+                }
             }
         }
 
@@ -883,6 +988,46 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         if (!property.required) {
             property.defaultValue = (property.defaultValue != null) ? "Some(" + property.defaultValue + ")" : "None";
         }
+    }
+
+    static long requiredBits(Long bound, boolean unsigned) {
+        if (bound == null) return 0;
+
+        if (unsigned) {
+            if (bound < 0) {
+                throw new RuntimeException("Unsigned bound is negative: " + bound);
+            }
+            return 65 - Long.numberOfLeadingZeros(bound >> 1);
+        }
+
+        return 65 - Long.numberOfLeadingZeros(
+                // signed bounds go from (-n) to (n - 1), i.e. i8 goes from -128 to 127
+                bound < 0 ? Math.abs(bound) - 1 : bound);
+    }
+
+    static String matchingIntType(boolean unsigned, Long inclusiveMin, Long inclusiveMax) {
+        long requiredMinBits = requiredBits(inclusiveMin, unsigned);
+        long requiredMaxBits = requiredBits(inclusiveMax, unsigned);
+        long requiredBits = Math.max(requiredMinBits, requiredMaxBits);
+
+        if (requiredMaxBits == 0 && requiredMinBits <= 16) {
+            // rust 'size' types are arch-specific and thus somewhat loose
+            // so they are used when no format or maximum are specified
+            // and as long as minimum stays within plausible smallest ptr size (16 bits)
+            // this way all rust types are obtainable without defining custom formats
+            // this behavior (default int size) could also follow a generator flag
+            return unsigned ? "usize" : "isize";
+
+        } else if (requiredBits <= 8) {
+            return unsigned ? "u8" : "i8";
+
+        } else if (requiredBits <= 16) {
+            return unsigned ? "u16" : "i16";
+
+        } else if (requiredBits <= 32) {
+            return unsigned ? "u32" : "i32";
+        }
+        return unsigned ? "u64" : "i64";
     }
 
     @Override
@@ -908,56 +1053,66 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
         return false;
     }
 
-    private String processMimeType(String mimeType){
-        // Transform mime type into a form that the hyper mime! macro can handle.
-        String result = "";
+    private void processParam(CodegenParameter param, CodegenOperation op) {
+        String example = null;
 
-        String[] split_attributes = mimeType.split(";");
-        String media = split_attributes[0];
-        String[] mediaTypes = media.split("/");
-
-        if (mediaTypes.length == 2) {
-
-            if (mediaTypes[0].equals("*")){
-                result += "Star";
+        if (param.isString) {
+            if (param.dataFormat != null && param.dataFormat.equals("byte")) {
+                param.vendorExtensions.put("formatString", "\\\"{:?}\\\"");
+                example = "swagger::ByteArray(\"" + ((param.example != null) ? param.example : "") + "\".to_string().into_bytes())";
             } else {
-                result += escapeText(escapeQuotationMark(initialCaps(mediaTypes[0])));
+                param.vendorExtensions.put("formatString", "\\\"{}\\\"");
+                example = "\"" + ((param.example != null) ? param.example : "") + "\".to_string()";
             }
-
-            result += "/";
-
-            if (mediaTypes[1].equals("*")) {
-                result += "Star";
+        } else if (param.isPrimitiveType) {
+            if ((param.isByteArray) ||
+                (param.isBinary)) {
+                // Binary primitive types don't implement `Display`.
+                param.vendorExtensions.put("formatString", "{:?}");
+                example = "swagger::ByteArray(Vec::from(\"" + ((param.example != null) ? param.example : "") + "\"))";
             } else {
-                result += escapeText(escapeQuotationMark(initialCaps(mediaTypes[1])));
+                param.vendorExtensions.put("formatString", "{}");
+                example = (param.example != null) ? param.example : "";
             }
+        } else if (param.isListContainer) {
+            param.vendorExtensions.put("formatString", "{:?}");
+            example = (param.example != null) ? param.example : "&Vec::new()";
+        } else if (param.isFile) {
+            param.vendorExtensions.put("formatString", "{:?}");
+            op.vendorExtensions.put("hasFile", true);
+            additionalProperties.put("apiHasFile", true);
+            example = "Box::new(stream::once(Ok(b\"hello\".to_vec()))) as Box<Stream<Item=_, Error=_> + Send>";
         } else {
-            LOGGER.error("Failed to parse media type: "
-                         + mimeType
-                         + ", media types should have exactly one /");
-        }
-
-        if (split_attributes.length == 2) {
-            String attributes = "";
-            String[] attrs = split_attributes[1].split(",");
-
-            for (String attr : attrs) {
-                String[] keyValuePair =attr.split("=");
-                if (keyValuePair.length == 2) {
-                    attributes += "(\""
-                                + escapeText(escapeQuotationMark(keyValuePair[0].trim()))
-                                + "\")=(\""
-                                + escapeText(escapeQuotationMark(keyValuePair[1].trim()))
-                                + "\")";
-                } else {
-                    LOGGER.error("Failed to parse parameter attributes: "
-                                 + split_attributes[1]
-                                 + ", attributes must be a comma separated list of 'key=value' pairs");
-                }
+            param.vendorExtensions.put("formatString", "{:?}");
+            if (param.example != null) {
+                example = "serde_json::from_str::<" + param.dataType + ">(\"" + param.example + "\").expect(\"Failed to parse JSON example\")";
             }
-            result += "; " + attributes;
         }
 
-        return result;
+        if (param.required) {
+            if (example != null) {
+                param.vendorExtensions.put("example", example);
+            } else if (param.isListContainer) {
+                // Use the empty list if we don't have an example
+                param.vendorExtensions.put("example", "&Vec::new()");
+            }
+            else {
+                // If we don't have an example that we can provide, we need to disable the client example, as it won't build.
+                param.vendorExtensions.put("example", "???");
+                op.vendorExtensions.put("noClientExample", Boolean.TRUE);
+            }
+        } else if ((param.dataFormat != null)&&((param.dataFormat.equals("date-time")) || (param.dataFormat.equals("date")))) {
+            param.vendorExtensions.put("formatString", "{:?}");
+            param.vendorExtensions.put("example", "None");
+        } else {
+            // Not required, so override the format string and example
+            param.vendorExtensions.put("formatString", "{:?}");
+            if (param.isFile) {
+                // Optional file types are wrapped in a future
+                param.vendorExtensions.put("example", (example != null) ? "Box::new(future::ok(Some(" + example + "))) as Box<Future<Item=_, Error=_> + Send>" : "None");
+            } else {
+                param.vendorExtensions.put("example", (example != null) ? "Some(" + example + ")" : "None");
+            }
+        }
     }
 }

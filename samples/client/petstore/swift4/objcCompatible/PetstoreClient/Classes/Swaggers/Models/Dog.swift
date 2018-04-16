@@ -9,30 +9,18 @@ import Foundation
 
 
 
-open class Dog: Animal {
+public struct Dog: Codable {
 
+    public var className: String
+    public var color: String?
     public var breed: String?
 
-
-    public init(breed: String?) {
+    public init(className: String, color: String?, breed: String?) {
+        self.className = className
+        self.color = color
         self.breed = breed
     }
 
-    // Encodable protocol methods
 
-    public override func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(breed, forKey: "breed")
-    }
-
-    // Decodable protocol methods
-
-    public override required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        breed = try container.decodeIfPresent(String.self, forKey: "breed")
-    }
 }
 

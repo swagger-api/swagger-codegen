@@ -31,50 +31,50 @@ namespace IO.Swagger.Model
     public partial class MyClassWithOptionalInlineEnum :  IEquatable<MyClassWithOptionalInlineEnum>, IValidatableObject
     {
         /// <summary>
-        /// Gets or Sets Days
+        /// Defines Days
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum DaysEnum
         {
             
             /// <summary>
-            /// Enum Sun for "sun"
+            /// Enum Sun for value: sun
             /// </summary>
             [EnumMember(Value = "sun")]
             Sun = 1,
             
             /// <summary>
-            /// Enum Mon for "mon"
+            /// Enum Mon for value: mon
             /// </summary>
             [EnumMember(Value = "mon")]
             Mon = 2,
             
             /// <summary>
-            /// Enum Tue for "tue"
+            /// Enum Tue for value: tue
             /// </summary>
             [EnumMember(Value = "tue")]
             Tue = 3,
             
             /// <summary>
-            /// Enum Wed for "wed"
+            /// Enum Wed for value: wed
             /// </summary>
             [EnumMember(Value = "wed")]
             Wed = 4,
             
             /// <summary>
-            /// Enum Thu for "thu"
+            /// Enum Thu for value: thu
             /// </summary>
             [EnumMember(Value = "thu")]
             Thu = 5,
             
             /// <summary>
-            /// Enum Fri for "fri"
+            /// Enum Fri for value: fri
             /// </summary>
             [EnumMember(Value = "fri")]
             Fri = 6,
             
             /// <summary>
-            /// Enum Sat for "sat"
+            /// Enum Sat for value: sat
             /// </summary>
             [EnumMember(Value = "sat")]
             Sat = 7
@@ -88,14 +88,14 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MyClassWithOptionalInlineEnum" /> class.
         /// </summary>
-        /// <param name="Quarantine">Quarantine.</param>
-        /// <param name="Grayware">Grayware.</param>
-        /// <param name="Days">Days.</param>
-        public MyClassWithOptionalInlineEnum(bool? Quarantine = default(bool?), bool? Grayware = default(bool?), DaysEnum? Days = default(DaysEnum?))
+        /// <param name="quarantine">quarantine.</param>
+        /// <param name="grayware">grayware.</param>
+        /// <param name="days">days.</param>
+        public MyClassWithOptionalInlineEnum(bool? quarantine = default(bool?), bool? grayware = default(bool?), DaysEnum? days = default(DaysEnum?))
         {
-            this.Quarantine = Quarantine;
-            this.Grayware = Grayware;
-            this.Days = Days;
+            this.Quarantine = quarantine;
+            this.Grayware = grayware;
+            this.Days = days;
         }
         
         /// <summary>
@@ -130,7 +130,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

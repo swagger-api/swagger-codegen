@@ -29,8 +29,8 @@ open class Response<T> {
     public convenience init(response: HTTPURLResponse, body: T?) {
         let rawHeader = response.allHeaderFields
         var header = [String:String]()
-        for (key, value) in rawHeader {
-            header[key as! String] = value as? String
+        for case let (key, value) as (String, String) in rawHeader {
+            header[key] = value
         }
         self.init(statusCode: response.statusCode, header: header, body: body)
     }
@@ -185,7 +185,7 @@ class Decoders {
             return .success(nil)
         }
     }
-    
+
     static func decodeOptional<T>(clazz: [T].Type, source: AnyObject?) -> Decoded<[T]?> where T: RawRepresentable {
         if let source = source as? [AnyObject] {
             var values = [T]()

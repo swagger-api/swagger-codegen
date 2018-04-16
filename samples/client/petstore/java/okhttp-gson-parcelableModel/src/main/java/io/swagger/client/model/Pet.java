@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -101,6 +102,8 @@ public class Pet implements Parcelable {
   @SerializedName("status")
   private StatusEnum status = null;
 
+  public Pet() {
+  }
   public Pet id(Long id) {
     this.id = id;
     return this;
@@ -272,27 +275,17 @@ public class Pet implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(id);
-
     out.writeValue(category);
-
     out.writeValue(name);
-
     out.writeValue(photoUrls);
-
     out.writeValue(tags);
-
     out.writeValue(status);
   }
 
-  public Pet() {
-    super();
-  }
-
   Pet(Parcel in) {
-    
     id = (Long)in.readValue(null);
     category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);

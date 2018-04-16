@@ -113,6 +113,8 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
+        supportingFiles.add(new SupportingFile("object-header.mustache", "", "Object.h"));
+        supportingFiles.add(new SupportingFile("object-source.mustache", "", "Object.cpp"));
         supportingFiles.add(new SupportingFile("apiclient-header.mustache", "", "ApiClient.h"));
         supportingFiles.add(new SupportingFile("apiclient-source.mustache", "", "ApiClient.cpp"));
         supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", "", "ApiConfiguration.h"));
@@ -156,13 +158,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         importMapping.put("ModelBase", "#include \"ModelBase.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
         importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
-    }
-
-    protected void addOption(String key, String description, String defaultValue) {
-        CliOption option = new CliOption(key, description);
-        if (defaultValue != null)
-            option.defaultValue(defaultValue);
-        cliOptions.add(option);
     }
 
     @Override

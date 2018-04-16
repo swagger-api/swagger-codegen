@@ -3,6 +3,7 @@ package io.swagger.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -52,6 +53,7 @@ public enum JustSymbolEnum {
   @ApiModelProperty(value = "")
   private JustSymbolEnum justSymbol = null;
 
+
 @XmlType(name="ArrayEnumEnum")
 @XmlEnum(String.class)
 public enum ArrayEnumEnum {
@@ -85,8 +87,7 @@ public enum ArrayEnumEnum {
 }
 
   @ApiModelProperty(value = "")
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
-
+  private List<ArrayEnumEnum> arrayEnum = null;
  /**
    * Get justSymbol
    * @return justSymbol

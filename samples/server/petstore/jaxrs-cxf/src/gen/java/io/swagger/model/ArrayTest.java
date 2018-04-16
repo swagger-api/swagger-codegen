@@ -4,6 +4,7 @@ import io.swagger.model.ReadOnlyFirst;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,12 +19,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ArrayTest  {
   
   @ApiModelProperty(value = "")
-  private List<String> arrayOfString = new ArrayList<String>();
-  @ApiModelProperty(value = "")
-  private List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
-  @ApiModelProperty(value = "")
-  private List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+  private List<String> arrayOfString = null;
 
+  @ApiModelProperty(value = "")
+  @Valid
+  private List<List<Long>> arrayArrayOfInteger = null;
+
+  @ApiModelProperty(value = "")
+  @Valid
+  private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
  /**
    * Get arrayOfString
    * @return arrayOfString

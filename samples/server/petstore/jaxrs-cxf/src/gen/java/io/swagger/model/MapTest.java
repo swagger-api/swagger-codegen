@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,7 +19,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MapTest  {
   
   @ApiModelProperty(value = "")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  @Valid
+  private Map<String, Map<String, String>> mapMapOfString = null;
+
 
 @XmlType(name="InnerEnum")
 @XmlEnum(String.class)
@@ -53,8 +56,7 @@ public enum InnerEnum {
 }
 
   @ApiModelProperty(value = "")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
-
+  private Map<String, InnerEnum> mapOfEnumString = null;
  /**
    * Get mapMapOfString
    * @return mapMapOfString

@@ -16,7 +16,7 @@ import { Tag } from './tag';
 /**
  * A pet for sale in the pet store
  */
-export interface Pet {
+export interface Pet { 
     id?: number;
     category?: Category;
     name: string;
@@ -33,5 +33,5 @@ export namespace Pet {
         Available: 'available' as StatusEnum,
         Pending: 'pending' as StatusEnum,
         Sold: 'sold' as StatusEnum
-    }
+    };
 }

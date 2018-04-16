@@ -322,7 +322,7 @@ impl EnumArrays {
 /// which helps with FFI.
 #[allow(non_camel_case_types)]
 #[repr(C)]
-#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize, Eq, Ord)]
 pub enum EnumClass { 
     #[serde(rename = "_abc")]
     _ABC,
@@ -362,6 +362,10 @@ pub struct EnumTest {
     pub enum_string: Option<String>,
 
     // Note: inline enums are not fully supported by swagger-codegen
+    #[serde(rename = "enum_string_required")]
+    pub enum_string_required: String,
+
+    // Note: inline enums are not fully supported by swagger-codegen
     #[serde(rename = "enum_integer")]
     #[serde(skip_serializing_if="Option::is_none")]
     pub enum_integer: Option<i32>,
@@ -378,9 +382,10 @@ pub struct EnumTest {
 }
 
 impl EnumTest {
-    pub fn new() -> EnumTest {
+    pub fn new(enum_string_required: String, ) -> EnumTest {
         EnumTest {
             enum_string: None,
+            enum_string_required: enum_string_required,
             enum_integer: None,
             enum_number: None,
             outer_enum: None,
@@ -392,11 +397,11 @@ impl EnumTest {
 pub struct FormatTest {
     #[serde(rename = "integer")]
     #[serde(skip_serializing_if="Option::is_none")]
-    pub integer: Option<i32>,
+    pub integer: Option<u8>,
 
     #[serde(rename = "int32")]
     #[serde(skip_serializing_if="Option::is_none")]
-    pub int32: Option<i32>,
+    pub int32: Option<u32>,
 
     #[serde(rename = "int64")]
     #[serde(skip_serializing_if="Option::is_none")]
@@ -603,7 +608,7 @@ pub struct Name {
 
     #[serde(rename = "123Number")]
     #[serde(skip_serializing_if="Option::is_none")]
-    pub _123_number: Option<i32>,
+    pub _123_number: Option<isize>,
 
 }
 
@@ -739,7 +744,7 @@ impl OuterComposite {
 /// which helps with FFI.
 #[allow(non_camel_case_types)]
 #[repr(C)]
-#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize, Eq, Ord)]
 pub enum OuterEnum { 
     #[serde(rename = "placed")]
     PLACED,

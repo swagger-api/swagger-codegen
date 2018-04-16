@@ -3,6 +3,7 @@ Pod::Spec.new do |s|
   s.summary = '{{projectDescription}}'{{/projectDescription}}
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.11'
+  s.tvos.deployment_target = '9.0'
   s.version = '{{#podVersion}}{{podVersion}}{{/podVersion}}{{^podVersion}}0.0.1{{/podVersion}}'
   s.source = {{#podSource}}{{& podSource}}{{/podSource}}{{^podSource}}{ :git => 'git@github.com:swagger-api/swagger-mustache.git', :tag => 'v1.0.0' }{{/podSource}}{{#podAuthors}}
   s.authors = '{{podAuthors}}'{{/podAuthors}}{{#podSocialMediaURL}}
@@ -16,6 +17,6 @@ Pod::Spec.new do |s|
   s.documentation_url = '{{podDocumentationURL}}'{{/podDocumentationURL}}
   s.source_files = '{{projectName}}/Classes/**/*.swift'{{#usePromiseKit}}
   s.dependency 'PromiseKit/CorePromise', '~> 4.4.0'{{/usePromiseKit}}{{#useRxSwift}}
-  s.dependency 'RxSwift', '~> 3.4.1'{{/useRxSwift}}
+  s.dependency 'RxSwift', '~> 4.0'{{/useRxSwift}}
   s.dependency 'Alamofire', '~> 4.5.0'
 end

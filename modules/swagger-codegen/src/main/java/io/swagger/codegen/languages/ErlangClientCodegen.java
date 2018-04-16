@@ -157,16 +157,19 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
 
         supportingFiles.add(new SupportingFile("rebar.config.mustache","", "rebar.config"));
         supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator + this.packageName + ".app.src"));
+        supportingFiles.add(new SupportingFile("utils.mustache", "", "src" + File.separator + this.packageName + "_utils.erl"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
 
     public String qsEncode(Object o) {
         String r = new String();
         CodegenParameter q = (CodegenParameter) o;
-        if (q.isListContainer) {
-            r += "[{<<\"" + q.baseName + "\">>, X} || X <- " + q.paramName + "]";
-        } else {
-            r += "{<<\"" + q.baseName + "\">>, " + q.paramName + "}";
+        if (q.required) {
+            if (q.isListContainer) {
+                r += "[{<<\"" + q.baseName + "\">>, X} || X <- " + q.paramName + "]";
+            } else {
+                r += "{<<\"" + q.baseName + "\">>, " + q.paramName + "}";
+            }
         }
         return r;
     }
@@ -219,23 +222,24 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
-        return this.packageName + "_" + underscore(name.replaceAll("-", "_"));
+        return this.packageName + "_" + underscore(name.replaceAll("-", "_").replaceAll("\\.", "_"));
     }
 
     @Override
     public String toApiName(String name) {
-        return this.packageName + "_" + underscore(name.replaceAll("-", "_"));
+        return this.packageName + "_" + underscore(name.replaceAll("-", "_").replaceAll("\\.", "_"));
     }
 
     @Override
     public String toModelFilename(String name) {
-        return this.packageName + "_" + underscore(name);
+        return this.packageName + "_" + underscore(name.replaceAll("\\.", "_"));
     }
 
     @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_").replaceAll("\\.", "_");
 
         // e.g. PetApi.erl => pet_api.erl
         return this.packageName + "_" + underscore(name) + "_api";
@@ -245,11 +249,11 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)).replaceAll("\\.", "_"));
             operationId = "call_" + operationId;
         }
 
-        return underscore(operationId);
+        return underscore(operationId.replaceAll("\\.", "_"));
     }
 
     @Override
@@ -257,7 +261,7 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         List<CodegenOperation> os = (List<CodegenOperation>) operations.get("operation");
         List<ExtendedCodegenOperation> newOs = new ArrayList<ExtendedCodegenOperation>();
-        Pattern pattern = Pattern.compile("(.*)\\{([^\\}]+)\\}(.*)");
+        Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}");
         for (CodegenOperation o : os) {
             // force http method to lower case
             o.httpMethod = o.httpMethod.toLowerCase();
@@ -270,10 +274,12 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             Matcher matcher = pattern.matcher(o.path);
             StringBuffer buffer = new StringBuffer();
             while (matcher.find()) {
-                String pathTemplateName = matcher.group(2);
-                matcher.appendReplacement(buffer, "$1" + "\", " + camelize(pathTemplateName) + ", \"" + "$3");
+                String pathTemplateName = matcher.group(1);
+                matcher.appendReplacement(buffer, "\", " + camelize(pathTemplateName) + ", \"");
                 pathTemplateNames.add(pathTemplateName);
             }
+            matcher.appendTail(buffer);
+
             ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
             if (buffer.toString().isEmpty()) {
                 eco.setReplacedPathName(o.path);
@@ -295,8 +301,26 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
         this.packageVersion = packageVersion;
     }
 
-    String length(Object o) {
-        return Integer.toString((((ExtendedCodegenOperation) o).allParams).size());
+    String length(Object os) {
+        int l = 1;
+        for (CodegenParameter o : ((ExtendedCodegenOperation) os).allParams) {
+            CodegenParameter q = (CodegenParameter) o;
+            if (q.required)
+                l++;
+        }
+
+        return Integer.toString(l);
+    }
+
+    int lengthRequired(List<CodegenParameter> allParams) {
+        int l = 0;
+        for (CodegenParameter o : allParams) {
+            CodegenParameter q = (CodegenParameter) o;
+            if (q.required || q.isBodyParam)
+                l++;
+        }
+
+        return l;
     }
 
     @Override
@@ -313,6 +337,8 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
     class ExtendedCodegenOperation extends CodegenOperation {
         private List<String> pathTemplateNames = new ArrayList<String>();
         private String replacedPathName;
+        String arityRequired;
+        String arityOptional;
 
         public ExtendedCodegenOperation(CodegenOperation o) {
             super();
@@ -355,6 +381,8 @@ public class ErlangClientCodegen extends DefaultCodegen implements CodegenConfig
             this.produces = o.produces;
             this.bodyParam = o.bodyParam;
             this.allParams = o.allParams;
+            this.arityRequired = Integer.toString(lengthRequired(o.allParams)+1);
+            this.arityOptional = Integer.toString(lengthRequired(o.allParams)+2);
             this.bodyParams = o.bodyParams;
             this.pathParams = o.pathParams;
             this.queryParams = o.queryParams;

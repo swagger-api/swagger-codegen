@@ -30,6 +30,7 @@ import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.ArrayProperty;
@@ -50,10 +51,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
     public static final String JAVA8_MODE = "java8";
+    public static final String SUPPORT_ASYNC = "supportAsync";
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
 
     protected String dateLibrary = "threetenbp";
+    protected boolean supportAsync = false;
     protected boolean java8Mode = false;
     protected boolean withXml = false;
     protected String invokerPackage = "io.swagger";
@@ -80,7 +83,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String javaUtilPrefix = "";
     protected Boolean serializableModel = false;
     protected boolean serializeBigDecimalAsString = false;
-    protected boolean hideGenerationTimestamp = false;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
@@ -94,6 +96,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
+        hideGenerationTimestamp = false; 
+        
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -172,7 +176,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         java8ModeOptions.put("false", "Various third party libraries as needed");
         java8Mode.setEnum(java8ModeOptions);
         cliOptions.add(java8Mode);
-
     }
 
     @Override
@@ -380,14 +383,21 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(JAVA8_MODE)) {
+        if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
                 additionalProperties.put("java8", "true");
             }
         }
 
-        if(additionalProperties.containsKey(WITH_XML)) {
+        if (additionalProperties.containsKey(SUPPORT_ASYNC)) {
+            setSupportAsync(Boolean.parseBoolean(additionalProperties.get(SUPPORT_ASYNC).toString()));
+            if (supportAsync) {
+                additionalProperties.put(SUPPORT_ASYNC, "true");
+            }
+        }
+
+        if (additionalProperties.containsKey(WITH_XML)) {
             setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
             if ( withXml ) {
                 additionalProperties.put(WITH_XML, "true");
@@ -941,13 +951,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
             for (Operation operation : path.getOperations()) {
                 boolean hasFormParameters = false;
+                boolean hasBodyParameters = false;
                 for (Parameter parameter : operation.getParameters()) {
                     if (parameter instanceof FormParameter) {
                         hasFormParameters = true;
                     }
+                    if (parameter instanceof BodyParameter) {
+                        hasBodyParameters = true;
+                    }
                 }
-              //only add content-Type if its no a GET-Method
-                if(path.getGet() != null || ! operation.equals(path.getGet())){
+                if (hasBodyParameters || hasFormParameters){
                     String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
                     String contentType =  operation.getConsumes() == null || operation.getConsumes().isEmpty() ? defaultContentType : operation.getConsumes().get(0);
                     operation.setVendorExtension("x-contentType", contentType);
@@ -1213,6 +1226,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         this.java8Mode = enabled;
     }
 
+    public void setSupportAsync(boolean enabled) {
+        this.supportAsync = enabled;
+    }
+
     @Override
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
@@ -1265,13 +1282,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     /**
-     * Output the Getter name for boolean property, e.g. isActive
+     * Output the partial Getter name for boolean property, e.g. Active
      *
      * @param name the name of the property
-     * @return getter name based on naming convention
+     * @return partial getter name based on naming convention
      */
     public String toBooleanGetter(String name) {
-        return "is" + getterAndSetterCapitalize(name);
+        return getterAndSetterCapitalize(name);
     }
 
     @Override

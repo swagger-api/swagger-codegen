@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ArrayOfNumberOnly  {
   
   @ApiModelProperty(value = "")
-  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
-
+  @Valid
+  private List<BigDecimal> arrayNumber = null;
  /**
    * Get arrayNumber
    * @return arrayNumber
