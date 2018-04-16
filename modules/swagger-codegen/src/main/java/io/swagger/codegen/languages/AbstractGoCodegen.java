@@ -28,10 +28,31 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
     public AbstractGoCodegen() {
         super();
 
-        defaultIncludes = new HashSet<String>(Arrays.asList("map", "array"));
+        hideGenerationTimestamp = Boolean.FALSE;
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList("string", "bool", "uint", "uint32", "uint64",
-                "int", "int32", "int64", "float32", "float64", "complex64", "complex128", "rune", "byte"));
+        defaultIncludes = new HashSet<String>(
+            Arrays.asList(
+                "map",
+                "array")
+            );
+
+        languageSpecificPrimitives = new HashSet<String>(
+            Arrays.asList(
+                "string",
+                "bool",
+                "uint",
+                "uint32",
+                "uint64",
+                "int",
+                "int32",
+                "int64",
+                "float32",
+                "float64",
+                "complex64",
+                "complex128",
+                "rune",
+                "byte")
+            );
 
         instantiationTypes.clear();
         /*instantiationTypes.put("array", "GoArray");
@@ -63,8 +84,9 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Go package name (convention: lowercase).")
                 .defaultValue("swagger"));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                "hides the timestamp when files were generated").defaultValue(Boolean.TRUE.toString()));
+
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
+                .defaultValue(Boolean.TRUE.toString()));
     }
 
     /**
