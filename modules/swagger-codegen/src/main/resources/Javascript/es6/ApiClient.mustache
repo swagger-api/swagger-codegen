@@ -462,7 +462,7 @@ export default class ApiClient {
         {{#usePromises}}return new Promise((resolve, reject) => {
             request.end((error, response) => {
                 if (error) {
-                    reject(error);
+                    reject({error, response});
                 } else {
                     try {
                         var data = this.deserialize(response, returnType);
@@ -472,7 +472,7 @@ export default class ApiClient {
 
                         resolve({data, response});
                     } catch (err) {
-                        reject(err);
+                        reject({error: err, response: null});
                     }
                 }
             });
