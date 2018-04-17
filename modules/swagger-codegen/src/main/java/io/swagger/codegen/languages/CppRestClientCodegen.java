@@ -111,8 +111,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         addOption(DEFAULT_INCLUDE,
                 "The default include statement that should be placed in all headers for including things like the declspec (convention: #include \"Commons.h\" ",
                 this.defaultInclude);
-        addOption(GENERATE_GMOCKS_FOR_APIS,
-                "Generate Google Mock classes for APIs. Implies generating abstract base classes (interfaces) for APIs.");
+        addOption(GENERATE_GMOCKS_FOR_APIS, "Generate Google Mock classes for APIs.");
 
         supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
