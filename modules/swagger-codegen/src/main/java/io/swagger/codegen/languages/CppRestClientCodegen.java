@@ -45,7 +45,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
     public static final String DECLSPEC = "declspec";
     public static final String DEFAULT_INCLUDE = "defaultInclude";
-    public static final String GENERATE_INTERFACES_FOR_APIS = "generateInterfacesForApis";
     public static final String GENERATE_GMOCKS_FOR_APIS = "generateGMocksForApis";
 
     protected String packageVersion = "1.0.0";
@@ -112,8 +111,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         addOption(DEFAULT_INCLUDE,
                 "The default include statement that should be placed in all headers for including things like the declspec (convention: #include \"Commons.h\" ",
                 this.defaultInclude);
-        addOption(GENERATE_INTERFACES_FOR_APIS,
-                "Generate abstract base classes (interfaces) for APIs. This allows to mocks APIs (e.g. for unit testing).");
         addOption(GENERATE_GMOCKS_FOR_APIS,
                 "Generate Google Mock classes for APIs. Implies generating abstract base classes (interfaces) for APIs.");
 
@@ -180,7 +177,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         if (convertPropertyToBoolean(GENERATE_GMOCKS_FOR_APIS))
         {
-            additionalProperties.put(GENERATE_INTERFACES_FOR_APIS, "true");
             apiTemplateFiles.put("api-gmock.mustache", "GMock.h");
         }
 

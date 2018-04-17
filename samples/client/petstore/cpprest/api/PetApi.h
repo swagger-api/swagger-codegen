@@ -36,12 +36,47 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
+class  IPetApi
+{
+public:
+    virtual ~IPetApi() = default;
+    virtual pplx::task<void> addPet(
+        std::shared_ptr<Pet> body
+    ) = 0;
+    virtual pplx::task<void> deletePet(
+        int64_t petId,
+        boost::optional<utility::string_t> apiKey
+    ) = 0;
+    virtual pplx::task<std::vector<std::shared_ptr<Pet>>> findPetsByStatus(
+        std::vector<utility::string_t> status
+    ) = 0;
+    virtual pplx::task<std::vector<std::shared_ptr<Pet>>> findPetsByTags(
+        std::vector<utility::string_t> tags
+    ) = 0;
+    virtual pplx::task<std::shared_ptr<Pet>> getPetById(
+        int64_t petId
+    ) = 0;
+    virtual pplx::task<void> updatePet(
+        std::shared_ptr<Pet> body
+    ) = 0;
+    virtual pplx::task<void> updatePetWithForm(
+        int64_t petId,
+        boost::optional<utility::string_t> name,
+        boost::optional<utility::string_t> status
+    ) = 0;
+    virtual pplx::task<std::shared_ptr<ApiResponse>> uploadFile(
+        int64_t petId,
+        boost::optional<utility::string_t> additionalMetadata,
+        boost::optional<std::shared_ptr<HttpContent>> file
+    ) = 0;
+};
 
-class  PetApi 
+
+class  PetApi : public IPetApi
 {
 public:
     PetApi( std::shared_ptr<ApiClient> apiClient );
-    virtual ~PetApi();
+    ~PetApi() override;
     /// <summary>
     /// Add a new pet to the store
     /// </summary>
@@ -51,7 +86,7 @@ public:
     /// <param name="body">Pet object that needs to be added to the store</param>
     pplx::task<void> addPet(
         std::shared_ptr<Pet> body
-    );
+    ) override;
     /// <summary>
     /// Deletes a pet
     /// </summary>
@@ -63,7 +98,7 @@ public:
     pplx::task<void> deletePet(
         int64_t petId,
         boost::optional<utility::string_t> apiKey
-    );
+    ) override;
     /// <summary>
     /// Finds Pets by status
     /// </summary>
@@ -73,7 +108,7 @@ public:
     /// <param name="status">Status values that need to be considered for filter</param>
     pplx::task<std::vector<std::shared_ptr<Pet>>> findPetsByStatus(
         std::vector<utility::string_t> status
-    );
+    ) override;
     /// <summary>
     /// Finds Pets by tags
     /// </summary>
@@ -83,7 +118,7 @@ public:
     /// <param name="tags">Tags to filter by</param>
     pplx::task<std::vector<std::shared_ptr<Pet>>> findPetsByTags(
         std::vector<utility::string_t> tags
-    );
+    ) override;
     /// <summary>
     /// Find pet by ID
     /// </summary>
@@ -93,7 +128,7 @@ public:
     /// <param name="petId">ID of pet to return</param>
     pplx::task<std::shared_ptr<Pet>> getPetById(
         int64_t petId
-    );
+    ) override;
     /// <summary>
     /// Update an existing pet
     /// </summary>
@@ -103,7 +138,7 @@ public:
     /// <param name="body">Pet object that needs to be added to the store</param>
     pplx::task<void> updatePet(
         std::shared_ptr<Pet> body
-    );
+    ) override;
     /// <summary>
     /// Updates a pet in the store with form data
     /// </summary>
@@ -117,7 +152,7 @@ public:
         int64_t petId,
         boost::optional<utility::string_t> name,
         boost::optional<utility::string_t> status
-    );
+    ) override;
     /// <summary>
     /// uploads an image
     /// </summary>
@@ -131,7 +166,7 @@ public:
         int64_t petId,
         boost::optional<utility::string_t> additionalMetadata,
         boost::optional<std::shared_ptr<HttpContent>> file
-    );
+    ) override;
 
 protected:
     std::shared_ptr<ApiClient> m_ApiClient;
