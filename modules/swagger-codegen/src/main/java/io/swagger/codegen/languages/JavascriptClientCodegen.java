@@ -10,8 +10,8 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.Info;
 import io.swagger.models.License;
@@ -389,6 +389,10 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String modelFileFolder() {
         return createPath(outputFolder, sourceFolder, invokerPackage, modelPackage());
+    }
+
+    public String getInvokerPackage() {
+        return invokerPackage;
     }
 
     public void setInvokerPackage(String invokerPackage) {
@@ -790,6 +794,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             if (mm.getAdditionalProperties() != null) {
                 codegenModel.vendorExtensions.put("x-isMap", true);
                 codegenModel.vendorExtensions.put("x-itemType", getSwaggerType(mm.getAdditionalProperties()));
+            } else {
+                String type = mm.getType();
+                if (isPrimitiveType(type)){
+                    codegenModel.vendorExtensions.put("x-isPrimitive", true);
+                }
             }
         }
 
@@ -872,6 +881,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     private boolean isModelledType(CodegenOperation co) {
         // This seems to be the only way to tell whether an operation return type is modelled.
         return !Boolean.TRUE.equals(co.returnTypeIsPrimitive);
+    }
+
+    private boolean isPrimitiveType(String type) {
+        final String[] primitives = {"number", "integer", "string", "boolean", "null"};
+        return Arrays.asList(primitives).contains(type);
     }
 
     @SuppressWarnings("unchecked")
