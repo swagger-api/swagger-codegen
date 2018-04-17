@@ -26,7 +26,7 @@ import { Configuration }                                     from '../configurat
 export interface {{classname}}Interface {
     defaultHeaders: {{#useHttpClient}}Http{{/useHttpClient}}Headers;
     configuration: Configuration;
-    [others: string]: any;
+    {{^useHttpClient}}[others: string]: any;{{/useHttpClient}}
 
 {{#operation}}
     /**
