@@ -25,7 +25,7 @@ import { Pet } from '../model/pet';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { PetServiceInterface }                            from './PetServiceInterface';
+import { PetServiceInterface }                            from './pet.serviceInterface';
 
 
 @Injectable()
