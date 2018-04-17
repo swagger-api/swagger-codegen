@@ -35,11 +35,29 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
-class  StoreApi
+class  IStoreApi
+{
+public:
+    virtual ~IStoreApi() = default;
+    virtual pplx::task<void> deleteOrder(
+        utility::string_t orderId
+    ) = 0;
+    virtual pplx::task<std::map<utility::string_t, int32_t>> getInventory(
+    ) = 0;
+    virtual pplx::task<std::shared_ptr<Order>> getOrderById(
+        int64_t orderId
+    ) = 0;
+    virtual pplx::task<std::shared_ptr<Order>> placeOrder(
+        std::shared_ptr<Order> body
+    ) = 0;
+};
+
+
+class  StoreApi : public IStoreApi
 {
 public:
     StoreApi( std::shared_ptr<ApiClient> apiClient );
-    virtual ~StoreApi();
+    ~StoreApi() override;
     /// <summary>
     /// Delete purchase order by ID
     /// </summary>
@@ -49,7 +67,7 @@ public:
     /// <param name="orderId">ID of the order that needs to be deleted</param>
     pplx::task<void> deleteOrder(
         utility::string_t orderId
-    );
+    ) override;
     /// <summary>
     /// Returns pet inventories by status
     /// </summary>
@@ -57,7 +75,7 @@ public:
     /// Returns a map of status codes to quantities
     /// </remarks>
     pplx::task<std::map<utility::string_t, int32_t>> getInventory(
-    );
+    ) override;
     /// <summary>
     /// Find purchase order by ID
     /// </summary>
@@ -67,7 +85,7 @@ public:
     /// <param name="orderId">ID of pet that needs to be fetched</param>
     pplx::task<std::shared_ptr<Order>> getOrderById(
         int64_t orderId
-    );
+    ) override;
     /// <summary>
     /// Place an order for a pet
     /// </summary>
@@ -77,7 +95,7 @@ public:
     /// <param name="body">order placed for purchasing the pet</param>
     pplx::task<std::shared_ptr<Order>> placeOrder(
         std::shared_ptr<Order> body
-    );
+    ) override;
 
 protected:
     std::shared_ptr<ApiClient> m_ApiClient;
