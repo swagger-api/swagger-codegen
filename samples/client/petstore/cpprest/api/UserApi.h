@@ -35,12 +35,43 @@ namespace api {
 
 using namespace io::swagger::client::model;
 
+class  IUserApi
+{
+public:
+    virtual ~IUserApi() = default;
+    virtual pplx::task<void> createUser(
+        std::shared_ptr<User> body
+    ) = 0;
+    virtual pplx::task<void> createUsersWithArrayInput(
+        std::vector<std::shared_ptr<User>> body
+    ) = 0;
+    virtual pplx::task<void> createUsersWithListInput(
+        std::vector<std::shared_ptr<User>> body
+    ) = 0;
+    virtual pplx::task<void> deleteUser(
+        utility::string_t username
+    ) = 0;
+    virtual pplx::task<std::shared_ptr<User>> getUserByName(
+        utility::string_t username
+    ) = 0;
+    virtual pplx::task<utility::string_t> loginUser(
+        utility::string_t username,
+        utility::string_t password
+    ) = 0;
+    virtual pplx::task<void> logoutUser(
+    ) = 0;
+    virtual pplx::task<void> updateUser(
+        utility::string_t username,
+        std::shared_ptr<User> body
+    ) = 0;
+};
 
-class  UserApi 
+
+class  UserApi : public IUserApi
 {
 public:
     UserApi( std::shared_ptr<ApiClient> apiClient );
-    virtual ~UserApi();
+    ~UserApi() override;
     /// <summary>
     /// Create user
     /// </summary>
@@ -50,7 +81,7 @@ public:
     /// <param name="body">Created user object</param>
     pplx::task<void> createUser(
         std::shared_ptr<User> body
-    );
+    ) override;
     /// <summary>
     /// Creates list of users with given input array
     /// </summary>
@@ -60,7 +91,7 @@ public:
     /// <param name="body">List of user object</param>
     pplx::task<void> createUsersWithArrayInput(
         std::vector<std::shared_ptr<User>> body
-    );
+    ) override;
     /// <summary>
     /// Creates list of users with given input array
     /// </summary>
@@ -70,7 +101,7 @@ public:
     /// <param name="body">List of user object</param>
     pplx::task<void> createUsersWithListInput(
         std::vector<std::shared_ptr<User>> body
-    );
+    ) override;
     /// <summary>
     /// Delete user
     /// </summary>
@@ -80,7 +111,7 @@ public:
     /// <param name="username">The name that needs to be deleted</param>
     pplx::task<void> deleteUser(
         utility::string_t username
-    );
+    ) override;
     /// <summary>
     /// Get user by user name
     /// </summary>
@@ -90,7 +121,7 @@ public:
     /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
     pplx::task<std::shared_ptr<User>> getUserByName(
         utility::string_t username
-    );
+    ) override;
     /// <summary>
     /// Logs user into the system
     /// </summary>
@@ -102,7 +133,7 @@ public:
     pplx::task<utility::string_t> loginUser(
         utility::string_t username,
         utility::string_t password
-    );
+    ) override;
     /// <summary>
     /// Logs out current logged in user session
     /// </summary>
@@ -110,7 +141,7 @@ public:
     /// 
     /// </remarks>
     pplx::task<void> logoutUser(
-    );
+    ) override;
     /// <summary>
     /// Updated user
     /// </summary>
@@ -122,7 +153,7 @@ public:
     pplx::task<void> updateUser(
         utility::string_t username,
         std::shared_ptr<User> body
-    );
+    ) override;
 
 protected:
     std::shared_ptr<ApiClient> m_ApiClient;
