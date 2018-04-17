@@ -52,7 +52,7 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String scheme = "http"
+    private String scheme = "http";
     private String host = "petstore.swagger.io:80";
     private String basePath = "/v2";
     private boolean debugging = false;
@@ -1063,7 +1063,7 @@ public class ApiClient {
      */
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
-        url.append(scheme).append("://")append(host).append(basePath).append(path);
+        url.append(scheme).append("://").append(host).append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
