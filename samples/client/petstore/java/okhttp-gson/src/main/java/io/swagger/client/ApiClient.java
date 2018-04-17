@@ -52,7 +52,8 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String host = "http://petstore.swagger.io:80";
+    private String scheme = "http"
+    private String host = "petstore.swagger.io:80";
     private String basePath = "/v2";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -98,25 +99,46 @@ public class ApiClient {
         authentications = Collections.unmodifiableMap(authentications);
     }
 
+
+    /**
+     * Get scheme
+     *
+     * @return scheme
+     */
+    public String getScheme() {
+        return scheme;
+    }
+
+    /**
+     * Set scheme
+     *
+     * @param host (e.g "http")
+     * @return An instance of OkHttpClient
+     */
+    public ApiClient setScheme(String scheme) {
+        this.scheme = scheme;
+        return this;
+    }
+
     /**
      * Get host
      *
      * @return host
      */
-     public String getHost() {
+    public String getHost() {
         return host;
-      }
+    }
 
     /**
      * Set host
      *
-     * @param host (e.g "http://petstore.swagger.io:80";)
+     * @param host (e.g "petstore.swagger.io:80")
      * @return An instance of OkHttpClient
      */
     public ApiClient setHost(String host) {
         this.host = host;
         return this;
-      }
+    }
 
     /**
      * Get base path
@@ -1041,7 +1063,7 @@ public class ApiClient {
      */
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
-        url.append(host).append(basePath).append(path);
+        url.append(scheme).append("://")append(host).append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"

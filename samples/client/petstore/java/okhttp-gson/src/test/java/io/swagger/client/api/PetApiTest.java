@@ -35,7 +35,7 @@ public class PetApiTest {
         // the default api client is used
         assertEquals(Configuration.getDefaultApiClient(), api.getApiClient());
         assertNotNull(api.getApiClient());
-        assertEquals("http://petstore.swagger.io:80", api.getApiClient().getHost());
+        assertEquals("petstore.swagger.io:80", api.getApiClient().getHost());
         assertEquals("/v2", api.getApiClient().getBasePath());
         assertFalse(api.getApiClient().isDebugging());
 
@@ -54,7 +54,7 @@ public class PetApiTest {
         // set api client via setter method
         api.setApiClient(oldClient);
         assertNotNull(api.getApiClient());
-        assertEquals("http://petstore.swagger.io:80", api.getApiClient().getHost());
+        assertEquals("petstore.swagger.io:80", api.getApiClient().getHost());
         assertEquals("/v2", api.getApiClient().getBasePath());
         assertFalse(api.getApiClient().isDebugging());
     }
