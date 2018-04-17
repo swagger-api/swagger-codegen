@@ -38,7 +38,7 @@ use std::collections::{HashMap, BTreeMap};
 #[allow(unused_imports)]
 use swagger;
 
-use swagger::{Context, ApiError, XSpanId, XSpanIdString, Has, AuthData};
+use swagger::{ApiError, XSpanId, XSpanIdString, Has, AuthData};
 
 use {Api,
      TestSpecialTagsResponse,

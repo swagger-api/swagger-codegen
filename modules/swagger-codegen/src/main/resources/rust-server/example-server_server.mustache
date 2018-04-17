@@ -12,7 +12,7 @@ use std::marker::PhantomData;
 use swagger;
 use swagger::{Has, XSpanIdString};
 
-use {{externCrateName}}::{Api, ApiError, Context{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
+use {{externCrateName}}::{Api, ApiError{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}},
                       {{operationId}}Response{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 };
 use {{externCrateName}}::models;

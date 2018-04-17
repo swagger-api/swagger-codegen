@@ -30,7 +30,7 @@ pub use futures::Future;
 #[cfg(any(feature = "client", feature = "server"))]
 mod mimetypes;
 
-pub use swagger::{ApiError, Context, ContextWrapper};
+pub use swagger::{ApiError, ContextWrapper};
 
 pub const BASE_PATH: &'static str = "/v2";
 <<<<<<< e3b6145963b1ad8d6948f19c4a90a314bdc6cddd

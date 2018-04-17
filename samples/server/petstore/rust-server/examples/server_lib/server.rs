@@ -12,7 +12,7 @@ use uuid;
 use swagger;
 use swagger::{Has, XSpanIdString};
 
-use petstore_api::{Api, ApiError, Context,
+use petstore_api::{Api, ApiError,
                       TestSpecialTagsResponse,
                       GetXmlFeaturesResponse,
                       PostPlainTextResponse,

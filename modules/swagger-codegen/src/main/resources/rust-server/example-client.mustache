@@ -11,7 +11,7 @@ extern crate uuid;
 extern crate clap;
 extern crate tokio_core;
 
-use swagger::{Context, EmptyContext, XSpanIdString, Has, Push, AuthData};
+use swagger::{ContextBuilder, EmptyContext, XSpanIdString, Has, Push, AuthData};
 
 #[allow(unused_imports)]
 use futures::{Future, future, Stream, stream};
@@ -63,8 +63,8 @@ fn main() {
             .expect("Failed to create HTTP client")
     };
 
-    let context: make_context_ty!(Context, EmptyContext, Option<AuthData>, XSpanIdString) =
-        make_context!(Context, EmptyContext, None, XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
+    let context: make_context_ty!(ContextBuilder, EmptyContext, Option<AuthData>, XSpanIdString) =
+        make_context!(ContextBuilder, EmptyContext, None, XSpanIdString(self::uuid::Uuid::new_v4().to_string()));
     let client = client.with_context(context);
 
     match matches.value_of("operation") {
