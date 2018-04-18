@@ -33,7 +33,7 @@ impl<C> Api<C> for Server<C> where C: Has<XSpanIdString>{
 {{#summary}}    /// {{{summary}}}{{/summary}}
     fn {{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}(&self{{#allParams}}, {{paramName}}: {{^required}}{{#isFile}}Box<Future<Item={{/isFile}}Option<{{/required}}{{#isListContainer}}&{{/isListContainer}}{{{dataType}}}{{^required}}>{{#isFile}}, Error=Error> + Send>{{/isFile}}{{/required}}{{/allParams}}, context: &C) -> Box<Future<Item={{operationId}}Response, Error=ApiError>> {
         let context = context.clone();
-        println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{^isFile}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/isFile}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, Has::<XSpanIdString>::get(context).0.clone());{{#allParams}}{{#isFile}}
+        println!("{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}{{^isFile}}{{#vendorExtensions}}{{{formatString}}}{{/vendorExtensions}}{{#hasMore}}, {{/hasMore}}{{/isFile}}{{/allParams}}) - X-Span-ID: {:?}"{{#allParams}}{{^isFile}}, {{paramName}}{{/isFile}}{{/allParams}}, context.get().0.clone());{{#allParams}}{{#isFile}}
         let _ = {{paramName}}; //Suppresses unused param warning{{/isFile}}{{/allParams}}
         Box::new(futures::failed("Generic failure".into()))
     }

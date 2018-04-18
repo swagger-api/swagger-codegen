@@ -133,7 +133,7 @@ where
             &hyper::Method::{{vendorExtensions.HttpMethod}} if path.matched(paths::ID_{{vendorExtensions.PATH_ID}}) => {
 {{#hasAuthMethods}}
                 {
-                    let authorization = match Has::<Option<Authorization>>::get(&context) {
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
                         &Some(ref authorization) => authorization,
                         &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
@@ -330,7 +330,7 @@ where
                                 Box::new(api_impl.{{#vendorExtensions}}{{operation_id}}{{/vendorExtensions}}({{#allParams}}param_{{paramName}}{{#isListContainer}}.as_ref(){{/isListContainer}}, {{/allParams}}&context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        response.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(&context).0.to_string()));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 {{#bodyParams}}{{#vendorExtensions}}{{^consumesPlainText}}
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));

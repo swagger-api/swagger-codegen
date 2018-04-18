@@ -292,8 +292,8 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> {{#hasAuthMethods}}+ Has<O
 
         request.headers_mut().set(ContentType(mimetypes::requests::{{#vendorExtensions}}{{uppercase_operation_id}}{{/vendorExtensions}}.clone()));
 {{/bodyParam}}
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
-{{#authMethods}}{{#isBasic}}        Has::<Option<AuthData>>::get(context).as_ref().map(|auth_data| {
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
+{{#authMethods}}{{#isBasic}}        (context as &Has<Option<AuthData>>).get().as_ref().map(|auth_data| {
             if let &AuthData::Basic(ref basic_header) = auth_data {
                 request.headers_mut().set(hyper::header::Authorization(
                     basic_header.clone(),

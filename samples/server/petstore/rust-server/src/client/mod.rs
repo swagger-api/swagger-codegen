@@ -265,7 +265,7 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_SPECIAL_TAGS.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -335,7 +335,7 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -412,7 +412,7 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::POST_PLAIN_TEXT.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -489,7 +489,7 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
         request.headers_mut().set(ContentType(mimetypes::requests::POST_URL_ENCODED_FORM.clone()));
         request.set_body(body.into_bytes());
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -558,7 +558,7 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::POST_XML_FEATURES.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -623,7 +623,7 @@ if let Some(body) = body {
         }
 
         request.headers_mut().set(ContentType(mimetypes::requests::PUT_PLAIN_TEXT.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -692,7 +692,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_BODY_WITH_QUERY_PARAMS.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -751,7 +751,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
         // Header parameters
         header! { (RequestXUuidHeader, "X-Uuid-Header") => [uuid::Uuid] }
@@ -827,7 +827,7 @@ if let Some(body) = body {
         }
 
         request.headers_mut().set(ContentType(mimetypes::requests::FAKE_OUTER_BOOLEAN_SERIALIZE.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -905,7 +905,7 @@ if let Some(body) = body {
         }
 
         request.headers_mut().set(ContentType(mimetypes::requests::FAKE_OUTER_COMPOSITE_SERIALIZE.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -983,7 +983,7 @@ if let Some(body) = body {
         }
 
         request.headers_mut().set(ContentType(mimetypes::requests::FAKE_OUTER_NUMBER_SERIALIZE.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1061,7 +1061,7 @@ if let Some(body) = body {
         }
 
         request.headers_mut().set(ContentType(mimetypes::requests::FAKE_OUTER_STRING_SERIALIZE.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1137,7 +1137,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_CLIENT_MODEL.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1226,8 +1226,8 @@ if let Some(body) = body {
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_ENDPOINT_PARAMETERS.clone()));
         request.set_body(body.into_bytes());
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
-        Has::<Option<AuthData>>::get(context).as_ref().map(|auth_data| {
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
+        (context as &Has<Option<AuthData>>).get().as_ref().map(|auth_data| {
             if let &AuthData::Basic(ref basic_header) = auth_data {
                 request.headers_mut().set(hyper::header::Authorization(
                     basic_header.clone(),
@@ -1316,7 +1316,7 @@ if let Some(body) = body {
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_ENUM_PARAMETERS.clone()));
         request.set_body(body.into_bytes());
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
         // Header parameters
         header! { (RequestEnumHeaderStringArray, "enum_header_string_array") => (String)* }
@@ -1397,7 +1397,7 @@ if let Some(body) = body {
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_JSON_FORM_DATA.clone()));
         request.set_body(body.into_bytes());
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1462,7 +1462,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::TEST_CLASSNAME.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1538,7 +1538,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::ADD_PET.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1597,7 +1597,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
         // Header parameters
         header! { (RequestApiKey, "api_key") => [String] }
@@ -1664,7 +1664,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1749,7 +1749,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1830,7 +1830,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -1926,7 +1926,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::UPDATE_PET.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2010,7 +2010,7 @@ if let Some(body) = body {
         request.headers_mut().set(ContentType(mimetypes::requests::UPDATE_PET_WITH_FORM.clone()));
         request.set_body(body.into_bytes());
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2103,7 +2103,7 @@ if let Some(body) = body {
             Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build multipart header: {:?}", err))))),
         };
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2176,7 +2176,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2244,7 +2244,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2314,7 +2314,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2410,7 +2410,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::PLACE_ORDER.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2497,7 +2497,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::CREATE_USER.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2562,7 +2562,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::CREATE_USERS_WITH_ARRAY_INPUT.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2627,7 +2627,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::CREATE_USERS_WITH_LIST_INPUT.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2686,7 +2686,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2754,7 +2754,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2850,7 +2850,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -2941,7 +2941,7 @@ if let Some(body) = body {
 
 
 
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
@@ -3006,7 +3006,7 @@ if let Some(body) = body {
 
 
         request.headers_mut().set(ContentType(mimetypes::requests::UPDATE_USER.clone()));
-        request.headers_mut().set(XSpanId(Has::<XSpanIdString>::get(context).0.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
 
 
 
