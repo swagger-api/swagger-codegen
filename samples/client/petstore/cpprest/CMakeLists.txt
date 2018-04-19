@@ -27,19 +27,21 @@ endif()
 # BUILD TYPE
 message("A ${CMAKE_BUILD_TYPE} build configuration is detected")
 
-# Update require components as necessary
-#find_package(Boost 1.45.0 REQUIRED COMPONENTS ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
 
-# build and set path to cpp rest sdk
+# set path to cpp rest sdk (will be built as a dependency)
 #set(CPPREST_ROOT ${PROJECT_SOURCE_DIR}/../../../developmentTools/3rdParty/cpprest)
-set(CPPREST_INCLUDE_DIR ${CPPREST_ROOT}/include)
-set(CPPREST_LIBRARY_DIR ${CPPREST_ROOT}/lib)
 
 if( NOT DEFINED CPPREST_ROOT )
     message( FATAL_ERROR "Failed to find cpprest SDK (or missing components). Double check that \"CPPREST_ROOT\" is properly set")
 endif( NOT DEFINED CPPREST_ROOT )
 
-include_directories(${PROJECT_SOURCE_DIR} ${CPPREST_INCLUDE_DIR})
+# Don't build the tests and samples of cpprest
+set(BUILD_TESTS OFF CACHE BOOL "Don't build cpprest tests")
+set(BUILD_SAMPLES OFF CACHE BOOL "Don't build cpprest samples")
+
+# Build cpprest
+add_subdirectory(${CPPREST_ROOT} cpprest-lib)
+
 
 #SUPPORTING FILES
 set(SUPPORTING_FILES  "client/ApiClient"
@@ -55,3 +57,7 @@ set(SUPPORTING_FILES  "client/ApiClient"
 file(GLOB SOURCE_FILES  "client/api/*"  "client/model/*")
 
 add_library(${PROJECT_NAME} ${SUPPORTING_FILES} ${SOURCE_FILES})
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} cpprest)
+
