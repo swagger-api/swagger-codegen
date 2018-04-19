@@ -2,9 +2,9 @@
 
 myApp.factory('MockService', ['$http', '$q', function($http, $q){
 
-    var REST_SERVICE_URI = '/mockservice/mockservice/';
-    var REST_SERVICE_URI_LOAD = '/mockservice/mockload/';
-    var REST_SERVICE_URI_SWAGGER = '/mockservice/swagger-catalogs/';
+    var REST_SERVICE_URI = '/virtualservices/mockservice/';
+    var REST_SERVICE_URI_LOAD = '/virtualservices/mockload/';
+    var REST_SERVICE_URI_SWAGGER = '/virtualservices/swagger-catalogs/';
     
     var factory = {
     	loadAllMockRequest: loadAllMockRequest,

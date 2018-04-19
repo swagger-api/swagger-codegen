@@ -6,7 +6,7 @@ spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false
 server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}
 {{/generateDynamicMock}}
 {{#generateDynamicMock}}
-server.contextPath=/mockservice
+server.contextPath=/virtualservices
 mock.datasource.driver-class-name=org.hsqldb.jdbcDriver
 mock.datasource.url=jdbc:hsqldb:mem:dataSource
 mock.datasource.username=sa

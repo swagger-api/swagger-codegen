@@ -11,12 +11,12 @@
         $stateProvider
             .state('mock', {
                 url: '/mock',
-                templateUrl: '/mockservice/static/home/mock.html',
+                templateUrl: '/virtualservices/static/home/mock.html',
             })
             
             .state('swagger', {
                 url: '/swagger',
-                templateUrl: '/mockservice/static/home/swagger.html',
+                templateUrl: '/virtualservices/static/home/swagger.html',
             })
         
            }
