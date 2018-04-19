@@ -3,9 +3,6 @@ package io.swagger.mock;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,22 +21,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import io.swagger.mock.model.APIResponse;
 import io.swagger.mock.model.MockKeyValue;
 import io.swagger.mock.model.MockRequest;
@@ -57,109 +43,20 @@ public class MockUtil {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	VirtualServiceInfo virtualServiceInfo; // Service which will do all data 
 
-	public Map<String, Map<String, MockTransferObject>> loadMockRequests(RequestMappingHandlerMapping handlerMapping)
-			throws ClassNotFoundException, JsonProcessingException, InstantiationException, IllegalAccessException {
-		
-		Map<String, Map<String, MockTransferObject>> mockLoadChoice = new TreeMap<>();
-		Map<RequestMappingInfo, HandlerMethod> mapSwaggerAPI = handlerMapping.getHandlerMethods();
-		for (Map.Entry<RequestMappingInfo, HandlerMethod> mapSwaggerAPIEntry : mapSwaggerAPI.entrySet()) {
-			if (mapSwaggerAPIEntry.getValue().getBeanType().toString().matches("class io.swagger.api.*Controller")) {
-				String interfaceName = mapSwaggerAPIEntry.getValue().getBeanType().getName().replace("Controller", "");
-				Class intefaceController = Class.forName(interfaceName);
-				interfaceName = interfaceName.substring(interfaceName.lastIndexOf(".") + 1, interfaceName.length());
-				if (!mockLoadChoice.containsKey(interfaceName)) {
-					String resource = null;
-					Api[] apiOperationAnnos = (Api[]) intefaceController.getAnnotationsByType(Api.class);
-					if(apiOperationAnnos != null){
-						for(Api api : apiOperationAnnos){
-							if(api.value() != null) {
-								resource = api.value();
-							}
-						}
-					}
-					
-					Map<String, MockTransferObject> mockAPILoadChoice = new LinkedHashMap<String, MockTransferObject>();
-					for (Method method : intefaceController.getDeclaredMethods()) {
-						Annotation[][] annotations = method.getParameterAnnotations();
-						Class[] parameterTypes = method.getParameterTypes();
-						RequestMapping[] annotInstance = method.getAnnotationsByType(RequestMapping.class);
-						MockTransferObject mockLoadRequest = new MockTransferObject();
-						mockLoadRequest.setResource(resource);
-						if (annotInstance != null && annotInstance.length > 0) {
-							RequestMapping requestMapping = ((RequestMapping) annotInstance[0]);
-							if (requestMapping.value() != null && requestMapping.value().length > 0) {
-								mockLoadRequest.setUrl(requestMapping.value()[0]);
-							}
-							if (requestMapping.method() != null && requestMapping.method().length > 0) {
-								mockLoadRequest.setMethod(requestMapping.method()[0].name());
-							}
-							
-							ApiResponses[] apiResponsesAnno = method.getAnnotationsByType(ApiResponses.class);
-							if (apiResponsesAnno != null) {
-								Map<String, APIResponse> responseType = new HashMap<>();
-/*								System.out.println(method.getName());
-*/								for (ApiResponses apiResponses : apiResponsesAnno) {
-									for (ApiResponse apiResponse : apiResponses.value()) {
-/*										System.out.println("apiResponse.response().getCanonicalName() >>"+ apiResponse.response().getCanonicalName() );
-*/										if (apiResponse.response().getCanonicalName() != null && !apiResponse.response()
-												.getCanonicalName().contains("java.lang.Void")) {
-											responseType
-													.put(String.valueOf(apiResponse.code()),
-															new APIResponse(String.valueOf(apiResponse.code()),
-																	apiResponse.response().getCanonicalName(),
-																	objectMapper.writerWithDefaultPrettyPrinter()
-																			.writeValueAsString(Class
-																					.forName(apiResponse.response()
-																							.getCanonicalName())
-																					.newInstance()),
-																	apiResponse.message()));
-										} else {
-											responseType.put(String.valueOf(apiResponse.code()),
-													new APIResponse(String.valueOf(apiResponse.code()), null, null,
-															apiResponse.message()));
-										}
-										mockLoadRequest.setResponseType(responseType);
-									}
-								}
-
-							}
-
-							int i = 0;
-							List<MockKeyValue> availableParams = new ArrayList();
-							for (Annotation[] anns : annotations) {
-								Class parameterType = parameterTypes[i++];
-								for (Annotation paramAnnotation : anns) {
-									if (paramAnnotation.annotationType().equals(RequestParam.class)) {
-										RequestParam requestParam = (RequestParam) paramAnnotation;
-										availableParams.add(new MockKeyValue(requestParam.value(), null));
-									} else if (paramAnnotation.annotationType().equals(PathVariable.class)) {
-										PathVariable pathVariable = (PathVariable) paramAnnotation;
-										availableParams.add(new MockKeyValue(pathVariable.value(), null));
-									} else if (paramAnnotation.annotationType().equals(RequestBody.class)) {
-										mockLoadRequest.setInputObjectType(parameterType.getName());
-										mockLoadRequest.setInput(
-												objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(
-														Class.forName(parameterType.getName()).newInstance()));
-									}
-								}
-							}
-							// TO build Return Json object
-							String returnObject = method.getGenericReturnType().getTypeName();
-							mockLoadRequest.setOperationId(method.getName());
-							mockLoadRequest.setAvailableParams(availableParams);
-							mockLoadRequest.setHttpStatusMap(getHttpStatusMap());
-							mockAPILoadChoice.put(method.getName(), mockLoadRequest);
-						}
-					}
-					mockLoadChoice.put(interfaceName, mockAPILoadChoice);
-				}
-			}
-
-		}
-		return mockLoadChoice;
+	
+	private ObjectMapper getObjectMapper(){
+		objectMapper.findAndRegisterModules();
+		return objectMapper.enable(
+                DeserializationFeature.FAIL_ON_INVALID_SUBTYPE,
+                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
+                //,DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES
+        ) ;
 	}
-
+	
 	public Map<String, String> getHttpStatusMap() {
 		Map<String, String> map = new LinkedHashMap<>();
 		for (HttpStatus status : HttpStatus.values()) {
@@ -241,9 +138,12 @@ public class MockUtil {
 	}
 
 	public boolean isMockAlreadyExists(MockTransferObject mockTransferObject) {
-		objectMapper.findAndRegisterModules();
+		
 		boolean isValid = false;
+		
 		try {
+			String inputObjectType = virtualServiceInfo.getInputType(mockTransferObject); 
+
 			HashMap<String, String> availableParamMap = new HashMap<>();
 			if (mockTransferObject.getAvailableParams() != null && mockTransferObject.getAvailableParams().size() > 0) {
 				for (MockKeyValue availableParam : mockTransferObject.getAvailableParams()) {
@@ -257,10 +157,10 @@ public class MockUtil {
 						&& mockTransferObject.getInput() != null) {
 					if (compareQueryParams(mockRequestResponse.getKey(), availableParamMap)
 							&& EqualsBuilder.reflectionEquals(
-									objectMapper.readValue(mockRequestResponse.getKey().getInput(),
-											Class.forName(mockTransferObject.getInputObjectType())),
-									objectMapper.readValue(mockTransferObject.getInput(),
-											Class.forName(mockTransferObject.getInputObjectType())),
+									getObjectMapper().readValue(mockRequestResponse.getKey().getInput(),
+											Class.forName(inputObjectType)),
+									getObjectMapper().readValue(mockTransferObject.getInput(),
+											Class.forName(inputObjectType)),
 									mockRequestResponse.getKey().getExcludeSet())) {
 						return true;
 					}
@@ -268,10 +168,10 @@ public class MockUtil {
 						&& compareQueryParams(mockRequestResponse.getKey(), availableParamMap)) {
 					return true;
 				} else if (mockTransferObject.getInput() != null && EqualsBuilder.reflectionEquals(
-						objectMapper.readValue(mockRequestResponse.getKey().getInput(),
-								Class.forName(mockTransferObject.getInputObjectType())),
-						objectMapper.readValue(mockTransferObject.getInput(),
-								Class.forName(mockTransferObject.getInputObjectType())),
+						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(),
+								Class.forName(inputObjectType)),
+						getObjectMapper().readValue(mockTransferObject.getInput(),
+								Class.forName(inputObjectType)),
 						mockRequestResponse.getKey().getExcludeSet())) {
 					return true;
 				}
@@ -283,17 +183,17 @@ public class MockUtil {
 	}
 
 	public boolean isMockRequestBodyValid(MockTransferObject mockTransferObject) {
-		objectMapper.findAndRegisterModules();
 		boolean isValid = true;
+		String inputObjectType = virtualServiceInfo.getInputType(mockTransferObject);
 		try {
-
+			 
 			if (mockTransferObject.getInput() != null && mockTransferObject.getInput().length() > 0
-					&& mockTransferObject.getInputObjectType() != null
-					&& mockTransferObject.getInputObjectType().length() > 0) {
-				objectMapper.readValue(mockTransferObject.getInput(),
-						Class.forName(mockTransferObject.getInputObjectType()));
+					&& inputObjectType != null
+					&& inputObjectType.length() > 0) {
+				Class classs  = Class.forName(inputObjectType);
+				getObjectMapper().readValue(mockTransferObject.getInput(),classs);				
 				isValid = true;
-			} else if (mockTransferObject.getInputObjectType() == null
+			} else if (inputObjectType == null
 					&& (mockTransferObject.getInput() == null || mockTransferObject.getInput().length() == 0)) {
 				isValid = true;
 			} else {
@@ -303,16 +203,19 @@ public class MockUtil {
 			e.printStackTrace();
 			isValid = false;
 		}
+		
 		return isValid;
 	}
 
 	public boolean isMockResponseBodyValid(MockTransferObject mockTransferObject) {
 		boolean isValid = true;
 		try {
-			if (mockTransferObject.getResponseType().size() > 0 && validResponse(mockTransferObject)) {
+			MockTransferObject mockTransferObjectActual = virtualServiceInfo.getResponseType(mockTransferObject);
+			
+			if (mockTransferObjectActual.getResponseType().size() > 0 && validResponse(mockTransferObjectActual, mockTransferObject)) {
 				isValid = true;
-			} else if (mockTransferObject.getResponseType().get(mockTransferObject.getHttpStatusCode()) == null) {
-				isValid = true;
+			/*} else if (mockTransferObjectActual.getResponseType().get(mockTransferObject.getHttpStatusCode()) == null) {
+				isValid = true;*/
 			} else {
 				isValid = false;
 			}
@@ -323,10 +226,9 @@ public class MockUtil {
 		return isValid;
 	}
 
-	private boolean validResponse(MockTransferObject mockTransferObject)
+	private boolean validResponse(MockTransferObject mockTransferObjectActual, MockTransferObject mockTransferObject)
 			throws JsonParseException, JsonMappingException, ClassNotFoundException, IOException {
-		objectMapper.findAndRegisterModules();
-		APIResponse apiResponse = mockTransferObject.getResponseType().get(mockTransferObject.getHttpStatusCode());
+		APIResponse apiResponse = mockTransferObjectActual.getResponseType().get(mockTransferObject.getHttpStatusCode());
 		if (apiResponse != null && apiResponse.getObjectType() != null) {
 			objectMapper.readValue(mockTransferObject.getOutput(), Class.forName(apiResponse.getObjectType()));
 		}

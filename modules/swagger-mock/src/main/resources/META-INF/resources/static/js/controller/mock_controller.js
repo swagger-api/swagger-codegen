@@ -2,7 +2,8 @@
 
 myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService', function($scope, $filter,  $modal, MockService) {
     var self = this;
-    self.mockRequest={id:'',resource:'',operationId:'',input:'',output:'',excludeList:'', httpStatus:'',availableParams:[]};
+    self.mockRequest={id:'',resource:'',url:'',method:'',operationId:'',input:'',output:'',excludeList:'', httpStatus:'',availableParams:[]};
+    self.mockCreateRequest= {id:'',resource:'',method:'',url:'',operationId:'',input:'',output:'',excludeList:'', httpStatus:'',availableParams:[]};
     self.mockRequests=[];
     self.mockLoadRequests=[];
     self.mockLoadRequest='';
@@ -116,8 +117,17 @@ myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService
 
     function submit() {
         console.log('Saving New mockRequest', self.mockRequest);
-        self.mockRequest.id = '';
-        createMockRequest(self.mockRequest);
+        self.mockCreateRequest= {id:'', 
+        			resource:self.mockRequest.resource,
+        			url:self.mockRequest.url,
+        			operationId:self.mockRequest.operationId,
+        			input:self.mockRequest.input,
+        			output:self.mockRequest.output,
+        			excludeList:self.mockRequest.excludeList, 
+        			httpStatus:self.mockRequest.httpStatus,
+        			method:self.mockRequest.method,
+        			availableParams:self.mockRequest.availableParams};
+        createMockRequest(self.mockCreateRequest);
 
     }
 

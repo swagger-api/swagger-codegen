@@ -2,9 +2,12 @@ package io.swagger.mock;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import io.swagger.mock.model.MockStatus;
@@ -32,6 +36,9 @@ public class MockController {
 	MockService mockService; // Service which will do all data 
 
 	@Autowired
+	VirtualServiceInfo virtualServiceInfo; // Service which will do all data 
+
+	@Autowired
 	private MockUtil mockUtil;
 
 	private final RequestMappingHandlerMapping handlerMapping;
@@ -41,10 +48,16 @@ public class MockController {
 		this.handlerMapping = handlerMapping;
 	}
 
+	@PostConstruct
+	public void init() throws ClassNotFoundException, JsonProcessingException, InstantiationException, IllegalAccessException{
+		virtualServiceInfo.loadVirtualServices(handlerMapping);
+		virtualServiceInfo.loadMapper();
+	}
+	
 	@RequestMapping(value = "/mockload/", method = RequestMethod.GET)
 	public Map<String, Map<String, MockTransferObject>> listAllMockLoadRequest() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, JsonParseException, JsonMappingException, IOException {
-		return mockUtil.loadMockRequests(handlerMapping);
+		return virtualServiceInfo.loadVirtualServices(handlerMapping);
 	}
 
 	@RequestMapping(value = "/mockservice/", method = RequestMethod.GET)
@@ -70,7 +83,16 @@ public class MockController {
 	@RequestMapping(value = "/mockservice/", method = RequestMethod.POST)
 	public ResponseEntity<MockStatus> createMockRequest(@RequestBody MockTransferObject mockLoadRequest) {// ,UriComponentsBuilder
 		try {
-
+			if(mockLoadRequest.getOperationId() == null) {
+				String resourceUrl = mockLoadRequest.getUrl().substring(1, mockLoadRequest.getUrl().length());
+				List<String> resouceSplitterList = new LinkedList(Arrays.asList(resourceUrl.split("/")));
+				if(resouceSplitterList.size() >0) {
+					String operationId = virtualServiceInfo.getOperationId( mockLoadRequest.getMethod(), virtualServiceInfo.getResourceParent(), resouceSplitterList);
+					mockLoadRequest.setOperationId(operationId);
+					System.out.println( " ORG("+mockLoadRequest.getOperationId()+") >>>>>>>>>>>>>>>> FOUND ("+operationId+") ");
+				}
+			}
+			
 			if (!mockUtil.isMockRequestBodyValid(mockLoadRequest)) {
 				return new ResponseEntity<MockStatus>(
 						new MockStatus("Check input Json for the Mock Request Body, Please correct the Json!!!"),
