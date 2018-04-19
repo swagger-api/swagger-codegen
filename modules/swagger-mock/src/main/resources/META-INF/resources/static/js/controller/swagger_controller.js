@@ -5,16 +5,16 @@ myApp.controller('SwaggerController', [ '$scope', '$window',
 			var self = this;
 
 			self.openSwaggerCatalog = function() {
-				loadUrl("/mockservice/swagger-ui.html");
+				loadUrl("/virtualservices/swagger-ui.html");
 			};
 			self.openSwaggerUI = function() {
-				loadUrl("/mockservice/swaggerui.html");
+				loadUrl("/virtualservices/swaggerui.html");
 			};
 			self.openSwaggerEUI = function() {
-				loadUrl("/mockservice/swaggerex-ui.html");
+				loadUrl("/virtualservices/swaggerex-ui.html");
 			};
 			self.openSwaggerEditor = function() {
-				loadUrl("/mockservice/swagger-editor.html")
+				loadUrl("/virtualservices/swagger-editor.html")
 			};
 			
 			function loadUrl(url) {
