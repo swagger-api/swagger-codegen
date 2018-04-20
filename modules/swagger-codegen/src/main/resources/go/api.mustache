@@ -147,8 +147,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 {{#hasFormParams}}
 {{#formParams}}
 {{#isFile}}
-{{^required}}
 	var localVarFile ({{dataType}})
+{{^required}}
 	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
 		localVarFile = localVarTempParam
 	}
