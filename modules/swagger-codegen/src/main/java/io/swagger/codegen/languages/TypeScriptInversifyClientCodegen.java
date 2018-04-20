@@ -230,15 +230,21 @@ public class TypeScriptInversifyClientCodegen extends AbstractTypeScriptClientCo
                         insideCurly--;
 
                         // Add the more complicated component instead of just the brace.
+                        CodegenParameter parameter = findPathParameterByName(op, parameterName.toString());
                         pathBuffer.append(toVarName(parameterName.toString()));
+                        if (parameter != null && parameter.isDateTime) {
+                            pathBuffer.append(".toISOString()");
+                        }
                         pathBuffer.append("))}");
                         parameterName.setLength(0);
                         break;
                     default:
+                        char nextChar = op.path.charAt(i);
+
                         if (insideCurly > 0) {
-                            parameterName.append(op.path.charAt(i));
+                            parameterName.append(nextChar);
                         } else {
-                            pathBuffer.append(op.path.charAt(i));
+                            pathBuffer.append(nextChar);
                         }
                         break;
                 }
@@ -256,6 +262,21 @@ public class TypeScriptInversifyClientCodegen extends AbstractTypeScriptClientCo
         }
 
         return operations;
+    }
+
+    /**
+     * Finds and returns a path parameter of an operation by its name
+     * @param operation
+     * @param parameterName
+     * @return
+     */
+    private CodegenParameter findPathParameterByName(CodegenOperation operation, String parameterName) {
+        for(CodegenParameter param : operation.pathParams) {
+            if (param.baseName.equals(parameterName)) {
+                return param;
+            }
+        }
+        return null;
     }
 
     @Override
