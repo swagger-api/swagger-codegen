@@ -47,6 +47,7 @@ io.swagger.codegen.languages.ClojureClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
 io.swagger.codegen.languages.PureCloudPythonClientCodegen
 io.swagger.codegen.languages.PureCloudJavaClientCodegen
+io.swagger.codegen.languages.PureCloudSwiftClientCodegen
 io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen
 io.swagger.codegen.languages.PureCloudDotNetClientCodegen
 io.swagger.codegen.languages.PureCloudRubyClientCodegen

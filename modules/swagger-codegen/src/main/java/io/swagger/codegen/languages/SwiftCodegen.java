@@ -327,17 +327,17 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         CodegenProperty codegenProperty = super.fromProperty(name, p);
         if (codegenProperty.isEnum) {
             List<Map<String, String>> swiftEnums = new ArrayList<Map<String, String>>();
-            List<String> values = (List<String>) codegenProperty.allowableValues.get("values");
-            for (String value : values) {
+            List<Object> values = (List<Object>) codegenProperty.allowableValues.get("values");
+            for (Object value : values) {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("enum", toSwiftyEnumName(value));
-                map.put("raw", value);
+                // HACK: This code is converting integer enum keys to strings. Not sure if this has a negative impact or how to handle this correctly in Swift.
+                map.put("enum", toSwiftyEnumName(value.toString()));
+                map.put("raw", value.toString());
                 swiftEnums.add(map);
             }
+
             codegenProperty.allowableValues.put("values", swiftEnums);
             codegenProperty.datatypeWithEnum = toEnumName(codegenProperty);
-            //codegenProperty.datatypeWithEnum =
-            //    StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
  
             // Ensure that the enum type doesn't match a reserved word or
             // the variable name doesn't match the generated enum type or the
