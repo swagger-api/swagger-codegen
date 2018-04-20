@@ -39,6 +39,12 @@ public class MockEntity implements Serializable {
 	@Column(name = "resources")
 	private String resource;
 	
+	@Column(name = "url")
+	private String url;
+	
+	@Column(name = "method")
+	private String method;
+	
 	@Column(name = "excludeList")
 	private String excludeList;
 
@@ -118,6 +124,22 @@ public class MockEntity implements Serializable {
 
 	public void setHttpStatusCode(String httpStatusCode) {
 		this.httpStatusCode = httpStatusCode;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 }

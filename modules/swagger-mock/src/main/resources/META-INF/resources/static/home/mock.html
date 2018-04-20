@@ -205,7 +205,7 @@
 							<thead>
 								<tr>
 									<th>ID.</th>
-									<th>Resource.</th>
+									<th>Resource/Verb</th>
 									<th>HttpStatusCode</th>
 									<th>Path/QueryParam</th>
 									<th>OperationId</th>
@@ -218,8 +218,11 @@
 							<tbody>
 								<tr
 									ng-repeat="mockRequest in ctrl.filtered = (ctrl.filterList | filter: ctrl.searchText ) | start: (ctrl.currentPage - 1) * ctrl.perPage | limitTo : ctrl.perPage">
-									<td><span ng-bind="mockRequest.id"></span></td>
-									<td><span ng-bind="mockRequest.resource"></span></td>
+									<td ><span ng-bind="mockRequest.id"></span></td>
+									<td><span ng-bind="mockRequest.url"></span>
+										<div class="line-separator"></div>
+										<span ng-bind="mockRequest.method"></span>
+									</td>
 									<td><span ng-bind="mockRequest.httpStatusCode"></span></td>
 									<td><div
 											ng-repeat="mockKeyValue in mockRequest.availableParams track by $index">
@@ -228,7 +231,7 @@
 										</div></td>
 									<td><span ng-bind="mockRequest.operationId"></span></td>
 									<td>
-										<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+										<button type="button" class="btn btn-info btn-sm" data-toggle="modal" ng-show="mockRequest.input != null"
 												data-target="#load-json" ng-click="ctrl.loadJson(mockRequest.input)">Request</button>
 										</td>
 									<td><button type="button" class="btn btn-info btn-sm" data-toggle="modal"

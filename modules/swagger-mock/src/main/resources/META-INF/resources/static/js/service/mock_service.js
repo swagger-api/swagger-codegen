@@ -2,9 +2,9 @@
 
 myApp.factory('MockService', ['$http', '$q', function($http, $q){
 
-    var REST_SERVICE_URI = '/virtualservices/mockservice/';
-    var REST_SERVICE_URI_LOAD = '/virtualservices/mockload/';
-    var REST_SERVICE_URI_SWAGGER = '/virtualservices/swagger-catalogs/';
+    var REST_SERVICE_URI = '/virtualservices/mockservice';
+    var REST_SERVICE_URI_LOAD = '/virtualservices/mockload';
+    var REST_SERVICE_URI_SWAGGER = '/virtualservices/swagger-catalogs';
     
     var factory = {
     	loadAllMockRequest: loadAllMockRequest,
@@ -20,7 +20,7 @@ myApp.factory('MockService', ['$http', '$q', function($http, $q){
     
     function loadSwaggerFiles(name) {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI_SWAGGER+name)
+        $http.get(REST_SERVICE_URI_SWAGGER+"/"+name)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -83,7 +83,7 @@ myApp.factory('MockService', ['$http', '$q', function($http, $q){
 
     function updateMockRequest(mockLoadRequest, id) {
         var deferred = $q.defer();
-        $http.put(REST_SERVICE_URI+id, mockLoadRequest)
+        $http.put(REST_SERVICE_URI+"/"+id, mockLoadRequest)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -98,7 +98,7 @@ myApp.factory('MockService', ['$http', '$q', function($http, $q){
 
     function deleteMockRequest(id) {
         var deferred = $q.defer();
-        $http.delete(REST_SERVICE_URI+id)
+        $http.delete(REST_SERVICE_URI+"/"+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);

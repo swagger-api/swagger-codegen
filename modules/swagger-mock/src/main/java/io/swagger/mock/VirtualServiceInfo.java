@@ -188,7 +188,7 @@ public class VirtualServiceInfo {
 				String resourceUrl = mockTransferInput.getUrl().substring(1, mockTransferInput.getUrl().length());
 				List<String> resouceSplitterList = new LinkedList(Arrays.asList(resourceUrl.split("/")));
 				if(resouceSplitterList.size() >0) {
-					String operationId = getOperationId( mockTransferInput.getMethod(), resourceParent.findResource(resouceSplitterList.get(0)), resouceSplitterList);
+					String operationId = getOperationId( mockTransferInput.getMethod(), resourceParent, resouceSplitterList);
 					System.out.println( " ORG("+mockTransferInput.getOperationId()+") >>>>>>>>>>>>>>>> FOUND ("+operationId+") ");
 					MockTransferObject mockTransferActual = mockLoadChoice.get(resource)
 							.get(operationId);
@@ -207,15 +207,11 @@ public class VirtualServiceInfo {
 			return resourceParent.getOperationId(httpVerb);
 		}
 		String resource = resouceSplitterList.get(0);
-		if(resourceParent.findResource(resource) != null){
-			ResourceMapper mapper = resourceParent.findResource(resource);
-			if(mapper != null){
-				return getOperationId(httpVerb, mapper, resouceSplitterList.subList(1, resouceSplitterList.size()));
-			} else {
-				return getOperationId(httpVerb,resourceParent.findResource(CURLY_PATH), resouceSplitterList.subList(1, resouceSplitterList.size()));
-			}
+		ResourceMapper mapper = resourceParent.findResource(resource);
+		if(mapper != null){
+			return getOperationId(httpVerb, mapper, resouceSplitterList.subList(1, resouceSplitterList.size()));
 		} else {
-			return resourceParent.getOperationId(httpVerb);
+			return getOperationId(httpVerb,resourceParent.findResource(CURLY_PATH), resouceSplitterList.subList(1, resouceSplitterList.size()));
 		}
 
 	}
@@ -252,7 +248,7 @@ public class VirtualServiceInfo {
 					ResourceMapper mapperChild = buildHierarchyObject(requestMockObject.getValue().getMethod(),  resourceParent, resouceSplitterList, requestMockObject.getKey());
 					resourceParent.addResourceMapper(mapperChild);
 				}
-				System.out.println(resourceParent);
+				//System.out.println(resourceParent);
 			}
 		}
 	}

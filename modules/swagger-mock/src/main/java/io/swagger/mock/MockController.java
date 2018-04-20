@@ -1,5 +1,6 @@
 package io.swagger.mock;
 
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
@@ -54,13 +55,13 @@ public class MockController {
 		virtualServiceInfo.loadMapper();
 	}
 	
-	@RequestMapping(value = "/mockload/", method = RequestMethod.GET)
+	@RequestMapping(value = "/mockload", method = RequestMethod.GET)
 	public Map<String, Map<String, MockTransferObject>> listAllMockLoadRequest() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, JsonParseException, JsonMappingException, IOException {
 		return virtualServiceInfo.loadVirtualServices(handlerMapping);
 	}
 
-	@RequestMapping(value = "/mockservice/", method = RequestMethod.GET)
+	@RequestMapping(value = "/mockservice", method = RequestMethod.GET)
 	public ResponseEntity<List<MockTransferObject>> listAllMockLoadRequests(){//@RequestParam("resource") String resource, @RequestParam("operationId") String operationId) {
 		List<MockTransferObject> MockLoadRequests = mockService.findAllMockRequests(); //readByOperationId(resource, operationId);
 		if (MockLoadRequests.isEmpty()) {
@@ -80,18 +81,29 @@ public class MockController {
 	}
 
 
-	@RequestMapping(value = "/mockservice/", method = RequestMethod.POST)
+	@RequestMapping(value = "/mockservice", method = RequestMethod.POST)
 	public ResponseEntity<MockStatus> createMockRequest(@RequestBody MockTransferObject mockLoadRequest) {// ,UriComponentsBuilder
 		try {
+			
+			if(mockLoadRequest.getHttpStatusCode() == null 
+					|| mockLoadRequest.getMethod() == null 
+					|| mockLoadRequest.getUrl() == null) {
+				return new ResponseEntity<MockStatus>(
+						new MockStatus("Check HttpStatusCode or HttpVerb or URL, Please add one of the missing field!!!"),
+						HttpStatus.BAD_REQUEST);
+			}
+			
 			if(mockLoadRequest.getOperationId() == null) {
 				String resourceUrl = mockLoadRequest.getUrl().substring(1, mockLoadRequest.getUrl().length());
 				List<String> resouceSplitterList = new LinkedList(Arrays.asList(resourceUrl.split("/")));
 				if(resouceSplitterList.size() >0) {
 					String operationId = virtualServiceInfo.getOperationId( mockLoadRequest.getMethod(), virtualServiceInfo.getResourceParent(), resouceSplitterList);
 					mockLoadRequest.setOperationId(operationId);
+					mockLoadRequest.setResource(resouceSplitterList.get(0));
 					System.out.println( " ORG("+mockLoadRequest.getOperationId()+") >>>>>>>>>>>>>>>> FOUND ("+operationId+") ");
 				}
 			}
+			
 			
 			if (!mockUtil.isMockRequestBodyValid(mockLoadRequest)) {
 				return new ResponseEntity<MockStatus>(

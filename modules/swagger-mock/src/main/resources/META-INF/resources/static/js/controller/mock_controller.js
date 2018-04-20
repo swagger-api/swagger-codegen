@@ -124,7 +124,7 @@ myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService
         			input:self.mockRequest.input,
         			output:self.mockRequest.output,
         			excludeList:self.mockRequest.excludeList, 
-        			httpStatus:self.mockRequest.httpStatus,
+        			httpStatusCode:self.mockRequest.httpStatusCode,
         			method:self.mockRequest.method,
         			availableParams:self.mockRequest.availableParams};
         createMockRequest(self.mockCreateRequest);
