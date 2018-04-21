@@ -19,6 +19,7 @@ import io.swagger.client.ApiException;
 import io.swagger.client.ApiResponse;
 import io.swagger.client.Configuration;
 import io.swagger.client.Pair;
+import io.swagger.client.ProgressListener;
 import io.swagger.client.ProgressRequestBody;
 import io.swagger.client.ProgressResponseBody;
 
@@ -57,11 +58,10 @@ public class FakeApi {
      * Build call for testCodeInjectEndRnNR
      * @param testCodeInjectEndRnNR To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call testCodeInjectEndRnNRCall(String testCodeInjectEndRnNR, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call testCodeInjectEndRnNRCall(String testCodeInjectEndRnNR, final ProgressListener progressListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -88,27 +88,15 @@ public class FakeApi {
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressListener);
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testCodeInjectEndRnNRValidateBeforeCall(String testCodeInjectEndRnNR, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testCodeInjectEndRnNRValidateBeforeCall(String testCodeInjectEndRnNR, final ProgressListener progressListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = testCodeInjectEndRnNRCall(testCodeInjectEndRnNR, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testCodeInjectEndRnNRCall(testCodeInjectEndRnNR, progressListener);
         return call;
 
     }
@@ -131,7 +119,7 @@ public class FakeApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> testCodeInjectEndRnNRWithHttpInfo(String testCodeInjectEndRnNR) throws ApiException {
-        com.squareup.okhttp.Call call = testCodeInjectEndRnNRValidateBeforeCall(testCodeInjectEndRnNR, null, null);
+        com.squareup.okhttp.Call call = testCodeInjectEndRnNRValidateBeforeCall(testCodeInjectEndRnNR, null);
         return apiClient.execute(call);
     }
 
@@ -145,26 +133,23 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testCodeInjectEndRnNRAsync(String testCodeInjectEndRnNR, final ApiCallback<Void> callback) throws ApiException {
 
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+        ProgressListener progressListener = null;
 
         if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+            progressListener = new ProgressListener() {
                 @Override
                 public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
                     callback.onUploadProgress(bytesWritten, contentLength, done);
                 }
+
+                @Override
+                public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
             };
         }
 
-        com.squareup.okhttp.Call call = testCodeInjectEndRnNRValidateBeforeCall(testCodeInjectEndRnNR, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testCodeInjectEndRnNRValidateBeforeCall(testCodeInjectEndRnNR, progressListener);
         apiClient.executeAsync(call, callback);
         return call;
     }

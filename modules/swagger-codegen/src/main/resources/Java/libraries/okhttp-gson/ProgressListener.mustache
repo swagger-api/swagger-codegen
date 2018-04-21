@@ -1,0 +1,9 @@
+{{>licenseInfo}}
+
+package {{invokerPackage}};
+
+public interface ProgressListener {
+    void onRequestProgress(long bytesWritten, long contentLength, boolean done);
+
+    void onResponseProgress(long bytesRead, long contentLength, boolean done);
+}

@@ -15,10 +15,6 @@ import okio.Source;
 
 public class ProgressResponseBody extends ResponseBody {
 
-    public interface ProgressListener {
-        void update(long bytesRead, long contentLength, boolean done);
-    }
-
     private final ResponseBody responseBody;
     private final ProgressListener progressListener;
     private BufferedSource bufferedSource;
@@ -55,7 +51,7 @@ public class ProgressResponseBody extends ResponseBody {
                 long bytesRead = super.read(sink, byteCount);
                 // read() returns the number of bytes read, or -1 if this source is exhausted.
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
-                progressListener.update(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
+                progressListener.onResponseProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
                 return bytesRead;
             }
         };

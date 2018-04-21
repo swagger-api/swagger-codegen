@@ -26,15 +26,11 @@ import okio.Sink;
 
 public class ProgressRequestBody extends RequestBody {
 
-    public interface ProgressRequestListener {
-        void onRequestProgress(long bytesWritten, long contentLength, boolean done);
-    }
-
     private final RequestBody requestBody;
 
-    private final ProgressRequestListener progressListener;
+    private final ProgressListener progressListener;
 
-    public ProgressRequestBody(RequestBody requestBody, ProgressRequestListener progressListener) {
+    public ProgressRequestBody(RequestBody requestBody, ProgressListener progressListener) {
         this.requestBody = requestBody;
         this.progressListener = progressListener;
     }
