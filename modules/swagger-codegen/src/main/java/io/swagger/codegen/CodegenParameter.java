@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.List;
 
 public class CodegenParameter {
-    public boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
+    public boolean isFormParam, isQueryParam, isFilterParam, isPathParam, isHeaderParam,
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
@@ -97,6 +97,7 @@ public class CodegenParameter {
         output.baseType = this.baseType;
         output.isFormParam = this.isFormParam;
         output.isQueryParam = this.isQueryParam;
+        output.isFilterParam = this.isFilterParam;
         output.isPathParam = this.isPathParam;
         output.isHeaderParam = this.isHeaderParam;
         output.isCookieParam = this.isCookieParam;
@@ -165,6 +166,8 @@ public class CodegenParameter {
         if (isFormParam != that.isFormParam)
             return false;
         if (isQueryParam != that.isQueryParam)
+            return false;
+        if (isFilterParam != that.isFilterParam)
             return false;
         if (isPathParam != that.isPathParam)
             return false;
@@ -283,6 +286,7 @@ public class CodegenParameter {
     @Override
     public int hashCode() {
         int result = isFormParam ? 13:31;
+        result = 31 * result + (isFilterParam ? 13:31);
         result = 31 * result + (isQueryParam ? 13:31);
         result = 31 * result + (isPathParam ? 13:31);
         result = 31 * result + (isHeaderParam ? 13:31);

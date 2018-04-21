@@ -310,6 +310,16 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 }
             }
 
+            // Add identifier for filter params which need to be serialized into json string
+            List<CodegenParameter> params = (List<CodegenParameter>) op.queryParams;
+            for (CodegenParameter param : params) {
+                if (param.paramName.contains("filters")) {
+                    param.isFilterParam = true;
+                } else {
+                    param.isFilterParam = false;
+                }
+            }
+
             // Overwrite path to TypeScript template string, after applying everything we just did.
             op.path = pathBuffer.toString();
         }
