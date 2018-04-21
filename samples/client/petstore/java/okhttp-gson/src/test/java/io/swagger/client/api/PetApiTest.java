@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +65,7 @@ public class PetApiTest {
         api.addPet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
-        assertNotNull(fetched);
-        assertEquals(pet.getId(), fetched.getId());
-        assertNotNull(fetched.getCategory());
-        assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
+        assertPetMatches(pet, fetched);
     }
 
     /*
@@ -79,10 +78,7 @@ public class PetApiTest {
         byte[] fetchedBytes = api.petPetIdtestingByteArraytrueGet(pet.getId());
         Type type = new TypeToken<Pet>(){}.getType();
         Pet fetched = deserializeJson(new String(fetchedBytes), type, api.getApiClient());
-        assertNotNull(fetched);
-        assertEquals(pet.getId(), fetched.getId());
-        assertNotNull(fetched.getCategory());
-        assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
+        assertPetMatches(pet, fetched);
     }
     */
 
@@ -95,99 +91,42 @@ public class PetApiTest {
         assertEquals(200, resp.getStatusCode());
         assertEquals("application/json", resp.getHeaders().get("Content-Type").get(0));
         Pet fetched = resp.getData();
-        assertNotNull(fetched);
-        assertEquals(pet.getId(), fetched.getId());
-        assertNotNull(fetched.getCategory());
-        assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
+        assertPetMatches(pet, fetched);
     }
 
     @Test
     public void testCreateAndGetPetAsync() throws Exception {
         Pet pet = createRandomPet();
         api.addPet(pet);
-        // to store returned Pet or error message/exception
-        final Map<String, Object> result = new HashMap<String, Object>();
 
-        api.getPetByIdAsync(pet.getId(), new ApiCallback<Pet>() {
-            @Override
-            public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                result.put("error", e.getMessage());
-            }
+        final CountDownLatch latch1 = new CountDownLatch(1);
+        final TestApiCallback<Pet> callback1 = new TestApiCallback<Pet>(latch1);
 
-            @Override
-            public void onSuccess(Pet pet, int statusCode, Map<String, List<String>> responseHeaders) {
-                result.put("pet", pet);
-            }
-
-            @Override
-            public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                //empty
-            }
-
-            @Override
-            public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                //empty
-            }
-        });
-        // the API call should be executed asynchronously, so result should be empty at the moment
-        assertTrue(result.isEmpty());
+        api.getPetByIdAsync(pet.getId(), callback1);
+        // the API call should be executed asynchronously, so callback success should be null at the moment
+        assertFalse(callback1.isDone());
 
         // wait for the asynchronous call to finish (at most 10 seconds)
-        final int maxTry = 10;
-        int tryCount = 1;
-        Pet fetched = null;
-        do {
-            if (tryCount > maxTry) fail("have not got result of getPetByIdAsync after 10 seconds");
-            Thread.sleep(1000);
-            tryCount += 1;
-            if (result.get("error") != null) fail((String) result.get("error"));
-            if (result.get("pet") != null) {
-                fetched = (Pet) result.get("pet");
-                break;
-            }
-        } while (result.isEmpty());
-        assertNotNull(fetched);
-        assertEquals(pet.getId(), fetched.getId());
-        assertNotNull(fetched.getCategory());
-        assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
+        assertTrue("have not got result of getPetByIdAsync after 10 seconds",
+                   latch1.await(10, TimeUnit.SECONDS));
+
+        assertTrue(callback1.isDone());
+        if (!callback1.isSuccess()) fail(callback1.getException().getMessage());
+        Pet fetched = callback1.getResult();
+        assertPetMatches(pet, fetched);
 
         // test getting a nonexistent pet
-        result.clear();
-        api.getPetByIdAsync(-10000L, new ApiCallback<Pet>() {
-            @Override
-            public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                result.put("exception", e);
-            }
-
-            @Override
-            public void onSuccess(Pet pet, int statusCode, Map<String, List<String>> responseHeaders) {
-                result.put("pet", pet);
-            }
-
-            @Override
-            public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                //empty
-            }
-
-            @Override
-            public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                //empty
-            }
-        });
+        final CountDownLatch latch2 = new CountDownLatch(1);
+        final TestApiCallback<Pet> callback2 = new TestApiCallback<Pet>(latch2);
+        api.getPetByIdAsync(-10000L, callback2);
 
         // wait for the asynchronous call to finish (at most 10 seconds)
-        tryCount = 1;
-        ApiException exception = null;
-        do {
-            if (tryCount > maxTry) fail("have not got result of getPetByIdAsync after 10 seconds");
-            Thread.sleep(1000);
-            tryCount += 1;
-            if (result.get("pet") != null) fail("expected an error");
-            if (result.get("exception") != null) {
-                exception = (ApiException) result.get("exception");
-                break;
-            }
-        } while (result.isEmpty());
+        assertTrue("have not got result of getPetByIdAsync after 10 seconds",
+                   latch2.await(10, TimeUnit.SECONDS));
+
+        assertTrue(callback2.isDone());
+        assertFalse("expected an error", callback2.isSuccess());
+        ApiException exception = callback2.getException();
         assertNotNull(exception);
         assertEquals(404, exception.getCode());
         assertEquals("Not Found", exception.getMessage());
@@ -238,10 +177,7 @@ public class PetApiTest {
         api.updatePet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
-        assertNotNull(fetched);
-        assertEquals(pet.getId(), fetched.getId());
-        assertNotNull(fetched.getCategory());
-        assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
+        assertPetMatches(pet, fetched);
     }
 
     @Test
@@ -390,5 +326,70 @@ public class PetApiTest {
 
     private <T> T deserializeJson(String json, Type type, ApiClient apiClient) {
         return (T) apiClient.getJSON().deserialize(json, type);
+    }
+
+    private void assertPetMatches(Pet expected, Pet actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getId(), actual.getId());
+        assertNotNull(actual.getCategory());
+        assertEquals(expected.getCategory().getName(),
+                     actual.getCategory().getName());
+    }
+
+    private static class TestApiCallback<T> implements ApiCallback<T> {
+
+        private final CountDownLatch latch;
+
+        private boolean done;
+        private boolean success;
+        private ApiException exception;
+        private T result;
+
+        public TestApiCallback(CountDownLatch latch) {
+            this.latch = latch;
+            this.done = false;
+        }
+
+        @Override
+        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+            exception = e;
+            this.done = true;
+            this.success = false;
+            latch.countDown();
+        }
+
+        @Override
+        public void onSuccess(T result, int statusCode, Map<String, List<String>> responseHeaders) {
+            this.result = result;
+            this.done = true;
+            this.success = true;
+            latch.countDown();
+        }
+
+        @Override
+        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+            //empty
+        }
+
+        @Override
+        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+            //empty
+        }
+
+        public boolean isDone() {
+            return done;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public ApiException getException() {
+            return exception;
+        }
+
+        public T getResult() {
+            return result;
+        }
     }
 }
