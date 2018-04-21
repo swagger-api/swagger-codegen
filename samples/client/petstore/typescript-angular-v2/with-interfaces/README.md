@@ -37,7 +37,7 @@ npm link
 
 In your project:
 ```
-npm link @swagger/angular2-typescript-petstore@0.0.1
+npm link @swagger/angular2-typescript-petstore
 ```
 
 __Note for Windows users:__ The Angular CLI has troubles to use linked npm packages.
