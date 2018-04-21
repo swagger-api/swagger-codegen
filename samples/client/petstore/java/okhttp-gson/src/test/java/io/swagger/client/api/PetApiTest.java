@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
@@ -131,6 +132,64 @@ public class PetApiTest {
         assertEquals(404, exception.getCode());
         assertEquals("Not Found", exception.getMessage());
         assertEquals("application/json", exception.getResponseHeaders().get("Content-Type").get(0));
+    }
+
+    @Test
+    public void testCreateAndGetMultiplePetsAsync() throws Exception {
+        Pet pet1 = createRandomPet();
+        Pet pet2 = createRandomPet();
+
+        final CountDownLatch addLatch = new CountDownLatch(2);
+        final TestApiCallback<Void> addCallback1 = new TestApiCallback<Void>(addLatch);
+        final TestApiCallback<Void> addCallback2 = new TestApiCallback<Void>(addLatch);
+
+        // Make 2 simultaneous calls
+        api.addPetAsync(pet1, addCallback1);
+        api.addPetAsync(pet2, addCallback2);
+
+        // wait for both asynchronous calls to finish (at most 10 seconds)
+        assertTrue(addLatch.await(10, TimeUnit.SECONDS));
+
+        assertTrue(addCallback1.isDone());
+        assertTrue(addCallback2.isDone());
+
+        if (!addCallback1.isSuccess()) throw addCallback1.getException();
+        if (!addCallback2.isSuccess()) throw addCallback2.getException();
+
+        assertValidProgress(addCallback1.getUploadProgress());
+        assertValidProgress(addCallback2.getUploadProgress());
+
+        final CountDownLatch getLatch = new CountDownLatch(3);
+        final TestApiCallback<Pet> getCallback1 = new TestApiCallback<Pet>(getLatch);
+        final TestApiCallback<Pet> getCallback2 = new TestApiCallback<Pet>(getLatch);
+        final TestApiCallback<Pet> getCallback3 = new TestApiCallback<Pet>(getLatch);
+
+        api.getPetByIdAsync(pet1.getId(), getCallback1);
+        api.getPetByIdAsync(pet2.getId(), getCallback2);
+        // Get nonexistent pet
+        api.getPetByIdAsync(-10000L, getCallback3);
+
+        // wait for all asynchronous calls to finish (at most 10 seconds)
+        assertTrue(getLatch.await(10, TimeUnit.SECONDS));
+
+        assertTrue(getCallback1.isDone());
+        assertTrue(getCallback2.isDone());
+        assertTrue(getCallback3.isDone());
+
+        if (!getCallback1.isSuccess()) throw getCallback1.getException();
+        if (!getCallback2.isSuccess()) throw getCallback2.getException();
+
+        assertPetMatches(pet1, getCallback1.getResult());
+        assertPetMatches(pet2, getCallback2.getResult());
+
+        assertValidProgress(getCallback1.getDownloadProgress());
+        assertValidProgress(getCallback2.getDownloadProgress());
+
+        // Last callback should fail with ApiException
+        assertFalse(getCallback3.isSuccess());
+        final ApiException exception = getCallback3.getException();
+        assertNotNull(exception);
+        assertEquals(404, exception.getCode());
     }
 
     /*
@@ -336,9 +395,42 @@ public class PetApiTest {
                      actual.getCategory().getName());
     }
 
+    /**
+     * Assert that the given upload/download progress list satisfies the
+     * following constraints:
+     *
+     *     - List is not empty
+     *     - Byte count should be nondecreasing
+     *     - The last element, and only the last element, should have done=true
+     */
+    private void assertValidProgress(List<Progress> progressList) {
+        assertFalse(progressList.isEmpty());
+
+        Progress prev = null;
+        int index = 0;
+        for (Progress progress : progressList) {
+            if (prev != null) {
+                if (prev.done || prev.bytes > progress.bytes) {
+                    fail("Progress list out of order at index " + index
+                         + ": " + progressList);
+                }
+            }
+            prev = progress;
+            index += 1;
+        }
+
+        if (!prev.done) {
+            fail("Last progress item should have done=true: " + progressList);
+        }
+    }
+
     private static class TestApiCallback<T> implements ApiCallback<T> {
 
         private final CountDownLatch latch;
+        private final ConcurrentLinkedQueue<Progress> uploadProgress =
+            new ConcurrentLinkedQueue<Progress>();
+        private final ConcurrentLinkedQueue<Progress> downloadProgress =
+            new ConcurrentLinkedQueue<Progress>();
 
         private boolean done;
         private boolean success;
@@ -368,12 +460,12 @@ public class PetApiTest {
 
         @Override
         public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-            //empty
+            uploadProgress.add(new Progress(bytesWritten, contentLength, done));
         }
 
         @Override
         public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-            //empty
+            downloadProgress.add(new Progress(bytesRead, contentLength, done));
         }
 
         public boolean isDone() {
@@ -390,6 +482,31 @@ public class PetApiTest {
 
         public T getResult() {
             return result;
+        }
+
+        public List<Progress> getUploadProgress() {
+            return new ArrayList<Progress>(uploadProgress);
+        }
+
+        public List<Progress> getDownloadProgress() {
+            return new ArrayList<Progress>(downloadProgress);
+        }
+    }
+
+    private static class Progress {
+        public final long bytes;
+        public final long contentLength;
+        public final boolean done;
+
+        public Progress(long bytes, long contentLength, boolean done) {
+            this.bytes = bytes;
+            this.contentLength = contentLength;
+            this.done = done;
+        }
+
+        @Override
+        public String toString() {
+            return "<Progress " + bytes + " " + contentLength + " " + done + ">";
         }
     }
 }
