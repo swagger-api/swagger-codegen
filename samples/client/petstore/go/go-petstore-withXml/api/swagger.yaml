@@ -107,11 +107,11 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
+          default: "available"
         collectionFormat: "csv"
         x-exportParamName: "Status"
       responses:
@@ -498,7 +498,7 @@ paths:
             X-Expires-After:
               type: "string"
               format: "date-time"
-              description: "date in UTC when toekn expires"
+              description: "date in UTC when token expires"
         400:
           description: "Invalid username/password supplied"
   /user/logout:
@@ -528,7 +528,7 @@ paths:
       parameters:
       - name: "username"
         in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
+        description: "The name that needs to be fetched. Use user1 for testing."
         required: true
         type: "string"
         x-exportParamName: "Username"
@@ -595,6 +595,7 @@ paths:
       tags:
       - "fake_classname_tags 123#$%^"
       summary: "To test class name in snake case"
+      description: "To test class name in snake case"
       operationId: "testClassname"
       consumes:
       - "application/json"
@@ -634,10 +635,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         x-exportParamName: "EnumFormStringArray"
       - name: "enum_form_string"
         in: "formData"
@@ -657,10 +658,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         x-exportParamName: "EnumHeaderStringArray"
       - name: "enum_header_string"
         in: "header"
@@ -680,10 +681,10 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "$"
           enum:
           - ">"
           - "$"
+          default: "$"
         x-exportParamName: "EnumQueryStringArray"
       - name: "enum_query_string"
         in: "query"
@@ -995,6 +996,26 @@ paths:
       responses:
         200:
           description: "successful operation"
+  /fake/body-with-query-params:
+    put:
+      operationId: "testBodyWithQueryParams"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+        x-exportParamName: "Body"
+      - name: "query"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Query"
+      responses:
+        200:
+          description: "Success"
   /another-fake/dummy:
     patch:
       tags:
@@ -1344,8 +1365,16 @@ definitions:
     default: "-efg"
   Enum_Test:
     type: "object"
+    required:
+    - "enum_string_required"
     properties:
       enum_string:
+        type: "string"
+        enum:
+        - "UPPER"
+        - "lower"
+        - ""
+      enum_string_required:
         type: "string"
         enum:
         - "UPPER"
