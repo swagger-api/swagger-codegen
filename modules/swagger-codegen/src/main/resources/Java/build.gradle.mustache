@@ -18,6 +18,20 @@ repositories {
     jcenter()
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
 
 if(hasProperty('target') && target == 'android') {
 
@@ -135,3 +149,4 @@ dependencies {
     {{/java8}}
     testCompile "junit:junit:$junit_version"
 }
+
