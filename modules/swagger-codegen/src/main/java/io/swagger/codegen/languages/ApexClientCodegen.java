@@ -26,6 +26,7 @@ public class ApexClientCodegen extends AbstractApexCodegen {
     private String namedCredential = classPrefix;
     private String srcPath = "force-app/main/default/";
     private String sfdxConfigPath = "config/";
+    private HashMap<String, Object> primitiveDefaults = new HashMap<String, Object>();
 
     public ApexClientCodegen() {
         super();
@@ -70,14 +71,15 @@ public class ApexClientCodegen extends AbstractApexCodegen {
         typeMapping.put("short", "Integer");
         typeMapping.put("UUID", "String");
 
+        // https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_reserved_words.htm
         setReservedWordsLowerCase(
             Arrays.asList("abstract", "activate", "and", "any", "array", "as", "asc", "autonomous",
                 "begin", "bigdecimal", "blob", "break", "bulk", "by", "byte", "case", "cast",
                 "catch", "char", "class", "collect", "commit", "const", "continue",
-                "convertcurrency", "date", "datetime", "decimal", "default", "delete", "desc", "do", "else",
+                "convertcurrency", "currency", "date", "datetime", "decimal", "default", "delete", "desc", "do", "else",
                 "end", "enum", "exception", "exit", "export", "extends", "false", "final",
                 "finally", "float", "for", "from", "future", "global", "goto", "group", "having",
-                "hint", "if", "implements", "import", "inner", "insert", "instanceof", "int",
+                "hint", "if", "implements", "import", "in", "inner", "insert", "instanceof", "int",
                 "interface", "into", "join", "last_90_days", "last_month", "last_n_days",
                 "last_week", "like", "limit", "list", "long", "loop", "map", "merge", "new",
                 "next_90_days", "next_month", "next_n_days", "next_week", "not", "null", "nulls",
@@ -94,7 +96,14 @@ public class ApexClientCodegen extends AbstractApexCodegen {
             Arrays.asList("Blob", "Boolean", "Date", "Datetime", "Decimal", "Double", "ID",
                 "Integer", "Long", "Object", "String", "Time"
             ));
-        
+
+        primitiveDefaults.put("Boolean", true);
+        primitiveDefaults.put("Decimal", 1);
+        primitiveDefaults.put("Double", 1);
+        primitiveDefaults.put("Integer", 1);
+        primitiveDefaults.put("Long", 1);
+        primitiveDefaults.put("String", "");
+
         instantiationTypes.put("array", "List");
         instantiationTypes.put("map", "Map");
 

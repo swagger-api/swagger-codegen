@@ -38,7 +38,7 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
 
     @Override
     public String getHelp() {
-        return "Generates an Apex API client library (beta).";
+        return "Generates an Apex API client library.";
     }
 
     @Override
@@ -52,6 +52,18 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
+    }
+
+    @Override
+    public String sanitizeName(String name) {
+        name = super.sanitizeName(name);
+        if (name.contains("__")) { // Preventing namespacing
+            name.replaceAll("__", "_");
+        }
+        if (name.matches("^\\d.*")) {  // Prevent named credentials with leading number
+            name.replaceAll("^\\d.*", "");
+        }
+        return name;
     }
 
     @Override
@@ -69,6 +81,9 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
 
         // if it's all uppper case, do nothing
         if (name.matches("^[A-Z_]*$")) {
+            if (isReservedWord(name)) {
+                name = escapeReservedWord(name);
+            }
             return name;
         }
 
@@ -265,7 +280,11 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
             p.example = "'" + p.example + "'";
         } else if ("".equals(p.example) || p.example == null && p.dataType != "Object") {
             // Get an example object from the generated model
-            p.example = p.dataType + ".getExample()";
+            if (!isReservedWord(p.dataType.toLowerCase())) {
+                p.example = p.dataType + ".getExample()";
+            }
+        } else {
+            p.example = "''";
         }
 
     }
@@ -339,8 +358,11 @@ public abstract class AbstractApexCodegen extends DefaultCodegen implements Code
             ((PasswordProperty) p).setExample(example);
             example = "'" + example + "'";
         } else if (p instanceof RefProperty) {
-            example = getTypeDeclaration(p) + ".getExample()";
-            LOGGER.warn(example);
+            if(languageSpecificPrimitives().contains(getTypeDeclaration(p))) {
+                example = getTypeDeclaration(p) + ".getExample()";
+            } else {
+                example = "''";
+            }
         } else if (p instanceof StringProperty) {
             StringProperty sp = (StringProperty) p;
             List<String> enums = sp.getEnum();

@@ -34,6 +34,7 @@ private class {{classname}}Test {
         {{{returnType}}} response;
         {{{returnType}}} expectedResponse;
       {{/returnType}}
+        String js = '';
 
     {{#authMethods}}
         client = new {{classPrefix}}Client();
@@ -43,9 +44,8 @@ private class {{classname}}Test {
       {{#examples}}
 
 
-        String js = JSON.serialize({{{deserializedExample}}});
+        js = JSON.serialize({{{deserializedExample}}});
         res.setHeader('Content-Type', '{{contentType}}');
-        // res.setBody('{{{example}}}');
         res.setBody(js);
         expectedResponse = {{{deserializedExample}}};
         response = ({{{returnType}}}) api.{{operationId}}({{#hasParams}}params{{/hasParams}});
@@ -60,9 +60,8 @@ private class {{classname}}Test {
         api = new {{classname}}(new {{classPrefix}}Client());
       {{#examples}}
 
-        String js = JSON.serialize({{{deserializedExample}}});
+        js = JSON.serialize({{{deserializedExample}}});
         res.setHeader('Content-Type', '{{contentType}}');
-        // res.setBody('{{{example}}}');
         res.setBody(js);
         expectedResponse = {{{deserializedExample}}};
         response = ({{{returnType}}}) api.{{operationId}}({{#hasParams}}params{{/hasParams}});

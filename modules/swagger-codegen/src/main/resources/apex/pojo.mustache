@@ -60,7 +60,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{#interfac
     public static {{classname}} getExample() {
         {{classname}} {{classVarName}} = new {{classname}}();
       {{#vars}}
-        {{classVarName}}.{{name}} = {{{example}}};
+          {{#example}}{{classVarName}}.{{name}} = {{{example}}};{{/example}}
       {{/vars}}
         return {{classVarName}};
     }
