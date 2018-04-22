@@ -19,7 +19,6 @@ import io.swagger.client.ApiException;
 import io.swagger.client.ApiResponse;
 import io.swagger.client.Configuration;
 import io.swagger.client.Pair;
-import io.swagger.client.ProgressListener;
 import io.swagger.client.ProgressRequestBody;
 import io.swagger.client.ProgressResponseBody;
 
@@ -58,11 +57,11 @@ public class AnotherFakeApi {
     /**
      * Build call for testSpecialTags
      * @param body client model (required)
-     * @param progressListener Progress listener
+     * @param callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call testSpecialTagsCall(Client body, final ProgressListener progressListener) throws ApiException {
+    public com.squareup.okhttp.Call testSpecialTagsCall(Client body, final ApiCallback callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -88,11 +87,11 @@ public class AnotherFakeApi {
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressListener);
+        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, callback);
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testSpecialTagsValidateBeforeCall(Client body, final ProgressListener progressListener) throws ApiException {
+    private com.squareup.okhttp.Call testSpecialTagsValidateBeforeCall(Client body, final ApiCallback callback) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -100,7 +99,7 @@ public class AnotherFakeApi {
         }
         
 
-        com.squareup.okhttp.Call call = testSpecialTagsCall(body, progressListener);
+        com.squareup.okhttp.Call call = testSpecialTagsCall(body, callback);
         return call;
 
     }
@@ -140,23 +139,7 @@ public class AnotherFakeApi {
      */
     public com.squareup.okhttp.Call testSpecialTagsAsync(Client body, final ApiCallback<Client> callback) throws ApiException {
 
-        ProgressListener progressListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-
-                @Override
-                public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(body, progressListener);
+        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(body, callback);
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

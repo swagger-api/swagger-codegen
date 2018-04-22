@@ -27,12 +27,12 @@ import okio.Source;
 public class ProgressResponseBody extends ResponseBody {
 
     private final ResponseBody responseBody;
-    private final ProgressListener progressListener;
+    private final ApiCallback callback;
     private BufferedSource bufferedSource;
 
-    public ProgressResponseBody(ResponseBody responseBody, ProgressListener progressListener) {
+    public ProgressResponseBody(ResponseBody responseBody, ApiCallback callback) {
         this.responseBody = responseBody;
-        this.progressListener = progressListener;
+        this.callback = callback;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ProgressResponseBody extends ResponseBody {
                 long bytesRead = super.read(sink, byteCount);
                 // read() returns the number of bytes read, or -1 if this source is exhausted.
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
-                progressListener.onResponseProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
+                callback.onDownloadProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
                 return bytesRead;
             }
         };
