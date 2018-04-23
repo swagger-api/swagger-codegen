@@ -28,13 +28,13 @@ public class SwagCategory {
 
     public static SwagCategory getExample() {
         SwagCategory category = new SwagCategory();
-        category.id = 123456789L;
-        category.name = 'aeiou';
+          category.id = 123456789L;
+          category.name = '';
         return category;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagCategory) {
+        if (obj instanceof SwagCategory) {           
             SwagCategory category = (SwagCategory) obj;
             return this.id == category.id
                 && this.name == category.name;

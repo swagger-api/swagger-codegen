@@ -64,19 +64,19 @@ public class SwagUser {
 
     public static SwagUser getExample() {
         SwagUser user = new SwagUser();
-        user.id = 123456789L;
-        user.username = 'aeiou';
-        user.firstName = 'aeiou';
-        user.lastName = 'aeiou';
-        user.email = 'aeiou';
-        user.password = 'aeiou';
-        user.phone = 'aeiou';
-        user.userStatus = 123;
+          user.id = 123456789L;
+          user.username = '';
+          user.firstName = '';
+          user.lastName = '';
+          user.email = '';
+          user.password = '';
+          user.phone = '';
+          user.userStatus = 0;
         return user;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagUser) {
+        if (obj instanceof SwagUser) {           
             SwagUser user = (SwagUser) obj;
             return this.id == user.id
                 && this.username == user.username

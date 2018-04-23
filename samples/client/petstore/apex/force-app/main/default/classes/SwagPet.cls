@@ -66,17 +66,17 @@ public class SwagPet {
 
     public static SwagPet getExample() {
         SwagPet pet = new SwagPet();
-        pet.id = 123456789L;
-        pet.category = SwagCategory.getExample();
-        pet.name = 'doggie';
-        pet.photoUrls = new List<String>{'aeiou'};
-        pet.tags = new List<SwagTag>{SwagTag.getExample()};
-        pet.status = StatusEnum.AVAILABLE;
+          pet.id = 123456789L;
+          pet.category = '';
+          pet.name = 'doggie';
+          pet.photoUrls = new List<String>{''};
+          pet.tags = new List<SwagTag>{''};
+          pet.status = StatusEnum.AVAILABLE;
         return pet;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagPet) {
+        if (obj instanceof SwagPet) {           
             SwagPet pet = (SwagPet) obj;
             return this.id == pet.id
                 && this.category == pet.category
