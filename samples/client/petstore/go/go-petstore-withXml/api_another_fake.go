@@ -16,8 +16,6 @@ import (
 	"net/url"
 	"strings"
 	"golang.org/x/net/context"
-	"encoding/json"
-	"encoding/xml"
 )
 
 // Linger please
@@ -38,7 +36,7 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		successPayload     Client
+		localVarReturnValue Client
 	)
 
 	// create path and map variables
@@ -69,30 +67,51 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return successPayload, nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return successPayload, localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	contentType := localVarHttpResponse.Header.Get("content-type")
-	if strings.Contains(contentType, "application/xml") {
-		if err = xml.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-			return successPayload, localVarHttpResponse, err
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
 		}
-
-		return successPayload, localVarHttpResponse, err
 	}
 
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return successPayload, localVarHttpResponse, err
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		if localVarHttpResponse.StatusCode == 200 {
+			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+			if err != nil {
+				return localVarReturnValue, localVarHttpResponse, err
+			}
+
+			var v Client
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return successPayload, localVarHttpResponse, err
+	return localVarReturnValue, localVarHttpResponse, nil
 }
