@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>2.4.0-SNAPSHOT+baikal2</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -63,6 +63,11 @@
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-1</version>
+            </extension>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
@@ -921,22 +926,30 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
+        </repository>
+    </distributionManagement>
     <repositories>
         <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>baikal-internal</id>
+            <url>s3://4pf-internal-dependencies/snapshots</url>
         </repository>
     </repositories>
+
     <properties>
         <swagger-parser-version>1.0.34</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <swagger-core-version>1.5.18</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
+        <commons-cli-version>1.4</commons-cli-version>
         <junit-version>4.8.1</junit-version>
         <jackson-version>2.8.9</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
