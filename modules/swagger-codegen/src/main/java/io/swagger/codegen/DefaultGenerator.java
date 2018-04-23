@@ -805,7 +805,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     public Map<String, List<CodegenOperation>> processPaths(Map<String, Path> paths) {
-        Map<String, List<CodegenOperation>> ops = new TreeMap<String, List<CodegenOperation>>();
+        Map<String, List<CodegenOperation>> ops = new HashMap<>();
         for (String resourcePath : paths.keySet()) {
             Path path = paths.get(resourcePath);
             processOperation(resourcePath, "get", path.getGet(), ops, path);
