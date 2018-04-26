@@ -47,7 +47,7 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result getInventory()  {
         Map<String, Integer> obj = imp.getInventory();
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -57,7 +57,7 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -77,7 +77,7 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 }

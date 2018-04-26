@@ -31,15 +31,15 @@ namespace Swagger {
 class SWGTag: public SWGObject {
 public:
     SWGTag();
-    SWGTag(QString* json);
-    virtual ~SWGTag();
+    SWGTag(QString json);
+    ~SWGTag();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGTag* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGTag* fromJson(QString jsonString) override;
 
     qint64 getId();
     void setId(qint64 id);

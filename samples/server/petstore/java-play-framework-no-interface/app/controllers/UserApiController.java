@@ -101,7 +101,7 @@ public class UserApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -122,7 +122,7 @@ public class UserApiController extends Controller {
             throw new IllegalArgumentException("'password' parameter is required");
         }
         String obj = imp.loginUser(username, password);
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 

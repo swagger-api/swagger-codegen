@@ -5,6 +5,7 @@ import apimodels.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import apimodels.OuterComposite;
+import apimodels.User;
 
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -53,7 +54,7 @@ public class FakeApiController extends Controller {
             body = null;
         }
         Boolean obj = imp.fakeOuterBooleanSerialize(body);
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -73,7 +74,7 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -93,7 +94,7 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -110,8 +111,31 @@ public class FakeApiController extends Controller {
             body = null;
         }
         String obj = imp.fakeOuterStringSerialize(body);
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
+    }
+
+    @ApiAction
+    public Result testBodyWithQueryParams() throws Exception {
+        JsonNode nodebody = request().body().asJson();
+        User body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), User.class);
+            if (configuration.getBoolean("useInputBeanValidation")) {
+                SwaggerUtils.validate(body);
+            }
+        } else {
+            throw new IllegalArgumentException("'body' parameter is required");
+        }
+        String valuequery = request().getQueryString("query");
+        String query;
+        if (valuequery != null) {
+            query = valuequery;
+        } else {
+            throw new IllegalArgumentException("'query' parameter is required");
+        }
+        imp.testBodyWithQueryParams(body, query);
+        return Results.status(200);
     }
 
     @ApiAction
@@ -130,7 +154,7 @@ public class FakeApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 

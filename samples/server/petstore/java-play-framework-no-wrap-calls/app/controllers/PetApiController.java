@@ -86,7 +86,7 @@ public class PetApiController extends Controller {
                 SwaggerUtils.validate(curItem);
             }
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -110,7 +110,7 @@ public class PetApiController extends Controller {
                 SwaggerUtils.validate(curItem);
             }
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -120,7 +120,7 @@ public class PetApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -174,7 +174,7 @@ public class PetApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 }

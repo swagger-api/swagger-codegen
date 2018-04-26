@@ -46,3 +46,7 @@ java $JAVA_OPTS -jar $executable $ags
 echo "Typescript Petstore API client (v4.3 { Adding HttpClientModule over HttpModule })"
 ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular -c bin/typescript-petstore-npm.json -o samples/client/petstore/typescript-angular-v4.3/npm --additional-properties ngVersion=4.3"
 java $JAVA_OPTS -jar $executable $ags
+
+echo "Typescript Petstore API client (v5 { Uses latest version of ng-packagr })"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular -c bin/typescript-petstore-npm.json -o samples/client/petstore/typescript-angular-v5/npm --additional-properties ngVersion=5"
+java $JAVA_OPTS -jar $executable $ags

@@ -149,4 +149,12 @@ class ApiClient {
       auth.applyToParams(queryParams, headerParams);
     });
   }
+
+  void setAccessToken(String accessToken) {
+    _authentications.forEach((key, auth) {
+      if (auth is OAuth) {
+        auth.setAccessToken(accessToken);
+      }
+    });
+  }
 }

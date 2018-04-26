@@ -551,7 +551,7 @@
               "X-Expires-After" : {
                 "type" : "string",
                 "format" : "date-time",
-                "description" : "date in UTC when toekn expires"
+                "description" : "date in UTC when token expires"
               }
             }
           },
@@ -668,6 +668,7 @@
       "patch" : {
         "tags" : [ "fake_classname_tags 123#$%^" ],
         "summary" : "To test class name in snake case",
+        "description" : "To test class name in snake case",
         "operationId" : "testClassname",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
@@ -1101,6 +1102,33 @@
         "responses" : {
           "200" : {
             "description" : "successful operation"
+          }
+        },
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
+      }
+    },
+    "/fake/body-with-query-params" : {
+      "put" : {
+        "tags" : [ "fake" ],
+        "operationId" : "testBodyWithQueryParams",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        }, {
+          "name" : "query",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
           }
         },
         "x-contentType" : "application/json",
@@ -1561,8 +1589,13 @@
     },
     "Enum_Test" : {
       "type" : "object",
+      "required" : [ "enum_string_required" ],
       "properties" : {
         "enum_string" : {
+          "type" : "string",
+          "enum" : [ "UPPER", "lower", "" ]
+        },
+        "enum_string_required" : {
           "type" : "string",
           "enum" : [ "UPPER", "lower", "" ]
         },

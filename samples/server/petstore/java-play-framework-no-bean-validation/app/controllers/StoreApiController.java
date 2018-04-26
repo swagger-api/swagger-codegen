@@ -42,14 +42,14 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result getInventory() throws Exception {
         Map<String, Integer> obj = imp.getInventory();
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
     @ApiAction
     public Result getOrderById(Long orderId) throws Exception {
         Order obj = imp.getOrderById(orderId);
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 
@@ -63,7 +63,7 @@ public class StoreApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         Order obj = imp.placeOrder(body);
-        JsonNode result = mapper.valueToTree(obj);
+        JsonNode result = mapper.valueToTree(obj); 
         return Results.status(200, result);
     }
 }
