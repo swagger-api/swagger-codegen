@@ -316,7 +316,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_xml_features(&context)
@@ -358,7 +358,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -447,7 +447,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -483,7 +483,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -739,7 +739,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.uuid_header(param_x_uuid_header, &context)
@@ -776,7 +776,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1215,7 +1215,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -1269,7 +1269,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1311,7 +1311,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -1354,7 +1354,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1369,7 +1369,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -1404,7 +1404,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1667,7 +1667,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_pet(param_pet_id, param_api_key, &context)
@@ -1698,7 +1698,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1746,7 +1746,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.find_pets_by_status(param_status.as_ref(), &context)
@@ -1792,7 +1792,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1840,7 +1840,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.find_pets_by_tags(param_tags.as_ref(), &context)
@@ -1886,7 +1886,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1926,7 +1926,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_pet_by_id(param_pet_id, &context)
@@ -1979,7 +1979,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2156,7 +2156,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -2191,7 +2191,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2361,7 +2361,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_order(param_order_id, &context)
@@ -2399,7 +2399,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2423,7 +2423,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_inventory(&context)
@@ -2462,7 +2462,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2493,7 +2493,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_order_by_id(param_order_id, &context)
@@ -2546,7 +2546,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2908,7 +2908,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_user(param_username, &context)
@@ -2946,7 +2946,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2977,7 +2977,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_user_by_name(param_username, &context)
@@ -3030,7 +3030,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -3068,7 +3068,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.login_user(param_username, param_password, &context)
@@ -3123,7 +3123,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -3138,7 +3138,7 @@ where
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.logout_user(&context)
@@ -3169,7 +3169,7 @@ where
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
