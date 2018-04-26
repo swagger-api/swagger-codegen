@@ -27,6 +27,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public static final String PACKAGE_URL = "packageUrl";
     public static final String DEFAULT_LIBRARY = "urllib3";
 
+    public static final String HTTPSIG_OPTON ="httpsig";
+    public static final String HTTPSIG_DESC = "Generate code that supports signed HTTP operations.";
+
     protected String packageName; // e.g. petstore_api
     protected String packageVersion;
     protected String projectName; // for setup.py, e.g. petstore-api
@@ -140,6 +143,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         libraryOption.setDefault(DEFAULT_LIBRARY);
         cliOptions.add(libraryOption);
         setLibrary(DEFAULT_LIBRARY);
+
+        CliOption httpsigOption = CliOption.newBoolean(PythonClientCodegen.HTTPSIG_OPTON, PythonClientCodegen.HTTPSIG_DESC);
+        cliOptions.add(httpsigOption);
     }
 
     @Override
