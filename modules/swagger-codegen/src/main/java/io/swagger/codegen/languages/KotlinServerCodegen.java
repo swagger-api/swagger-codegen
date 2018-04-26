@@ -26,7 +26,7 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
     private Boolean compressionFeatureEnabled = true;
 
     // This is here to potentially warn the user when an option is not supoprted by the target framework.
-    private Map<String, List<String>> optionsSupportedPerFramework = new ImmutableMap.Builder<String, List<String>>()
+    private final Map<String, List<String>> optionsSupportedPerFramework = new ImmutableMap.Builder<String, List<String>>()
             .put(Constants.KTOR, Arrays.asList(
                     Constants.AUTOMATIC_HEAD_REQUESTS,
                     Constants.CONDITIONAL_HEADERS,
@@ -34,6 +34,13 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
                     Constants.CORS,
                     Constants.COMPRESSION
             ))
+            .build();
+
+
+    private final Map<String, String> supportedEngines = new ImmutableMap.Builder<String, String>()
+            .put(Constants.ENGINE_NETTY, Constants.ENGINE_NETTY)
+            .put(Constants.ENGINE_JETTY, Constants.ENGINE_JETTY)
+            .put(Constants.ENGINE_TOMCAT, Constants.ENGINE_TOMCAT)
             .build();
 
     /**
@@ -53,12 +60,15 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
 
         supportedLibraries.put("ktor", "ktor framework");
 
-        // TODO: Configurable server engine. Defaults to netty in build.gradle.
-        CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
-        library.setDefault(DEFAULT_LIBRARY);
-        library.setEnum(supportedLibraries);
+        cliOptions.add(new CliOption(CodegenConstants.LIBRARY, CodegenConstants.LIBRARY_DESC) {{
+            setDefault(DEFAULT_LIBRARY);
+            setEnum(supportedLibraries);
+        }});
 
-        cliOptions.add(library);
+        cliOptions.add(new CliOption(Constants.ENGINE, Constants.ENGINE_DESC) {{
+            setDefault(Constants.ENGINE_NETTY);
+            setEnum(supportedEngines);
+        }});
 
         addSwitch(Constants.AUTOMATIC_HEAD_REQUESTS, Constants.AUTOMATIC_HEAD_REQUESTS_DESC, getAutoHeadFeatureEnabled());
         addSwitch(Constants.CONDITIONAL_HEADERS, Constants.CONDITIONAL_HEADERS_DESC, getConditionalHeadersFeatureEnabled());
@@ -220,5 +230,10 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         public final static String CORS_DESC = "Ktor by default provides an interceptor for implementing proper support for Cross-Origin Resource Sharing (CORS). See enable-cors.org.";
         public final static String COMPRESSION = "featureCompression";
         public final static String COMPRESSION_DESC = "Adds ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce size of the response.";
+        public static final String ENGINE = "engine";
+        public static final String ENGINE_DESC = "Engine to use with the backend";
+        public static final String ENGINE_NETTY = "netty";
+        public static final String ENGINE_JETTY = "jetty";
+        public static final String ENGINE_TOMCAT = "tomcat";
     }
 }
