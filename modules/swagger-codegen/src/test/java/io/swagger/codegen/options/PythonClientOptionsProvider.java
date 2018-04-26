@@ -28,7 +28,7 @@ public class PythonClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, "true")
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.LIBRARY, "urllib3")
-                .put(PythonClientCodegen.HTTPSIG_OPTON, "true")
+                .put( CodegenConstants.HTTPSIG_OPTON, "true")
                 .build();
     }
 
