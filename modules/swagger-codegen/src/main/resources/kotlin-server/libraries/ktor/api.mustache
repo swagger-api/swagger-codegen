@@ -25,10 +25,6 @@ import {{packageName}}.HTTP.client
 import {{packageName}}.infrastructure.ApiPrincipal
 import {{packageName}}.infrastructure.apiKeyAuth
 
-// ktor 0.9.x is missing io.ktor.locations.DELETE, this adds it.
-// see https://github.com/ktorio/ktor/issues/288
-import {{packageName}}.delete
-
 {{#imports}}import {{import}}
 {{/imports}}
 
