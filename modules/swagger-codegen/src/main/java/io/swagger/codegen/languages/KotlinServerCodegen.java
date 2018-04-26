@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class KotlinServerCodegen extends AbstractKotlinCodegen {
 
-    public static final String DEFAULT_LIBRARY = Constants.KTOR;
     static Logger LOGGER = LoggerFactory.getLogger(KotlinServerCodegen.class);
     private Boolean autoHeadFeatureEnabled = true;
     private Boolean conditionalHeadersFeatureEnabled = false;
@@ -38,9 +37,9 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
 
 
     private final Map<String, String> supportedEngines = new ImmutableMap.Builder<String, String>()
-            .put(Constants.ENGINE_NETTY, Constants.ENGINE_NETTY)
-            .put(Constants.ENGINE_JETTY, Constants.ENGINE_JETTY)
-            .put(Constants.ENGINE_TOMCAT, Constants.ENGINE_TOMCAT)
+            .put(Constants.ENGINE_NETTY.getName(), Constants.ENGINE_NETTY.getDescription())
+            .put(Constants.ENGINE_JETTY.getName(), Constants.ENGINE_JETTY.getDescription())
+            .put(Constants.ENGINE_TOMCAT.getName(), Constants.ENGINE_TOMCAT.getDescription())
             .build();
 
     /**
@@ -58,15 +57,8 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         apiPackage = packageName + ".apis";
         modelPackage = packageName + ".models";
 
-        supportedLibraries.put("ktor", "ktor framework");
-
-        cliOptions.add(new CliOption(CodegenConstants.LIBRARY, CodegenConstants.LIBRARY_DESC) {{
-            setDefault(DEFAULT_LIBRARY);
-            setEnum(supportedLibraries);
-        }});
-
         cliOptions.add(new CliOption(Constants.ENGINE, Constants.ENGINE_DESC) {{
-            setDefault(Constants.ENGINE_NETTY);
+            setDefault(Constants.ENGINE_NETTY.getName());
             setEnum(supportedEngines);
         }});
 
@@ -167,7 +159,7 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
             additionalProperties.put(Constants.COMPRESSION, getCompressionFeatureEnabled());
         }
 
-        Boolean generateApis = additionalProperties.containsKey(CodegenConstants.GENERATE_APIS) && (Boolean)additionalProperties.get(CodegenConstants.GENERATE_APIS);
+        Boolean generateApis = additionalProperties.containsKey(CodegenConstants.GENERATE_APIS) && (Boolean) additionalProperties.get(CodegenConstants.GENERATE_APIS);
         String packageFolder = (sourceFolder + File.separator + packageName).replace(".", File.separator);
         String resourcesFolder = "src/main/resources"; // not sure this can be user configurable.
 
@@ -232,8 +224,30 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         public final static String COMPRESSION_DESC = "Adds ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce size of the response.";
         public static final String ENGINE = "engine";
         public static final String ENGINE_DESC = "Engine to use with the backend";
-        public static final String ENGINE_NETTY = "netty";
-        public static final String ENGINE_JETTY = "jetty";
-        public static final String ENGINE_TOMCAT = "tomcat";
+        public static final DevelopmentEngine ENGINE_NETTY = new DevelopmentEngine("netty", "io.ktor.server.netty.DevelopmentEngine");
+        public static final DevelopmentEngine ENGINE_JETTY = new DevelopmentEngine("jetty", "io.ktor.server.jetty.DevelopmentEngine");
+        public static final DevelopmentEngine ENGINE_TOMCAT = new DevelopmentEngine("tomcat", "io.ktor.server.tomcat.DevelopmentEngine");
+    }
+
+    private static class DevelopmentEngine {
+        private String name;
+        private String mainClass;
+
+        public DevelopmentEngine(String name, String mainClass) {
+            this.name = name;
+            this.mainClass = mainClass;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getMainClass() {
+            return mainClass;
+        }
+
+        public String getDescription() {
+            return getName();
+        }
     }
 }
