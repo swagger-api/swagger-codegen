@@ -319,7 +319,7 @@ where
 {{^required}}{{#isFile}}                                let param_{{paramName}} = Box::new(future::ok(param_{{paramName}}));{{/isFile}}{{/required}}
 {{/formParams}}
 {{/hasFile}}{{^hasFile}}
-                Box::new(({
+                Box::new({
                         {{
 {{#formParams}}{{#-first}}
                                 // Form parameters
@@ -425,7 +425,7 @@ where
                                 ))
 {{^bodyParams}}{{#vendorExtensions}}{{^hasFile}}
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 {{/hasFile}}{{#hasFile}}
                                 as Box<Future<Item=Response, Error=Error>>
                             },
