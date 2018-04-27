@@ -5,7 +5,6 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.options.JavaScriptOptionsProvider;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 import io.swagger.codegen.options.OptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -69,6 +68,8 @@ public class JavaScriptClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setEmitJSDoc(Boolean.valueOf(JavaScriptOptionsProvider.EMIT_JS_DOC_VALUE));
             times = 1;
             clientCodegen.setUseES6(Boolean.valueOf(JavaScriptOptionsProvider.USE_ES6_VALUE));
+            times = 1;
+            clientCodegen.setModelPropertyNaming(JavaScriptOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
         }};
     }
