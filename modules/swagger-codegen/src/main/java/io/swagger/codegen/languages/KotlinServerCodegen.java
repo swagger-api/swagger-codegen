@@ -82,6 +82,15 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         return CodegenType.SERVER;
     }
 
+    private boolean handleAdditionalBoolProperty(boolean value, String name) {
+        if (additionalProperties.containsKey(name)) {
+            return convertPropertyToBooleanAndWriteBack(name);
+        } else {
+            additionalProperties.put(name, value);
+            return value;
+        }
+    }
+
     @Override
     public void processOpts() {
         super.processOpts();
@@ -90,35 +99,11 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
             this.setLibrary((String) additionalProperties.get(CodegenConstants.LIBRARY));
         }
 
-        if (additionalProperties.containsKey(Constants.AUTOMATIC_HEAD_REQUESTS)) {
-            autoHeadFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.AUTOMATIC_HEAD_REQUESTS);
-        } else {
-            additionalProperties.put(Constants.AUTOMATIC_HEAD_REQUESTS, autoHeadFeatureEnabled);
-        }
-
-        if (additionalProperties.containsKey(Constants.CONDITIONAL_HEADERS)) {
-            conditionalHeadersFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.CONDITIONAL_HEADERS);
-        } else {
-            additionalProperties.put(Constants.CONDITIONAL_HEADERS, conditionalHeadersFeatureEnabled);
-        }
-
-        if (additionalProperties.containsKey(Constants.HSTS)) {
-            hstsFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.HSTS);
-        } else {
-            additionalProperties.put(Constants.HSTS, hstsFeatureEnabled);
-        }
-
-        if (additionalProperties.containsKey(Constants.CORS)) {
-            corsFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.CORS);
-        } else {
-            additionalProperties.put(Constants.CORS, corsFeatureEnabled);
-        }
-
-        if (additionalProperties.containsKey(Constants.COMPRESSION)) {
-            compressionFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.COMPRESSION);
-        } else {
-            additionalProperties.put(Constants.COMPRESSION, compressionFeatureEnabled);
-        }
+        autoHeadFeatureEnabled = handleAdditionalBoolProperty(autoHeadFeatureEnabled, Constants.AUTOMATIC_HEAD_REQUESTS);
+        conditionalHeadersFeatureEnabled = handleAdditionalBoolProperty(conditionalHeadersFeatureEnabled, Constants.CONDITIONAL_HEADERS);
+        hstsFeatureEnabled = handleAdditionalBoolProperty(hstsFeatureEnabled, Constants.HSTS);
+        corsFeatureEnabled = handleAdditionalBoolProperty(corsFeatureEnabled, Constants.CORS);
+        compressionFeatureEnabled = handleAdditionalBoolProperty(compressionFeatureEnabled, Constants.COMPRESSION);
 
         Boolean generateApis = additionalProperties.containsKey(CodegenConstants.GENERATE_APIS) && (Boolean) additionalProperties.get(CodegenConstants.GENERATE_APIS);
         String packageFolder = (sourceFolder + File.separator + packageName).replace(".", File.separator);
