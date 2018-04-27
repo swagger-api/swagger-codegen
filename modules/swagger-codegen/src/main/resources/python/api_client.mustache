@@ -520,7 +520,7 @@ class ApiClient(object):
                     querys.append((auth_setting['key'], auth_setting['value']))
 {{#httpsig}}
                 elif auth_setting['in'] == 'httpsig': # https://datatracker.ietf.org/doc/draft-cavage-http-signatures/?include_text=1
-                	self.prepare_auth_header(auth_setting, resource_path, method, body, querys)
+                        self.prepare_auth_header(auth_setting, resource_path, method, body, querys)
 {{/httpsig}}
                 else:
                     raise ValueError(
@@ -642,7 +642,7 @@ class ApiClient(object):
         return instance
  
 {{#httpsig}}    
- 	def get_sha256_digest(self, data):
+    def get_sha256_digest(self, data):
         """
         :param data: Data set by User
         :return: instance of digest object 
@@ -749,7 +749,7 @@ class ApiClient(object):
         string_to_sign = self.prepare_str_to_sign(request_target, headers)
         
         if auth_settings['digest_algorithm'] != 'rsa-sha256':
-        	raise ValueError('only rsa-sha256 supported for digest_algorithm in httpsig')
+                raise ValueError('only rsa-sha256 supported for digest_algorithm in httpsig')
         digest = self.get_sha256_digest(string_to_sign.encode())
         
         b64_signed_msg = self.get_rsasig_b64encode(auth_settings['private_key_file'], digest)
