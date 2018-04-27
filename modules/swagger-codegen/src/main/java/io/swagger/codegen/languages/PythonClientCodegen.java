@@ -9,7 +9,18 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.*;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,10 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PACKAGE_URL = "packageUrl";
@@ -33,6 +40,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String packageUrl;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected Boolean httpsig;
 
     protected Map<Character, String> regexModifiers;
 
@@ -40,7 +48,6 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     public PythonClientCodegen() {
         super();
-
         // clear import mapping (from default generator) as python does not use it
         // at the moment
         importMapping.clear();
@@ -140,6 +147,10 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         libraryOption.setDefault(DEFAULT_LIBRARY);
         cliOptions.add(libraryOption);
         setLibrary(DEFAULT_LIBRARY);
+
+        this.addSwitch( CodegenConstants.HTTPSIG_OPTON,
+                CodegenConstants.HTTPSIG_DESC,
+                Boolean.FALSE);
     }
 
     @Override
@@ -218,7 +229,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
         modelPackage = packageName + "." + modelPackage;
         apiPackage = packageName + "." + apiPackage;
-
+        if (additionalProperties.containsKey( CodegenConstants.HTTPSIG_OPTON))
+            httpsig = Boolean.valueOf(additionalProperties.get( CodegenConstants.HTTPSIG_OPTON).toString());
     }
 
     private static String dropDots(String str) {
