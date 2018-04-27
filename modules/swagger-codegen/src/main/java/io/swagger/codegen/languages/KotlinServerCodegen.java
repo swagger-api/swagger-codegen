@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,13 +36,6 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
             ))
             .build();
 
-
-    private final Map<String, String> supportedEngines = new ImmutableMap.Builder<String, String>()
-            .put(Constants.ENGINE_NETTY.getName(), Constants.ENGINE_NETTY.getDescription())
-            .put(Constants.ENGINE_JETTY.getName(), Constants.ENGINE_JETTY.getDescription())
-            .put(Constants.ENGINE_TOMCAT.getName(), Constants.ENGINE_TOMCAT.getDescription())
-            .build();
-
     /**
      * Constructs an instance of `KotlinServerCodegen`.
      */
@@ -58,8 +52,12 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         modelPackage = packageName + ".models";
 
         cliOptions.add(new CliOption(Constants.ENGINE, Constants.ENGINE_DESC) {{
-            setDefault(Constants.ENGINE_NETTY.getName());
-            setEnum(supportedEngines);
+            setDefault(Constants.ENGINE_DEFAULT.getName());
+            setEnum(new LinkedHashMap<String, String>() {{
+                for (DevelopmentEngine engine : Constants.ENGINES) {
+                    put(engine.getName(), engine.getDescription());
+                }
+            }});
         }});
 
         addSwitch(Constants.AUTOMATIC_HEAD_REQUESTS, Constants.AUTOMATIC_HEAD_REQUESTS_DESC, autoHeadFeatureEnabled);
@@ -104,6 +102,16 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         hstsFeatureEnabled = handleAdditionalBoolProperty(hstsFeatureEnabled, Constants.HSTS);
         corsFeatureEnabled = handleAdditionalBoolProperty(corsFeatureEnabled, Constants.CORS);
         compressionFeatureEnabled = handleAdditionalBoolProperty(compressionFeatureEnabled, Constants.COMPRESSION);
+
+        final String engineName = additionalProperties.containsKey(Constants.ENGINE)
+                ? additionalProperties.get(Constants.ENGINE).toString()
+                : Constants.ENGINE_DEFAULT.getName();
+
+        final DevelopmentEngine engine = Constants.ENGINES_BY_NAME.get(engineName);
+        additionalProperties.put("engineName", engine.getName());
+        additionalProperties.put("engineMainClass", engine.getMainClass());
+        additionalProperties.put("engineArtifact", engine.getArtifact());
+        additionalProperties.put("engineClass", engine.getEngineClass());
 
         Boolean generateApis = additionalProperties.containsKey(CodegenConstants.GENERATE_APIS) && (Boolean) additionalProperties.get(CodegenConstants.GENERATE_APIS);
         String packageFolder = (sourceFolder + File.separator + packageName).replace(".", File.separator);
@@ -171,18 +179,31 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         public final static String COMPRESSION_DESC = "Adds ability to compress outgoing content using gzip, deflate or custom encoder and thus reduce size of the response.";
         public static final String ENGINE = "engine";
         public static final String ENGINE_DESC = "Engine to use with the backend";
-        public static final DevelopmentEngine ENGINE_NETTY = new DevelopmentEngine("netty", "io.ktor.server.netty.DevelopmentEngine");
-        public static final DevelopmentEngine ENGINE_JETTY = new DevelopmentEngine("jetty", "io.ktor.server.jetty.DevelopmentEngine");
-        public static final DevelopmentEngine ENGINE_TOMCAT = new DevelopmentEngine("tomcat", "io.ktor.server.tomcat.DevelopmentEngine");
+        public static final DevelopmentEngine[] ENGINES = {
+                new DevelopmentEngine("cio", "io.ktor.server.cio.DevelopmentEngine", "io.ktor:ktor-server-cio:$ktor_version", "io.ktor.server.cio.CIO"),
+                new DevelopmentEngine("netty", "io.ktor.server.netty.DevelopmentEngine", "io.ktor:ktor-server-netty:$ktor_version", "io.ktor.server.netty.Netty"),
+                new DevelopmentEngine("jetty", "io.ktor.server.jetty.DevelopmentEngine", "io.ktor:ktor-server-jetty:$ktor_version", "io.ktor.server.netty.Jetty"),
+                new DevelopmentEngine("tomcat", "io.ktor.server.tomcat.DevelopmentEngine", "io.ktor:ktor-server-tomcat:$ktor_version", "io.ktor.server.netty.Tomcat")
+        };
+        public static final Map<String, DevelopmentEngine> ENGINES_BY_NAME = new LinkedHashMap<String, DevelopmentEngine>() {{
+            for (DevelopmentEngine engine : ENGINES) {
+                put(engine.getName(), engine);
+            }
+        }};
+        public static final DevelopmentEngine ENGINE_DEFAULT = ENGINES_BY_NAME.get("netty");
     }
 
     private static class DevelopmentEngine {
         private String name;
         private String mainClass;
+        private String artifact;
+        private String engineClass;
 
-        public DevelopmentEngine(String name, String mainClass) {
+        public DevelopmentEngine(String name, String mainClass, String artifact, String engineClass) {
             this.name = name;
             this.mainClass = mainClass;
+            this.artifact = artifact;
+            this.engineClass = engineClass;
         }
 
         public String getName() {
@@ -191,6 +212,14 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
 
         public String getMainClass() {
             return mainClass;
+        }
+
+        public String getArtifact() {
+            return artifact;
+        }
+
+        public String getEngineClass() {
+            return engineClass;
         }
 
         public String getDescription() {

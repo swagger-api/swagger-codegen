@@ -9,7 +9,6 @@ import io.ktor.locations.*
 import io.ktor.metrics.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 import java.util.concurrent.*
 {{#generateApis}}
 import {{apiPackage}}.*
@@ -19,7 +18,7 @@ import {{apiPackage}}.*
 {{/imports}}
 
 fun main(args: Array<String>): Unit {
-    embeddedServer(Netty, port = 8080, module = Application::main).start(wait = true)
+    embeddedServer({{{engineClass}}}, port = 8080, module = Application::main).start(wait = true)
 }
 
 fun Application.main() {
