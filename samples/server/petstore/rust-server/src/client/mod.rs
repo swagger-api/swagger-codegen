@@ -9,7 +9,7 @@ extern crate url;
 extern crate multipart;
 extern crate serde_urlencoded;
 
-use uuid;
+
 use self::multipart::client::lazy::Multipart;
 use hyper;
 use hyper::header::{Headers, ContentType};
@@ -42,20 +42,15 @@ use swagger::{ApiError, XSpanId, XSpanIdString, Has, AuthData};
 
 use {Api,
      TestSpecialTagsResponse,
-     GetXmlFeaturesResponse,
-     PostPlainTextResponse,
-     PostUrlEncodedFormResponse,
-     PostXmlFeaturesResponse,
-     PutPlainTextResponse,
-     TestBodyWithQueryParamsResponse,
-     UuidHeaderResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
      FakeOuterStringSerializeResponse,
+     TestBodyWithQueryParamsResponse,
      TestClientModelResponse,
      TestEndpointParametersResponse,
      TestEnumParametersResponse,
+     TestInlineAdditionalPropertiesResponse,
      TestJsonFormDataResponse,
      TestClassnameResponse,
      AddPetResponse,
@@ -291,490 +286,6 @@ impl<C> Api<C> for Client where C: Has<XSpanIdString> + Has<Option<AuthData>>{
                                              ))
                         .map(move |body|
                             TestSpecialTagsResponse::SuccessfulOperation(body)
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn get_xml_features(&self, context: &C) -> Box<Future<Item=GetXmlFeaturesResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/xmlFeatures",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Get, uri);
-
-
-
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        body
-                        .concat2()
-                        .map_err(|e| ApiError(format!("Failed to read response: {}", e)))
-                        .and_then(|body| str::from_utf8(&body)
-                                             .map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))
-                                             .and_then(|body|
-
-                                                 // ToDo: this will move to swagger-rs and become a standard From conversion trait
-                                                 // once https://github.com/RReverser/serde-xml-rs/pull/45 is accepted upstream
-                                                 serde_xml_rs::from_str::<models::XmlObject>(body)
-                                                     .map_err(|e| ApiError(format!("Response body did not match the schema: {}", e)))
-
-                                             ))
-                        .map(move |body|
-                            GetXmlFeaturesResponse::Success(body)
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn post_plain_text(&self, param_message: String, context: &C) -> Box<Future<Item=PostPlainTextResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/plaintext",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Post, uri);
-
-        let body = param_message;
-
-
-        request.set_body(body.into_bytes());
-
-
-        request.headers_mut().set(ContentType(mimetypes::requests::POST_PLAIN_TEXT.clone()));
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        body
-                        .concat2()
-                        .map_err(|e| ApiError(format!("Failed to read response: {}", e)))
-                        .and_then(|body| str::from_utf8(&body)
-                                             .map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))
-                                             .and_then(|body|
-
-                                                 Ok(body.to_string())
-
-                                             ))
-                        .map(move |body|
-                            PostPlainTextResponse::Success(body)
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn post_url_encoded_form(&self, param_param1: String, param_param2: String, param_param3: Option<String>, context: &C) -> Box<Future<Item=PostUrlEncodedFormResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/formUrlEncoded",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Post, uri);
-
-        let params = &[
-            ("Param1", Some(param_param1)),
-            ("Param2", Some(param_param2)),
-            ("Param3", param_param3),
-        ];
-        let body = serde_urlencoded::to_string(params).expect("impossible to fail to serialize");
-
-        request.headers_mut().set(ContentType(mimetypes::requests::POST_URL_ENCODED_FORM.clone()));
-        request.set_body(body.into_bytes());
-
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            PostUrlEncodedFormResponse::Success
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn post_xml_features(&self, param_xml_object: models::XmlObject, context: &C) -> Box<Future<Item=PostXmlFeaturesResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/xmlFeatures",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Post, uri);
-
-
-
-        let mut namespaces = BTreeMap::new();
-        // An empty string is used to indicate a global namespace in xmltree.
-        namespaces.insert("".to_string(), models::namespaces::XMLOBJECT.clone());
-        let body = serde_xml_rs::to_string_with_namespaces(&param_xml_object, namespaces).expect("impossible to fail to serialize");
-
-
-        request.set_body(body.into_bytes());
-
-
-        request.headers_mut().set(ContentType(mimetypes::requests::POST_XML_FEATURES.clone()));
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            PostXmlFeaturesResponse::Success
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn put_plain_text(&self, param_message: Option<String>, context: &C) -> Box<Future<Item=PutPlainTextResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/plaintext",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Put, uri);
-
-        let body = param_message;
-
-
-if let Some(body) = body {
-            request.set_body(body.into_bytes());
-        }
-
-        request.headers_mut().set(ContentType(mimetypes::requests::PUT_PLAIN_TEXT.clone()));
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            PutPlainTextResponse::Success
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn test_body_with_query_params(&self, param_body: models::User, param_query: String, context: &C) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
-
-        // Query parameters
-        let query_query = format!("query={query}&", query=param_query.to_string());
-
-
-        let uri = format!(
-            "{}/v2/fake/body-with-query-params?{query}",
-            self.base_path,
-            query=utf8_percent_encode(&query_query, QUERY_ENCODE_SET)
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Put, uri);
-
-
-        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
-
-
-        request.set_body(body.into_bytes());
-
-
-        request.headers_mut().set(ContentType(mimetypes::requests::TEST_BODY_WITH_QUERY_PARAMS.clone()));
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            TestBodyWithQueryParamsResponse::Success
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn uuid_header(&self, param_x_uuid_header: uuid::Uuid, context: &C) -> Box<Future<Item=UuidHeaderResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/uuid-headers/",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Post, uri);
-
-
-
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-        // Header parameters
-        header! { (RequestXUuidHeader, "X-Uuid-Header") => [uuid::Uuid] }
-        request.headers_mut().set(RequestXUuidHeader(param_x_uuid_header));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    header! { (ResponseXUuidHeader, "X-Uuid-Header") => [uuid::Uuid] }
-                    let response_x_uuid_header = match response.headers().get::<ResponseXUuidHeader>() {
-                        Some(response_x_uuid_header) => response_x_uuid_header.0.clone(),
-                        None => return Box::new(future::err(ApiError(String::from("Required response header X-Uuid-Header for response 200 was not found.")))) as Box<Future<Item=_, Error=_>>,
-                    };
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            UuidHeaderResponse::SuccessOrNotFound{ x_uuid_header: response_x_uuid_header }
                         )
                     ) as Box<Future<Item=_, Error=_>>
                 },
@@ -1114,6 +625,75 @@ if let Some(body) = body {
 
     }
 
+    fn test_body_with_query_params(&self, param_body: models::User, param_query: String, context: &C) -> Box<Future<Item=TestBodyWithQueryParamsResponse, Error=ApiError>> {
+
+        // Query parameters
+        let query_query = format!("query={query}&", query=param_query.to_string());
+
+
+        let uri = format!(
+            "{}/v2/fake/body-with-query-params?{query}",
+            self.base_path,
+            query=utf8_percent_encode(&query_query, QUERY_ENCODE_SET)
+        );
+
+        let uri = match Uri::from_str(&uri) {
+            Ok(uri) => uri,
+            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
+        };
+
+        let mut request = hyper::Request::new(hyper::Method::Put, uri);
+
+
+        let body = serde_json::to_string(&param_body).expect("impossible to fail to serialize");
+
+
+        request.set_body(body.into_bytes());
+
+
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_BODY_WITH_QUERY_PARAMS.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
+
+
+
+
+        Box::new(self.hyper_client.call(request)
+                             .map_err(|e| ApiError(format!("No response received: {}", e)))
+                             .and_then(|mut response| {
+            match response.status().as_u16() {
+                200 => {
+                    let body = response.body();
+                    Box::new(
+
+                        future::ok(
+                            TestBodyWithQueryParamsResponse::Success
+                        )
+                    ) as Box<Future<Item=_, Error=_>>
+                },
+                code => {
+                    let headers = response.headers().clone();
+                    Box::new(response.body()
+                            .take(100)
+                            .concat2()
+                            .then(move |body|
+                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
+                                    code,
+                                    headers,
+                                    match body {
+                                        Ok(ref body) => match str::from_utf8(body) {
+                                            Ok(body) => Cow::from(body),
+                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
+                                        },
+                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
+                                    })))
+                            )
+                    ) as Box<Future<Item=_, Error=_>>
+                }
+            }
+        }))
+
+    }
+
     fn test_client_model(&self, param_body: models::Client, context: &C) -> Box<Future<Item=TestClientModelResponse, Error=ApiError>> {
 
 
@@ -1346,6 +926,71 @@ if let Some(body) = body {
 
                         future::ok(
                             TestEnumParametersResponse::NotFound
+                        )
+                    ) as Box<Future<Item=_, Error=_>>
+                },
+                code => {
+                    let headers = response.headers().clone();
+                    Box::new(response.body()
+                            .take(100)
+                            .concat2()
+                            .then(move |body|
+                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
+                                    code,
+                                    headers,
+                                    match body {
+                                        Ok(ref body) => match str::from_utf8(body) {
+                                            Ok(body) => Cow::from(body),
+                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
+                                        },
+                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
+                                    })))
+                            )
+                    ) as Box<Future<Item=_, Error=_>>
+                }
+            }
+        }))
+
+    }
+
+    fn test_inline_additional_properties(&self, param_param: object, context: &C) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError>> {
+
+
+        let uri = format!(
+            "{}/v2/fake/inline-additionalProperties",
+            self.base_path
+        );
+
+        let uri = match Uri::from_str(&uri) {
+            Ok(uri) => uri,
+            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
+        };
+
+        let mut request = hyper::Request::new(hyper::Method::Post, uri);
+
+
+        let body = serde_json::to_string(&param_param).expect("impossible to fail to serialize");
+
+
+        request.set_body(body.into_bytes());
+
+
+        request.headers_mut().set(ContentType(mimetypes::requests::TEST_INLINE_ADDITIONAL_PROPERTIES.clone()));
+        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
+
+
+
+
+        Box::new(self.hyper_client.call(request)
+                             .map_err(|e| ApiError(format!("No response received: {}", e)))
+                             .and_then(|mut response| {
+            match response.status().as_u16() {
+                200 => {
+                    let body = response.body();
+                    Box::new(
+
+                        future::ok(
+                            TestInlineAdditionalPropertiesResponse::SuccessfulOperation
                         )
                     ) as Box<Future<Item=_, Error=_>>
                 },

@@ -33,13 +33,7 @@ mod mimetypes;
 pub use swagger::{ApiError, ContextWrapper};
 
 pub const BASE_PATH: &'static str = "/v2";
-<<<<<<< e3b6145963b1ad8d6948f19c4a90a314bdc6cddd
-lazy_static! {
-    pub static ref API_VERSION: Result<semver::Version, semver::SemVerError> = semver::Version::parse("1.0.0");
-}
-=======
 pub const API_VERSION: &'static str = "1.0.0";
->>>>>>> Go back to API version as a string
 
 
 #[derive(Debug, PartialEq)]

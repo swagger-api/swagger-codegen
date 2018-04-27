@@ -20,20 +20,15 @@ use tokio_core::reactor;
 use petstore_api::{ApiNoContext, ContextWrapperExt,
                       ApiError,
                       TestSpecialTagsResponse,
-                      GetXmlFeaturesResponse,
-                      PostPlainTextResponse,
-                      PostUrlEncodedFormResponse,
-                      PostXmlFeaturesResponse,
-                      PutPlainTextResponse,
-                      TestBodyWithQueryParamsResponse,
-                      UuidHeaderResponse,
                       FakeOuterBooleanSerializeResponse,
                       FakeOuterCompositeSerializeResponse,
                       FakeOuterNumberSerializeResponse,
                       FakeOuterStringSerializeResponse,
+                      TestBodyWithQueryParamsResponse,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
+                      TestInlineAdditionalPropertiesResponse,
                       TestJsonFormDataResponse,
                       TestClassnameResponse,
                       AddPetResponse,
@@ -64,10 +59,6 @@ fn main() {
         .arg(Arg::with_name("operation")
             .help("Sets the operation to run")
             .possible_values(&[
-    "GetXmlFeatures",
-    "PostPlainText",
-    "PostUrlEncodedForm",
-    "PutPlainText",
     "FakeOuterBooleanSerialize",
     "FakeOuterCompositeSerialize",
     "FakeOuterNumberSerialize",
@@ -136,44 +127,6 @@ fn main() {
         //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
         //  },
 
-        Some("GetXmlFeatures") => {
-            let result = core.run(client.get_xml_features());
-            println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-         },
-
-        Some("PostPlainText") => {
-            let result = core.run(client.post_plain_text("message_example".to_string()));
-            println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-         },
-
-        Some("PostUrlEncodedForm") => {
-            let result = core.run(client.post_url_encoded_form("param1_example".to_string(), "param2_example".to_string(), Some("param3_example".to_string())));
-            println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-         },
-
-        // Disabled because there's no example.
-        // Some("PostXmlFeatures") => {
-        //     let result = core.run(client.post_xml_features(???));
-        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-        //  },
-
-        Some("PutPlainText") => {
-            let result = core.run(client.put_plain_text(Some("message_example".to_string())));
-            println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-         },
-
-        // Disabled because there's no example.
-        // Some("TestBodyWithQueryParams") => {
-        //     let result = core.run(client.test_body_with_query_params(???, "query_example".to_string()));
-        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-        //  },
-
-        // Disabled because there's no example.
-        // Some("UuidHeader") => {
-        //     let result = core.run(client.uuid_header(???));
-        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-        //  },
-
         Some("FakeOuterBooleanSerialize") => {
             let result = core.run(client.fake_outer_boolean_serialize(None));
             println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
@@ -195,6 +148,12 @@ fn main() {
          },
 
         // Disabled because there's no example.
+        // Some("TestBodyWithQueryParams") => {
+        //     let result = core.run(client.test_body_with_query_params(???, "query_example".to_string()));
+        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
+        //  },
+
+        // Disabled because there's no example.
         // Some("TestClientModel") => {
         //     let result = core.run(client.test_client_model(???));
         //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
@@ -209,6 +168,12 @@ fn main() {
             let result = core.run(client.test_enum_parameters(Some(&Vec::new()), Some("enum_form_string_example".to_string()), Some(&Vec::new()), Some("enum_header_string_example".to_string()), Some(&Vec::new()), Some("enum_query_string_example".to_string()), Some(56), Some(1.2)));
             println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
          },
+
+        // Disabled because there's no example.
+        // Some("TestInlineAdditionalProperties") => {
+        //     let result = core.run(client.test_inline_additional_properties(???));
+        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
+        //  },
 
         Some("TestJsonFormData") => {
             let result = core.run(client.test_json_form_data("param_example".to_string(), "param2_example".to_string()));
