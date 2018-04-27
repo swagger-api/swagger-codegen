@@ -15,10 +15,11 @@ import io.ktor.metrics.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.swagger.server.apis.*
+import io.ktor.auth.*
+import java.time.*
 import java.util.concurrent.*
 import {{packageName}}.infrastructure.*
-import {{packageName}}.settings
+import {{packageName}}.server.apis.*
 
 {{#featureCORS}}
 /**
@@ -111,7 +112,7 @@ internal fun Application.installAuthProviders() {
         apiKey("apikey-{{{name}}}") {
             apiKeyName = "{{{keyParamName}}}"
             authLocation = {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}
-            validate = {
+            validate {
                 // TODO: "Verify key here , accessible as it.value"
                 if (it.value == "keyboardcat") {
                     ApiPrincipal(it)
@@ -135,8 +136,8 @@ internal fun Application.installAuthProviders() {
                     accessTokenUrl = "{{tokenUrl}}",
                     requestMethod = HttpMethod.Get,
                     {{! TODO: flow, doesn't seem to be supported yet by ktor }}
-                    clientId = settings.property("auth.oauth.{{name}}.clientId").getString(),
-                    clientSecret = settings.property("auth.oauth.{{name}}.clientSecret").getString(),
+                    clientId = environment.config.property("auth.oauth.{{name}}.clientId").getString(),
+                    clientSecret = environment.config.property("auth.oauth.{{name}}.clientSecret").getString(),
                     defaultScopes = listOf({{#scopes}}"{{scope}}"{{#hasMore}}, {{/hasMore}}{{/scopes}})
                 )
             }
