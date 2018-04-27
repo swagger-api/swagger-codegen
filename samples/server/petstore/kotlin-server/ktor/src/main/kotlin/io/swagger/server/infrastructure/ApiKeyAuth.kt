@@ -1,27 +1,23 @@
 package io.swagger.server.infrastructure
 
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
-import io.ktor.auth.*
-import io.ktor.request.ApplicationRequest
-import io.ktor.response.respond
-
-
 import io.ktor.application.*
-import io.ktor.pipeline.*
+import io.ktor.auth.*
 import io.ktor.request.*
 import io.ktor.response.*
-import java.util.*
 
 enum class ApiKeyLocation(val location: String) {
     QUERY("query"),
     HEADER("header")
 }
-data class ApiKey(val value: String): Credential
+
+data class ApiKey(val value: String) : Credential
 data class ApiPrincipal(val apiKey: ApiKey?) : Principal
-fun ApplicationCall.apiKey(key: String, keyLocation: ApiKeyLocation = ApiKeyLocation.valueOf("header")): ApiKey? = request.apiKey(key, keyLocation)
+
+fun ApplicationCall.apiKey(key: String, keyLocation: ApiKeyLocation = ApiKeyLocation.valueOf("header")): ApiKey? =
+    request.apiKey(key, keyLocation)
+
 fun ApplicationRequest.apiKey(key: String, keyLocation: ApiKeyLocation = ApiKeyLocation.valueOf("header")): ApiKey? {
-    val value: String? = when(keyLocation) {
+    val value: String? = when (keyLocation) {
         ApiKeyLocation.QUERY -> this.queryParameters[key]
         ApiKeyLocation.HEADER -> this.headers[key]
     }
@@ -31,10 +27,24 @@ fun ApplicationRequest.apiKey(key: String, keyLocation: ApiKeyLocation = ApiKeyL
     }
 }
 
-fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, validate: suspend (ApiKey) -> ApiPrincipal?) {
-    intercept(AuthenticationPipeline.RequestAuthentication) { context ->
-        val credentials = call.request.apiKey(apiKeyName, ApiKeyLocation.values().first {  it.location == authLocation })
-        val principal = credentials?.let { validate(it) }
+class ApiKeyAuthenticationProvider(name: String?) : AuthenticationProvider(name) {
+    lateinit var apiKeyName: String
+    lateinit var authLocation: String
+    internal lateinit var validateBody: suspend (ApiKey) -> ApiPrincipal?
+
+    fun validate(body: suspend (ApiKey) -> ApiPrincipal?) {
+        validateBody = body
+    }
+}
+
+fun Authentication.Configuration.apiKey(name: String? = null, configure: ApiKeyAuthenticationProvider.() -> Unit) {
+    val provider = ApiKeyAuthenticationProvider(name).apply(configure)
+    provider.pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { context ->
+
+        val credentials = call.request.apiKey(
+            provider.apiKeyName,
+            ApiKeyLocation.values().first { it.location == provider.authLocation })
+        val principal = credentials?.let { provider.validateBody(it) }
 
         val cause = when {
             credentials == null -> AuthenticationFailedCause.NoCredentials
@@ -43,9 +53,17 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
         }
 
         if (cause != null) {
-            context.challenge(apiKeyName, cause) {
+            context.challenge(provider.apiKeyName, cause) {
                 // TODO: Verify correct response structure here.
-                call.respond(UnauthorizedResponse(HttpAuthHeader.Parameterized("API_KEY", mapOf("key" to apiKeyName), HeaderValueEncoding.QUOTED_ALWAYS)))
+                call.respond(
+                    UnauthorizedResponse(
+                        HttpAuthHeader.Parameterized(
+                            "API_KEY",
+                            mapOf("key" to provider.apiKeyName),
+                            HeaderValueEncoding.QUOTED_ALWAYS
+                        )
+                    )
+                )
                 it.complete()
             }
         }
@@ -53,5 +71,5 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
             context.principal(principal)
         }
     }
+    register(provider)
 }
-

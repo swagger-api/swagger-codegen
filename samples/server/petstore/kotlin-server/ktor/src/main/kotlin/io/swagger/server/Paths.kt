@@ -20,15 +20,6 @@ import io.ktor.routing.method
 import io.swagger.server.models.*
 
 
-// NOTE: ktor-location@0.9.0 is missing extension for Route.delete. This includes it.
-inline fun <reified T : Any> Route.delete(noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit): Route {
-    return location(T::class) {
-        method(HttpMethod.Delete) {
-            handle(body)
-        }
-    }
-}
-
 object Paths {
     /**
      * Deletes a pet
@@ -89,7 +80,7 @@ object Paths {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing.  
+     * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     @Location("/user/{username}") class getUserByName(val username: kotlin.String)
 

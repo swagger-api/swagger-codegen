@@ -1,25 +1,20 @@
 package io.swagger.server
 
 import com.codahale.metrics.*
-import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.apache.Apache
-import io.ktor.config.HoconApplicationConfig
 import io.ktor.features.*
-import io.ktor.gson.GsonConverter
-import io.ktor.http.ContentType
+import io.ktor.gson.*
+import io.ktor.http.*
 import io.ktor.locations.*
 import io.ktor.metrics.*
 import io.ktor.routing.*
+import io.ktor.server.engine.*
 import java.util.concurrent.*
 import io.swagger.server.apis.*
 
 
-internal val settings = HoconApplicationConfig(ConfigFactory.defaultApplication(HTTP::class.java.classLoader))
-
-object HTTP {
-    val client = HttpClient(Apache)
+fun main(args: Array<String>): Unit {
+    embeddedServer(io.ktor.server.netty.Netty, port = 8080, module = Application::main).start(wait = true)
 }
 
 fun Application.main() {
@@ -35,6 +30,7 @@ fun Application.main() {
     install(ContentNegotiation) {
         register(ContentType.Application.Json, GsonConverter())
     }
+    installAuthProviders()
     install(AutoHeadResponse) // see http://ktor.io/features/autoheadresponse.html
     install(HSTS, ApplicationHstsConfiguration()) // see http://ktor.io/features/hsts.html
     install(Compression, ApplicationCompressionConfiguration()) // see http://ktor.io/features/compression.html
@@ -43,10 +39,5 @@ fun Application.main() {
         PetApi()
         StoreApi()
         UserApi()
-    }
-
-    environment.monitor.subscribe(ApplicationStopping)
-    {
-        HTTP.client.close()
     }
 }
