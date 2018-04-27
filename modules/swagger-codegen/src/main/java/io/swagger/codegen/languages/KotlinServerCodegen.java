@@ -62,55 +62,16 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
             setEnum(supportedEngines);
         }});
 
-        addSwitch(Constants.AUTOMATIC_HEAD_REQUESTS, Constants.AUTOMATIC_HEAD_REQUESTS_DESC, getAutoHeadFeatureEnabled());
-        addSwitch(Constants.CONDITIONAL_HEADERS, Constants.CONDITIONAL_HEADERS_DESC, getConditionalHeadersFeatureEnabled());
-        addSwitch(Constants.HSTS, Constants.HSTS_DESC, getHstsFeatureEnabled());
-        addSwitch(Constants.CORS, Constants.CORS_DESC, getCorsFeatureEnabled());
-        addSwitch(Constants.COMPRESSION, Constants.COMPRESSION_DESC, getCompressionFeatureEnabled());
+        addSwitch(Constants.AUTOMATIC_HEAD_REQUESTS, Constants.AUTOMATIC_HEAD_REQUESTS_DESC, autoHeadFeatureEnabled);
+        addSwitch(Constants.CONDITIONAL_HEADERS, Constants.CONDITIONAL_HEADERS_DESC, conditionalHeadersFeatureEnabled);
+        addSwitch(Constants.HSTS, Constants.HSTS_DESC, hstsFeatureEnabled);
+        addSwitch(Constants.CORS, Constants.CORS_DESC, corsFeatureEnabled);
+        addSwitch(Constants.COMPRESSION, Constants.COMPRESSION_DESC, compressionFeatureEnabled);
     }
 
-    public Boolean getAutoHeadFeatureEnabled() {
-        return autoHeadFeatureEnabled;
-    }
-
-    public void setAutoHeadFeatureEnabled(Boolean autoHeadFeatureEnabled) {
-        this.autoHeadFeatureEnabled = autoHeadFeatureEnabled;
-    }
-
-    public Boolean getCompressionFeatureEnabled() {
-        return compressionFeatureEnabled;
-    }
-
-    public void setCompressionFeatureEnabled(Boolean compressionFeatureEnabled) {
-        this.compressionFeatureEnabled = compressionFeatureEnabled;
-    }
-
-    public Boolean getConditionalHeadersFeatureEnabled() {
-        return conditionalHeadersFeatureEnabled;
-    }
-
-    public void setConditionalHeadersFeatureEnabled(Boolean conditionalHeadersFeatureEnabled) {
-        this.conditionalHeadersFeatureEnabled = conditionalHeadersFeatureEnabled;
-    }
-
-    public Boolean getCorsFeatureEnabled() {
-        return corsFeatureEnabled;
-    }
-
-    public void setCorsFeatureEnabled(Boolean corsFeatureEnabled) {
-        this.corsFeatureEnabled = corsFeatureEnabled;
-    }
 
     public String getHelp() {
         return "Generates a kotlin server.";
-    }
-
-    public Boolean getHstsFeatureEnabled() {
-        return hstsFeatureEnabled;
-    }
-
-    public void setHstsFeatureEnabled(Boolean hstsFeatureEnabled) {
-        this.hstsFeatureEnabled = hstsFeatureEnabled;
     }
 
     public String getName() {
@@ -130,33 +91,33 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
         }
 
         if (additionalProperties.containsKey(Constants.AUTOMATIC_HEAD_REQUESTS)) {
-            setAutoHeadFeatureEnabled(convertPropertyToBooleanAndWriteBack(Constants.AUTOMATIC_HEAD_REQUESTS));
+            autoHeadFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.AUTOMATIC_HEAD_REQUESTS);
         } else {
-            additionalProperties.put(Constants.AUTOMATIC_HEAD_REQUESTS, getAutoHeadFeatureEnabled());
+            additionalProperties.put(Constants.AUTOMATIC_HEAD_REQUESTS, autoHeadFeatureEnabled);
         }
 
         if (additionalProperties.containsKey(Constants.CONDITIONAL_HEADERS)) {
-            setConditionalHeadersFeatureEnabled(convertPropertyToBooleanAndWriteBack(Constants.CONDITIONAL_HEADERS));
+            conditionalHeadersFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.CONDITIONAL_HEADERS);
         } else {
-            additionalProperties.put(Constants.CONDITIONAL_HEADERS, getConditionalHeadersFeatureEnabled());
+            additionalProperties.put(Constants.CONDITIONAL_HEADERS, conditionalHeadersFeatureEnabled);
         }
 
         if (additionalProperties.containsKey(Constants.HSTS)) {
-            setHstsFeatureEnabled(convertPropertyToBooleanAndWriteBack(Constants.HSTS));
+            hstsFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.HSTS);
         } else {
-            additionalProperties.put(Constants.HSTS, getHstsFeatureEnabled());
+            additionalProperties.put(Constants.HSTS, hstsFeatureEnabled);
         }
 
         if (additionalProperties.containsKey(Constants.CORS)) {
-            setCorsFeatureEnabled(convertPropertyToBooleanAndWriteBack(Constants.CORS));
+            corsFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.CORS);
         } else {
-            additionalProperties.put(Constants.CORS, getCorsFeatureEnabled());
+            additionalProperties.put(Constants.CORS, corsFeatureEnabled);
         }
 
         if (additionalProperties.containsKey(Constants.COMPRESSION)) {
-            setCompressionFeatureEnabled(convertPropertyToBooleanAndWriteBack(Constants.COMPRESSION));
+            compressionFeatureEnabled = convertPropertyToBooleanAndWriteBack(Constants.COMPRESSION);
         } else {
-            additionalProperties.put(Constants.COMPRESSION, getCompressionFeatureEnabled());
+            additionalProperties.put(Constants.COMPRESSION, compressionFeatureEnabled);
         }
 
         Boolean generateApis = additionalProperties.containsKey(CodegenConstants.GENERATE_APIS) && (Boolean) additionalProperties.get(CodegenConstants.GENERATE_APIS);
