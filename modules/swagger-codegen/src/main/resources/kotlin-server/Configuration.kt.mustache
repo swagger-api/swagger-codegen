@@ -100,12 +100,16 @@ internal fun Application.installAuthProviders() {
         {{/isBasic}}
         {{#isApiKey}}
         // "Implement API key auth ({{{name}}}) for parameter name '{{{keyParamName}}}'."
-        apiKey("apikey-{{{name}}}", "{{{keyParamName}}}", {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}) {
-            // TODO: "Verify key here , accessible as it.value"
-            if (it.value == "keyboardcat") {
-                ApiPrincipal(it)
-            } else {
-                null
+        apiKey("apikey-{{{name}}}") {
+            apiKeyName = "{{{keyParamName}}}"
+            authLocation = {{#isKeyInQuery}}"query"{{/isKeyInQuery}}{{#isKeyInHeader}}"header"{{/isKeyInHeader}}
+            validate = {
+                // TODO: "Verify key here , accessible as it.value"
+                if (it.value == "keyboardcat") {
+                    ApiPrincipal(it)
+                } else {
+                    null
+                }
             }
         }
         {{/isApiKey}}

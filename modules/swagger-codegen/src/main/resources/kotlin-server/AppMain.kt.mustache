@@ -26,6 +26,8 @@ object HTTP {
     val client = HttpClient(Apache)
 }
 
+fun main(args: Array<String>) = embeddedServer(Netty, port = 8080, module = Application::main).start(wait = true)
+
 fun Application.main() {
     install(DefaultHeaders)
     install(Metrics) {

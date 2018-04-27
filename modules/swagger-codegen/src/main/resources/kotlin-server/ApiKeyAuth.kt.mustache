@@ -56,7 +56,9 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
 }
 
 class ApiKeyAuthenticationProvider(var name: String?) {
-
+    lateinit var apiKeyName: String
+    lateinit var authLocation: String
+    lateinit var validate: suspend (ApiKey) -> ApiPrincipal?
 }
 
 fun Authentication.Configuration.apiKey(name: String? = null, configure: ApiKeyAuthenticationProvider.() -> Unit) {
