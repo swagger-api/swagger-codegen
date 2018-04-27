@@ -37,7 +37,7 @@ fun Route.{{classname}}() {
 
     route("{{path}}") {
         {{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}} {
-            {{#lambda.indented_12}}{{>libraries/ktor/_api_body}}{{/lambda.indented_12}}
+            {{#lambda.indented_12}}{{>_api_body}}{{/lambda.indented_12}}
         }
     }
     {{/bodyAllowed}}
@@ -45,7 +45,7 @@ fun Route.{{classname}}() {
 
     {{! NOTE: Locations can be used on routes without body parameters.}}
     {{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}<Paths.{{operationId}}> {  it: Paths.{{operationId}} ->
-        {{#lambda.indented_8}}{{>libraries/ktor/_api_body}}{{/lambda.indented_8}}
+        {{#lambda.indented_8}}{{>_api_body}}{{/lambda.indented_8}}
     }
     {{/bodyAllowed}}
     {{! THis looks a little weird, but it's completely valid Kotlin code, and simplifies templated route logic above. }}

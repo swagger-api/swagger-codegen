@@ -1,5 +1,5 @@
 {{#hasAuthMethods}}
-{{>libraries/ktor/_principal}}
+{{>_principal}}
 if (principal == null) {
     call.respond(HttpStatusCode.Unauthorized)
 } else {
@@ -16,7 +16,7 @@ if (principal == null) {
 {{^hasAuthMethods}}
 {{#examples}}
 {{#-first}}
-{{>libraries/ktor/_response}}
+{{>_response}}
 {{/-first}}
 {{/examples}}
 {{^examples}}
