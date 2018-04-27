@@ -24,23 +24,23 @@ fun Route.{{classname}}() {
 {{#authMethods}}
 {{#isApiKey}}
     authenticate("apikey-{{{name}}}") {
-        {{#lambda.indented_4}}{{>_operation}}{{/lambda.indented_4}}
+        {{#lambda.indented_8}}{{>_operation}}{{/lambda.indented_8}}
     }
 {{/isApiKey}}
 {{#isOauth}}
     authenticate("oauth-{{{name}}}") {
-        {{#lambda.indented_4}}{{>_operation}}{{/lambda.indented_4}}
+        {{#lambda.indented_8}}{{>_operation}}{{/lambda.indented_8}}
     }
 {{/isOauth}}
 {{#isBasic}}
     authenticate("basic-{{{name}}}") {
-        {{#lambda.indented_4}}{{>_operation}}{{/lambda.indented_4}}
+        {{#lambda.indented_8}}{{>_operation}}{{/lambda.indented_8}}
     }
 {{/isBasic}}
 {{/authMethods}}
 {{/hasAuthMethods}}
 {{^hasAuthMethods}}
-{{#lambda.indented_4}}{{>_operation}}{{/lambda.indented_4}}
+    {{#lambda.indented_4}}{{>_operation}}{{/lambda.indented_4}}
 {{/hasAuthMethods}}
 {{/operation}}
 }
