@@ -2,6 +2,7 @@
 
 var fs = require('fs'),
     path = require('path'),
+    cors = require('cors'),
     http = require('http');
 
 var app = require('connect')();
@@ -22,6 +23,10 @@ var swaggerDoc = jsyaml.safeLoad(spec);
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
+  
+  // Uncomment this line to enable CORS for each request.
+  // But be aware of the risks: https://mobilejazz.com/blog/which-security-risks-do-cors-imply/
+  // app.use(cors());
 
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
