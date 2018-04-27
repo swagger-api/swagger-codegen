@@ -195,6 +195,7 @@ public class KotlinServerCodegen extends AbstractKotlinCodegen {
                 .put("titlecase", new TitlecaseLambda())
                 .put("camelcase", new CamelCaseLambda().generator(this))
                 .put("indented", new IndentedLambda())
+                .put("indented_4", new IndentedLambda(4, " "))
                 .put("indented_8", new IndentedLambda(8, " "))
                 .put("indented_12", new IndentedLambda(12, " "))
                 .put("indented_16", new IndentedLambda(16, " "))
