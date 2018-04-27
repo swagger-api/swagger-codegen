@@ -55,13 +55,18 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
     }
 }
 
-class ApiKeyAuthenticationProvider(var name: String?) {
+class ApiKeyAuthenticationProvider(name: String?) : AuthenticationProvider(name) {
     lateinit var apiKeyName: String
     lateinit var authLocation: String
-    lateinit var validate: suspend (ApiKey) -> ApiPrincipal?
+    internal lateinit var validateBody: suspend (ApiKey) -> ApiPrincipal?
+
+    fun validate(body: suspend (ApiKey) -> ApiPrincipal?) {
+        validateBody = body
+    }
 }
 
 fun Authentication.Configuration.apiKey(name: String? = null, configure: ApiKeyAuthenticationProvider.() -> Unit) {
-    val config = ApiKeyAuthenticationProvider(name).apply(configure)
+    val provider = ApiKeyAuthenticationProvider(name).apply(configure)
+    basic()
     TODO()
 }

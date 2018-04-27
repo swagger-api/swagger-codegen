@@ -1,13 +1,21 @@
 package {{packageName}}
 
 // Use this file to hold package-level internal functions that return receiver object passed to the `install` method.
+import com.codahale.metrics.*
+import com.typesafe.config.*
 import io.ktor.application.*
-import io.ktor.auth.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
+import io.ktor.config.*
 import io.ktor.features.*
+import io.ktor.gson.*
 import io.ktor.http.*
-import java.time.*
+import io.ktor.locations.*
+import io.ktor.metrics.*
+import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+import io.swagger.server.apis.*
 import java.util.concurrent.*
 import {{packageName}}.infrastructure.*
 import {{packageName}}.settings
