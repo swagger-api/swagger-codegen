@@ -40,6 +40,9 @@ fun Application.main() {
     install(ContentNegotiation) {
         register(ContentType.Application.Json, GsonConverter())
     }
+    {{#hasAuthMethods}}
+    installAuthProviders()
+    {{/hasAuthMethods}}
     {{#featureAutoHead}}
     install(AutoHeadResponse) // see http://ktor.io/features/autoheadresponse.html
     {{/featureAutoHead}}

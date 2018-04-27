@@ -55,3 +55,11 @@ fun AuthenticationPipeline.apiKeyAuth(apiKeyName: String, authLocation: String, 
     }
 }
 
+class ApiKeyAuthenticationProvider(var name: String?) {
+
+}
+
+fun Authentication.Configuration.apiKey(name: String? = null, configure: ApiKeyAuthenticationProvider.() -> Unit) {
+    val config = ApiKeyAuthenticationProvider(name).apply(configure)
+    TODO()
+}
