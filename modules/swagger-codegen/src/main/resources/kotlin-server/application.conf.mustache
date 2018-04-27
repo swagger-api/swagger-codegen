@@ -2,6 +2,7 @@ ktor {
   deployment {
     environment = development
     port = 8080
+    port = ${?PORT} # If PORT environment variable is defined, it will override the previously defined PORT
     autoreload = true
     watch = [ {{packageName}} ]
   }
