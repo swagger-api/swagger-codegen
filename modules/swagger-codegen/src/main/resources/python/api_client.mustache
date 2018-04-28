@@ -17,7 +17,7 @@ from six.moves.urllib.parse import quote
 import tornado.gen
 {{/tornado}}
 
-from {{packageName}}.configuration import Configuration
+from {{packageName}}.configuration import default_config
 import {{modelPackage}}
 from {{packageName}} import rest
 
@@ -57,7 +57,7 @@ class ApiClient(object):
     def __init__(self, configuration=None, header_name=None, header_value=None,
                  cookie=None):
         if configuration is None:
-            configuration = Configuration()
+            configuration = default_config
         self.configuration = configuration
 
         self.pool = ThreadPool()
