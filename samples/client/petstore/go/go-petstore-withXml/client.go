@@ -12,6 +12,7 @@ package petstore
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
@@ -29,7 +30,6 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 )
 
@@ -47,8 +47,6 @@ type APIClient struct {
 	// API Services
 
 	AnotherFakeApi *AnotherFakeApiService
-
-	DefaultApi *DefaultApiService
 
 	FakeApi *FakeApiService
 
@@ -78,7 +76,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AnotherFakeApi = (*AnotherFakeApiService)(&c.common)
-	c.DefaultApi = (*DefaultApiService)(&c.common)
 	c.FakeApi = (*FakeApiService)(&c.common)
 	c.FakeClassnameTags123Api = (*FakeClassnameTags123ApiService)(&c.common)
 	c.PetApi = (*PetApiService)(&c.common)
@@ -367,6 +364,8 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		_, err = bodyBuf.Write(b)
 	} else if s, ok := body.(string); ok {
 		_, err = bodyBuf.WriteString(s)
+	} else if s, ok := body.(*string); ok {
+		_, err = bodyBuf.WriteString(*s)
 	} else if jsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
 	} else if xmlCheck.MatchString(contentType) {
@@ -458,7 +457,7 @@ func strlen(s string) int {
 	return utf8.RuneCountInString(s)
 }
 
-// localDecodeData will hide body and error details on models.
+// GenericSwaggerError Provides access to the body, error and model on returned errors.
 type GenericSwaggerError struct {
 	body  []byte
 	error string
@@ -473,4 +472,9 @@ func (e GenericSwaggerError) Error() string {
 // Body returns the raw bytes of the response
 func (e GenericSwaggerError) Body() []byte {
 	return e.body
+}
+
+// Model returns the unpacked model of the error
+func (e GenericSwaggerError) Model() interface{} {
+	return e.model
 }
