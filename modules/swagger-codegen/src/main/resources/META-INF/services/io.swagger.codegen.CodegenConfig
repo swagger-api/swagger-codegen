@@ -39,6 +39,7 @@ io.swagger.codegen.languages.JavaPlayFrameworkCodegen
 io.swagger.codegen.languages.JavaResteasyEapServerCodegen
 io.swagger.codegen.languages.JavaResteasyServerCodegen
 io.swagger.codegen.languages.JavascriptClientCodegen
+io.swagger.codegen.languages.JavascriptFlowtypedCodegen
 io.swagger.codegen.languages.JavascriptClosureAngularClientCodegen
 io.swagger.codegen.languages.JavaVertXServerCodegen
 io.swagger.codegen.languages.KotlinClientCodegen

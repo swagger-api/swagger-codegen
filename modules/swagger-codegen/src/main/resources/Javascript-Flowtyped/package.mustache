@@ -1,0 +1,27 @@
+{
+  "name": "{{npmName}}",
+  "version": "{{npmVersion}}",
+  "description": "swagger client for {{npmName}}",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "fetch",
+    "flow",
+    "swagger-client",
+    "{{npmName}}"
+  ],
+  "license": "Unlicense",
+  "main": "./index.js",
+  "scripts" : {
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "portable-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+  }{{#npmRepository}},{{/npmRepository}}
+{{#npmRepository}}
+  "publishConfig":{
+    "registry":"{{npmRepository}}"
+  }
+{{/npmRepository}}
+}
