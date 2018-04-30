@@ -469,6 +469,12 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         return toModelName(name);
     }
 
+    @Override
+    public String toOperationId(String operationId) {
+        String superOperationId = super.toOperationId(operationId);
+        return camelize(sanitizeName(superOperationId), true);
+    }
+
     /**
      * Provides a strongly typed declaration for simple arrays of some type and arrays of arrays of some type.
      *
