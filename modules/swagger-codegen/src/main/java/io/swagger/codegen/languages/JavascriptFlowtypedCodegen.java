@@ -107,9 +107,9 @@ public class JavascriptFlowtypedCodegen extends AbstractTypeScriptClientCodegen 
     @Override
     public void processOpts() {
         super.processOpts();
-        supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
-        supportingFiles.add(new SupportingFile("api.mustache", "", "api.js"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.js"));
+        supportingFiles.add(new SupportingFile("index.mustache", "src", "index.js"));
+        supportingFiles.add(new SupportingFile("api.mustache", "src", "api.js"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", "src", "configuration.js"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
 
         addNpmPackageGeneration();
@@ -155,6 +155,7 @@ public class JavascriptFlowtypedCodegen extends AbstractTypeScriptClientCodegen 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
         supportingFiles.add(new SupportingFile("flowconfig.mustache", "", ".flowconfig"));
+        supportingFiles.add(new SupportingFile("babelrc", "", ".babelrc"));
     }
 
     @Override

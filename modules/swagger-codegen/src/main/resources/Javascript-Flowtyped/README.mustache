@@ -15,9 +15,10 @@ Module system
 
 ### Building
 
-To build an compile the typescript sources to javascript use:
+To build an compile the flow typed sources to javascript use:
 ```
 npm install
+npm run build
 ```
 
 ### Publishing
