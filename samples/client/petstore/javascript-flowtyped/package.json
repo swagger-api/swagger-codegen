@@ -1,0 +1,22 @@
+{
+  "name": "swagger_petstore",
+  "version": "1.0.0",
+  "description": "swagger client for swagger_petstore",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "fetch",
+    "flow",
+    "swagger-client",
+    "swagger_petstore"
+  ],
+  "license": "Unlicense",
+  "main": "./index.js",
+  "scripts" : {
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "portable-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+  }
+}
