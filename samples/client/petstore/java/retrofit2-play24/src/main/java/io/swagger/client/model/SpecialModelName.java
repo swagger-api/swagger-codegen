@@ -39,6 +39,7 @@ public class SpecialModelName {
    * Get specialPropertyName
    * @return specialPropertyName
   **/
+
   @ApiModelProperty(value = "")
   public Long getSpecialPropertyName() {
     return specialPropertyName;

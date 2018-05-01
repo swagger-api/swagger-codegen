@@ -50,6 +50,7 @@ public class Animal {
    * @return className
   **/
   @NotNull
+
   @ApiModelProperty(required = true, value = "")
   public String getClassName() {
     return className;
@@ -68,6 +69,7 @@ public class Animal {
    * Get color
    * @return color
   **/
+
   @ApiModelProperty(value = "")
   public String getColor() {
     return color;

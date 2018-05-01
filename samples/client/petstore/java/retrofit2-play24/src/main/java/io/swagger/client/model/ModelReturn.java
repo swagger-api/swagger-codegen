@@ -40,6 +40,7 @@ public class ModelReturn {
    * Get _return
    * @return _return
   **/
+
   @ApiModelProperty(value = "")
   public Integer getReturn() {
     return _return;

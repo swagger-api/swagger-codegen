@@ -40,7 +40,7 @@ public class ArrayOfNumberOnly {
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
     if (this.arrayNumber == null) {
-      this.arrayNumber = new ArrayList<BigDecimal>();
+      this.arrayNumber = new ArrayList<>();
     }
     this.arrayNumber.add(arrayNumberItem);
     return this;
@@ -51,6 +51,7 @@ public class ArrayOfNumberOnly {
    * @return arrayNumber
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;

@@ -46,7 +46,7 @@ public class ArrayTest {
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
     if (this.arrayOfString == null) {
-      this.arrayOfString = new ArrayList<String>();
+      this.arrayOfString = new ArrayList<>();
     }
     this.arrayOfString.add(arrayOfStringItem);
     return this;
@@ -56,6 +56,7 @@ public class ArrayTest {
    * Get arrayOfString
    * @return arrayOfString
   **/
+
   @ApiModelProperty(value = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
@@ -72,7 +73,7 @@ public class ArrayTest {
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
     if (this.arrayArrayOfInteger == null) {
-      this.arrayArrayOfInteger = new ArrayList<List<Long>>();
+      this.arrayArrayOfInteger = new ArrayList<>();
     }
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
@@ -83,6 +84,7 @@ public class ArrayTest {
    * @return arrayArrayOfInteger
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
@@ -99,7 +101,7 @@ public class ArrayTest {
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
     if (this.arrayArrayOfModel == null) {
-      this.arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+      this.arrayArrayOfModel = new ArrayList<>();
     }
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
@@ -110,6 +112,7 @@ public class ArrayTest {
    * @return arrayArrayOfModel
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;

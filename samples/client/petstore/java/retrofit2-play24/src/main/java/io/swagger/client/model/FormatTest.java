@@ -81,7 +81,8 @@ public class FormatTest {
    * maximum: 100
    * @return integer
   **/
- @Min(10) @Max(100)  @ApiModelProperty(value = "")
+ @Min(10) @Max(100)
+  @ApiModelProperty(value = "")
   public Integer getInteger() {
     return integer;
   }
@@ -101,7 +102,8 @@ public class FormatTest {
    * maximum: 200
    * @return int32
   **/
- @Min(20) @Max(200)  @ApiModelProperty(value = "")
+ @Min(20) @Max(200)
+  @ApiModelProperty(value = "")
   public Integer getInt32() {
     return int32;
   }
@@ -119,6 +121,7 @@ public class FormatTest {
    * Get int64
    * @return int64
   **/
+
   @ApiModelProperty(value = "")
   public Long getInt64() {
     return int64;
@@ -141,7 +144,8 @@ public class FormatTest {
   **/
   @NotNull
   @Valid
- @DecimalMin("32.1") @DecimalMax("543.2")  @ApiModelProperty(required = true, value = "")
+ @DecimalMin(value = "32.1") @DecimalMax(value = "543.2")
+  @ApiModelProperty(required = true, value = "")
   public BigDecimal getNumber() {
     return number;
   }
@@ -161,7 +165,8 @@ public class FormatTest {
    * maximum: 987.6
    * @return _float
   **/
- @DecimalMin("54.3") @DecimalMax("987.6")  @ApiModelProperty(value = "")
+ @DecimalMin(value = "54.3") @DecimalMax(value = "987.6")
+  @ApiModelProperty(value = "")
   public Float getFloat() {
     return _float;
   }
@@ -181,7 +186,8 @@ public class FormatTest {
    * maximum: 123.4
    * @return _double
   **/
- @DecimalMin("67.8") @DecimalMax("123.4")  @ApiModelProperty(value = "")
+ @DecimalMin(value = "67.8") @DecimalMax(value = "123.4")
+  @ApiModelProperty(value = "")
   public Double getDouble() {
     return _double;
   }
@@ -199,7 +205,8 @@ public class FormatTest {
    * Get string
    * @return string
   **/
- @Pattern(regexp="/[a-z]/i")  @ApiModelProperty(value = "")
+ @Pattern(regexp="/[a-z]/i")
+  @ApiModelProperty(value = "")
   public String getString() {
     return string;
   }
@@ -218,7 +225,8 @@ public class FormatTest {
    * @return _byte
   **/
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  @ApiModelProperty(required = true, value = "")
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
+  @ApiModelProperty(required = true, value = "")
   public byte[] getByte() {
     return _byte;
   }
@@ -236,6 +244,7 @@ public class FormatTest {
    * Get binary
    * @return binary
   **/
+
   @ApiModelProperty(value = "")
   public byte[] getBinary() {
     return binary;
@@ -256,6 +265,7 @@ public class FormatTest {
   **/
   @NotNull
   @Valid
+
   @ApiModelProperty(required = true, value = "")
   public LocalDate getDate() {
     return date;
@@ -275,6 +285,7 @@ public class FormatTest {
    * @return dateTime
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
@@ -294,6 +305,7 @@ public class FormatTest {
    * @return uuid
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;
@@ -313,7 +325,8 @@ public class FormatTest {
    * @return password
   **/
   @NotNull
- @Size(min=10,max=64)  @ApiModelProperty(required = true, value = "")
+ @Size(min=10,max=64)
+  @ApiModelProperty(required = true, value = "")
   public String getPassword() {
     return password;
   }

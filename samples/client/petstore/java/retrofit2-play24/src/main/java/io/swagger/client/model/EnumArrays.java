@@ -114,6 +114,7 @@ public class EnumArrays {
    * Get justSymbol
    * @return justSymbol
   **/
+
   @ApiModelProperty(value = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
@@ -130,7 +131,7 @@ public class EnumArrays {
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     if (this.arrayEnum == null) {
-      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+      this.arrayEnum = new ArrayList<>();
     }
     this.arrayEnum.add(arrayEnumItem);
     return this;
@@ -140,6 +141,7 @@ public class EnumArrays {
    * Get arrayEnum
    * @return arrayEnum
   **/
+
   @ApiModelProperty(value = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;

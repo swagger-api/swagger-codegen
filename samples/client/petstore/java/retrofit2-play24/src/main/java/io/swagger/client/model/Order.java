@@ -92,6 +92,7 @@ public class Order {
    * Get id
    * @return id
   **/
+
   @ApiModelProperty(value = "")
   public Long getId() {
     return id;
@@ -110,6 +111,7 @@ public class Order {
    * Get petId
    * @return petId
   **/
+
   @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
@@ -128,6 +130,7 @@ public class Order {
    * Get quantity
    * @return quantity
   **/
+
   @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
@@ -147,6 +150,7 @@ public class Order {
    * @return shipDate
   **/
   @Valid
+
   @ApiModelProperty(value = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
@@ -165,6 +169,7 @@ public class Order {
    * Order Status
    * @return status
   **/
+
   @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
@@ -183,6 +188,7 @@ public class Order {
    * Get complete
    * @return complete
   **/
+
   @ApiModelProperty(value = "")
   public Boolean isComplete() {
     return complete;

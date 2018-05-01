@@ -43,6 +43,7 @@ public class Model200Response {
    * Get name
    * @return name
   **/
+
   @ApiModelProperty(value = "")
   public Integer getName() {
     return name;
@@ -61,6 +62,7 @@ public class Model200Response {
    * Get propertyClass
    * @return propertyClass
   **/
+
   @ApiModelProperty(value = "")
   public String getPropertyClass() {
     return propertyClass;
