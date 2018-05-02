@@ -402,6 +402,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         if (reservedWords.contains(modified)) {
             return escapeReservedWord(modified);
         }
+        // NOTE: another sanitize because camelize can create an invalid name
         return sanitizeKotlinSpecificNames(modified);
     }
 
@@ -495,7 +496,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
         // Fallback, replace unknowns with underscore.
         word = word.replaceAll("\\W+", "_");
-        if (startWithDigits(word)) {
+        if (word.matches("\\d.*")) {
             word = "_" + word;
         }
 
@@ -505,10 +506,6 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         }
 
         return word;
-    }
-
-    private boolean startWithDigits(String modified) {
-        return modified.matches("\\d.*");
     }
 
     private String titleCase(final String input) {
