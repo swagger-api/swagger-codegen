@@ -472,7 +472,10 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     @Override
     public String toOperationId(String operationId) {
         String superOperationId = super.toOperationId(operationId);
-        return camelize(sanitizeName(superOperationId), true);
+        String sanitized = sanitizeKotlinSpecificNames(sanitizeName(superOperationId));
+        String camelized = camelize(sanitized, true);
+        // NOTE: another sanitize because camelize can create an invalid name
+        return sanitizeKotlinSpecificNames(camelized);
     }
 
     /**
