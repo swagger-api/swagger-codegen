@@ -528,6 +528,7 @@ class ApiClient(object):
 {{#httpsig}}
                 elif auth_setting['in'] == 'httpsig': # https://datatracker.ietf.org/doc/draft-cavage-http-signatures/?include_text=1
                     self.prepare_auth_header(auth_setting, resource_path, method, body, querys, url)
+                    headers.update(self.default_headers) # headers may have changed, canonicalize
 {{/httpsig}}
                 else:
                     raise ValueError(
@@ -745,7 +746,7 @@ class ApiClient(object):
         target_host = parsedUrl.netloc
         target_path = parsedUrl.path
         
-        request_target = method + " " + target_path + resource_path
+        request_target = method + " " + target_path
         
         if query_params:
             raw_query = urlencode(query_params).replace('+', '%20')
