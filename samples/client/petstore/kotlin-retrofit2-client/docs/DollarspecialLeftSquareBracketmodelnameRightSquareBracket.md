@@ -1,5 +1,5 @@
 
-# DollarspecialLeft_Square_BracketmodelnameRight_Square_Bracket
+# DollarspecialLeftSquareBracketmodelnameRightSquareBracket
 
 ## Properties
 Name | Type | Description | Notes

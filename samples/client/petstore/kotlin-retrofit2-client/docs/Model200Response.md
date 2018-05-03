@@ -1,5 +1,5 @@
 
-# _200_response
+# Model200Response
 
 ## Properties
 Name | Type | Description | Notes

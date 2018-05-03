@@ -25,7 +25,7 @@ import io.swagger.client.models.OuterEnum
  * @param enum_number 
  * @param outerEnum 
 */
-data class Enum_Test (
+data class EnumTest (
     val enum_string_required: EnumStringRequired,
     val enum_string: EnumString? = null,
     val enum_integer: EnumInteger? = null,

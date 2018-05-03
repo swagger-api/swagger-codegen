@@ -465,12 +465,22 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             modifiedName = escapeReservedWord(modifiedName);
         }
 
-        return titleCase(modifiedName);
+        modifiedName = titleCase(modifiedName);
+
+        if (modifiedName.matches("\\d.*")) {
+            modifiedName = "Model" + modifiedName;
+        }
+        return modifiedName;
     }
 
     @Override
     public String toModelFilename(String name) {
         // Should be the same as the model name
+        return toModelName(name);
+    }
+
+    @Override
+    public String toModelDocFilename(String name) {
         return toModelName(name);
     }
 

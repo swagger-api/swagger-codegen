@@ -1,5 +1,5 @@
 
-# Format_test
+# FormatTest
 
 ## Properties
 Name | Type | Description | Notes

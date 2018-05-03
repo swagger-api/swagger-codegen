@@ -1,5 +1,5 @@
 
-# Enum_Test
+# EnumTest
 
 ## Properties
 Name | Type | Description | Notes

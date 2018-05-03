@@ -32,7 +32,7 @@ import com.google.gson.stream.JsonWriter
  * @param uuid 
  * @param password 
 */
-data class Format_test (
+data class FormatTest (
     val number: java.math.BigDecimal,
     val byte: kotlin.ByteArray,
     val date: java.time.OffsetDateTime,

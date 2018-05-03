@@ -17,9 +17,11 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 
 /**
- * 
- * @param special_property_name 
+ * Model for testing model name starting with number
+ * @param name 
+ * @param &#x60;class&#x60; 
 */
-data class DollarspecialLeft_Square_BracketmodelnameRight_Square_Bracket (
-    val special_property_name: kotlin.Long? = null
+data class Model200Response (
+    val name: kotlin.Int? = null,
+    val `class`: kotlin.String? = null
 ) 
