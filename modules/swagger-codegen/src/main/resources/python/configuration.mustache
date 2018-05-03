@@ -45,6 +45,10 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         # Authentication Settings
         # dict to store API key(s)
         self.api_key = {}
+{{#httpsig}}
+        # dict to store httpsig data
+        self.httpsig_settings = {}
+{{/httpsig}}
         # dict to store API prefix (e.g. Bearer)
         self.api_key_prefix = {}
         # Username for HTTP basic authentication
@@ -214,10 +218,24 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
 
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
+        
+        Clients may end up mutating the results, because it would be 
+        atypical practice to store your apiKey in your Swagger spec. 
 
         :return: The Auth Settings information dict.
         """
-        return {
+        return{
+{{#httpsig}}
+            'httpsig':
+                {
+                    'type': 'httpsig',
+                    'in': 'httpsig',
+                    'private_key_path': self.httpsig_settings['private_key_path'],
+                    'api_key_id': self.httpsig_settings['api_key_id'],
+                    'digest_algorithm': 'rsa-sha256',
+                    'value': "httpsig" 
+                },
+{{/httpsig}}
 {{#authMethods}}
 {{#isApiKey}}
             '{{name}}':
@@ -246,6 +264,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
                 },
 {{/isOAuth}}{{/authMethods}}
         }
+        return _auth_settings
 
     def to_debug_report(self):
         """Gets the essential information for debugging.
