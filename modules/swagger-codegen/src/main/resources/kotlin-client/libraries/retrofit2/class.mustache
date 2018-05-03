@@ -1,0 +1,14 @@
+/**
+ * {{{description}}}
+{{#vars}}
+ * @param {{name}} {{{description}}}
+{{/vars}}
+*/
+{{#hasChildren}}open {{/hasChildren}}class {{classname}}(
+{{#parentVars}}{{#required}}{{>data_class_req_var}}{{/required}}{{^required}}{{>data_class_opt_var}}{{/required}}{{^-last}},
+{{/-last}}{{#-last}}{{#vars}}{{#-last}},{{/-last}}{{/vars}}{{/-last}}{{/parentVars}}
+{{#vars}}{{#required}}{{>data_class_req_var}}{{/required}}{{^required}}{{>data_class_opt_var}}{{/required}}{{^-last}},
+{{/-last}}
+{{/vars}}
+
+){{#parent}}: {{{parent}}}({{#parentVars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}

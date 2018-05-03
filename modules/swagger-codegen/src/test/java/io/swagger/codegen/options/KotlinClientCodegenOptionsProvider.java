@@ -32,6 +32,7 @@ public class KotlinClientCodegenOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER)
                 .put(CodegenConstants.ENUM_PROPERTY_NAMING, ENUM_PROPERTY_NAMING)
                 .put(KotlinClientCodegen.DATE_LIBRARY, DATE_LIBRARY)
+                .put(KotlinClientCodegen.USE_ASYNC, "false")
                 .build();
     }
 

@@ -1,0 +1,30 @@
+
+/**
+* {{{description}}}
+* Values: {{#allowableValues}}{{#enumVars}}{{name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
+*/
+@JsonAdapter({{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.Adapter::class)
+enum class {{classname}}(val value: {{dataType}}){
+{{#allowableValues}}{{#enumVars}}
+    {{{name}}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+{{/enumVars}}{{/allowableValues}}
+
+    companion object {
+        fun fromValue(text: kotlin.String): {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}? {
+            return {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.values().firstOrNull {
+                it.value{{^isString}}.toString(){{/isString}} == text
+            }
+        }
+    }
+
+    inner class Adapter : TypeAdapter<{{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}>() {
+        override fun write(jsonWriter: JsonWriter, enumeration: {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}) {
+            jsonWriter.value(enumeration.value)
+        }
+
+        override fun read(jsonReader: JsonReader): {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}? {
+            val value = jsonReader.nextString()
+            return  {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.fromValue(value)
+        }
+    }
+}

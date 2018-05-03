@@ -1,0 +1,47 @@
+group 'io.swagger'
+version '1.0.0'
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+ext {
+    retrofit_version = "2.3.0"
+    swagger_annotations_version = "1.5.17"
+    junit_version = "4.12"
+    json_fire_version = "1.8.0"
+{{#threetenbp}}
+    threetenbp_version = "1.3.5"
+{{/threetenbp}}
+}
+
+buildscript {
+    ext.kotlin_version = '1.2.31'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    compile "io.gsonfire:gson-fire:$json_fire_version"
+{{#threetenbp}}
+    compile "org.threeten:threetenbp:$threetenbp_version"
+{{/threetenbp}}
+
+    testCompile "junit:junit:$junit_version"
+}

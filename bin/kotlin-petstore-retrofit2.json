@@ -1,0 +1,6 @@
+{
+    "library": "retrofit2",
+    "artifactId": "swagger-kotlin-retrofit2",
+    "dateLibrary": "java8",
+    "enumPropertyNaming": "UPPERCASE"
+}

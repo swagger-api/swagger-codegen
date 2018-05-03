@@ -1,0 +1,18 @@
+{{>licenseInfo}}
+package {{modelPackage}}
+
+import com.google.gson.TypeAdapter
+import com.google.gson.annotations.JsonAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
+{{#imports}}import {{import}}
+{{/imports}}
+{{#threetenbp}}
+import org.threeten.bp.LocalDateTime
+{{/threetenbp}}
+
+{{#models}}
+{{#model}}
+{{^isAlias}}{{^hasChildren}}{{^parent}}{{#isEnum}}{{>enum_class}}{{/isEnum}}{{^isEnum}}{{>data_class}}{{/isEnum}}{{/parent}}{{#parent}}{{>class}}{{/parent}}{{/hasChildren}}{{#hasChildren}}{{^parent}}{{>class}}{{/parent}}{{/hasChildren}}{{#hasChildren}}{{#parent}}{{>class}}{{/parent}}{{/hasChildren}}{{/isAlias}}{{#isAlias}}{{>model_alias}}{{/isAlias}}
+{{/model}}
+{{/models}}

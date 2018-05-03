@@ -22,7 +22,7 @@ package io.swagger.client.models
  * @param password 
  * @param phone 
  * @param userStatus User Status
- */
+*/
 data class User (
     val id: kotlin.Long? = null,
     val username: kotlin.String? = null,

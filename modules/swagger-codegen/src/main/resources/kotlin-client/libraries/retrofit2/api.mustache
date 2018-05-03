@@ -1,0 +1,62 @@
+package {{package}}
+
+{{#useAsync}}
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import kotlinx.coroutines.experimental.Deferred
+{{/useAsync}}
+{{^useAsync}}
+import retrofit2.Call
+{{/useAsync}}
+import retrofit2.http.*
+
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import okhttp3.MultipartBody
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#operations}}
+interface {{classname}} {
+  {{#operation}}
+  /**
+   * {{summary}}
+   * {{notes}}
+{{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+   * @return {{#useAsync}}{{#returnType}}Deferred&lt;{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{returnType}}{{/isResponseFile}}&gt;{{/returnType}}{{^returnType}}Void{{/returnType}}{{/useAsync}}{{^useAsync}}Call&lt;{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}&gt;{{/useAsync}}
+{{#isDeprecated}}
+   * @deprecated
+{{/isDeprecated}}
+{{#externalDocs}}
+   * {{description}}
+   * @see <a href="{{url}}">{{summary}} Documentation</a>
+{{/externalDocs}}
+   */
+  {{#isDeprecated}}
+  @Deprecated("")
+  {{/isDeprecated}}
+  {{#formParams}}
+  {{#-first}}
+  {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
+  {{/-first}}
+  {{/formParams}}
+  {{^formParams}}
+  {{#prioritizedContentTypes}}
+  {{#-first}}
+  @Headers(
+    "Content-Type:{{{mediaType}}}"
+  )
+  {{/-first}}
+  {{/prioritizedContentTypes}}
+  {{/formParams}}
+  @{{httpMethod}}("{{{path}}}")
+  fun {{operationId}}({{^allParams}}){{/allParams}}
+    {{#allParams}}{{>libraries/retrofit2/queryParams}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}}{{#hasMore}},
+    {{/hasMore}}{{^hasMore}}
+  ){{/hasMore}}{{/allParams}}: {{#useAsync}}{{#returnType}}Deferred<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Void{{/returnType}}{{/useAsync}}{{^useAsync}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}>{{/useAsync}}
+
+  {{/operation}}
+}
+{{/operations}}
