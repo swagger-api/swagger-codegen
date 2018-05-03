@@ -240,7 +240,8 @@ export type {{classname}}Type = { {{#operation}}
  * {{{description}}}{{/description}}
  * @export
  */
-export const {{classname}} = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): {{classname}}Type {
+export const {{classname}} = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): {{classname}}Type {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
     {{#operation}}
         /**
