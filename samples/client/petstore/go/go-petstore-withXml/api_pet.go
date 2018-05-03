@@ -11,11 +11,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"context"
 	"fmt"
 	"github.com/antihax/optional"
 	"os"
