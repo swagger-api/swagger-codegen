@@ -54,6 +54,7 @@ mvn clean compile
 - `generateApiTests` - generate the api tests (`true` by default. Only available if `generateApis` is `true`)
 - `generateApiDocumentation` - generate the api documentation (`true` by default. Only available if `generateApis` is `true`)
 - `generateModels` - generate the models (`true` by default)
+- `apisToGenerate` - A comma separated list of apis to generate. All apis is the default.
 - `modelsToGenerate` - A comma separated list of models to generate.  All models is the default.
 - `generateModelTests` - generate the model tests (`true` by default. Only available if `generateModels` is `true`)
 - `generateModelDocumentation` - generate the model documentation (`true` by default. Only available if `generateModels` is `true`)

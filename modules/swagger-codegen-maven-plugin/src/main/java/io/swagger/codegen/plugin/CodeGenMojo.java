@@ -242,6 +242,12 @@ public class CodeGenMojo extends AbstractMojo {
     private String modelsToGenerate = "";
 
     /**
+     * A comma separated list of apis to generate. All apis is the default.
+     */
+    @Parameter(name = "apisToGenerate", required = false)
+    private String apisToGenerate = "";
+
+    /**
      * Generate the supporting files
      */
     @Parameter(name = "generateSupportingFiles", required = false)
@@ -408,7 +414,7 @@ public class CodeGenMojo extends AbstractMojo {
 
         // Set generation options
         if (null != generateApis && generateApis) {
-            System.setProperty(CodegenConstants.APIS, "");
+            System.setProperty(CodegenConstants.APIS, apisToGenerate);
         } else {
             System.clearProperty(CodegenConstants.APIS);
         }
