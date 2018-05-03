@@ -158,8 +158,6 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         instantiationTypes.put("array", "kotlin.collections.ArrayList");
         instantiationTypes.put("list", "kotlin.collections.ArrayList");
 
-        //instantiationTypes.put("array", "arrayOf");
-        //instantiationTypes.put("list", "listOf");
         instantiationTypes.put("map", "mapOf");
 
         importMapping = new HashMap<String, String>();
