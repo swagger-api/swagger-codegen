@@ -48,8 +48,6 @@ type APIClient struct {
 
 	AnotherFakeApi *AnotherFakeApiService
 
-	DefaultApi *DefaultApiService
-
 	FakeApi *FakeApiService
 
 	FakeClassnameTags123Api *FakeClassnameTags123ApiService
@@ -78,7 +76,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AnotherFakeApi = (*AnotherFakeApiService)(&c.common)
-	c.DefaultApi = (*DefaultApiService)(&c.common)
 	c.FakeApi = (*FakeApiService)(&c.common)
 	c.FakeClassnameTags123Api = (*FakeClassnameTags123ApiService)(&c.common)
 	c.PetApi = (*PetApiService)(&c.common)
