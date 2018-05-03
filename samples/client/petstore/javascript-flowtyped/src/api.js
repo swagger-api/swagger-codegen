@@ -951,7 +951,8 @@ export type AnotherFakeApiType = {
  * AnotherFakeApi - factory function to inject configuration 
  * @export
  */
-export const AnotherFakeApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): AnotherFakeApiType {
+export const AnotherFakeApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): AnotherFakeApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * To test special tags
@@ -1407,7 +1408,8 @@ export type FakeApiType = {
  * FakeApi - factory function to inject configuration 
  * @export
  */
-export const FakeApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): FakeApiType {
+export const FakeApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): FakeApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * Test serialization of outer boolean types
@@ -1612,7 +1614,8 @@ export type FakeClassnameTags123ApiType = {
  * FakeClassnameTags123Api - factory function to inject configuration 
  * @export
  */
-export const FakeClassnameTags123Api = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): FakeClassnameTags123ApiType {
+export const FakeClassnameTags123Api = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): FakeClassnameTags123ApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * To test class name in snake case
@@ -1990,7 +1993,8 @@ export type PetApiType = {
  * PetApi - factory function to inject configuration 
  * @export
  */
-export const PetApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): PetApiType {
+export const PetApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): PetApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * 
@@ -2252,7 +2256,8 @@ export type StoreApiType = {
  * StoreApi - factory function to inject configuration 
  * @export
  */
-export const StoreApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): StoreApiType {
+export const StoreApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): StoreApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -2587,7 +2592,8 @@ export type UserApiType = {
  * UserApi - factory function to inject configuration 
  * @export
  */
-export const UserApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH): UserApiType {
+export const UserApi = function(configuration?: Configuration, fetch: FetchAPI = portableFetch): UserApiType {
+    const basePath: string = (configuration && configuration.basePath) || BASE_PATH;
     return {
         /**
          * This can only be done by the logged in user.
