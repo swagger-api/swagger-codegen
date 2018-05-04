@@ -138,9 +138,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         typeMapping.put("UUID", "utility::string_t");
 
         super.importMapping = new HashMap<String, String>();
-        updateImportMapping();
-
-        addSupportingFiles();
     }
 
     private void addSupportingFiles()
@@ -208,15 +205,14 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         if (additionalProperties.containsKey(SOURCE_OUTPUT_FOLDER_KEY))
         {
             sourceOutputFolder = additionalProperties.get(SOURCE_OUTPUT_FOLDER_KEY).toString();
-            supportingFiles.clear();
-            addSupportingFiles();
-
-            updateImportMapping();
         }
         else
         {
             additionalProperties.put(SOURCE_OUTPUT_FOLDER_KEY, sourceOutputFolder);
         }
+
+        addSupportingFiles();
+        updateImportMapping();
     }
 
     /**
