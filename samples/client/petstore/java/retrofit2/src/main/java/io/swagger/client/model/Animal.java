@@ -29,8 +29,10 @@ import java.io.IOException;
 
 
 public class Animal {
-@SerializedName("className")
+
+  @SerializedName("className")
   private String className = null;
+  
   @SerializedName("color")
   private String color = "red";
   

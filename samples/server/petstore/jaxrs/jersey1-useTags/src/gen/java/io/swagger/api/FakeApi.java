@@ -143,11 +143,11 @@ public class FakeApi  {
     public Response testEnumParameters(
         @ApiParam(value = "" ) Object body
 ,
-        @ApiParam(value = "Header parameter enum test (string array)" , allowableValues="range=[-infinity, infinity]")@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
+        @ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $")@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
 ,
         @ApiParam(value = "Header parameter enum test (string)" )@HeaderParam("enum_header_string") String enumHeaderString
 ,
-        @ApiParam(value = "Query parameter enum test (string array)", allowableValues="range=[-infinity, infinity]") @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
+        @ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $") @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
 ,
         @ApiParam(value = "Query parameter enum test (string)") @QueryParam("enum_query_string") String enumQueryString
 ,

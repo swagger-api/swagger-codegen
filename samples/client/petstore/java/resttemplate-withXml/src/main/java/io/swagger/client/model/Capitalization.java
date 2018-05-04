@@ -31,30 +31,36 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "Capitalization")
 public class Capitalization {
 
+  
   @JsonProperty("smallCamel")
   @JacksonXmlProperty(localName = "smallCamel")
   @XmlElement(name="smallCamel")
   private String smallCamel = null;
+  
   
   @JsonProperty("CapitalCamel")
   @JacksonXmlProperty(localName = "CapitalCamel")
   @XmlElement(name="CapitalCamel")
   private String capitalCamel = null;
   
+  
   @JsonProperty("small_Snake")
   @JacksonXmlProperty(localName = "small_Snake")
   @XmlElement(name="small_Snake")
   private String smallSnake = null;
+  
   
   @JsonProperty("Capital_Snake")
   @JacksonXmlProperty(localName = "Capital_Snake")
   @XmlElement(name="Capital_Snake")
   private String capitalSnake = null;
   
+  
   @JsonProperty("SCA_ETH_Flow_Points")
   @JacksonXmlProperty(localName = "SCA_ETH_Flow_Points")
   @XmlElement(name="SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
+  
   
   @JsonProperty("ATT_NAME")
   @JacksonXmlProperty(localName = "ATT_NAME")

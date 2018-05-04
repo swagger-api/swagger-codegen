@@ -73,7 +73,6 @@ public class Pet  {
 
 
   
-
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {
@@ -241,6 +240,12 @@ public enum StatusEnum {
     return this;
   }
   
+
+  public Pet addPhotoUrlsItem(String photoUrlsItem) {
+    this.photoUrls.add(photoUrlsItem);
+    return this;
+  }
+  
   
   
 
@@ -268,6 +273,12 @@ public enum StatusEnum {
 
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
+    return this;
+  }
+  
+
+  public Pet addTagsItem(Tag tagsItem) {
+    this.tags.add(tagsItem);
     return this;
   }
   

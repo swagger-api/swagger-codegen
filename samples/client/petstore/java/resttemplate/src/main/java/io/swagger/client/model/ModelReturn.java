@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ModelReturn {
 
+  
   @JsonProperty("return")
   private Integer _return = null;
   

@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 public class Dog extends Animal  {
   
     
-    
+      
   
   @JsonProperty("className")
   
@@ -49,7 +49,7 @@ public class Dog extends Animal  {
 
   
     
-    
+      
   
   @JsonProperty("color")
   
@@ -61,7 +61,7 @@ public class Dog extends Animal  {
 
   
     
-    
+      
   
   @JsonProperty("breed")
   

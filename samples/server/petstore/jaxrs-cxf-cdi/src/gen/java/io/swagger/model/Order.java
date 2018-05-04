@@ -26,7 +26,6 @@ public class Order   {
   private Long petId = null;
   private Integer quantity = null;
   private java.util.Date shipDate = null;
-
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {

@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EnumTest  {
   
-
 @XmlType(name="EnumStringEnum")
 @XmlEnum(String.class)
 public enum EnumStringEnum {
@@ -67,7 +66,6 @@ public enum EnumStringEnum {
   private EnumStringEnum enumString = null;
 
   
-
 @XmlType(name="EnumIntegerEnum")
 @XmlEnum(Integer.class)
 public enum EnumIntegerEnum {
@@ -110,7 +108,6 @@ public enum EnumIntegerEnum {
   private EnumIntegerEnum enumInteger = null;
 
   
-
 @XmlType(name="EnumNumberEnum")
 @XmlEnum(Double.class)
 public enum EnumNumberEnum {

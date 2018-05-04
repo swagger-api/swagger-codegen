@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class Capitalization   {
   
     
-    
+      
   
   @JsonProperty("smallCamel")
   
@@ -48,7 +48,7 @@ public class Capitalization   {
 
   
     
-    
+      
   
   @JsonProperty("CapitalCamel")
   
@@ -60,7 +60,7 @@ public class Capitalization   {
 
   
     
-    
+      
   
   @JsonProperty("small_Snake")
   
@@ -72,7 +72,7 @@ public class Capitalization   {
 
   
     
-    
+      
   
   @JsonProperty("Capital_Snake")
   
@@ -84,7 +84,7 @@ public class Capitalization   {
 
   
     
-    
+      
   
   @JsonProperty("SCA_ETH_Flow_Points")
   
@@ -96,7 +96,7 @@ public class Capitalization   {
 
   
     
-    
+      
   
   @JsonProperty("ATT_NAME")
   

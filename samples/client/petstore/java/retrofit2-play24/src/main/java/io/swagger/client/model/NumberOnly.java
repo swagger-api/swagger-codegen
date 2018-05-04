@@ -29,6 +29,7 @@ import javax.validation.Valid;
 
 public class NumberOnly {
 
+  
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
   
