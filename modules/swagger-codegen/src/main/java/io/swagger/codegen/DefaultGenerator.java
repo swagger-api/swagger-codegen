@@ -1010,8 +1010,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
+        //replaceFirst takes regex arguments and never replaces the template directory
+        //so changed to use substring
         if (templateFile.startsWith(config.templateDir())) {
-            templateFile = templateFile.replaceFirst(config.templateDir(), StringUtils.EMPTY);
+            templateFile = templateFile.substring(templateFile.lastIndexOf('\\')+1, templateFile.length());
+        }
+        if (templateFile.contains("/")) {
+            templateFile = templateFile.substring(templateFile.lastIndexOf('/')+1, templateFile.length());
         }
         TemplateLoader templateLoader = null;
         if (config.additionalProperties().get(CodegenConstants.TEMPLATE_DIR) != null) {
