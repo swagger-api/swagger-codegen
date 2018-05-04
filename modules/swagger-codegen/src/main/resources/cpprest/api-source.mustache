@@ -1,10 +1,10 @@
 {{>licenseInfo}}
 {{#operations}}
 
-#include "{{classname}}.h"
-#include "IHttpBody.h"
-#include "JsonBody.h"
-#include "MultipartFormData.h"
+#include <{{sourceOutputFolder}}/api/{{classname}}.h>
+#include <{{sourceOutputFolder}}/IHttpBody.h>
+#include <{{sourceOutputFolder}}/JsonBody.h>
+#include <{{sourceOutputFolder}}/MultipartFormData.h>
 
 #include <unordered_set>
 
