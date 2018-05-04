@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MapTest  implements Serializable {
   
   private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
-
 public enum InnerEnum {
 
     

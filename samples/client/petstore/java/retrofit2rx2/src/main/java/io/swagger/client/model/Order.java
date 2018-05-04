@@ -29,16 +29,20 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 public class Order {
-@SerializedName("id")
+
+  @SerializedName("id")
   private Long id = null;
+  
   @SerializedName("petId")
   private Long petId = null;
+  
   @SerializedName("quantity")
   private Integer quantity = null;
+  
   @SerializedName("shipDate")
   private OffsetDateTime shipDate = null;
   
-    /**
+  /**
    * Order Status
    */
   @JsonAdapter(StatusEnum.Adapter.class)
@@ -88,6 +92,7 @@ public class Order {
   
   @SerializedName("status")
   private StatusEnum status = null;
+  
   @SerializedName("complete")
   private Boolean complete = false;
   

@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 public class ClassModel   {
   
     
-    
+      
   
   @JsonProperty("_class")
   

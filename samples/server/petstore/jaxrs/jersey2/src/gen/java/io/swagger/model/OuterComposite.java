@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
 public class OuterComposite   {
   
     
-    
+      
   
   @JsonProperty("my_number")
   
@@ -49,7 +49,7 @@ public class OuterComposite   {
 
   
     
-    
+      
   
   @JsonProperty("my_string")
   
@@ -61,7 +61,7 @@ public class OuterComposite   {
 
   
     
-    
+      
   
   @JsonProperty("my_boolean")
   

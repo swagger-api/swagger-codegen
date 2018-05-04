@@ -31,10 +31,12 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "ReadOnlyFirst")
 public class ReadOnlyFirst {
 
+  
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")
   @XmlElement(name="bar")
   private String bar = null;
+  
   
   @JsonProperty("baz")
   @JacksonXmlProperty(localName = "baz")

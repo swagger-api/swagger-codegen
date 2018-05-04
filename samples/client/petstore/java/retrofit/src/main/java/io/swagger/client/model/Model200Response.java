@@ -28,8 +28,10 @@ import java.io.IOException;
  */@ApiModel(description = "Model for testing model name starting with number")
 
 public class Model200Response {
-@SerializedName("name")
+
+  @SerializedName("name")
   private Integer name = null;
+  
   @SerializedName("class")
   private String propertyClass = null;
   

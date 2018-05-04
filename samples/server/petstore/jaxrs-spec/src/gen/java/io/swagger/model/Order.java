@@ -24,7 +24,6 @@ public class Order  implements Serializable {
   private @Valid Long petId = null;
   private @Valid Integer quantity = null;
   private @Valid Date shipDate = null;
-
 public enum StatusEnum {
 
     

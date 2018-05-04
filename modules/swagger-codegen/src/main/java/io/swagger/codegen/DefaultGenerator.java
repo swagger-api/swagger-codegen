@@ -1013,7 +1013,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (templateFile.startsWith(config.templateDir())) {
             templateFile = templateFile.replaceFirst(config.templateDir(), StringUtils.EMPTY);
         }
-        final TemplateLoader templateLoader = new ClassPathTemplateLoader("/" + config.templateDir(), ".mustache");
+        TemplateLoader templateLoader = null;
+        if (config.additionalProperties().get(CodegenConstants.TEMPLATE_DIR) != null) {
+            templateLoader = new FileTemplateLoader(config.templateDir(), ".mustache");
+        } else {
+            templateLoader = new ClassPathTemplateLoader("/" + config.templateDir(), ".mustache");
+        }
         final Handlebars handlebars = new Handlebars(templateLoader);
         config.addHandlebarHelpers(handlebars);
 

@@ -30,8 +30,10 @@ import android.os.Parcel;
  */
 
 public class HasOnlyReadOnly {
-@SerializedName("bar")
+
+  @SerializedName("bar")
   private String bar = null;
+  
   @SerializedName("foo")
   private String foo = null;
   

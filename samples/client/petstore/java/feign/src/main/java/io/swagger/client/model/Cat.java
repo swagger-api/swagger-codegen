@@ -27,11 +27,14 @@ import io.swagger.client.model.Animal;
 
 public class Cat extends Animal {
 
+  
   @JsonProperty("className")
   private String className = null;
   
+  
   @JsonProperty("color")
   private String color = "red";
+  
   
   @JsonProperty("declawed")
   private Boolean declawed = null;

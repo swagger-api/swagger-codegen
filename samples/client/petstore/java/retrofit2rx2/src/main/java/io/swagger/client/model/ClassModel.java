@@ -28,7 +28,8 @@ import java.io.IOException;
  */@ApiModel(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel {
-@SerializedName("_class")
+
+  @SerializedName("_class")
   private String propertyClass = null;
   
   public ClassModel propertyClass(String propertyClass) {

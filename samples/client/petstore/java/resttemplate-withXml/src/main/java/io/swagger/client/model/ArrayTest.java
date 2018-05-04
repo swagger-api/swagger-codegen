@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "ArrayTest")
 public class ArrayTest {
 
+  
   @JsonProperty("array_of_string")
   
   
@@ -41,12 +42,14 @@ public class ArrayTest {
   
   private List<String> arrayOfString = null;
   
+  
   @JsonProperty("array_array_of_integer")
   
   
   @XmlElement(name="arrayArrayOfInteger")
   
   private List<List<Long>> arrayArrayOfInteger = null;
+  
   
   @JsonProperty("array_array_of_model")
   

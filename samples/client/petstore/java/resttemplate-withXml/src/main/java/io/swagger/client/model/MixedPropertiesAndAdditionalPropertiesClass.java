@@ -37,15 +37,18 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "MixedPropertiesAndAdditionalPropertiesClass")
 public class MixedPropertiesAndAdditionalPropertiesClass {
 
+  
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
   @XmlElement(name="uuid")
   private UUID uuid = null;
   
+  
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
   @XmlElement(name="dateTime")
   private OffsetDateTime dateTime = null;
+  
   
   @JsonProperty("map")
   

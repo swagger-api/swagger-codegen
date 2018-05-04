@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class ReadOnlyFirst   {
   
     
-    
+      
   
   @JsonProperty("bar")
   
@@ -48,7 +48,7 @@ public class ReadOnlyFirst   {
 
   
     
-    
+      
   
   @JsonProperty("baz")
   

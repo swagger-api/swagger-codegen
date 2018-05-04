@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "ClassModel")
 public class ClassModel {
 
+  
   @JsonProperty("_class")
   @JacksonXmlProperty(localName = "_class")
   @XmlElement(name="_class")

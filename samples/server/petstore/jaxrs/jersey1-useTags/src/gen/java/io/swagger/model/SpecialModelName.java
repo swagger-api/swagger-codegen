@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 public class SpecialModelName   {
   
     
-    
+      
   
   @JsonProperty("$special[property.name]")
   

@@ -31,11 +31,11 @@ import javax.validation.Valid;
 
 public class MapTest {
 
+  
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
   
-  
-    /**
+  /**
    * Gets or Sets inner
    */
   public enum InnerEnum {
@@ -72,6 +72,7 @@ public class MapTest {
     }
     
   }
+  
   
   @JsonProperty("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;

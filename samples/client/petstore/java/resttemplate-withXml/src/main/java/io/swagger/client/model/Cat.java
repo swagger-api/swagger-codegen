@@ -32,15 +32,18 @@ import javax.xml.bind.annotation.*;
 @JacksonXmlRootElement(localName = "Cat")
 public class Cat extends Animal {
 
+  
   @JsonProperty("className")
   @JacksonXmlProperty(localName = "className")
   @XmlElement(name="className")
   private String className = null;
   
+  
   @JsonProperty("color")
   @JacksonXmlProperty(localName = "color")
   @XmlElement(name="color")
   private String color = "red";
+  
   
   @JsonProperty("declawed")
   @JacksonXmlProperty(localName = "declawed")

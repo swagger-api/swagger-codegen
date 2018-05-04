@@ -26,7 +26,6 @@ public class Pet   {
   private @Valid String name = null;
   private @Valid List<String> photoUrls = new ArrayList<String>();
   private @Valid List<Tag> tags = new ArrayList<Tag>();
-
 public enum StatusEnum {
 
     
