@@ -29,6 +29,7 @@ public class Meta implements Runnable {
 
     private static final String TEMPLATE_DIR_CLASSPATH = "codegen";
     private static final String MUSTACHE_EXTENSION = ".mustache";
+    private static final String CODEGEN_GENERATOR_VERSION = "1.0.0-SNAPSHOT";
 
     private String outputFolder = "";
     private String name = "default";
@@ -73,7 +74,7 @@ public class Meta implements Runnable {
                 new ImmutableMap.Builder<String, Object>().put("generatorPackage", targetPackage)
                         .put("generatorClass", mainClass).put("name", name)
                         .put("fullyQualifiedGeneratorClass", targetPackage + "." + mainClass)
-                        .put("swaggerCodegenVersion", swaggerVersion).build();
+                        .put("swaggerCodegenGeneratorVersion", CODEGEN_GENERATOR_VERSION).build();
 
 
         with(supportingFiles).convert(processFiles(targetDir, data));
