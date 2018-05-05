@@ -25,7 +25,6 @@ public class Meta implements Runnable {
 
     private static final String TEMPLATE_DIR_CLASSPATH = "v2/codegen";
     private static final String MUSTACHE_EXTENSION = ".mustache";
-    private static final String CODEGEN_GENERATOR_VERSION = "1.0.0-SNAPSHOT";
 
     private String outputFolder = "";
     private String name = "default";
