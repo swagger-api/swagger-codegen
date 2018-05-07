@@ -17,16 +17,16 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
 
     public static final String DATE_LIBRARY = "dateLibrary";
     public static final String USE_ASYNC = "useAsync";
+    public static final String USE_OFFSET_DATE_TIME = "useOffsetDateTime";
     private static final String RETROFIT_2 = "retrofit2";
 
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
-    protected String dateLibrary = DateLibrary.JAVA8_LOCAL.value;
+    protected String dateLibrary = DateLibrary.JAVA8.value;
 
     public enum DateLibrary {
         STRING("string"),
         THREETENBP("threetenbp"),
-        JAVA8_LOCAL("java8-localdatetime"),
         JAVA8("java8");
 
         public final String value;
@@ -59,12 +59,12 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         dateOptions.put(DateLibrary.THREETENBP.value, "Threetenbp");
         dateOptions.put(DateLibrary.STRING.value, "String");
         dateOptions.put(DateLibrary.JAVA8.value, "Java 8 native JSR310");
-        dateOptions.put(DateLibrary.JAVA8_LOCAL.value, "Java 8 using LocalDateTime");
         dateLibrary.setEnum(dateOptions);
         cliOptions.add(dateLibrary);
         cliOptions.add(CliOption.newBoolean(USE_ASYNC, "Whether to use the Kotlin coroutines with the retrofit2 library."));
+        cliOptions.add(CliOption.newBoolean(USE_OFFSET_DATE_TIME, "Whether to use the OffsetDateTime instead of LocalDateTime with Java8 DateLibrary."));
 
-        supportedLibraries.put(RETROFIT_2, "HTTP client: OkHttp 3.8.0. JSON processing: Gson 2.6.1 (Retrofit 2.3.0).");
+        supportedLibraries.put(RETROFIT_2, "HTTP client: OkHttp, JSON processing: Gson (Retrofit2x).");
         if (usesRetrofit2Library()) {
             instantiationTypes.put("array", "kotlin.collections.ArrayList");
             instantiationTypes.put("list", "kotlin.collections.ArrayList");
@@ -107,13 +107,13 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
             typeMapping.put("date", "kotlin.String");
             typeMapping.put("Date", "kotlin.String");
             typeMapping.put("DateTime", "kotlin.String");
-        } else if (DateLibrary.JAVA8_LOCAL.value.equals(dateLibrary)) {
-            additionalProperties.put(DateLibrary.JAVA8.value, true);
         } else if (DateLibrary.JAVA8.value.equals(dateLibrary)) {
-            typeMapping.put("date-time", "java.time.OffsetDateTime");
-            typeMapping.put("date", "java.time.OffsetDateTime");
-            typeMapping.put("Date", "java.time.OffsetDateTime");
-            typeMapping.put("DateTime", "java.time.OffsetDateTime");
+            if (additionalProperties.containsKey(USE_OFFSET_DATE_TIME) && Boolean.valueOf(additionalProperties.get(USE_OFFSET_DATE_TIME).toString())) {
+                typeMapping.put("date-time", "java.time.OffsetDateTime");
+                typeMapping.put("date", "java.time.OffsetDateTime");
+                typeMapping.put("Date", "java.time.OffsetDateTime");
+                typeMapping.put("DateTime", "java.time.OffsetDateTime");
+            }
             additionalProperties.put(DateLibrary.JAVA8.value, true);
         }
 
@@ -200,9 +200,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
     private static boolean isMultipartType(List<Map<String, String>> consumes) {
         Map<String, String> firstType = consumes.get(0);
         if (firstType != null) {
-            if ("multipart/form-data".equals(firstType.get("mediaType"))) {
-                return true;
-            }
+            return "multipart/form-data".equals(firstType.get("mediaType"));
         }
         return false;
     }

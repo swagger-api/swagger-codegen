@@ -129,11 +129,11 @@ public class KotlinClientCodegenModelTest {
         Assert.assertTrue(property3.isNotContainer);
     }
 
-    @Test(description = "convert a simple model: date java8-local")
-    public void selectDateLibraryAsJava8Local() {
+    @Test(description = "convert a simple model: date java8")
+    public void selectDateLibraryAsJava8() {
         final Model model = getSimpleModel();
         final KotlinClientCodegen codegen = new KotlinClientCodegen();
-        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.JAVA8_LOCAL.value);
+        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.JAVA8.value);
         codegen.processOpts();
 
         final CodegenModel cm = codegen.fromModel("sample", model);
@@ -150,10 +150,11 @@ public class KotlinClientCodegenModelTest {
     }
 
     @Test(description = "convert a simple model: date java8")
-    public void selectDateLibraryAsJava8() {
+    public void selectDateLibraryAsJava8WithOffsetDateTime() {
         final Model model = getSimpleModel();
         final KotlinClientCodegen codegen = new KotlinClientCodegen();
         codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.JAVA8.value);
+        codegen.additionalProperties().put(KotlinClientCodegen.USE_OFFSET_DATE_TIME, true);
         codegen.processOpts();
 
         final CodegenModel cm = codegen.fromModel("sample", model);
