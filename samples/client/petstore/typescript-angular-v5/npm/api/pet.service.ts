@@ -18,8 +18,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
-
-
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
 
