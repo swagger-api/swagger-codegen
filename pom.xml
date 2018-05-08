@@ -859,6 +859,8 @@
                 <!--<module>samples/client/petstore/typescript-angular-v2/npm</module>-->
                 <module>samples/client/petstore/typescript-angular-v4/npm</module>
                 <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
+                <module>samples/client/petstore/typescript-angular-v5/npm</module>
+                <module>samples/client/petstore/typescript-angular-v6/npm</module>
                 <!--<module>samples/client/petstore/bash</module>-->
             </modules>
         </profile>

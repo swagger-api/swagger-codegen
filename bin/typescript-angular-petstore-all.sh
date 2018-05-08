@@ -50,3 +50,7 @@ java $JAVA_OPTS -jar $executable $ags
 echo "Typescript Petstore API client (v5 { Uses latest version of ng-packagr })"
 ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular -c bin/typescript-petstore-npm.json -o samples/client/petstore/typescript-angular-v5/npm --additional-properties ngVersion=5"
 java $JAVA_OPTS -jar $executable $ags
+
+echo "Typescript Petstore API client (v6 { Uses RxJS version 6 })"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular -c bin/typescript-petstore-npm.json -o samples/client/petstore/typescript-angular-v6/npm --additional-properties ngVersion=6"
+java $JAVA_OPTS -jar $executable $ags

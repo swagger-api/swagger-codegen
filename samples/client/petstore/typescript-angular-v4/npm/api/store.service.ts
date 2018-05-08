@@ -18,6 +18,8 @@ import { Response, ResponseContentType }                     from '@angular/http
 import { CustomQueryEncoderHelper }                          from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
+
+
 import '../rxjs-operators';
 
 import { Order } from '../model/order';
