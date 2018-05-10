@@ -144,7 +144,7 @@ export class ApiResponse {
     'type'?: string;
     'message'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -175,7 +175,7 @@ export class Category {
     'id'?: number;
     'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -208,7 +208,7 @@ export class Order {
     'status'?: Order.StatusEnum;
     'complete'?: boolean;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -268,7 +268,7 @@ export class Pet {
     */
     'status'?: Pet.StatusEnum;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -321,7 +321,7 @@ export class Tag {
     'id'?: number;
     'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -356,7 +356,7 @@ export class User {
     */
     'userStatus'?: number;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
