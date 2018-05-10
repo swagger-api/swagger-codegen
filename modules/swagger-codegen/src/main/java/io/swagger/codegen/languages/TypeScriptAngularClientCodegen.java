@@ -99,7 +99,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
         supportingFiles.add(new SupportingFile("auth.service.mustache", apiPackage().replace('.', File.separatorChar), "auth.service.ts"));
         supportingFiles.add(new SupportingFile("token.service.mustache", apiPackage().replace('.', File.separatorChar), "token.service.ts"));
-        supportingFiles.add(new SupportingFile("auth.model.mustache", modelPackage().replace('.', File.separatorChar), "auth.ts"));
 
         // determine NG version
         SemVer ngVersion;
