@@ -11,11 +11,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"context"
 	"fmt"
 )
 
@@ -181,11 +181,6 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-			if err != nil {
-				return localVarReturnValue, localVarHttpResponse, err
-			}
-
 			var v map[string]int32
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
@@ -281,11 +276,6 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-			if err != nil {
-				return localVarReturnValue, localVarHttpResponse, err
-			}
-
 			var v Order
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
@@ -376,11 +366,6 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-			if err != nil {
-				return localVarReturnValue, localVarHttpResponse, err
-			}
-
 			var v Order
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {

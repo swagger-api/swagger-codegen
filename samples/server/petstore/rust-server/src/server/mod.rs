@@ -13,6 +13,7 @@ extern crate url;
 
 
 use std::sync::Arc;
+use std::marker::PhantomData;
 use futures::{Future, future, Stream, stream};
 use hyper;
 use hyper::{Request, Response, Error, StatusCode};
@@ -35,16 +36,16 @@ use std::io;
 use std::collections::BTreeSet;
 
 pub use swagger::auth::Authorization;
-use swagger::{ApiError, Context, XSpanId};
+use swagger::{ApiError, XSpanId, XSpanIdString, Has};
 use swagger::auth::Scopes;
 
 use {Api,
      TestSpecialTagsResponse,
-     TestBodyWithQueryParamsResponse,
      FakeOuterBooleanSerializeResponse,
      FakeOuterCompositeSerializeResponse,
      FakeOuterNumberSerializeResponse,
      FakeOuterStringSerializeResponse,
+     TestBodyWithQueryParamsResponse,
      TestClientModelResponse,
      TestEndpointParametersResponse,
      TestEnumParametersResponse,
@@ -148,39 +149,56 @@ mod paths {
     }
 }
 
-pub struct NewService<T> {
+pub struct NewService<T, C> {
     api_impl: Arc<T>,
+    marker: PhantomData<C>,
 }
 
-impl<T> NewService<T> where T: Api + Clone + 'static {
-    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T> {
-        NewService{api_impl: api_impl.into()}
+impl<T, C> NewService<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
+    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> NewService<T, C> {
+        NewService{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T> hyper::server::NewService for NewService<T> where T: Api + Clone + 'static {
-    type Request = (Request, Context);
+impl<T, C> hyper::server::NewService for NewService<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
+    type Request = (Request, C);
     type Response = Response;
     type Error = Error;
-    type Instance = Service<T>;
+    type Instance = Service<T, C>;
 
     fn new_service(&self) -> Result<Self::Instance, io::Error> {
         Ok(Service::new(self.api_impl.clone()))
     }
 }
 
-pub struct Service<T> {
+pub struct Service<T, C> {
     api_impl: Arc<T>,
+    marker: PhantomData<C>,
 }
 
-impl<T> Service<T> where T: Api + Clone + 'static {
-    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T> {
-        Service{api_impl: api_impl.into()}
+impl<T, C> Service<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static {
+    pub fn new<U: Into<Arc<T>>>(api_impl: U) -> Service<T, C> {
+        Service{api_impl: api_impl.into(), marker: PhantomData}
     }
 }
 
-impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
-    type Request = (Request, Context);
+impl<T, C> hyper::server::Service for Service<T, C>
+where
+    T: Api<C> + Clone + 'static,
+    C: Has<XSpanIdString> + Has<Option<Authorization>> + 'static
+{
+    type Request = (Request, C);
     type Response = Response;
     type Error = Error;
     type Future = Box<Future<Item=Response, Error=Error>>;
@@ -193,9 +211,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestSpecialTags - PATCH /another-fake/dummy
             &hyper::Method::Patch if path.matched(paths::ID_ANOTHER_FAKE_DUMMY) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -235,7 +250,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_special_tags(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -281,11 +296,336 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             },
 
 
+            // FakeOuterBooleanSerialize - POST /fake/outer/boolean
+            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_BOOLEAN) => {
+
+
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+                Box::new(body.concat2()
+                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
+                        match result {
+                            Ok(body) => {
+
+                                let mut unused_elements = Vec::new();
+                                let param_body: Option<models::OuterBoolean> = if !body.is_empty() {
+
+                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
+
+                                    match serde_ignored::deserialize(deserializer, |path| {
+                                            warn!("Ignoring unknown field in body: {}", path);
+                                            unused_elements.push(path.to_string());
+                                    }) {
+                                        Ok(param_body) => param_body,
+
+                                        Err(_) => None,
+                                    }
+
+                                } else {
+                                    None
+                                };
+
+
+                                Box::new(api_impl.fake_outer_boolean_serialize(param_body, &context)
+                                    .then(move |result| {
+                                        let mut response = Response::new();
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
+
+                                        if !unused_elements.is_empty() {
+                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                                        }
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                FakeOuterBooleanSerializeResponse::OutputBoolean
+
+                                                    (body)
+
+
+                                                => {
+                                                    response.set_status(StatusCode::try_from(200).unwrap());
+
+
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+
+                                                    response.set_body(body);
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                response.set_status(StatusCode::InternalServerError);
+                                                response.set_body("An internal error occurred");
+                                            },
+                                        }
+
+                                        future::ok(response)
+                                    }
+                                ))
+
+
+                            },
+                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
+                        }
+                    })
+                ) as Box<Future<Item=Response, Error=Error>>
+
+            },
+
+
+            // FakeOuterCompositeSerialize - POST /fake/outer/composite
+            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_COMPOSITE) => {
+
+
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+                Box::new(body.concat2()
+                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
+                        match result {
+                            Ok(body) => {
+
+                                let mut unused_elements = Vec::new();
+                                let param_body: Option<models::OuterComposite> = if !body.is_empty() {
+
+                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
+
+                                    match serde_ignored::deserialize(deserializer, |path| {
+                                            warn!("Ignoring unknown field in body: {}", path);
+                                            unused_elements.push(path.to_string());
+                                    }) {
+                                        Ok(param_body) => param_body,
+
+                                        Err(_) => None,
+                                    }
+
+                                } else {
+                                    None
+                                };
+
+
+                                Box::new(api_impl.fake_outer_composite_serialize(param_body, &context)
+                                    .then(move |result| {
+                                        let mut response = Response::new();
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
+
+                                        if !unused_elements.is_empty() {
+                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                                        }
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                FakeOuterCompositeSerializeResponse::OutputComposite
+
+                                                    (body)
+
+
+                                                => {
+                                                    response.set_status(StatusCode::try_from(200).unwrap());
+
+
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+
+                                                    response.set_body(body);
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                response.set_status(StatusCode::InternalServerError);
+                                                response.set_body("An internal error occurred");
+                                            },
+                                        }
+
+                                        future::ok(response)
+                                    }
+                                ))
+
+
+                            },
+                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
+                        }
+                    })
+                ) as Box<Future<Item=Response, Error=Error>>
+
+            },
+
+
+            // FakeOuterNumberSerialize - POST /fake/outer/number
+            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_NUMBER) => {
+
+
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+                Box::new(body.concat2()
+                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
+                        match result {
+                            Ok(body) => {
+
+                                let mut unused_elements = Vec::new();
+                                let param_body: Option<models::OuterNumber> = if !body.is_empty() {
+
+                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
+
+                                    match serde_ignored::deserialize(deserializer, |path| {
+                                            warn!("Ignoring unknown field in body: {}", path);
+                                            unused_elements.push(path.to_string());
+                                    }) {
+                                        Ok(param_body) => param_body,
+
+                                        Err(_) => None,
+                                    }
+
+                                } else {
+                                    None
+                                };
+
+
+                                Box::new(api_impl.fake_outer_number_serialize(param_body, &context)
+                                    .then(move |result| {
+                                        let mut response = Response::new();
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
+
+                                        if !unused_elements.is_empty() {
+                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                                        }
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                FakeOuterNumberSerializeResponse::OutputNumber
+
+                                                    (body)
+
+
+                                                => {
+                                                    response.set_status(StatusCode::try_from(200).unwrap());
+
+
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+
+                                                    response.set_body(body);
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                response.set_status(StatusCode::InternalServerError);
+                                                response.set_body("An internal error occurred");
+                                            },
+                                        }
+
+                                        future::ok(response)
+                                    }
+                                ))
+
+
+                            },
+                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
+                        }
+                    })
+                ) as Box<Future<Item=Response, Error=Error>>
+
+            },
+
+
+            // FakeOuterStringSerialize - POST /fake/outer/string
+            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_STRING) => {
+
+
+
+
+
+
+                // Body parameters (note that non-required body parameters will ignore garbage
+                // values, rather than causing a 400 response). Produce warning header and logs for
+                // any unused fields.
+                Box::new(body.concat2()
+                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
+                        match result {
+                            Ok(body) => {
+
+                                let mut unused_elements = Vec::new();
+                                let param_body: Option<models::OuterString> = if !body.is_empty() {
+
+                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
+
+                                    match serde_ignored::deserialize(deserializer, |path| {
+                                            warn!("Ignoring unknown field in body: {}", path);
+                                            unused_elements.push(path.to_string());
+                                    }) {
+                                        Ok(param_body) => param_body,
+
+                                        Err(_) => None,
+                                    }
+
+                                } else {
+                                    None
+                                };
+
+
+                                Box::new(api_impl.fake_outer_string_serialize(param_body, &context)
+                                    .then(move |result| {
+                                        let mut response = Response::new();
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
+
+                                        if !unused_elements.is_empty() {
+                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
+                                        }
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                FakeOuterStringSerializeResponse::OutputString
+
+                                                    (body)
+
+
+                                                => {
+                                                    response.set_status(StatusCode::try_from(200).unwrap());
+
+
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+
+                                                    response.set_body(body);
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                response.set_status(StatusCode::InternalServerError);
+                                                response.set_body("An internal error occurred");
+                                            },
+                                        }
+
+                                        future::ok(response)
+                                    }
+                                ))
+
+
+                            },
+                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
+                        }
+                    })
+                ) as Box<Future<Item=Response, Error=Error>>
+
+            },
+
+
             // TestBodyWithQueryParams - PUT /fake/body-with-query-params
             &hyper::Method::Put if path.matched(paths::ID_FAKE_BODY_WITH_QUERY_PARAMS) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -338,7 +678,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_body_with_query_params(param_body, param_query, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -376,351 +716,8 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
             },
 
 
-            // FakeOuterBooleanSerialize - POST /fake/outer/boolean
-            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_BOOLEAN) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
-
-
-
-
-
-
-                // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response). Produce warning header and logs for
-                // any unused fields.
-                Box::new(body.concat2()
-                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
-                        match result {
-                            Ok(body) => {
-
-                                let mut unused_elements = Vec::new();
-                                let param_body: Option<models::OuterBoolean> = if !body.is_empty() {
-
-                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
-
-                                    match serde_ignored::deserialize(deserializer, |path| {
-                                            warn!("Ignoring unknown field in body: {}", path);
-                                            unused_elements.push(path.to_string());
-                                    }) {
-                                        Ok(param_body) => param_body,
-
-                                        Err(_) => None,
-                                    }
-
-                                } else {
-                                    None
-                                };
-
-
-                                Box::new(api_impl.fake_outer_boolean_serialize(param_body, &context)
-                                    .then(move |result| {
-                                        let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
-
-                                        if !unused_elements.is_empty() {
-                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
-                                        }
-
-                                        match result {
-                                            Ok(rsp) => match rsp {
-                                                FakeOuterBooleanSerializeResponse::OutputBoolean
-
-                                                    (body)
-
-
-                                                => {
-                                                    response.set_status(StatusCode::try_from(200).unwrap());
-
-
-                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
-
-                                                    response.set_body(body);
-                                                },
-                                            },
-                                            Err(_) => {
-                                                // Application code returned an error. This should not happen, as the implementation should
-                                                // return a valid response.
-                                                response.set_status(StatusCode::InternalServerError);
-                                                response.set_body("An internal error occurred");
-                                            },
-                                        }
-
-                                        future::ok(response)
-                                    }
-                                ))
-
-
-                            },
-                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
-                        }
-                    })
-                ) as Box<Future<Item=Response, Error=Error>>
-
-            },
-
-
-            // FakeOuterCompositeSerialize - POST /fake/outer/composite
-            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_COMPOSITE) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
-
-
-
-
-
-
-                // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response). Produce warning header and logs for
-                // any unused fields.
-                Box::new(body.concat2()
-                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
-                        match result {
-                            Ok(body) => {
-
-                                let mut unused_elements = Vec::new();
-                                let param_body: Option<models::OuterComposite> = if !body.is_empty() {
-
-                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
-
-                                    match serde_ignored::deserialize(deserializer, |path| {
-                                            warn!("Ignoring unknown field in body: {}", path);
-                                            unused_elements.push(path.to_string());
-                                    }) {
-                                        Ok(param_body) => param_body,
-
-                                        Err(_) => None,
-                                    }
-
-                                } else {
-                                    None
-                                };
-
-
-                                Box::new(api_impl.fake_outer_composite_serialize(param_body, &context)
-                                    .then(move |result| {
-                                        let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
-
-                                        if !unused_elements.is_empty() {
-                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
-                                        }
-
-                                        match result {
-                                            Ok(rsp) => match rsp {
-                                                FakeOuterCompositeSerializeResponse::OutputComposite
-
-                                                    (body)
-
-
-                                                => {
-                                                    response.set_status(StatusCode::try_from(200).unwrap());
-
-
-                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
-
-                                                    response.set_body(body);
-                                                },
-                                            },
-                                            Err(_) => {
-                                                // Application code returned an error. This should not happen, as the implementation should
-                                                // return a valid response.
-                                                response.set_status(StatusCode::InternalServerError);
-                                                response.set_body("An internal error occurred");
-                                            },
-                                        }
-
-                                        future::ok(response)
-                                    }
-                                ))
-
-
-                            },
-                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
-                        }
-                    })
-                ) as Box<Future<Item=Response, Error=Error>>
-
-            },
-
-
-            // FakeOuterNumberSerialize - POST /fake/outer/number
-            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_NUMBER) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
-
-
-
-
-
-
-                // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response). Produce warning header and logs for
-                // any unused fields.
-                Box::new(body.concat2()
-                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
-                        match result {
-                            Ok(body) => {
-
-                                let mut unused_elements = Vec::new();
-                                let param_body: Option<models::OuterNumber> = if !body.is_empty() {
-
-                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
-
-                                    match serde_ignored::deserialize(deserializer, |path| {
-                                            warn!("Ignoring unknown field in body: {}", path);
-                                            unused_elements.push(path.to_string());
-                                    }) {
-                                        Ok(param_body) => param_body,
-
-                                        Err(_) => None,
-                                    }
-
-                                } else {
-                                    None
-                                };
-
-
-                                Box::new(api_impl.fake_outer_number_serialize(param_body, &context)
-                                    .then(move |result| {
-                                        let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
-
-                                        if !unused_elements.is_empty() {
-                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
-                                        }
-
-                                        match result {
-                                            Ok(rsp) => match rsp {
-                                                FakeOuterNumberSerializeResponse::OutputNumber
-
-                                                    (body)
-
-
-                                                => {
-                                                    response.set_status(StatusCode::try_from(200).unwrap());
-
-
-                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
-
-                                                    response.set_body(body);
-                                                },
-                                            },
-                                            Err(_) => {
-                                                // Application code returned an error. This should not happen, as the implementation should
-                                                // return a valid response.
-                                                response.set_status(StatusCode::InternalServerError);
-                                                response.set_body("An internal error occurred");
-                                            },
-                                        }
-
-                                        future::ok(response)
-                                    }
-                                ))
-
-
-                            },
-                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
-                        }
-                    })
-                ) as Box<Future<Item=Response, Error=Error>>
-
-            },
-
-
-            // FakeOuterStringSerialize - POST /fake/outer/string
-            &hyper::Method::Post if path.matched(paths::ID_FAKE_OUTER_STRING) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
-
-
-
-
-
-
-                // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response). Produce warning header and logs for
-                // any unused fields.
-                Box::new(body.concat2()
-                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
-                        match result {
-                            Ok(body) => {
-
-                                let mut unused_elements = Vec::new();
-                                let param_body: Option<models::OuterString> = if !body.is_empty() {
-
-                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
-
-                                    match serde_ignored::deserialize(deserializer, |path| {
-                                            warn!("Ignoring unknown field in body: {}", path);
-                                            unused_elements.push(path.to_string());
-                                    }) {
-                                        Ok(param_body) => param_body,
-
-                                        Err(_) => None,
-                                    }
-
-                                } else {
-                                    None
-                                };
-
-
-                                Box::new(api_impl.fake_outer_string_serialize(param_body, &context)
-                                    .then(move |result| {
-                                        let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
-
-                                        if !unused_elements.is_empty() {
-                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
-                                        }
-
-                                        match result {
-                                            Ok(rsp) => match rsp {
-                                                FakeOuterStringSerializeResponse::OutputString
-
-                                                    (body)
-
-
-                                                => {
-                                                    response.set_status(StatusCode::try_from(200).unwrap());
-
-
-                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
-
-                                                    response.set_body(body);
-                                                },
-                                            },
-                                            Err(_) => {
-                                                // Application code returned an error. This should not happen, as the implementation should
-                                                // return a valid response.
-                                                response.set_status(StatusCode::InternalServerError);
-                                                response.set_body("An internal error occurred");
-                                            },
-                                        }
-
-                                        future::ok(response)
-                                    }
-                                ))
-
-
-                            },
-                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter body: {}", e)))),
-                        }
-                    })
-                ) as Box<Future<Item=Response, Error=Error>>
-
-            },
-
-
             // TestClientModel - PATCH /fake
             &hyper::Method::Patch if path.matched(paths::ID_FAKE) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -760,7 +757,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_client_model(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -808,13 +805,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestEndpointParameters - POST /fake
             &hyper::Method::Post if path.matched(paths::ID_FAKE) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -827,7 +821,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -849,7 +843,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_endpoint_parameters(param_number, param_double, param_pattern_without_delimiter, param_byte, param_integer, param_int32, param_int64, param_float, param_string, param_binary, param_date, param_date_time, param_password, param_callback, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -881,7 +875,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -889,9 +883,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestEnumParameters - GET /fake
             &hyper::Method::Get if path.matched(paths::ID_FAKE) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -926,7 +917,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -937,7 +928,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_enum_parameters(param_enum_form_string_array.as_ref(), param_enum_form_string, param_enum_header_string_array.as_ref(), param_enum_header_string, param_enum_query_string_array.as_ref(), param_enum_query_string, param_enum_query_integer, param_enum_query_double, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -969,7 +960,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -977,9 +968,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestInlineAdditionalProperties - POST /fake/inline-additionalProperties
             &hyper::Method::Post if path.matched(paths::ID_FAKE_INLINE_ADDITIONALPROPERTIES) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -1019,7 +1007,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_inline_additional_properties(param_param, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1059,9 +1047,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestJsonFormData - GET /fake/jsonFormData
             &hyper::Method::Get if path.matched(paths::ID_FAKE_JSONFORMDATA) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -1069,7 +1054,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -1079,7 +1064,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_json_form_data(param_param, param_param2, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1104,7 +1089,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1112,13 +1097,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // TestClassname - PATCH /fake_classname_test
             &hyper::Method::Patch if path.matched(paths::ID_FAKE_CLASSNAME_TEST) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1163,7 +1145,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.test_classname(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1211,13 +1193,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // AddPet - POST /pet
             &hyper::Method::Post if path.matched(paths::ID_PET) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1279,7 +1258,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.add_pet(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1319,13 +1298,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // DeletePet - DELETE /pet/{petId}
             &hyper::Method::Delete if path.matched(paths::ID_PET_PETID) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1376,13 +1352,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_pet(param_pet_id, param_api_key, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1407,7 +1383,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1415,13 +1391,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // FindPetsByStatus - GET /pet/findByStatus
             &hyper::Method::Get if path.matched(paths::ID_PET_FINDBYSTATUS) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1458,13 +1431,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.find_pets_by_status(param_status.as_ref(), &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1504,7 +1477,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1512,13 +1485,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // FindPetsByTags - GET /pet/findByTags
             &hyper::Method::Get if path.matched(paths::ID_PET_FINDBYTAGS) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1555,13 +1525,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.find_pets_by_tags(param_tags.as_ref(), &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1601,7 +1571,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1609,13 +1579,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // GetPetById - GET /pet/{petId}
             &hyper::Method::Get if path.matched(paths::ID_PET_PETID) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1644,13 +1611,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_pet_by_id(param_pet_id, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1697,7 +1664,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1705,13 +1672,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // UpdatePet - PUT /pet
             &hyper::Method::Put if path.matched(paths::ID_PET) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1773,7 +1737,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.update_pet(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -1827,13 +1791,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // UpdatePetWithForm - POST /pet/{petId}
             &hyper::Method::Post if path.matched(paths::ID_PET_PETID) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -1880,7 +1841,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 // Form parameters
@@ -1890,7 +1851,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.update_pet_with_form(param_pet_id, param_name, param_status, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -1915,7 +1876,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -1923,13 +1884,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // UploadFile - POST /pet/{petId}/uploadImage
             &hyper::Method::Post if path.matched(paths::ID_PET_PETID_UPLOADIMAGE) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -2020,7 +1978,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.upload_file(param_pet_id, param_additional_metadata, param_file, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2065,9 +2023,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // DeleteOrder - DELETE /store/order/{order_id}
             &hyper::Method::Delete if path.matched(paths::ID_STORE_ORDER_ORDER_ID) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
                 // Path parameters
@@ -2091,13 +2046,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_order(param_order_id, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2129,7 +2084,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2137,13 +2092,10 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // GetInventory - GET /store/inventory
             &hyper::Method::Get if path.matched(paths::ID_STORE_INVENTORY) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
                 {
-                    let authorization = match context.authorization.as_ref() {
-                        Some(authorization) => authorization,
-                        None => return Box::new(future::ok(Response::new()
+                    let authorization = match (&context as &Has<Option<Authorization>>).get() {
+                        &Some(ref authorization) => authorization,
+                        &None => return Box::new(future::ok(Response::new()
                                                 .with_status(StatusCode::Forbidden)
                                                 .with_body("Unauthenticated"))),
                     };
@@ -2156,13 +2108,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_inventory(&context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2195,7 +2147,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2203,9 +2155,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // GetOrderById - GET /store/order/{order_id}
             &hyper::Method::Get if path.matched(paths::ID_STORE_ORDER_ORDER_ID) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
                 // Path parameters
@@ -2229,13 +2178,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_order_by_id(param_order_id, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2282,7 +2231,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2290,9 +2239,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // PlaceOrder - POST /store/order
             &hyper::Method::Post if path.matched(paths::ID_STORE_ORDER) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2332,7 +2278,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.place_order(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2387,9 +2333,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // CreateUser - POST /user
             &hyper::Method::Post if path.matched(paths::ID_USER) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2429,7 +2372,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.create_user(param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2469,9 +2412,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // CreateUsersWithArrayInput - POST /user/createWithArray
             &hyper::Method::Post if path.matched(paths::ID_USER_CREATEWITHARRAY) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2511,7 +2451,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.create_users_with_array_input(param_body.as_ref(), &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2551,9 +2491,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // CreateUsersWithListInput - POST /user/createWithList
             &hyper::Method::Post if path.matched(paths::ID_USER_CREATEWITHLIST) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2593,7 +2530,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.create_users_with_list_input(param_body.as_ref(), &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
@@ -2633,9 +2570,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // DeleteUser - DELETE /user/{username}
             &hyper::Method::Delete if path.matched(paths::ID_USER_USERNAME) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
                 // Path parameters
@@ -2659,13 +2593,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.delete_user(param_username, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2697,7 +2631,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2705,9 +2639,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // GetUserByName - GET /user/{username}
             &hyper::Method::Get if path.matched(paths::ID_USER_USERNAME) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
                 // Path parameters
@@ -2731,13 +2662,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.get_user_by_name(param_username, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2784,7 +2715,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2792,9 +2723,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // LoginUser - GET /user/login
             &hyper::Method::Get if path.matched(paths::ID_USER_LOGIN) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2825,13 +2753,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.login_user(param_username, param_password, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2880,7 +2808,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2888,9 +2816,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // LogoutUser - GET /user/logout
             &hyper::Method::Get if path.matched(paths::ID_USER_LOGOUT) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
 
@@ -2898,13 +2823,13 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
 
 
-                Box::new(({
+                Box::new({
                         {{
 
                                 Box::new(api_impl.logout_user(&context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         match result {
                                             Ok(rsp) => match rsp {
@@ -2929,7 +2854,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 ))
 
                         }}
-                })) as Box<Future<Item=Response, Error=Error>>
+                }) as Box<Future<Item=Response, Error=Error>>
 
 
             },
@@ -2937,9 +2862,6 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
 
             // UpdateUser - PUT /user/{username}
             &hyper::Method::Put if path.matched(paths::ID_USER_USERNAME) => {
-                if context.x_span_id.is_none() {
-                    context.x_span_id = Some(headers.get::<XSpanId>().map(XSpanId::to_string).unwrap_or_else(|| self::uuid::Uuid::new_v4().to_string()));
-                }
 
 
                 // Path parameters
@@ -2995,7 +2917,7 @@ impl<T> hyper::server::Service for Service<T> where T: Api + Clone + 'static {
                                 Box::new(api_impl.update_user(param_username, param_body, &context)
                                     .then(move |result| {
                                         let mut response = Response::new();
-                                        context.x_span_id.as_ref().map(|header| response.headers_mut().set(XSpanId(header.clone())));
+                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
 
                                         if !unused_elements.is_empty() {
                                             response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
