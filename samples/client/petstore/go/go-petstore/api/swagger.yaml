@@ -107,11 +107,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
         x-exportParamName: "Status"
       responses:
@@ -639,10 +639,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         x-exportParamName: "EnumFormStringArray"
       - name: "enum_form_string"
         in: "formData"
@@ -663,10 +663,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         x-exportParamName: "EnumHeaderStringArray"
       - name: "enum_header_string"
         in: "header"
@@ -687,10 +687,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
         x-exportParamName: "EnumQueryStringArray"
       - name: "enum_query_string"
         in: "query"
@@ -1017,6 +1017,8 @@ paths:
           description: "successful operation"
   /fake/body-with-query-params:
     put:
+      tags:
+      - "fake"
       operationId: "testBodyWithQueryParams"
       consumes:
       - "application/json"
