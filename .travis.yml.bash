@@ -26,7 +26,7 @@ before_install:
   - sudo apt-get install -qq bats
   - sudo apt-get install -qq curl
 
-  # show host table to confirm petstore.swagger.io is mapped to localhost
+  # show host table to confirm petstore.swagger.io is mapped to localhost.
   - cat /etc/hosts
 
 script:
