@@ -13,7 +13,6 @@ import { Headers }                                           from '@angular/http
 
 import { Observable }                                        from 'rxjs/Observable';
 
-
 import { User } from '../model/user';
 
 
