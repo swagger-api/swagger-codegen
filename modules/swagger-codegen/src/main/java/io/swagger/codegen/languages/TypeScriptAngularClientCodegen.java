@@ -132,6 +132,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (!ngVersion.atLeast("4.3.0")) {
             supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         }
+        additionalProperties.put("useRxjsVersion6Imports", ngVersion.atLeast("6.0.0"));
     }
 
     private void addNpmPackageGeneration(SemVer ngVersion) {
