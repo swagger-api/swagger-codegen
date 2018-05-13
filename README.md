@@ -532,7 +532,7 @@ CONFIG OPTIONS
 	    retrofit - HTTP client: OkHttp 2.4.0. JSON processing: Gson 2.3.1 (Retrofit 1.9.0)
         retrofit2 - HTTP client: OkHttp 2.5.0. JSON processing: Gson 2.4 (Retrofit 2.0.0-beta2)
         google-api-client - HTTP client: google-api-client 1.23.0. JSON processing: Jackson 2.8.9
-        rest-assured - HTTP client: rest-assured : 3.0.6. JSON processing: Gson 2.6.1. Only for Java8 
+        rest-assured - HTTP client: rest-assured : 3.1.0. JSON processing: Gson 2.6.1. Only for Java8 
 ```
 
 Your config file for Java can look like
@@ -657,7 +657,7 @@ To push the auto-generated SDK to GitHub, we provide `git_push.sh` to streamline
 ```sh
  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
  -i modules/swagger-codegen/src/test/resources/2_0/petstore.json -l perl \
- --git-user-id "wing328" \
+ --git-user-id "swaggerapi" \
  --git-repo-id "petstore-perl" \
  --release-note "Github integration demo" \
  -o /var/tmp/perl/petstore
@@ -956,11 +956,7 @@ Presentations/Videos/Tutorials/Books
 Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
 ## Core Team Members
-* [@jimschubert](https://github.com/jimschubert) (2016/05)
-* [@cbornet](https://github.com/cbornet) (2016/05)
-* [@jaz-ah](https://github.com/jaz-ah) (2016/05)
-* [@ackintosh](https://github.com/ackintosh) (2018/02)
-* [@JFCote](https://github.com/JFCote) (2018/03)
+
 
 ## Template Creator
 Here is a list of template creators:
@@ -1056,8 +1052,6 @@ Here are the requirements to become a core team member:
   - about 3 hours per week
   - for contribution, it can be addressing issues, reviewing PRs submitted by others, submitting PR to fix bugs or make enhancements, etc
 
- To join the core team, please reach out to wing328hk@gmail.com (@wing328) for more information.
-
  To become a Template Creator, simply submit a PR for new API client (e.g. Rust, Elixir) or server stub (e.g. Ruby Grape) generator.
 
 # Swagger Codegen Technical Committee
@@ -1071,42 +1065,40 @@ Members of the Swagger Codegen technical committee shoulder the following respon
 
 Who is eligible? Those who want to join must have at least 3 PRs merged into a generator. (Exceptions can be granted to template creators or contributors who have made a lot of code changes with less than 3 merged PRs)
 
-If you want to join the committee, please kindly apply by sending an email to wing328hk@gmail.com ([@wing328](https://github.com/wing328)) with your Github ID.
-
 ## Members of Technical Committee
 
 | Languages     | Member (join date) |
 |:-------------|:-------------|
 | ActionScript |      |
-| Ada | @stcarrez (2018/02) @micheleISEP (2018/02) |
-| Android | @jaz-ah (2017/09) |
+| Ada | @stcarrez (2018/02) |
+| Android |  |
 | Apex  |     |
-| Bash  | @frol (2017/07) @bkryza (2017/08) @kenjones-cisco (2017/09) |
-| C++      | @ravinikam (2017/07) @stkrwork (2017/07) @fvarose (2017/11) @etherealjoy (2018/02) @martindelille (2018/03) |
-| C#        | @mandrean (2017/08) @jimschubert (2017/09) |
+| Bash  | @kenjones-cisco (2017/09) |
+| C++      | @fvarose (2017/11) |
+| C#        | @mandrean (2017/08) |
 | Clojure   |  |
 | Dart      | @ircecho (2017/07) |
-| Eiffel    | @jvelilla (2017/09) |
+| Eiffel    | |
 | Elixir    |  |
 | Elm       |  |
-| Erlang    | @tsloughter (2017/11) |
+| Erlang    | |
 | Groovy    |  |
-| Go        | @antihax (2017/11) @bvwells (2017/12) |
+| Go        | |
 | Haskell   | |
-| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) @cbornet (2017/09) @jeff9finger (2018/01) |
-| Kotlin     | @jimschubert (2017/09) |
-| Lua     | @daurnimator (2017/08) |
-| NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
+| Java      | |
+| Kotlin     | |
+| Lua     | |
+| NodeJS/Javascript | @CodeNinjai (2017/07) |
 | ObjC      |  |
-| Perl      | @wing328 (2017/07) |
-| PHP      | @jebentier (2017/07) @dkarlovi (2017/07) @mandrean (2017/08) @jfastnacht (2017/09) @ackintosh (2017/09) |
-| Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) @cbornet (2017/09) @kenjones-cisco (2017/11)|
+| Perl      | |
+| PHP      | @dkarlovi (2017/07) @mandrean (2017/08) |
+| Python   | @kenjones-cisco (2017/11)|
 | R        |  |
-| Ruby      | @cliffano (2017/07) @zlx (2017/09) |
-| Rust      | @frol (2017/07) @farcaller (2017/08) @bjgill (2017/12) |
-| Scala     | @clasnake (2017/07) @jimschubert (2017/09) @shijinkui  (2018/01) @ramzimaalej (2018/03) |
-| Swift     | @jgavris (2017/07) @ehyche (2017/08) @Edubits (2017/09) @jaz-ah (2017/09) @d-date  (2018/03) |
-| TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) @macjohnny (2018/01) |
+| Ruby      | @zlx (2017/09) |
+| Rust      | |
+| Scala     | |
+| Swift     | @ehyche (2017/08) |
+| TypeScript | |
 
 
 # License information on Generated Code

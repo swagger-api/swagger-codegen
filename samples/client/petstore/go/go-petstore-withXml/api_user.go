@@ -11,13 +11,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
-	"encoding/json"
-	"encoding/xml"
 	"fmt"
 )
 
@@ -28,17 +26,21 @@ var (
 
 type UserApiService service
 
-/* UserApiService Create user
+/* 
+UserApiService Create user
 This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body Created user object
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body Created user object
+
+
+*/
 func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -76,25 +78,41 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Respo
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 
-/* UserApiService Creates list of users with given input array
+/* 
+UserApiService Creates list of users with given input array
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body List of user object
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body List of user object
+
+
+*/
 func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -132,25 +150,41 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 
-/* UserApiService Creates list of users with given input array
+/* 
+UserApiService Creates list of users with given input array
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body List of user object
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body List of user object
+
+
+*/
 func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -188,25 +222,41 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 
-/* UserApiService Delete user
+/* 
+UserApiService Delete user
 This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The name that needs to be deleted
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The name that needs to be deleted
+
+
+*/
 func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -243,26 +293,41 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 
-/* UserApiService Get user by user name
+/* 
+UserApiService Get user by user name
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The name that needs to be fetched. Use user1 for testing. 
-@return User*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The name that needs to be fetched. Use user1 for testing.
+
+@return User
+*/
 func (a *UserApiService) GetUserByName(ctx context.Context, username string) (User, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		successPayload     User
+		localVarReturnValue User
 	)
 
 	// create path and map variables
@@ -292,47 +357,67 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return successPayload, nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return successPayload, localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	contentType := localVarHttpResponse.Header.Get("content-type")
-	if strings.Contains(contentType, "application/xml") {
-		if err = xml.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-			return successPayload, localVarHttpResponse, err
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
 		}
-
-		return successPayload, localVarHttpResponse, err
 	}
 
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return successPayload, localVarHttpResponse, err
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		if localVarHttpResponse.StatusCode == 200 {
+			var v User
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return successPayload, localVarHttpResponse, err
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* UserApiService Logs user into the system
+/* 
+UserApiService Logs user into the system
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The user name for login
-@param password The password for login in clear text
-@return string*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The user name for login
+ * @param password The password for login in clear text
+
+@return string
+*/
 func (a *UserApiService) LoginUser(ctx context.Context, username string, password string) (string, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		successPayload     string
+		localVarReturnValue string
 	)
 
 	// create path and map variables
@@ -363,44 +448,65 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return successPayload, nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return successPayload, localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
 	}
-	contentType := localVarHttpResponse.Header.Get("content-type")
-	if strings.Contains(contentType, "application/xml") {
-		if err = xml.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-			return successPayload, localVarHttpResponse, err
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
 		}
-
-		return successPayload, localVarHttpResponse, err
 	}
 
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return successPayload, localVarHttpResponse, err
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		if localVarHttpResponse.StatusCode == 200 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return successPayload, localVarHttpResponse, err
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* UserApiService Logs out current logged in user session
+/* 
+UserApiService Logs out current logged in user session
 
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+
+*/
 func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -436,26 +542,42 @@ func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error)
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 
-/* UserApiService Updated user
+/* 
+UserApiService Updated user
 This can only be done by the logged in user.
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param username name that need to be deleted
-@param body Updated user object
-@return */
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username name that need to be deleted
+ * @param body Updated user object
+
+
+*/
 func (a *UserApiService) UpdateUser(ctx context.Context, username string, body User) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
+		
 	)
 
 	// create path and map variables
@@ -494,10 +616,22 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	if err != nil || localVarHttpResponse == nil {
 		return localVarHttpResponse, err
 	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
 	}
-	return localVarHttpResponse, err
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }

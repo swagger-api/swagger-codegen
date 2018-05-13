@@ -14,35 +14,27 @@
 package io.swagger.client.api;
 
 import com.google.gson.reflect.TypeToken;
-import io.swagger.client.model.Order;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+import io.swagger.client.model.Order;
 
 import java.lang.reflect.Type;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.*;
+import static io.restassured.http.Method.DELETE;
+import static io.restassured.http.Method.GET;
+import static io.restassured.http.Method.POST;
 
 public class StoreApi {
 
     private RequestSpecBuilder reqSpec;
 
-    private JSON json;
-
     private StoreApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
-        this.json = new JSON();
     }
 
     public static StoreApi store(RequestSpecBuilder reqSpec) {
@@ -64,26 +56,6 @@ public class StoreApi {
 
     public PlaceOrderOper placeOrder() {
         return new PlaceOrderOper(reqSpec);
-    }
-
-    /**
-     * Get JSON
-     *
-     * @return JSON object
-     */
-    public JSON getJSON() {
-        return json;
-    }
-
-    /**
-     * Set JSON
-     *
-     * @param json JSON object
-     * @return StoreApi
-     */
-    public StoreApi setJSON(JSON json) {
-        this.json = json;
-        return this;
     }
 
     /**
@@ -190,7 +162,7 @@ public class StoreApi {
          */
         public Map<String, Integer> executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<Map<String, Integer>>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -249,7 +221,7 @@ public class StoreApi {
          */
         public Order executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<Order>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -318,14 +290,14 @@ public class StoreApi {
          */
         public Order executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<Order>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
          /**
          * @param body (Order) order placed for purchasing the pet (required)
          */
         public PlaceOrderOper body(Order body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
