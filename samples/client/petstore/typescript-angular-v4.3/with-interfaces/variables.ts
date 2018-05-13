@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import {Observable} from 'rxjs';
+
+import { Observable }                                        from 'rxjs/Observable';
 
 export const BASE_PATH = new InjectionToken<string>('basePath');
 export const BASE_PATH_OBSERVABLE = new InjectionToken<Observable<string>>('basePathObservable');
