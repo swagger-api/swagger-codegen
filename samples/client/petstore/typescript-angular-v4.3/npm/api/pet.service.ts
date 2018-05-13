@@ -21,7 +21,7 @@ import { Observable }                                        from 'rxjs/Observab
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
 
-import { BASE_PATH, COLLECTION_FORMATS, BASE_PATH_OBSERVABLE }                     from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
@@ -32,19 +32,13 @@ export class PetService {
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient,
-                @Optional() @Inject(BASE_PATH) basePath: string,
-                @Optional() configuration: Configuration,
-                @Optional() @Inject(BASE_PATH_OBSERVABLE) basePath$: Observable<string>) {
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
-        }
-        if (basePath$) {
-            basePath$.subscribe(nextBasePath => this.basePath = nextBasePath);
         }
     }
 
