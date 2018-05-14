@@ -176,9 +176,9 @@ use {{invokerPackage}}\ObjectSerializer;
                         $response->getHeaders()
                     ];
             {{/dataType}}
-            {{#-first}}
+            {{#-last}}
             }
-            {{/-first}}
+            {{/-last}}
         {{/responses}}
 
             return [null, $statusCode, $response->getHeaders()];
