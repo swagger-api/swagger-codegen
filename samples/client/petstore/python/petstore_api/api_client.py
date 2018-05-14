@@ -28,7 +28,6 @@ import petstore_api.models
 from petstore_api import rest
 
 
-
 class ApiClient(object):
     """Generic API client for Swagger client library builds.
 
@@ -136,17 +135,16 @@ class ApiClient(object):
             post_params = self.parameters_to_tuples(post_params,
                                                     collection_formats)
 
- 
         # body
         if body:
             body = self.sanitize_for_serialization(body)
 
-       # request url
+        # request url
         url = self.configuration.host + resource_path
 
         # auth setting
-        self.update_params_for_auth(header_params, query_params, auth_settings, resource_path, body, method, url)
-
+        self.update_params_for_auth(header_params, query_params, auth_settings,
+                                    resource_path, body, method, url)
 
         # perform request and return response
         response_data = self.request(
@@ -485,7 +483,8 @@ class ApiClient(object):
         else:
             return content_types[0]
 
-    def update_params_for_auth(self, headers, querys, auth_settings, resource_path, body, method, url):
+    def update_params_for_auth(self, headers, querys, auth_settings,
+                               resource_path, body, method, url):
         """Updates header and query params based on authentication setting.
 
         :param headers: Header parameters dict to be updated.
@@ -501,7 +500,7 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
-                if not 'value' in auth_setting:
+                if 'value' not in auth_setting:
                     continue
                 elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']
@@ -625,4 +624,3 @@ class ApiClient(object):
             if klass_name:
                 instance = self.__deserialize(data, klass_name)
         return instance
- 

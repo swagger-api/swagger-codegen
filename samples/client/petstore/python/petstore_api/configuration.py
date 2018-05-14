@@ -223,9 +223,9 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
 
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
-        
-        Clients may end up mutating the results, because it would be 
-        atypical practice to store your apiKey in your Swagger spec. 
+
+        Clients may end up mutating the results, because it would be
+        atypical practice to store your apiKey in your Swagger spec.
 
         :return: The Auth Settings information dict.
         """
