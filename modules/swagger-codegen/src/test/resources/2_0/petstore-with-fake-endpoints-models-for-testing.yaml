@@ -1245,16 +1245,8 @@ definitions:
       - (xyz)
   Enum_Test:
     type: object
-    required:
-      - enum_string_required
     properties:
       enum_string:
-        type: string
-        enum:
-          - UPPER
-          - lower
-          - ''
-      enum_string_required:
         type: string
         enum:
           - UPPER
