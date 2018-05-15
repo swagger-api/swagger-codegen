@@ -261,7 +261,6 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
                 },
 
         }
-        return _auth_settings
 
     def to_debug_report(self):
         """Gets the essential information for debugging.
