@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enumString** | [**EnumStringEnum**](#EnumStringEnum) |  |  [optional]
-**enumStringRequired** | [**EnumStringRequiredEnum**](#EnumStringRequiredEnum) |  | 
 **enumInteger** | [**EnumIntegerEnum**](#EnumIntegerEnum) |  |  [optional]
 **enumNumber** | [**EnumNumberEnum**](#EnumNumberEnum) |  |  [optional]
 **outerEnum** | [**OuterEnum**](OuterEnum.md) |  |  [optional]
@@ -13,15 +12,6 @@ Name | Type | Description | Notes
 
 <a name="EnumStringEnum"></a>
 ## Enum: EnumStringEnum
-Name | Value
----- | -----
-UPPER | &quot;UPPER&quot;
-LOWER | &quot;lower&quot;
-EMPTY | &quot;&quot;
-
-
-<a name="EnumStringRequiredEnum"></a>
-## Enum: EnumStringRequiredEnum
 Name | Value
 ---- | -----
 UPPER | &quot;UPPER&quot;
