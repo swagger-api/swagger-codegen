@@ -1,6 +1,5 @@
 package io.swagger.codegen.languages;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.samskivert.mustache.Mustache;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.*;
-import java.util.Map.Entry;
 
 import static java.util.UUID.randomUUID;
 
@@ -108,7 +106,6 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
 
         String packageFolder = sourceFolder + File.separator + packageName;
 
-        supportingFiles.add(new SupportingFile("NuGet.Config", "", "NuGet.Config"));
         supportingFiles.add(new SupportingFile("build.sh.mustache", "", "build.sh"));
         supportingFiles.add(new SupportingFile("build.bat.mustache", "", "build.bat"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
