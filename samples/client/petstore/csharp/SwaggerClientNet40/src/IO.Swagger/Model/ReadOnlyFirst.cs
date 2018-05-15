@@ -33,10 +33,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadOnlyFirst" /> class.
         /// </summary>
-        /// <param name="Baz">Baz.</param>
-        public ReadOnlyFirst(string Baz = default(string))
+        /// <param name="baz">baz.</param>
+        public ReadOnlyFirst(string baz = default(string))
         {
-            this.Baz = Baz;
+            this.Baz = baz;
         }
         
         /// <summary>
@@ -69,7 +69,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

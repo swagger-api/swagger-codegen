@@ -1,6 +1,9 @@
 package io.swagger.codegen.languages;
 
+import com.google.common.collect.ImmutableMap;
+import com.samskivert.mustache.Mustache;
 import io.swagger.codegen.*;
+import io.swagger.codegen.mustache.*;
 import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +24,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected boolean returnICollection = false;
     protected boolean netCoreProjectFileFlag = false;
 
-    protected String modelPropertyNaming = "PascalCase";
+    protected String modelPropertyNaming = CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.PascalCase.name();
 
     protected String packageVersion = "1.0.0";
     protected String packageName = "IO.Swagger";
@@ -67,12 +70,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 Arrays.asList("IDictionary")
         );
 
-        setReservedWordsLowerCase(
+        // NOTE: C# uses camel cased reserved words, while models are title cased. We don't want lowercase comparisons.
+        reservedWords.addAll(
                 Arrays.asList(
                         // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
                         // this is a workaround and can be removed if c# api client is updated to use
                         // fully qualified name
-                        "client", "parameter",
+                        "Client", "client", "parameter",
                         // local variable names in API methods (endpoints)
                         "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
@@ -170,18 +174,6 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     public void setNetCoreProjectFileFlag(boolean flag) {
         this.netCoreProjectFileFlag = flag;
-    }
-
-    protected void addOption(String key, String description, String defaultValue) {
-        CliOption option = new CliOption(key, description);
-        if (defaultValue != null) option.defaultValue(defaultValue);
-        cliOptions.add(option);
-    }
-
-    protected void addSwitch(String key, String description, Boolean defaultValue) {
-        CliOption option = CliOption.newBoolean(key, description);
-        if (defaultValue != null) option.defaultValue(defaultValue.toString());
-        cliOptions.add(option);
     }
 
     public void useDateTimeOffset(boolean flag) {
@@ -304,6 +296,32 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
         // This either updates additionalProperties with the above fixes, or sets the default if the option was not specified.
         additionalProperties.put(CodegenConstants.INTERFACE_PREFIX, interfacePrefix);
+
+        addMustacheLambdas(additionalProperties);
+    }
+
+    private void addMustacheLambdas(Map<String, Object> objs) {
+
+        Map<String, Mustache.Lambda> lambdas = new ImmutableMap.Builder<String, Mustache.Lambda>()
+                .put("lowercase", new LowercaseLambda().generator(this))
+                .put("uppercase", new UppercaseLambda())
+                .put("titlecase", new TitlecaseLambda())
+                .put("camelcase", new CamelCaseLambda().generator(this))
+                .put("camelcase_param", new CamelCaseLambda().generator(this).escapeAsParamName(true))
+                .put("indented", new IndentedLambda())
+                .put("indented_8", new IndentedLambda(8, " "))
+                .put("indented_12", new IndentedLambda(12, " "))
+                .put("indented_16", new IndentedLambda(16, " "))
+                .build();
+
+        if (objs.containsKey("lambda")) {
+            LOGGER.warn("An property named 'lambda' already exists. Mustache lambdas renamed from 'lambda' to '_lambda'. " +
+                    "You'll likely need to use a custom template, " +
+                    "see https://github.com/swagger-api/swagger-codegen#modifying-the-client-library-format. ");
+            objs.put("_lambda", lambdas);
+        } else {
+            objs.put("lambda", lambdas);
+        }
     }
 
     @Override
@@ -350,7 +368,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
      * When working with enums, we can't always assume a RefModel is a nullable type (where default(YourType) == null),
      * so this post processing runs through all models to find RefModel'd enums. Then, it runs through all vars and modifies
      * those vars referencing RefModel'd enums to work the same as inlined enums rather than as objects.
-     * @param models
+     * @param models processed models to be further processed for enum references
      */
     @SuppressWarnings({ "unchecked" })
     private void postProcessEnumRefs(final Map<String, Object> models) {
@@ -719,6 +737,12 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     }
 
     @Override
+    protected boolean isReservedWord(String word) {
+        // NOTE: This differs from super's implementation in that C# does _not_ want case insensitive matching.
+        return reservedWords.contains(word);
+    }
+
+    @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type;
@@ -727,6 +751,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
             swaggerType = ""; // set swagger type to empty string if null
         }
 
+        // NOTE: typeMapping here supports things like string/String, long/Long, datetime/DateTime as lowercase keys.
+        //       Should we require explicit casing here (values are not insensitive).
         // TODO avoid using toLowerCase as typeMapping should be case-sensitive
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
             type = typeMapping.get(swaggerType.toLowerCase());
@@ -739,16 +765,39 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         return toModelName(type);
     }
 
+    /**
+     * Provides C# strongly typed declaration for simple arrays of some type and arrays of arrays of some type.
+     * @param arr The input array property
+     * @return The type declaration when the type is an array of arrays.
+     */
+    private String getArrayTypeDeclaration(ArrayProperty arr) {
+        // TODO: collection type here should be fully qualified namespace to avoid model conflicts
+        // This supports arrays of arrays.
+        String arrayType = typeMapping.get("array");
+        StringBuilder instantiationType = new StringBuilder(arrayType);
+        Property items = arr.getItems();
+        String nestedType = getTypeDeclaration(items);
+        // TODO: We may want to differentiate here between generics and primitive arrays.
+        instantiationType.append("<").append(nestedType).append(">");
+        return instantiationType.toString();
+    }
+
+    @Override
+    public String toInstantiationType(Property p) {
+        if (p instanceof ArrayProperty) {
+            return getArrayTypeDeclaration((ArrayProperty) p);
+        }
+        return super.toInstantiationType(p);
+    }
+
     @Override
     public String getTypeDeclaration(Property p) {
         if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
-            return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
+            return getArrayTypeDeclaration((ArrayProperty) p);
         } else if (p instanceof MapProperty) {
+            // Should we also support maps of maps?
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-
             return getSwaggerType(p) + "<string, " + getTypeDeclaration(inner) + ">";
         }
         return super.getTypeDeclaration(p);

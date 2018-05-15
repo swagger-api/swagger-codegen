@@ -12,7 +12,7 @@
 
 /*
  * SWGPet.h
- * 
+ *
  * A pet for sale in the pet store
  */
 
@@ -34,15 +34,15 @@ namespace Swagger {
 class SWGPet: public SWGObject {
 public:
     SWGPet();
-    SWGPet(QString* json);
-    virtual ~SWGPet();
+    SWGPet(QString json);
+    ~SWGPet();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGPet* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGPet* fromJson(QString jsonString) override;
 
     qint64 getId();
     void setId(qint64 id);
@@ -63,13 +63,27 @@ public:
     void setStatus(QString* status);
 
 
+    virtual bool isSet() override;
+
 private:
     qint64 id;
+    bool m_id_isSet;
+
     SWGCategory* category;
+    bool m_category_isSet;
+
     QString* name;
+    bool m_name_isSet;
+
     QList<QString*>* photo_urls;
+    bool m_photo_urls_isSet;
+
     QList<SWGTag*>* tags;
+    bool m_tags_isSet;
+
     QString* status;
+    bool m_status_isSet;
+
 };
 
 }

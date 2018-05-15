@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -86,6 +87,8 @@ public class MapTest implements Parcelable {
   @SerializedName("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
 
+  public MapTest() {
+  }
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
@@ -180,19 +183,13 @@ public class MapTest implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
-  public void writeToParcel(Parcel out, int flags) {
-     
-    out.writeValue(mapMapOfString);
 
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeValue(mapMapOfString);
     out.writeValue(mapOfEnumString);
   }
 
-  public MapTest() {
-    super();
-  }
-
   MapTest(Parcel in) {
-    
     mapMapOfString = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
     mapOfEnumString = (Map<String, InnerEnum>)in.readValue(null);
   }

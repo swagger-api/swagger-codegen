@@ -12,7 +12,7 @@
 
 /*
  * SWGOrder.h
- * 
+ *
  * An order for a pets from the pet store
  */
 
@@ -32,15 +32,15 @@ namespace Swagger {
 class SWGOrder: public SWGObject {
 public:
     SWGOrder();
-    SWGOrder(QString* json);
-    virtual ~SWGOrder();
+    SWGOrder(QString json);
+    ~SWGOrder();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGOrder* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGOrder* fromJson(QString jsonString) override;
 
     qint64 getId();
     void setId(qint64 id);
@@ -61,13 +61,27 @@ public:
     void setComplete(bool complete);
 
 
+    virtual bool isSet() override;
+
 private:
     qint64 id;
+    bool m_id_isSet;
+
     qint64 pet_id;
+    bool m_pet_id_isSet;
+
     qint32 quantity;
+    bool m_quantity_isSet;
+
     QDateTime* ship_date;
+    bool m_ship_date_isSet;
+
     QString* status;
+    bool m_status_isSet;
+
     bool complete;
+    bool m_complete_isSet;
+
 };
 
 }

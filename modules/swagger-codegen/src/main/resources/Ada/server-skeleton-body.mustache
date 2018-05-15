@@ -33,6 +33,10 @@ package body {{package}}.Skeletons is
          {{/returnType}}
       begin
          {{#authMethods}}
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
          {{#scopes}}
          if not Context.Has_Permission (ACL_{{ident}}.Permission) then
             Context.Set_Error (403, "Permission denied");
@@ -48,7 +52,7 @@ package body {{package}}.Skeletons is
          {{/pathParams}}
          {{#hasFormParams}}
          {{#formParams}}
-         Swagger.Servers.Get_Parameter (Req, "{{baseName}}", {{paramName}});
+         Swagger.Servers.Get_Parameter (Context, "{{baseName}}", {{paramName}});
          {{/formParams}}
          {{/hasFormParams}}
          {{#hasParams}}
@@ -73,11 +77,13 @@ package body {{package}}.Skeletons is
          {{/returnType}}
          {{/hasParams}}
          {{#returnType}}
-         Stream.Start_Document;{{#vendorExtensions.x-codegen-response.isString}}
-         Swagger.Streams.Serialize (Stream, "", Result);{{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}{{#returnTypeIsPrimitive}}
-         Swagger.Streams.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}
-         {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
-         Stream.End_Document;{{/returnType}}
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;{{#vendorExtensions.x-codegen-response.isString}}
+            Swagger.Streams.Serialize (Stream, "", Result);{{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}{{#returnTypeIsPrimitive}}
+            Swagger.Streams.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}
+            {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
+            Stream.End_Document;
+         end if;{{/returnType}}
       end {{operationId}};
 {{/operation}}
 {{/operations}}
@@ -122,6 +128,18 @@ package body {{package}}.Skeletons is
          Result : {{returnType}};
          {{/returnType}}
       begin
+         {{#authMethods}}
+         if not Context.Is_Authenticated then
+            Context.Set_Error (401, "Not authenticated");
+            return;
+         end if;
+         {{#scopes}}
+         if not Context.Has_Permission (ACL_{{ident}}.Permission) then
+            Context.Set_Error (403, "Permission denied");
+            return;
+         end if;
+         {{/scopes}}
+         {{/authMethods}}
          {{#queryParams}}
          Swagger.Servers.Get_Query_Parameter (Req, "{{baseName}}", {{paramName}});
          {{/queryParams}}
@@ -130,7 +148,7 @@ package body {{package}}.Skeletons is
          {{/pathParams}}
          {{#hasFormParams}}
          {{#formParams}}
-         Swagger.Servers.Get_Parameter (Req, "{{baseName}}", {{paramName}});
+         Swagger.Servers.Get_Parameter (Context, "{{baseName}}", {{paramName}});
          {{/formParams}}
          {{/hasFormParams}}
          {{#hasParams}}
@@ -155,11 +173,13 @@ package body {{package}}.Skeletons is
          {{/returnType}}
          {{/hasParams}}
          {{#returnType}}
-         Stream.Start_Document;{{#vendorExtensions.x-codegen-response.isString}}
-         Swagger.Streams.Serialize (Stream, "", Result);{{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}{{#returnTypeIsPrimitive}}
-         Swagger.Streams.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}
-         {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
-         Stream.End_Document;{{/returnType}}
+         if Context.Get_Status = 200 then
+            Stream.Start_Document;{{#vendorExtensions.x-codegen-response.isString}}
+            Swagger.Streams.Serialize (Stream, "", Result);{{/vendorExtensions.x-codegen-response.isString}}{{^vendorExtensions.x-codegen-response.isString}}{{#returnTypeIsPrimitive}}
+            Swagger.Streams.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}
+            {{package}}.Models.Serialize (Stream, "", Result);{{/returnTypeIsPrimitive}}{{/vendorExtensions.x-codegen-response.isString}}
+            Stream.End_Document;
+         end if;{{/returnType}}
       end {{operationId}};
 
       package API_{{operationId}} is

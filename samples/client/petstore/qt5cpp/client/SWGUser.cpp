@@ -22,9 +22,9 @@
 
 namespace Swagger {
 
-SWGUser::SWGUser(QString* json) {
+SWGUser::SWGUser(QString json) {
     init();
-    this->fromJson(*json);
+    this->fromJson(json);
 }
 
 SWGUser::SWGUser() {
@@ -38,41 +38,49 @@ SWGUser::~SWGUser() {
 void
 SWGUser::init() {
     id = 0L;
+    m_id_isSet = false;
     username = new QString("");
+    m_username_isSet = false;
     first_name = new QString("");
+    m_first_name_isSet = false;
     last_name = new QString("");
+    m_last_name_isSet = false;
     email = new QString("");
+    m_email_isSet = false;
     password = new QString("");
+    m_password_isSet = false;
     phone = new QString("");
+    m_phone_isSet = false;
     user_status = 0;
+    m_user_status_isSet = false;
 }
 
 void
 SWGUser::cleanup() {
 
-    if(username != nullptr) {
+    if(username != nullptr) { 
         delete username;
     }
-    if(first_name != nullptr) {
+    if(first_name != nullptr) { 
         delete first_name;
     }
-    if(last_name != nullptr) {
+    if(last_name != nullptr) { 
         delete last_name;
     }
-    if(email != nullptr) {
+    if(email != nullptr) { 
         delete email;
     }
-    if(password != nullptr) {
+    if(password != nullptr) { 
         delete password;
     }
-    if(phone != nullptr) {
+    if(phone != nullptr) { 
         delete phone;
     }
 
 }
 
 SWGUser*
-SWGUser::fromJson(QString &json) {
+SWGUser::fromJson(QString json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -81,38 +89,61 @@ SWGUser::fromJson(QString &json) {
 }
 
 void
-SWGUser::fromJsonObject(QJsonObject &pJson) {
+SWGUser::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
+    
     ::Swagger::setValue(&username, pJson["username"], "QString", "QString");
+    
     ::Swagger::setValue(&first_name, pJson["firstName"], "QString", "QString");
+    
     ::Swagger::setValue(&last_name, pJson["lastName"], "QString", "QString");
+    
     ::Swagger::setValue(&email, pJson["email"], "QString", "QString");
+    
     ::Swagger::setValue(&password, pJson["password"], "QString", "QString");
+    
     ::Swagger::setValue(&phone, pJson["phone"], "QString", "QString");
+    
     ::Swagger::setValue(&user_status, pJson["userStatus"], "qint32", "");
+    
 }
 
 QString
 SWGUser::asJson ()
 {
-    QJsonObject* obj = this->asJsonObject();
-    
-    QJsonDocument doc(*obj);
+    QJsonObject obj = this->asJsonObject();
+    QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
     return QString(bytes);
 }
 
-QJsonObject*
+QJsonObject
 SWGUser::asJsonObject() {
-    QJsonObject* obj = new QJsonObject();
-    obj->insert("id", QJsonValue(id));
-    toJsonValue(QString("username"), username, obj, QString("QString"));
-    toJsonValue(QString("firstName"), first_name, obj, QString("QString"));
-    toJsonValue(QString("lastName"), last_name, obj, QString("QString"));
-    toJsonValue(QString("email"), email, obj, QString("QString"));
-    toJsonValue(QString("password"), password, obj, QString("QString"));
-    toJsonValue(QString("phone"), phone, obj, QString("QString"));
-    obj->insert("userStatus", QJsonValue(user_status));
+    QJsonObject obj;
+    if(m_id_isSet){
+        obj.insert("id", QJsonValue(id));
+    }
+    if(username != nullptr && *username != QString("")){
+        toJsonValue(QString("username"), username, obj, QString("QString"));
+    }
+    if(first_name != nullptr && *first_name != QString("")){
+        toJsonValue(QString("firstName"), first_name, obj, QString("QString"));
+    }
+    if(last_name != nullptr && *last_name != QString("")){
+        toJsonValue(QString("lastName"), last_name, obj, QString("QString"));
+    }
+    if(email != nullptr && *email != QString("")){
+        toJsonValue(QString("email"), email, obj, QString("QString"));
+    }
+    if(password != nullptr && *password != QString("")){
+        toJsonValue(QString("password"), password, obj, QString("QString"));
+    }
+    if(phone != nullptr && *phone != QString("")){
+        toJsonValue(QString("phone"), phone, obj, QString("QString"));
+    }
+    if(m_user_status_isSet){
+        obj.insert("userStatus", QJsonValue(user_status));
+    }
 
     return obj;
 }
@@ -124,6 +155,7 @@ SWGUser::getId() {
 void
 SWGUser::setId(qint64 id) {
     this->id = id;
+    this->m_id_isSet = true;
 }
 
 QString*
@@ -133,6 +165,7 @@ SWGUser::getUsername() {
 void
 SWGUser::setUsername(QString* username) {
     this->username = username;
+    this->m_username_isSet = true;
 }
 
 QString*
@@ -142,6 +175,7 @@ SWGUser::getFirstName() {
 void
 SWGUser::setFirstName(QString* first_name) {
     this->first_name = first_name;
+    this->m_first_name_isSet = true;
 }
 
 QString*
@@ -151,6 +185,7 @@ SWGUser::getLastName() {
 void
 SWGUser::setLastName(QString* last_name) {
     this->last_name = last_name;
+    this->m_last_name_isSet = true;
 }
 
 QString*
@@ -160,6 +195,7 @@ SWGUser::getEmail() {
 void
 SWGUser::setEmail(QString* email) {
     this->email = email;
+    this->m_email_isSet = true;
 }
 
 QString*
@@ -169,6 +205,7 @@ SWGUser::getPassword() {
 void
 SWGUser::setPassword(QString* password) {
     this->password = password;
+    this->m_password_isSet = true;
 }
 
 QString*
@@ -178,6 +215,7 @@ SWGUser::getPhone() {
 void
 SWGUser::setPhone(QString* phone) {
     this->phone = phone;
+    this->m_phone_isSet = true;
 }
 
 qint32
@@ -187,8 +225,24 @@ SWGUser::getUserStatus() {
 void
 SWGUser::setUserStatus(qint32 user_status) {
     this->user_status = user_status;
+    this->m_user_status_isSet = true;
 }
 
 
+bool
+SWGUser::isSet(){
+    bool isObjectUpdated = false;
+    do{
+        if(m_id_isSet){ isObjectUpdated = true; break;}
+        if(username != nullptr && *username != QString("")){ isObjectUpdated = true; break;}
+        if(first_name != nullptr && *first_name != QString("")){ isObjectUpdated = true; break;}
+        if(last_name != nullptr && *last_name != QString("")){ isObjectUpdated = true; break;}
+        if(email != nullptr && *email != QString("")){ isObjectUpdated = true; break;}
+        if(password != nullptr && *password != QString("")){ isObjectUpdated = true; break;}
+        if(phone != nullptr && *phone != QString("")){ isObjectUpdated = true; break;}
+        if(m_user_status_isSet){ isObjectUpdated = true; break;}
+    }while(false);
+    return isObjectUpdated;
+}
 }
 

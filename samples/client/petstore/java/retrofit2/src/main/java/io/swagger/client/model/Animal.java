@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -35,6 +36,9 @@ public class Animal {
   @SerializedName("color")
   private String color = "red";
 
+  public Animal() {
+    this.className = this.getClass().getSimpleName();
+  }
   public Animal className(String className) {
     this.className = className;
     return this;

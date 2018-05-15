@@ -194,12 +194,15 @@ public class CodegenConstants {
     public static final String EXCLUDE_TESTS_DESC = "Specifies that no tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+
+    public static final String GENERATE_APIS = "generateApis";
     public static final String GENERATE_API_DOCS = "generateApiDocs";
 
     public static final String GENERATE_API_TESTS = "generateApiTests";
     public static final String GENERATE_API_TESTS_DESC = "Specifies that api tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_MODELS = "generateModels";
     public static final String GENERATE_MODEL_DOCS = "generateModelDocs";
 
     public static final String GENERATE_MODEL_TESTS = "generateModelTests";
@@ -222,4 +225,7 @@ public class CodegenConstants {
 
     public static final String REMOVE_OPERATION_ID_PREFIX = "removeOperationIdPrefix";
     public static final String REMOVE_OPERATION_ID_PREFIX_DESC = "Remove prefix of operationId, e.g. config_getId => getId";
+
+    public static final String STRIP_PACKAGE_NAME = "stripPackageName";
+    public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
 }

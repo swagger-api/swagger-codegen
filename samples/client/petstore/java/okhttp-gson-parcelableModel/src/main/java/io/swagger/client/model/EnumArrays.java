@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -132,6 +133,8 @@ public class EnumArrays implements Parcelable {
   @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
 
+  public EnumArrays() {
+  }
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
@@ -218,19 +221,13 @@ public class EnumArrays implements Parcelable {
     return o.toString().replace("\n", "\n    ");
   }
 
-  public void writeToParcel(Parcel out, int flags) {
-     
-    out.writeValue(justSymbol);
 
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeValue(justSymbol);
     out.writeValue(arrayEnum);
   }
 
-  public EnumArrays() {
-    super();
-  }
-
   EnumArrays(Parcel in) {
-    
     justSymbol = (JustSymbolEnum)in.readValue(null);
     arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
   }

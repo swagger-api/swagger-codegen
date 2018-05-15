@@ -140,11 +140,11 @@ class ObjectSerializer {
 * Describes the result of uploading an image resource
 */
 export class ApiResponse {
-    'code': number;
-    'type': string;
-    'message': string;
+    'code'?: number;
+    'type'?: string;
+    'message'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -172,10 +172,10 @@ export class ApiResponse {
 * A category for a pet
 */
 export class Category {
-    'id': number;
-    'name': string;
+    'id'?: number;
+    'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -198,17 +198,17 @@ export class Category {
 * An order for a pets from the pet store
 */
 export class Order {
-    'id': number;
-    'petId': number;
-    'quantity': number;
-    'shipDate': Date;
+    'id'?: number;
+    'petId'?: number;
+    'quantity'?: number;
+    'shipDate'?: Date;
     /**
     * Order Status
     */
-    'status': Order.StatusEnum;
-    'complete': boolean;
+    'status'?: Order.StatusEnum;
+    'complete'?: boolean;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -258,17 +258,17 @@ export namespace Order {
 * A pet for sale in the pet store
 */
 export class Pet {
-    'id': number;
-    'category': Category;
+    'id'?: number;
+    'category'?: Category;
     'name': string;
     'photoUrls': Array<string>;
-    'tags': Array<Tag>;
+    'tags'?: Array<Tag>;
     /**
     * pet status in the store
     */
-    'status': Pet.StatusEnum;
+    'status'?: Pet.StatusEnum;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -318,10 +318,10 @@ export namespace Pet {
 * A tag for a pet
 */
 export class Tag {
-    'id': number;
-    'name': string;
+    'id'?: number;
+    'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -344,19 +344,19 @@ export class Tag {
 * A User who is purchasing from the pet store
 */
 export class User {
-    'id': number;
-    'username': string;
-    'firstName': string;
-    'lastName': string;
-    'email': string;
-    'password': string;
-    'phone': string;
+    'id'?: number;
+    'username'?: string;
+    'firstName'?: string;
+    'lastName'?: string;
+    'email'?: string;
+    'password'?: string;
+    'phone'?: string;
     /**
     * User Status
     */
-    'userStatus': number;
+    'userStatus'?: number;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -428,8 +428,9 @@ export interface Authentication {
 }
 
 export class HttpBasicAuth implements Authentication {
-    public username: string;
-    public password: string;
+    public username: string = '';
+    public password: string = '';
+
     applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
@@ -438,7 +439,7 @@ export class HttpBasicAuth implements Authentication {
 }
 
 export class ApiKeyAuth implements Authentication {
-    public apiKey: string;
+    public apiKey: string = '';
 
     constructor(private location: string, private paramName: string) {
     }
@@ -453,7 +454,7 @@ export class ApiKeyAuth implements Authentication {
 }
 
 export class OAuth implements Authentication {
-    public accessToken: string;
+    public accessToken: string = '';
 
     applyToRequest(requestOptions: localVarRequest.Options): void {
         if (requestOptions && requestOptions.headers) {
@@ -463,8 +464,9 @@ export class OAuth implements Authentication {
 }
 
 export class VoidAuth implements Authentication {
-    public username: string;
-    public password: string;
+    public username: string = '';
+    public password: string = '';
+
     applyToRequest(_: localVarRequest.Options): void {
         // Do nothing
     }
@@ -636,7 +638,7 @@ export class PetApi {
      * @summary Finds Pets by status
      * @param status Status values that need to be considered for filter
      */
-    public findPetsByStatus (status: Array<string>) : Promise<{ response: http.ClientResponse; body: Array<Pet>;  }> {
+    public findPetsByStatus (status: Array<'available' | 'pending' | 'sold'>) : Promise<{ response: http.ClientResponse; body: Array<Pet>;  }> {
         const localVarPath = this.basePath + '/pet/findByStatus';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -648,7 +650,7 @@ export class PetApi {
         }
 
         if (status !== undefined) {
-            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<string>");
+            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<'available' | 'pending' | 'sold'>");
         }
 
 
@@ -1507,7 +1509,7 @@ export class UserApi {
     /**
      * 
      * @summary Get user by user name
-     * @param username The name that needs to be fetched. Use user1 for testing. 
+     * @param username The name that needs to be fetched. Use user1 for testing.
      */
     public getUserByName (username: string) : Promise<{ response: http.ClientResponse; body: User;  }> {
         const localVarPath = this.basePath + '/user/{username}'

@@ -1,7 +1,6 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
-import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -21,11 +20,12 @@ public class ModelApiResponse  {
   
   @ApiModelProperty(value = "")
   private Integer code = null;
+
   @ApiModelProperty(value = "")
   private String type = null;
+
   @ApiModelProperty(value = "")
   private String message = null;
-
  /**
    * Get code
    * @return code

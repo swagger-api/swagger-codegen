@@ -22,9 +22,9 @@
 
 namespace Swagger {
 
-SWGCategory::SWGCategory(QString* json) {
+SWGCategory::SWGCategory(QString json) {
     init();
-    this->fromJson(*json);
+    this->fromJson(json);
 }
 
 SWGCategory::SWGCategory() {
@@ -38,19 +38,21 @@ SWGCategory::~SWGCategory() {
 void
 SWGCategory::init() {
     id = 0L;
+    m_id_isSet = false;
     name = new QString("");
+    m_name_isSet = false;
 }
 
 void
 SWGCategory::cleanup() {
 
-    if(name != nullptr) {
+    if(name != nullptr) { 
         delete name;
     }
 }
 
 SWGCategory*
-SWGCategory::fromJson(QString &json) {
+SWGCategory::fromJson(QString json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -59,26 +61,31 @@ SWGCategory::fromJson(QString &json) {
 }
 
 void
-SWGCategory::fromJsonObject(QJsonObject &pJson) {
+SWGCategory::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
+    
     ::Swagger::setValue(&name, pJson["name"], "QString", "QString");
+    
 }
 
 QString
 SWGCategory::asJson ()
 {
-    QJsonObject* obj = this->asJsonObject();
-    
-    QJsonDocument doc(*obj);
+    QJsonObject obj = this->asJsonObject();
+    QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
     return QString(bytes);
 }
 
-QJsonObject*
+QJsonObject
 SWGCategory::asJsonObject() {
-    QJsonObject* obj = new QJsonObject();
-    obj->insert("id", QJsonValue(id));
-    toJsonValue(QString("name"), name, obj, QString("QString"));
+    QJsonObject obj;
+    if(m_id_isSet){
+        obj.insert("id", QJsonValue(id));
+    }
+    if(name != nullptr && *name != QString("")){
+        toJsonValue(QString("name"), name, obj, QString("QString"));
+    }
 
     return obj;
 }
@@ -90,6 +97,7 @@ SWGCategory::getId() {
 void
 SWGCategory::setId(qint64 id) {
     this->id = id;
+    this->m_id_isSet = true;
 }
 
 QString*
@@ -99,8 +107,18 @@ SWGCategory::getName() {
 void
 SWGCategory::setName(QString* name) {
     this->name = name;
+    this->m_name_isSet = true;
 }
 
 
+bool
+SWGCategory::isSet(){
+    bool isObjectUpdated = false;
+    do{
+        if(m_id_isSet){ isObjectUpdated = true; break;}
+        if(name != nullptr && *name != QString("")){ isObjectUpdated = true; break;}
+    }while(false);
+    return isObjectUpdated;
+}
 }
 
