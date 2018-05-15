@@ -7,6 +7,9 @@
 import Foundation
 
 public struct APIHelper {
+
+    static let numberFormatter = NumberFormatter()
+
     public static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
         let destination = source.reduce(into: [String: Any]()) { (result, item) in
             if let value = item.value {
@@ -45,14 +48,38 @@ public struct APIHelper {
         })
     }
 
+    static func valueToString(_ valueBox: Any?) -> String {
+        guard let value = valueBox else {
+            return "\(valueBox)"
+        }
+
+        switch value {
+            case is Double,
+                is Float,
+                is Int,
+                is Int8,
+                is Int16,
+                is Int32,
+                is Int64,
+                is UInt,
+                is UInt8,
+                is UInt16,
+                is UInt32,
+                is UInt64:
+                    return numberFormatter.string(for: value) ?? "\(value)"
+            default:
+                return "\(value)"
+            }
+    }
+
 
     public static func mapValuesToQueryItems(_ source: [String:Any?]) -> [URLQueryItem]? {
         let destination = source.filter({ $0.value != nil}).reduce(into: [URLQueryItem]()) { (result, item) in
             if let collection = item.value as? Array<Any?> {
-                let value = collection.filter({ $0 != nil }).map({"\($0!)"}).joined(separator: ",")
+                let value = collection.filter({ $0 != nil }).map({valueToString($0)}).joined(separator: ",")
                 result.append(URLQueryItem(name: item.key, value: value))
             } else if let value = item.value {
-                result.append(URLQueryItem(name: item.key, value: "\(value)"))
+                result.append(URLQueryItem(name: item.key, value: valueToString(value)))
             }
         }
 
