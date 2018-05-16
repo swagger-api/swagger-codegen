@@ -84,17 +84,17 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -174,27 +174,24 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v map[string]int32
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v map[string]int32
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -269,27 +266,24 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Order
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v Order
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -359,25 +353,22 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Order
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v Order
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }

@@ -106,27 +106,24 @@ func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVar
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v OuterBoolean
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v OuterBoolean
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -209,27 +206,24 @@ func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localV
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v OuterComposite
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v OuterComposite
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -312,27 +306,24 @@ func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarO
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v OuterNumber
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v OuterNumber
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -415,27 +406,24 @@ func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarO
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v OuterString
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v OuterString
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -498,17 +486,17 @@ func (a *FakeApiService) TestBodyWithQueryParams(ctx context.Context, body User,
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -578,27 +566,24 @@ func (a *FakeApiService) TestClientModel(ctx context.Context, body Client) (Clie
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Client
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v Client
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -732,17 +717,17 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -846,17 +831,17 @@ func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptiona
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -918,17 +903,17 @@ func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, par
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -991,15 +976,15 @@ func (a *FakeApiService) TestJsonFormData(ctx context.Context, param string, par
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }

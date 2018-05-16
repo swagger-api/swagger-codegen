@@ -87,17 +87,17 @@ func (a *PetApiService) AddPet(ctx context.Context, body Pet) (*http.Response, e
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -168,17 +168,17 @@ func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOpti
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -247,27 +247,24 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v []Pet
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v []Pet
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -336,27 +333,24 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v []Pet
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v []Pet
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -438,27 +432,24 @@ func (a *PetApiService) GetPetById(ctx context.Context, petId int64) (Pet, *http
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Pet
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v Pet
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -520,17 +511,17 @@ func (a *PetApiService) UpdatePet(ctx context.Context, body Pet) (*http.Response
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -606,17 +597,17 @@ func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, loca
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -711,25 +702,22 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v ModelApiResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v ModelApiResponse
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }

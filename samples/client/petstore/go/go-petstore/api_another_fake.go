@@ -92,25 +92,22 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v Client
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v Client
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }

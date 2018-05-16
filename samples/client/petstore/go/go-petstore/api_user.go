@@ -85,17 +85,17 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Respo
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -157,17 +157,17 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -229,17 +229,17 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -300,17 +300,17 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -379,27 +379,24 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v User
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v User
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -470,27 +467,24 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 		}
 	}
 
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v string
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
 	}
+	
+	if localVarHttpResponse.StatusCode == 200 {
+		var v string
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+	}
+	
+	return localVarReturnValue, localVarHttpResponse, newErr
 
-	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /* 
@@ -549,17 +543,17 @@ func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error)
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
 
 /* 
@@ -623,15 +617,15 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 		return localVarHttpResponse, err
 	}
 
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		return localVarHttpResponse, newErr
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
 
-	return localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	
+	return localVarHttpResponse, newErr
+
 }
