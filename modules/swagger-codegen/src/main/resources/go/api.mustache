@@ -236,27 +236,29 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 		}
 	}
 	{{/returnType}}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		{{#responses}}{{#dataType}}
-		if localVarHttpResponse.StatusCode == {{{code}}} {
-			var v {{{dataType}}}
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
-		}
-		{{/dataType}}{{/responses}}
-		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+	{{^returnType}}
+	if localVarHttpResponse.StatusCode < 300 {
+		return localVarHttpResponse, nil
 	}
+	{{/returnType}}
 
-	return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, nil
+	newErr := GenericSwaggerError{
+		body: localVarBody,
+		error: localVarHttpResponse.Status,
+	}
+	{{#responses}}{{#dataType}}
+	if localVarHttpResponse.StatusCode == {{{code}}} {
+		var v {{{dataType}}}
+		err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+			if err != nil {
+				newErr.error = err.Error()
+				return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+	}
+	{{/dataType}}{{/responses}}
+	return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+
 }
 {{/operation}}{{/operations}}
