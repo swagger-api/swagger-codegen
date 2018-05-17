@@ -50,6 +50,8 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq bats
   - sudo apt-get install -qq curl
+  # Install Rust
+  - curl https://sh.rustup.rs -sSf | sh
   # comment out below as installation failed in travis
   # Add rebar3 build tool and recent Erlang/OTP for Erlang petstore server tests.
   # - Travis CI does not support rebar3 [yet](https://github.com/travis-ci/travis-ci/issues/6506#issuecomment-275189490).
