@@ -98,6 +98,55 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 }
 
 /* 
+StoreApiService Delete purchase order by ID
+For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param orderId ID of the order that needs to be deleted
+
+*/
+func (a *StoreApiService) DeleteOrderStream(ctx context.Context, orderId string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/store/order/{order_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"order_id"+"}", fmt.Sprintf("%v", orderId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 StoreApiService Returns pet inventories by status
 Returns a map of status codes to quantities
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -198,6 +247,66 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 }
 
 /* 
+StoreApiService Returns pet inventories by status
+Returns a map of status codes to quantities
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+*/
+func (a *StoreApiService) GetInventoryStream(ctx context.Context) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/store/inventory"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["api_key"] = key
+			
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 StoreApiService Find purchase order by ID
 For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -293,6 +402,61 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 }
 
 /* 
+StoreApiService Find purchase order by ID
+For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param orderId ID of pet that needs to be fetched
+
+*/
+func (a *StoreApiService) GetOrderByIdStream(ctx context.Context, orderId int64) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/store/order/{order_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"order_id"+"}", fmt.Sprintf("%v", orderId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if orderId < 1 {
+		return nil, reportError("orderId must be greater than 1")
+	}
+	if orderId > 5 {
+		return nil, reportError("orderId must be less than 5")
+	}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 StoreApiService Place an order for a pet
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -380,4 +544,54 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/* 
+StoreApiService Place an order for a pet
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body order placed for purchasing the pet
+
+*/
+func (a *StoreApiService) PlaceOrderStream(ctx context.Context, body Order) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/store/order"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }

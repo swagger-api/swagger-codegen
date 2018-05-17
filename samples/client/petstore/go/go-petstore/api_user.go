@@ -99,6 +99,56 @@ func (a *UserApiService) CreateUser(ctx context.Context, body User) (*http.Respo
 }
 
 /* 
+UserApiService Create user
+This can only be done by the logged in user.
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body Created user object
+
+*/
+func (a *UserApiService) CreateUserStream(ctx context.Context, body User) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 UserApiService Creates list of users with given input array
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -168,6 +218,56 @@ func (a *UserApiService) CreateUsersWithArrayInput(ctx context.Context, body []U
 	}
 
 	return localVarHttpResponse, nil
+}
+
+/* 
+UserApiService Creates list of users with given input array
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body List of user object
+
+*/
+func (a *UserApiService) CreateUsersWithArrayInputStream(ctx context.Context, body []User) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/createWithArray"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }
 
 /* 
@@ -243,6 +343,56 @@ func (a *UserApiService) CreateUsersWithListInput(ctx context.Context, body []Us
 }
 
 /* 
+UserApiService Creates list of users with given input array
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body List of user object
+
+*/
+func (a *UserApiService) CreateUsersWithListInputStream(ctx context.Context, body []User) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/createWithList"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 UserApiService Delete user
 This can only be done by the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -311,6 +461,55 @@ func (a *UserApiService) DeleteUser(ctx context.Context, username string) (*http
 	}
 
 	return localVarHttpResponse, nil
+}
+
+/* 
+UserApiService Delete user
+This can only be done by the logged in user.
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The name that needs to be deleted
+
+*/
+func (a *UserApiService) DeleteUserStream(ctx context.Context, username string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/{username}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }
 
 /* 
@@ -400,6 +599,55 @@ func (a *UserApiService) GetUserByName(ctx context.Context, username string) (Us
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/* 
+UserApiService Get user by user name
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The name that needs to be fetched. Use user1 for testing.
+
+*/
+func (a *UserApiService) GetUserByNameStream(ctx context.Context, username string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/{username}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }
 
 /* 
@@ -494,6 +742,57 @@ func (a *UserApiService) LoginUser(ctx context.Context, username string, passwor
 }
 
 /* 
+UserApiService Logs user into the system
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username The user name for login
+ * @param password The password for login in clear text
+
+*/
+func (a *UserApiService) LoginUserStream(ctx context.Context, username string, password string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/login"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	localVarQueryParams.Add("username", parameterToString(username, ""))
+	localVarQueryParams.Add("password", parameterToString(password, ""))
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
+
+/* 
 UserApiService Logs out current logged in user session
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -560,6 +859,53 @@ func (a *UserApiService) LogoutUser(ctx context.Context) (*http.Response, error)
 	}
 
 	return localVarHttpResponse, nil
+}
+
+/* 
+UserApiService Logs out current logged in user session
+
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+*/
+func (a *UserApiService) LogoutUserStream(ctx context.Context) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/logout"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }
 
 /* 
@@ -634,4 +980,56 @@ func (a *UserApiService) UpdateUser(ctx context.Context, username string, body U
 	}
 
 	return localVarHttpResponse, nil
+}
+
+/* 
+UserApiService Updated user
+This can only be done by the logged in user.
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param username name that need to be deleted
+ * @param body Updated user object
+
+*/
+func (a *UserApiService) UpdateUserStream(ctx context.Context, username string, body User) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Put")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/user/{username}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/xml", "application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
 }

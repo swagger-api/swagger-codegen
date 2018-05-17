@@ -127,3 +127,66 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
+/* 
+FakeClassnameTags123ApiService To test class name in snake case
+To test class name in snake case
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body client model
+
+*/
+func (a *FakeClassnameTags123ApiService) TestClassnameStream(ctx context.Context, body Client) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Patch")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/fake_classname_test"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			
+			localVarQueryParams.Add("api_key_query", key)
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}

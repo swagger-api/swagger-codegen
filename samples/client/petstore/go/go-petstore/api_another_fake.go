@@ -114,3 +114,53 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
+/* 
+AnotherFakeApiService To test special tags
+To test special tags
+ Support streaming responses without preloading content.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body client model
+
+*/
+func (a *AnotherFakeApiService) TestSpecialTagsStream(ctx context.Context, body Client) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Patch")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/another-fake/dummy"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.client.callAPI(r)
+}
