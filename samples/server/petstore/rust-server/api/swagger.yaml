@@ -1442,44 +1442,6 @@ paths:
       PATH_ID: "FAKE_JSONFORMDATA"
       hasPathParams: false
       HttpMethod: "Get"
-  /fake/inline-additionalProperties:
-    post:
-      tags:
-      - "fake"
-      summary: "test inline additionalProperties"
-      description: ""
-      operationId: "testInlineAdditionalProperties"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "param"
-        description: "request body"
-        required: true
-        schema:
-          type: "object"
-          additionalProperties:
-            type: "string"
-          upperCaseName: "PARAM"
-        refName: null
-        formatString: "{:?}"
-        example: "???"
-        model_key: "OuterBoolean"
-        uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
-        consumesJson: true
-      responses:
-        200:
-          description: "successful operation"
-          x-responseId: "SuccessfulOperation"
-          x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
-          uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
-      operation_id: "test_inline_additional_properties"
-      uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
-      path: "/fake/inline-additionalProperties"
-      PATH_ID: "FAKE_INLINE_ADDITIONALPROPERTIES"
-      hasPathParams: false
-      HttpMethod: "Post"
-      noClientExample: true
   /fake/body-with-query-params:
     put:
       tags:

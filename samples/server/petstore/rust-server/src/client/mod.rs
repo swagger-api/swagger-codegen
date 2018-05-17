@@ -50,7 +50,6 @@ use {Api,
      TestClientModelResponse,
      TestEndpointParametersResponse,
      TestEnumParametersResponse,
-     TestInlineAdditionalPropertiesResponse,
      TestJsonFormDataResponse,
      TestClassnameResponse,
      AddPetResponse,
@@ -926,71 +925,6 @@ if let Some(body) = body {
 
                         future::ok(
                             TestEnumParametersResponse::NotFound
-                        )
-                    ) as Box<Future<Item=_, Error=_>>
-                },
-                code => {
-                    let headers = response.headers().clone();
-                    Box::new(response.body()
-                            .take(100)
-                            .concat2()
-                            .then(move |body|
-                                future::err(ApiError(format!("Unexpected response code {}:\n{:?}\n\n{}",
-                                    code,
-                                    headers,
-                                    match body {
-                                        Ok(ref body) => match str::from_utf8(body) {
-                                            Ok(body) => Cow::from(body),
-                                            Err(e) => Cow::from(format!("<Body was not UTF8: {:?}>", e)),
-                                        },
-                                        Err(e) => Cow::from(format!("<Failed to read body: {}>", e)),
-                                    })))
-                            )
-                    ) as Box<Future<Item=_, Error=_>>
-                }
-            }
-        }))
-
-    }
-
-    fn test_inline_additional_properties(&self, param_param: object, context: &C) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError>> {
-
-
-        let uri = format!(
-            "{}/v2/fake/inline-additionalProperties",
-            self.base_path
-        );
-
-        let uri = match Uri::from_str(&uri) {
-            Ok(uri) => uri,
-            Err(err) => return Box::new(futures::done(Err(ApiError(format!("Unable to build URI: {}", err))))),
-        };
-
-        let mut request = hyper::Request::new(hyper::Method::Post, uri);
-
-
-        let body = serde_json::to_string(&param_param).expect("impossible to fail to serialize");
-
-
-        request.set_body(body.into_bytes());
-
-
-        request.headers_mut().set(ContentType(mimetypes::requests::TEST_INLINE_ADDITIONAL_PROPERTIES.clone()));
-        request.headers_mut().set(XSpanId((context as &Has<XSpanIdString>).get().0.clone()));
-
-
-
-
-        Box::new(self.hyper_client.call(request)
-                             .map_err(|e| ApiError(format!("No response received: {}", e)))
-                             .and_then(|mut response| {
-            match response.status().as_u16() {
-                200 => {
-                    let body = response.body();
-                    Box::new(
-
-                        future::ok(
-                            TestInlineAdditionalPropertiesResponse::SuccessfulOperation
                         )
                     ) as Box<Future<Item=_, Error=_>>
                 },

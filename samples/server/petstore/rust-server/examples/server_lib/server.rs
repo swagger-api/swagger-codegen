@@ -22,7 +22,6 @@ use petstore_api::{Api, ApiError,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
-                      TestInlineAdditionalPropertiesResponse,
                       TestJsonFormDataResponse,
                       TestClassnameResponse,
                       AddPetResponse,
@@ -121,13 +120,6 @@ impl<C> Api<C> for Server<C> where C: Has<XSpanIdString>{
     fn test_enum_parameters(&self, enum_form_string_array: Option<&Vec<String>>, enum_form_string: Option<String>, enum_header_string_array: Option<&Vec<String>>, enum_header_string: Option<String>, enum_query_string_array: Option<&Vec<String>>, enum_query_string: Option<String>, enum_query_integer: Option<i32>, enum_query_double: Option<f64>, context: &C) -> Box<Future<Item=TestEnumParametersResponse, Error=ApiError>> {
         let context = context.clone();
         println!("test_enum_parameters({:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}, {:?}) - X-Span-ID: {:?}", enum_form_string_array, enum_form_string, enum_header_string_array, enum_header_string, enum_query_string_array, enum_query_string, enum_query_integer, enum_query_double, context.get().0.clone());
-        Box::new(futures::failed("Generic failure".into()))
-    }
-
-    /// test inline additionalProperties
-    fn test_inline_additional_properties(&self, param: object, context: &C) -> Box<Future<Item=TestInlineAdditionalPropertiesResponse, Error=ApiError>> {
-        let context = context.clone();
-        println!("test_inline_additional_properties({:?}) - X-Span-ID: {:?}", param, context.get().0.clone());
         Box::new(futures::failed("Generic failure".into()))
     }
 

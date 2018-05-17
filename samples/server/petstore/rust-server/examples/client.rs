@@ -28,7 +28,6 @@ use petstore_api::{ApiNoContext, ContextWrapperExt,
                       TestClientModelResponse,
                       TestEndpointParametersResponse,
                       TestEnumParametersResponse,
-                      TestInlineAdditionalPropertiesResponse,
                       TestJsonFormDataResponse,
                       TestClassnameResponse,
                       AddPetResponse,
@@ -168,12 +167,6 @@ fn main() {
             let result = core.run(client.test_enum_parameters(Some(&Vec::new()), Some("enum_form_string_example".to_string()), Some(&Vec::new()), Some("enum_header_string_example".to_string()), Some(&Vec::new()), Some("enum_query_string_example".to_string()), Some(56), Some(1.2)));
             println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
          },
-
-        // Disabled because there's no example.
-        // Some("TestInlineAdditionalProperties") => {
-        //     let result = core.run(client.test_inline_additional_properties(???));
-        //     println!("{:?} (X-Span-ID: {:?})", result, (client.context() as &Has<XSpanIdString>).get().clone());
-        //  },
 
         Some("TestJsonFormData") => {
             let result = core.run(client.test_json_form_data("param_example".to_string(), "param2_example".to_string()));

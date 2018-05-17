@@ -93,10 +93,6 @@ pub mod requests {
     lazy_static! {
         pub static ref TEST_ENUM_PARAMETERS: Mime = "*/*".parse().unwrap();
     }
-   /// Create Mime objects for the request content types for TestInlineAdditionalProperties
-    lazy_static! {
-        pub static ref TEST_INLINE_ADDITIONAL_PROPERTIES: Mime = "application/json".parse().unwrap();
-    }
    /// Create Mime objects for the request content types for TestJsonFormData
     lazy_static! {
         pub static ref TEST_JSON_FORM_DATA: Mime = "application/json".parse().unwrap();

@@ -49,7 +49,6 @@ use {Api,
      TestClientModelResponse,
      TestEndpointParametersResponse,
      TestEnumParametersResponse,
-     TestInlineAdditionalPropertiesResponse,
      TestJsonFormDataResponse,
      TestClassnameResponse,
      AddPetResponse,
@@ -88,7 +87,6 @@ mod paths {
             r"^/v2/another-fake/dummy$",
             r"^/v2/fake$",
             r"^/v2/fake/body-with-query-params$",
-            r"^/v2/fake/inline-additionalProperties$",
             r"^/v2/fake/jsonFormData$",
             r"^/v2/fake/outer/boolean$",
             r"^/v2/fake/outer/composite$",
@@ -114,36 +112,35 @@ mod paths {
     pub static ID_ANOTHER_FAKE_DUMMY: usize = 0;
     pub static ID_FAKE: usize = 1;
     pub static ID_FAKE_BODY_WITH_QUERY_PARAMS: usize = 2;
-    pub static ID_FAKE_INLINE_ADDITIONALPROPERTIES: usize = 3;
-    pub static ID_FAKE_JSONFORMDATA: usize = 4;
-    pub static ID_FAKE_OUTER_BOOLEAN: usize = 5;
-    pub static ID_FAKE_OUTER_COMPOSITE: usize = 6;
-    pub static ID_FAKE_OUTER_NUMBER: usize = 7;
-    pub static ID_FAKE_OUTER_STRING: usize = 8;
-    pub static ID_FAKE_CLASSNAME_TEST: usize = 9;
-    pub static ID_PET: usize = 10;
-    pub static ID_PET_FINDBYSTATUS: usize = 11;
-    pub static ID_PET_FINDBYTAGS: usize = 12;
-    pub static ID_PET_PETID: usize = 13;
+    pub static ID_FAKE_JSONFORMDATA: usize = 3;
+    pub static ID_FAKE_OUTER_BOOLEAN: usize = 4;
+    pub static ID_FAKE_OUTER_COMPOSITE: usize = 5;
+    pub static ID_FAKE_OUTER_NUMBER: usize = 6;
+    pub static ID_FAKE_OUTER_STRING: usize = 7;
+    pub static ID_FAKE_CLASSNAME_TEST: usize = 8;
+    pub static ID_PET: usize = 9;
+    pub static ID_PET_FINDBYSTATUS: usize = 10;
+    pub static ID_PET_FINDBYTAGS: usize = 11;
+    pub static ID_PET_PETID: usize = 12;
     lazy_static! {
         pub static ref REGEX_PET_PETID: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)$").unwrap();
     }
-    pub static ID_PET_PETID_UPLOADIMAGE: usize = 14;
+    pub static ID_PET_PETID_UPLOADIMAGE: usize = 13;
     lazy_static! {
         pub static ref REGEX_PET_PETID_UPLOADIMAGE: regex::Regex = regex::Regex::new(r"^/v2/pet/(?P<petId>[^/?#]*)/uploadImage$").unwrap();
     }
-    pub static ID_STORE_INVENTORY: usize = 15;
-    pub static ID_STORE_ORDER: usize = 16;
-    pub static ID_STORE_ORDER_ORDER_ID: usize = 17;
+    pub static ID_STORE_INVENTORY: usize = 14;
+    pub static ID_STORE_ORDER: usize = 15;
+    pub static ID_STORE_ORDER_ORDER_ID: usize = 16;
     lazy_static! {
         pub static ref REGEX_STORE_ORDER_ORDER_ID: regex::Regex = regex::Regex::new(r"^/v2/store/order/(?P<order_id>[^/?#]*)$").unwrap();
     }
-    pub static ID_USER: usize = 18;
-    pub static ID_USER_CREATEWITHARRAY: usize = 19;
-    pub static ID_USER_CREATEWITHLIST: usize = 20;
-    pub static ID_USER_LOGIN: usize = 21;
-    pub static ID_USER_LOGOUT: usize = 22;
-    pub static ID_USER_USERNAME: usize = 23;
+    pub static ID_USER: usize = 17;
+    pub static ID_USER_CREATEWITHARRAY: usize = 18;
+    pub static ID_USER_CREATEWITHLIST: usize = 19;
+    pub static ID_USER_LOGIN: usize = 20;
+    pub static ID_USER_LOGOUT: usize = 21;
+    pub static ID_USER_USERNAME: usize = 22;
     lazy_static! {
         pub static ref REGEX_USER_USERNAME: regex::Regex = regex::Regex::new(r"^/v2/user/(?P<username>[^/?#]*)$").unwrap();
     }
@@ -962,85 +959,6 @@ where
                         }}
                 }) as Box<Future<Item=Response, Error=Error>>
 
-
-            },
-
-
-            // TestInlineAdditionalProperties - POST /fake/inline-additionalProperties
-            &hyper::Method::Post if path.matched(paths::ID_FAKE_INLINE_ADDITIONALPROPERTIES) => {
-
-
-
-
-
-
-                // Body parameters (note that non-required body parameters will ignore garbage
-                // values, rather than causing a 400 response). Produce warning header and logs for
-                // any unused fields.
-                Box::new(body.concat2()
-                    .then(move |result| -> Box<Future<Item=Response, Error=Error>> {
-                        match result {
-                            Ok(body) => {
-
-                                let mut unused_elements = Vec::new();
-                                let param_param: Option<object> = if !body.is_empty() {
-
-                                    let deserializer = &mut serde_json::Deserializer::from_slice(&*body);
-
-                                    match serde_ignored::deserialize(deserializer, |path| {
-                                            warn!("Ignoring unknown field in body: {}", path);
-                                            unused_elements.push(path.to_string());
-                                    }) {
-                                        Ok(param_param) => param_param,
-                                        Err(e) => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't parse body parameter param - doesn't match schema: {}", e)))),
-                                    }
-
-                                } else {
-                                    None
-                                };
-                                let param_param = match param_param {
-                                    Some(param_param) => param_param,
-                                    None => return Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body("Missing required body parameter param"))),
-                                };
-
-
-                                Box::new(api_impl.test_inline_additional_properties(param_param, &context)
-                                    .then(move |result| {
-                                        let mut response = Response::new();
-                                        response.headers_mut().set(XSpanId((&context as &Has<XSpanIdString>).get().0.to_string()));
-
-                                        if !unused_elements.is_empty() {
-                                            response.headers_mut().set(Warning(format!("Ignoring unknown fields in body: {:?}", unused_elements)));
-                                        }
-
-                                        match result {
-                                            Ok(rsp) => match rsp {
-                                                TestInlineAdditionalPropertiesResponse::SuccessfulOperation
-
-
-                                                => {
-                                                    response.set_status(StatusCode::try_from(200).unwrap());
-
-                                                },
-                                            },
-                                            Err(_) => {
-                                                // Application code returned an error. This should not happen, as the implementation should
-                                                // return a valid response.
-                                                response.set_status(StatusCode::InternalServerError);
-                                                response.set_body("An internal error occurred");
-                                            },
-                                        }
-
-                                        future::ok(response)
-                                    }
-                                ))
-
-
-                            },
-                            Err(e) => Box::new(future::ok(Response::new().with_status(StatusCode::BadRequest).with_body(format!("Couldn't read body parameter param: {}", e)))),
-                        }
-                    })
-                ) as Box<Future<Item=Response, Error=Error>>
 
             },
 
