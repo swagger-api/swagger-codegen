@@ -7,6 +7,7 @@ cache:
   directories:
   - $HOME/.m2
   - $HOME/.ivy2
+  - $HOME/.cargo
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/samples/client/petstore/php/SwaggerClient-php/vendor
@@ -68,7 +69,7 @@ install:
   # Add Godeps dependencies to GOPATH and PATH
   - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.4 bash)"
   - export GOPATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace"
-  - export PATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace/bin:${TRAVIS_BUILD_DIR}/.cargo/bin:$PATH"
+  - export PATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace/bin:$HOME/.cargo/bin:$PATH"
 
 script:
   # fail fast
