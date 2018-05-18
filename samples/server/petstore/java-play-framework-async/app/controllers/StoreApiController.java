@@ -5,6 +5,7 @@ import apimodels.Order;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class StoreApiController extends Controller {
     public CompletionStage<Result> deleteOrder(String orderId) throws Exception {
         return CompletableFuture.supplyAsync(() -> {
             imp.deleteOrder(orderId)
-            return ok();
+            return Results.status(200);
         });
     }
 
@@ -53,8 +54,8 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 
@@ -67,8 +68,8 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 
@@ -91,8 +92,8 @@ public class StoreApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 }

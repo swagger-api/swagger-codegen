@@ -5,6 +5,7 @@ import apimodels.Order;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -39,14 +40,14 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result deleteOrder(String orderId) throws Exception {
         imp.deleteOrder(orderId);
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result getInventory() throws Exception {
         Map<String, Integer> obj = imp.getInventory();
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        JsonNode result = mapper.valueToTree(obj); 
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -55,8 +56,8 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        JsonNode result = mapper.valueToTree(obj); 
+        return Results.status(200, result);
     }
 
     @ApiAction
@@ -75,7 +76,7 @@ public class StoreApiController extends Controller {
         if (configuration.getBoolean("useOutputBeanValidation")) {
             SwaggerUtils.validate(obj);
         }
-        JsonNode result = mapper.valueToTree(obj);
-        return ok(result);
+        JsonNode result = mapper.valueToTree(obj); 
+        return Results.status(200, result);
     }
 }

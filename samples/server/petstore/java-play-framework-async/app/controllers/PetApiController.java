@@ -6,6 +6,7 @@ import apimodels.Pet;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class PetApiController extends Controller {
         }
         return CompletableFuture.supplyAsync(() -> {
             imp.addPet(body)
-            return ok();
+            return Results.status(200);
         });
     }
 
@@ -69,7 +70,7 @@ public class PetApiController extends Controller {
         }
         return CompletableFuture.supplyAsync(() -> {
             imp.deletePet(petId, apiKey)
-            return ok();
+            return Results.status(200);
         });
     }
 
@@ -96,8 +97,8 @@ public class PetApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 
@@ -124,8 +125,8 @@ public class PetApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 
@@ -138,8 +139,8 @@ public class PetApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 
@@ -157,7 +158,7 @@ public class PetApiController extends Controller {
         }
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePet(body)
-            return ok();
+            return Results.status(200);
         });
     }
 
@@ -179,7 +180,7 @@ public class PetApiController extends Controller {
         }
         return CompletableFuture.supplyAsync(() -> {
             imp.updatePetWithForm(petId, name, status)
-            return ok();
+            return Results.status(200);
         });
     }
 
@@ -200,8 +201,8 @@ public class PetApiController extends Controller {
             return obj;
         });
         stage.thenApply(obj -> {
-            JsonNode result = mapper.valueToTree(obj);
-            return ok(result);
+            JsonNode result = mapper.valueToTree(obj); 
+            return Results.status(200, result);
         });
     }
 }

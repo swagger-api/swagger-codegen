@@ -5,6 +5,7 @@ package {{package}};
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -257,22 +258,22 @@ public class {{classname}}Controller extends Controller {
         stage.thenApply(obj -> {
         {{/supportAsync}}
         {{^isResponseFile}}
-        {{#supportAsync}}    {{/supportAsync}}JsonNode result = mapper.valueToTree(obj);
-        {{#supportAsync}}    {{/supportAsync}}return ok(result);
+        {{#supportAsync}}    {{/supportAsync}}JsonNode result = mapper.valueToTree(obj); 
+        {{#supportAsync}}    {{/supportAsync}}return Results.status({{{successCode}}}, result);
         {{/isResponseFile}}
         {{#isResponseFile}}
-        {{#supportAsync}}    {{/supportAsync}}return ok(obj);
+        {{#supportAsync}}    {{/supportAsync}}return Results.status({{{successCode}}}, obj);
         {{/isResponseFile}}
         {{/returnType}}
         {{^returnType}}
-        {{#supportAsync}}    {{/supportAsync}}return ok();
+        {{#supportAsync}}    {{/supportAsync}}return Results.status({{{successCode}}});
         {{/returnType}}
         {{#supportAsync}}
         });
         {{/supportAsync}}
         {{/controllerOnly}}
         {{#controllerOnly}}
-        return ok();
+        return Results.status({{{successCode}}});
         {{/controllerOnly}}
     }
 {{/operation}}

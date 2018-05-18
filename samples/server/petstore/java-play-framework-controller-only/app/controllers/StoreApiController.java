@@ -5,6 +5,7 @@ import apimodels.Order;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Http;
 import java.util.List;
 import java.util.Map;
@@ -36,17 +37,17 @@ public class StoreApiController extends Controller {
 
     @ApiAction
     public Result deleteOrder(String orderId) throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result getInventory() throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
     public Result getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
-        return ok();
+        return Results.status(200);
     }
 
     @ApiAction
@@ -61,6 +62,6 @@ public class StoreApiController extends Controller {
         } else {
             throw new IllegalArgumentException("'body' parameter is required");
         }
-        return ok();
+        return Results.status(200);
     }
 }
