@@ -360,6 +360,11 @@ public class DefaultCodegen {
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
+    // override to post-process any model properties
+    @SuppressWarnings("unused")
+    public void postProcessModel(CodegenModel model){
+    }
+
     // override to post-process any parameters
     @SuppressWarnings("unused")
     public void postProcessParameter(CodegenParameter parameter){
@@ -1466,6 +1471,7 @@ public class DefaultCodegen {
                 postProcessModelProperty(m, prop);
             }
         }
+        postProcessModel(m);
         return m;
     }
 
