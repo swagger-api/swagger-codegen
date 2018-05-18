@@ -33,7 +33,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -81,7 +81,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -129,7 +129,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -177,7 +177,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -345,7 +345,7 @@ open class UserAPI: APIBase {
         
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "username": username, 
+            "username": username,
             "password": password
         ])
 
@@ -374,7 +374,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -423,7 +423,7 @@ open class UserAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise

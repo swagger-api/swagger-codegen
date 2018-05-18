@@ -33,7 +33,7 @@ open class StoreAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise

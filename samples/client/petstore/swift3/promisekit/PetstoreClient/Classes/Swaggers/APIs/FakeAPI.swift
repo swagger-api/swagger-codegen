@@ -298,7 +298,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -460,7 +460,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -495,8 +495,8 @@ open class FakeAPI: APIBase {
         
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "enum_query_string_array": enumQueryStringArray, 
-            "enum_query_string": enumQueryString?.rawValue, 
+            "enum_query_string_array": enumQueryStringArray,
+            "enum_query_string": enumQueryString?.rawValue,
             "enum_query_integer": enumQueryInteger?.rawValue
         ])
         let nillableHeaders: [String: Any?] = [
@@ -534,7 +534,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
