@@ -84,13 +84,21 @@ public class LumenServerCodegen extends AbstractPhpCodegen
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
         supportingFiles.add(new SupportingFile("composer.mustache", packagePath + File.separator + srcBasePath, "composer.json"));
+        supportingFiles.add(new SupportingFile(".env.example", packagePath + File.separator + srcBasePath, ".env.example"));
+        supportingFiles.add(new SupportingFile("artisan", packagePath + File.separator + srcBasePath, "artisan"));
         supportingFiles.add(new SupportingFile("readme.md", packagePath + File.separator + srcBasePath, "readme.md"));
         supportingFiles.add(new SupportingFile("app.php", packagePath + File.separator + srcBasePath + File.separator + "bootstrap", "app.php"));
+        supportingFiles.add(new SupportingFile("ModelFactory.php", packagePath + File.separator + srcBasePath + File.separator + "database" + File.separator + "factories", "ModelFactory.php"));
+        supportingFiles.add(new SupportingFile("DatabaseSeeder.php", packagePath + File.separator + srcBasePath + File.separator + "database" + File.separator + "seeds", "DatabaseSeeder.php"));
+        supportingFiles.add(new SupportingFile("DatabaseSeeder.php", packagePath + File.separator + srcBasePath + File.separator + "database" + File.separator + "migrations", ".gitkeep"));
         supportingFiles.add(new SupportingFile("index.php", packagePath + File.separator + srcBasePath + File.separator + "public", "index.php"));
+        supportingFiles.add(new SupportingFile(".htaccess", packagePath + File.separator + srcBasePath + File.separator + "public", ".htaccess"));
+        supportingFiles.add(new SupportingFile("ExampleTest.php", packagePath + File.separator + srcBasePath + File.separator + "tests", "ExampleTest.php"));
+        supportingFiles.add(new SupportingFile("TestCase.php", packagePath + File.separator + srcBasePath + File.separator + "tests", "TestCase.php"));
         supportingFiles.add(new SupportingFile("User.php", packagePath + File.separator + srcBasePath + File.separator + "app", "User.php"));
         supportingFiles.add(new SupportingFile("Kernel.php", packagePath + File.separator + srcBasePath + File.separator + "app"  + File.separator + "Console", "Kernel.php"));
         supportingFiles.add(new SupportingFile("Handler.php", packagePath + File.separator + srcBasePath + File.separator + "app"  + File.separator + "Exceptions", "Handler.php"));
-        supportingFiles.add(new SupportingFile("routes.mustache", packagePath + File.separator + srcBasePath + File.separator + "app"  + File.separator + "Http", "routes.php"));
+        supportingFiles.add(new SupportingFile("routes.mustache", packagePath + File.separator + srcBasePath + File.separator + "routes", "web.php"));
         
         supportingFiles.add(new SupportingFile("Controller.php", packagePath + File.separator + srcBasePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Controllers" + File.separator, "Controller.php"));
         supportingFiles.add(new SupportingFile("Authenticate.php", packagePath + File.separator + srcBasePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Middleware" + File.separator, "Authenticate.php"));
