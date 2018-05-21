@@ -845,7 +845,7 @@
                 <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/javascript</module>
                 <module>samples/client/petstore/python</module>
-                <module>samples/client/petstore/python-tornado</module>
+                <!--<module>samples/client/petstore/python-tornado</module>-->
                 <module>samples/client/petstore/python-asyncio</module>
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
@@ -859,6 +859,8 @@
                 <!--<module>samples/client/petstore/typescript-angular-v2/npm</module>-->
                 <module>samples/client/petstore/typescript-angular-v4/npm</module>
                 <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
+                <module>samples/client/petstore/typescript-angular-v5/npm</module>
+                <module>samples/client/petstore/typescript-angular-v6/npm</module>
                 <!--<module>samples/client/petstore/bash</module>-->
             </modules>
         </profile>

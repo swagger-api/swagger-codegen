@@ -14,35 +14,24 @@
 package io.swagger.client.api;
 
 import com.google.gson.reflect.TypeToken;
-import io.swagger.client.model.Client;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+import io.swagger.client.model.Client;
 
 import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.*;
+import static io.restassured.http.Method.PATCH;
 
 public class FakeClassnameTags123Api {
 
     private RequestSpecBuilder reqSpec;
 
-    private JSON json;
-
     private FakeClassnameTags123Api(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
-        this.json = new JSON();
     }
 
     public static FakeClassnameTags123Api fakeClassnameTags123(RequestSpecBuilder reqSpec) {
@@ -55,26 +44,6 @@ public class FakeClassnameTags123Api {
     }
 
     /**
-     * Get JSON
-     *
-     * @return JSON object
-     */
-    public JSON getJSON() {
-        return json;
-    }
-
-    /**
-     * Set JSON
-     *
-     * @param json JSON object
-     * @return FakeClassnameTags123Api
-     */
-    public FakeClassnameTags123Api setJSON(JSON json) {
-        this.json = json;
-        return this;
-    }
-
-    /**
     * Customise request specification
     */
     public FakeClassnameTags123Api reqSpec(Consumer<RequestSpecBuilder> consumer) {
@@ -84,7 +53,7 @@ public class FakeClassnameTags123Api {
 
     /**
      * To test class name in snake case
-     * 
+     * To test class name in snake case
      *
      * @see #body client model (required)
      * return Client
@@ -124,14 +93,14 @@ public class FakeClassnameTags123Api {
          */
         public Client executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<Client>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
          /**
          * @param body (Client) client model (required)
          */
         public TestClassnameOper body(Client body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 

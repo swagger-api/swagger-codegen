@@ -53,7 +53,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -104,7 +105,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -155,7 +157,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -206,7 +209,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -257,7 +261,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'User') as User ;
+      return 
+          apiClient.deserialize(response.body, 'User') as User ;
     } else {
       return null;
     }
@@ -313,7 +318,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'String') as String ;
+      return 
+          apiClient.deserialize(response.body, 'String') as String ;
     } else {
       return null;
     }
@@ -361,7 +367,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -415,7 +422,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }

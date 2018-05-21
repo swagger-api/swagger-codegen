@@ -31,15 +31,15 @@ namespace Swagger {
 class SWGUser: public SWGObject {
 public:
     SWGUser();
-    SWGUser(QString* json);
-    virtual ~SWGUser();
+    SWGUser(QString json);
+    ~SWGUser();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGUser* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGUser* fromJson(QString jsonString) override;
 
     qint64 getId();
     void setId(qint64 id);

@@ -13,7 +13,9 @@ import { Headers }                                           from '@angular/http
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+import { Order } from '../model/order';
+
+
 import { Configuration }                                     from '../configuration';
 
 
