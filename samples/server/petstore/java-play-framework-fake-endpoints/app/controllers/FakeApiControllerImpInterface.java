@@ -5,6 +5,7 @@ import apimodels.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import apimodels.OuterComposite;
+import apimodels.User;
 
 import play.mvc.Http;
 import java.util.List;
@@ -22,6 +23,8 @@ public interface FakeApiControllerImpInterface {
     BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws Exception;
 
     String fakeOuterStringSerialize(String body) throws Exception;
+
+    void testBodyWithQueryParams(User body,  @NotNull String query) throws Exception;
 
     Client testClientModel(Client body) throws Exception;
 
