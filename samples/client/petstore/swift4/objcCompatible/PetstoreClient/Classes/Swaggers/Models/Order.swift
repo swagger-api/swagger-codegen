@@ -16,10 +16,10 @@ public struct Order: Codable {
         case approved = "approved"
         case delivered = "delivered"
     }
-    public var id: Int64?
-    public var idNum: NSNumber? {
+    public var _id: Int64?
+    public var _idNum: NSNumber? {
         get {
-            return id.map({ return NSNumber(value: $0) })
+            return _id.map({ return NSNumber(value: $0) })
         }
     }
     public var petId: Int64?
@@ -44,13 +44,22 @@ public struct Order: Codable {
         }
     }
 
-    public init(id: Int64?, petId: Int64?, quantity: Int?, shipDate: Date?, status: Status?, complete: Bool?) {
-        self.id = id
+    public init(_id: Int64?, petId: Int64?, quantity: Int?, shipDate: Date?, status: Status?, complete: Bool?) {
+        self._id = _id
         self.petId = petId
         self.quantity = quantity
         self.shipDate = shipDate
         self.status = status
         self.complete = complete
+    }
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case petId
+        case quantity
+        case shipDate
+        case status
+        case complete
     }
 
 

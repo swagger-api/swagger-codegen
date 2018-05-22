@@ -28,6 +28,15 @@ public struct Capitalization: Codable {
         self.ATT_NAME = ATT_NAME
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case smallCamel
+        case capitalCamel = "CapitalCamel"
+        case smallSnake = "small_Snake"
+        case capitalSnake = "Capital_Snake"
+        case sCAETHFlowPoints = "SCA_ETH_Flow_Points"
+        case ATT_NAME
+    }
+
 
 }
 

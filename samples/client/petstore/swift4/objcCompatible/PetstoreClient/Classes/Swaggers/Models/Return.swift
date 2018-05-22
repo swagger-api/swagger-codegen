@@ -23,6 +23,10 @@ public struct Return: Codable {
         self._return = _return
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case _return = "return"
+    }
+
 
 }
 

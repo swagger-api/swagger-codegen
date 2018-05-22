@@ -16,10 +16,10 @@ public struct Pet: Codable {
         case pending = "pending"
         case sold = "sold"
     }
-    public var id: Int64?
-    public var idNum: NSNumber? {
+    public var _id: Int64?
+    public var _idNum: NSNumber? {
         get {
-            return id.map({ return NSNumber(value: $0) })
+            return _id.map({ return NSNumber(value: $0) })
         }
     }
     public var category: Category?
@@ -29,13 +29,22 @@ public struct Pet: Codable {
     /** pet status in the store */
     public var status: Status?
 
-    public init(id: Int64?, category: Category?, name: String?, photoUrls: [String]?, tags: [Tag]?, status: Status?) {
-        self.id = id
+    public init(_id: Int64?, category: Category?, name: String?, photoUrls: [String]?, tags: [Tag]?, status: Status?) {
+        self._id = _id
         self.category = category
         self.name = name
         self.photoUrls = photoUrls
         self.tags = tags
         self.status = status
+    }
+
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case category
+        case name
+        case photoUrls
+        case tags
+        case status
     }
 
 

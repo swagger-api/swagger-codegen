@@ -43,6 +43,14 @@ public struct EnumTest: Codable {
         self.outerEnum = outerEnum
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case enumString = "enum_string"
+        case enumStringRequired = "enum_string_required"
+        case enumInteger = "enum_integer"
+        case enumNumber = "enum_number"
+        case outerEnum
+    }
+
 
 }
 
