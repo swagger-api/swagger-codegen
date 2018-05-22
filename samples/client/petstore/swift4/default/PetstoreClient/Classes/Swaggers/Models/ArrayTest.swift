@@ -21,12 +21,6 @@ public struct ArrayTest: Codable {
         self.arrayArrayOfModel = arrayArrayOfModel
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case arrayOfString = "array_of_string"
-        case arrayArrayOfInteger = "array_array_of_integer"
-        case arrayArrayOfModel = "array_array_of_model"
-    }
-
 
 }
 

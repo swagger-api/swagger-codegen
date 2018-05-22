@@ -11,22 +11,17 @@ import Foundation
 
 public struct Category: Codable {
 
-    public var _id: Int64?
-    public var _idNum: NSNumber? {
+    public var id: Int64?
+    public var idNum: NSNumber? {
         get {
-            return _id.map({ return NSNumber(value: $0) })
+            return id.map({ return NSNumber(value: $0) })
         }
     }
     public var name: String?
 
-    public init(_id: Int64?, name: String?) {
-        self._id = _id
+    public init(id: Int64?, name: String?) {
+        self.id = id
         self.name = name
-    }
-
-    public enum CodingKeys: String, CodingKey { 
-        case _id = "id"
-        case name
     }
 
 

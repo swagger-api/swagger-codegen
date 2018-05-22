@@ -12,7 +12,7 @@ import Foundation
 
 public struct Name: Codable {
 
-    public var name: Int
+    public var name: Int?
     public var nameNum: NSNumber? {
         get {
             return name.map({ return NSNumber(value: $0) })
@@ -32,18 +32,11 @@ public struct Name: Codable {
         }
     }
 
-    public init(name: Int, snakeCase: Int?, property: String?, _123Number: Int?) {
+    public init(name: Int?, snakeCase: Int?, property: String?, _123Number: Int?) {
         self.name = name
         self.snakeCase = snakeCase
         self.property = property
         self._123Number = _123Number
-    }
-
-    public enum CodingKeys: String, CodingKey { 
-        case name
-        case snakeCase = "snake_case"
-        case property
-        case _123Number = "123Number"
     }
 
 

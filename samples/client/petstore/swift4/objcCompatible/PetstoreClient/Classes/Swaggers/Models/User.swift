@@ -11,10 +11,10 @@ import Foundation
 
 public struct User: Codable {
 
-    public var _id: Int64?
-    public var _idNum: NSNumber? {
+    public var id: Int64?
+    public var idNum: NSNumber? {
         get {
-            return _id.map({ return NSNumber(value: $0) })
+            return id.map({ return NSNumber(value: $0) })
         }
     }
     public var username: String?
@@ -31,8 +31,8 @@ public struct User: Codable {
         }
     }
 
-    public init(_id: Int64?, username: String?, firstName: String?, lastName: String?, email: String?, password: String?, phone: String?, userStatus: Int?) {
-        self._id = _id
+    public init(id: Int64?, username: String?, firstName: String?, lastName: String?, email: String?, password: String?, phone: String?, userStatus: Int?) {
+        self.id = id
         self.username = username
         self.firstName = firstName
         self.lastName = lastName
@@ -40,17 +40,6 @@ public struct User: Codable {
         self.password = password
         self.phone = phone
         self.userStatus = userStatus
-    }
-
-    public enum CodingKeys: String, CodingKey { 
-        case _id = "id"
-        case username
-        case firstName
-        case lastName
-        case email
-        case password
-        case phone
-        case userStatus
     }
 
 

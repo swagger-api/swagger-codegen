@@ -29,7 +29,7 @@ public struct FormatTest: Codable {
             return int64.map({ return NSNumber(value: $0) })
         }
     }
-    public var number: Double
+    public var number: Double?
     public var float: Float?
     public var floatNum: NSNumber? {
         get {
@@ -43,14 +43,14 @@ public struct FormatTest: Codable {
         }
     }
     public var string: String?
-    public var byte: Data
+    public var byte: Data?
     public var binary: Data?
-    public var date: Date
+    public var date: Date?
     public var dateTime: Date?
     public var uuid: UUID?
-    public var password: String
+    public var password: String?
 
-    public init(integer: Int?, int32: Int?, int64: Int64?, number: Double, float: Float?, double: Double?, string: String?, byte: Data, binary: Data?, date: Date, dateTime: Date?, uuid: UUID?, password: String) {
+    public init(integer: Int?, int32: Int?, int64: Int64?, number: Double?, float: Float?, double: Double?, string: String?, byte: Data?, binary: Data?, date: Date?, dateTime: Date?, uuid: UUID?, password: String?) {
         self.integer = integer
         self.int32 = int32
         self.int64 = int64
