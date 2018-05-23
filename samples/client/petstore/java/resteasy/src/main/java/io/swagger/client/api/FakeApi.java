@@ -12,6 +12,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class FakeApi {
    * 
    * Test serialization of outer boolean types
    * @param body Input boolean as post body (optional)
-   * @return Boolean
+   * @return a {@code Boolean }
    * @throws ApiException if fails to make API call
    */
   public Boolean fakeOuterBooleanSerialize(Boolean body) throws ApiException {
@@ -78,7 +79,7 @@ public class FakeApi {
    * 
    * Test serialization of object with outer number type
    * @param body Input composite as post body (optional)
-   * @return OuterComposite
+   * @return a {@code OuterComposite }
    * @throws ApiException if fails to make API call
    */
   public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws ApiException {
@@ -114,7 +115,7 @@ public class FakeApi {
    * 
    * Test serialization of outer number types
    * @param body Input number as post body (optional)
-   * @return BigDecimal
+   * @return a {@code BigDecimal }
    * @throws ApiException if fails to make API call
    */
   public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws ApiException {
@@ -150,7 +151,7 @@ public class FakeApi {
    * 
    * Test serialization of outer string types
    * @param body Input string as post body (optional)
-   * @return String
+   * @return a {@code String }
    * @throws ApiException if fails to make API call
    */
   public String fakeOuterStringSerialize(String body) throws ApiException {
@@ -183,10 +184,57 @@ public class FakeApi {
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
+   * 
+   * 
+   * @param body  (required)
+   * @param query  (required) }
+   * @throws ApiException if fails to make API call
+   */
+  public void testBodyWithQueryParams(User body, String query) throws ApiException {
+    Object localVarPostBody = body;
+    
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling testBodyWithQueryParams");
+    }
+    
+    // verify the required parameter 'query' is set
+    if (query == null) {
+      throw new ApiException(400, "Missing the required parameter 'query' when calling testBodyWithQueryParams");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/fake/body-with-query-params".replaceAll("\\{format\\}","json");
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "query", query));
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
    * @param body client model (required)
-   * @return Client
+   * @return a {@code Client }
    * @throws ApiException if fails to make API call
    */
   public Client testClientModel(Client body) throws ApiException {
@@ -239,7 +287,7 @@ public class FakeApi {
    * @param date None (optional)
    * @param dateTime None (optional)
    * @param password None (optional)
-   * @param paramCallback None (optional)
+   * @param paramCallback None (optional) }
    * @throws ApiException if fails to make API call
    */
   public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
@@ -329,7 +377,7 @@ if (paramCallback != null)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
    * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
-   * @param enumQueryDouble Query parameter enum test (double) (optional)
+   * @param enumQueryDouble Query parameter enum test (double) (optional) }
    * @throws ApiException if fails to make API call
    */
   public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws ApiException {
@@ -377,7 +425,7 @@ if (enumQueryDouble != null)
   /**
    * test inline additionalProperties
    * 
-   * @param param request body (required)
+   * @param param request body (required) }
    * @throws ApiException if fails to make API call
    */
   public void testInlineAdditionalProperties(Object param) throws ApiException {
@@ -418,7 +466,7 @@ if (enumQueryDouble != null)
    * test json serialization of form data
    * 
    * @param param field1 (required)
-   * @param param2 field2 (required)
+   * @param param2 field2 (required) }
    * @throws ApiException if fails to make API call
    */
   public void testJsonFormData(String param, String param2) throws ApiException {
