@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
-public class PetstoreServlet extends HttpServlet {
+public class DefaultServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = IOUtils.toString(getClass().getResourceAsStream("/petstore.json"));
+        String json = IOUtils.toString(getClass().getResourceAsStream("/generator.json"));
         response.setContentType(MediaType.APPLICATION_JSON);
         response.setStatus(HttpServletResponse.SC_OK);
 
