@@ -16,11 +16,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>PetstoreServlet</servlet-name>
-        <servlet-class>io.swagger.generator.online.PetstoreServlet</servlet-class>
+        <servlet-name>DefaultServlet</servlet-name>
+        <servlet-class>io.swagger.generator.online.DefaultServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PetstoreServlet</servlet-name>
+        <servlet-name>DefaultServlet</servlet-name>
         <url-pattern>/api/swagger.json</url-pattern>
     </servlet-mapping>
 
