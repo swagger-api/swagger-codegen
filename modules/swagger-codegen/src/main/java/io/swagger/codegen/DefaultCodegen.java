@@ -2156,10 +2156,10 @@ public class DefaultCodegen {
             op.responses.get(op.responses.size() - 1).hasMore = false;
 
             if (methodResponse != null) {
-                if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-
-                    Property responseProperty = methodResponse.getSchema();
+                final Property responseProperty = methodResponse.getSchema();
+                if (responseProperty != null) {
+                    responseProperty.setRequired(true);
+                    CodegenProperty cm = fromProperty("response", responseProperty);
 
                     if (responseProperty instanceof ArrayProperty) {
                         ArrayProperty ap = (ArrayProperty) responseProperty;
