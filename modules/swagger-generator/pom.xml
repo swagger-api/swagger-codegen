@@ -204,7 +204,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
         <logback-version>1.0.1</logback-version>
-        <inflector-version>2.0.0-SNAPSHOT</inflector-version>
+        <inflector-version>2.0.0-rc2</inflector-version>
         <junit-version>4.8.2</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
         <swagger-codegen-generators-version>1.0.0-rc1</swagger-codegen-generators-version>
