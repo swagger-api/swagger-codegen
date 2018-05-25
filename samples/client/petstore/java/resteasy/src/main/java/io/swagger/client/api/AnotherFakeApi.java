@@ -38,7 +38,7 @@ public class AnotherFakeApi {
    * To test special tags
    * To test special tags
    * @param body client model (required)
-   * @return Client
+   * @return a {@code Client }
    * @throws ApiException if fails to make API call
    */
   public Client testSpecialTags(Client body) throws ApiException {

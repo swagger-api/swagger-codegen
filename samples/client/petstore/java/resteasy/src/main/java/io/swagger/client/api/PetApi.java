@@ -39,7 +39,7 @@ public class PetApi {
   /**
    * Add a new pet to the store
    * 
-   * @param body Pet object that needs to be added to the store (required)
+   * @param body Pet object that needs to be added to the store (required) }
    * @throws ApiException if fails to make API call
    */
   public void addPet(Pet body) throws ApiException {
@@ -80,7 +80,7 @@ public class PetApi {
    * Deletes a pet
    * 
    * @param petId Pet id to delete (required)
-   * @param apiKey  (optional)
+   * @param apiKey  (optional) }
    * @throws ApiException if fails to make API call
    */
   public void deletePet(Long petId, String apiKey) throws ApiException {
@@ -124,7 +124,7 @@ public class PetApi {
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
    * @param status Status values that need to be considered for filter (required)
-   * @return List<Pet>
+   * @return a {@code List<Pet> }
    * @throws ApiException if fails to make API call
    */
   public List<Pet> findPetsByStatus(List<String> status) throws ApiException {
@@ -166,7 +166,7 @@ public class PetApi {
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (required)
-   * @return List<Pet>
+   * @return a {@code List<Pet> }
    * @throws ApiException if fails to make API call
    * @deprecated
    */
@@ -210,7 +210,7 @@ public class PetApi {
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
-   * @return Pet
+   * @return a {@code Pet }
    * @throws ApiException if fails to make API call
    */
   public Pet getPetById(Long petId) throws ApiException {
@@ -251,7 +251,7 @@ public class PetApi {
   /**
    * Update an existing pet
    * 
-   * @param body Pet object that needs to be added to the store (required)
+   * @param body Pet object that needs to be added to the store (required) }
    * @throws ApiException if fails to make API call
    */
   public void updatePet(Pet body) throws ApiException {
@@ -293,7 +293,7 @@ public class PetApi {
    * 
    * @param petId ID of pet that needs to be updated (required)
    * @param name Updated name of the pet (optional)
-   * @param status Updated status of the pet (optional)
+   * @param status Updated status of the pet (optional) }
    * @throws ApiException if fails to make API call
    */
   public void updatePetWithForm(Long petId, String name, String status) throws ApiException {
@@ -341,7 +341,7 @@ if (status != null)
    * @param petId ID of pet to update (required)
    * @param additionalMetadata Additional data to pass to server (optional)
    * @param file file to upload (optional)
-   * @return ModelApiResponse
+   * @return a {@code ModelApiResponse }
    * @throws ApiException if fails to make API call
    */
   public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
