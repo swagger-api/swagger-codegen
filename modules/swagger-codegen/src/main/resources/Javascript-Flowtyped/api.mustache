@@ -44,7 +44,7 @@ export type FetchArgs = {
 export type RequestOptions = {
     headers?: {};
     query?: {};
-    body?: string;
+    body?: string | FormData;
 }
 
 /**
@@ -95,7 +95,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
     {{#hasFormParams}}
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
     {{/hasFormParams}}
 
     {{#authMethods}}
@@ -196,10 +196,6 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
             {{/isListContainer}}
 
     {{/formParams}}
-    {{#hasFormParams}}
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
-    {{/hasFormParams}}
     {{#bodyParam}}
             {{^consumes}}
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -214,7 +210,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
     {{#hasFormParams}}
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
     {{/hasFormParams}}
     {{#bodyParam}}
             const needsSerialization = (typeof {{paramName}} !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';

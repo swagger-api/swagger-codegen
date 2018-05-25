@@ -55,7 +55,7 @@ export type FetchArgs = {
 export type RequestOptions = {
     headers?: {};
     query?: {};
-    body?: string;
+    body?: string | FormData;
 }
 
 /**
@@ -1172,7 +1172,7 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions: RequestOptions = Object.assign({}, { method: 'POST' }, options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
 
             // authentication http_basic_test required
             // http basic authentication required
@@ -1236,13 +1236,11 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
                 localVarFormParams.set('callback', ((callback:any):string));
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1260,7 +1258,7 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions: RequestOptions = Object.assign({}, { method: 'GET' }, options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
 
             if (enumQueryStringArray) {
                 localVarQueryParameter['enum_query_string_array'] = enumQueryStringArray.join(COLLECTION_FORMATS["csv"]);
@@ -1294,13 +1292,11 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
                 localVarFormParams.set('enum_query_double', ((enumQueryDouble:any):string));
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1356,7 +1352,7 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions: RequestOptions = Object.assign({}, { method: 'GET' }, options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
 
             if (param !== undefined) {
                 localVarFormParams.set('param', ((param:any):string));
@@ -1366,13 +1362,11 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
                 localVarFormParams.set('param2', ((param2:any):string));
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1888,7 +1882,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions: RequestOptions = Object.assign({}, { method: 'POST' }, options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
 
             // authentication petstore_auth required
             // oauth required
@@ -1907,13 +1901,11 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
                 localVarFormParams.set('status', ((status:any):string));
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
 
             return {
                 url: url.format(localVarUrlObj),
@@ -1936,7 +1928,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions: RequestOptions = Object.assign({}, { method: 'POST' }, options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new FormData();
 
             // authentication petstore_auth required
             // oauth required
@@ -1955,13 +1947,11 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
                 localVarFormParams.set('file', ((file:any):string));
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            localVarRequestOptions.body = localVarFormParams.toString();
+            localVarRequestOptions.body = localVarFormParams;
 
             return {
                 url: url.format(localVarUrlObj),
