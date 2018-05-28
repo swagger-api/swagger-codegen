@@ -1,4 +1,4 @@
-package io.swagger.mock;
+package io.swagger.mock.service;
 
 import java.util.List;
 

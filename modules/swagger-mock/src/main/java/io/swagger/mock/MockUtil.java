@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -32,6 +33,7 @@ import io.swagger.mock.model.MockKeyValue;
 import io.swagger.mock.model.MockRequest;
 import io.swagger.mock.model.MockResponse;
 import io.swagger.mock.model.MockTransferObject;
+import io.swagger.mock.service.MockService;
 
 @Service("mockUtil")
 public class MockUtil {
@@ -233,6 +235,94 @@ public class MockUtil {
 			objectMapper.readValue(mockTransferObject.getOutput(), Class.forName(apiResponse.getObjectType()));
 		}
 		return true;
+	}
+	
+	
+	String resource = null;
+	String operationId  = null;
+	Map<String, String> params = null;
+	Class inputObjectType = null;
+	Object inputObject = null;;
+
+	public Object getInputObject() {
+		return inputObject;
+	}
+
+	public void setInputObject(Object inputObject) {
+		this.inputObject = inputObject;
+	}
+
+	public String getResource() {
+		return resource;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
+
+	public String getOperationId() {
+		return operationId;
+	}
+
+	public void setOperationId(String operationId) {
+		this.operationId = operationId;
+	}
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	public void setParams(Map<String, String> params) {
+		this.params = params;
+	}
+
+	public Class getInputObjectType() {
+		return inputObjectType;
+	}
+
+	public void setInputObjectType(Class inputObjectType) {
+		this.inputObjectType = inputObjectType;
+	}
+
+	public ResponseEntity returnResponse() throws ClassNotFoundException, IOException {
+		Map<MockRequest, MockResponse> mockDataSetupMap = readDynamicResponse(getResource(), getOperationId());
+		for (Map.Entry<MockRequest, MockResponse> mockRequestResponse : mockDataSetupMap.entrySet()) {
+			
+			if(getParams() != null && getParams().size() > 0 
+					&& getInputObjectType() != null	&& getInputObject() != null ) {
+				if (compareQueryParams(mockRequestResponse.getKey(), getParams()) && EqualsBuilder.reflectionEquals(
+						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), getInputObjectType()),
+						getInputObjectType().cast(getInputObject()),
+						mockRequestResponse.getKey().getExcludeSet())) {
+						return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
+							HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
+				}
+			} else if(getParams() != null && getParams().size() > 0 ) {
+					if (compareQueryParams(mockRequestResponse.getKey(), getParams())) {
+							return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
+								HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
+					}
+			} else if(getInputObjectType() != null ) {
+				if (EqualsBuilder.reflectionEquals(
+						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), getInputObjectType()),
+						getInputObjectType().cast(getInputObject()),
+						mockRequestResponse.getKey().getExcludeSet())) {
+						return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
+							HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
+				}
+			}
+			
+		}
+		if (mockDataSetupMap.size() > 0) {
+			return new ResponseEntity(
+					"{\"code\": \"MISSING_MOCK_DATA\", \"message\":\"Mock response was not added for the given parameter\"}",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			log.error("Mock Response was not defined for the given input createDocument");
+			return new ResponseEntity(
+					"{\"code\": \"MOCK_DATA_NOT_SET\", \"message\":\"Mock Response was not defined for the given input\"}",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

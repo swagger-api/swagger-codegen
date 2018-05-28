@@ -8,10 +8,8 @@ myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService
     self.mockLoadRequests=[];
     self.mockLoadRequest='';
     self.selectedOperationId ='';
-    self.submit = submit;
     self.edit = edit;
     self.remove = remove;
-    self.reset = reset;
     self.message ='';
     self.classCode = '';
     self.filtered = {};
@@ -115,18 +113,19 @@ myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService
         );
     }
 
-    function submit() {
-        console.log('Saving New mockRequest', self.mockRequest);
+    self.submit= function (mockRequest) {
+        console.log('Saving New mockRequest', mockRequest);
         self.mockCreateRequest= {id:'', 
-        			resource:self.mockRequest.resource,
-        			url:self.mockRequest.url,
-        			operationId:self.mockRequest.operationId,
-        			input:self.mockRequest.input,
-        			output:self.mockRequest.output,
-        			excludeList:self.mockRequest.excludeList, 
-        			httpStatusCode:self.mockRequest.httpStatusCode,
-        			method:self.mockRequest.method,
-        			availableParams:self.mockRequest.availableParams};
+        			resource:mockRequest.resource,
+        			url:mockRequest.url,
+        			operationId:mockRequest.operationId,
+        			input:mockRequest.input,
+        			output:mockRequest.output,
+        			excludeList:mockRequest.excludeList, 
+        			httpStatusCode:mockRequest.httpStatusCode,
+        			method:mockRequest.method,
+        			availableParams:mockRequest.availableParams};
+        console.log('Saving New mockRequest', self.mockCreateRequest);
         createMockRequest(self.mockCreateRequest);
 
     }
@@ -150,11 +149,20 @@ myApp.controller('MockController', ['$scope',  '$filter', '$modal', 'MockService
     }
 
 
-    function reset(){
+    self.reset = function (myForm, mockRequest){
         self.message ='';
         self.classCode = '';
-        self.mockRequest={id:null,operationId:'',input:'',output:'',excludeList:'', httpStatus:'',paramList:'' };
-        $scope.myForm.$setPristine(); //reset Form
+        mockRequest.id = null;
+        mockRequest.output= null;
+        mockRequest.excludeList = null;
+        mockRequest.httpStatusCode ='';
+        for (var parm in mockRequest.availableParams) {
+        	mockRequest.availableParams[parm].value =  '';
+        }
+        if(mockRequest.input != null) {
+        	mockRequest.input = '';
+    	}
+        myForm.$setPristine(); //reset Form
     }
 
 }]);

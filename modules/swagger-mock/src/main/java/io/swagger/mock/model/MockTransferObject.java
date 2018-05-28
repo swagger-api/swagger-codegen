@@ -18,6 +18,10 @@ public class MockTransferObject {
 	private Map<String, APIResponse> responseType;
 	private String excludeList;
 	private String resource;
+	private String desc;
+	private MockStatus mockStatus;
+	
+	
 	
 	public String getResource() {
 		return resource;
@@ -149,6 +153,22 @@ public class MockTransferObject {
 				+ ", url=" + url + ", method=" + method + ", inputObjectType=" + inputObjectType + ", outputObjectType="
 				+ outputObjectType + ", input=" + input + ", output=" + output + ", availableParams=" + availableParams
 				+ ", excludeList=" + excludeList + ", httpStatusMap=" + httpStatusMap + "]";
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public MockStatus getMockStatus() {
+		return mockStatus;
+	}
+
+	public void setMockStatus(MockStatus mockStatus) {
+		this.mockStatus = mockStatus;
 	}
 
 }

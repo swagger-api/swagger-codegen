@@ -1,4 +1,4 @@
-package io.swagger.mock;
+package io.swagger.mock.dao;
 
 import org.springframework.data.repository.CrudRepository;
 

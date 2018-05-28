@@ -1,4 +1,4 @@
-package io.swagger.mock;
+package io.swagger.mock.controller;
 
 
 import java.io.IOException;
@@ -27,8 +27,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import io.swagger.mock.MockUtil;
+import io.swagger.mock.VirtualServiceInfo;
 import io.swagger.mock.model.MockStatus;
 import io.swagger.mock.model.MockTransferObject;
+import io.swagger.mock.service.MockService;
 
 @RestController
 public class MockController {
@@ -82,7 +85,7 @@ public class MockController {
 
 
 	@RequestMapping(value = "/mockservice", method = RequestMethod.POST)
-	public ResponseEntity<MockStatus> createMockRequest(@RequestBody MockTransferObject mockLoadRequest) {// ,UriComponentsBuilder
+	public ResponseEntity createMockRequest(@RequestBody MockTransferObject mockLoadRequest) {// ,UriComponentsBuilder
 		try {
 			
 			if(mockLoadRequest.getHttpStatusCode() == null 
@@ -123,14 +126,13 @@ public class MockController {
 						HttpStatus.BAD_REQUEST);
 			}
 			MockTransferObject mockTransferObject = mockService.saveMockRequest(mockLoadRequest);
-			return new ResponseEntity<MockStatus>(new MockStatus("Mock created successfully", mockTransferObject), HttpStatus.CREATED);
+			mockTransferObject.setMockStatus(new MockStatus("Mock created successfully"));
+			return new ResponseEntity<>(mockTransferObject, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<MockStatus>(new MockStatus("Unexpected error please retry....."),
 					HttpStatus.BAD_REQUEST);
 		}
-		// HttpHeaders headers = new HttpHeaders();
-		// headers.setLocation(ucBuilder.path("/mockservice/{id}").buildAndExpand(mockLoadRequest.getId()).toUri());
 	}
 
 	@RequestMapping(value = "/mockservice/{id}", method = RequestMethod.PUT)

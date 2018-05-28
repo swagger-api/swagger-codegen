@@ -1,63 +1,29 @@
-{{#hasParams}}
-	
-	Map<String, String> paramMap =  new HashMap<>();
-	
+{{#hasParams}}	
+Map<String, String> paramMap =  new HashMap<>();
 	{{#allParams}}
-				{{#isQueryParam}}
-					if({{paramName}} != null && {{paramName}}.getClass().toString().contains("List")) {
-						paramMap.put("{{baseName}}", addQueryParamValue({{paramName}}));
-					} else {
-						paramMap.put("{{baseName}}", String.valueOf({{paramName}}));
-					}
-				{{/isQueryParam}}
-				{{#isPathParam}}paramMap.put("{{baseName}}", String.valueOf({{paramName}}));{{/isPathParam}}
+		{{#isQueryParam}}
+		if({{paramName}} != null && {{paramName}}.getClass().toString().contains("List")) {
+			paramMap.put("{{baseName}}", addQueryParamValue({{paramName}}));					
+		} else {
+			paramMap.put("{{baseName}}", String.valueOf({{paramName}}));
+		}
+		{{/isQueryParam}}
+		{{#isPathParam}}
+		paramMap.put("{{baseName}}", String.valueOf({{paramName}}));{{/isPathParam}}
 	{{/allParams}}
-
 		try {
-			Map<MockRequest, MockResponse> mockDataSetupMap =  mockUtil.readDynamicResponse("{{baseName}}", "{{operationId}}");
-			for (Map.Entry<MockRequest, MockResponse> mockRequestResponse  : mockDataSetupMap.entrySet()) {
-				{{#bodyParams}}
-					{{#pathParams}}
-						if (mockUtil.compareQueryParams(mockRequestResponse.getKey(), paramMap)
-							&& EqualsBuilder.reflectionEquals(objectMapper.readValue(mockRequestResponse.getKey().getInput(),{{#allParams}}{{>bodyParamsInputType}}{{/allParams}}.class), 
-							{{#allParams}}{{>bodyParamsInput}}{{/allParams}}, mockRequestResponse.getKey().getExcludeSet())) {
-					{{/pathParams}}
-					{{^pathParams}}
-						{{#queryParams}}
-							if (mockUtil.compareQueryParams(mockRequestResponse.getKey(), paramMap)
-								&& EqualsBuilder.reflectionEquals(objectMapper.readValue(mockRequestResponse.getKey().getInput(),{{#allParams}}{{>bodyParamsInputType}}{{/allParams}}.class), 
-								{{#allParams}}{{>bodyParamsInput}}{{/allParams}}, mockRequestResponse.getKey().getExcludeSet())) {
-						{{/queryParams}}
-						{{^queryParams}}
-							if(EqualsBuilder.reflectionEquals(objectMapper.readValue(mockRequestResponse.getKey().getInput(),{{#allParams}}{{>bodyParamsInputType}}{{/allParams}}.class), 
-							{{#allParams}}{{>bodyParamsInput}}{{/allParams}}, mockRequestResponse.getKey().getExcludeSet())){ 
-						{{/queryParams}}
-					{{/pathParams}}
-				{{/bodyParams}}
-				
-				{{^bodyParams}}
-					if (mockUtil.compareQueryParams(mockRequestResponse.getKey(), paramMap)) {
-				{{/bodyParams}}
-						return new ResponseEntity(mockRequestResponse.getValue().getOutput(), HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
-				
-					}
-				}
-				if(mockDataSetupMap.size() > 0){
-					return new ResponseEntity("{\"code\": \"MISSING_MOCK_DATA\", \"message\":\"Mock response was not added for the given parameter\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-				} else {
-					log.error("Mock Response was not defined for the given input {{operationId}}");
-					try {
-						return new ResponseEntity<{{>returnTypes}}>(objectMapper.readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
-					} catch (IOException e) {
-						log.error("Couldn't serialize response for content type {{{contentType}}}", e);
-						return new ResponseEntity<{{>returnTypes}}>(HttpStatus.INTERNAL_SERVER_ERROR);
-					}
-				}
-				
-		} catch (IOException e) {
+			mockUtil.setResource("{{baseName}}");
+			mockUtil.setOperationId("{{operationId}}");
+			mockUtil.setParams(paramMap);
+			{{#bodyParams}}
+			mockUtil.setInputObjectType({{#allParams}}{{>bodyParamsInput}}{{/allParams}}.getClass());
+			mockUtil.setInputObject({{#allParams}}{{>bodyParamsInput}}{{/allParams}});
+			{{/bodyParams}}
+			return mockUtil.returnResponse();
+		} catch (Exception e) {
 			log.error("Unable to load the mock Response for " + "{{operationId}}", e);
 			return new ResponseEntity("{\"code\": \"ERROR\", \"message\": \"Unable to load the mock Response for {{operationId}}\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-		} 
+		}
 {{/hasParams}}
 {{^hasParams}}
 	return new ResponseEntity("{\"code\": \"CASE_NOT_HANDLED\", \"message\":\"Mock NOT SUPPORTED AT this time \"}", HttpStatus.INTERNAL_SERVER_ERROR);

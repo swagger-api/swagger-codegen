@@ -20,6 +20,10 @@
 <link href="/virtualservices/static/js/view/jquery.json-view.min.css"
 	rel="stylesheet">
 
+ <link rel="stylesheet" type="text/css" href="/virtualservices/swagger-ui/swagger-ui.css" >
+  <link rel="icon" type="image/png" href="/virtualservices/swagger-ui/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/virtualservices/swagger-ui/favicon-16x16.png" sizes="16x16" />
+
 </head>
 
 <style type="text/css">
@@ -55,43 +59,6 @@ json-tree .branch-preview::after {
 	border-bottom:1px solid #313030;
 }
 
-.input.ng-valid {
-	background-color: lightgreen;
-}
-
-.valid {
-	background-color: lightgreen;
-	color: white;
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.invalid {
-	background-color: red;
-	color: white;
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.input.ng-dirty.ng-invalid-required {
-	background-color: red;
-}
-
-.input.ng-dirty.ng-invalid-minlength {
-	background-color: yellow;
-}
-
-.output.ng-valid {
-	background-color: lightgreen;
-}
-
-.output.ng-dirty.ng-invalid-required {
-	background-color: red;
-}
-
-.output.ng-dirty.ng-invalid-email {
-	background-color: yellow;
-}
 
 .tabsDynamicTabs md-content {
 	background-color: transparent !important;
@@ -169,6 +136,8 @@ json-tree .branch-preview::after {
 							Service</a></li>
 					<li role="presentation"><a href="#/swagger">Swagger</a>
 					</li>
+					<li role="presentation"><a href="#/utils">Utilities</a>
+					</li>
 				</ul>
 
 			</div>
@@ -214,6 +183,7 @@ json-tree .branch-preview::after {
 	<script src="/virtualservices/static/js/service/mock_service.js"></script>
 	<script src="/virtualservices/static/js/controller/mock_controller.js"></script>
 	<script src="/virtualservices/static/js/controller/swagger_controller.js"></script>
+	<script src="/virtualservices/static/js/controller/utils_controller.js"></script>
 
 </body>
 </html>

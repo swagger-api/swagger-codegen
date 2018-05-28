@@ -1,0 +1,316 @@
+<div layout="column" ng-app="myApp"
+	ng-controller="MockController as ctrl" class="tabsDynamicTabs" ng-cloak>
+
+	<div class="col-md-6 col-md-offset-3">
+		<h3>Virtual Mock Service</h3>
+		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+			ng-click="ctrl.loadData()" data-target="#load-mock">Load
+			Mock Data</button>
+		<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+			data-target="#add-mock">Add Mock</button>
+		<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+												data-target="#load-json">Load Json</button> -->
+	</div>
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="add-mock">
+		<div class="modal-dialog modal-xl">
+			<!-- Modal content-->
+			<div class="modal-content">
+			 <div class="modal-body">
+				<div class="swagger-ui">
+					<div class="topbar">
+						<div class="wrapper">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<div class="topbar-wrapper">
+								<a href="#" class="link"><img height="30" width="30"
+									src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAYFBMVEUAAABUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwBUfwB0lzB/n0BfhxBpjyC0x4////+qv4CJp1D09++ft3C/z5/K16/U379UfwDf58/q79+Ur2D2RCk9AAAAHXRSTlMAEEAwn9//z3Agv4/vYID/////////////////UMeji1kAAAD8SURBVHgBlZMFAoQwDATRxbXB7f+vPKnlXAZn6k2cf3A9z/PfOC8IIYni5FmmABM8FMhwT17c9hnhiZL1CwvEL1tmPD0qSKq6gaStW/kMXanVmAVRDUlH1OvuuTINo6k90Sxf8qsOtF6g4ff1osP3OnMcV7d4pzdIUtu1oA4V0DZoKmxmlEYvtDUjjS3tmKmqB+pYy8pD1VPf7jPE0I40HHcaBwnue6fGzgyS5tXIU96PV7rkDWHNLV0DK4FkoKmFpN5oUnvi8KoeA2/JXsmXQuokx0siR1G8tLkN6eB9sLwJp/yymcyaP/TrP+RPmbMMixcJVgTR1aUZ93oGXsgXQAaG6EwAAAAASUVORK5CYII="
+									alt="Swagger Mock"> <span>Swagger Mock Setup</span></a>
+									
+							</div>
+						</div>
+				</div>
+				</div>
+				<div class="tabsDynamicTabs" ng-cloak>
+					<md-tabs md-dynamic-height="true" md-selected="selectedIndex">
+					<md-tab
+						ng-repeat="(key, mockLoadRequest) in ctrl.mockLoadRequests"
+							ng-click="ctrl.reset()" label="{{key}}">
+						<div >
+							<form ng-submit="ctrl.submit()" name="myForm"
+								class="form-horizontal">
+								<div class="row">
+									<div layout="row" layout-fill layout-align="center center"
+										class="{{ctrl.classCode}}">{{ctrl.message}}</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Operation
+											Id</label>
+										<div class="col-md-7">
+
+											<!-- ng-change="loadData()" -->
+											<select ng-model="ctrl.mockRequest"
+												ng-options="mockRequest.operationId for (key, mockRequest) in  mockLoadRequest"
+												ng-selected="(ctrl.mockRequest.operationId==ctrl.selectedOperationId) ? 'selected' : '' ">
+											</select> <input type="hidden" ng-model="ctrl.mockRequest.operationId"
+												class="input form-control input-sm" required
+												ng-minlength="5"> <input type="hidden"
+												ng-model="ctrl.mockRequest.responseType"
+												class="input form-control input-sm"> <input
+												type="hidden" ng-model="ctrl.mockRequest.inputObjectType"
+												class="input form-control input-sm"> <input
+												type="hidden" ng-model="ctrl.mockRequest.outputObjectType"
+												class="input form-control input-sm"> <input
+												type="hidden" name="id" ng-model="ctrl.mockRequest.id"
+												value="" />
+											<div class="has-error" ng-show="myForm.$dirty">
+												<span ng-show="myForm.api.$error.required">This is a
+													required field</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">HTTPVERB</label>
+										<div class="col-md-7">{{ctrl.mockRequest.method}}</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">REST
+											URL:</label>
+										<div class="col-md-7">{{ctrl.mockRequest.url}}</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Select
+											HTTP Status</label>
+										<div class="col-md-7">
+											<select ng-model="ctrl.mockRequest.httpStatusCode"
+												ng-options="httpStatus as name for (httpStatus, name) in ctrl.mockRequest.httpStatusMap"
+												required></select>
+											<div class="has-error" ng-show="myForm.$dirty">
+												<span ng-show="myForm.httpStatus.$error.required">This
+													is a required field</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div ng-show="ctrl.mockRequest.availableParams.length != 0"
+									class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Query/Path
+											Params</label>
+										<div class="col-md-7">
+											<div class="row"
+												ng-repeat="mockKeyValue in ctrl.mockRequest.availableParams track by $index">
+												<label class="col-md-2 control-lable" flex for="file">{{mockKeyValue.key}}</label>
+												<div class="col-md-7">
+													<input class="input form-control input-sm" type="text"
+														name="{{mockKeyValue.key}}"
+														ng-model="ctrl.mockRequest.availableParams[$index].value" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div ng-show="ctrl.mockRequest.input != null" class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Mock
+											Request Body</label>
+										<div class="col-md-7">
+											<textarea ng-model="ctrl.mockRequest.input" name="input"
+												class="input form-control input-sm" rows="10"
+												ng-minlength="10"> Enter your Request Body</textarea>
+											<div layout-align="center center">Type:
+												{{ctrl.mockRequest.inputObjectType}}</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Mock
+											Response</label>
+										<div class="col-md-7">
+											<textarea ng-model="ctrl.mockRequest.output" name="output"
+												class="response form-control input-sm" rows="10"> Enter your Expected response</textarea>
+											<div layout-align="center center">Type:
+												{{ctrl.mockRequest.outputObjectType}}</div>
+											<div class="has-error" ng-show="myForm.$dirty">
+												<span ng-show="myForm.output.$error.required">This is
+													a required field</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label class="col-md-2 control-lable" for="file">Exclude
+											List</label>
+										<div class="col-md-7">
+											<input type="text" ng-model="ctrl.mockRequest.excludeList"
+												name="excludeList" class="input form-control input-sm">
+											<div layout-align="center center">**Exclude parameters
+												in comma separated value which would not required to be
+												considered. Example: createDate,receiveDate**</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-actions floatRight">
+										<input type="submit"
+											value="{{!ctrl.mockRequest.id ? 'Add' : 'Update'}}"
+											class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+										<button type="button" ng-click="ctrl.reset()"
+											class="btn btn-primary btn-sm" ng-disabled="myForm.$pristine">Reset
+											Form</button>
+										<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						</md-tab> </md-tabs>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="load-mock">
+		<div class="modal-dialog modal-xl">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">List of Mock Response!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="tablecontainer">
+						<input type="text" ng-model="ctrl.searchText"
+							class="form-control search-icon float-right"
+							placeholder="Type to filter"> Total items:
+						{{ctrl.filtered.length}} <br />
+
+						<table class="table table-striped table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>ID.</th>
+									<th>Resource/Verb</th>
+									<th>HttpStatusCode</th>
+									<th>Path/QueryParam</th>
+									<th>OperationId</th>
+									<th>Input</th>
+									<th>Output</th>
+									<th>ExcludeList</th>
+									<th width="20%"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="mockRequest in ctrl.filtered = (ctrl.filterList | filter: ctrl.searchText ) | start: (ctrl.currentPage - 1) * ctrl.perPage | limitTo : ctrl.perPage">
+									<td><span ng-bind="mockRequest.id"></span></td>
+									<td><span ng-bind="mockRequest.url"></span>
+										<div class="line-separator"></div> <span
+										ng-bind="mockRequest.method"></span></td>
+									<td><span ng-bind="mockRequest.httpStatusCode"></span></td>
+									<td><div
+											ng-repeat="mockKeyValue in mockRequest.availableParams track by $index">
+											{{mockKeyValue.key}} =
+											{{mockRequest.availableParams[$index].value}}</br>
+										</div></td>
+									<td><span ng-bind="mockRequest.operationId"></span></td>
+									<td>
+										<button type="button" class="btn btn-info btn-sm"
+											data-toggle="modal" ng-show="mockRequest.input != null"
+											data-target="#load-json"
+											ng-click="ctrl.loadJson(mockRequest.input)">Request</button>
+									</td>
+									<td><button type="button" class="btn btn-info btn-sm"
+											data-toggle="modal" data-target="#load-json"
+											ng-click="ctrl.loadJson(mockRequest.output)">Response</button>
+									</td>
+									<td><span ng-bind="mockRequest.excludeList"></span></td>
+									<td>
+										<!-- 							<button type="button" ng-click="ctrl.edit(u.id)"
+									class="btn btn-success custom-width">Edit</button> -->
+										<button type="button" ng-click="ctrl.remove(mockRequest.id)"
+											class="btn btn-danger custom-width">Remove</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					View <select ng-model="ctrl.viewby"
+						ng-change="ctrl.setItemsPerPage(ctrl.viewby)"><option>3</option>
+						<option>5</option>
+						<option>10</option>
+						<option>20</option>
+						<option>30</option>
+						<option>40</option>
+						<option>50</option></select> records at a time.
+
+					<pagination total-items="ctrl.filtered.length"
+						boundary-links="true" max-size="ctrl.maxSize"
+						ng-model="ctrl.currentPage" class="pagination-sm"
+						items-per-page="ctrl.perPage"></pagination>
+					<!-- 	<button type="button" class="btn btn-info"
+						ng-click="ctrl.loadData()">Load Data</button>
+ -->
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="modal fade" id="load-json" ng-model="loadJson">
+		<div class="modal-dialog modal-xl">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">View!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="panel panel-default">
+						<div class="panel-body" layout="row">
+							<div flex-gt-sm="50" flex="50">
+								<code>
+									<pre>{{ctrl.jsonStr |json}}</pre>
+								</code>
+							</div>
+							<div flex-gt-sm="50" flex="50">
+								<json-tree object="ctrl.jsonObj" start-expanded="true">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>

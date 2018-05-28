@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	 <parent>
-        <groupId>io.swagger</groupId>
-        <artifactId>swagger-codegen-project</artifactId>
-        <version>2.4.0-SNAPSHOT</version>
-        <relativePath>../..</relativePath>
-    </parent>
+	<parent>
+		<groupId>io.swagger</groupId>
+		<artifactId>swagger-codegen-project</artifactId>
+		<version>2.4.0-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.swagger</groupId>
 	<artifactId>swagger-mock</artifactId>
@@ -20,8 +20,104 @@
 		<hsqldb.version>2.3.2</hsqldb.version>
 		<spring.version>5.0.0.RELEASE</spring.version>
 	</properties>
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>swagger-editor</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/swagger-api/swagger-editor/archive/master.tar.gz</url>
+							<outputFileName>swagger-editor.tar.gz</outputFileName>
+							<unpack>true</unpack>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>swagger-ui</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+							<outputFileName>swagger-ui.tar.gz</outputFileName>
+							<unpack>true</unpack>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>ui-resource</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/classes/META-INF/resources/swagger-ui/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/swagger-ui-master/dist/</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>eui-resource</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/classes/META-INF/resources/swagger-ui/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources/META-INF/resources</directory>
+									<includes>
+										<include>swaggerex-ui.html</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>editor-resource</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/classes/META-INF/resources/swagger-editor/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/swagger-editor-master/</directory>
+									<includes>
+										<include>dist/**</include>
+										<include>index.html</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
-
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
@@ -132,8 +228,6 @@
 			<version>1.1.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
-
-
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>

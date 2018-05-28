@@ -19,6 +19,11 @@
                 templateUrl: '/virtualservices/static/home/swagger.html',
             })
         
+            .state('utils', {
+                url: '/utils',
+                templateUrl: '/virtualservices/static/home/utils.html',
+            })
+        
            }
 
     function run() {

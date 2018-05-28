@@ -1,4 +1,4 @@
-package io.swagger.mock;
+package io.swagger.mock.controller;
 
 import java.io.IOException;
 

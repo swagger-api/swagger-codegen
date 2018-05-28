@@ -1,4 +1,4 @@
-package io.swagger.mock;
+package io.swagger.mock.dao;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
