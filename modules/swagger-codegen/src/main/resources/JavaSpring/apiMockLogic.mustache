@@ -1,26 +1,27 @@
 {{#hasParams}}	
-Map<String, String> paramMap =  new HashMap<>();
+		Map<String, String> paramMap =  new HashMap<>();
+		MockServiceRequest mockServiceRequest = new MockServiceRequest();
 	{{#allParams}}
-		{{#isQueryParam}}
-		if({{paramName}} != null && {{paramName}}.getClass().toString().contains("List")) {
-			paramMap.put("{{baseName}}", addQueryParamValue({{paramName}}));					
-		} else {
-			paramMap.put("{{baseName}}", String.valueOf({{paramName}}));
-		}
-		{{/isQueryParam}}
-		{{#isPathParam}}
+	{{#isQueryParam}}
+	if({{paramName}} != null && {{paramName}}.getClass().toString().contains("List")) {
+		paramMap.put("{{baseName}}", addQueryParamValue({{paramName}}));					
+	} else {
+		paramMap.put("{{baseName}}", String.valueOf({{paramName}}));
+	}
+	{{/isQueryParam}}
+	{{#isPathParam}}
 		paramMap.put("{{baseName}}", String.valueOf({{paramName}}));{{/isPathParam}}
 	{{/allParams}}
 		try {
-			getMockUtil().get().setResource("{{baseName}}");
-			getMockUtil().get().setOperationId("{{operationId}}");
-			getMockUtil().get().setParams(paramMap);
+			mockServiceRequest.setResource("{{baseName}}");
+			mockServiceRequest.setOperationId("{{operationId}}");
+			mockServiceRequest.setParams(paramMap);
 			{{#bodyParams}}
-			getMockUtil().get().setInputObjectType({{#allParams}}{{>bodyParamsInput}}{{/allParams}}.getClass());
-			getMockUtil().get().setInputObject({{#allParams}}{{>bodyParamsInput}}{{/allParams}});
+			mockServiceRequest.setInputObjectType({{#allParams}}{{>bodyParamsInput}}{{/allParams}}.getClass());
+			mockServiceRequest.setInputObject({{#allParams}}{{>bodyParamsInput}}{{/allParams}});
 			{{/bodyParams}}
-			return getMockUtil().get().returnResponse();
-		} catch (Exception e) {
+			return getMockUtil().get().returnResponse(mockServiceRequest);
+		} catch (ClassNotFoundException | IOException e) {
 			log.error("Unable to load the mock Response for " + "{{operationId}}", e);
 			return new ResponseEntity("{\"code\": \"ERROR\", \"message\": \"Unable to load the mock Response for {{operationId}}\"}", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

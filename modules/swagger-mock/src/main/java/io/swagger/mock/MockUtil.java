@@ -32,6 +32,7 @@ import io.swagger.mock.model.APIResponse;
 import io.swagger.mock.model.MockKeyValue;
 import io.swagger.mock.model.MockRequest;
 import io.swagger.mock.model.MockResponse;
+import io.swagger.mock.model.MockServiceRequest;
 import io.swagger.mock.model.MockTransferObject;
 import io.swagger.mock.service.MockService;
 
@@ -238,74 +239,27 @@ public class MockUtil {
 	}
 	
 	
-	String resource = null;
-	String operationId  = null;
-	Map<String, String> params = null;
-	Class inputObjectType = null;
-	Object inputObject = null;;
-
-	public Object getInputObject() {
-		return inputObject;
-	}
-
-	public void setInputObject(Object inputObject) {
-		this.inputObject = inputObject;
-	}
-
-	public String getResource() {
-		return resource;
-	}
-
-	public void setResource(String resource) {
-		this.resource = resource;
-	}
-
-	public String getOperationId() {
-		return operationId;
-	}
-
-	public void setOperationId(String operationId) {
-		this.operationId = operationId;
-	}
-
-	public Map<String, String> getParams() {
-		return params;
-	}
-
-	public void setParams(Map<String, String> params) {
-		this.params = params;
-	}
-
-	public Class getInputObjectType() {
-		return inputObjectType;
-	}
-
-	public void setInputObjectType(Class inputObjectType) {
-		this.inputObjectType = inputObjectType;
-	}
-
-	public ResponseEntity returnResponse() throws ClassNotFoundException, IOException {
-		Map<MockRequest, MockResponse> mockDataSetupMap = readDynamicResponse(getResource(), getOperationId());
+	public ResponseEntity returnResponse(MockServiceRequest mockServiceRequest) throws ClassNotFoundException, IOException {
+		Map<MockRequest, MockResponse> mockDataSetupMap = readDynamicResponse(mockServiceRequest.getResource(), mockServiceRequest.getOperationId());
 		for (Map.Entry<MockRequest, MockResponse> mockRequestResponse : mockDataSetupMap.entrySet()) {
-			
-			if(getParams() != null && getParams().size() > 0 
-					&& getInputObjectType() != null	&& getInputObject() != null ) {
-				if (compareQueryParams(mockRequestResponse.getKey(), getParams()) && EqualsBuilder.reflectionEquals(
-						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), getInputObjectType()),
-						getInputObjectType().cast(getInputObject()),
+			if(mockServiceRequest.getParams() != null && mockServiceRequest.getParams().size() > 0 
+					&& mockServiceRequest.getInputObjectType() != null	&& mockServiceRequest.getInputObject() != null ) {
+				if (compareQueryParams(mockRequestResponse.getKey(), mockServiceRequest.getParams()) && EqualsBuilder.reflectionEquals(
+						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), mockServiceRequest.getInputObjectType()),
+						mockServiceRequest.getInputObjectType().cast(mockServiceRequest.getInputObject()),
 						mockRequestResponse.getKey().getExcludeSet())) {
 						return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
 							HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
 				}
-			} else if(getParams() != null && getParams().size() > 0 ) {
-					if (compareQueryParams(mockRequestResponse.getKey(), getParams())) {
+			} else if(mockServiceRequest.getParams() != null && mockServiceRequest.getParams().size() > 0 ) {
+					if (compareQueryParams(mockRequestResponse.getKey(), mockServiceRequest.getParams())) {
 							return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
 								HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
 					}
-			} else if(getInputObjectType() != null ) {
+			} else if(mockServiceRequest.getInputObjectType() != null ) {
 				if (EqualsBuilder.reflectionEquals(
-						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), getInputObjectType()),
-						getInputObjectType().cast(getInputObject()),
+						getObjectMapper().readValue(mockRequestResponse.getKey().getInput(), mockServiceRequest.getInputObjectType()),
+						mockServiceRequest.getInputObjectType().cast(mockServiceRequest.getInputObject()),
 						mockRequestResponse.getKey().getExcludeSet())) {
 						return new ResponseEntity(mockRequestResponse.getValue().getOutput(),
 							HttpStatus.valueOf(Integer.parseInt(mockRequestResponse.getValue().getHttpStatusCode())));
@@ -324,5 +278,6 @@ public class MockUtil {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
+	
 }
