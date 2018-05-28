@@ -26,6 +26,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String DELEGATE_PATTERN = "delegatePattern";
     public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
     public static final String JAVA_8 = "java8";
+    public static final String GENERATE_DYNAMIC_MOCK = "generateDynamicMock";
     public static final String ASYNC = "async";
     public static final String RESPONSE_WRAPPER = "responseWrapper";
     public static final String USE_TAGS = "useTags";
@@ -49,6 +50,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean implicitHeaders = false;
     protected boolean swaggerDocketConfig = false;
     protected boolean useOptional = false;
+    protected boolean generateDynamicMock = false;
 
     public SpringCodegen() {
         super();
@@ -73,6 +75,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(DELEGATE_PATTERN, "Whether to generate the server files using the delegate pattern"));
         cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
         cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
+        cliOptions.add(CliOption.newBoolean(GENERATE_DYNAMIC_MOCK, "Default generate without Dynamic Mock"));
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
         cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
@@ -167,6 +170,10 @@ public class SpringCodegen extends AbstractJavaCodegen
             this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
         }
 
+        if (additionalProperties.containsKey(GENERATE_DYNAMIC_MOCK)) {
+            this.setGenerateDynamicMock(Boolean.valueOf(additionalProperties.get(GENERATE_DYNAMIC_MOCK).toString()));
+        }
+        
         if (additionalProperties.containsKey(ASYNC)) {
             this.setAsync(Boolean.valueOf(additionalProperties.get(ASYNC).toString()));
         }
@@ -604,6 +611,8 @@ public class SpringCodegen extends AbstractJavaCodegen
     }
 
     public void setJava8(boolean java8) { this.java8 = java8; }
+    
+    public void setGenerateDynamicMock(boolean generateDynamicMock) { this.generateDynamicMock = generateDynamicMock; }
 
     public void setAsync(boolean async) { this.async = async; }
 

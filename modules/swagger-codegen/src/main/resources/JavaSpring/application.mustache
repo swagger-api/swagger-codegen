@@ -1,5 +1,14 @@
 springfox.documentation.swagger.v2.path=/api-docs
-server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}
 server.port={{serverPort}}
 spring.jackson.date-format={{basePackage}}.RFC3339DateFormat
 spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false
+{{^generateDynamicMock}}
+server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}
+{{/generateDynamicMock}}
+{{#generateDynamicMock}}
+server.contextPath=/virtualservices
+mock.datasource.driver-class-name=org.hsqldb.jdbcDriver
+mock.datasource.url=jdbc:hsqldb:mem:dataSource
+mock.datasource.username=sa
+mock.datasource.password=
+{{/generateDynamicMock}}

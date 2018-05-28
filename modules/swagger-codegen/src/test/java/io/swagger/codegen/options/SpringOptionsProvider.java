@@ -22,7 +22,7 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String IMPLICIT_HEADERS = "false";
     public static final String SWAGGER_DOCKET_CONFIG = "false";
     public static final String USE_OPTIONAL = "false";
-
+    public static final String GENERATE_DYNAMIC_MOCK = "false";
     @Override
     public String getLanguage() {
         return "spring";
@@ -46,6 +46,7 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.IMPLICIT_HEADERS, IMPLICIT_HEADERS);
         options.put(SpringCodegen.SWAGGER_DOCKET_CONFIG, SWAGGER_DOCKET_CONFIG);
         options.put(SpringCodegen.USE_OPTIONAL, USE_OPTIONAL);
+        options.put(SpringCodegen.GENERATE_DYNAMIC_MOCK, GENERATE_DYNAMIC_MOCK);
 
         return options;
     }
