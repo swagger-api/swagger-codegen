@@ -32,11 +32,19 @@ open class ApiClient(val baseUrl: String) {
                     MediaType.parse(mediaType), content
             )
         } else if(mediaType == FormDataMediaType) {
-            var builder = FormBody.Builder()
-            // content's type *must* be Map<String, Any>
+            val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
             @Suppress("UNCHECKED_CAST")
-            (content as Map<String,String>).forEach { key, value ->
-                builder = builder.add(key, value)
+            (content as Map<String, Any?>).forEach { formData ->
+                val value = formData.value
+                if (value is String) {
+                    builder.addPart(MultipartBody.Part.createFormData(formData.key, value))
+                } else if (value is File) {
+                    builder.addPart(MultipartBody.Part.createFormData(
+                            formData.key,
+                            value.name,
+                            RequestBody.create(MediaType.parse(mediaType), value)))
+                }
             }
             return builder.build()
         }  else if(mediaType == JsonMediaType) {
@@ -48,7 +56,7 @@ open class ApiClient(val baseUrl: String) {
         }
 
         // TODO: this should be extended with other serializers
-        TODO("requestBody currently only supports JSON body and File body.")
+        TODO("requestBody currently only supports JSON body and File body and FormDataMediaType.")
     }
 
     inline protected fun <reified T: Any?> responseBody(body: ResponseBody?, mediaType: String = JsonMediaType): T? {
@@ -72,7 +80,7 @@ open class ApiClient(val baseUrl: String) {
         }
 
         val url = urlBuilder.build()
-        val headers = requestConfig.headers + defaultHeaders
+        val headers = defaultHeaders + requestConfig.headers
 
         if(headers[ContentType] ?: "" == "") {
             throw kotlin.IllegalStateException("Missing Content-Type header. This is required.")
