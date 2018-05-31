@@ -175,11 +175,13 @@ public class ModelUtils {
         }
 
         // put "enumVars" map into `allowableValues", including `name` and `value`
-        List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
+        List<Map<String, Object>> enumVars = new ArrayList<>();
         String commonPrefix = findCommonPrefixOfVars(values);
         int truncateIdx = commonPrefix.length();
+        int numVars = values.size();
+        int i = 0;
         for (Object value : values) {
-            Map<String, String> enumVar = new HashMap<String, String>();
+            Map<String, Object> enumVar = new HashMap<>();
             String enumName;
             if (truncateIdx == 0) {
                 enumName = value.toString();
@@ -191,6 +193,8 @@ public class ModelUtils {
             }
             enumVar.put("name", toEnumVarName(enumName));
             enumVar.put("value", toEnumValue(value.toString(), var.datatype));
+            enumVar.put("hasMore", Boolean.valueOf(  i < numVars-1) );
+            i++;
             enumVars.add(enumVar);
         }
         allowableValues.put("enumVars", enumVars);
@@ -198,9 +202,9 @@ public class ModelUtils {
         // handle default value for enum, e.g. available => StatusEnum.AVAILABLE
         if (var.defaultValue != null) {
             String enumName = null;
-            for (Map<String, String> enumVar : enumVars) {
+            for (Map<String, Object> enumVar : enumVars) {
                 if (toEnumValue(var.defaultValue, var.datatype).equals(enumVar.get("value"))) {
-                    enumName = enumVar.get("name");
+                    enumName = (String) enumVar.get("name");
                     break;
                 }
             }
