@@ -221,6 +221,65 @@ open class FakeAPI {
     }
 
     /**
+
+     - parameter body: (body)  
+     - parameter query: (query)  
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func testBodyWithQueryParams(body: User, query: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        testBodyWithQueryParamsWithRequestBuilder(body: body, query: query).execute { (response, error) -> Void in
+            if error == nil {
+                completion((), error)
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+
+     - parameter body: (body)  
+     - parameter query: (query)  
+     - returns: Observable<Void>
+     */
+    open class func testBodyWithQueryParams(body: User, query: String) -> Observable<Void> {
+        return Observable.create { observer -> Disposable in
+            testBodyWithQueryParams(body: body, query: query) { data, error in
+                if let error = error {
+                    observer.on(.error(error))
+                } else {
+                    observer.on(.next(data!))
+                }
+                observer.on(.completed)
+            }
+            return Disposables.create()
+        }
+    }
+
+    /**
+     - PUT /fake/body-with-query-params
+     
+     - parameter body: (body)  
+     - parameter query: (query)  
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func testBodyWithQueryParamsWithRequestBuilder(body: User, query: String) -> RequestBuilder<Void> {
+        let path = "/fake/body-with-query-params"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems([
+            "query": query
+        ])
+
+        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      To test \"client\" model
      
      - parameter body: (body) client model 

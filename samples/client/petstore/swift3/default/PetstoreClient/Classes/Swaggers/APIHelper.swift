@@ -7,6 +7,9 @@
 import Foundation
 
 class APIHelper {
+
+    static let numberFormatter = NumberFormatter()
+
     static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
         var destination = [String:Any]()
         for (key, nillableValue) in source {
@@ -49,6 +52,30 @@ class APIHelper {
         return destination
     }
 
+    static func valueToString(_ valueBox: Any?) -> String {
+        guard let value = valueBox else {
+            return "\(valueBox)"
+        }
+
+        switch value {
+        case is Double,
+            is Float,
+            is Int,
+            is Int8,
+            is Int16,
+            is Int32,
+            is Int64,
+            is UInt,
+            is UInt8,
+            is UInt16,
+            is UInt32,
+            is UInt64:
+                return numberFormatter.string(for: value) ?? "\(value)"
+        default:
+            return "\(value)"
+        }
+    }
+
     static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
         let returnValues = values
             .filter { $0.1 != nil }
@@ -63,7 +90,7 @@ class APIHelper {
                 } else {
                     return [URLQueryItem(
                         name: item._key,
-                        value: "\(item._value!)"
+                        value: valueToString(item._value!)
                     )]
                 }
             }
