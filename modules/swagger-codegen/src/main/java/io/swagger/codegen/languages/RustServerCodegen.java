@@ -402,8 +402,12 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             var = varName;
         }
 
+        else {
+            var = value;
+        }
+
         // string
-        var = value.replaceAll("\\W+", "_").toUpperCase();
+        var = var.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             var = "_" + var;
         } else {
