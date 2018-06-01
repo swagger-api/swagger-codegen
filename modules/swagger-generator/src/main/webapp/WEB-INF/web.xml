@@ -19,9 +19,17 @@
         <servlet-name>DefaultServlet</servlet-name>
         <servlet-class>io.swagger.generator.online.DefaultServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GeneratorServlet</servlet-name>
+        <servlet-class>io.swagger.generator.online.GeneratorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DefaultServlet</servlet-name>
         <url-pattern>/api/swagger.json</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GeneratorServlet</servlet-name>
+        <url-pattern>/api/generator.json</url-pattern>
     </servlet-mapping>
 
     <filter>
