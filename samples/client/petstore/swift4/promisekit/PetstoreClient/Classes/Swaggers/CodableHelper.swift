@@ -11,15 +11,15 @@ public typealias EncodeResult = (data: Data?, error: Error?)
 
 open class CodableHelper {
 
-    open static var dateformatter: DateFormatter?
+    open static var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 
     open class func decode<T>(_ type: T.Type, from data: Data) -> (decodableObj: T?, error: Error?) where T : Decodable {
         var returnedDecodable: T? = nil
         var returnedError: Error? = nil
 
-        let decoder = JSONDecoder()
-        if let df = self.dateformatter {
-            decoder.dateDecodingStrategy = .formatted(df)
+        let decoder = JSONDecoder()        
+        if let strategy = self.dateDecodingStrategy {
+            decoder.dateDecodingStrategy = strategy
         } else {
             decoder.dataDecodingStrategy = .base64
             let formatter = DateFormatter()
