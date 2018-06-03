@@ -14,45 +14,18 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
 
 /**
- * Dog
+ * AnimalFarm
  */
 
-public class Dog extends Animal {
+public class AnimalFarm extends ArrayList<Animal> {
 
-  @SerializedName("breed")
-  private String breed = null;
-  
-  public Dog breed(String breed) {
-    this.breed = breed;
-    return this;
-  }
-
-  
-  /**
-  * Get breed
-  * @return breed
-  **/
-  @ApiModelProperty(value = "")
-  public String getBreed() {
-    return breed;
-  }
-  public void setBreed(String breed) {
-    this.breed = breed;
-  }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -61,22 +34,19 @@ public class Dog extends Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Dog dog = (Dog) o;
-    return Objects.equals(this.breed, dog.breed) &&
-        super.equals(o);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(breed, super.hashCode());
+    return Objects.hash(super.hashCode());
   }
   
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Dog {\n");
+    sb.append("class AnimalFarm {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    breed: ").append(toIndentedString(breed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -94,32 +64,29 @@ public class Dog extends Animal {
 
   
   public void writeToParcel(Parcel out, int flags) {
-     super.writeToParcel(out, flags); 
     
-    out.writeValue(breed);
     
   }
 
-  public Dog() {
+  public AnimalFarm() {
     super();
   }
 
-  Dog(Parcel in) {
-     super(in); 
+  AnimalFarm(Parcel in) {
     
-    breed = (String)in.readValue(null);
+    
   }
 
   public int describeContents() {
     return 0;
   }
 
-  public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
-    public Dog createFromParcel(Parcel in) {
-      return new Dog(in);
+  public static final Parcelable.Creator<AnimalFarm> CREATOR = new Parcelable.Creator<AnimalFarm>() {
+    public AnimalFarm createFromParcel(Parcel in) {
+      return new AnimalFarm(in);
     }
-    public Dog[] newArray(int size) {
-      return new Dog[size];
+    public AnimalFarm[] newArray(int size) {
+      return new AnimalFarm[size];
     }
   };
 }

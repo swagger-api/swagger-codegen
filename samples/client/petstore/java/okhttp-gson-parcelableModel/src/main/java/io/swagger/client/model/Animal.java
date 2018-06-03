@@ -117,6 +117,7 @@ public class Animal {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(className);
     out.writeValue(color);
     
@@ -127,6 +128,7 @@ public class Animal {
   }
 
   Animal(Parcel in) {
+    
     
     className = (String)in.readValue(null);color = (String)in.readValue(null);
   }
