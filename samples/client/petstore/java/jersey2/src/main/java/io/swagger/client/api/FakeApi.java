@@ -94,7 +94,7 @@ public class FakeApi {
    * 
    * Test serialization of object with outer number type
    
-   * @param outercomposite Input composite as post body (optional)
+   * @param body Input composite as post body (optional)
    
    
    * @return OuterComposite
@@ -104,8 +104,8 @@ public class FakeApi {
    
    */
   
-  public OuterComposite fakeOuterCompositeSerialize(OuterComposite outercomposite) throws ApiException {
-    Object localVarPostBody = outercomposite;
+  public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws ApiException {
+    Object localVarPostBody = body;
     
     // create path and map variables
     String localVarPath = "/fake/outer/composite";
@@ -241,7 +241,7 @@ public class FakeApi {
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
    
-   * @param client client model (required)
+   * @param body client model (required)
    
    
    * @return Client
@@ -251,12 +251,12 @@ public class FakeApi {
    
    */
   
-  public Client testClientModel(Client client) throws ApiException {
-    Object localVarPostBody = client;
+  public Client testClientModel(Client body) throws ApiException {
+    Object localVarPostBody = body;
     
-    // verify the required parameter 'client' is set
-    if (client == null) {
-      throw new ApiException(400, "Missing the required parameter 'client' when calling testClientModel");
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling testClientModel");
     }
     
     // create path and map variables
