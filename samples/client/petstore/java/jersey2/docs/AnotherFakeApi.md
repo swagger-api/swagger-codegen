@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 <a name="testSpecialTags"></a>
 # **testSpecialTags**
-> Client testSpecialTags(client)
+> Client testSpecialTags(body)
 
 To test special tags
 
@@ -27,10 +27,10 @@ To test special tags
 
 AnotherFakeApi apiInstance = new AnotherFakeApi();
 
-Client client = ; // Client | client model
+Client body = new Client(); // Client | client model
 
 try {
-    Client result = apiInstance.testSpecialTags(client);
+    Client result = apiInstance.testSpecialTags(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling AnotherFakeApi#testSpecialTags");
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **client** | [**Client**](.md)| client model |
+ **body** | [**Client**](Client.md)| client model |
 
 
 ### Return type
