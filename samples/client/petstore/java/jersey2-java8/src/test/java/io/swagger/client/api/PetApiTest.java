@@ -21,6 +21,8 @@ import org.junit.Test;
 import org.junit.Ignore;
 
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,9 +161,11 @@ public class PetApiTest {
         
         Integer petId = null;
         
-        Object body = null;
+        String name = null;
+
+        String status = null;
         
-        api.updatePetWithForm(petId, body);
+        api.updatePetWithForm(petId, name, status);
 
         // TODO: test validations
     }
@@ -179,9 +183,11 @@ public class PetApiTest {
         
         Integer petId = null;
         
-        Object body = null;
+        String additionalMetadata = null;
+
+        File file = null;
         
-        ModelApiResponse response = api.uploadFile(petId, body);
+        ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
 
         // TODO: test validations
     }
