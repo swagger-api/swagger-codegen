@@ -14,41 +14,16 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Dog
+ * AnimalFarm
  */
 
-public class Dog extends Animal {
+public class AnimalFarm extends ArrayList<Animal> {
 
-  
-  @JsonProperty("breed")
-  private String breed = null;
-  
-  public Dog breed(String breed) {
-    this.breed = breed;
-    return this;
-  }
-
-  
-  /**
-  * Get breed
-  * @return breed
-  **/
-  @ApiModelProperty(value = "")
-  public String getBreed() {
-    return breed;
-  }
-  public void setBreed(String breed) {
-    this.breed = breed;
-  }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -57,22 +32,19 @@ public class Dog extends Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Dog dog = (Dog) o;
-    return Objects.equals(this.breed, dog.breed) &&
-        super.equals(o);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(breed, super.hashCode());
+    return Objects.hash(super.hashCode());
   }
   
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Dog {\n");
+    sb.append("class AnimalFarm {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    breed: ").append(toIndentedString(breed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
