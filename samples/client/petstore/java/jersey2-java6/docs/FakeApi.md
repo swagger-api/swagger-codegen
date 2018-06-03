@@ -35,7 +35,7 @@ Test serialization of outer boolean types
 
 FakeApi apiInstance = new FakeApi();
 
-Boolean body = ; // Boolean | Input boolean as post body
+Boolean body = true; // Boolean | Input boolean as post body
 
 try {
     Boolean result = apiInstance.fakeOuterBooleanSerialize(body);
@@ -69,7 +69,7 @@ No authorization required
 
 <a name="fakeOuterCompositeSerialize"></a>
 # **fakeOuterCompositeSerialize**
-> OuterComposite fakeOuterCompositeSerialize(outercomposite)
+> OuterComposite fakeOuterCompositeSerialize(body)
 
 
 
@@ -85,10 +85,10 @@ Test serialization of object with outer number type
 
 FakeApi apiInstance = new FakeApi();
 
-OuterComposite outercomposite = ; // OuterComposite | Input composite as post body
+OuterComposite body = new OuterComposite(); // OuterComposite | Input composite as post body
 
 try {
-    OuterComposite result = apiInstance.fakeOuterCompositeSerialize(outercomposite);
+    OuterComposite result = apiInstance.fakeOuterCompositeSerialize(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#fakeOuterCompositeSerialize");
@@ -100,7 +100,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **outercomposite** | [**OuterComposite**](.md)| Input composite as post body | [optional]
+ **body** | [**OuterComposite**](OuterComposite.md)| Input composite as post body | [optional]
 
 
 ### Return type
@@ -135,7 +135,7 @@ Test serialization of outer number types
 
 FakeApi apiInstance = new FakeApi();
 
-BigDecimal body = ; // BigDecimal | Input number as post body
+BigDecimal body = new BigDecimal(); // BigDecimal | Input number as post body
 
 try {
     BigDecimal result = apiInstance.fakeOuterNumberSerialize(body);
@@ -185,7 +185,7 @@ Test serialization of outer string types
 
 FakeApi apiInstance = new FakeApi();
 
-String body = ; // String | Input string as post body
+String body = "body_example"; // String | Input string as post body
 
 try {
     String result = apiInstance.fakeOuterStringSerialize(body);
@@ -219,7 +219,7 @@ No authorization required
 
 <a name="testClientModel"></a>
 # **testClientModel**
-> Client testClientModel(client)
+> Client testClientModel(body)
 
 To test \&quot;client\&quot; model
 
@@ -235,10 +235,10 @@ To test \&quot;client\&quot; model
 
 FakeApi apiInstance = new FakeApi();
 
-Client client = ; // Client | client model
+Client body = new Client(); // Client | client model
 
 try {
-    Client result = apiInstance.testClientModel(client);
+    Client result = apiInstance.testClientModel(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#testClientModel");
@@ -250,7 +250,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **client** | [**Client**](.md)| client model |
+ **body** | [**Client**](Client.md)| client model |
 
 
 ### Return type
@@ -285,7 +285,7 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 FakeApi apiInstance = new FakeApi();
 
-Object body = ; // Object | 
+Object body = null; // Object | 
 
 try {
     apiInstance.testEndpointParameters(body);
@@ -334,7 +334,7 @@ To test enum parameters
 
 FakeApi apiInstance = new FakeApi();
 
-Object body = ; // Object | 
+Object body = null; // Object | 
 
 List<String> enumHeaderStringArray = Arrays.asList("enumHeaderStringArray_example"); // List<String> | Header parameter enum test (string array)
 
@@ -396,7 +396,7 @@ test inline additionalProperties
 
 FakeApi apiInstance = new FakeApi();
 
-Map<String, String> body = ; // Map<String, String> | request body
+Map<String, String> body = new Map(); // Map<String, String> | request body
 
 try {
     apiInstance.testInlineAdditionalProperties(body);
@@ -443,7 +443,7 @@ test json serialization of form data
 
 FakeApi apiInstance = new FakeApi();
 
-Object body = ; // Object | 
+Object body = null; // Object | 
 
 try {
     apiInstance.testJsonFormData(body);

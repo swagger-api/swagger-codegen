@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="createUser"></a>
 # **createUser**
-> createUser(user)
+> createUser(body)
 
 Create user
 
@@ -34,10 +34,10 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-User user = ; // User | Created user object
+User body = new User(); // User | Created user object
 
 try {
-    apiInstance.createUser(user);
+    apiInstance.createUser(body);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#createUser");
     e.printStackTrace();
@@ -48,7 +48,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | [**User**](.md)| Created user object |
+ **body** | [**User**](User.md)| Created user object |
 
 
 ### Return type
@@ -81,7 +81,7 @@ Creates list of users with given input array
 
 UserApi apiInstance = new UserApi();
 
-List<User> body = ; // List<User> | List of user object
+List<User> body = Arrays.asList(new User()); // List<User> | List of user object
 
 try {
     apiInstance.createUsersWithArrayInput(body);
@@ -128,7 +128,7 @@ Creates list of users with given input array
 
 UserApi apiInstance = new UserApi();
 
-List<User> body = ; // List<User> | List of user object
+List<User> body = Arrays.asList(new User()); // List<User> | List of user object
 
 try {
     apiInstance.createUsersWithListInput(body);
@@ -351,7 +351,7 @@ No authorization required
 
 <a name="updateUser"></a>
 # **updateUser**
-> updateUser(user, username)
+> updateUser(body, username)
 
 Updated user
 
@@ -367,12 +367,12 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-User user = ; // User | Updated user object
+User body = new User(); // User | Updated user object
 
 String username = Arrays.asList("username_example"); // String | name that need to be deleted
 
 try {
-    apiInstance.updateUser(user, username);
+    apiInstance.updateUser(body, username);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#updateUser");
     e.printStackTrace();
@@ -383,7 +383,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | [**User**](.md)| Updated user object |
+ **body** | [**User**](User.md)| Updated user object |
  **username** | [**String**](.md)| name that need to be deleted |
 
 

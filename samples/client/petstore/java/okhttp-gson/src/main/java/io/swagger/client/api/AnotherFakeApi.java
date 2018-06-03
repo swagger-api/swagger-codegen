@@ -64,15 +64,15 @@ public class AnotherFakeApi {
     
     /**
      * Build call for testSpecialTags
-     * @param client client model (required)
+     * @param body client model (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
         
      */
-    public com.squareup.okhttp.Call testSpecialTagsCall(Client client, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = client;
+    public com.squareup.okhttp.Call testSpecialTagsCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
         
         // create path and map variables
         String localVarPath = "/another-fake/dummy";
@@ -113,16 +113,16 @@ public class AnotherFakeApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testSpecialTagsValidateBeforeCall(Client client, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testSpecialTagsValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         
-        // verify the required parameter 'client' is set
-        if (client == null) {
-            throw new ApiException("Missing the required parameter 'client' when calling testSpecialTags(Async)");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling testSpecialTags(Async)");
         }
         
         
-        com.squareup.okhttp.Call call = testSpecialTagsCall(client, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testSpecialTagsCall(body, progressListener, progressRequestListener);
         return call;
 
         
@@ -136,26 +136,26 @@ public class AnotherFakeApi {
     /**
      * To test special tags
      * To test special tags
-     * @param client client model (required)
+     * @param body client model (required)
      * @return Client
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
         
      */
-    public Client testSpecialTags(Client client) throws ApiException {
-        ApiResponse<Client> resp = testSpecialTagsWithHttpInfo(client);
+    public Client testSpecialTags(Client body) throws ApiException {
+        ApiResponse<Client> resp = testSpecialTagsWithHttpInfo(body);
         return resp.getData();
     }
 
     /**
      * To test special tags
      * To test special tags
-     * @param client client model (required)
+     * @param body client model (required)
      * @return ApiResponse&lt;Client&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
         
      */
-    public ApiResponse<Client> testSpecialTagsWithHttpInfo(Client client) throws ApiException {
-        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(client, null, null);
+    public ApiResponse<Client> testSpecialTagsWithHttpInfo(Client body) throws ApiException {
+        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -163,13 +163,13 @@ public class AnotherFakeApi {
     /**
      * To test special tags (asynchronously)
      * To test special tags
-     * @param client client model (required)
+     * @param body client model (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
         
      */
-    public com.squareup.okhttp.Call testSpecialTagsAsync(Client client, final ApiCallback<Client> callback) throws ApiException {
+    public com.squareup.okhttp.Call testSpecialTagsAsync(Client body, final ApiCallback<Client> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -190,7 +190,7 @@ public class AnotherFakeApi {
             };
         }
 
-        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(client, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testSpecialTagsValidateBeforeCall(body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
