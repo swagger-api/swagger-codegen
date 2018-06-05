@@ -702,6 +702,29 @@ definitions:
         type: string
       message:
         type: string
+  #issue: https://github.com/swagger-api/swagger-codegen/issues/7980
+  Amount:
+    type: object
+    description: >
+      some description
+    properties:
+      value:
+        format: double
+        type: number
+        minimum: 0.01
+        maximum: 1000000000000000
+        description: >
+          some description
+      currency:
+        $ref: '#/definitions/Currency'
+    required:
+      - value
+      - currency
+  Currency:
+    type: string
+    pattern: '^[A-Z]{3,3}$'
+    description: >
+      some description
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
