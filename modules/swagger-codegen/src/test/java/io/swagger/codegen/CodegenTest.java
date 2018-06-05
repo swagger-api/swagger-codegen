@@ -439,5 +439,18 @@ public class CodegenTest {
         ModelImpl currency = (ModelImpl) swagger.getDefinitions().get("Currency");
         Assert.assertNotNull(currency);
         Assert.assertEquals(currency.getPattern(), "^[A-Z]{3,3}$");
+
+        ModelImpl amount = (ModelImpl) swagger.getDefinitions().get("Amount");
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Amount", amount, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            if ("currency".equalsIgnoreCase(codegenProperty.name)) {
+                Assert.assertEquals(codegenProperty.pattern, "^[A-Z]{3,3}$");
+                break;
+            }
+        }
+
     }
 }
