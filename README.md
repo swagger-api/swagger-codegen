@@ -34,6 +34,9 @@ This is the swagger codegen project, which allows generation of API client libra
 
 Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the OpenAPI project.
 
+### Community Fork: OpenAPI Generator
+Note: there exists a community-fork at [https://github.com/OpenAPITools/openapi-generator](https://github.com/OpenAPITools/openapi-generator) that supports OpenAPI 2.0 and 3.0 for all generators mentioned above.
+
 # Table of contents
 
   - [Swagger Code Generator](#swagger-code-generator)
