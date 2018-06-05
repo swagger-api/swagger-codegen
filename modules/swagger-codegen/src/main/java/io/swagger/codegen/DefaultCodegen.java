@@ -3146,7 +3146,7 @@ public class DefaultCodegen {
                     m.hasEnums = true;
                 }
 
-                if (prop instanceof RefProperty) {
+                if (allDefinitions != null && prop instanceof RefProperty) {
                     RefProperty refProperty = (RefProperty) prop;
                     Model model =  allDefinitions.get(refProperty.getSimpleRef());
                     if (model instanceof ModelImpl) {
