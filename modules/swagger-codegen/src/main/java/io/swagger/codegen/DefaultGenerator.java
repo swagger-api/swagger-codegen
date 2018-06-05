@@ -1011,13 +1011,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
         if (templateFile.startsWith(config.templateDir())) {
-            templateFile = templateFile.replaceFirst(config.templateDir(), StringUtils.EMPTY);
+            templateFile = StringUtils.replaceOnce(templateFile, config.templateDir(), StringUtils.EMPTY);
         }
         TemplateLoader templateLoader = null;
         if (config.additionalProperties().get(CodegenConstants.TEMPLATE_DIR) != null) {
-            templateLoader = new FileTemplateLoader(config.templateDir(), ".mustache");
+            templateLoader = new FileTemplateLoader(config.templateDir().replace("\\", "/"), ".mustache");
         } else {
-            templateLoader = new ClassPathTemplateLoader("/" + config.templateDir(), ".mustache");
+            templateLoader = new ClassPathTemplateLoader("/" + config.templateDir().replace("\\", "/"), ".mustache");
         }
         final Handlebars handlebars = new Handlebars(templateLoader);
         config.addHandlebarHelpers(handlebars);
