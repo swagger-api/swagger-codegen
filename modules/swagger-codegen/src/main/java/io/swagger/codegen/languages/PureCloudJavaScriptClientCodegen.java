@@ -85,6 +85,9 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
         apiPackage = "api";
         modelPackage = "model";
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
+        supportingFiles.add(new SupportingFile("rollup-cjs-for-node.config.mustache", "", "rollup-cjs-for-node.config.js"));
+        supportingFiles.add(new SupportingFile("rollup-cjs-for-browserify.config.mustache", "", "rollup-cjs-for-browserify.config.js"));
+        supportingFiles.add(new SupportingFile("rollup-amd.config.mustache", "", "rollup-amd.config.js"));
 
         // reference: http://www.w3schools.com/js/js_reserved.asp
         setReservedWordsLowerCase(
@@ -311,7 +314,6 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
         supportingFiles.add(new SupportingFile("index.mustache", createPath(sourceFolder, invokerPackage), "index.js"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", createPath(sourceFolder, invokerPackage), "ApiClient.js"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
     }
 
