@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.models.ExternalDocs;
 
 import java.util.ArrayList;
@@ -37,6 +39,36 @@ public class CodegenOperation {
     public String nickname; // legacy support
     public String operationIdLowerCase; // for mardown documentation
 
+
+    /**
+     * Returns a list of permissions
+     *
+     * @return the list of permissions
+     */
+    public List<String> getPermissions() {
+        if (!vendorExtensions.containsKey("x-inin-requires-permissions")) {
+            return null;
+        }
+        ObjectNode permissions = (ObjectNode)vendorExtensions.get("x-inin-requires-permissions");
+        List<String> permissionsList = new ArrayList<>();
+        for (final JsonNode permission : permissions.get("permissions")) {
+            permissionsList.add(permission.toString().replaceAll("\"", ""));
+        }
+        return permissionsList;
+    }
+
+    /**
+     * Returns the permission type
+     *
+     * @return the permission type
+     */
+    public String getPermissionType() {
+        if (!vendorExtensions.containsKey("x-inin-requires-permissions")) {
+            return "NO";
+        }
+        ObjectNode permissions = (ObjectNode)vendorExtensions.get("x-inin-requires-permissions");
+        return permissions.get("type").toString().replaceAll("\"", "");
+    }
 
     /**
      * Returns a list of only the required params from allParams
