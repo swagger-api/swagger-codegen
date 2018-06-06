@@ -1,4 +1,3 @@
-/// <reference path="./custom.d.ts" />
 // tslint:disable
 /**
  * Swagger Petstore
@@ -13,6 +12,7 @@
  */
 
 
+import "./custom.d.ts";
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
@@ -55,7 +55,7 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration?: Configuration;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -76,6 +76,26 @@ export class RequiredError extends Error {
     constructor(public field: string, msg?: string) {
         super(msg);
     }
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Amount
+ */
+export interface Amount {
+    /**
+     * some description 
+     * @type {number}
+     * @memberof Amount
+     */
+    value: number;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof Amount
+     */
+    currency: Currency;
 }
 
 /**
@@ -122,6 +142,14 @@ export interface Category {
      * @memberof Category
      */
     name?: string;
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Currency
+ */
+export interface Currency {
 }
 
 /**
@@ -695,7 +723,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -715,7 +745,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -734,7 +766,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -753,7 +787,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByTags(tags, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -772,7 +808,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).getPetById(petId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -791,7 +829,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -812,7 +852,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -833,7 +875,9 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).uploadFile(petId, additionalMetadata, file, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1195,7 +1239,9 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1213,7 +1259,9 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getInventory(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1232,7 +1280,9 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getOrderById(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1251,7 +1301,9 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).placeOrder(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1648,7 +1700,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1667,7 +1721,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1686,7 +1742,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1705,7 +1763,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1724,7 +1784,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).getUserByName(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1744,7 +1806,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).loginUser(username, password, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response.json();
                     } else {
                         throw response;
@@ -1762,7 +1826,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
@@ -1782,7 +1848,9 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (configuration && configuration.responseInterceptor) {
+                        return configuration.responseInterceptor(response);
+                    } else if (response.status >= 200 && response.status < 300) {
                         return response;
                     } else {
                         throw response;
