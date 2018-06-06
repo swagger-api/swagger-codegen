@@ -124,7 +124,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if stringResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.Error(self.path, self.URLString, stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error as Error!)
+                        ErrorResponse.Error(self.path, self.URLString, stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error!)
                     )
                     return
                 }
