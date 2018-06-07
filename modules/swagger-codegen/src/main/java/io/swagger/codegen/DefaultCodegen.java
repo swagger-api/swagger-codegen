@@ -1705,6 +1705,7 @@ public class DefaultCodegen {
         op.tags = operation.getTags();
         op.hasConsumes = false;
         op.hasProduces = false;
+        op.deprecated = operation.isDeprecated();
 
         List<String> consumes = new ArrayList<String>();
         if (operation.getConsumes() != null) {

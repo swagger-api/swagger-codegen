@@ -38,6 +38,7 @@ public class CodegenOperation {
     public Map<String, Object> vendorExtensions;
     public String nickname; // legacy support
     public String operationIdLowerCase; // for mardown documentation
+    public Boolean deprecated;
 
 
     /**
