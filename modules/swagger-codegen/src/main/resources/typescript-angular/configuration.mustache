@@ -16,7 +16,7 @@ export class Configuration {
     withCredentials?: boolean;
 
     constructor(configurationParameters: ConfigurationParameters = {}) {
-        this.apiKeys = configurationParameters.apiKeys;
+        this.apiKeys = configurationParameters.apiKeys || {};
         this.username = configurationParameters.username;
         this.password = configurationParameters.password;
         this.accessToken = configurationParameters.accessToken;
