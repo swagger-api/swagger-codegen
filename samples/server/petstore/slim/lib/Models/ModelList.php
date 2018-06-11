@@ -1,13 +1,13 @@
 <?php
 /*
- * List
+ * ModelList
  */
 namespace \Models;
 
 /*
- * List
+ * ModelList
  */
-class List {
+class ModelList {
     /* @var string $_123List  */
     private $_123List;
 }

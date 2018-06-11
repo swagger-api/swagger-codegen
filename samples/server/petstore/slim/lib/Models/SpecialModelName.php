@@ -1,13 +1,13 @@
 <?php
 /*
- * $Special[modelName]
+ * SpecialModelName
  */
 namespace \Models;
 
 /*
- * $Special[modelName]
+ * SpecialModelName
  */
-class $Special[modelName] {
+class SpecialModelName {
     /* @var int $specialPropertyName  */
     private $specialPropertyName;
 }

@@ -1,13 +1,13 @@
 <?php
 /*
- * Return
+ * ModelReturn
  */
 namespace \Models;
 
 /*
- * Return
+ * ModelReturn
  */
-class Return {
+class ModelReturn {
     /* @var int $return  */
     private $return;
 }

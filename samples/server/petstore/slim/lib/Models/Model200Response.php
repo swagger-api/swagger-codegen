@@ -1,13 +1,13 @@
 <?php
 /*
- * 200Response
+ * Model200Response
  */
 namespace \Models;
 
 /*
- * 200Response
+ * Model200Response
  */
-class 200Response {
+class Model200Response {
     /* @var int $name  */
     private $name;
 /* @var string $class  */
