@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
@@ -12,6 +13,8 @@ import io.swagger.models.properties.RefProperty;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Matcher;
@@ -279,6 +282,24 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "");
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
+        for (CodegenOperation op : operationList) {
+            if (op.hasProduces) {
+                // need to escape */* values because they breakes current mustaches
+                List<Map<String, String>> c = op.produces;
+                for (Map<String, String> mediaType : c) {
+                    if ("*/*".equals(mediaType.get("mediaType"))) {
+                        mediaType.put("mediaType", "*_/_*");
+                    }
+                }
+            }
+        }
+        return objs;
     }
 
 }

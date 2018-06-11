@@ -142,7 +142,7 @@ $app->POST('/v2/fake', function($request, $response, $args) {
  * GET testEnumParameters
  * Summary: To test enum parameters
  * Notes: To test enum parameters
- * Output-Formats: [*/*]
+ * Output-Formats: [*_/_*]
  */
 $app->GET('/v2/fake', function($request, $response, $args) {
             $headers = $request->getHeaders();
