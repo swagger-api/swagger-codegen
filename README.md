@@ -765,6 +765,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [carpolo](http://www.carpolo.co/)
+- [Carus](https://www.carus.com/)
 - [Cisco](http://www.cisco.com/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Cloudsmith](https://cloudsmith.io/)
