@@ -27,6 +27,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected ClientOptInput opts;
     protected Swagger swagger;
     protected CodegenIgnoreProcessor ignoreProcessor;
+    protected Map<String, CodegenModel> codegenModels = new HashMap<>();
 
     @Override
     public Generator opts(ClientOptInput opts) {
@@ -385,6 +386,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     });
                     Map<String, Object> operation = processOperations(config, tag, ops);
 
+                    // Populate codegenModel properties for use by documentation
+                    for (CodegenOperation apiOperation : ops) {
+                        setCodegenParameterModels(apiOperation.allParams);
+                    }
+
                     operation.put("basePath", basePath);
                     operation.put("basePathWithoutHost", basePathWithoutHost);
                     operation.put("contextPath", contextPath);
@@ -655,6 +661,52 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return files;
     }
 
+    /**
+     * Sets codegenModel property on CodegenParameter objects based on the baseType
+     */
+    private void setCodegenParameterModels(List<CodegenParameter> parameters) {
+        for (CodegenParameter parameter : parameters) {
+            // Only set for non-primitives that have not already had a codegenModel set
+            if ((parameter.isPrimitiveType == null || !parameter.isPrimitiveType) && parameter.codegenModel == null) {
+                // Set the codegenModel object
+                parameter.codegenModel = codegenModels.get(parameter.baseType);
+
+                // Recursively set codegen models
+                if (parameter.codegenModel != null && parameter.codegenModel.allVars != null && parameter.codegenModel.allVars.size() > 0)
+                    setCodegenPropertyModels(parameter.codegenModel.allVars, false);
+            }
+        }
+    }
+
+    /**
+     * Sets codegenModel property on CodegenProperty objects based on the baseType or complexType
+     */
+    private void setCodegenPropertyModels(List<CodegenProperty> properties, Boolean usedUserType) {
+        for (CodegenProperty property : properties) {
+            // Only set for non-primitives that have not already had a codegenModel set
+            if ((property.isPrimitiveType == null || !property.isPrimitiveType) && property.codegenModel == null) {
+                // Skip loading User model if it's already been loaded in this chain. The model is self-referencing and generates really unruly schemas in the docs
+                if (property.baseType.equals("User") || property.complexType.equals("User")) {
+                    if (usedUserType) {
+                        // Skip this instance of User
+                        continue;
+                    } else {
+                        usedUserType = true;
+                    }
+                }
+
+                // Set the codegenModel object
+                property.codegenModel = codegenModels.get(property.baseType);
+                if (property.codegenModel == null)
+                    property.codegenModel = codegenModels.get(property.complexType);
+
+                // Recursively set codegen models
+                if (property.codegenModel != null && property.codegenModel.allVars != null && property.codegenModel.allVars.size() > 0)
+                    setCodegenPropertyModels(property.codegenModel.allVars, usedUserType);
+            }
+        }
+    }
+
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
         if(ignoreProcessor.allowsFile(new File(outputFilename.replaceAll("//", "/")))) {
             String templateFile = getFullTemplateFile(config, templateName);
@@ -897,6 +949,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             models.add(mo);
 
             allImports.addAll(cm.imports);
+
+            // Add to list of codegen models
+            codegenModels.put(cm.classname, cm);
         }
         objs.put("models", models);
 

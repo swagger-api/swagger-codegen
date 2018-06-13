@@ -43,6 +43,7 @@ public class CodegenProperty {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
+    public CodegenModel codegenModel;
 
     @Override
     public String toString() {

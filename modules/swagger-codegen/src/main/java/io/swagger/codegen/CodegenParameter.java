@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import io.swagger.models.Model;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +24,7 @@ public class CodegenParameter {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
+    public CodegenModel codegenModel;
 
     public Map<String, Object> getAllowableValues() {
         if (this.allowableValues != null)
