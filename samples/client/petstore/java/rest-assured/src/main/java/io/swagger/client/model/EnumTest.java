@@ -13,15 +13,17 @@
 
 package io.swagger.client.model;
 
+import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import io.swagger.client.model.OuterEnum;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * EnumTest
@@ -245,6 +247,7 @@ public class EnumTest {
    * @return enumString
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_string")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -263,6 +266,7 @@ public class EnumTest {
    * @return enumStringRequired
   **/
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("enum_string_required")
   public EnumStringRequiredEnum getEnumStringRequired() {
     return enumStringRequired;
   }
@@ -281,6 +285,7 @@ public class EnumTest {
    * @return enumInteger
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_integer")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -299,6 +304,7 @@ public class EnumTest {
    * @return enumNumber
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_number")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -317,6 +323,7 @@ public class EnumTest {
    * @return outerEnum
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("outerEnum")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

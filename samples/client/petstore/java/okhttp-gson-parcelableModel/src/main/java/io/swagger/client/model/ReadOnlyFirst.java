@@ -44,6 +44,7 @@ public class ReadOnlyFirst implements Parcelable {
    * @return bar
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("bar")
   public String getBar() {
     return bar;
   }
@@ -58,6 +59,7 @@ public class ReadOnlyFirst implements Parcelable {
    * @return baz
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("baz")
   public String getBaz() {
     return baz;
   }

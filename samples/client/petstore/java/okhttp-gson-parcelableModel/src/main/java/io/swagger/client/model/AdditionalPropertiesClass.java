@@ -60,6 +60,7 @@ public class AdditionalPropertiesClass implements Parcelable {
    * @return mapProperty
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_property")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -86,6 +87,7 @@ public class AdditionalPropertiesClass implements Parcelable {
    * @return mapOfMapProperty
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_of_map_property")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

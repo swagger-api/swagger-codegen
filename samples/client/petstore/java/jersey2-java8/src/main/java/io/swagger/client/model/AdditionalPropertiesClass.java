@@ -53,6 +53,7 @@ public class AdditionalPropertiesClass {
    * @return mapProperty
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_property")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -79,6 +80,7 @@ public class AdditionalPropertiesClass {
    * @return mapOfMapProperty
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_of_map_property")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

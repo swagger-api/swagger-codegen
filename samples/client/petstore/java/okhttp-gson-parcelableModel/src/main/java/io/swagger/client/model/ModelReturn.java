@@ -47,6 +47,7 @@ public class ModelReturn implements Parcelable {
    * @return _return
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("return")
   public Integer getReturn() {
     return _return;
   }

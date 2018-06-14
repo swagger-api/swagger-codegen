@@ -47,6 +47,7 @@ public class ClassModel implements Parcelable {
    * @return propertyClass
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("_class")
   public String getPropertyClass() {
     return propertyClass;
   }

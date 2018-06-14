@@ -52,6 +52,7 @@ public class ModelApiResponse implements Parcelable {
    * @return code
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("code")
   public Integer getCode() {
     return code;
   }
@@ -70,6 +71,7 @@ public class ModelApiResponse implements Parcelable {
    * @return type
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("type")
   public String getType() {
     return type;
   }
@@ -88,6 +90,7 @@ public class ModelApiResponse implements Parcelable {
    * @return message
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("message")
   public String getMessage() {
     return message;
   }

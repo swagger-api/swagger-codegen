@@ -67,6 +67,7 @@ public class User implements Parcelable {
    * @return id
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -85,6 +86,7 @@ public class User implements Parcelable {
    * @return username
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("username")
   public String getUsername() {
     return username;
   }
@@ -103,6 +105,7 @@ public class User implements Parcelable {
    * @return firstName
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
   }
@@ -121,6 +124,7 @@ public class User implements Parcelable {
    * @return lastName
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
   }
@@ -139,6 +143,7 @@ public class User implements Parcelable {
    * @return email
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("email")
   public String getEmail() {
     return email;
   }
@@ -157,6 +162,7 @@ public class User implements Parcelable {
    * @return password
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("password")
   public String getPassword() {
     return password;
   }
@@ -175,6 +181,7 @@ public class User implements Parcelable {
    * @return phone
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("phone")
   public String getPhone() {
     return phone;
   }
@@ -193,6 +200,7 @@ public class User implements Parcelable {
    * @return userStatus
   **/
   @ApiModelProperty(value = "User Status")
+  @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
   }

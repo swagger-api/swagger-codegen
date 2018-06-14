@@ -47,6 +47,7 @@ public class NumberOnly implements Parcelable {
    * @return justNumber
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("JustNumber")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
