@@ -782,6 +782,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
+- [fashionTrade](https://www.fashiontrade.com/)
 - [Fastly](https://www.fastly.com/)
 - [FINRA](https://github.com/FINRAOS/herd/)
 - [Flat](https://flat.io)
