@@ -45,7 +45,7 @@ export class HttpService {
       this.client = new HttpClient();
       this.client.configure((builder) => {
         builder
-          .withBaseUrl(`${HttpService.getPrefix()}/${BASE_PATH}`)
+          .withBaseUrl(BASE_PATH)
           .withInterceptor({
             response(message: HttpResponseMessage): HttpResponseMessage {
               const { headers } = message;
@@ -61,43 +61,6 @@ export class HttpService {
     }
 
     return this.client;
-  }
-
-  /**
-   * Returns URL origin.
-   */
-  public static getOrigin(): string {
-    const { location } = window;
-    const { origin }   = location;
-
-    if (!origin) {
-      const hostname = location.hostname;
-      const protocol = location.protocol && `${location.protocol}//`;
-      const port     = location.port     && `:${location.port}`;
-
-      return `${protocol}${hostname}${port}`;
-    }
-
-    return origin;
-  }
-
-  /**
-   * Returns URI prefix.
-   */
-  public static getPrefix(): string {
-    const { location } = window;
-    const { pathname } = location;
-
-    const prefix = pathname.replace(/^\/*/, '');
-
-    return prefix.startsWith('app_dev.php') ? '/app_dev.php' : '';
-  }
-
-  /**
-   * Returns URL location with origin and prefix.
-   */
-  public static getLocation(): string {
-    return `${this.getOrigin()}${this.getPrefix()}`;
   }
 
   /**
