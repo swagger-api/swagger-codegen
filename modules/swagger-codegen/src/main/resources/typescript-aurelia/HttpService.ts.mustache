@@ -1,0 +1,142 @@
+{{>licenseInfo}}
+import { LogManager }
+  from 'aurelia-framework';
+
+import { HttpClient, HttpResponseMessage, RequestBuilder }
+  from 'aurelia-http-client';
+
+import { Logger }
+  from 'aurelia-logging';
+
+import { Router }
+  from 'aurelia-router';
+
+import { TokenService }
+  from '../services';
+
+const BASE_PATH = '{{{basePath}}}'.replace(/\/+$/, '');
+
+/**
+ * Class to handle http requests
+ */
+export class HttpService {
+
+  private logger:       Logger;
+  private router:       Router;
+  private httpClient:   HttpClient;
+
+  constructor(router: Router, basePath: string = BASE_PATH) {
+    this.logger       = LogManager.getLogger(this.constructor.name);
+    this.router       = router;
+
+    this.httpClient = new HttpClient();
+    this.httpClient.configure((builder) => {
+      builder
+        .withBaseUrl(`${HttpService.getPrefix()}/${basePath}`)
+        .withInterceptor({
+          response(message: HttpResponseMessage): HttpResponseMessage {
+            const { headers } = message;
+
+            const csrfToken = headers.get('XSRF-TOKEN');
+            csrfToken && TokenService.setCsrfToken(csrfToken);
+
+            return message;
+          },
+        })
+      ;
+    });
+  }
+
+  /**
+   * Creates request.
+   */
+  public createRequest(url: string): RequestBuilder {
+    return this.httpClient.createRequest(url);
+  }
+
+  /**
+   * Returns URL origin.
+   */
+  public static getOrigin(): string {
+    const { location } = window;
+    const { origin }   = location;
+
+    if (!origin) {
+      const hostname = location.hostname;
+      const protocol = location.protocol && `${location.protocol}//`;
+      const port     = location.port     && `:${location.port}`;
+
+      return `${protocol}${hostname}${port}`;
+    }
+
+    return origin;
+  }
+
+  /**
+   * Returns URI prefix.
+   */
+  public static getPrefix(): string {
+    const { location } = window;
+    const { pathname } = location;
+
+    const prefix = pathname.replace(/^\/*/, '');
+
+    return prefix.startsWith('app_dev.php') ? '/app_dev.php' : '';
+  }
+
+  /**
+   * Returns URL location with origin and prefix.
+   */
+  public static getLocation(): string {
+    return `${this.getOrigin()}${this.getPrefix()}`;
+  }
+
+  /**
+   * Adds the authorization header to the request.
+   */
+  public async addAuthHeader(name: string, req: RequestBuilder): Promise<RequestBuilder> {
+    if (!TokenService.getUserToken()) {
+      try {
+        this.logger.info('Reload user token.');
+        await TokenService.reloadUserToken();
+        this.logger.info('Reloaded user token.');
+      } catch (e) {
+        this.logger.debug('Reloading user token failed.', e);
+        this.router.navigateToRoute('login');
+        return Promise.reject('Reloading user token failed.');
+      }
+    }
+
+    return req.withHeader(name, `Bearer ${TokenService.getUserToken()}`);
+  }
+
+  /**
+   * Adds the authorization param to the request.
+   */
+  public async addAuthParam(name: string, req: RequestBuilder): Promise<RequestBuilder> {
+    if (!TokenService.getUserToken()) {
+      try {
+        this.logger.info('Reload user token.');
+        await TokenService.reloadUserToken();
+        this.logger.info('Reloaded user token.');
+      } catch (e) {
+        this.logger.debug('Reloading user token failed.', e);
+        this.router.navigateToRoute('login');
+        return Promise.reject('Reloading user token failed.');
+      }
+    }
+
+    const params = {};
+    params[name] = TokenService.getUserToken();
+
+    return req.withParams(params);
+  }
+
+  /**
+   * Adds CSRF token to the request.
+   */
+  public async addCsrfHeader(req: RequestBuilder): Promise<RequestBuilder> {
+    return req.withHeader('XSRF-TOKEN', TokenService.getCsrfToken());
+  }
+
+}

@@ -1,17 +1,16 @@
 {{>licenseInfo}}
-import { HttpClient } from 'aurelia-http-client';
-import { TokenStorage } from './TokenStorage';
+import { HttpService }
+  from './HttpService';
 
-const BASE_PATH = '{{{basePath}}}'.replace(/\/+$/, '');
+import { TokenStorage }
+  from './TokenStorage';
 
 export class Api {
-  basePath: string;
-  httpClient: HttpClient;
+  httpService:  HttpService;
   tokenStorage: TokenStorage;
 
-  constructor(httpClient: HttpClient, tokenStorage: TokenStorage, basePath: string = BASE_PATH) {
-    this.basePath = basePath;
-    this.httpClient = httpClient;
+  constructor(httpService: HttpService, tokenStorage: TokenStorage) {
+    this.httpService  = httpService;
     this.tokenStorage = tokenStorage;
   }
 

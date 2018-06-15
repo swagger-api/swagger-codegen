@@ -1,8 +1,16 @@
 {{>licenseInfo}}
-import { autoinject } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-http-client';
-import { Api } from './Api';
-import { TokenStorage } from './TokenStorage';
+import { autoinject }
+  from 'aurelia-framework';
+
+import { Api }
+  from './Api';
+
+import { HttpService }
+  from './HttpService';
+
+import { TokenStorage }
+  from './TokenStorage';
+
 import {
 {{#modelImports}}  I{{this}},
 {{/modelImports}}
@@ -47,11 +55,9 @@ export class {{classname}} extends Api implements I{{classname}} {
 
   /**
    * Creates a new {{classname}} class.
-   *
-   * @param httpClient The Aurelia HTTP client to be injected.
    */
-  constructor(httpClient: HttpClient, tokenStorage: TokenStorage) {
-    super(httpClient, tokenStorage);
+  constructor(httpService: HttpService, tokenStorage: TokenStorage) {
+    super(httpService, tokenStorage);
   }
 
 {{#operation}}
@@ -70,10 +76,10 @@ export class {{classname}} extends Api implements I{{classname}} {
 {{/allParams}}
 
     // Create URL to call
-    const url = `${this.basePath}{{{path}}}`{{#pathParams}}
+    const url = `{{{path}}}`{{#pathParams}}
       .replace(`{${'{{baseName}}'}}`, `${params['{{paramName}}']}`){{/pathParams}};
 
-    const response = await this.httpClient.createRequest(url)
+    const request = this.httpService.createRequest(url)
       // Set HTTP method
       .as{{httpMethod}}()
 {{#hasQueryParams}}
@@ -100,19 +106,22 @@ export class {{classname}} extends Api implements I{{classname}} {
 {{/hasBodyParam}}
 {{#headerParams}}
       .withHeader('{{baseName}}', params['{{paramName}}']){{/headerParams}}
+    ;
+
 {{#authMethods}}
       // Authentication '{{name}}' required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-      .withHeader('{{keyParamName}}', this.tokenStorage.get{{name}}())
+     await this.httpService.addAuthHeader('{{keyParamName}}', request);
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-      .withParams({ {{keyParamName}}: this.tokenStorage.get{{name}}() })
+     await this.httpService.addAutParam('{{keyParamName}}', request);
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{/authMethods}}
-      // Send the request
-      .send();
+
+    // Send the request
+    const response = await request.send();
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw new Error(response.content);
