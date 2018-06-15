@@ -8,9 +8,6 @@ import { Api }
 import { HttpService }
   from './HttpService';
 
-import { TokenStorage }
-  from './TokenStorage';
-
 import {
 {{#modelImports}}  I{{this}},
 {{/modelImports}}
@@ -56,8 +53,8 @@ export class {{classname}} extends Api implements I{{classname}} {
   /**
    * Creates a new {{classname}} class.
    */
-  constructor(httpService: HttpService, tokenStorage: TokenStorage) {
-    super(httpService, tokenStorage);
+  constructor(httpService: HttpService) {
+    super(httpService);
   }
 
 {{#operation}}

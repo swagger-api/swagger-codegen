@@ -2,16 +2,11 @@
 import { HttpService }
   from './HttpService';
 
-import { TokenStorage }
-  from './TokenStorage';
-
 export class Api {
   httpService:  HttpService;
-  tokenStorage: TokenStorage;
 
-  constructor(httpService: HttpService, tokenStorage: TokenStorage) {
-    this.httpService  = httpService;
-    this.tokenStorage = tokenStorage;
+  constructor(httpService: HttpService) {
+    this.httpService = httpService;
   }
 
   /**

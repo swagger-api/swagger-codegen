@@ -1,13 +1,19 @@
 {{>licenseInfo}}
-export { Api } from './Api';
-export { TokenStorage } from './TokenStorage';
+export { Api }
+  from './Api';
+
+export { HttpService }
+  from './HttpService';
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
-export { {{classname}} } from './{{classname}}';
+
+export { {{classname}} }
+  from './{{classname}}';
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
+
 export {
 {{#models}}
 {{#model}}  I{{classname}},
