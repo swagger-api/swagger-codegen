@@ -21,37 +21,46 @@ const BASE_PATH = '{{{basePath}}}'.replace(/\/+$/, '');
  */
 export class HttpService {
 
-  private logger:       Logger;
-  private router:       Router;
-  private httpClient:   HttpClient;
+  private logger: Logger;
+  private router: Router;
+  private static client;
 
-  constructor(router: Router, basePath: string = BASE_PATH) {
-    this.logger       = LogManager.getLogger(this.constructor.name);
-    this.router       = router;
-
-    this.httpClient = new HttpClient();
-    this.httpClient.configure((builder) => {
-      builder
-        .withBaseUrl(`${HttpService.getPrefix()}/${basePath}`)
-        .withInterceptor({
-          response(message: HttpResponseMessage): HttpResponseMessage {
-            const { headers } = message;
-
-            const csrfToken = headers.get('XSRF-TOKEN');
-            csrfToken && TokenService.setCsrfToken(csrfToken);
-
-            return message;
-          },
-        })
-      ;
-    });
+  constructor(router: Router) {
+    this.logger = LogManager.getLogger(this.constructor.name);
+    this.router = router;
   }
 
   /**
    * Creates request.
    */
   public createRequest(url: string): RequestBuilder {
-    return this.httpClient.createRequest(url);
+    return HttpService.getClient().createRequest(url);
+  }
+
+  /**
+   * Returns HTTP client.
+   */
+  public static getClient(): HttpClient {
+    if (!this.client) {
+      this.client = new HttpClient();
+      this.client.configure((builder) => {
+        builder
+          .withBaseUrl(`${HttpService.getPrefix()}/${BASE_PATH}`)
+          .withInterceptor({
+            response(message: HttpResponseMessage): HttpResponseMessage {
+              const { headers } = message;
+
+              const csrfToken = headers.get('XSRF-TOKEN');
+              csrfToken && TokenService.setCsrfToken(csrfToken);
+
+              return message;
+            },
+          })
+        ;
+      });
+    }
+
+    return this.client;
   }
 
   /**
