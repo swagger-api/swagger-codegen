@@ -1018,7 +1018,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (config.additionalProperties().get(CodegenConstants.TEMPLATE_DIR) != null) {
             templateLoader = new FileTemplateLoader(config.templateDir(), ".mustache");
         } else {
-            templateLoader = new ClassPathTemplateLoader("/" + config.templateDir(), ".mustache");
+            templateLoader = new ClassPathTemplateLoader("/" + config.templateDir().replace("\\", "/"), ".mustache");
         }
         final Handlebars handlebars = new Handlebars(templateLoader);
         config.addHandlebarHelpers(handlebars);
