@@ -578,7 +578,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     templateFile = templateFile.replaceAll("//", "/").replace('/', File.separatorChar);
                     if (templateFile.endsWith("mustache")) {
                         String templateName = templateFile;
-                        final com.github.jknack.handlebars.Template hTemplate = getHandlebars(templateName.replace(config.templateDir(), StringUtils.EMPTY));
+                        final com.github.jknack.handlebars.Template hTemplate = getHandlebars(StringUtils.replaceOnce(templateName, config.templateDir().replace("\\", "/"), StringUtils.EMPTY));
                         String rendered = hTemplate.apply(bundle);
                         writeToFile(outputFilename, rendered);
 
