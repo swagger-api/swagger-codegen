@@ -29,6 +29,7 @@
 
 namespace Swagger\Server\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Swagger\Server\Service\SerializerInterface;
@@ -42,7 +43,7 @@ use Swagger\Server\Service\ValidatorInterface;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Controller
+class Controller extends BaseController
 {
     protected $validator;
     protected $serializer;
