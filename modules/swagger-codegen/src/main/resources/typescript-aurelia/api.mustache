@@ -117,6 +117,11 @@ export class {{classname}} extends Api implements I{{classname}} {
 {{/isApiKey}}
 {{/authMethods}}
 
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].indexOf('{{httpMethod}}'.toUpperCase()) !== -1) {
+        // CSRF authorization required
+        this.httpService.addCsrfHeader(request);
+    }
+
     // Send the request
     const response = await request.send();
 

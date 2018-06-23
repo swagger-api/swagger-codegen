@@ -75,7 +75,7 @@ export class HttpService {
       } catch (e) {
         this.logger.debug('Reloading user token failed.', e);
         this.router.navigateToRoute('login');
-        return Promise.reject('Reloading user token failed.');
+        throw e;
       }
     }
 
@@ -94,7 +94,7 @@ export class HttpService {
       } catch (e) {
         this.logger.debug('Reloading user token failed.', e);
         this.router.navigateToRoute('login');
-        return Promise.reject('Reloading user token failed.');
+        throw e;
       }
     }
 
@@ -107,7 +107,7 @@ export class HttpService {
   /**
    * Adds CSRF token to the request.
    */
-  public async addCsrfHeader(req: RequestBuilder): Promise<RequestBuilder> {
+  public addCsrfHeader(req: RequestBuilder): RequestBuilder {
     return req.withHeader('XSRF-TOKEN', TokenService.getCsrfToken());
   }
 
