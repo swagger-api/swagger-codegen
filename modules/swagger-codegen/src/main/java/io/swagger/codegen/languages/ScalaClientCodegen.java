@@ -41,7 +41,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
                     "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
 
-        additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
         additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
@@ -52,10 +51,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("apiInvoker.mustache",
-                (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
-        supportingFiles.add(new SupportingFile("client.mustache",
-                (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         // gradle settings
@@ -104,6 +99,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         instantiationTypes.put("map", "HashMap");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
+        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
     }
 
     @Override
@@ -112,8 +108,27 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
             setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+            this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+        } else {
+            additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
+        }
+        
+        final String invokerFolder =  (sourceFolder + File.separator + getInvokerPackage()).replace(".", java.io.File.separator);
+        supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder, "ApiInvoker.scala"));
+        supportingFiles.add(new SupportingFile("client.mustache", invokerFolder, clientName + ".scala"));
     }
-    
+
+    public void setInvokerPackage(String invokerPackage) {
+        this.invokerPackage = invokerPackage;
+    }
+
+    public String getInvokerPackage() {
+        return this.invokerPackage;
+    }
+
+
     public void setModelPropertyNaming(String naming) {
         if ("original".equals(naming) || "camelCase".equals(naming) ||
                 "PascalCase".equals(naming) || "snake_case".equals(naming)) {

@@ -4,16 +4,11 @@ import io.swagger.codegen.CodegenConstants;
 
 import com.google.common.collect.ImmutableMap;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class ScalaClientOptionsProvider implements OptionsProvider {
-    public static final String SOURCE_FOLDER_VALUE = "sourceFolder";
-    public static final String MODEL_PACKAGE_VALUE = "package";
-    public static final String API_PACKAGE_VALUE = "apiPackage";
-    public static final String SORT_PARAMS_VALUE = "false";
-    public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
-    public static final String MODEL_PROPERTY_NAMING = "modelPropertyNaming";
-    public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+public class ScalaClientOptionsProvider extends LagomScalaOptionsProvider {
+    public static final String INVOKER_PACKAGE_VALUE = "io.swagger.client.test";
 
 
     @Override
@@ -23,15 +18,9 @@ public class ScalaClientOptionsProvider implements OptionsProvider {
 
     @Override
     public Map<String, String> createOptions() {
-        ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
-        return builder.put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
-                .put(CodegenConstants.API_PACKAGE, API_PACKAGE_VALUE)
-                .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
-                .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
-                .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING)
-                .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
-                .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
-                .build();
+        Map<String, String> options = new HashMap(super.createOptions());
+        options.put(CodegenConstants.INVOKER_PACKAGE, INVOKER_PACKAGE_VALUE);
+        return options;
     }
 
     @Override
