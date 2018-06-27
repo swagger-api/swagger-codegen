@@ -23,7 +23,7 @@ export class HttpService {
 
   private logger: Logger;
   private router: Router;
-  private static client;
+  private static client: HttpClient;
 
   constructor(router: Router) {
     this.logger = LogManager.getLogger(this.constructor.name);
@@ -73,7 +73,7 @@ export class HttpService {
         await TokenService.reloadUserToken();
         this.logger.info('Reloaded user token.');
       } catch (e) {
-        this.logger.debug('Reloading user token failed.', e);
+        this.logger.error('Reloading user token failed.', e);
         this.router.navigateToRoute('login');
         throw e;
       }
@@ -92,7 +92,7 @@ export class HttpService {
         await TokenService.reloadUserToken();
         this.logger.info('Reloaded user token.');
       } catch (e) {
-        this.logger.debug('Reloading user token failed.', e);
+        this.logger.error('Reloading user token failed.', e);
         this.router.navigateToRoute('login');
         throw e;
       }
@@ -107,8 +107,22 @@ export class HttpService {
   /**
    * Adds CSRF token to the request.
    */
-  public addCsrfHeader(req: RequestBuilder): RequestBuilder {
-    return req.withHeader('XSRF-TOKEN', TokenService.getCsrfToken());
+  public async addCsrfHeader(req: RequestBuilder): Promise<RequestBuilder> {
+    if (!TokenService.getCsrfToken()) {
+      try {
+        this.logger.info('Reload CSRF token.');
+        await TokenService.reloadCsrfToken();
+        this.logger.info('Reloaded CSRF token.');
+      } catch (e) {
+        this.logger.error('Reloading CSRF token failed.', e);
+        throw e;
+      }
+    }
+
+    const csrfToken = TokenService.getCsrfToken();
+    TokenService.clearCsrfToken();
+
+    return req.withHeader('XSRF-TOKEN', csrfToken);
   }
 
 }

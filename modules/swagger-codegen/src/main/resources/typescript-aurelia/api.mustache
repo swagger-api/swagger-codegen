@@ -109,18 +109,20 @@ export class {{classname}} extends Api implements I{{classname}} {
       // Authentication '{{name}}' required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-     await this.httpService.addAuthHeader('{{keyParamName}}', request);
+      await this.httpService.addAuthHeader('{{keyParamName}}', request);
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-     await this.httpService.addAutParam('{{keyParamName}}', request);
+      await this.httpService.addAutParam('{{keyParamName}}', request);
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{/authMethods}}
 
+{{^hasAuthMethods}}
     if (['POST', 'PUT', 'PATCH', 'DELETE'].indexOf('{{httpMethod}}'.toUpperCase()) !== -1) {
-        // CSRF authorization required
-        this.httpService.addCsrfHeader(request);
+      // CSRF authorization required
+      await this.httpService.addCsrfHeader(request);
     }
+{{/hasAuthMethods}}
 
     // Send the request
     const response = await request.send();
