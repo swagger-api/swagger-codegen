@@ -46,20 +46,25 @@ public struct APIHelper {
     }
 
 
-    public static func mapValuesToQueryItems(_ source: [String:Any?]) -> [URLQueryItem]? {
-        let destination = source.filter({ $0.value != nil}).reduce(into: [URLQueryItem]()) { (result, item) in
-            if let collection = item.value as? Array<Any?> {
-                let value = collection.filter({ $0 != nil }).map({"\($0!)"}).joined(separator: ",")
-                result.append(URLQueryItem(name: item.key, value: value))
-            } else if let value = item.value {
-                result.append(URLQueryItem(name: item.key, value: "\(value)"))
+    static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
+        var result: [URLQueryItem] = []
+        
+        for item in values {
+            if item.value != nil {
+                if let stringArr = item.value as? [String] {
+                    for str in stringArr {
+                        result.append(URLQueryItem(name: item.key, value:"\(str)"))
+                    }
+                } else {
+                    result.append(URLQueryItem(name: item.key, value:"\(item.value!)"))
+                }
             }
         }
-
-        if destination.isEmpty {
+        
+        if result.count == 0 {
             return nil
         }
-        return destination
+        return result
     }
 }
 
