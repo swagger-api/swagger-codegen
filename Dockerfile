@@ -1,7 +1,8 @@
-FROM jimschubert/8-jdk-alpine-mvn:1.0
+FROM openjdk:8-jdk-alpine
 
-RUN set -x && \
-    apk add --no-cache bash
+RUN set -x \
+ && apk update && apk upgrade \
+ && apk add --no-cache bash ca-certificates maven
 
 ENV GEN_DIR /opt/swagger-codegen
 WORKDIR ${GEN_DIR}
