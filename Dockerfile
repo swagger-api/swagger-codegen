@@ -18,7 +18,7 @@ COPY ./google_checkstyle.xml ${GEN_DIR}
 COPY ./modules/swagger-codegen-maven-plugin ${GEN_DIR}/modules/swagger-codegen-maven-plugin
 COPY ./modules/swagger-codegen-cli ${GEN_DIR}/modules/swagger-codegen-cli
 COPY ./modules/swagger-codegen ${GEN_DIR}/modules/swagger-codegen
-COPY ./pom.xml ${GEN_DIR}
+COPY ./pom.docker.xml ${GEN_DIR}/pom.xml
 
 # Pre-compile swagger-codegen-cli
 RUN mvn -am -pl "modules/swagger-codegen-cli" package
