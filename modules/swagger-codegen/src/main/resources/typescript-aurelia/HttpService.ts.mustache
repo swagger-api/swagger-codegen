@@ -94,7 +94,7 @@ export class HttpService {
       } catch (e) {
         this.logger.error('Reloading user token failed.', e);
 
-        if (e.statusCode === 401) {
+        if (e.statusCode > 399) {
             this.router.navigateToRoute('login');
         }
 
