@@ -93,7 +93,11 @@ export class HttpService {
         this.logger.info('Reloaded user token.');
       } catch (e) {
         this.logger.error('Reloading user token failed.', e);
-        this.router.navigateToRoute('login');
+
+        if (e.statusCode === 401) {
+            this.router.navigateToRoute('login');
+        }
+
         throw e;
       }
     }
