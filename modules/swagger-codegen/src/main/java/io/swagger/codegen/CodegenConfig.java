@@ -169,6 +169,8 @@ public interface CodegenConfig {
 
     boolean isSkipOverwrite();
 
+    boolean shouldSkipModel(CodegenModel model);
+
     void setSkipOverwrite(boolean skipOverwrite);
 
     boolean isRemoveOperationIdPrefix();
