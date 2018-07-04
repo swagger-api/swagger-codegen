@@ -66,46 +66,97 @@ export class HttpService {
   /**
    * Adds the authorization header to the request.
    */
-  public async addAuthHeader(name: string, req: RequestBuilder): Promise<RequestBuilder> {
-    if (!TokenService.getUserToken()) {
-      try {
-        this.logger.info('Reload user token.');
-        await TokenService.reloadUserToken();
-        this.logger.info('Reloaded user token.');
-      } catch (e) {
-        this.logger.error('Reloading user token failed.', e);
-        this.router.navigateToRoute('login');
-        throw e;
+  public async addAuthHeader(token: string, header: string, req: RequestBuilder): Promise<RequestBuilder> {
+    if (token === 'UserToken') {
+      if (!TokenService.getUserToken()) {
+        try {
+          this.logger.info('Reload user token.');
+          await TokenService.reloadUserToken();
+          this.logger.info('Reloaded user token.');
+        } catch (e) {
+          this.logger.error('Reloading user token failed.', e);
+          this.router.navigateToRoute('login');
+          throw e;
+        }
       }
+
+      return req.withHeader(header, `Bearer ${TokenService.getUserToken()}`);
     }
 
-    return req.withHeader(name, `Bearer ${TokenService.getUserToken()}`);
+    if (token === 'RefreshToken') {
+      if (!TokenService.getRefreshToken()) {
+        try {
+          this.logger.info('Reload refresh token.');
+          await TokenService.reloadRefreshToken();
+          this.logger.info('Reloaded refresh token.');
+        } catch (e) {
+          this.logger.error('Reloading refresh token failed.', e);
+          this.router.navigateToRoute('login');
+          throw e;
+        }
+      }
+
+      return req.withHeader(header, `Bearer ${TokenService.getRefreshToken()}`);
+    }
+
+    if (token === 'CsrfToken') {
+        return await this.addCsrfHeader(req);
+    }
+
+    return req;
   }
 
   /**
    * Adds the authorization param to the request.
    */
-  public async addAuthParam(name: string, req: RequestBuilder): Promise<RequestBuilder> {
-    if (!TokenService.getUserToken()) {
-      try {
-        this.logger.info('Reload user token.');
-        await TokenService.reloadUserToken();
-        this.logger.info('Reloaded user token.');
-      } catch (e) {
-        this.logger.error('Reloading user token failed.', e);
+  public async addAuthParam(token: string, param: string, req: RequestBuilder): Promise<RequestBuilder> {
+    if (token === 'UserToken') {
+      if (!TokenService.getUserToken()) {
+        try {
+          this.logger.info('Reload user token.');
+          await TokenService.reloadUserToken();
+          this.logger.info('Reloaded user token.');
+        } catch (e) {
+          this.logger.error('Reloading user token failed.', e);
 
-        if (e.statusCode > 399) {
+          if (e.statusCode > 399) {
             this.router.navigateToRoute('login');
-        }
+          }
 
-        throw e;
+          throw e;
+        }
       }
+
+      const params = {};
+      params[param] = TokenService.getUserToken();
+
+      return req.withParams(params);
     }
 
-    const params = {};
-    params[name] = TokenService.getUserToken();
+    if (token === 'RefreshToken') {
+      if (!TokenService.getRefreshToken()) {
+        try {
+          this.logger.info('Reload refresh token.');
+          await TokenService.reloadRefreshToken();
+          this.logger.info('Reloaded refresh token.');
+        } catch (e) {
+          this.logger.error('Reloading refresh token failed.', e);
 
-    return req.withParams(params);
+          if (e.statusCode > 399) {
+            this.router.navigateToRoute('login');
+          }
+
+          throw e;
+        }
+      }
+
+      const params = {};
+      params[param] = TokenService.getRefreshToken();
+
+      return req.withParams(params);
+    }
+
+    return req;
   }
 
   /**

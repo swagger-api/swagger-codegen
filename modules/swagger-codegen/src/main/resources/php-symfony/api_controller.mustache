@@ -183,7 +183,7 @@ class {{controllerName}} extends Controller
             $response->setContent($content);
             $response->headers->add([
                 'Content-Type'      => 'application/json',
-                'X-Swagger-Message' => 'Returns the address being found.',
+                'X-Swagger-Message' => '{{message}}',
             ]);
 
             return $handler->getResponse();
