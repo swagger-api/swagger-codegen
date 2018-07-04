@@ -280,6 +280,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
             for (CodegenParameter param : op.allParams) {
                 final String simpleName = extractSimpleName(param.dataType);
                 param.vendorExtensions.put("x-simpleName", simpleName);
+
                 final boolean isScalarType = typeMapping.containsValue(param.dataType);
                 param.vendorExtensions.put("x-parameterType", isScalarType ? null : simpleName);
                 if (!isScalarType) {
@@ -296,7 +297,11 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 if (response.dataType != null) {
                     final String dataType = extractSimpleName(response.dataType);
                     response.vendorExtensions.put("x-simpleName", dataType);
-                    imports.add(response.dataType.replaceFirst("\\[\\]$", ""));
+
+                    final boolean isScalarType = typeMapping.containsValue(response.dataType);
+                    if (!isScalarType) {
+                        imports.add(response.dataType.replaceFirst("\\[\\]$", ""));
+                    }
                 }
 
                 if (exception != null) {
