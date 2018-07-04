@@ -87,7 +87,7 @@ interface {{classname}}
      * @throws {{vendorExtensions.x-symfonyExceptionSimple}}  {{message}}
     {{/vendorExtensions.x-symfonyExceptionSimple}}
     {{^vendorExtensions.x-symfonyExceptionSimple}}
-     * @return {{^dataType}}void{{/dataType}}{{#dataType}}{{vendorExtensions.x-simpleName}}{{/dataType}}  {{message}}
+     * @return Response|{{^dataType}}void{{/dataType}}{{#dataType}}{{vendorExtensions.x-simpleName}}{{/dataType}}  {{message}}
      *
     {{/vendorExtensions.x-symfonyExceptionSimple}}
     {{/responses}}

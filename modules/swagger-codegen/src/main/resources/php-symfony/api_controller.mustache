@@ -173,6 +173,10 @@ class {{controllerName}} extends Controller
             // Expecting a return value (exception otherwise)
             $result = $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
+            if ($result instanceof Response) {
+                return $result;
+            }
+
             // Handle {{code}} response: {{message}}
             $content = $this->serialize($result, 'json');
 
@@ -194,7 +198,11 @@ class {{controllerName}} extends Controller
             $handler->setResponse($response);
 
             // No return type expected; return empty response
-            $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+            $result = $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+            if ($result instanceof Response) {
+                return $result;
+            }
 
             return $handler->getResponse();
             {{/returnType}}
