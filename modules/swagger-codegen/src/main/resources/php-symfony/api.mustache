@@ -47,6 +47,13 @@ interface {{classname}}
      */
      public function setResponse(Response $response);
 
+    /**
+     * Returns response object.
+     *
+     * @return Response
+     */
+     public function getResponse();
+
     {{#authMethods}}
 
     /**

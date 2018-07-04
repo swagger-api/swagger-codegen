@@ -182,7 +182,7 @@ class {{controllerName}} extends Controller
                 'X-Swagger-Message' => 'Returns the address being found.',
             ]);
 
-            return $response;
+            return $handler->getResponse();
             {{/vendorExtensions.x-symfonyExceptionSimple}}
             {{/responses}}
             {{/returnType}}
@@ -196,7 +196,7 @@ class {{controllerName}} extends Controller
             // No return type expected; return empty response
             $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
-            return $response;
+            return $handler->getResponse();
             {{/returnType}}
         {{#responses}}
         {{#vendorExtensions.x-symfonyExceptionSimple}}
