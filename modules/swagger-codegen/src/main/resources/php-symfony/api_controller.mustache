@@ -154,29 +154,49 @@ class {{controllerName}} extends Controller
         try {
             $handler = $this->getApiHandler();
 
+            // Set request
+            $handler->setRequest($request);
             {{#authMethods}}
+
             // Set authentication method '{{name}}'
             $handler->set{{name}}($security{{name}});
             {{/authMethods}}
             {{#returnType}}
-            // Expecting a return value (exception otherwise)
-            $result = $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
             {{#responses}}
             {{^vendorExtensions.x-symfonyExceptionSimple}}
+
+            $response = new Response();
+            {{/vendorExtensions.x-symfonyExceptionSimple}}
+
+            // Expecting a return value (exception otherwise)
+            $result = $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+            {{^vendorExtensions.x-symfonyExceptionSimple}}
+
             // Handle {{code}} response: {{message}}
             $content = $this->serialize($result, 'json');
-            return new Response($content, {{code}}, [
-                'Content-Type' => 'application/json',
-                'X-Swagger-Message' => '{{message}}',
+
+            $response->setContent($content);
+            $response->setStatusCode(200);
+            $response->headers->add([
+                'Content-Type'      => 'application/json',
+                'X-Swagger-Message' => 'Returns the address being found.',
             ]);
+
+            return $response;
             {{/vendorExtensions.x-symfonyExceptionSimple}}
             {{/responses}}
             {{/returnType}}
             {{^returnType}}
+
+            $response = new Response('', 204);
+
+            // Set response
+            $handler->setResponse($response);
+
             // No return type expected; return empty response
             $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-            return new Response('', 204);
+
+            return $response;
             {{/returnType}}
         {{#responses}}
         {{#vendorExtensions.x-symfonyExceptionSimple}}
