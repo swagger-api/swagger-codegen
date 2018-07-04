@@ -75,7 +75,11 @@ export class HttpService {
           this.logger.info('Reloaded user token.');
         } catch (e) {
           this.logger.error('Reloading user token failed.', e);
-          this.router.navigateToRoute('login');
+
+          if (e.statusCode > 399) {
+            this.router.navigateToRoute('login');
+          }
+
           throw e;
         }
       }
@@ -91,7 +95,11 @@ export class HttpService {
           this.logger.info('Reloaded refresh token.');
         } catch (e) {
           this.logger.error('Reloading refresh token failed.', e);
-          this.router.navigateToRoute('login');
+
+          if (e.statusCode > 399) {
+            this.router.navigateToRoute('login');
+          }
+
           throw e;
         }
       }
@@ -100,7 +108,21 @@ export class HttpService {
     }
 
     if (token === 'CsrfToken') {
-        return await this.addCsrfHeader(req);
+      if (!TokenService.getCsrfToken()) {
+        try {
+          this.logger.info('Reload CSRF token.');
+          await TokenService.reloadCsrfToken();
+          this.logger.info('Reloaded CSRF token.');
+        } catch (e) {
+          this.logger.error('Reloading CSRF token failed.', e);
+          throw e;
+        }
+      }
+
+      const csrfToken = TokenService.getCsrfToken();
+      TokenService.clearCsrfToken();
+
+      return req.withHeader('XSRF-TOKEN', csrfToken);
     }
 
     return req;
@@ -157,27 +179,6 @@ export class HttpService {
     }
 
     return req;
-  }
-
-  /**
-   * Adds CSRF token to the request.
-   */
-  public async addCsrfHeader(req: RequestBuilder): Promise<RequestBuilder> {
-    if (!TokenService.getCsrfToken()) {
-      try {
-        this.logger.info('Reload CSRF token.');
-        await TokenService.reloadCsrfToken();
-        this.logger.info('Reloaded CSRF token.');
-      } catch (e) {
-        this.logger.error('Reloading CSRF token failed.', e);
-        throw e;
-      }
-    }
-
-    const csrfToken = TokenService.getCsrfToken();
-    TokenService.clearCsrfToken();
-
-    return req.withHeader('XSRF-TOKEN', csrfToken);
   }
 
 }
