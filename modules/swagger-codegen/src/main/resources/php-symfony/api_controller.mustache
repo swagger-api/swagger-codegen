@@ -165,18 +165,18 @@ class {{controllerName}} extends Controller
             {{#responses}}
             {{^vendorExtensions.x-symfonyExceptionSimple}}
 
-            $response = new Response();
-            {{/vendorExtensions.x-symfonyExceptionSimple}}
+            $response = new Response('', {{code}});
+
+            // Set response
+            $handler->setResponse($response);
 
             // Expecting a return value (exception otherwise)
             $result = $handler->{{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-            {{^vendorExtensions.x-symfonyExceptionSimple}}
 
             // Handle {{code}} response: {{message}}
             $content = $this->serialize($result, 'json');
 
             $response->setContent($content);
-            $response->setStatusCode(200);
             $response->headers->add([
                 'Content-Type'      => 'application/json',
                 'X-Swagger-Message' => 'Returns the address being found.',

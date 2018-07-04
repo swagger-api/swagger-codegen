@@ -18,6 +18,8 @@
 
 namespace {{apiPackage}};
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 {{#operations}}{{#imports}}use {{this}};
 {{/imports}}
 
@@ -31,6 +33,20 @@ namespace {{apiPackage}};
  */
 interface {{classname}}
 {
+    /**
+     * Sets request object.
+     *
+     * @param Request $request The request object.
+     */
+     public function setRequest(Request $request);
+
+    /**
+     * Sets response object.
+     *
+     * @param Response $response The response object.
+     */
+     public function setResponse(Response $response);
+
     {{#authMethods}}
 
     /**
