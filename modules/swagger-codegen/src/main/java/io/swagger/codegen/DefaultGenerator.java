@@ -81,6 +81,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private Boolean generateModelTests = null;
     private Boolean generateModelDocumentation = null;
     private Boolean generateSwaggerMetadata = true;
+    private Boolean useOas2 = false;
     private String basePath;
     private String basePathWithoutHost;
     private String contextPath;
@@ -178,11 +179,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         final Boolean generateModelDocsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_DOCS_OPTION);
         final Boolean generateAPITestsOption = getCustomOptionBooleanValue(CodegenConstants.API_TESTS_OPTION);
         final Boolean generateAPIDocsOption = getCustomOptionBooleanValue(CodegenConstants.API_DOCS_OPTION);
+        final Boolean useOas2Option = getCustomOptionBooleanValue(CodegenConstants.USE_OAS2_OPTION);
 
         generateModelTests = generateModelTestsOption != null ? generateModelTestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
         generateModelDocumentation = generateModelDocsOption != null ? generateModelDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
         generateApiTests = generateAPITestsOption != null ? generateAPITestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_TESTS, true);
         generateApiDocumentation = generateAPIDocsOption != null ? generateAPIDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.API_DOCS, true);
+        useOas2 = useOas2Option != null ? useOas2Option : getGeneratorPropertyDefaultSwitch(CodegenConstants.USE_OAS2, false);
 
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
@@ -190,6 +193,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
+        config.additionalProperties().put(CodegenConstants.USE_OAS2, useOas2);
 
         if(!generateApiTests && !generateModelTests) {
             config.additionalProperties().put(CodegenConstants.EXCLUDE_TESTS, true);
