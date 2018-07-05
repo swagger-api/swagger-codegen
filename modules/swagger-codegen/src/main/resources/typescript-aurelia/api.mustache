@@ -50,13 +50,6 @@ export interface I{{classname}} {
 @autoinject()
 export class {{classname}} extends Api implements I{{classname}} {
 
-  /**
-   * Creates a new {{classname}} class.
-   */
-  constructor(httpService: HttpService) {
-    super(httpService);
-  }
-
 {{#operation}}
   /**{{#summary}}
    * {{summary}}
@@ -76,7 +69,7 @@ export class {{classname}} extends Api implements I{{classname}} {
     const url = `{{{path}}}`{{#pathParams}}
       .replace(`{${'{{baseName}}'}}`, `${params['{{paramName}}']}`){{/pathParams}};
 
-    const request = this.httpService.createRequest(url)
+    const request = HttpService.createRequest(url)
       // Set HTTP method
       .as{{httpMethod}}()
 {{#hasQueryParams}}
@@ -104,23 +97,23 @@ export class {{classname}} extends Api implements I{{classname}} {
 {{#headerParams}}
       .withHeader('{{baseName}}', params['{{paramName}}']){{/headerParams}}
     ;
-
 {{#authMethods}}
+
     // Authentication '{{name}}' required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-    await this.httpService.addAuthHeader('{{name}}', '{{keyParamName}}', request);
+    await HttpService.addAuthHeader('{{name}}', '{{keyParamName}}', request);
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-    await this.httpService.addAutParam('{{keyParamName}}', request);
+    await HttpService.addAutParam('{{keyParamName}}', request);
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{/authMethods}}
-
 {{^hasAuthMethods}}
+
     if (['POST', 'PUT', 'PATCH', 'DELETE'].indexOf('{{httpMethod}}'.toUpperCase()) !== -1) {
       // CSRF authorization required
-      await this.httpService.addAuthHeader('XSRF-TOKEN', 'CsrfToken', request);
+      await HttpService.addAuthHeader('XSRF-TOKEN', 'CsrfToken', request);
     }
 {{/hasAuthMethods}}
 

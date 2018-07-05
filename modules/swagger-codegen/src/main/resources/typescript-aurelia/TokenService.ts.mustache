@@ -1,0 +1,438 @@
+import { LogManager }
+  from 'aurelia-framework';
+
+import { Logger }
+  from 'aurelia-logging';
+
+import { BehaviorSubject }
+  from 'rxjs';
+
+import * as jwt
+  from 'jsonwebtoken';
+
+import { HttpService }
+  from './HttpService';
+
+interface TokenStorageInterface {
+  [name: string]: BehaviorSubject<string | null>;
+}
+
+export class TokenService {
+
+  private static logger:         Logger;
+  private static tokens:         TokenStorageInterface;
+  private static csrfPromise:    Promise<string>;
+  private static userPromise:    Promise<string>;
+  private static refreshPromise: Promise<string>;
+
+  /**
+   * Reloads refresh token from the API server.
+   */
+  public static async reloadRefreshToken(): Promise<string> {
+    if (this.refreshPromise) {
+      await this.refreshPromise;
+      return this.getRefreshToken();
+    }
+
+    const logger = this.getLogger();
+    logger.info('Reloading refresh token.');
+
+    try {
+      this.refreshPromise = new Promise<string>(async (resolve, reject) => {
+        const request = HttpService
+          .getClient()
+          .createRequest(`/security/refresh-token`)
+          .asPost()
+        ;
+
+        // CSRF authorization required
+        await HttpService.addAuthHeader('XSRF-TOKEN', 'CsrfToken', request);
+
+        // Send the request
+        const response = await request.send();
+
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          throw reject(response.content);
+        }
+
+        // Extract the content
+        return resolve(response.content);
+      });
+
+      const jwt = await this.refreshPromise;
+      this.setRefreshToken(jwt);
+
+      return this.getRefreshToken();
+    } catch (e) {
+      logger.error('Reloading refresh token failed:', e);
+
+      if (e.statusCode > 399) {
+        this.clearRefreshToken();
+        window.location.href = '/login';
+      }
+
+      throw e;
+    } finally {
+      this.refreshPromise = null;
+    }
+  }
+
+  /**
+   * Reloads user token from the API server.
+   */
+  public static async reloadUserToken(): Promise<string> {
+    const logger = this.getLogger();
+    logger.info('Reloading user token.');
+
+    if (this.userPromise) {
+      await this.userPromise;
+      return this.getUserToken();
+    }
+
+    const refreshToken = this.getRefreshToken();
+
+    if (!refreshToken) {
+      this.clearUserToken();
+      return Promise.reject('Refresh token is missing.');
+    }
+
+    try {
+      this.userPromise = new Promise<string>(async (resolve, reject) => {
+        const request = HttpService
+          .getClient()
+          .createRequest(`/security/user-token`)
+          .asPost()
+        ;
+
+        // Authentication 'RefreshToken' required
+        await HttpService.addAuthHeader('RefreshToken', 'authorization', request);
+
+        // Send the request
+        const response = await request.send();
+
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          throw reject(response.content);
+        }
+
+        // Extract the content
+        return resolve(response.content);
+      });
+
+      const jwt = await this.userPromise;
+      this.setUserToken(jwt);
+
+      return this.getUserToken();
+    } catch (e) {
+      logger.error('Reloading user token failed:', e);
+
+      if (e.statusCode > 399) {
+        this.clearUserToken();
+        window.location.href = '/login';
+      }
+
+      throw e;
+    } finally {
+      this.userPromise = null;
+    }
+  }
+
+
+  /**
+   * Refreshes token from the API server.
+   */
+  public static async reloadCsrfToken(): Promise<string> {
+    const logger = this.getLogger();
+    logger.info('Reloading CSRF token.');
+
+    if (this.csrfPromise) {
+      await this.csrfPromise;
+      return this.getCsrfToken();
+    }
+
+    this.clearCsrfToken();
+
+    try {
+      this.csrfPromise = new Promise<string>(async (resolve, reject) => {
+        const request = HttpService
+          .getClient()
+          .createRequest(`/security/csrf-token`)
+          .asHead()
+        ;
+
+        // Send the request
+        const response = await request.send();
+
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          throw reject(response.content);
+        }
+
+        // Extract the content
+        return resolve(response.content);
+      });
+
+      await this.csrfPromise;
+
+      return this.getCsrfToken();
+    } catch (e) {
+      logger.error('Reloading CSRF token failed:', e);
+      throw e;
+    } finally {
+      this.csrfPromise = null;
+    }
+  }
+
+  /**
+   * Returns token subjects.
+   */
+  public static getTokens(): TokenStorageInterface {
+    if (!this.tokens) {
+      this.tokens = { csrf: null, refresh: null, user: null };
+
+      const initFromCache = ['refresh', 'user'];
+      initFromCache.forEach((name) => this.initFromCache(name));
+
+      const initWithNull = ['csrf'];
+      initWithNull.forEach((name) => this.initWithNull(name));
+    }
+
+    return this.tokens;
+  }
+
+  /**
+   * Return the CSRF token subject.
+   */
+  public static getCsrfTokenSubject(): BehaviorSubject<string | null> {
+    const { csrf } = this.getTokens();
+    return csrf;
+  }
+
+  /**
+   * Returns value of the CSRF token.
+   */
+  public static getCsrfToken(): string | null {
+    return this.getCsrfTokenSubject().getValue();
+  }
+
+  /**
+   * Changes value of the CSRF token.
+   */
+  public static setCsrfToken(token: string | null): void {
+    const logger = this.getLogger();
+    logger.debug('Setting CSRF token:', token);
+
+    const { csrf } = this.getTokens();
+    csrf.next(token);
+  }
+
+  /**
+   * Clears value of the CSRF token.
+   */
+  public static clearCsrfToken(): void {
+    const logger = this.getLogger();
+    logger.info('Clearing CSRF token.');
+
+    const { csrf } = this.getTokens();
+    csrf.next(null);
+  }
+
+  /**
+   * Return the refresh token subject.
+   */
+  public static getRefreshTokenSubject(): BehaviorSubject<string | null> {
+    const { refresh } = this.getTokens();
+    const value = refresh.getValue();
+
+    if (value) {
+      const logger = this.getLogger();
+      logger.info('Refresh token found.');
+
+      const decoded: any = jwt.decode(value);
+
+      const exp  = decoded.exp || false;
+      const time = Math.round((new Date()).getTime() / 1000);
+
+      //logger.debug('Refresh token exp:',exp);
+      //logger.debug('Refresh token time:', time);
+
+      if (!exp || exp <= time - 5 * 60) {
+        logger.info('Refresh token expired.');
+        this.clearRefreshToken();
+      }
+    }
+
+    return refresh;
+  }
+
+  /**
+   * Returns value of the refresh token.
+   */
+  public static getRefreshToken(): string | null {
+    return this.getRefreshTokenSubject().getValue();
+  }
+
+  /**
+   * Changes value of the refresh token.
+   */
+  public static setRefreshToken(token: string | null): void {
+    const logger = this.getLogger();
+    logger.debug('Setting refresh token:', token);
+
+    const { refresh } = this.getTokens();
+    refresh.next(token);
+
+    this.saveToCache('token_refresh', token);
+    this.clearUserToken();
+  }
+
+  /**
+   * Clears value of the refresh token.
+   */
+  public static clearRefreshToken(): void {
+    const logger = this.getLogger();
+    logger.info('Clearing refresh token.');
+
+    const { refresh } = this.getTokens();
+    refresh.next(null);
+
+    this.clearFromCache('token_refresh');
+    this.clearUserToken();
+  }
+
+  /**
+   * Return the user token subject.
+   */
+  public static getUserTokenSubject(): BehaviorSubject<string | null> {
+    const { user } = this.getTokens();
+    const value = user.getValue();
+
+    if (value) {
+      const logger = this.getLogger();
+      logger.info('User token found.');
+
+      const decoded: any = jwt.decode(value);
+
+      const exp  = decoded.exp || false;
+      const time = Math.round((new Date()).getTime() / 1000);
+
+      //logger.debug('User token exp:',exp);
+      //logger.debug('User token time:', time);
+
+      if (!exp || exp <= time - 30) {
+        logger.info('User token expired.');
+        this.clearUserToken();
+      }
+    }
+
+    return user;
+  }
+
+  /**
+   * Returns value of the user token.
+   */
+  public static getUserToken(): string | null {
+    return this.getUserTokenSubject().getValue();
+  }
+
+  /**
+   * Changes value of the user token
+   */
+  public static setUserToken(token: string | null) {
+    const logger = this.getLogger();
+    logger.debug('Setting user token:', token);
+
+    const { user } = this.getTokens();
+    user.next(token);
+
+    this.saveToCache('token_user', token);
+  }
+
+  /**
+   * Clears value of the user token.
+   */
+  public static clearUserToken(): void {
+    const logger = this.getLogger();
+    logger.info('Clearing user token.');
+
+    const { user } = this.getTokens();
+    user.next(null);
+
+    this.clearFromCache('token_user');
+  }
+
+  /**
+   * Returns logger object.
+   */
+  private static getLogger(name?: string): Logger {
+    return this.logger || (this.logger = LogManager.getLogger(name || 'TokenService'));
+  }
+
+  /**
+   * Load token from the cache.
+   */
+  private static loadFromCache(key: string): string | null {
+    const value = localStorage.getItem(key);
+
+    const logger = this.getLogger();
+    logger.debug('Loaded from cache:', key);
+
+    return value;
+  }
+
+  /**
+   * Store token to the cache.
+   */
+  private static saveToCache(key: string, value: string | null): void {
+    const logger = this.getLogger();
+    logger.debug('Saving to cache:', key);
+
+    localStorage.setItem(key, value);
+  }
+
+  /**
+   * Remove token from the cache.
+   */
+  private static clearFromCache(key: string): void {
+    const logger = this.getLogger();
+    logger.debug('Clearing from cache:', key);
+
+    localStorage.removeItem(key);
+  }
+
+  /**
+   * Initializes item with null value.
+   */
+  private static initWithNull(name: string): void {
+    const logger = this.getLogger();
+    logger.info('Initialize with NULL:', name);
+
+    const tokens = this.getTokens();
+    tokens[name] = new BehaviorSubject(null);
+  }
+
+  /**
+   * Initializes item from the cache.
+   */
+  private static initFromCache(name: string): void {
+    const logger = this.getLogger();
+    logger.debug('Initialize from cache:', name);
+
+    const tokens = this.getTokens();
+
+    try {
+      // Load token from cache
+      const key   = `token_${name}`;
+      const value = this.loadFromCache(key);
+
+      // Create behavior subject with cached value
+      tokens[name] = new BehaviorSubject(value);
+
+      // Update cache when when value changes
+      //const observable = tokens[name].asObservable().skip(1);
+      //observable.subscribe((next) => next ? this.saveToCache(key, next) : this.clearFromCache(key));
+    } catch (e) {
+      logger.error('Loading from cache failed:', e);
+      this.initWithNull(name);
+    }
+  }
+
+}

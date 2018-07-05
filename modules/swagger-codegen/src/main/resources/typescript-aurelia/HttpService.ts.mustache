@@ -8,33 +8,26 @@ import { HttpClient, HttpResponseMessage, RequestBuilder }
 import { Logger }
   from 'aurelia-logging';
 
-import { Router }
-  from 'aurelia-router';
-
 import { TokenService }
-  from '../services';
+  from './TokenService';
 
-const BASE_PATH = '{{{basePath}}}'.replace(/\/+$/, '');
+const BASE_PATH = '{{{basePath}}}'
+  .replace(/^(https?:\/\/)?[^\/]+/, '')
+  .replace(/\/+$/, '');
 
 /**
  * Class to handle http requests
  */
 export class HttpService {
 
-  private logger: Logger;
-  private router: Router;
+  private static logger: Logger;
   private static client: HttpClient;
 
-  constructor(router: Router) {
-    this.logger = LogManager.getLogger(this.constructor.name);
-    this.router = router;
-  }
-
   /**
-   * Creates request.
+   * Returns logger object.
    */
-  public createRequest(url: string): RequestBuilder {
-    return HttpService.getClient().createRequest(url);
+  private static getLogger(name?: string): Logger {
+    return this.logger || (this.logger = LogManager.getLogger(name || 'HttpService'));
   }
 
   /**
@@ -64,22 +57,26 @@ export class HttpService {
   }
 
   /**
+   * Creates request.
+   */
+  public static createRequest(url: string): RequestBuilder {
+    return HttpService.getClient().createRequest(url);
+  }
+
+  /**
    * Adds the authorization header to the request.
    */
-  public async addAuthHeader(token: string, header: string, req: RequestBuilder): Promise<RequestBuilder> {
+  public static async addAuthHeader(token: string, header: string, req: RequestBuilder): Promise<RequestBuilder> {
+    const logger = this.getLogger();
+
     if (token === 'UserToken') {
       if (!TokenService.getUserToken()) {
         try {
-          this.logger.info('Reload user token.');
+          logger.info('Reload user token.');
           await TokenService.reloadUserToken();
-          this.logger.info('Reloaded user token.');
+          logger.info('Reloaded user token.');
         } catch (e) {
-          this.logger.error('Reloading user token failed.', e);
-
-          if (e.statusCode > 399) {
-            this.router.navigateToRoute('login');
-          }
-
+          logger.error('Reloading user token failed.', e);
           throw e;
         }
       }
@@ -90,16 +87,11 @@ export class HttpService {
     if (token === 'RefreshToken') {
       if (!TokenService.getRefreshToken()) {
         try {
-          this.logger.info('Reload refresh token.');
+          logger.info('Reload refresh token.');
           await TokenService.reloadRefreshToken();
-          this.logger.info('Reloaded refresh token.');
+          logger.info('Reloaded refresh token.');
         } catch (e) {
-          this.logger.error('Reloading refresh token failed.', e);
-
-          if (e.statusCode > 399) {
-            this.router.navigateToRoute('login');
-          }
-
+          logger.error('Reloading refresh token failed.', e);
           throw e;
         }
       }
@@ -110,11 +102,11 @@ export class HttpService {
     if (token === 'CsrfToken') {
       if (!TokenService.getCsrfToken()) {
         try {
-          this.logger.info('Reload CSRF token.');
+          logger.info('Reload CSRF token.');
           await TokenService.reloadCsrfToken();
-          this.logger.info('Reloaded CSRF token.');
+          logger.info('Reloaded CSRF token.');
         } catch (e) {
-          this.logger.error('Reloading CSRF token failed.', e);
+          logger.error('Reloading CSRF token failed.', e);
           throw e;
         }
       }
@@ -122,7 +114,7 @@ export class HttpService {
       const csrfToken = TokenService.getCsrfToken();
       TokenService.clearCsrfToken();
 
-      return req.withHeader('XSRF-TOKEN', csrfToken);
+      return req.withHeader(header, csrfToken);
     }
 
     return req;
@@ -131,20 +123,17 @@ export class HttpService {
   /**
    * Adds the authorization param to the request.
    */
-  public async addAuthParam(token: string, param: string, req: RequestBuilder): Promise<RequestBuilder> {
+  public static async addAuthParam(token: string, param: string, req: RequestBuilder): Promise<RequestBuilder> {
+    const logger = this.getLogger();
+
     if (token === 'UserToken') {
       if (!TokenService.getUserToken()) {
         try {
-          this.logger.info('Reload user token.');
+          logger.info('Reload user token.');
           await TokenService.reloadUserToken();
-          this.logger.info('Reloaded user token.');
+          logger.info('Reloaded user token.');
         } catch (e) {
-          this.logger.error('Reloading user token failed.', e);
-
-          if (e.statusCode > 399) {
-            this.router.navigateToRoute('login');
-          }
-
+          logger.error('Reloading user token failed.', e);
           throw e;
         }
       }
@@ -158,22 +147,38 @@ export class HttpService {
     if (token === 'RefreshToken') {
       if (!TokenService.getRefreshToken()) {
         try {
-          this.logger.info('Reload refresh token.');
+          logger.info('Reload refresh token.');
           await TokenService.reloadRefreshToken();
-          this.logger.info('Reloaded refresh token.');
+          logger.info('Reloaded refresh token.');
         } catch (e) {
-          this.logger.error('Reloading refresh token failed.', e);
-
-          if (e.statusCode > 399) {
-            this.router.navigateToRoute('login');
-          }
-
+          logger.error('Reloading refresh token failed.', e);
           throw e;
         }
       }
 
       const params = {};
       params[param] = TokenService.getRefreshToken();
+
+      return req.withParams(params);
+    }
+
+    if (token === 'CsrfToken') {
+      if (!TokenService.getCsrfToken()) {
+        try {
+          logger.info('Reload CSRF token.');
+          await TokenService.reloadCsrfToken();
+          logger.info('Reloaded CSRF token.');
+        } catch (e) {
+          logger.error('Reloading CSRF token failed:', e);
+          throw e;
+        }
+      }
+
+      const csrfToken = TokenService.getCsrfToken();
+      TokenService.clearCsrfToken();
+
+      const params = {};
+      params[param] = csrfToken;
 
       return req.withParams(params);
     }

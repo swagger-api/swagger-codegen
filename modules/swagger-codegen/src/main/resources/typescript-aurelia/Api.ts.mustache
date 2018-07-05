@@ -1,13 +1,5 @@
 {{>licenseInfo}}
-import { HttpService }
-  from './HttpService';
-
 export class Api {
-  httpService:  HttpService;
-
-  constructor(httpService: HttpService) {
-    this.httpService = httpService;
-  }
 
   /**
    * Encodes a query string.
@@ -56,4 +48,5 @@ export class Api {
       throw new Error(`Missing required parameter ${paramName} when calling ${context}`);
     }
   }
+
 }
