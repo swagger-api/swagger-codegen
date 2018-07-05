@@ -13,7 +13,7 @@ import * as jwt
 import { HttpService }
   from './HttpService';
 
-interface TokenStorageInterface {
+export interface TokenStorageInterface {
   [name: string]: BehaviorSubject<string | null>;
 }
 
