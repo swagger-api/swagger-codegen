@@ -54,6 +54,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String SUPPORT_ASYNC = "supportAsync";
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
+    public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -86,6 +87,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
+    protected boolean disableHtmlEscaping = false;
 
     public AbstractJavaCodegen() {
         super();
@@ -176,6 +178,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         java8ModeOptions.put("false", "Various third party libraries as needed");
         java8Mode.setEnum(java8ModeOptions);
         cliOptions.add(java8Mode);
+
+        cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
     }
 
     @Override
@@ -187,6 +191,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
+        if (additionalProperties.containsKey(DISABLE_HTML_ESCAPING)) {
+            this.setDisableHtmlEscaping(Boolean.valueOf(additionalProperties.get(DISABLE_HTML_ESCAPING).toString()));
+        }
+        additionalProperties.put(DISABLE_HTML_ESCAPING, disableHtmlEscaping);
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -1236,6 +1244,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setJava8Mode(boolean enabled) {
         this.java8Mode = enabled;
+    }
+
+    public void setDisableHtmlEscaping(boolean disabled) {
+        this.disableHtmlEscaping = disabled;
     }
 
     public void setSupportAsync(boolean enabled) {
