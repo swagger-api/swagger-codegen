@@ -283,6 +283,7 @@ public class CodegenConstants {
     public static final String IS_COLLECTION_FORMAT_MULTI_EXT_NAME = PREFIX_IS + "collection-format-multi";
 
     public static final String IS_BASIC_EXT_NAME = PREFIX_IS + "basic";
+    public static final String IS_BEARER_EXT_NAME = PREFIX_IS + "bearer";
     public static final String IS_OAUTH_EXT_NAME = PREFIX_IS + "oauth";
     public static final String IS_API_KEY_EXT_NAME = PREFIX_IS + "api-key";
     public static final String IS_KEY_IN_QUERY_EXT_NAME = PREFIX_IS + "key-in-query";
