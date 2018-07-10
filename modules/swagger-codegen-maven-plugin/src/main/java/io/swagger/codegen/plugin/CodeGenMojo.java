@@ -29,6 +29,7 @@ import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWo
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -483,6 +484,16 @@ public class CodeGenMojo extends AbstractMojo {
         //Apply Language Specific Primitives
         if (languageSpecificPrimitives != null && !configOptions.containsKey("language-specific-primitives")) {
             applyLanguageSpecificPrimitivesCsvList(languageSpecificPrimitives, configurator);
+        }
+
+        if (withXml != null && withXml) {
+            if (additionalProperties == null) {
+                additionalProperties = new ArrayList<>();
+            }
+            additionalProperties.add("withXml=" + withXml.toString());
+            if (configOptions == null) {
+                configOptions = new HashMap<>();
+            }
         }
 
         //Apply Additional Properties
