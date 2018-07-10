@@ -22,7 +22,7 @@
 
 #include "../ModelBase.h"
 
-#include "Currency.h"
+#include "../model/Currency.h"
 
 namespace io {
 namespace swagger {

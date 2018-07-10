@@ -22,10 +22,10 @@
 
 #include "../ModelBase.h"
 
-#include "Category.h"
+#include "../model/Category.h"
+#include "../model/Tag.h"
 #include <cpprest/details/basic_types.h>
 #include <vector>
-#include "Tag.h"
 
 namespace io {
 namespace swagger {
