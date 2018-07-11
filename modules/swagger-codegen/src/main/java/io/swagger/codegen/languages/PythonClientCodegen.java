@@ -77,7 +77,6 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         languageSpecificPrimitives.add("date");
         languageSpecificPrimitives.add("object");
 
-        instantiationTypes.put("array", "list");
         instantiationTypes.put("map", "dict");
 
         typeMapping.clear();
@@ -358,7 +357,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (p instanceof MapProperty) {
             return instantiationTypes.get("map");
         }
-        return super.toInstantiationType(p);
+        return null;
     }
 
     @Override

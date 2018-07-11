@@ -381,6 +381,107 @@ class FakeApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
+    def test_body_with_query_params(self, body, query, **kwargs):  # noqa: E501
+        """test_body_with_query_params  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_body_with_query_params(body, query, async=True)
+        >>> result = thread.get()
+
+        :param async bool
+        :param User body: (required)
+        :param str query: (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async'):
+            return self.test_body_with_query_params_with_http_info(body, query, **kwargs)  # noqa: E501
+        else:
+            (data) = self.test_body_with_query_params_with_http_info(body, query, **kwargs)  # noqa: E501
+            return data
+
+    def test_body_with_query_params_with_http_info(self, body, query, **kwargs):  # noqa: E501
+        """test_body_with_query_params  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.test_body_with_query_params_with_http_info(body, query, async=True)
+        >>> result = thread.get()
+
+        :param async bool
+        :param User body: (required)
+        :param str query: (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['body', 'query']  # noqa: E501
+        all_params.append('async')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method test_body_with_query_params" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'body' is set
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `test_body_with_query_params`")  # noqa: E501
+        # verify the required parameter 'query' is set
+        if ('query' not in params or
+                params['query'] is None):
+            raise ValueError("Missing the required parameter `query` when calling `test_body_with_query_params`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+
+        query_params = []
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/fake/body-with-query-params', 'PUT',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async=params.get('async'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def test_client_model(self, body, **kwargs):  # noqa: E501
         """To test \&quot;client\&quot; model  # noqa: E501
 
@@ -497,10 +598,10 @@ class FakeApi(object):
         :param int integer: None
         :param int int32: None
         :param int int64: None
-        :param float float: None
+        :param float _float: None
         :param str string: None
         :param str binary: None
-        :param date date: None
+        :param date _date: None
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
@@ -532,10 +633,10 @@ class FakeApi(object):
         :param int integer: None
         :param int int32: None
         :param int int64: None
-        :param float float: None
+        :param float _float: None
         :param str string: None
         :param str binary: None
-        :param date date: None
+        :param date _date: None
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
@@ -544,7 +645,7 @@ class FakeApi(object):
                  returns the request thread.
         """
 
-        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', 'float', 'string', 'binary', 'date', 'date_time', 'password', 'param_callback']  # noqa: E501
+        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', '_float', 'string', 'binary', '_date', 'date_time', 'password', 'param_callback']  # noqa: E501
         all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -594,8 +695,8 @@ class FakeApi(object):
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value less than or equal to `200`")  # noqa: E501
         if 'int32' in params and params['int32'] < 20:  # noqa: E501
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value greater than or equal to `20`")  # noqa: E501
-        if 'float' in params and params['float'] > 987.6:  # noqa: E501
-            raise ValueError("Invalid value for parameter `float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")  # noqa: E501
+        if '_float' in params and params['_float'] > 987.6:  # noqa: E501
+            raise ValueError("Invalid value for parameter `_float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")  # noqa: E501
         if 'string' in params and not re.search('[a-z]', params['string'], flags=re.IGNORECASE):  # noqa: E501
             raise ValueError("Invalid value for parameter `string` when calling `test_endpoint_parameters`, must conform to the pattern `/[a-z]/i`")  # noqa: E501
         if ('password' in params and
@@ -622,8 +723,8 @@ class FakeApi(object):
             form_params.append(('int64', params['int64']))  # noqa: E501
         if 'number' in params:
             form_params.append(('number', params['number']))  # noqa: E501
-        if 'float' in params:
-            form_params.append(('float', params['float']))  # noqa: E501
+        if '_float' in params:
+            form_params.append(('float', params['_float']))  # noqa: E501
         if 'double' in params:
             form_params.append(('double', params['double']))  # noqa: E501
         if 'string' in params:
@@ -634,8 +735,8 @@ class FakeApi(object):
             form_params.append(('byte', params['byte']))  # noqa: E501
         if 'binary' in params:
             form_params.append(('binary', params['binary']))  # noqa: E501
-        if 'date' in params:
-            form_params.append(('date', params['date']))  # noqa: E501
+        if '_date' in params:
+            form_params.append(('date', params['_date']))  # noqa: E501
         if 'date_time' in params:
             form_params.append(('dateTime', params['date_time']))  # noqa: E501
         if 'password' in params:
