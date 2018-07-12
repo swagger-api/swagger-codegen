@@ -27,7 +27,6 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
-import io.swagger.client.model.*;
 
 import java.io.IOException;
 import java.io.StringReader;

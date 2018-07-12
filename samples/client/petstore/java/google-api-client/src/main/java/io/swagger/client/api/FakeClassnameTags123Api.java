@@ -76,6 +76,7 @@ public class FakeClassnameTags123Api {
         }
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake_classname_test");
 
+
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
 
@@ -89,6 +90,7 @@ public class FakeClassnameTags123Api {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling testClassname");
               }
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake_classname_test");
+
 
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);

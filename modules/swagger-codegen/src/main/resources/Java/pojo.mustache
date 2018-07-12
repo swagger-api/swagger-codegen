@@ -1,10 +1,8 @@
 /**
  * {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
- * disableApiModelAnnotations = {{disableApiModelAnnotations}}
  */{{^disableApiModelAnnotations}}{{#description}}
 @ApiModel(description = "{{{description}}}"){{/description}}
 {{/disableApiModelAnnotations}}
-
 {{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}
 public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcelableModel}}implements Parcelable {{#serializableModel}}, Serializable {{/serializableModel}}{{/parcelableModel}}{{^parcelableModel}}{{#serializableModel}}implements Serializable {{/serializableModel}}{{/parcelableModel}}{
 {{#serializableModel}}
