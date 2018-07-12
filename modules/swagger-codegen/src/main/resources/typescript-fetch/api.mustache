@@ -102,7 +102,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
             const localVarPath = `{{{path}}}`{{#pathParams}}
                 .replace(`{${"{{baseName}}"}}`, encodeURIComponent(String({{paramName}}))){{/pathParams}};
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: '{{httpMethod}}' }, options);
+            const localVarRequestOptions = Object.assign({ method: '{{httpMethod}}' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
     {{#hasFormParams}}
