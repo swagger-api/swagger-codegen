@@ -23,6 +23,7 @@ io.swagger.codegen.languages.FlaskConnexionCodegen
 io.swagger.codegen.languages.GoClientCodegen
 io.swagger.codegen.languages.GoServerCodegen
 io.swagger.codegen.languages.GroovyClientCodegen
+io.swagger.codegen.languages.GroovyJacksonCodegen
 io.swagger.codegen.languages.HaskellHttpClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
 io.swagger.codegen.languages.JMeterCodegen
