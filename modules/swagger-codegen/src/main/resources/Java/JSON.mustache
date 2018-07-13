@@ -25,7 +25,9 @@ import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 {{/threetenbp}}
 
+{{#parent.length}}
 import {{modelPackage}}.*;
+{{/parent.length}}
 import okio.ByteString;
 
 import java.io.IOException;
@@ -76,7 +78,11 @@ public class JSON {
           })
         {{/parent}}
         ;
-        return fireBuilder.createGsonBuilder();
+        GsonBuilder builder = fireBuilder.createGsonBuilder();
+        {{#disableHtmlEscaping}}
+        builder.disableHtmlEscaping();
+        {{/disableHtmlEscaping}}
+        return builder;
     }
 
     private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {

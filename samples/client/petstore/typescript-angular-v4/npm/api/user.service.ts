@@ -418,10 +418,10 @@ export class UserService {
         }
 
         let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        if (username !== undefined) {
+        if (username !== undefined && username !== null) {
             queryParameters.set('username', <any>username);
         }
-        if (password !== undefined) {
+        if (password !== undefined && password !== null) {
             queryParameters.set('password', <any>password);
         }
 

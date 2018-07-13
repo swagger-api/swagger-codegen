@@ -29,21 +29,25 @@ class Pet {
   Pet.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id =
-    json['id'];
+        json['id']
+    ;
     category =
-        
-        
-        new Category.fromJson(json['category'])
-    ;
+      
+      
+      new Category.fromJson(json['category'])
+;
     name =
-    json['name'];
-    photoUrls =
-    json['photoUrls'];
-    tags =
-        Tag.listFromJson(json['tags'])
+        json['name']
     ;
+    photoUrls =
+        (json['photoUrls'] as List).map((item) => item as String).toList()
+    ;
+    tags =
+      Tag.listFromJson(json['tags'])
+;
     status =
-    json['status'];
+        json['status']
+    ;
   }
 
   Map<String, dynamic> toJson() {
@@ -57,12 +61,8 @@ class Pet {
      };
   }
 
-  static List<Pet> listFromJson(List<Map<String, dynamic>> json) {
-    var list = new List<Pet>();
-    if (json != null && json.length > 0) {
-      json.forEach((Map<String, dynamic> value) => list.add(new Pet.fromJson(value)));
-    }
-    return list;
+  static List<Pet> listFromJson(List<dynamic> json) {
+    return json == null ? new List<Pet>() : json.map((value) => new Pet.fromJson(value)).toList();
   }
 
   static Map<String, Pet> mapFromJson(Map<String, Map<String, dynamic>> json) {

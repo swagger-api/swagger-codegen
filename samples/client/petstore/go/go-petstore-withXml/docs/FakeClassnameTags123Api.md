@@ -11,11 +11,13 @@ Method | HTTP request | Description
 > Client TestClassname(ctx, body)
 To test class name in snake case
 
+To test class name in snake case
+
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**Client**](Client.md)| client model | 
 
 ### Return type

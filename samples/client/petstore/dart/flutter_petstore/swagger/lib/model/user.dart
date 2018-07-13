@@ -35,21 +35,29 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id =
-    json['id'];
+        json['id']
+    ;
     username =
-    json['username'];
+        json['username']
+    ;
     firstName =
-    json['firstName'];
+        json['firstName']
+    ;
     lastName =
-    json['lastName'];
+        json['lastName']
+    ;
     email =
-    json['email'];
+        json['email']
+    ;
     password =
-    json['password'];
+        json['password']
+    ;
     phone =
-    json['phone'];
+        json['phone']
+    ;
     userStatus =
-    json['userStatus'];
+        json['userStatus']
+    ;
   }
 
   Map<String, dynamic> toJson() {
@@ -65,12 +73,8 @@ class User {
      };
   }
 
-  static List<User> listFromJson(List<Map<String, dynamic>> json) {
-    var list = new List<User>();
-    if (json != null && json.length > 0) {
-      json.forEach((Map<String, dynamic> value) => list.add(new User.fromJson(value)));
-    }
-    return list;
+  static List<User> listFromJson(List<dynamic> json) {
+    return json == null ? new List<User>() : json.map((value) => new User.fromJson(value)).toList();
   }
 
   static Map<String, User> mapFromJson(Map<String, Map<String, dynamic>> json) {
