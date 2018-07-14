@@ -226,6 +226,9 @@ public class CodegenConstants {
 
     public static final String REMOVE_OPERATION_ID_PREFIX = "removeOperationIdPrefix";
     public static final String REMOVE_OPERATION_ID_PREFIX_DESC = "Remove prefix of operationId, e.g. config_getId => getId";
+    
+    public static final String USE_OAS2 = "useOas2";
+    public static final String USE_OAS2_DESC = "use OpenAPI v2.0 (Swagger 1.5.x)";
 
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";
@@ -309,5 +312,6 @@ public class CodegenConstants {
     public static final String API_DOCS_OPTION = "--api-docs";
     public static final String MODEL_TESTS_OPTION = "--model-tests";
     public static final String API_TESTS_OPTION = "--api-tests";
+    public static final String USE_OAS2_OPTION = "--use-oas2";
 
 }
