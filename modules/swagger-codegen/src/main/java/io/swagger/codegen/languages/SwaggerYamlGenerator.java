@@ -8,8 +8,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.swagger.codegen.*;
+import io.swagger.jackson.mixin.ResponseSchemaMixin;
+import io.swagger.models.Response;
 import io.swagger.models.Swagger;
 import io.swagger.util.DeserializationModule;
+import io.swagger.util.Yaml;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,5 +95,6 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.addMixIn(Response.class, ResponseSchemaMixin.class);
     }
 }
