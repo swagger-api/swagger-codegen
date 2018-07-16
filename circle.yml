@@ -50,6 +50,7 @@ test:
     # skip the rest if previous mvn task fails
     - if [ $? -ne 0 ]; then exit 1; fi
     ## docker: build generator image and push to Docker Hub
-    - ./bin/docker/build_and_push_docker:
-        timeout: 60m
+    ## 16/07/2018, commented out as it's causing timeout on circleCI, for the time being build and push manually
+    #- ./bin/docker/build_and_push_docker:
+    #    timeout: 60m
 
