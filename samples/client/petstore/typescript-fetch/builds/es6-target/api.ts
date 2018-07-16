@@ -79,6 +79,26 @@ export class RequiredError extends Error {
 }
 
 /**
+ * some description 
+ * @export
+ * @interface Amount
+ */
+export interface Amount {
+    /**
+     * some description 
+     * @type {number}
+     * @memberof Amount
+     */
+    value: number;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof Amount
+     */
+    currency: Currency;
+}
+
+/**
  * Describes the result of uploading an image resource
  * @export
  * @interface ApiResponse
@@ -122,6 +142,14 @@ export interface Category {
      * @memberof Category
      */
     name?: string;
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Currency
+ */
+export interface Currency {
 }
 
 /**
@@ -341,7 +369,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
             const localVarPath = `/pet`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -384,7 +412,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/pet/{petId}`
                 .replace(`{${"petId"}}`, encodeURIComponent(String(petId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -425,7 +453,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
             const localVarPath = `/pet/findByStatus`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -466,7 +494,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
             const localVarPath = `/pet/findByTags`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -508,7 +536,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/pet/{petId}`
                 .replace(`{${"petId"}}`, encodeURIComponent(String(petId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -544,7 +572,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             }
             const localVarPath = `/pet`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -588,7 +616,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/pet/{petId}`
                 .replace(`{${"petId"}}`, encodeURIComponent(String(petId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new url.URLSearchParams();
@@ -640,7 +668,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/pet/{petId}/uploadImage`
                 .replace(`{${"petId"}}`, encodeURIComponent(String(petId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new url.URLSearchParams();
@@ -1069,7 +1097,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             const localVarPath = `/store/order/{orderId}`
                 .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1092,7 +1120,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
         getInventory(options: any = {}): FetchArgs {
             const localVarPath = `/store/inventory`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1129,7 +1157,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             const localVarPath = `/store/order/{orderId}`
                 .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1157,7 +1185,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
             }
             const localVarPath = `/store/order`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1386,7 +1414,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             }
             const localVarPath = `/user`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1418,7 +1446,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             }
             const localVarPath = `/user/createWithArray`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1450,7 +1478,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             }
             const localVarPath = `/user/createWithList`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1483,7 +1511,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const localVarPath = `/user/{username}`
                 .replace(`{${"username"}}`, encodeURIComponent(String(username)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1512,7 +1540,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const localVarPath = `/user/{username}`
                 .replace(`{${"username"}}`, encodeURIComponent(String(username)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1545,7 +1573,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             }
             const localVarPath = `/user/login`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1576,7 +1604,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
         logoutUser(options: any = {}): FetchArgs {
             const localVarPath = `/user/logout`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1610,7 +1638,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
             const localVarPath = `/user/{username}`
                 .replace(`{${"username"}}`, encodeURIComponent(String(username)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, configuration.baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
