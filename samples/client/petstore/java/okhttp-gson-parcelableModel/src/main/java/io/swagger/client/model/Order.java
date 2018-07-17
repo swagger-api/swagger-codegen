@@ -111,6 +111,7 @@ public class Order implements Parcelable {
    * @return id
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -129,6 +130,7 @@ public class Order implements Parcelable {
    * @return petId
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("petId")
   public Long getPetId() {
     return petId;
   }
@@ -147,6 +149,7 @@ public class Order implements Parcelable {
    * @return quantity
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
@@ -165,6 +168,7 @@ public class Order implements Parcelable {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("shipDate")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
@@ -183,6 +187,7 @@ public class Order implements Parcelable {
    * @return status
   **/
   @ApiModelProperty(value = "Order Status")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -201,6 +206,7 @@ public class Order implements Parcelable {
    * @return complete
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("complete")
   public Boolean isComplete() {
     return complete;
   }

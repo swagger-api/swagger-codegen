@@ -61,6 +61,7 @@ public class Capitalization implements Parcelable {
    * @return smallCamel
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("smallCamel")
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -79,6 +80,7 @@ public class Capitalization implements Parcelable {
    * @return capitalCamel
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("CapitalCamel")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -97,6 +99,7 @@ public class Capitalization implements Parcelable {
    * @return smallSnake
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("small_Snake")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -115,6 +118,7 @@ public class Capitalization implements Parcelable {
    * @return capitalSnake
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("Capital_Snake")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -133,6 +137,7 @@ public class Capitalization implements Parcelable {
    * @return scAETHFlowPoints
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("SCA_ETH_Flow_Points")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -151,6 +156,7 @@ public class Capitalization implements Parcelable {
    * @return ATT_NAME
   **/
   @ApiModelProperty(value = "Name of the pet ")
+  @JsonProperty("ATT_NAME")
   public String getATTNAME() {
     return ATT_NAME;
   }

@@ -145,6 +145,7 @@ public class EnumArrays implements Parcelable {
    * @return justSymbol
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("just_symbol")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -171,6 +172,7 @@ public class EnumArrays implements Parcelable {
    * @return arrayEnum
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("array_enum")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }

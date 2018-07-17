@@ -84,6 +84,7 @@ public class FormatTest {
    * @return integer
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("integer")
   public Integer getInteger() {
     return integer;
   }
@@ -104,6 +105,7 @@ public class FormatTest {
    * @return int32
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("int32")
   public Integer getInt32() {
     return int32;
   }
@@ -122,6 +124,7 @@ public class FormatTest {
    * @return int64
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("int64")
   public Long getInt64() {
     return int64;
   }
@@ -142,6 +145,7 @@ public class FormatTest {
    * @return number
   **/
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("number")
   public BigDecimal getNumber() {
     return number;
   }
@@ -162,6 +166,7 @@ public class FormatTest {
    * @return _float
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("float")
   public Float getFloat() {
     return _float;
   }
@@ -182,6 +187,7 @@ public class FormatTest {
    * @return _double
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("double")
   public Double getDouble() {
     return _double;
   }
@@ -200,6 +206,7 @@ public class FormatTest {
    * @return string
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("string")
   public String getString() {
     return string;
   }
@@ -218,6 +225,7 @@ public class FormatTest {
    * @return _byte
   **/
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("byte")
   public byte[] getByte() {
     return _byte;
   }
@@ -236,6 +244,7 @@ public class FormatTest {
    * @return binary
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("binary")
   public byte[] getBinary() {
     return binary;
   }
@@ -254,6 +263,7 @@ public class FormatTest {
    * @return date
   **/
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("date")
   public LocalDate getDate() {
     return date;
   }
@@ -272,6 +282,7 @@ public class FormatTest {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("dateTime")
   public DateTime getDateTime() {
     return dateTime;
   }
@@ -290,6 +301,7 @@ public class FormatTest {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("uuid")
   public UUID getUuid() {
     return uuid;
   }
@@ -308,6 +320,7 @@ public class FormatTest {
    * @return password
   **/
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("password")
   public String getPassword() {
     return password;
   }

@@ -107,6 +107,7 @@ public class MapTest implements Parcelable {
    * @return mapMapOfString
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_map_of_string")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -133,6 +134,7 @@ public class MapTest implements Parcelable {
    * @return mapOfEnumString
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("map_of_enum_string")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

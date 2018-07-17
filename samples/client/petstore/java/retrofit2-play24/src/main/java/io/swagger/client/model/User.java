@@ -62,6 +62,7 @@ public class User {
    * @return id
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -80,6 +81,7 @@ public class User {
    * @return username
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("username")
   public String getUsername() {
     return username;
   }
@@ -98,6 +100,7 @@ public class User {
    * @return firstName
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
   }
@@ -116,6 +119,7 @@ public class User {
    * @return lastName
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
   }
@@ -134,6 +138,7 @@ public class User {
    * @return email
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("email")
   public String getEmail() {
     return email;
   }
@@ -152,6 +157,7 @@ public class User {
    * @return password
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("password")
   public String getPassword() {
     return password;
   }
@@ -170,6 +176,7 @@ public class User {
    * @return phone
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("phone")
   public String getPhone() {
     return phone;
   }
@@ -188,6 +195,7 @@ public class User {
    * @return userStatus
   **/
   @ApiModelProperty(value = "User Status")
+  @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
   }

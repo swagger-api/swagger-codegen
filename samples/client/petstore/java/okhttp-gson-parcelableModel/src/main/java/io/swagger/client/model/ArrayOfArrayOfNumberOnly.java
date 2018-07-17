@@ -57,6 +57,7 @@ public class ArrayOfArrayOfNumberOnly implements Parcelable {
    * @return arrayArrayNumber
   **/
   @ApiModelProperty(value = "")
+  @JsonProperty("ArrayArrayNumber")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
