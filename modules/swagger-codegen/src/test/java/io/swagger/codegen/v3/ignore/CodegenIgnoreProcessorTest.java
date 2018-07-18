@@ -4,14 +4,18 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.*;
-import static org.testng.Assert.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Factory;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 public class CodegenIgnoreProcessorTest {
 
