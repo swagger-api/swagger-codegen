@@ -12,14 +12,18 @@
  * the License.
  */
 
-package io.swagger.generator.exception;
+package io.swagger.v3.generator.exception;
 
-import org.apache.http.HttpStatus;
+public class ApiException extends Exception {
+    private static final long serialVersionUID = -5085112752305370687L;
+    private int code;
 
-public class NotFoundException extends ApiException {
-    private static final long serialVersionUID = -1223255119112336573L;
+    public ApiException(int code, String msg) {
+        super(msg);
+        this.code = code;
+    }
 
-    public NotFoundException(String msg) {
-        super(HttpStatus.SC_NOT_FOUND, msg);
+    public int getCode() {
+        return code;
     }
 }

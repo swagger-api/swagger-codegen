@@ -12,7 +12,7 @@
  * the License.
  */
 
-package io.swagger.generator.model;
+package io.swagger.v3.generator.model;
 
 import javax.xml.bind.annotation.XmlTransient;
 

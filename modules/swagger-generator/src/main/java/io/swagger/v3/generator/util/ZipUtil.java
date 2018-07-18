@@ -12,7 +12,7 @@
  * the License.
  */
 
-package io.swagger.generator.util;
+package io.swagger.v3.generator.util;
 
 import java.io.BufferedInputStream;
 import java.io.File;

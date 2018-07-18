@@ -1,4 +1,4 @@
-package io.swagger.generator.online;
+package io.swagger.v3.generator.online;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

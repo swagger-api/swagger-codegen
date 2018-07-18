@@ -1,4 +1,4 @@
-package io.swagger.generator.online;
+package io.swagger.v3.generator.online;
 
 import org.apache.commons.io.IOUtils;
 

@@ -1,10 +1,10 @@
-package io.swagger.generator.util;
+package io.swagger.v3.generator.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.config.CodegenConfigurator;
-import io.swagger.generator.model.GenerationRequest;
-import io.swagger.generator.model.Options;
+import io.swagger.v3.generator.model.GenerationRequest;
+import io.swagger.v3.generator.model.Options;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.Validate;
 
