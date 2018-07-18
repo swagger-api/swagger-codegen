@@ -1,10 +1,9 @@
 package io.swagger.codegen.swift4;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.Swift4Codegen;
-import io.swagger.codegen.languages.helpers.ExtensionHelper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.parser.OpenAPIV3Parser;

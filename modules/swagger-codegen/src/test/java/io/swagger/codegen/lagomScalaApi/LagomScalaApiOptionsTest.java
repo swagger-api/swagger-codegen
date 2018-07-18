@@ -1,7 +1,7 @@
 package io.swagger.codegen.lagomScalaApi;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.ScalaLagomServerCodegen;
 import io.swagger.codegen.options.ScalaClientOptionsProvider;
 import mockit.Expectations;

@@ -1,8 +1,8 @@
 package io.swagger.codegen.bash;
 
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenParameter;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.BashClientCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;

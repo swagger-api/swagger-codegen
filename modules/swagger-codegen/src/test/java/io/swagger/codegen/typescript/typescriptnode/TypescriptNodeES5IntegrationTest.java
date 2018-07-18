@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.swagger.codegen.AbstractIntegrationTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.TypeScriptNodeClientCodegen;
 import io.swagger.codegen.testutils.IntegrationTestPathsConfig;
 

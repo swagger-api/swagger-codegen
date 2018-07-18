@@ -5,6 +5,8 @@ import io.swagger.codegen.options.OptionsProvider;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
 import mockit.FullVerifications;
 
 import org.apache.commons.lang3.StringUtils;

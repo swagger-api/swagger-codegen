@@ -1,7 +1,7 @@
 package io.swagger.codegen.csharpdotnettwo;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.CsharpDotNet2ClientCodegen;
 import io.swagger.codegen.options.CsharpDotNet2ClientOptionsProvider;
 

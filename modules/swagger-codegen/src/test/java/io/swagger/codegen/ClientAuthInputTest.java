@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 
 
+import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.v3.parser.core.models.AuthorizationValue;
 import org.testng.Assert;
 import org.testng.annotations.Test;

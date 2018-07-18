@@ -1,9 +1,8 @@
 package io.swagger.codegen.typescript.typescriptangular;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.TypeScriptAngularClientCodegen;
-import io.swagger.codegen.options.TypeScriptAngularClientOptionsProvider;
 import io.swagger.codegen.options.TypeScriptAngularClientOptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;

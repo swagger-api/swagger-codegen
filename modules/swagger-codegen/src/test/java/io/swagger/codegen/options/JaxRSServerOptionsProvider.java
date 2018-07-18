@@ -1,7 +1,7 @@
 package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.codegen.languages.JavaJerseyServerCodegen;

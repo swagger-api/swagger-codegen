@@ -1,10 +1,10 @@
 package io.swagger.codegen.typescript.fetch;
 
 import com.google.common.collect.Sets;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.TypeScriptFetchClientCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.ArraySchema;
@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 import static io.swagger.codegen.utils.ModelUtils.updateCodegenPropertyEnum;
 

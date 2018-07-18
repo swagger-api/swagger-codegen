@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
 
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenParameter;
 
 public class JavaClientCodegenTest {
 

@@ -1,10 +1,9 @@
 package io.swagger.codegen.typescript.typescriptnode;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.languages.TypeScriptAngularJsClientCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.TypeScriptNodeClientCodegen;
 
 import com.google.common.collect.Sets;

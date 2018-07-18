@@ -1,5 +1,8 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -11,7 +14,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
