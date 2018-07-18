@@ -1,15 +1,14 @@
 package io.swagger.codegen.v3.ignore.rules;
 
-import io.swagger.codegen.v3.ignore.rules.IgnoreLineParser;
-import io.swagger.codegen.v3.ignore.rules.ParserException;
-import io.swagger.codegen.v3.ignore.rules.Part;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 
 public class IgnoreLineParserTest {
     private IgnoreLineParser.Token verifyInputToSingleToken(final String input, IgnoreLineParser.Token token) throws ParserException {

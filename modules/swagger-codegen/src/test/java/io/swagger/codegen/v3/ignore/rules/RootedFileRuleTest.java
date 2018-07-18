@@ -1,15 +1,12 @@
 package io.swagger.codegen.v3.ignore.rules;
 
-import io.swagger.codegen.v3.ignore.rules.IgnoreLineParser;
-import io.swagger.codegen.v3.ignore.rules.Part;
-import io.swagger.codegen.v3.ignore.rules.RootedFileRule;
-import io.swagger.codegen.v3.ignore.rules.Rule;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class RootedFileRuleTest {
     @Test(enabled = false)
