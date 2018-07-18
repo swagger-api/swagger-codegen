@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3.cli;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -31,7 +31,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.swagger.codegen.SwaggerCodegen</mainClass>
+                            <mainClass>io.swagger.codegen.v3.cli.SwaggerCodegen</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

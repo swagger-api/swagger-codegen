@@ -1,4 +1,4 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import io.swagger.v3.parser.OpenAPIV3Parser;
 

@@ -1,6 +1,6 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3.cli;
 
-import io.swagger.codegen.cmd.Generate;
+import io.swagger.codegen.v3.cli.cmd.Generate;
 import io.swagger.codegen.v3.CodegenArgument;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConfigLoader;

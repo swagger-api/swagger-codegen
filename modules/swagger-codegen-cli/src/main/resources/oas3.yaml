@@ -14,7 +14,7 @@ components:
   schemas:
     Generate:
       x-command-description: "Generate code with chosen lang"
-      x-class-name: "io.swagger.codegen.cmd.Generate"
+      x-class-name: "io.swagger.codegen.v3.cli.cmd.Generate"
       properties:
         verbose:
           type: "boolean"
@@ -194,7 +194,7 @@ components:
     ConfigHelp:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"
-      x-class-name: "io.swagger.codegen.cmd.ConfigHelp"
+      x-class-name: "io.swagger.codegen.v3.cli.cmd.ConfigHelp"
       properties:
         lang:
           type: "string"
@@ -205,7 +205,7 @@ components:
           x-require: true
     Meta:
       x-command-description: "MetaGenerator. Generator for creating a new template set and configuration for Codegen.  The output will be based on the language you specify, and includes default templates to include."
-      x-class-name: "io.swagger.codegen.cmd.Meta"
+      x-class-name: "io.swagger.codegen.v3.cli.cmd.Meta"
       properties:
         outputFolder:
           type: "string"
@@ -228,7 +228,7 @@ components:
           x-short-version: "-p"
     Langs:
       x-command-description: "Shows available langs"
-      x-class-name: "io.swagger.codegen.cmd.Langs"
+      x-class-name: "io.swagger.codegen.v3.cli.cmd.Langs"
     Version:
       x-command-description: "Show version information"
-      x-class-name: "io.swagger.codegen.cmd.Version"
+      x-class-name: "io.swagger.codegen.v3.cli.cmd.Version"
