@@ -1,4 +1,4 @@
-package io.swagger.codegen.examples;
+package io.swagger.codegen.v3.examples;
 
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
