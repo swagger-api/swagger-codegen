@@ -1,5 +1,8 @@
-package io.swagger.codegen.ignore.rules;
+package io.swagger.codegen.v3.ignore.rules;
 
+import io.swagger.codegen.v3.ignore.rules.IgnoreLineParser;
+import io.swagger.codegen.v3.ignore.rules.ParserException;
+import io.swagger.codegen.v3.ignore.rules.Part;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
