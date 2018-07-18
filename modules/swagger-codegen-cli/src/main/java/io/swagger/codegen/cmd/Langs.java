@@ -1,7 +1,7 @@
 package io.swagger.codegen.cmd;
 
 import ch.lambdaj.collection.LambdaIterable;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 
 import static ch.lambdaj.Lambda.on;
 import static ch.lambdaj.collection.LambdaCollections.with;

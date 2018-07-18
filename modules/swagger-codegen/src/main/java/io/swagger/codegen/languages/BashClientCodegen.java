@@ -3,20 +3,19 @@ package io.swagger.codegen.languages;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenParameter;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.MapSchema;
 import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.Arrays;
@@ -60,7 +59,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
    * Configures the type of generator.
    *
    * @return  the CodegenType for this generator
-   * @see     io.swagger.codegen.CodegenType
+   * @see     CodegenType
    */
   public CodegenType getTag() {
     return CodegenType.CLIENT;

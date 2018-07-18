@@ -2,9 +2,9 @@ package io.swagger.codegen.cmd;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.CLIHelper;
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.CodegenArgument;
-import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.CodegenArgument;
+import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

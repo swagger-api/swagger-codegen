@@ -10,8 +10,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.SupportingFile;
 
 public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptNodeClientCodegen.class);

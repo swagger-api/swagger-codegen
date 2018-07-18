@@ -8,9 +8,9 @@ import java.util.Map;
 
 import com.samskivert.mustache.Escapers;
 import com.samskivert.mustache.Mustache;
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.MapSchema;
 import io.swagger.v3.oas.models.media.Schema;

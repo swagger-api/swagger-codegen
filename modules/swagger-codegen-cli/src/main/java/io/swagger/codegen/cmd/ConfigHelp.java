@@ -1,8 +1,8 @@
 package io.swagger.codegen.cmd;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConfigLoader;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfigLoader;
 
 public class ConfigHelp implements Runnable {
     private String lang;

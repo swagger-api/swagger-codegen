@@ -1,17 +1,15 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 
 public class EiffelClientCodegen extends AbstractEiffelCodegen {
     static Logger LOGGER = LoggerFactory.getLogger(EiffelClientCodegen.class);

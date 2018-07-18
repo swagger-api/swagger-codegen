@@ -1,6 +1,6 @@
 package io.swagger.codegen.utils;
 
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
 import org.slf4j.Logger;
