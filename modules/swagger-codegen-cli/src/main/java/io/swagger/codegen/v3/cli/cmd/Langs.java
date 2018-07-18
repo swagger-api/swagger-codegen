@@ -1,4 +1,4 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import ch.lambdaj.collection.LambdaIterable;
 import io.swagger.codegen.v3.CodegenConfig;

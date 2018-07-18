@@ -1,7 +1,7 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.codegen.CLIHelper;
+import io.swagger.codegen.v3.cli.CLIHelper;
 import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.CodegenArgument;
 import io.swagger.codegen.v3.DefaultGenerator;
@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static io.swagger.codegen.CLIHelper.isValidJson;
-import static io.swagger.codegen.CLIHelper.isValidURL;
-import static io.swagger.codegen.CLIHelper.isValidYaml;
+import static io.swagger.codegen.v3.cli.CLIHelper.isValidJson;
+import static io.swagger.codegen.v3.cli.CLIHelper.isValidURL;
+import static io.swagger.codegen.v3.cli.CLIHelper.isValidYaml;
 import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
 import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
 import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;

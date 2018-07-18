@@ -1,4 +1,4 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

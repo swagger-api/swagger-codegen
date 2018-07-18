@@ -1,4 +1,4 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;

@@ -1,10 +1,10 @@
-package io.swagger.codegen.cmd;
+package io.swagger.codegen.v3.cli.cmd;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.codegen.CLIHelper;
+import io.swagger.codegen.v3.cli.CLIHelper;
 import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.DefaultGenerator;
-import io.swagger.codegen.SwaggerCodegen;
+import io.swagger.codegen.v3.cli.SwaggerCodegen;
 import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
