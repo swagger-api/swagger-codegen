@@ -1,9 +1,8 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import io.swagger.v3.oas.models.security.Scopes;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CodegenSecurity implements VendorExtendable {

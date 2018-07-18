@@ -1,7 +1,7 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
-import static io.swagger.codegen.VendorExtendable.PREFIX_HAS;
-import static io.swagger.codegen.VendorExtendable.PREFIX_IS;
+import static io.swagger.codegen.v3.VendorExtendable.PREFIX_HAS;
+import static io.swagger.codegen.v3.VendorExtendable.PREFIX_IS;
 
 /**
  * A class for storing constants that are used throughout the project.

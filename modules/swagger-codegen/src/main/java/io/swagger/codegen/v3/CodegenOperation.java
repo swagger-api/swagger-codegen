@@ -1,10 +1,9 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.media.Discriminator;
-import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.tags.Tag;
 
 import java.util.ArrayList;
