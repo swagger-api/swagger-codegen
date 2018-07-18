@@ -1,4 +1,4 @@
-package io.swagger.codegen.config;
+package io.swagger.codegen.v3.config;
 
 import io.swagger.codegen.v3.utils.OptionUtils;
 import org.apache.commons.lang3.tuple.Pair;

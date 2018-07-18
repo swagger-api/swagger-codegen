@@ -8,7 +8,7 @@ import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.v3.DefaultGenerator;
-import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
