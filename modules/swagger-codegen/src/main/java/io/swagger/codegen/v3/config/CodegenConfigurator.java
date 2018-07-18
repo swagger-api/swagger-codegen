@@ -9,7 +9,7 @@ import io.swagger.codegen.v3.CodegenArgument;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConstants;
-import io.swagger.codegen.auth.AuthParser;
+import io.swagger.codegen.v3.auth.AuthParser;
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.core.util.Json;

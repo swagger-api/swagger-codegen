@@ -1,4 +1,4 @@
-package config;
+package io.swagger.codegen.v3.config;
 
 import java.util.Collections;
 import java.util.HashMap;

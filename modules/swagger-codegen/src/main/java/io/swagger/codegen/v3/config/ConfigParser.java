@@ -1,4 +1,4 @@
-package config;
+package io.swagger.codegen.v3.config;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

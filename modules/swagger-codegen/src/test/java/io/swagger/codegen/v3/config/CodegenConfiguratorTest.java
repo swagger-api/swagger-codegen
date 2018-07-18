@@ -4,7 +4,7 @@ import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConstants;
-import io.swagger.codegen.auth.AuthParser;
+import io.swagger.codegen.v3.auth.AuthParser;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;

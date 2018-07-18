@@ -1,6 +1,6 @@
 package io.swagger.codegen.v3;
 
-import io.swagger.codegen.auth.AuthParser;
+import io.swagger.codegen.v3.auth.AuthParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.core.models.AuthorizationValue;
 
