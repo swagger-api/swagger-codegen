@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import config.Config;
 import config.ConfigParser;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
+ * @deprecated use instead {@link DefaultGenerator}
  * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated

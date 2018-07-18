@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.samskivert.mustache.Mustache.Compiler;
@@ -61,15 +61,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static io.swagger.codegen.CodegenConstants.HAS_ONLY_READ_ONLY_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.HAS_OPTIONAL_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.HAS_REQUIRED_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.IS_ARRAY_MODEL_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
-import static io.swagger.codegen.CodegenHelper.getDefaultIncludes;
-import static io.swagger.codegen.CodegenHelper.getImportMappings;
-import static io.swagger.codegen.CodegenHelper.getTypeMappings;
-import static io.swagger.codegen.CodegenHelper.initalizeSpecialCharacterMapping;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_ONLY_READ_ONLY_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_OPTIONAL_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_REQUIRED_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ARRAY_MODEL_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenHelper.getDefaultIncludes;
+import static io.swagger.codegen.v3.CodegenHelper.getImportMappings;
+import static io.swagger.codegen.v3.CodegenHelper.getTypeMappings;
+import static io.swagger.codegen.v3.CodegenHelper.initalizeSpecialCharacterMapping;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 import static io.swagger.codegen.utils.ModelUtils.processCodegenModels;
 import static io.swagger.codegen.utils.ModelUtils.processModelEnums;

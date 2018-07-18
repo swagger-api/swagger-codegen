@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.parser.util.SchemaTypeUtil;

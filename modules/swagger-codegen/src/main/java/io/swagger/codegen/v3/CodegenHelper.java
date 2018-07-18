@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import java.util.Arrays;
 import java.util.HashMap;
