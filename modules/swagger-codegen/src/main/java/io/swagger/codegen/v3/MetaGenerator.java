@@ -1,4 +1,4 @@
-package io.swagger.codegen;
+package io.swagger.codegen.v3;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
+ * @deprecated use instead {@link DefaultGenerator}
  * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated
@@ -128,7 +128,7 @@ public class MetaGenerator extends AbstractGenerator {
         supportingFiles.add(new SupportingFile("api.template", "src/main/resources" + File.separator + name, "api.mustache"));
         supportingFiles.add(new SupportingFile("model.template", "src/main/resources" + File.separator + name, "model.mustache"));
 
-        supportingFiles.add(new SupportingFile("services.mustache", "src/main/resources/META-INF/services", "io.swagger.codegen.CodegenConfig"));
+        supportingFiles.add(new SupportingFile("services.mustache", "src/main/resources/META-INF/services", "io.swagger.codegen.v3.CodegenConfig"));
 
         List<File> files = new ArrayList<File>();
 
