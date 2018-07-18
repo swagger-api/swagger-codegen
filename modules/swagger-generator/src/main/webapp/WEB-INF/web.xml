@@ -17,11 +17,11 @@
 
     <servlet>
         <servlet-name>DefaultServlet</servlet-name>
-        <servlet-class>io.swagger.generator.online.DefaultServlet</servlet-class>
+        <servlet-class>io.swagger.v3.generator.online.DefaultServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GeneratorServlet</servlet-name>
-        <servlet-class>io.swagger.generator.online.GeneratorServlet</servlet-class>
+        <servlet-class>io.swagger.v3.generator.online.GeneratorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DefaultServlet</servlet-name>

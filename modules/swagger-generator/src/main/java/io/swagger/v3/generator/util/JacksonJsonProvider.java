@@ -1,4 +1,4 @@
-package io.swagger.generator.util;
+package io.swagger.v3.generator.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,8 +1,8 @@
-package io.swagger.generator.online;
+package io.swagger.v3.generator.online;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.generator.model.GenerationRequest;
-import io.swagger.generator.model.Options;
+import io.swagger.v3.generator.model.GenerationRequest;
+import io.swagger.v3.generator.model.Options;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

@@ -1,4 +1,4 @@
-package io.swagger.generator.model;
+package io.swagger.v3.generator.model;
 
 import java.util.ArrayList;
 import java.util.List;

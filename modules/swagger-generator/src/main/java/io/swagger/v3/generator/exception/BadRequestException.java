@@ -12,25 +12,14 @@
  * the License.
  */
 
-package io.swagger.generator.model;
+package io.swagger.v3.generator.exception;
 
-public class Generated {
-    private String filename;
-    private String friendlyName;
+import org.apache.http.HttpStatus;
 
-    public String getFilename() {
-        return filename;
-    }
+public class BadRequestException extends ApiException {
+    private static final long serialVersionUID = -5540416398447252055L;
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getFriendlyName() {
-        return friendlyName;
-    }
-
-    public void setFriendlyName(String friendlyName) {
-        this.friendlyName = friendlyName;
+    public BadRequestException(String msg) {
+        super(HttpStatus.SC_BAD_REQUEST, msg);
     }
 }
