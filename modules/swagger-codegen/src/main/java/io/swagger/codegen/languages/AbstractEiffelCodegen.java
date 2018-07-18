@@ -31,7 +31,7 @@ import io.swagger.codegen.v3.CodegenOperation;
 import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.codegen.v3.DefaultCodegen;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.v3.core.util.Json;
 
 public abstract class AbstractEiffelCodegen extends DefaultCodegen implements CodegenConfig {

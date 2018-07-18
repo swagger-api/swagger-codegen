@@ -28,7 +28,7 @@ import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import io.swagger.codegen.languages.helpers.ExtensionHelper;
-import io.swagger.codegen.utils.URLPathUtil;
+import io.swagger.codegen.v3.utils.URLPathUtil;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
 
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
 //import io.swagger.codegen.languages.AbstractJavaCodegen;
-import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.codegen.v3.utils.ImplementationVersion;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);

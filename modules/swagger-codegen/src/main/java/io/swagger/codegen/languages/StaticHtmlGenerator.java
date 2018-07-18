@@ -11,7 +11,7 @@ import io.swagger.codegen.v3.CodegenResponse;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.v3.SupportingFile;
-import io.swagger.codegen.utils.Markdown;
+import io.swagger.codegen.v3.utils.Markdown;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

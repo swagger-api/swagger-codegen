@@ -6,7 +6,7 @@ import io.swagger.codegen.languages.helpers.HasHelper;
 import io.swagger.codegen.languages.helpers.HasNotHelper;
 import io.swagger.codegen.languages.helpers.IsHelper;
 import io.swagger.codegen.languages.helpers.IsNotHelper;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -71,9 +71,9 @@ import static io.swagger.codegen.v3.CodegenHelper.getImportMappings;
 import static io.swagger.codegen.v3.CodegenHelper.getTypeMappings;
 import static io.swagger.codegen.v3.CodegenHelper.initalizeSpecialCharacterMapping;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
-import static io.swagger.codegen.utils.ModelUtils.processCodegenModels;
-import static io.swagger.codegen.utils.ModelUtils.processModelEnums;
-import static io.swagger.codegen.utils.ModelUtils.updateCodegenPropertyEnum;
+import static io.swagger.codegen.v3.utils.ModelUtils.processCodegenModels;
+import static io.swagger.codegen.v3.utils.ModelUtils.processModelEnums;
+import static io.swagger.codegen.v3.utils.ModelUtils.updateCodegenPropertyEnum;
 
 public class DefaultCodegen implements CodegenConfig {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
