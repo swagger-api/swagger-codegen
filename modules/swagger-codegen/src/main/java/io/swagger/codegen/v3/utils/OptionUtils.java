@@ -1,4 +1,4 @@
-package io.swagger.codegen.utils;
+package io.swagger.codegen.v3.utils;
 
 import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;

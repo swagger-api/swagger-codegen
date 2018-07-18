@@ -21,7 +21,7 @@ import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.SupportingFile;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.ArraySchema;

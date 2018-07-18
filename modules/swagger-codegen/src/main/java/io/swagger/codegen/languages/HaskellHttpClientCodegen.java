@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import io.swagger.codegen.languages.helpers.ExtensionHelper;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.v3.CodegenSecurity;

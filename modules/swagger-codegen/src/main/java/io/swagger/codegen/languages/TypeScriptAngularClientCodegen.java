@@ -15,7 +15,7 @@ import io.swagger.codegen.v3.CodegenModel;
 import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.v3.CodegenOperation;
 import io.swagger.codegen.v3.SupportingFile;
-import io.swagger.codegen.utils.SemVer;
+import io.swagger.codegen.v3.utils.SemVer;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.FileSchema;
 import io.swagger.v3.oas.models.media.MapSchema;

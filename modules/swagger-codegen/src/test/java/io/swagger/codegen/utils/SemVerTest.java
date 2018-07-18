@@ -1,5 +1,6 @@
 package io.swagger.codegen.utils;
 
+import io.swagger.codegen.v3.utils.SemVer;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

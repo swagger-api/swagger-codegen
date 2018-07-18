@@ -1,4 +1,4 @@
-package io.swagger.codegen.utils;
+package io.swagger.codegen.v3.utils;
 
 public class SemVer implements Comparable<SemVer> {
 

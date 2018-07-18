@@ -1,6 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.codegen.v3.CliOption;
 import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.CodegenModel;

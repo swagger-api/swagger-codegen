@@ -1,6 +1,6 @@
 package io.swagger.codegen.cmd.utils;
 
-import io.swagger.codegen.utils.OptionUtils;
+import io.swagger.codegen.v3.utils.OptionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.testng.annotations.Test;
 
