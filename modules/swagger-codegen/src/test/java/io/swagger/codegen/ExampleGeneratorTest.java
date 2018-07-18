@@ -1,6 +1,6 @@
 package io.swagger.codegen;
 
-import io.swagger.codegen.examples.ExampleGenerator;
+import io.swagger.codegen.v3.examples.ExampleGenerator;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import io.swagger.v3.core.util.RefUtils;
