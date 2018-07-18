@@ -1,4 +1,4 @@
-package io.swagger.codegen.config;
+package io.swagger.codegen.v3.config;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;

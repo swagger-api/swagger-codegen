@@ -5,7 +5,7 @@ import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.DefaultGenerator;
-import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.generator.model.GenerationRequest;
 import io.swagger.generator.util.GeneratorUtil;
 import io.swagger.generator.util.ZipUtil;

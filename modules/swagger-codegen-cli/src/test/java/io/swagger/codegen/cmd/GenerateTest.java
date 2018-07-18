@@ -5,7 +5,7 @@ import io.swagger.codegen.CLIHelper;
 import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.codegen.SwaggerCodegen;
-import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.core.util.Yaml;
 import mockit.Expectations;

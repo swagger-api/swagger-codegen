@@ -14,18 +14,18 @@ package io.swagger.codegen.plugin;
  * the License.
  */
 
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
@@ -46,7 +46,7 @@ import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.DefaultGenerator;
-import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.v3.config.CodegenConfigurator;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.

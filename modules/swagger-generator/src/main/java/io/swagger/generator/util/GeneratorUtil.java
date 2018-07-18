@@ -2,7 +2,7 @@ package io.swagger.generator.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.v3.ClientOptInput;
-import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.generator.model.GenerationRequest;
 import io.swagger.generator.model.Options;
 import io.swagger.v3.core.util.Json;
@@ -11,13 +11,13 @@ import org.apache.commons.lang3.Validate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applySystemPropertiesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applySystemPropertiesKvpList;
+import static io.swagger.codegen.v3.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class GeneratorUtil {
