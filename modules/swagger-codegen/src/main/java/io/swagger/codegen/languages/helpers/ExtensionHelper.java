@@ -3,7 +3,7 @@ package io.swagger.codegen.languages.helpers;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import com.github.jknack.handlebars.Options.Buffer;
-import io.swagger.codegen.VendorExtendable;
+import io.swagger.codegen.v3.VendorExtendable;
 
 import java.io.IOException;
 import java.util.Map;

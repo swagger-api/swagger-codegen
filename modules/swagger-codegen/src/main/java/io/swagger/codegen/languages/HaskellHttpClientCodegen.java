@@ -1,7 +1,5 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -9,6 +7,11 @@ import java.util.regex.Pattern;
 
 import io.swagger.codegen.languages.helpers.ExtensionHelper;
 import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenParameter;
+import io.swagger.codegen.v3.CodegenSecurity;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.ArraySchema;
@@ -20,12 +23,12 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.io.FileUtils;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.core.util.Yaml;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -35,7 +38,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.regex.Matcher;
 
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 public class HaskellHttpClientCodegen extends DefaultCodegen implements CodegenConfig {

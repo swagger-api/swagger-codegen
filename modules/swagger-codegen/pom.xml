@@ -53,7 +53,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>io.swagger.codegen.Codegen</mainClass>
+                    <mainClass>io.swagger.codegen.v3.Codegen</mainClass>
                 </configuration>
             </plugin>
             <plugin>

@@ -4,8 +4,8 @@ import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
-import io.swagger.codegen.DefaultGenerator;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.DefaultGenerator;
+import io.swagger.codegen.v3.SupportingFile;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class Meta implements Runnable {
                                 new SupportingFile("api.template", String.join(File.separator, "src", "main", "resources", name), "api.mustache"),
                                 new SupportingFile("model.template", String.join(File.separator, "src", "main", "resources", name), "model.mustache"),
                                 new SupportingFile("myFile.template", String.join(File.separator, "src", "main", "resources", name), "myFile.mustache"),
-                                new SupportingFile("services.mustache", String.join(File.separator, "src", "main", "resources", "META-INF", "services"), "io.swagger.codegen.CodegenConfig"));
+                                new SupportingFile("services.mustache", String.join(File.separator, "src", "main", "resources", "META-INF", "services"), "io.swagger.codegen.v3.CodegenConfig"));
 
         String swaggerCodegenVersion = Version.readVersionFromResources(Version.SWAGGER_CODEGEN_VERSION);
         String swaggerCodegenGeneratorsVersion = Version.readVersionFromResources(Version.SWAGGER_CODEGEN_GENERATORS_VERSION);

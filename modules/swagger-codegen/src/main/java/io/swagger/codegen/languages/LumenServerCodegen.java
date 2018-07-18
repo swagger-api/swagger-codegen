@@ -1,8 +1,8 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 
 import java.io.File;
 import java.util.Collections;
@@ -19,7 +19,7 @@ public class LumenServerCodegen extends AbstractPhpCodegen
      * Configures the type of generator.
      * 
      * @return  the CodegenType for this generator
-     * @see     io.swagger.codegen.CodegenType
+     * @see     CodegenType
      */
     public CodegenType getTag() {
         return CodegenType.SERVER;

@@ -2,8 +2,8 @@ package io.swagger.codegen.languages;
 
 import java.io.File;
 
-import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.v3.SupportingFile;
+import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.v3.oas.models.media.Schema;
 
 public class TypeScriptAngularJsClientCodegen extends AbstractTypeScriptClientCodegen {

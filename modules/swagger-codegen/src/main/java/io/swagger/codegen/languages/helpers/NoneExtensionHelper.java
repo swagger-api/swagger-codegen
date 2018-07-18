@@ -2,11 +2,10 @@ package io.swagger.codegen.languages.helpers;
 
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
-import io.swagger.codegen.VendorExtendable;
+import io.swagger.codegen.v3.VendorExtendable;
 
 import java.io.IOException;
 
-import static io.swagger.codegen.VendorExtendable.PREFIX_IS;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 /**

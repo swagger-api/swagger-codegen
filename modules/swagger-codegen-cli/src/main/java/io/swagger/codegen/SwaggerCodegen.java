@@ -1,6 +1,9 @@
 package io.swagger.codegen;
 
 import io.swagger.codegen.cmd.Generate;
+import io.swagger.codegen.v3.CodegenArgument;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfigLoader;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;

@@ -1,8 +1,8 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -25,7 +25,7 @@ public class JMeterCodegen extends DefaultCodegen implements CodegenConfig {
    * Configures the type of generator.
    * 
    * @return  the CodegenType for this generator
-   * @see     io.swagger.codegen.CodegenType
+   * @see     CodegenType
    */
   @Override
   public CodegenType getTag() {
