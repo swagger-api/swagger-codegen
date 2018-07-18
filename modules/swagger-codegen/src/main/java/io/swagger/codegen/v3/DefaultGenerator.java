@@ -49,7 +49,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
 //import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
 

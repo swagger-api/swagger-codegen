@@ -1,4 +1,4 @@
-package io.swagger.codegen.ignore.rules;
+package io.swagger.codegen.v3.ignore.rules;
 
 class Part {
     private final IgnoreLineParser.Token token;

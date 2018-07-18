@@ -1,7 +1,7 @@
-package io.swagger.codegen.ignore;
+package io.swagger.codegen.v3.ignore;
 
-import io.swagger.codegen.ignore.rules.DirectoryRule;
-import io.swagger.codegen.ignore.rules.Rule;
+import io.swagger.codegen.v3.ignore.rules.DirectoryRule;
+import io.swagger.codegen.v3.ignore.rules.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
