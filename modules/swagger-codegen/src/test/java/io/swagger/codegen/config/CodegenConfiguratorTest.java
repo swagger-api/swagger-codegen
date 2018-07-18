@@ -1,9 +1,9 @@
 package io.swagger.codegen.config;
 
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConfigLoader;
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfigLoader;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.auth.AuthParser;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -17,7 +17,6 @@ import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
 import org.apache.commons.lang3.SerializationUtils;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.nio.file.Paths;

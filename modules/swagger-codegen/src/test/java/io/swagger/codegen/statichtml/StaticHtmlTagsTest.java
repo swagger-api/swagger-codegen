@@ -2,7 +2,6 @@ package io.swagger.codegen.statichtml;
 
 import static org.testng.Assert.assertEquals;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,10 +24,10 @@ import org.testng.annotations.Test;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.ClientOpts;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.codegen.languages.StaticHtmlGenerator;
 
 public class StaticHtmlTagsTest {

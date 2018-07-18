@@ -1,7 +1,7 @@
 package io.swagger.codegen.haskellhttpclient;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.HaskellHttpClientCodegen;
 import io.swagger.codegen.options.HaskellHttpClientOptionsProvider;
 import mockit.Expectations;

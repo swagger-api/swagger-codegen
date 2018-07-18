@@ -1,6 +1,12 @@
 package io.swagger.codegen;
 
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.ClientOpts;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenSecurity;
+import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.tags.Tag;
@@ -18,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
-import static io.swagger.codegen.CodegenConstants.TEMPLATE_DIR;
+import static io.swagger.codegen.v3.CodegenConstants.TEMPLATE_DIR;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.fail;
 import static org.testng.Assert.*;

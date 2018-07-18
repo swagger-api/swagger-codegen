@@ -1,6 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.v3.CodegenProperty;
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;

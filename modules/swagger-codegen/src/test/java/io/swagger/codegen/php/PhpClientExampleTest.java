@@ -1,6 +1,6 @@
 package io.swagger.codegen.php;
 
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.codegen.languages.PhpClientCodegen;
 
 import org.testng.Assert;

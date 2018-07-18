@@ -1,7 +1,7 @@
 package io.swagger.codegen.swift3;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.Swift3Codegen;
 import io.swagger.codegen.options.Swift3OptionsProvider;
 import mockit.Expectations;
