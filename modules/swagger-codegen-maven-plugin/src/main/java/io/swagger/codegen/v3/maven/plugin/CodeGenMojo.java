@@ -1,4 +1,4 @@
-package io.swagger.codegen.plugin;
+package io.swagger.codegen.v3.maven.plugin;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
