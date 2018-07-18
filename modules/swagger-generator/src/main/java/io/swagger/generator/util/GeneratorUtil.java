@@ -1,7 +1,7 @@
 package io.swagger.generator.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.generator.model.GenerationRequest;
 import io.swagger.generator.model.Options;
