@@ -16,8 +16,8 @@ import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import config.Config;
-import config.ConfigParser;
+import io.swagger.codegen.v3.config.Config;
+import io.swagger.codegen.v3.config.ConfigParser;
 
 /**
  * @deprecated use instead {@link DefaultGenerator}

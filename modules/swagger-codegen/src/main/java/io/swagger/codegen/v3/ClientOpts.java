@@ -3,7 +3,7 @@ package io.swagger.codegen.v3;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.swagger.codegen.auth.AuthMethod;
+import io.swagger.codegen.v3.auth.AuthMethod;
 
 public class ClientOpts {
     protected String uri;
