@@ -2947,6 +2947,10 @@ public class DefaultCodegen implements CodegenConfig {
         this.skipOverwrite = skipOverwrite;
     }
 
+    public boolean shouldSkipModel(CodegenModel model) {
+        return false;
+    }
+
     public boolean isRemoveOperationIdPrefix() {
         return removeOperationIdPrefix;
     }

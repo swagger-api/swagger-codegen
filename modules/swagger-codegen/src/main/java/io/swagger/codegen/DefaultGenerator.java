@@ -384,13 +384,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     continue;
                 }
                 Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
-                if (isJavaCodegen(config.getName())) {
-                    // Special handling of aliases only applies to Java
-                    if (modelTemplate != null && modelTemplate.containsKey("model")) {
-                        CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
-                        if (ExtensionHelper.getBooleanValue(codegenModel, CodegenConstants.IS_ALIAS_EXT_NAME)) {
-                            continue;  // Don't create user-defined classes for aliases
-                        }
+                if (modelTemplate != null && modelTemplate.containsKey("model")) {
+                    CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
+                    if (config.shouldSkipModel(codegenModel)) {
+                        continue;
                     }
                 }
                 allModels.add(modelTemplate);
@@ -1028,11 +1025,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         final Handlebars handlebars = new Handlebars(templateLoader);
         config.addHandlebarHelpers(handlebars);
         return handlebars.compile(templateFile);
-    }
-
-    private boolean isJavaCodegen(String name) {
-        return name.equalsIgnoreCase("java")
-                || name.equalsIgnoreCase("inflector");
     }
 
     private Boolean getCustomOptionBooleanValue(String option) {
