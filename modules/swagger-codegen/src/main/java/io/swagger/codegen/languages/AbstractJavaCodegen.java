@@ -11,10 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.github.jknack.handlebars.Handlebars;
-import io.swagger.codegen.languages.helpers.ExtensionHelper;
 import io.swagger.codegen.languages.helpers.JavaHelper;
-import io.swagger.codegen.languages.helpers.NoneExtensionHelper;
-import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -34,17 +31,17 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenParameter;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 
-import static io.swagger.codegen.CodegenConstants.HAS_ENUMS_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_ENUMS_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 /**

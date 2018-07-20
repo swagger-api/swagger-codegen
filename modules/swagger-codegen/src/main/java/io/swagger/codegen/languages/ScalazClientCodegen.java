@@ -1,10 +1,7 @@
 package io.swagger.codegen.languages;
 
-import com.google.common.base.CaseFormat;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-
-import io.swagger.codegen.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +9,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.*;
 
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ScalazClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
 

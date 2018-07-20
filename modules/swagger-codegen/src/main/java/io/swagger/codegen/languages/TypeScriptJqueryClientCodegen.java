@@ -1,7 +1,7 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenParameter;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.SupportingFile;
 
 public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptJqueryClientCodegen.class);

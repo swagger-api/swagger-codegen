@@ -1,10 +1,8 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 
 import com.google.common.collect.ImmutableMap;
-
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import java.util.Map;
 

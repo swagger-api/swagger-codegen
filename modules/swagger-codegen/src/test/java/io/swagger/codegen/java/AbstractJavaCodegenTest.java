@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.parameters.RequestBody;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.languages.AbstractJavaCodegen;
 
 public class AbstractJavaCodegenTest {

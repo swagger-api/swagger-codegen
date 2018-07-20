@@ -1,6 +1,6 @@
 package io.swagger.codegen.java.jaxrs;
 
-import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.v3.CodegenParameter;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

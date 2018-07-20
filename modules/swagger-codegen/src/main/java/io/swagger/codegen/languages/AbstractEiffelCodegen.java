@@ -1,8 +1,8 @@
 package io.swagger.codegen.languages;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static io.swagger.codegen.CodegenConstants.HAS_ENUMS_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_ENUMS_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 import java.util.Arrays;
@@ -23,15 +23,15 @@ import org.apache.commons.lang3.StringUtils;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenParameter;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
+import io.swagger.codegen.v3.utils.ModelUtils;
 import io.swagger.v3.core.util.Json;
 
 public abstract class AbstractEiffelCodegen extends DefaultCodegen implements CodegenConfig {

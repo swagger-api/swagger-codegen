@@ -1,9 +1,9 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
 import io.swagger.v3.oas.models.media.IntegerSchema;
@@ -18,8 +18,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 
 public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig {

@@ -1,13 +1,13 @@
 package io.swagger.codegen.languages;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.MapSchema;
@@ -16,10 +16,8 @@ import io.swagger.v3.core.util.Yaml;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

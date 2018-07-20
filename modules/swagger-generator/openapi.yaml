@@ -18,7 +18,7 @@ tags:
 paths:
   /generate:
     get:
-      x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
+      x-swagger-router-controller: "io.swagger.v3.generator.online.GeneratorController"
       operationId: generateFiles
       parameters:
       - name: argumentsUrl
@@ -35,7 +35,7 @@ paths:
                 type: string
                 format: binary
     post:
-      x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
+      x-swagger-router-controller: "io.swagger.v3.generator.online.GeneratorController"
       operationId: generate
       requestBody:
         content:
@@ -53,7 +53,7 @@ paths:
 
   /generate/{language}:
     get:
-      x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
+      x-swagger-router-controller: "io.swagger.v3.generator.online.GeneratorController"
       operationId: generate
       parameters:
       - name: language
@@ -86,7 +86,7 @@ paths:
     get:
       tags:
       - "clients"
-      x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
+      x-swagger-router-controller: "io.swagger.v3.generator.online.GeneratorController"
       operationId: clientOptions
       responses:
         200:
@@ -101,7 +101,7 @@ paths:
     get:
       tags:
       - "servers"
-      x-swagger-router-controller: "io.swagger.generator.online.GeneratorController"
+      x-swagger-router-controller: "io.swagger.v3.generator.online.GeneratorController"
       operationId: serverOptions
       responses:
         200:
@@ -116,7 +116,7 @@ paths:
 components:
   schemas:
     GenerationRequest:
-      x-swagger-router-model: "io.swagger.generator.model.GenerationRequest"
+      x-swagger-router-model: "io.swagger.v3.generator.model.GenerationRequest"
       required:
       - spec
       - options
@@ -127,7 +127,7 @@ components:
         options:
           $ref: '#/components/schemas/Options'
     Options:
-      x-swagger-router-model: "io.swagger.generator.model.Options"
+      x-swagger-router-model: "io.swagger.v3.generator.model.Options"
       required:
       - lang
       properties:

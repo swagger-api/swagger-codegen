@@ -2,8 +2,8 @@ package io.swagger.codegen.csharp;
 
 import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.AbstractIntegrationTest;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.languages.CSharpClientCodegen;
 import io.swagger.codegen.testutils.IntegrationTestPathsConfig;
 import org.testng.annotations.Test;

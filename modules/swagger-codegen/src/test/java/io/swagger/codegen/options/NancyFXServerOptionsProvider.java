@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import static io.swagger.codegen.CodegenConstants.*;
+import static io.swagger.codegen.v3.CodegenConstants.*;
 
 public class NancyFXServerOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_server_nancyfx";

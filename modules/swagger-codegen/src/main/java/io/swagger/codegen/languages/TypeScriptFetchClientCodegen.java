@@ -1,8 +1,8 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.FileSchema;
 import io.swagger.v3.oas.models.media.MapSchema;
@@ -10,7 +10,6 @@ import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

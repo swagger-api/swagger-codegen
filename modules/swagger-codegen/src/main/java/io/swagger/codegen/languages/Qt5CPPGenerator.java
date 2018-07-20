@@ -1,9 +1,9 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
 import io.swagger.v3.oas.models.media.DateSchema;
@@ -175,7 +175,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
      * Configures the type of generator.
      *
      * @return the CodegenType for this generator
-     * @see io.swagger.codegen.CodegenType
+     * @see CodegenType
      */
     @Override
     public CodegenType getTag() {

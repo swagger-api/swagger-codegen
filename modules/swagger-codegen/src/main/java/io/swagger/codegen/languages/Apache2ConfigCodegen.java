@@ -1,19 +1,14 @@
 package io.swagger.codegen.languages;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.DefaultCodegen;
 
 public class Apache2ConfigCodegen extends DefaultCodegen implements CodegenConfig {
   public static final String USER_INFO_PATH = "userInfoPath";

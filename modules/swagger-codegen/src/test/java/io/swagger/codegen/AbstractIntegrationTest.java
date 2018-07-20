@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.ClientOpts;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import org.testng.annotations.Test;

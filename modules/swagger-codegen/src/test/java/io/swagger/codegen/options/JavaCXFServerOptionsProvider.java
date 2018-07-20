@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
 
 public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {

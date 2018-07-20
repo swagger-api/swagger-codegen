@@ -1,7 +1,7 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CliOption;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 import org.reflections.Reflections;
 import org.testng.Assert;

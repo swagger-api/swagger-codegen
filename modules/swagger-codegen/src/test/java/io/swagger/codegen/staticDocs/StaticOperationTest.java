@@ -1,8 +1,8 @@
 package io.swagger.codegen.staticDocs;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.StaticDocCodegen;
 
 import io.swagger.v3.oas.models.media.ArraySchema;

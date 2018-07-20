@@ -1,7 +1,7 @@
 package io.swagger.codegen.javascript;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.options.JavaScriptOptionsProvider;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 import io.swagger.codegen.options.OptionsProvider;

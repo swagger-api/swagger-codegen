@@ -1,5 +1,5 @@
 package io.swagger.codegen.eiffel;
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.DateTimeSchema;
 import io.swagger.v3.oas.models.media.IntegerSchema;
@@ -10,9 +10,9 @@ import io.swagger.v3.parser.util.SchemaTypeUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.EiffelClientCodegen;
 
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;

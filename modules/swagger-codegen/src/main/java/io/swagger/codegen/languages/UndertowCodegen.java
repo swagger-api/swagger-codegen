@@ -1,11 +1,11 @@
 package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.BooleanUtils;
@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.swagger.codegen.CodegenConstants.HAS_ENUMS_EXT_NAME;
-import static io.swagger.codegen.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.HAS_ENUMS_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 public class UndertowCodegen extends AbstractJavaCodegen {

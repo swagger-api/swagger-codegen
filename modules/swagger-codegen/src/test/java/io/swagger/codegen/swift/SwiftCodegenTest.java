@@ -1,8 +1,8 @@
 package io.swagger.codegen.swift;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.SwiftCodegen;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;

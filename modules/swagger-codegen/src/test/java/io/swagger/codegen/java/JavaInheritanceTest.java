@@ -1,8 +1,8 @@
 package io.swagger.codegen.java;
 
 import com.google.common.collect.Sets;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.v3.oas.models.media.ComposedSchema;
 import io.swagger.v3.oas.models.media.Discriminator;
