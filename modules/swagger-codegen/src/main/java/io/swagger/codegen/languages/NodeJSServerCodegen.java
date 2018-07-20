@@ -351,6 +351,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                         .toLowerCase();
                 this.additionalProperties.put("projectName", projectName);
             }
+            else {
+                info.setTitle("swagger-project");
+            }
         }
 
         if (getGoogleCloudFunctions()) {
