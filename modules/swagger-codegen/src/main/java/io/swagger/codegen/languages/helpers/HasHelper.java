@@ -1,6 +1,6 @@
 package io.swagger.codegen.languages.helpers;
 
-import static io.swagger.codegen.VendorExtendable.PREFIX_HAS;
+import static io.swagger.codegen.v3.VendorExtendable.PREFIX_HAS;
 
 /**
  * new version of this class can be found on: https://github.com/swagger-api/swagger-codegen-generators

@@ -6,7 +6,10 @@ import java.io.Writer;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import io.swagger.codegen.*;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
 
 public class AdaServerCodegen extends AbstractAdaCodegen implements CodegenConfig {
 

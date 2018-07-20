@@ -1,8 +1,8 @@
 package io.swagger.codegen.apex;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.codegen.languages.ApexClientCodegen;
 import io.swagger.v3.oas.models.media.BinarySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
@@ -22,7 +22,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Date;
 import java.util.List;
 
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;

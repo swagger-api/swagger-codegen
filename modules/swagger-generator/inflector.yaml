@@ -1,8 +1,8 @@
-controllerPackage: io.swagger.generator.online
-modelPackage: io.swagger.generator.model
+controllerPackage: io.swagger.v3.generator.online
+modelPackage: io.swagger.v3.generator.model
 swaggerUrl: openapi.yaml
 modelMappings:
-  GenerationRequest: io.swagger.generator.model
+  GenerationRequest: io.swagger.v3.generator.model
 
 # loads all by default, or pick and choose
 entityProcessors:

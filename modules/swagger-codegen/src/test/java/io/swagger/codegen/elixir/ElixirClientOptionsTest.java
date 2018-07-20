@@ -1,10 +1,9 @@
 package io.swagger.codegen.elixir;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.ElixirClientCodegen;
 import io.swagger.codegen.options.ElixirClientOptionsProvider;
-import io.swagger.codegen.options.PhpClientOptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 

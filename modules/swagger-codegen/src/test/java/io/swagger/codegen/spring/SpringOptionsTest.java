@@ -1,6 +1,6 @@
 package io.swagger.codegen.spring;
 
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.codegen.options.SpringOptionsProvider;

@@ -1,11 +1,5 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.v3.parser.util.SchemaTypeUtil;
-import org.junit.Test;
-import org.testng.Assert;
-
 public class JavaJAXRSSpecServerCodegenTest {
 
     private JavaJAXRSSpecServerCodegen generator = new JavaJAXRSSpecServerCodegen();

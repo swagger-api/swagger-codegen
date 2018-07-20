@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.Sets;
 
-import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.v3.CodegenModel;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 
 public class JavaScriptInheritanceTest {

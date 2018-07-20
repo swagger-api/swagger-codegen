@@ -1,9 +1,9 @@
 package io.swagger.codegen.languages.helpers;
 
 import com.github.jknack.handlebars.Options;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import org.apache.commons.lang3.StringUtils;
 

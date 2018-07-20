@@ -1,6 +1,6 @@
 package io.swagger.codegen.jaxrs;
 
-import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.v3.CodegenModel;
 import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 import io.swagger.v3.oas.models.media.DateSchema;
 import io.swagger.v3.oas.models.media.DateTimeSchema;

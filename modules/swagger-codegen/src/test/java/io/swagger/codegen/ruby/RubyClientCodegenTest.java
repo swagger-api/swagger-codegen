@@ -1,9 +1,9 @@
 package io.swagger.codegen.ruby;
 
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.v3.ClientOpts;
+import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.DefaultGenerator;
 import io.swagger.codegen.languages.RubyClientCodegen;
 
 import io.swagger.v3.oas.models.OpenAPI;

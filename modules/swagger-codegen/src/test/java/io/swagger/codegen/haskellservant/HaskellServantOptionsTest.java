@@ -1,7 +1,7 @@
 package io.swagger.codegen.haskellservant;
 
 import io.swagger.codegen.AbstractOptionsTest;
-import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.languages.HaskellServantCodegen;
 import io.swagger.codegen.options.HaskellServantOptionsProvider;
 

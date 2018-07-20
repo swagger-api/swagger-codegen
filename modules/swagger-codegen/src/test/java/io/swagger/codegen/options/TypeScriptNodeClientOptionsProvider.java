@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.languages.TypeScriptAngularClientCodegen;
 
 

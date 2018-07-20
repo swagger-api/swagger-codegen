@@ -1,10 +1,10 @@
 package io.swagger.codegen.python;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.DefaultCodegen;
 import io.swagger.codegen.languages.PythonClientCodegen;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -19,10 +19,8 @@ import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.annotations.ITestAnnotation;
 
 import com.google.common.collect.Sets;
-import java.util.Map;
 
 import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 

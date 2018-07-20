@@ -1,8 +1,7 @@
 package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.SymfonyServerCodegen;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.languages.SymfonyServerCodegen;
 
 import java.util.Map;

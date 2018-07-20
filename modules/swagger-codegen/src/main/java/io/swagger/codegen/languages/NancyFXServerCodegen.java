@@ -1,19 +1,19 @@
 package io.swagger.codegen.languages;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static io.swagger.codegen.CodegenConstants.*;
-import static io.swagger.codegen.CodegenType.SERVER;
+import static io.swagger.codegen.v3.CodegenConstants.*;
+import static io.swagger.codegen.v3.CodegenType.SERVER;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenModel;
+import io.swagger.codegen.v3.CodegenOperation;
+import io.swagger.codegen.v3.CodegenProperty;
+import io.swagger.codegen.v3.CodegenType;
+import io.swagger.codegen.v3.SupportingFile;
+import io.swagger.codegen.v3.utils.ModelUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -26,11 +26,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import io.swagger.codegen.utils.URLPathUtil;
+import io.swagger.codegen.v3.utils.URLPathUtil;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
