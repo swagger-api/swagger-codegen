@@ -9,9 +9,9 @@ Usage
 Add to your `build->plugins` section (default phase is `generate-sources` phase)
 ```xml
 <plugin>
-    <groupId>io.swagger</groupId>
+    <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.2.3</version>
+    <version>3.0.0-SNAPSHOT</version>
     <executions>
         <execution>
             <goals>
@@ -67,7 +67,7 @@ Specifying a custom generator is a bit different. It doesn't support the classpa
 
 ```xml
 <plugin>
-    <groupId>io.swagger</groupId>
+    <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
     <version>${swagger-codegen-maven-plugin-version}</version>
     <executions>
