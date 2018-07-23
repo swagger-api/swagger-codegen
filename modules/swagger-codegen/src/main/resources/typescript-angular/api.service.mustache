@@ -124,16 +124,19 @@ export class {{classname}} {
      * @param reportProgress flag to report request and response progress.{{/useHttpClient}}
      */
     {{#useHttpClient}}
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public {{nickname}}({{#allParams}}{{^isConstQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstQueryParam}}{{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
+    public {{nickname}}({{#allParams}}{{^isConstQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstQueryParam}}{{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{^isConstQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstQueryParam}}{{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{^isConstQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstQueryParam}}{{/allParams}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
     {{/useHttpClient}}
     {{^useHttpClient}}
     public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
     {{/useHttpClient}}
 {{#allParams}}
 {{#required}}
+        {{#isConstQueryParam}}
+        let {{paramName}} = {{{dataType}}};
+        {{/isConstQueryParam}}
         if ({{paramName}} === null || {{paramName}} === undefined) {
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
         }
