@@ -45,7 +45,7 @@ export class TokenService {
           .asPost()
         ;
 
-        // CSRF authorization required
+        // Authentication 'CSRF token' required
         await HttpService.addAuthHeader('XSRF-TOKEN', 'CsrfToken', request);
 
         // Send the request
@@ -55,7 +55,7 @@ export class TokenService {
           throw reject(response.content);
         }
 
-        // Extract the content
+        // Resolve the content
         return resolve(response.content);
       });
 
@@ -67,7 +67,7 @@ export class TokenService {
       logger.error('Reloading refresh token failed:', e);
 
       if (e.statusCode > 399) {
-        this.clearRefreshToken();
+        this.setRefreshToken(null);
         window.location.href = '/login';
       }
 
@@ -92,7 +92,10 @@ export class TokenService {
     const refreshToken = this.getRefreshToken();
 
     if (!refreshToken) {
-      this.clearUserToken();
+      logger.warn('Refresh token is missing.');
+
+      this.setUserToken(null);
+
       return Promise.reject('Refresh token is missing.');
     }
 
@@ -126,7 +129,7 @@ export class TokenService {
       logger.error('Reloading user token failed:', e);
 
       if (e.statusCode > 399) {
-        this.clearUserToken();
+        this.setUserToken(null);
         window.location.href = '/login';
       }
 
@@ -149,7 +152,7 @@ export class TokenService {
       return this.getCsrfToken();
     }
 
-    this.clearCsrfToken();
+    this.setCsrfToken(null);
 
     try {
       this.csrfPromise = new Promise<string>(async (resolve, reject) => {
@@ -202,8 +205,7 @@ export class TokenService {
    * Return the CSRF token subject.
    */
   public static getCsrfTokenSubject(): BehaviorSubject<string | null> {
-    const { csrf } = this.getTokens();
-    return csrf;
+    return this.getTokens().csrf;
   }
 
   /**
@@ -220,8 +222,7 @@ export class TokenService {
     const logger = this.getLogger();
     logger.debug('Setting CSRF token:', token);
 
-    const { csrf } = this.getTokens();
-    csrf.next(token);
+    this.getCsrfTokenSubject().next(token);
   }
 
   /**
@@ -231,8 +232,7 @@ export class TokenService {
     const logger = this.getLogger();
     logger.info('Clearing CSRF token.');
 
-    const { csrf } = this.getTokens();
-    csrf.next(null);
+    this.getCsrfTokenSubject().next(null);
   }
 
   /**
@@ -248,15 +248,61 @@ export class TokenService {
 
       const decoded: any = jwt.decode(value);
 
-      const exp  = decoded.exp || false;
-      const time = Math.round((new Date()).getTime() / 1000);
+      if (!decoded) {
+        logger.info('Refresh token is invalid.');
 
-      //logger.debug('Refresh token exp:',exp);
-      //logger.debug('Refresh token time:', time);
+        this.flushRefreshToken();
+        refresh.next(null);
 
-      if (!exp || exp <= time - 5 * 60) {
-        logger.info('Refresh token expired.');
-        this.clearRefreshToken();
+        // Must be after flush
+        this.setUserToken(null);
+
+        return refresh;
+      }
+
+      const duration = decoded.dur || false;
+
+      if (!duration) {
+        logger.info('Refresh token is missing duration.');
+
+        this.flushRefreshToken();
+        refresh.next(null);
+
+        // Must be after flush
+        this.setUserToken(null);
+
+        return refresh;
+      }
+
+      const received = localStorage.getItem('unix_refresh');
+
+      if (!received) {
+        logger.info('Refresh token received at timestamp is missing.');
+
+        this.flushRefreshToken();
+        refresh.next(null);
+
+        // Must be after flush
+        this.setUserToken(null);
+
+        return refresh;
+      }
+
+      const exp = parseInt(received) + parseInt(duration);
+      const now = Math.round((new Date()).getTime() / 1000);
+
+      //logger.debug('dur:', dur, 'exp:', exp, 'now:', now);
+
+      if (exp < now - 5 * 60) {
+        logger.info('Refresh token has expired.');
+
+        this.flushRefreshToken();
+        refresh.next(null);
+
+        // Must be after flush
+        this.setUserToken(null);
+
+        return refresh;
       }
     }
 
@@ -277,25 +323,31 @@ export class TokenService {
     const logger = this.getLogger();
     logger.debug('Setting refresh token:', token);
 
-    const { refresh } = this.getTokens();
-    refresh.next(token);
+    const decoded: any = jwt.decode(token);
 
-    this.saveToCache('token_refresh', token);
-    this.clearUserToken();
+    if (decoded) {
+      const now = Math.round((new Date()).getTime() / 1000);
+
+      this.saveToCache('token_refresh', token);
+      this.saveToCache('unix_refresh', now.toString());
+
+      // Must be after save
+      this.getRefreshTokenSubject().next(token);
+    } else {
+      this.flushRefreshToken();
+      this.setUserToken(null);
+
+      // Must be after flush
+      this.getRefreshTokenSubject().next(null);
+    }
   }
 
   /**
-   * Clears value of the refresh token.
+   * Flushes value of the refresh token.
    */
-  public static clearRefreshToken(): void {
-    const logger = this.getLogger();
-    logger.info('Clearing refresh token.');
-
-    const { refresh } = this.getTokens();
-    refresh.next(null);
-
+  public static flushRefreshToken(): void {
     this.clearFromCache('token_refresh');
-    this.clearUserToken();
+    this.clearFromCache('unix_refresh');
   }
 
   /**
@@ -311,15 +363,55 @@ export class TokenService {
 
       const decoded: any = jwt.decode(value);
 
-      const exp  = decoded.exp || false;
-      const time = Math.round((new Date()).getTime() / 1000);
+      if (!decoded) {
+        logger.info('User token is invalid.');
 
-      //logger.debug('User token exp:',exp);
-      //logger.debug('User token time:', time);
+        this.flushUserToken();
 
-      if (!exp || exp <= time - 30) {
-        logger.info('User token expired.');
-        this.clearUserToken();
+        // Must be after flush
+        user.next(null);
+
+        return user;
+      }
+
+      const duration = decoded.dur || false;
+
+      if (!duration) {
+        logger.info('User token is missing duration.');
+
+        this.flushUserToken();
+
+        // Must be after flush
+        user.next(null);
+
+        return user;
+      }
+
+      const received = localStorage.getItem('unix_user');
+
+      if (!received) {
+        logger.info('User token received at timestamp is missing.');
+
+        this.flushUserToken();
+
+        // Must be after flush
+        user.next(null);
+
+        return user;
+      }
+
+      const exp = parseInt(received) + parseInt(duration);
+      const now = Math.round((new Date()).getTime() / 1000);
+
+      if (exp < now - 30) {
+        logger.info('User token has expired.');
+
+        this.flushUserToken();
+
+        // Must be after flush
+        user.next(null);
+
+        return user;
       }
     }
 
@@ -340,23 +432,30 @@ export class TokenService {
     const logger = this.getLogger();
     logger.debug('Setting user token:', token);
 
-    const { user } = this.getTokens();
-    user.next(token);
+    const decoded: any = jwt.decode(token);
 
-    this.saveToCache('token_user', token);
+    if (decoded) {
+      const now = Math.round((new Date()).getTime() / 1000);
+
+      this.saveToCache('token_user', token);
+      this.saveToCache('unix_user', now.toString());
+
+      // Must be after save
+      this.getUserTokenSubject().next(token);
+    } else {
+      this.flushUserToken();
+
+      // Must be after flush
+      this.getUserTokenSubject().next(null);
+    }
   }
 
   /**
    * Clears value of the user token.
    */
-  public static clearUserToken(): void {
-    const logger = this.getLogger();
-    logger.info('Clearing user token.');
-
-    const { user } = this.getTokens();
-    user.next(null);
-
+  public static flushUserToken(): void {
     this.clearFromCache('token_user');
+    this.clearFromCache('unix_user');
   }
 
   /**
@@ -425,10 +524,6 @@ export class TokenService {
 
       // Create behavior subject with cached value
       tokens[name] = new BehaviorSubject(value);
-
-      // Update cache when when value changes
-      //const observable = tokens[name].asObservable().skip(1);
-      //observable.subscribe((next) => next ? this.saveToCache(key, next) : this.clearFromCache(key));
     } catch (e) {
       logger.error('Loading from cache failed:', e);
       this.initWithNull(name);
