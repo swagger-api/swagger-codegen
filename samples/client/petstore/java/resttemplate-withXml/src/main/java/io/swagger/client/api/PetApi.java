@@ -2,6 +2,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -53,16 +54,16 @@ public class PetApi {
      * Add a new pet to the store
      * 
      * <p><b>405</b> - Invalid input
-     * @param pet Pet object that needs to be added to the store
+     * @param body Pet object that needs to be added to the store
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public void addPet(Pet pet) throws RestClientException {
-        Object postBody = pet;
+    public void addPet(Pet body) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'pet' is set
-        if (pet == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'pet' when calling addPet");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling addPet");
         }
         
         String path = UriComponentsBuilder.fromPath("/pet").build().toUriString();
@@ -249,16 +250,16 @@ public class PetApi {
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Pet not found
      * <p><b>405</b> - Validation exception
-     * @param pet Pet object that needs to be added to the store
+     * @param body Pet object that needs to be added to the store
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public void updatePet(Pet pet) throws RestClientException {
-        Object postBody = pet;
+    public void updatePet(Pet body) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'pet' is set
-        if (pet == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'pet' when calling updatePet");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updatePet");
         }
         
         String path = UriComponentsBuilder.fromPath("/pet").build().toUriString();
@@ -285,12 +286,13 @@ public class PetApi {
      * 
      * <p><b>405</b> - Invalid input
      * @param petId ID of pet that needs to be updated
-     * @param body The body parameter
+     * @param name The name parameter
+     * @param status The status parameter
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public void updatePetWithForm(Integer petId, Object body) throws RestClientException {
-        Object postBody = body;
+    public void updatePetWithForm(Integer petId, String name, String status) throws RestClientException {
+        Object postBody = null;
         
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -305,6 +307,11 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+        
+        if (name != null)
+            formParams.add("name", name);
+        if (status != null)
+            formParams.add("status", status);
 
         final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
@@ -324,13 +331,14 @@ public class PetApi {
      * 
      * <p><b>200</b> - successful operation
      * @param petId ID of pet to update
-     * @param body The body parameter
+     * @param additionalMetadata The additionalMetadata parameter
+     * @param file The file parameter
      * @return ModelApiResponse
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public ModelApiResponse uploadFile(Integer petId, Object body) throws RestClientException {
-        Object postBody = body;
+    public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, File file) throws RestClientException {
+        Object postBody = null;
         
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -345,6 +353,11 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+        
+        if (additionalMetadata != null)
+            formParams.add("additionalMetadata", additionalMetadata);
+        if (file != null)
+            formParams.add("file", file);
 
         final String[] accepts = { 
             "application/json"

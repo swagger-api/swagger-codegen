@@ -17,14 +17,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing model name same as property name
- */@ApiModel(description = "Model for testing model name same as property name")
+ */@Schema(description = "Model for testing model name same as property name")
 
 @XmlRootElement(name = "Name")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -65,7 +64,9 @@ public class Name {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public Integer getName() {
     return name;
   }
@@ -78,7 +79,9 @@ public class Name {
   * Get snakeCase
   * @return snakeCase
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -93,7 +96,9 @@ public class Name {
   * Get property
   * @return property
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getProperty() {
     return property;
   }
@@ -106,7 +111,9 @@ public class Name {
   * Get _123Number
   * @return _123Number
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer get123Number() {
     return _123Number;
   }
@@ -128,7 +135,7 @@ public class Name {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, snakeCase, property, _123Number);
+    return java.util.Objects.hash(name, snakeCase, property, _123Number);
   }
   
   @Override

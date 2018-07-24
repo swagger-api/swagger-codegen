@@ -17,14 +17,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing reserved words
- */@ApiModel(description = "Model for testing reserved words")
+ */@Schema(description = "Model for testing reserved words")
 
 @XmlRootElement(name = "Return")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -47,7 +46,9 @@ public class ModelReturn {
   * Get _return
   * @return _return
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getReturn() {
     return _return;
   }
@@ -69,7 +70,7 @@ public class ModelReturn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(_return);
+    return java.util.Objects.hash(_return);
   }
   
   @Override
