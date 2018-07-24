@@ -19,7 +19,8 @@
 
 namespace {{controllerPackage}};
 
-use \Throwable;
+use Exception;
+use Throwable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -149,7 +150,6 @@ class {{controllerName}} extends Controller
         {{/minItems}}
         {{/hasValidation}}
         {{/allParams}}
-
         // Call the API interface
         try {
             $handler = $this->getApiHandler();
@@ -213,8 +213,12 @@ class {{controllerName}} extends Controller
             return $this->createErrorResponse($exception);
         {{/vendorExtensions.x-symfonyExceptionSimple}}
         {{/responses}}
-        } catch (Throwable $fallthrough) {
-            return $this->createErrorResponse(new HttpException(500, 'An unsuspected error occurred.', $fallthrough));
+        } catch (HttpException $exception) {
+            return $this->createErrorResponse($exception);
+        } catch (Exception $exception) {
+            return $this->createErrorResponse(new HttpException(500, 'An unsuspected error occurred.', $exception));
+        } catch (Throwable $throwable) {
+            return $this->createErrorResponse(new HttpException(500, $throwable->getMessage()));
         }
     }
     {{/operation}}
