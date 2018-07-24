@@ -102,10 +102,10 @@ export class {{classname}} extends Api implements I{{classname}} {
     // Authentication '{{name}}' required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-    await HttpService.addAuthHeader('{{name}}', '{{keyParamName}}', request);
+    await HttpService.addAuthHeader('{{keyParamName}}', '{{name}}', request);
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-    await HttpService.addAutParam('{{keyParamName}}', request);
+    await HttpService.addAutParam('{{keyParamName}}', '{{name}}, request);
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{/authMethods}}
@@ -113,7 +113,7 @@ export class {{classname}} extends Api implements I{{classname}} {
 
     if (['POST', 'PUT', 'PATCH', 'DELETE'].indexOf('{{httpMethod}}'.toUpperCase()) !== -1) {
       // CSRF authorization required
-      await HttpService.addAuthHeader('XSRF-TOKEN', 'CsrfToken', request);
+      await HttpService.addAuthHeader('CsrfToken', 'XSRF-TOKEN', request);
     }
 {{/hasAuthMethods}}
 
