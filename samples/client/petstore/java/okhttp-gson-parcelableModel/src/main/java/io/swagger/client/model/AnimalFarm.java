@@ -39,7 +39,7 @@ public class AnimalFarm extends ArrayList<Animal> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode());
+    return java.util.Objects.hash(super.hashCode());
   }
   
   @Override

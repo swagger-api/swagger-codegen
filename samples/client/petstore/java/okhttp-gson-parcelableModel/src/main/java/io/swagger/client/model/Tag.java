@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -47,7 +46,9 @@ public class Tag {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -65,7 +66,9 @@ public class Tag {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getName() {
     return name;
   }
@@ -88,7 +91,7 @@ public class Tag {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return java.util.Objects.hash(id, name);
   }
   
   @Override
@@ -116,6 +119,7 @@ public class Tag {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(id);
     out.writeValue(name);
     
@@ -126,6 +130,7 @@ public class Tag {
   }
 
   Tag(Parcel in) {
+    
     
     id = (Long)in.readValue(null);name = (String)in.readValue(null);
   }

@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -65,7 +64,9 @@ public class User {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -83,7 +84,9 @@ public class User {
   * Get username
   * @return username
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getUsername() {
     return username;
   }
@@ -101,7 +104,9 @@ public class User {
   * Get firstName
   * @return firstName
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getFirstName() {
     return firstName;
   }
@@ -119,7 +124,9 @@ public class User {
   * Get lastName
   * @return lastName
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getLastName() {
     return lastName;
   }
@@ -137,7 +144,9 @@ public class User {
   * Get email
   * @return email
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getEmail() {
     return email;
   }
@@ -155,7 +164,9 @@ public class User {
   * Get password
   * @return password
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getPassword() {
     return password;
   }
@@ -173,7 +184,9 @@ public class User {
   * Get phone
   * @return phone
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getPhone() {
     return phone;
   }
@@ -191,7 +204,9 @@ public class User {
   * User Status
   * @return userStatus
   **/
-  @ApiModelProperty(value = "User Status")
+  
+  
+  @Schema(description = "User Status")
   public Integer getUserStatus() {
     return userStatus;
   }
@@ -220,7 +235,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
+    return java.util.Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
   
   @Override
@@ -254,6 +269,7 @@ public class User {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(id);
     out.writeValue(username);
     out.writeValue(firstName);
@@ -270,6 +286,7 @@ public class User {
   }
 
   User(Parcel in) {
+    
     
     id = (Long)in.readValue(null);username = (String)in.readValue(null);firstName = (String)in.readValue(null);lastName = (String)in.readValue(null);email = (String)in.readValue(null);password = (String)in.readValue(null);phone = (String)in.readValue(null);userStatus = (Integer)in.readValue(null);
   }
