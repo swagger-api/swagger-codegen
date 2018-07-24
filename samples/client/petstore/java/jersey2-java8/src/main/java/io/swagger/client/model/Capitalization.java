@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Capitalization
@@ -60,7 +59,9 @@ public class Capitalization {
   * Get smallCamel
   * @return smallCamel
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -78,7 +79,9 @@ public class Capitalization {
   * Get capitalCamel
   * @return capitalCamel
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -96,7 +99,9 @@ public class Capitalization {
   * Get smallSnake
   * @return smallSnake
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -114,7 +119,9 @@ public class Capitalization {
   * Get capitalSnake
   * @return capitalSnake
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -132,7 +139,9 @@ public class Capitalization {
   * Get scAETHFlowPoints
   * @return scAETHFlowPoints
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -150,7 +159,9 @@ public class Capitalization {
   * Name of the pet 
   * @return ATT_NAME
   **/
-  @ApiModelProperty(value = "Name of the pet ")
+  
+  
+  @Schema(description = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
@@ -177,7 +188,7 @@ public class Capitalization {
 
   @Override
   public int hashCode() {
-    return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
+    return java.util.Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
   
   @Override
