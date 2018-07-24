@@ -102,10 +102,10 @@ export class {{classname}} extends Api implements I{{classname}} {
     // Authentication '{{name}}' required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-    await HttpService.addAuthHeader('{{keyParamName}}', '{{name}}', request);
+    await HttpService.addAuthHeader('{{name}}', '{{keyParamName}}', request);
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-    await HttpService.addAutParam('{{keyParamName}}', '{{name}}, request);
+    await HttpService.addAutParam('{{name}}, '{{keyParamName}}', request);
 {{/isKeyInQuery}}
 {{/isApiKey}}
 {{/authMethods}}
