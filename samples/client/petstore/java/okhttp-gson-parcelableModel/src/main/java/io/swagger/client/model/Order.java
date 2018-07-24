@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import org.threeten.bp.OffsetDateTime;
 import android.os.Parcelable;
@@ -108,7 +107,9 @@ public class Order {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -126,7 +127,9 @@ public class Order {
   * Get petId
   * @return petId
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
@@ -144,7 +147,9 @@ public class Order {
   * Get quantity
   * @return quantity
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -162,7 +167,9 @@ public class Order {
   * Get shipDate
   * @return shipDate
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
@@ -180,7 +187,9 @@ public class Order {
   * Order Status
   * @return status
   **/
-  @ApiModelProperty(value = "Order Status")
+  
+  
+  @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -198,7 +207,9 @@ public class Order {
   * Get complete
   * @return complete
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
@@ -225,7 +236,7 @@ public class Order {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
   
   @Override
@@ -257,6 +268,7 @@ public class Order {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(id);
     out.writeValue(petId);
     out.writeValue(quantity);
@@ -271,6 +283,7 @@ public class Order {
   }
 
   Order(Parcel in) {
+    
     
     id = (Long)in.readValue(null);petId = (Long)in.readValue(null);quantity = (Integer)in.readValue(null);shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());status = (StatusEnum)in.readValue(null);complete = (Boolean)in.readValue(null);
   }

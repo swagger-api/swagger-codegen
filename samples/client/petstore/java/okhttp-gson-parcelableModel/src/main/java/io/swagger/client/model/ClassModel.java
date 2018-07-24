@@ -19,15 +19,14 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
- */@ApiModel(description = "Model for testing model with \"_class\" property")
+ */@Schema(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel {
 
@@ -44,7 +43,9 @@ public class ClassModel {
   * Get propertyClass
   * @return propertyClass
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -66,7 +67,7 @@ public class ClassModel {
 
   @Override
   public int hashCode() {
-    return Objects.hash(propertyClass);
+    return java.util.Objects.hash(propertyClass);
   }
   
   @Override
@@ -93,6 +94,7 @@ public class ClassModel {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(propertyClass);
     
   }
@@ -102,6 +104,7 @@ public class ClassModel {
   }
 
   ClassModel(Parcel in) {
+    
     
     propertyClass = (String)in.readValue(null);
   }

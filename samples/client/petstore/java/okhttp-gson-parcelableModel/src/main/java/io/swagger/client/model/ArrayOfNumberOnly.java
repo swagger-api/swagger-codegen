@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -56,7 +55,9 @@ public class ArrayOfNumberOnly {
   * Get arrayNumber
   * @return arrayNumber
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
@@ -78,7 +79,7 @@ public class ArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayNumber);
+    return java.util.Objects.hash(arrayNumber);
   }
   
   @Override
@@ -105,6 +106,7 @@ public class ArrayOfNumberOnly {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(arrayNumber);
     
   }
@@ -114,6 +116,7 @@ public class ArrayOfNumberOnly {
   }
 
   ArrayOfNumberOnly(Parcel in) {
+    
     
     arrayNumber = (List<BigDecimal>)in.readValue(BigDecimal.class.getClassLoader());
   }

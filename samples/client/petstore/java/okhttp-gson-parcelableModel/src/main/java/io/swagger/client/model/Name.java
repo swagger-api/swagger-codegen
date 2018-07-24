@@ -19,15 +19,14 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
 /**
  * Model for testing model name same as property name
- */@ApiModel(description = "Model for testing model name same as property name")
+ */@Schema(description = "Model for testing model name same as property name")
 
 public class Name {
 
@@ -53,7 +52,9 @@ public class Name {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public Integer getName() {
     return name;
   }
@@ -66,7 +67,9 @@ public class Name {
   * Get snakeCase
   * @return snakeCase
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -81,7 +84,9 @@ public class Name {
   * Get property
   * @return property
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getProperty() {
     return property;
   }
@@ -94,7 +99,9 @@ public class Name {
   * Get _123Number
   * @return _123Number
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer get123Number() {
     return _123Number;
   }
@@ -116,7 +123,7 @@ public class Name {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, snakeCase, property, _123Number);
+    return java.util.Objects.hash(name, snakeCase, property, _123Number);
   }
   
   @Override
@@ -146,6 +153,7 @@ public class Name {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(name);
     out.writeValue(snakeCase);
     out.writeValue(property);
@@ -158,6 +166,7 @@ public class Name {
   }
 
   Name(Parcel in) {
+    
     
     name = (Integer)in.readValue(null);snakeCase = (Integer)in.readValue(null);property = (String)in.readValue(null);_123Number = (Integer)in.readValue(null);
   }

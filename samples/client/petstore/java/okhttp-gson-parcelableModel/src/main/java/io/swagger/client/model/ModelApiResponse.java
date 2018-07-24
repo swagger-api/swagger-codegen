@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -50,7 +49,9 @@ public class ModelApiResponse {
   * Get code
   * @return code
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getCode() {
     return code;
   }
@@ -68,7 +69,9 @@ public class ModelApiResponse {
   * Get type
   * @return type
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getType() {
     return type;
   }
@@ -86,7 +89,9 @@ public class ModelApiResponse {
   * Get message
   * @return message
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getMessage() {
     return message;
   }
@@ -110,7 +115,7 @@ public class ModelApiResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, type, message);
+    return java.util.Objects.hash(code, type, message);
   }
   
   @Override
@@ -139,6 +144,7 @@ public class ModelApiResponse {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(code);
     out.writeValue(type);
     out.writeValue(message);
@@ -150,6 +156,7 @@ public class ModelApiResponse {
   }
 
   ModelApiResponse(Parcel in) {
+    
     
     code = (Integer)in.readValue(null);type = (String)in.readValue(null);message = (String)in.readValue(null);
   }
