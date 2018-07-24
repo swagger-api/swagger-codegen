@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.UUID;
 import org.threeten.bp.LocalDate;
@@ -94,7 +93,9 @@ public class FormatTest {
   * maximum: 100
   * @return integer
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getInteger() {
     return integer;
   }
@@ -114,7 +115,9 @@ public class FormatTest {
   * maximum: 200
   * @return int32
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getInt32() {
     return int32;
   }
@@ -132,7 +135,9 @@ public class FormatTest {
   * Get int64
   * @return int64
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getInt64() {
     return int64;
   }
@@ -148,9 +153,13 @@ public class FormatTest {
   
   /**
   * Get number
+  * minimum: 32
+  * maximum: 543
   * @return number
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public BigDecimal getNumber() {
     return number;
   }
@@ -166,9 +175,13 @@ public class FormatTest {
   
   /**
   * Get _float
+  * minimum: 54
+  * maximum: 987
   * @return _float
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Float getFloat() {
     return _float;
   }
@@ -184,9 +197,13 @@ public class FormatTest {
   
   /**
   * Get _double
+  * minimum: 67
+  * maximum: 123
   * @return _double
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Double getDouble() {
     return _double;
   }
@@ -204,7 +221,9 @@ public class FormatTest {
   * Get string
   * @return string
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getString() {
     return string;
   }
@@ -222,7 +241,9 @@ public class FormatTest {
   * Get _byte
   * @return _byte
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public String getByte() {
     return _byte;
   }
@@ -240,7 +261,9 @@ public class FormatTest {
   * Get binary
   * @return binary
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBinary() {
     return binary;
   }
@@ -258,7 +281,9 @@ public class FormatTest {
   * Get date
   * @return date
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public LocalDate getDate() {
     return date;
   }
@@ -276,7 +301,9 @@ public class FormatTest {
   * Get dateTime
   * @return dateTime
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -294,7 +321,9 @@ public class FormatTest {
   * Get uuid
   * @return uuid
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public UUID getUuid() {
     return uuid;
   }
@@ -312,7 +341,9 @@ public class FormatTest {
   * Get password
   * @return password
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public String getPassword() {
     return password;
   }
@@ -346,7 +377,7 @@ public class FormatTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
+    return java.util.Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
   }
   
   @Override
