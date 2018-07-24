@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.io.File;
+
 
 /**
  * API tests for PetApi
@@ -158,10 +160,10 @@ public class PetApiTest {
     public void updatePetWithFormTest() throws ApiException {
         
         Integer petId = null;
+        String name = null;
+        String status = null;
         
-        Object body = null;
-        
-        api.updatePetWithForm(petId, body);
+        api.updatePetWithForm(petId, name, status);
 
         // TODO: test validations
     }
@@ -179,9 +181,11 @@ public class PetApiTest {
         
         Integer petId = null;
         
-        Object body = null;
+        String additionalMetadata = null;
+
+        File file = null;
         
-        ModelApiResponse response = api.uploadFile(petId, body);
+        ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
 
         // TODO: test validations
     }
