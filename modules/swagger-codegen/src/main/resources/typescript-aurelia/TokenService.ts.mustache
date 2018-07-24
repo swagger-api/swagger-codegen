@@ -159,7 +159,7 @@ export class TokenService {
         const request = HttpService
           .getClient()
           .createRequest(`/security/csrf-token`)
-          .asHead()
+          .asGet()
         ;
 
         // Send the request
