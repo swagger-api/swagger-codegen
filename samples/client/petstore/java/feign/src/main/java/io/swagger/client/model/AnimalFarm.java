@@ -14,42 +14,19 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.client.model.Animal;
-import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.Serializable;
 
 /**
- * Cat
+ * AnimalFarm
  */
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2018-07-24T05:13:04.565-05:00[America/Bogota]")
+public class AnimalFarm extends ArrayList<Animal> implements Serializable {
 
-public class Cat extends Animal {
+  private static final long serialVersionUID = 1L;
 
-  
-  @JsonProperty("declawed")
-  private Boolean declawed = null;
-  
-  public Cat declawed(Boolean declawed) {
-    this.declawed = declawed;
-    return this;
-  }
-
-  
-  /**
-  * Get declawed
-  * @return declawed
-  **/
-  
-  
-  @Schema(description = "")
-  public Boolean isDeclawed() {
-    return declawed;
-  }
-  public void setDeclawed(Boolean declawed) {
-    this.declawed = declawed;
-  }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -58,22 +35,19 @@ public class Cat extends Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Cat cat = (Cat) o;
-    return Objects.equals(this.declawed, cat.declawed) &&
-        super.equals(o);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(declawed, super.hashCode());
+    return java.util.Objects.hash(super.hashCode());
   }
   
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Cat {\n");
+    sb.append("class AnimalFarm {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
