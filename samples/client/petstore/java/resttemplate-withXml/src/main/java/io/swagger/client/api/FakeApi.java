@@ -87,13 +87,13 @@ public class FakeApi {
      * 
      * Test serialization of object with outer number type
      * <p><b>200</b> - Output composite
-     * @param outercomposite Input composite as post body
+     * @param body Input composite as post body
      * @return OuterComposite
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public OuterComposite fakeOuterCompositeSerialize(OuterComposite outercomposite) throws RestClientException {
-        Object postBody = outercomposite;
+    public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws RestClientException {
+        Object postBody = body;
         
         String path = UriComponentsBuilder.fromPath("/fake/outer/composite").build().toUriString();
         
@@ -186,17 +186,17 @@ public class FakeApi {
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
      * <p><b>200</b> - successful operation
-     * @param client client model
+     * @param body client model
      * @return Client
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public Client testClientModel(Client client) throws RestClientException {
-        Object postBody = client;
+    public Client testClientModel(Client body) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'client' is set
-        if (client == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'client' when calling testClientModel");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testClientModel");
         }
         
         String path = UriComponentsBuilder.fromPath("/fake").build().toUriString();

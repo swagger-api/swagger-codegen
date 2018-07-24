@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 
@@ -53,7 +52,9 @@ public class Tag {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -71,7 +72,9 @@ public class Tag {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getName() {
     return name;
   }
@@ -94,7 +97,7 @@ public class Tag {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return java.util.Objects.hash(id, name);
   }
   
   @Override
