@@ -5,9 +5,13 @@ import com.samskivert.mustache.Mustache;
 import io.swagger.codegen.*;
 import io.swagger.codegen.mustache.*;
 import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
+import io.swagger.models.Response;
 import io.swagger.models.Swagger;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -972,20 +976,63 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public void preprocessSwagger(Swagger swagger) {
-        if(this.preserveNewLines) {
-            for(String pathname: swagger.getPaths().keySet()) {
+        if (this.preserveNewLines) {
+            if (swagger.getDefinitions() != null) {
+                for (String name : swagger.getDefinitions().keySet()) {
+                    Model model = swagger.getDefinitions().get(name);
+                    if (StringUtils.isNotBlank(model.getDescription())) {
+                        model.setDescription(preserveNewlines(model.getDescription(), 1));
+                    }
+                    if (model instanceof ModelImpl) {
+                        ModelImpl impl = (ModelImpl) model;
+                        if (impl.getProperties() != null) {
+                            for (String propertyName : impl.getProperties().keySet()) {
+                                Property property = impl.getProperties().get(propertyName);
+                                if (StringUtils.isNotBlank(property.getDescription())) {
+                                    property.setDescription(preserveNewlines(property.getDescription(), 2));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (String pathname : swagger.getPaths().keySet()) {
                 Path path = swagger.getPaths().get(pathname);
                 for (Operation op : path.getOperations()) {
-                    if (op.getDescription() != null) {
-                        op.setDescription(preservation(op.getDescription()));
+                    if (StringUtils.isNotBlank(op.getDescription())) {
+                        op.setDescription(preserveNewlines(op.getDescription(), 2));
+                    }
+                    if (StringUtils.isNotBlank(op.getSummary())) {
+                        op.setSummary(preserveNewlines(op.getSummary(), 2));
+                    }
+                    if (op.getParameters() != null) {
+                        for (Parameter param : op.getParameters()) {
+                            if (StringUtils.isNotBlank(param.getDescription())) {
+                                param.setDescription(preserveNewlines(param.getDescription(), 2));
+                            }
+                        }
+                    }
+                    if (op.getResponses() != null) {
+                        for (String responseCode : op.getResponses().keySet()) {
+                            Response response = op.getResponses().get(responseCode);
+
+                            if (StringUtils.isNotBlank(response.getDescription())) {
+                                response.setDescription(preserveNewlines(response.getDescription(), 2));
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    public String preservation(String input) {
-        return input.replaceAll("\\n", "~~N");
+    public String preserveNewlines(String input, int tabstops) {
+        if (tabstops == 1) {
+            return input.replaceAll("\\n", "~~N1");
+        } else {
+            // assume 2 tabstops
+            return input.replaceAll("\\n", "~~N2");
+        }
     }
 
     @Override
@@ -998,7 +1045,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public String escapeUnsafeCharacters(String input) {
         String intermediate = input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -");
 
-        intermediate = intermediate.replaceAll("~~N", "\n        /// ");
+        intermediate = intermediate.replaceAll("~~N1", "\n    /// ");
+        intermediate = intermediate.replaceAll("~~N2", "\n        /// ");
 
         return intermediate;
     }
