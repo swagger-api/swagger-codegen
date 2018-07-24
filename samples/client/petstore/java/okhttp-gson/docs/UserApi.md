@@ -177,7 +177,7 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The name that needs to be deleted
+String username = "username_example"; // String | The name that needs to be deleted
 
 try {
     apiInstance.deleteUser(username);
@@ -224,7 +224,7 @@ Get user by user name
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The name that needs to be fetched. Use user1 for testing. 
+String username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
 
 try {
     User result = apiInstance.getUserByName(username);
@@ -272,9 +272,9 @@ Logs user into the system
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The user name for login
+String username = "username_example"; // String | The user name for login
 
-String password = Arrays.asList("password_example"); // String | The password for login in clear text
+String password = "password_example"; // String | The password for login in clear text
 
 try {
     String result = apiInstance.loginUser(username, password);
@@ -369,7 +369,7 @@ UserApi apiInstance = new UserApi();
 
 User body = new User(); // User | Updated user object
 
-String username = Arrays.asList("username_example"); // String | name that need to be deleted
+String username = "username_example"; // String | name that need to be deleted
 
 try {
     apiInstance.updateUser(body, username);
