@@ -17,8 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ReadOnlyFirst
@@ -39,7 +38,9 @@ public class ReadOnlyFirst {
   * Get bar
   * @return bar
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBar() {
     return bar;
   }
@@ -54,7 +55,9 @@ public class ReadOnlyFirst {
   * Get baz
   * @return baz
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBaz() {
     return baz;
   }

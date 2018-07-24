@@ -17,8 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +54,9 @@ public class AdditionalPropertiesClass {
   * Get mapProperty
   * @return mapProperty
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -81,7 +82,9 @@ public class AdditionalPropertiesClass {
   * Get mapOfMapProperty
   * @return mapOfMapProperty
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
