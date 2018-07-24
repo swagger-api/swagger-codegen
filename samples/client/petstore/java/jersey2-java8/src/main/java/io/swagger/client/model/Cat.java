@@ -17,9 +17,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Cat
@@ -41,7 +40,9 @@ public class Cat extends Animal {
   * Get declawed
   * @return declawed
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Boolean isDeclawed() {
     return declawed;
   }
@@ -64,7 +65,7 @@ public class Cat extends Animal {
 
   @Override
   public int hashCode() {
-    return Objects.hash(declawed, super.hashCode());
+    return java.util.Objects.hash(declawed, super.hashCode());
   }
   
   @Override
