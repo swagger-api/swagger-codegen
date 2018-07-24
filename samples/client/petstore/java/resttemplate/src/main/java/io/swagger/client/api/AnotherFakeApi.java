@@ -52,17 +52,17 @@ public class AnotherFakeApi {
      * To test special tags
      * To test special tags
      * <p><b>200</b> - successful operation
-     * @param client client model
+     * @param body client model
      * @return Client
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public Client testSpecialTags(Client client) throws RestClientException {
-        Object postBody = client;
+    public Client testSpecialTags(Client body) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'client' is set
-        if (client == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'client' when calling testSpecialTags");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testSpecialTags");
         }
         
         String path = UriComponentsBuilder.fromPath("/another-fake/dummy").build().toUriString();

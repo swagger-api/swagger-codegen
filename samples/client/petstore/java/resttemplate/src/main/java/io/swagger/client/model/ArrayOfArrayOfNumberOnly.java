@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,9 @@ public class ArrayOfArrayOfNumberOnly {
   * Get arrayArrayNumber
   * @return arrayArrayNumber
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
@@ -74,7 +75,7 @@ public class ArrayOfArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayArrayNumber);
+    return java.util.Objects.hash(arrayArrayNumber);
   }
   
   @Override
