@@ -367,9 +367,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 Map<String, Model> modelMap = new HashMap<String, Model>();
                 modelMap.put(name, model);
                 Map<String, Object> models = processModels(config, modelMap, definitions);
-                models.put("classname", config.toModelName(name));
-                models.putAll(config.additionalProperties());
-                allProcessedModels.put(name, models);
+                if (models != null) {
+                    models.put("classname", config.toModelName(name));
+                    models.putAll(config.additionalProperties());
+                    allProcessedModels.put(name, models);
+                }
             } catch (Exception e) {
                 String message = "Could not process model '" + name + "'" + ". Please make sure that your schema is correct!";
                 LOGGER.error(message, e);
