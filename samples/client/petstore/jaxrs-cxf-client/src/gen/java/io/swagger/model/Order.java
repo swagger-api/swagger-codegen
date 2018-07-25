@@ -1,6 +1,6 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 
 
@@ -9,7 +9,10 @@ import java.util.Date;
 
 
 
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,12 +27,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
   * An order for a pets from the pet store
  **/
-@ApiModel(description="An order for a pets from the pet store")
+@Schema(description="An order for a pets from the pet store")
 
 public class Order  {
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -37,7 +41,8 @@ public class Order  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -45,7 +50,8 @@ public class Order  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -53,7 +59,8 @@ public class Order  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -95,7 +102,8 @@ public enum StatusEnum {
 }
 
 
-  @ApiModelProperty(value = "Order Status")
+  
+  @Schema(description = "Order Status")
 
  /**
    * Order Status  
@@ -107,7 +115,8 @@ public enum StatusEnum {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
