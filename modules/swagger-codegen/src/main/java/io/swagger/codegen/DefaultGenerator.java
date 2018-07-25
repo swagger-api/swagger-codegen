@@ -371,7 +371,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 models.putAll(config.additionalProperties());
                 allProcessedModels.put(name, models);
             } catch (Exception e) {
-                throw new RuntimeException("Could not process model '" + name + "'" + ".Please make sure that your schema is correct!", e);
+                String message = "Could not process model '" + name + "'" + ". Please make sure that your schema is correct!";
+                LOGGER.error(message, e);
+                throw new RuntimeException(message, e);
             }
         }
 
