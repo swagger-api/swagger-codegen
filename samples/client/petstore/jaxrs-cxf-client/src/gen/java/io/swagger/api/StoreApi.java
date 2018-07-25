@@ -12,11 +12,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 import org.apache.cxf.jaxrs.ext.multipart.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.jaxrs.PATCH;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 
 
@@ -30,7 +34,7 @@ import io.swagger.jaxrs.PATCH;
  */
 
 @Path("/")
-@Api(value = "/", description = "")
+
 
 public interface StoreApi  {
 
@@ -50,10 +54,13 @@ public interface StoreApi  {
     @Path("/store/order/{orderId}")
 
 
-    @ApiOperation(value = "Delete purchase order by ID", tags={  })
+    
+    
+    @Operation(summary = "Delete purchase order by ID", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Order not found") })
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+        @ApiResponse(responseCode = "404", description = "Order not found") })
+    
     public void deleteOrder(@PathParam("orderId") String orderId);
 
 
@@ -73,9 +80,12 @@ public interface StoreApi  {
 
     @Produces({ "application/json" })
 
-    @ApiOperation(value = "Returns pet inventories by status", tags={  })
+    
+    
+    @Operation(summary = "Returns pet inventories by status", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
+    
     public Map<String, Integer> getInventory();
 
 
@@ -95,11 +105,14 @@ public interface StoreApi  {
 
     @Produces({ "application/xml", "application/json" })
 
-    @ApiOperation(value = "Find purchase order by ID", tags={  })
+    
+    
+    @Operation(summary = "Find purchase order by ID", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Order not found") })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+        @ApiResponse(responseCode = "404", description = "Order not found") })
+    
     public Order getOrderById(@PathParam("orderId") Integer orderId);
 
 
@@ -118,12 +131,14 @@ public interface StoreApi  {
 
     @Produces({ "application/xml", "application/json" })
 
-    @ApiOperation(value = "Place an order for a pet", tags={  })
+    
+    
+    @Operation(summary = "Place an order for a pet", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid Order") })
-    public Order placeOrder(Order order);
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid Order") })
+    
+    public Order placeOrder(Order body);
 
 }
-
 
