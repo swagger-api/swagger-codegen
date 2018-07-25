@@ -8,8 +8,6 @@ import retrofit.mime.*;
 
 import io.swagger.client.model.Order;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +21,7 @@ public interface StoreApi {
    * Delete purchase order by ID
    * Sync method
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-
    * @param orderId ID of the order that needs to be deleted (required)
-
 
    * @return Void
 
@@ -42,8 +38,7 @@ public interface StoreApi {
    * Async method
 
    * @param orderId ID of the order that needs to be deleted (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -56,8 +51,6 @@ public interface StoreApi {
    * Returns pet inventories by status
    * Sync method
    * Returns a map of status codes to quantities
-
-
    * @return Map&lt;String, Integer&gt;
 
 
@@ -70,8 +63,7 @@ public interface StoreApi {
   /**
    * Returns pet inventories by status
    * Async method
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -84,9 +76,7 @@ public interface StoreApi {
    * Find purchase order by ID
    * Sync method
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-
    * @param orderId ID of pet that needs to be fetched (required)
-
 
    * @return Order
 
@@ -103,8 +93,7 @@ public interface StoreApi {
    * Async method
 
    * @param orderId ID of pet that needs to be fetched (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -117,9 +106,7 @@ public interface StoreApi {
    * Place an order for a pet
    * Sync method
    * 
-
-   * @param order order placed for purchasing the pet (required)
-
+   * @param body order placed for purchasing the pet (required)
 
    * @return Order
 
@@ -128,22 +115,21 @@ public interface StoreApi {
   
   @POST("/store/order")
   Order placeOrder(
-    @retrofit.http.Body Order order
+    @retrofit.http.Body Order body
   );
 
   /**
    * Place an order for a pet
    * Async method
 
-   * @param order order placed for purchasing the pet (required)
-
-   * @param cb callback method
+   * @param body order placed for purchasing the pet (required)
+* @param cb callback method
 
    */
   
   @POST("/store/order")
   void placeOrder(
-    @retrofit.http.Body Order order, Callback<Order> cb
+    @retrofit.http.Body Order body, Callback<Order> cb
   );
   
 }

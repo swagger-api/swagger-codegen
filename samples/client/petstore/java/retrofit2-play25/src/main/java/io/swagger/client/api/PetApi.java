@@ -9,6 +9,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -30,7 +31,7 @@ public interface PetApi {
    * Add a new pet to the store
    * 
 
-   * @param pet Pet object that needs to be added to the store (required)
+   * @param body Pet object that needs to be added to the store (required)
 
    * @return Call&lt;Void&gt;
    */
@@ -48,7 +49,7 @@ public interface PetApi {
     
   @POST("pet")
   CompletionStage<Response<Void>> addPet(
-    @retrofit2.http.Body Pet pet
+    @retrofit2.http.Body Pet body
   );
 
   
@@ -130,7 +131,7 @@ public interface PetApi {
    * Update an existing pet
    * 
 
-   * @param pet Pet object that needs to be added to the store (required)
+   * @param body Pet object that needs to be added to the store (required)
 
    * @return Call&lt;Void&gt;
    */
@@ -148,7 +149,7 @@ public interface PetApi {
     
   @PUT("pet")
   CompletionStage<Response<Void>> updatePet(
-    @retrofit2.http.Body Pet pet
+    @retrofit2.http.Body Pet body
   );
 
   
@@ -158,23 +159,23 @@ public interface PetApi {
 
    * @param petId ID of pet that needs to be updated (required)
 
-   * @param body  (optional)
+   * @param name  (optional)
+
+   * @param status  (optional)
 
    * @return Call&lt;Void&gt;
    */
   
   
+  @retrofit2.http.FormUrlEncoded
   
   
-  @Headers({
-    "Content-Type:application/x-www-form-urlencoded"
-  })
   
   
     
   @POST("pet/{petId}")
   CompletionStage<Response<Void>> updatePetWithForm(
-    @retrofit2.http.Path("petId") Integer petId, @retrofit2.http.Body Object body
+    @retrofit2.http.Path("petId") Integer petId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
   
@@ -184,17 +185,23 @@ public interface PetApi {
 
    * @param petId ID of pet to update (required)
 
-   * @param body  (optional)
+   * @param additionalMetadata  (optional)
+
+   * @param file  (optional)
 
    * @return Call&lt;ModelApiResponse&gt;
    */
+  
+  
+  @retrofit2.http.Multipart
+  
   
   
   
     
   @POST("pet/{petId}/uploadImage")
   CompletionStage<Response<ModelApiResponse>> uploadFile(
-    @retrofit2.http.Path("petId") Integer petId, @retrofit2.http.Body Object body
+    @retrofit2.http.Path("petId") Integer petId, @retrofit2.http.Part("additionalMetadata") String additionalMetadata, @retrofit2.http.Part okhttp3.MultipartBody.Part file
   );
 
   

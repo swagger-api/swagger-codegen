@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +55,9 @@ public class AdditionalPropertiesClass {
   * Get mapProperty
   * @return mapProperty
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -82,7 +83,9 @@ public class AdditionalPropertiesClass {
   * Get mapOfMapProperty
   * @return mapOfMapProperty
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
@@ -105,7 +108,7 @@ public class AdditionalPropertiesClass {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapProperty, mapOfMapProperty);
+    return java.util.Objects.hash(mapProperty, mapOfMapProperty);
   }
   
   @Override

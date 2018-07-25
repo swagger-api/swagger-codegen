@@ -99,7 +99,10 @@ if(hasProperty('target') && target == 'android') {
 }
 
 ext {
-    swagger_annotations_version = "1.5.8"
+    
+    
+    swagger_annotations_version = "2.0.0"
+    
     jackson_version = "2.7.5"
     jersey_version = "2.22.2"
     
@@ -110,7 +113,10 @@ ext {
 }
 
 dependencies {
-    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    
+    
+    compile "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
+    
     compile "org.glassfish.jersey.core:jersey-client:$jersey_version"
     compile "org.glassfish.jersey.media:jersey-media-multipart:$jersey_version"
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jersey_version"

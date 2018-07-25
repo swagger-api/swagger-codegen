@@ -19,10 +19,9 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
 import io.swagger.client.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +108,9 @@ public class Pet {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -127,7 +128,9 @@ public class Pet {
   * Get category
   * @return category
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Category getCategory() {
     return category;
   }
@@ -145,7 +148,9 @@ public class Pet {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  
+  
+  @Schema(example = "doggie", required = true, description = "")
   public String getName() {
     return name;
   }
@@ -168,7 +173,9 @@ public class Pet {
   * Get photoUrls
   * @return photoUrls
   **/
-  @ApiModelProperty(required = true, value = "")
+  
+  
+  @Schema(required = true, description = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -195,7 +202,9 @@ public class Pet {
   * Get tags
   * @return tags
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -213,7 +222,9 @@ public class Pet {
   * pet status in the store
   * @return status
   **/
-  @ApiModelProperty(value = "pet status in the store")
+  
+  
+  @Schema(description = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
@@ -240,7 +251,7 @@ public class Pet {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, category, name, photoUrls, tags, status);
+    return java.util.Objects.hash(id, category, name, photoUrls, tags, status);
   }
   
   @Override

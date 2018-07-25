@@ -17,14 +17,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
  * Model for testing model name starting with number
- */@ApiModel(description = "Model for testing model name starting with number")
+ */@Schema(description = "Model for testing model name starting with number")
 
 public class Model200Response {
 
@@ -51,7 +50,9 @@ public class Model200Response {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Integer getName() {
     return name;
   }
@@ -74,7 +75,9 @@ public class Model200Response {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -97,7 +100,7 @@ public class Model200Response {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, propertyClass);
+    return java.util.Objects.hash(name, propertyClass);
   }
   
   @Override

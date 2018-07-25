@@ -6,10 +6,9 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
-
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +23,7 @@ public interface PetApi {
    * Add a new pet to the store
    * Sync method
    * 
-
-   * @param pet Pet object that needs to be added to the store (required)
-
+   * @param body Pet object that needs to be added to the store (required)
 
    * @return Void
 
@@ -35,33 +32,30 @@ public interface PetApi {
   
   @POST("/pet")
   Void addPet(
-    @retrofit.http.Body Pet pet
+    @retrofit.http.Body Pet body
   );
 
   /**
    * Add a new pet to the store
    * Async method
 
-   * @param pet Pet object that needs to be added to the store (required)
-
-   * @param cb callback method
+   * @param body Pet object that needs to be added to the store (required)
+* @param cb callback method
 
    */
   
   @POST("/pet")
   void addPet(
-    @retrofit.http.Body Pet pet, Callback<Void> cb
+    @retrofit.http.Body Pet body, Callback<Void> cb
   );
   
   /**
    * Deletes a pet
    * Sync method
    * 
-
    * @param petId Pet id to delete (required)
 
    * @param apiKey  (optional)
-
 
    * @return Void
 
@@ -80,8 +74,7 @@ public interface PetApi {
    * @param petId Pet id to delete (required)
 
    * @param apiKey  (optional)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -94,9 +87,7 @@ public interface PetApi {
    * Finds Pets by status
    * Sync method
    * Multiple status values can be provided with comma separated strings
-
    * @param status Status values that need to be considered for filter (required)
-
 
    * @return List&lt;Pet&gt;
 
@@ -113,8 +104,7 @@ public interface PetApi {
    * Async method
 
    * @param status Status values that need to be considered for filter (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -127,9 +117,7 @@ public interface PetApi {
    * Finds Pets by tags
    * Sync method
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-
    * @param tags Tags to filter by (required)
-
 
    * @return List&lt;Pet&gt;
 
@@ -146,8 +134,7 @@ public interface PetApi {
    * Async method
 
    * @param tags Tags to filter by (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -160,9 +147,7 @@ public interface PetApi {
    * Find pet by ID
    * Sync method
    * Returns a single pet
-
    * @param petId ID of pet to return (required)
-
 
    * @return Pet
 
@@ -179,8 +164,7 @@ public interface PetApi {
    * Async method
 
    * @param petId ID of pet to return (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -193,9 +177,7 @@ public interface PetApi {
    * Update an existing pet
    * Sync method
    * 
-
-   * @param pet Pet object that needs to be added to the store (required)
-
+   * @param body Pet object that needs to be added to the store (required)
 
    * @return Void
 
@@ -204,42 +186,42 @@ public interface PetApi {
   
   @PUT("/pet")
   Void updatePet(
-    @retrofit.http.Body Pet pet
+    @retrofit.http.Body Pet body
   );
 
   /**
    * Update an existing pet
    * Async method
 
-   * @param pet Pet object that needs to be added to the store (required)
-
-   * @param cb callback method
+   * @param body Pet object that needs to be added to the store (required)
+* @param cb callback method
 
    */
   
   @PUT("/pet")
   void updatePet(
-    @retrofit.http.Body Pet pet, Callback<Void> cb
+    @retrofit.http.Body Pet body, Callback<Void> cb
   );
   
   /**
    * Updates a pet in the store with form data
    * Sync method
    * 
-
    * @param petId ID of pet that needs to be updated (required)
 
-   * @param body  (optional)
+   * @param name  (optional)
 
+   * @param status  (optional)
 
    * @return Void
 
 
    */
   
+  @retrofit.http.FormUrlEncoded
   @POST("/pet/{petId}")
   Void updatePetWithForm(
-    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Body Object body
+    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status
   );
 
   /**
@@ -248,35 +230,38 @@ public interface PetApi {
 
    * @param petId ID of pet that needs to be updated (required)
 
-   * @param body  (optional)
+   * @param name  (optional)
 
-   * @param cb callback method
+   * @param status  (optional)
+* @param cb callback method
 
    */
   
+  @retrofit.http.FormUrlEncoded
   @POST("/pet/{petId}")
   void updatePetWithForm(
-    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Body Object body, Callback<Void> cb
+    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status, Callback<Void> cb
   );
   
   /**
    * uploads an image
    * Sync method
    * 
-
    * @param petId ID of pet to update (required)
 
-   * @param body  (optional)
+   * @param additionalMetadata  (optional)
 
+   * @param file  (optional)
 
    * @return ModelApiResponse
 
 
    */
   
+  @retrofit.http.Multipart
   @POST("/pet/{petId}/uploadImage")
   ModelApiResponse uploadFile(
-    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Body Object body
+    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Part("additionalMetadata") String additionalMetadata, @retrofit.http.Part("file") TypedFile file
   );
 
   /**
@@ -285,15 +270,17 @@ public interface PetApi {
 
    * @param petId ID of pet to update (required)
 
-   * @param body  (optional)
+   * @param additionalMetadata  (optional)
 
-   * @param cb callback method
+   * @param file  (optional)
+* @param cb callback method
 
    */
   
+  @retrofit.http.FormUrlEncoded
   @POST("/pet/{petId}/uploadImage")
   void uploadFile(
-    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Body Object body, Callback<ModelApiResponse> cb
+    @retrofit.http.Path("petId") Integer petId, @retrofit.http.Part("additionalMetadata") String additionalMetadata, @retrofit.http.Part("file") TypedFile file, Callback<ModelApiResponse> cb
   );
   
 }

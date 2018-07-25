@@ -8,8 +8,6 @@ import retrofit.mime.*;
 
 import io.swagger.client.model.Client;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +21,7 @@ public interface AnotherFakeApi {
    * To test special tags
    * Sync method
    * To test special tags
-
-   * @param client client model (required)
-
+   * @param body client model (required)
 
    * @return Client
 
@@ -34,22 +30,21 @@ public interface AnotherFakeApi {
   
   @PATCH("/another-fake/dummy")
   Client testSpecialTags(
-    @retrofit.http.Body Client client
+    @retrofit.http.Body Client body
   );
 
   /**
    * To test special tags
    * Async method
 
-   * @param client client model (required)
-
-   * @param cb callback method
+   * @param body client model (required)
+* @param cb callback method
 
    */
   
   @PATCH("/another-fake/dummy")
   void testSpecialTags(
-    @retrofit.http.Body Client client, Callback<Client> cb
+    @retrofit.http.Body Client body, Callback<Client> cb
   );
   
 }

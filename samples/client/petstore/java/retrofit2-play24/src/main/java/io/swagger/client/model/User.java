@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -75,7 +74,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -98,7 +99,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getUsername() {
     return username;
   }
@@ -121,7 +124,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getFirstName() {
     return firstName;
   }
@@ -144,7 +149,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getLastName() {
     return lastName;
   }
@@ -167,7 +174,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getEmail() {
     return email;
   }
@@ -190,7 +199,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getPassword() {
     return password;
   }
@@ -213,7 +224,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getPhone() {
     return phone;
   }
@@ -236,7 +249,9 @@ public class User {
 
 
 
-@ApiModelProperty(value = "User Status")
+
+  
+  @Schema(description = "User Status")
   public Integer getUserStatus() {
     return userStatus;
   }
@@ -265,7 +280,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
+    return java.util.Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
   
   @Override

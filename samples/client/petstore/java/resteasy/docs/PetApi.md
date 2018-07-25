@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="addPet"></a>
 # **addPet**
-> addPet(pet)
+> addPet(body)
 
 Add a new pet to the store
 
@@ -32,10 +32,10 @@ Add a new pet to the store
 
 PetApi apiInstance = new PetApi();
 
-Pet pet = ; // Pet | Pet object that needs to be added to the store
+Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
 
 try {
-    apiInstance.addPet(pet);
+    apiInstance.addPet(body);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#addPet");
     e.printStackTrace();
@@ -46,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet** | [**Pet**](.md)| Pet object that needs to be added to the store |
+ **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
 
 
 ### Return type
@@ -79,9 +79,9 @@ Deletes a pet
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | Pet id to delete
+Integer petId = 56; // Integer | Pet id to delete
 
-String apiKey = Arrays.asList("apiKey_example"); // String | 
+String apiKey = "apiKey_example"; // String | 
 
 try {
     apiInstance.deletePet(petId, apiKey);
@@ -231,7 +231,7 @@ Returns a single pet
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet to return
+Integer petId = 56; // Integer | ID of pet to return
 
 try {
     Pet result = apiInstance.getPetById(petId);
@@ -265,7 +265,7 @@ Name | Type | Description  | Notes
 
 <a name="updatePet"></a>
 # **updatePet**
-> updatePet(pet)
+> updatePet(body)
 
 Update an existing pet
 
@@ -279,10 +279,10 @@ Update an existing pet
 
 PetApi apiInstance = new PetApi();
 
-Pet pet = ; // Pet | Pet object that needs to be added to the store
+Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
 
 try {
-    apiInstance.updatePet(pet);
+    apiInstance.updatePet(body);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#updatePet");
     e.printStackTrace();
@@ -293,7 +293,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet** | [**Pet**](.md)| Pet object that needs to be added to the store |
+ **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
 
 
 ### Return type
@@ -312,7 +312,7 @@ null (empty response body)
 
 <a name="updatePetWithForm"></a>
 # **updatePetWithForm**
-> updatePetWithForm(petId, body)
+> updatePetWithForm(petId, name, status)
 
 Updates a pet in the store with form data
 
@@ -326,12 +326,14 @@ Updates a pet in the store with form data
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet that needs to be updated
+Integer petId = 56; // Integer | ID of pet that needs to be updated
 
-Object body = ; // Object | 
+String name = "name_example"; // String | 
+
+String status = "status_example"; // String | 
 
 try {
-    apiInstance.updatePetWithForm(petId, body);
+    apiInstance.updatePetWithForm(petId, name, status);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#updatePetWithForm");
     e.printStackTrace();
@@ -343,7 +345,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | [**Integer**](.md)| ID of pet that needs to be updated |
- **body** | [**Object**](Object.md)|  | [optional]
+ **name** | [**String**](.md)|  | [optional]
+ **status** | [**String**](.md)|  | [optional]
 
 
 ### Return type
@@ -362,7 +365,7 @@ null (empty response body)
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> ModelApiResponse uploadFile(petId, body)
+> ModelApiResponse uploadFile(petId, additionalMetadata, file)
 
 uploads an image
 
@@ -376,12 +379,14 @@ uploads an image
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet to update
+Integer petId = 56; // Integer | ID of pet to update
 
-Object body = ; // Object | 
+String additionalMetadata = "additionalMetadata_example"; // String | 
+
+File file = new File("file_example"); // File | 
 
 try {
-    ModelApiResponse result = apiInstance.uploadFile(petId, body);
+    ModelApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#uploadFile");
@@ -394,7 +399,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | [**Integer**](.md)| ID of pet to update |
- **body** | [**Object**](Object.md)|  | [optional]
+ **additionalMetadata** | [**String**](.md)|  | [optional]
+ **file** | **File**|  | [optional]
 
 
 ### Return type
