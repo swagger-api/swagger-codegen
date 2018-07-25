@@ -17,9 +17,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.ReadOnlyFirst;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
@@ -67,7 +66,9 @@ public class ArrayTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -103,7 +104,9 @@ public class ArrayTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -139,7 +142,9 @@ public class ArrayTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
@@ -163,7 +168,7 @@ public class ArrayTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
+    return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
   
   @Override

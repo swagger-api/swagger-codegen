@@ -10,8 +10,6 @@ import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +23,7 @@ public interface FakeApi {
    * 
    * Sync method
    * Test serialization of outer boolean types
-
    * @param body Input boolean as post body (optional)
-
 
    * @return Boolean
 
@@ -44,8 +40,7 @@ public interface FakeApi {
    * Async method
 
    * @param body Input boolean as post body (optional)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -58,9 +53,7 @@ public interface FakeApi {
    * 
    * Sync method
    * Test serialization of object with outer number type
-
-   * @param outercomposite Input composite as post body (optional)
-
+   * @param body Input composite as post body (optional)
 
    * @return OuterComposite
 
@@ -69,31 +62,28 @@ public interface FakeApi {
   
   @POST("/fake/outer/composite")
   OuterComposite fakeOuterCompositeSerialize(
-    @retrofit.http.Body OuterComposite outercomposite
+    @retrofit.http.Body OuterComposite body
   );
 
   /**
    * 
    * Async method
 
-   * @param outercomposite Input composite as post body (optional)
-
-   * @param cb callback method
+   * @param body Input composite as post body (optional)
+* @param cb callback method
 
    */
   
   @POST("/fake/outer/composite")
   void fakeOuterCompositeSerialize(
-    @retrofit.http.Body OuterComposite outercomposite, Callback<OuterComposite> cb
+    @retrofit.http.Body OuterComposite body, Callback<OuterComposite> cb
   );
   
   /**
    * 
    * Sync method
    * Test serialization of outer number types
-
    * @param body Input number as post body (optional)
-
 
    * @return BigDecimal
 
@@ -110,8 +100,7 @@ public interface FakeApi {
    * Async method
 
    * @param body Input number as post body (optional)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -124,9 +113,7 @@ public interface FakeApi {
    * 
    * Sync method
    * Test serialization of outer string types
-
    * @param body Input string as post body (optional)
-
 
    * @return String
 
@@ -143,8 +130,7 @@ public interface FakeApi {
    * Async method
 
    * @param body Input string as post body (optional)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -157,9 +143,7 @@ public interface FakeApi {
    * To test \&quot;client\&quot; model
    * Sync method
    * To test \&quot;client\&quot; model
-
-   * @param client client model (required)
-
+   * @param body client model (required)
 
    * @return Client
 
@@ -168,31 +152,28 @@ public interface FakeApi {
   
   @PATCH("/fake")
   Client testClientModel(
-    @retrofit.http.Body Client client
+    @retrofit.http.Body Client body
   );
 
   /**
    * To test \&quot;client\&quot; model
    * Async method
 
-   * @param client client model (required)
-
-   * @param cb callback method
+   * @param body client model (required)
+* @param cb callback method
 
    */
   
   @PATCH("/fake")
   void testClientModel(
-    @retrofit.http.Body Client client, Callback<Client> cb
+    @retrofit.http.Body Client body, Callback<Client> cb
   );
   
   /**
    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
    * Sync method
    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-
    * @param body  (required)
-
 
    * @return Void
 
@@ -209,8 +190,7 @@ public interface FakeApi {
    * Async method
 
    * @param body  (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -223,7 +203,6 @@ public interface FakeApi {
    * To test enum parameters
    * Sync method
    * To test enum parameters
-
    * @param body  (optional)
 
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
@@ -235,7 +214,6 @@ public interface FakeApi {
    * @param enumQueryString Query parameter enum test (string) (optional)
 
    * @param enumQueryInteger Query parameter enum test (double) (optional)
-
 
    * @return Void
 
@@ -262,8 +240,7 @@ public interface FakeApi {
    * @param enumQueryString Query parameter enum test (string) (optional)
 
    * @param enumQueryInteger Query parameter enum test (double) (optional)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -276,9 +253,7 @@ public interface FakeApi {
    * test inline additionalProperties
    * Sync method
    * 
-
    * @param body request body (required)
-
 
    * @return Void
 
@@ -295,8 +270,7 @@ public interface FakeApi {
    * Async method
 
    * @param body request body (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   
@@ -309,9 +283,7 @@ public interface FakeApi {
    * test json serialization of form data
    * Sync method
    * 
-
    * @param body  (required)
-
 
    * @return Void
 
@@ -328,8 +300,7 @@ public interface FakeApi {
    * Async method
 
    * @param body  (required)
-
-   * @param cb callback method
+* @param cb callback method
 
    */
   

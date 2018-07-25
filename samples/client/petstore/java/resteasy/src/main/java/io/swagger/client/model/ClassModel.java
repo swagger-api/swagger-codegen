@@ -17,12 +17,11 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
- */@ApiModel(description = "Model for testing model with \"_class\" property")
+ */@Schema(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel {
 
@@ -40,7 +39,9 @@ public class ClassModel {
   * Get propertyClass
   * @return propertyClass
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -62,7 +63,7 @@ public class ClassModel {
 
   @Override
   public int hashCode() {
-    return Objects.hash(propertyClass);
+    return java.util.Objects.hash(propertyClass);
   }
   
   @Override
