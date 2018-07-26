@@ -1,9 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.*;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.properties.MapProperty;
@@ -34,6 +31,7 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
         reservedWords.add("null");
 
         operationTemplateFiles.put("requestBuilder.mustache", ".java");
+        supportingFiles.add(new SupportingFile("testng.mustache", "", "testng.xml"));
     }
 
 

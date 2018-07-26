@@ -2,6 +2,7 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,12 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         typeMapping.put("PureCloud", this.packageName + ".Model.PureCloud");
 
         typeMapping.put("Action", this.packageName + ".Model.Action");
+
+        // Tests
+        supportingFiles.add(new SupportingFile("test-packages.mustache", "", "src/" + this.packageName + ".Tests/packages.config"));
+        supportingFiles.add(new SupportingFile("test-AssemblyInfo.mustache", "", "src/" + this.packageName + ".Tests/Properties/AssemblyInfo.cs"));
+        supportingFiles.add(new SupportingFile("test-csproj.mustache", "", "src/" + this.packageName + ".Tests/" + this.packageName + ".Tests.csproj"));
+        supportingFiles.add(new SupportingFile("test-SdkTests.mustache", "", "src/" + this.packageName + ".Tests/SdkTests.cs"));
     }
 
     @Override
