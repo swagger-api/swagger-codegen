@@ -9,7 +9,7 @@ import java.util.Objects;
 public class CodegenProperty implements Cloneable {
     public String baseName, complexType, getter, setter, description, datatype,
           datatypeWithEnum, dataFormat, name, min, max, defaultValue, defaultValueWithParam,
-          baseType, containerType, title;
+          baseType, containerType, title, innerType;
 
     /** The 'description' string without escape charcters needed by some programming languages/targets */
     public String unescapedDescription;
@@ -79,6 +79,7 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((allowableValues == null) ? 0 : allowableValues.hashCode());
         result = prime * result + ((baseName == null) ? 0 : baseName.hashCode());
         result = prime * result + ((baseType == null) ? 0 : baseType.hashCode());
+        result = prime * result + ((innerType == null) ? 0 : innerType.hashCode());
         result = prime * result + ((complexType == null) ? 0 : complexType.hashCode());
         result = prime * result + ((containerType == null) ? 0 : containerType.hashCode());
         result = prime * result + ((datatype == null) ? 0 : datatype.hashCode());
@@ -194,6 +195,9 @@ public class CodegenProperty implements Cloneable {
             return false;
         }
         if ((this.baseType == null) ? (other.baseType != null) : !this.baseType.equals(other.baseType)) {
+            return false;
+        }
+        if ((this.innerType == null) ? (other.innerType != null) : !this.innerType.equals(other.innerType)) {
             return false;
         }
         if ((this.containerType == null) ? (other.containerType != null) : !this.containerType.equals(other.containerType)) {

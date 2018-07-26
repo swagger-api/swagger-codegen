@@ -10,7 +10,7 @@ import scala.reflect.ClassTag
 object EnumsSerializers {
 
   def all: Seq[Serializer[_]] = Seq[Serializer[_]](){{#models}}{{#model}}{{#hasEnums}}{{#vars}}{{#isEnum}} :+
-    new EnumNameSerializer({{classname}}Enums.{{datatypeWithEnum}}){{/isEnum}}{{/vars}}{{/hasEnums}}{{/model}}{{/models}}
+    new EnumNameSerializer(io.swagger.client.model.{{classname}}Enums.{{#isContainer}}{{innerType}}{{/isContainer}}{{^isContainer}}{{datatypeWithEnum}}{{/isContainer}}){{/isEnum}}{{/vars}}{{/hasEnums}}{{/model}}{{/models}}
 
   private class EnumNameSerializer[E <: Enumeration: ClassTag](enum: E)
     extends Serializer[E#Value] {

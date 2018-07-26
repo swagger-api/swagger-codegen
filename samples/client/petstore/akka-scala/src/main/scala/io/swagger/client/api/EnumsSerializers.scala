@@ -11,15 +11,14 @@
  */
 package io.swagger.client.api
 
-import io.swagger.client.model._
 import org.json4s._
 import scala.reflect.ClassTag
 
 object EnumsSerializers {
 
   def all: Seq[Serializer[_]] = Seq[Serializer[_]]() :+
-    new EnumNameSerializer(OrderEnums.Status) :+
-    new EnumNameSerializer(PetEnums.Status)
+    new EnumNameSerializer(io.swagger.client.model.OrderEnums.Status) :+
+    new EnumNameSerializer(io.swagger.client.model.PetEnums.Status)
 
   private class EnumNameSerializer[E <: Enumeration: ClassTag](enum: E)
     extends Serializer[E#Value] {

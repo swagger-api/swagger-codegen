@@ -33,12 +33,12 @@ public class AbstractScalaCodegenTest {
 
     @Test
     public void shouldEscapeReservedWords() {
-        String className = "ReservedWord";
+        String className = "reservedword";
 
-        String result = abstractScalaCodegen.formatIdentifier(className, true);
+        String result = abstractScalaCodegen.formatIdentifier(className, false);
 
         // NOTE: reserved words are further escaped at the compiler level.
-        Assert.assertTrue("`ReservedWord`".equals(result));
+        Assert.assertTrue("`reservedword`".equals(result));
     }
 
     @Test

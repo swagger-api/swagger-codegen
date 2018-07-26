@@ -36,7 +36,6 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
 
         languageSpecificPrimitives.addAll(Arrays.asList(
                 "String",
-                "boolean",
                 "Boolean",
                 "Double",
                 "Int",
@@ -159,6 +158,11 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     @Override
     public String modelFileFolder() {
         return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
+
+    // Scala reserved words are case sensitive
+    protected boolean isReservedWord(String word) {
+        return word != null && reservedWords.contains(word);
     }
 
     @Override

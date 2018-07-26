@@ -1858,7 +1858,6 @@ public class DefaultCodegen {
             // set allowable values to enum values (including array/map of enum)
             property.allowableValues = getInnerEnumAllowableValues(property);
         }
-
     }
 
     /**
@@ -1931,6 +1930,7 @@ public class DefaultCodegen {
         if (baseItem != null) {
             // set both datatype and datetypeWithEnum as only the inner type is enum
             property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
+            property.innerType = toEnumName(baseItem);
 
             // naming the enum with respect to the language enum naming convention
             // e.g. remove [], {} from array/map of enum
@@ -1959,6 +1959,7 @@ public class DefaultCodegen {
         if (baseItem != null) {
             // set both datatype and datetypeWithEnum as only the inner type is enum
             property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
+            property.innerType = toEnumName(baseItem);
 
             // naming the enum with respect to the language enum naming convention
             // e.g. remove [], {} from array/map of enum

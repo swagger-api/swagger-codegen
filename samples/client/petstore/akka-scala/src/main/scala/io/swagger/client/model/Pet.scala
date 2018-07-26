@@ -14,6 +14,7 @@ package io.swagger.client.model
 import io.swagger.client.core.ApiModel
 import org.joda.time.DateTime
 import java.util.UUID
+import PetEnums._
 
 case class Pet (
   id: Option[Long],
@@ -22,7 +23,7 @@ case class Pet (
   photoUrls: Seq[String],
   tags: Option[Seq[Tag]],
   /* pet status in the store */
-  status: Option[PetEnums.Status]
+  status: Option[Status]
 ) extends ApiModel
 
 object PetEnums {

@@ -74,15 +74,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         modelPackage = mainPackage + ".model";
         invokerPackage = mainPackage + ".core";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "abstract", "case", "catch", "class", "def", "do", "else", "extends",
-                        "false", "final", "finally", "for", "forSome", "if", "implicit",
-                        "import", "lazy", "match", "new", "null", "object", "override", "package",
-                        "private", "protected", "return", "sealed", "super", "this", "throw",
-                        "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
-        );
-
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
         additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
@@ -109,6 +100,7 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder, "ApiSettings.scala"));
         final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder, "EnumsSerializers.scala"));
+        final String modelFolder = (sourceFolder + File.separator + modelPackage).replace(".", File.separator);
 
         importMapping.remove("Seq");
         importMapping.remove("List");
@@ -342,5 +334,13 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
         return input.replace("\"", "");
+    }
+
+    public static void main(String[] args) {
+        AkkaScalaClientCodegen codegen = new AkkaScalaClientCodegen();
+        CodegenProperty prop = new CodegenProperty();
+        String s = "Договор на брокерское обслуживание";
+        prop.baseName = s;
+        System.out.println(codegen.sanitizeName(s));
     }
 }

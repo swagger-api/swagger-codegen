@@ -4,6 +4,13 @@ package {{package}}
 import {{invokerPackage}}.ApiModel
 import org.joda.time.DateTime
 import java.util.UUID
+{{#models}}
+{{#model}}
+{{#hasEnums}}
+import {{classname}}Enums._
+{{/hasEnums}}
+{{/model}}
+{{/models}}
 
 {{#models}}
 {{#model}}
@@ -12,7 +19,7 @@ case class {{classname}} (
   {{#description}}
   /* {{{description}}} */
   {{/description}}
-  {{{name}}}: {{^required}}Option[{{/required}}{{^isEnum}}{{datatype}}{{/isEnum}}{{#isEnum}}{{classname}}Enums.{{datatypeWithEnum}}{{/isEnum}}{{^required}}]{{/required}}{{#hasMore}},{{/hasMore}}
+  {{name}}: {{^required}}Option[{{/required}}{{^isEnum}}{{datatype}}{{/isEnum}}{{#isEnum}}{{datatypeWithEnum}}{{/isEnum}}{{^required}}]{{/required}}{{#hasMore}},{{/hasMore}}
   {{/vars}}
 ) extends ApiModel
 
@@ -21,15 +28,25 @@ object {{classname}}Enums {
 
   {{#vars}}
   {{#isEnum}}
+  {{#isContainer}}
+  type {{innerType}} = {{innerType}}.Value
+  {{/isContainer}}
+  {{^isContainer}}
   type {{datatypeWithEnum}} = {{datatypeWithEnum}}.Value
+  {{/isContainer}}
   {{/isEnum}}
   {{/vars}}
   {{#vars}}
   {{#isEnum}}
-  object {{datatypeWithEnum}} extends Enumeration {
-{{#_enum}}
+  object {{#isContainer}}{{innerType}}{{/isContainer}}{{^isContainer}}{{datatypeWithEnum}}{{/isContainer}} extends Enumeration {
+    {{#_enum}}
     val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
-{{/_enum}}
+    {{/_enum}}
+    {{#items}}
+    {{#_enum}}
+    val {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = Value("{{.}}")
+    {{/_enum}}
+    {{/items}}
   }
 
   {{/isEnum}}
