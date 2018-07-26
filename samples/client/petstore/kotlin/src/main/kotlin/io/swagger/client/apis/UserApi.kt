@@ -236,14 +236,15 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
         }
     }
 
+    
     /**
     * Updated user
     * This can only be done by the logged in user.
-    * @param username name that need to be deleted 
     * @param body Updated user object 
+    * @param username name that need to be deleted 
     * @return void
     */
-    fun updateUser(username: kotlin.String, body: User) : Unit {
+    fun updateUser(body: User, username: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = body
         val localVariableQuery: MultiValueMap = mapOf()
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
