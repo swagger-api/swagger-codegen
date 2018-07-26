@@ -2,9 +2,9 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +17,15 @@ import javax.validation.constraints.*;
  * A pet for sale in the pet store
  **/
 
-import io.swagger.annotations.*;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@ApiModel(description = "A pet for sale in the pet store")
+@Schema(description = "A pet for sale in the pet store")
 
 public class Pet   {
   
@@ -79,7 +82,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("id")
 
   public Long getId() {
@@ -101,7 +105,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("category")
 
   public Category getCategory() {
@@ -123,7 +128,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  
+  @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
 
   @NotNull
@@ -147,7 +153,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  
+  @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
 
   @NotNull
@@ -171,7 +178,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("tags")
 
   public List<Tag> getTags() {
@@ -195,7 +203,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "pet status in the store")
+  
+  @Schema(description = "pet status in the store")
   @JsonProperty("status")
 
   public StatusEnum getStatus() {
