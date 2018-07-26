@@ -2,7 +2,7 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.validation.constraints.*;
@@ -13,12 +13,15 @@ import javax.validation.constraints.*;
  * A category for a pet
  **/
 
-import io.swagger.annotations.*;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@ApiModel(description = "A category for a pet")
+@Schema(description = "A category for a pet")
 
 public class Category   {
   
@@ -37,7 +40,8 @@ public class Category   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("id")
 
   public Long getId() {
@@ -59,7 +63,8 @@ public class Category   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("name")
 
   public String getName() {

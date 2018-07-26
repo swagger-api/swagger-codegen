@@ -2,7 +2,7 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.validation.constraints.*;
@@ -13,12 +13,15 @@ import javax.validation.constraints.*;
  * A User who is purchasing from the pet store
  **/
 
-import io.swagger.annotations.*;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@ApiModel(description = "A User who is purchasing from the pet store")
+@Schema(description = "A User who is purchasing from the pet store")
 
 public class User   {
   
@@ -43,7 +46,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("id")
 
   public Long getId() {
@@ -65,7 +69,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("username")
 
   public String getUsername() {
@@ -87,7 +92,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("firstName")
 
   public String getFirstName() {
@@ -109,7 +115,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("lastName")
 
   public String getLastName() {
@@ -131,7 +138,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("email")
 
   public String getEmail() {
@@ -153,7 +161,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("password")
 
   public String getPassword() {
@@ -175,7 +184,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("phone")
 
   public String getPhone() {
@@ -199,7 +209,8 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "User Status")
+  
+  @Schema(description = "User Status")
   @JsonProperty("userStatus")
 
   public Integer getUserStatus() {
