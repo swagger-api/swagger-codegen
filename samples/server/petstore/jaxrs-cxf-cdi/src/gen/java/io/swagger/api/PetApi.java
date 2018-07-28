@@ -101,7 +101,13 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
     
-    public Response findPetsByStatus( @NotNull @Parameter(description = "Status values that need to be considered for filter",required=true)  @QueryParam("status") List<String> status) {
+    public Response findPetsByStatus( @NotNull 
+
+@Parameter(description = "Status values that need to be considered for filter",required=true, 
+
+schema=@Schema(allowableValues={ "available", "pending", "sold" })
+)  @QueryParam("status") List<String> status
+) {
         return delegate.findPetsByStatus(status, securityContext);
     }
 
