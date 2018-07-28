@@ -20,32 +20,47 @@ import io.swagger.client.core.ApiKeyLocations._
 
 object PetApi {
 
+  object addPet {
   /**
-   * 
+   *   
    * Expected answers:
    *   code 405 :  (Invalid input)
    * 
    * @param body Pet object that needs to be added to the store
    */
-  def addPet(body: Pet): ApiRequest[Unit] =
-    ApiRequest[Unit](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet", "application/json")
-      .withBody(body)
-      .withErrorResponse[Unit](405)
-        /**
-   * 
+    def apply(body: Pet): ApiRequest[Unit] =
+      ApiRequest[Unit](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet", "application/json")
+        .withBody(body)
+        .withErrorResponse[Unit](405)
+        
+  }
+
+  object deletePet {
+  /**
+   *   
    * Expected answers:
    *   code 400 :  (Invalid pet value)
    * 
    * @param petId Pet id to delete
    * @param apiKey 
    */
-  def deletePet(petId: Long, apiKey: Option[String] = None): ApiRequest[Unit] =
-    ApiRequest[Unit](ApiMethods.DELETE, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/json")
-      .withPathParam("petId", petId)
-      .withHeaderParam("api_key", apiKey)
-      .withErrorResponse[Unit](400)
-        /**
-   * Multiple status values can be provided with comma separated strings
+    def apply(petId: Long, apiKey: Option[String] = None): ApiRequest[Unit] =
+      ApiRequest[Unit](ApiMethods.DELETE, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/json")
+        .withPathParam("petId", petId)
+        .withHeaderParam("api_key", apiKey)
+        .withErrorResponse[Unit](400)
+        
+  }
+
+  object findPetsByStatus {
+  type Status = Status.Value
+    object Seq[Status] extends Enumeration {
+      val Available = Value("available")
+      val Pending = Value("pending")
+      val Sold = Value("sold")
+    }
+  /**
+   *   Multiple status values can be provided with comma separated strings
    * 
    * Expected answers:
    *   code 200 : Seq[Pet] (successful operation)
@@ -53,13 +68,17 @@ object PetApi {
    * 
    * @param status Status values that need to be considered for filter
    */
-  def findPetsByStatus(status: Seq[String]): ApiRequest[Seq[Pet]] =
-    ApiRequest[Seq[Pet]](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/findByStatus", "application/json")
-      .withQueryParam("status", ArrayValues(status, CSV))
-      .withSuccessResponse[Seq[Pet]](200)
-      .withErrorResponse[Unit](400)
-        /**
-   * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+    def apply(status: Seq[Status]): ApiRequest[Seq[Pet]] =
+      ApiRequest[Seq[Pet]](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/findByStatus", "application/json")
+        .withQueryParam("status", ArrayValues(status, CSV))
+        .withSuccessResponse[Seq[Pet]](200)
+        .withErrorResponse[Unit](400)
+        
+  }
+
+  object findPetsByTags {
+  /**
+   *   Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
    * 
    * Expected answers:
    *   code 200 : Seq[Pet] (successful operation)
@@ -67,13 +86,17 @@ object PetApi {
    * 
    * @param tags Tags to filter by
    */
-  def findPetsByTags(tags: Seq[String]): ApiRequest[Seq[Pet]] =
-    ApiRequest[Seq[Pet]](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/findByTags", "application/json")
-      .withQueryParam("tags", ArrayValues(tags, CSV))
-      .withSuccessResponse[Seq[Pet]](200)
-      .withErrorResponse[Unit](400)
-        /**
-   * Returns a single pet
+    def apply(tags: Seq[String]): ApiRequest[Seq[Pet]] =
+      ApiRequest[Seq[Pet]](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/findByTags", "application/json")
+        .withQueryParam("tags", ArrayValues(tags, CSV))
+        .withSuccessResponse[Seq[Pet]](200)
+        .withErrorResponse[Unit](400)
+        
+  }
+
+  object getPetById {
+  /**
+   *   Returns a single pet
    * 
    * Expected answers:
    *   code 200 : Pet (successful operation)
@@ -85,15 +108,19 @@ object PetApi {
    * 
    * @param petId ID of pet to return
    */
-  def getPetById(petId: Long)(implicit apiKey: ApiKeyValue): ApiRequest[Pet] =
-    ApiRequest[Pet](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/json")
-      .withApiKey(apiKey, "api_key", HEADER)
-      .withPathParam("petId", petId)
-      .withSuccessResponse[Pet](200)
-      .withErrorResponse[Unit](400)
-      .withErrorResponse[Unit](404)
-        /**
-   * 
+    def apply(petId: Long)(implicit apiKey: ApiKeyValue): ApiRequest[Pet] =
+      ApiRequest[Pet](ApiMethods.GET, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/json")
+        .withApiKey(apiKey, "api_key", HEADER)
+        .withPathParam("petId", petId)
+        .withSuccessResponse[Pet](200)
+        .withErrorResponse[Unit](400)
+        .withErrorResponse[Unit](404)
+        
+  }
+
+  object updatePet {
+  /**
+   *   
    * Expected answers:
    *   code 400 :  (Invalid ID supplied)
    *   code 404 :  (Pet not found)
@@ -101,14 +128,18 @@ object PetApi {
    * 
    * @param body Pet object that needs to be added to the store
    */
-  def updatePet(body: Pet): ApiRequest[Unit] =
-    ApiRequest[Unit](ApiMethods.PUT, "http://petstore.swagger.io/v2", "/pet", "application/json")
-      .withBody(body)
-      .withErrorResponse[Unit](400)
-      .withErrorResponse[Unit](404)
-      .withErrorResponse[Unit](405)
-        /**
-   * 
+    def apply(body: Pet): ApiRequest[Unit] =
+      ApiRequest[Unit](ApiMethods.PUT, "http://petstore.swagger.io/v2", "/pet", "application/json")
+        .withBody(body)
+        .withErrorResponse[Unit](400)
+        .withErrorResponse[Unit](404)
+        .withErrorResponse[Unit](405)
+        
+  }
+
+  object updatePetWithForm {
+  /**
+   *   
    * Expected answers:
    *   code 405 :  (Invalid input)
    * 
@@ -116,14 +147,18 @@ object PetApi {
    * @param name Updated name of the pet
    * @param status Updated status of the pet
    */
-  def updatePetWithForm(petId: Long, name: Option[String] = None, status: Option[String] = None): ApiRequest[Unit] =
-    ApiRequest[Unit](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/x-www-form-urlencoded")
-      .withFormParam("name", name)
-      .withFormParam("status", status)
-      .withPathParam("petId", petId)
-      .withErrorResponse[Unit](405)
-        /**
-   * 
+    def apply(petId: Long, name: Option[String] = None, status: Option[String] = None): ApiRequest[Unit] =
+      ApiRequest[Unit](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet/{petId}", "application/x-www-form-urlencoded")
+        .withFormParam("name", name)
+        .withFormParam("status", status)
+        .withPathParam("petId", petId)
+        .withErrorResponse[Unit](405)
+        
+  }
+
+  object uploadFile {
+  /**
+   *   
    * Expected answers:
    *   code 200 : ApiResponse (successful operation)
    * 
@@ -131,13 +166,16 @@ object PetApi {
    * @param additionalMetadata Additional data to pass to server
    * @param file file to upload
    */
-  def uploadFile(petId: Long, additionalMetadata: Option[String] = None, file: Option[File] = None): ApiRequest[ApiResponse] =
-    ApiRequest[ApiResponse](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet/{petId}/uploadImage", "multipart/form-data")
-      .withFormParam("additionalMetadata", additionalMetadata)
-      .withFormParam("file", file)
-      .withPathParam("petId", petId)
-      .withSuccessResponse[ApiResponse](200)
-      
+    def apply(petId: Long, additionalMetadata: Option[String] = None, file: Option[File] = None): ApiRequest[ApiResponse] =
+      ApiRequest[ApiResponse](ApiMethods.POST, "http://petstore.swagger.io/v2", "/pet/{petId}/uploadImage", "multipart/form-data")
+        .withFormParam("additionalMetadata", additionalMetadata)
+        .withFormParam("file", file)
+        .withPathParam("petId", petId)
+        .withSuccessResponse[ApiResponse](200)
+        
+  }
+
+
 
 }
 
