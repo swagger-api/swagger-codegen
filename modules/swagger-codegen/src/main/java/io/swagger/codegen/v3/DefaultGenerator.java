@@ -1012,6 +1012,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             templateLoader = new ClassPathTemplateLoader("/" + templateDir, ".mustache");
         }
         final Handlebars handlebars = new Handlebars(templateLoader);
+        handlebars.prettyPrint(true);
         config.addHandlebarHelpers(handlebars);
         return handlebars.compile(templateFile);
     }
