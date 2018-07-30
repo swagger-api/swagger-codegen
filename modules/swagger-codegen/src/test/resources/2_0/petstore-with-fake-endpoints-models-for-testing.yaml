@@ -28,6 +28,36 @@ schemes:
   - http
 paths:
   /pet:
+    get:
+      tags:
+        - pet
+      summary: Lists all the Pets
+      description: Lists all the Pets
+      operationId: listPets
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: action
+          in: query
+          description: Action type to be passed on to the get the Pets
+          required: true
+          type: string
+          enum:
+              - list
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Pet'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
     post:
       tags:
         - pet
