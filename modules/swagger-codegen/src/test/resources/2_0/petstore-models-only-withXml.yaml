@@ -1,0 +1,157 @@
+swagger: '2.0'
+info:
+  description: "This spec is for testing the withXml feature"
+  version: 1.0.0
+  title: Simplified Swagger Petstore Model for Testing the withXml Feature
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache-2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  x-comment: "Model only"
+definitions:
+  Order:
+    type: object
+    required:
+      - id
+      - petId
+      - quantity
+      - status
+    properties:
+      id:
+        type: integer
+        format: int64
+      petId:
+        type: integer
+        format: int64
+      quantity:
+        type: integer
+        format: int32
+      shipDate:
+        type: string
+        format: date-time
+      status:
+        type: string
+        description: Order Status
+        enum:
+          - placed
+          - approved
+          - delivered
+        xml:
+          name: OrderStatus
+          namespace: urn:io::swagger::petstore::v1
+    xml:
+      name: Order
+      namespace: urn:io::swagger::petstore::v1
+  Category:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: string
+        xml:
+          attribute: true
+    xml:
+      name: Category
+      namespace: urn:io::swagger::petstore::v1
+  User:
+    type: object
+    required:
+      - id
+      - username
+      - email
+      - status
+      - password
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      status:
+        type: integer
+        format: int32
+        description: User Status
+    xml:
+      name: User
+      namespace: urn:io::swagger::petstore::v1
+  Tag:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: string
+        xml:
+          attribute: true
+    xml:
+      name: Tag
+      namespace: urn:io::swagger::petstore::v1
+  Pet:
+    type: object
+    required:
+      - id
+      - name
+      - photoUrls
+      - status
+      - category
+      - tags
+    properties:
+      id:
+        type: integer
+        format: int64
+      category:
+        $ref: '#/definitions/Category'
+      name:
+        type: string
+        example: doggie
+      photoUrls:
+        type: array
+        items:
+          type: string
+          xml:
+            name: url
+            namespace: urn:io::swagger::petstore::v1
+        xml:
+          wrapped: true
+          namespace: urn:io::swagger::petstore::v1
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+          xml:
+            name: tag
+          namespace: urn:io::swagger::petstore::v1
+        xml:
+          wrapped: true
+          name: Tags
+          namespace: urn:io::swagger::petstore::v1
+      status:
+        type: string
+        description: pet status in the store
+        enum:
+          - available
+          - pending
+          - sold
+        xml:
+          name: PetStatus
+          namespace: urn:io::swagger::petstore::v1
+    xml:
+      name: Pet
+      namespace: urn:io::swagger::petstore::v1
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

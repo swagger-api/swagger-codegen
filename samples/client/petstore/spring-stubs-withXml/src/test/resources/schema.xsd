@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:io::swagger::petstore::v1" targetNamespace="urn:io::swagger::petstore::v1" version="1.0">
+
+  <xs:element name="Category" type="tns:Category"/>
+
+  <xs:element name="Order" type="tns:Order"/>
+
+  <xs:element name="Pet" type="tns:Pet"/>
+
+  <xs:element name="Tag" type="tns:Tag"/>
+
+  <xs:element name="User" type="tns:User"/>
+
+  <xs:complexType name="Category">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Category]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="Order">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Order]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="petId" type="xs:long"/>
+      <xs:element name="quantity" type="xs:int"/>
+      <xs:element minOccurs="0" name="shipDate" type="xs:dateTime"/>
+      <xs:element form="qualified" name="OrderStatus" type="tns:OrderStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Pet">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Pet]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="category" type="tns:Category"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element form="qualified" name="photoUrls">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="url" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" name="Tags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="tag" type="tns:Tag"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" name="PetStatus" type="tns:PetStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Tag">
+    <xs:annotation>
+      <xs:documentation><![CDATA[Tag]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="User">
+    <xs:annotation>
+      <xs:documentation><![CDATA[User]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+      <xs:element name="email" type="xs:string"/>
+      <xs:element name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="phone" type="xs:string"/>
+      <xs:element name="status" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="OrderStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PLACED"/>
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="DELIVERED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PetStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AVAILABLE"/>
+      <xs:enumeration value="PENDING"/>
+      <xs:enumeration value="SOLD"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

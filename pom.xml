@@ -862,6 +862,8 @@
                 <module>samples/client/petstore/typescript-angular-v5/npm</module>
                 <module>samples/client/petstore/typescript-angular-v6/npm</module>
                 <!--<module>samples/client/petstore/bash</module>-->
+                <!-- java/spring -->
+                <module>samples/client/petstore/spring-stubs-withXml</module>
             </modules>
         </profile>
     </profiles>

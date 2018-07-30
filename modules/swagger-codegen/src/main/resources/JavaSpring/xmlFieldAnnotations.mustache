@@ -1,0 +1,22 @@
+{{#withXml}}
+    {{#jackson}}
+  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+    {{/jackson}}
+    {{^isContainer}}
+        {{#isXmlAttribute}}
+  @XmlAttribute({{#required}}required = true, {{/required}}{{#xmlNamespace}}namespace = "{{xmlNamespace}}", {{/xmlNamespace}}name = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+        {{/isXmlAttribute}}
+        {{^isXmlAttribute}}
+  @XmlElement({{#required}}required = true, {{/required}}{{#xmlNamespace}}namespace = "{{xmlNamespace}}", {{/xmlNamespace}}name = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+        {{/isXmlAttribute}}
+    {{/isContainer}}
+    {{#isContainer}}
+        {{#isXmlWrapped}}
+            {{#jackson}}
+  @JacksonXmlElementWrapper(useWrapping = true, {{#xmlNamespace}}namespace = "{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#items.xmlName}}{{items.xmlName}}{{/items.xmlName}}{{^items.xmlName}}{{items.baseName}}{{/items.xmlName}}")
+            {{/jackson}}
+  @XmlElementWrapper({{#required}}required = true, {{/required}}{{#xmlNamespace}}namespace = "{{xmlNamespace}}", {{/xmlNamespace}}name = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+  @XmlElement({{#xmlNamespace}}namespace = "{{xmlNamespace}}", {{/xmlNamespace}}name = "{{#items.xmlName}}{{items.xmlName}}{{/items.xmlName}}{{^items.xmlName}}{{items.baseName}}{{/items.xmlName}}")
+        {{/isXmlWrapped}}
+    {{/isContainer}}
+{{/withXml}}
