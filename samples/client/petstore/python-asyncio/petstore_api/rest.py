@@ -64,7 +64,7 @@ class RESTClientObject(object):
 
         connector = aiohttp.TCPConnector(
             limit=maxsize,
-            ssl_context=ssl_context,
+            ssl_context=ssl_context if configuration.verify_ssl else None,
             verify_ssl=configuration.verify_ssl
         )
 
