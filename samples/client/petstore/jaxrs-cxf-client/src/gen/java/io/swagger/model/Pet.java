@@ -1,8 +1,8 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,10 @@ import java.util.List;
 
 
 
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,12 +30,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
   * A pet for sale in the pet store
  **/
-@ApiModel(description="A pet for sale in the pet store")
+@Schema(description="A pet for sale in the pet store")
 
 public class Pet  {
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -40,7 +44,8 @@ public class Pet  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -48,7 +53,8 @@ public class Pet  {
 
   
 
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  
+  @Schema(example = "doggie", required = true, description = "")
 
 
 
@@ -56,7 +62,8 @@ public class Pet  {
 
   
 
-  @ApiModelProperty(required = true, value = "")
+  
+  @Schema(required = true, description = "")
 
 
   private List<String> photoUrls = new ArrayList<String>();
@@ -64,7 +71,8 @@ public class Pet  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
   private List<Tag> tags = null;
@@ -106,7 +114,8 @@ public enum StatusEnum {
 }
 
 
-  @ApiModelProperty(value = "pet status in the store")
+  
+  @Schema(description = "pet status in the store")
 
  /**
    * pet status in the store  

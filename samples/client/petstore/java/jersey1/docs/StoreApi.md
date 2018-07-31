@@ -30,7 +30,7 @@ For valid response try integer IDs with value &lt; 1000. Anything above 1000 or 
 
 StoreApi apiInstance = new StoreApi();
 
-String orderId = Arrays.asList("orderId_example"); // String | ID of the order that needs to be deleted
+String orderId = "orderId_example"; // String | ID of the order that needs to be deleted
 
 try {
     apiInstance.deleteOrder(orderId);
@@ -124,7 +124,7 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 
 StoreApi apiInstance = new StoreApi();
 
-Integer orderId = Arrays.asList(56); // Integer | ID of pet that needs to be fetched
+Integer orderId = 56; // Integer | ID of pet that needs to be fetched
 
 try {
     Order result = apiInstance.getOrderById(orderId);
@@ -158,7 +158,7 @@ No authorization required
 
 <a name="placeOrder"></a>
 # **placeOrder**
-> Order placeOrder(order)
+> Order placeOrder(body)
 
 Place an order for a pet
 
@@ -172,10 +172,10 @@ Place an order for a pet
 
 StoreApi apiInstance = new StoreApi();
 
-Order order = ; // Order | order placed for purchasing the pet
+Order body = new Order(); // Order | order placed for purchasing the pet
 
 try {
-    Order result = apiInstance.placeOrder(order);
+    Order result = apiInstance.placeOrder(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StoreApi#placeOrder");
@@ -187,7 +187,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order** | [**Order**](.md)| order placed for purchasing the pet |
+ **body** | [**Order**](Order.md)| order placed for purchasing the pet |
 
 
 ### Return type

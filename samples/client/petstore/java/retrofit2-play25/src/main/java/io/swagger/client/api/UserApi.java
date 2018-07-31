@@ -29,7 +29,7 @@ public interface UserApi {
    * Create user
    * This can only be done by the logged in user.
 
-   * @param user Created user object (required)
+   * @param body Created user object (required)
 
    * @return Call&lt;Void&gt;
    */
@@ -45,7 +45,7 @@ public interface UserApi {
     
   @POST("user")
   CompletionStage<Response<Void>> createUser(
-    @retrofit2.http.Body User user
+    @retrofit2.http.Body User body
   );
 
   
@@ -172,7 +172,7 @@ public interface UserApi {
    * Updated user
    * This can only be done by the logged in user.
 
-   * @param user Updated user object (required)
+   * @param body Updated user object (required)
 
    * @param username name that need to be deleted (required)
 
@@ -190,7 +190,7 @@ public interface UserApi {
     
   @PUT("user/{username}")
   CompletionStage<Response<Void>> updateUser(
-    @retrofit2.http.Body User user, @retrofit2.http.Path("username") String username
+    @retrofit2.http.Body User body, @retrofit2.http.Path("username") String username
   );
 
   

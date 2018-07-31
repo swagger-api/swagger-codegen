@@ -9,7 +9,6 @@ import Foundation
 
 
 open class ReadOnlyFirst: JSONEncodable {
-
     public var bar: String?
     public var baz: String?
 
@@ -25,4 +24,3 @@ open class ReadOnlyFirst: JSONEncodable {
         return dictionary
     }
 }
-

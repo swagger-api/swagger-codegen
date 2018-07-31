@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.math.BigDecimal;
 import android.os.Parcelable;
@@ -51,7 +50,9 @@ public class OuterComposite {
   * Get myNumber
   * @return myNumber
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -69,7 +70,9 @@ public class OuterComposite {
   * Get myString
   * @return myString
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getMyString() {
     return myString;
   }
@@ -87,7 +90,9 @@ public class OuterComposite {
   * Get myBoolean
   * @return myBoolean
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Boolean getMyBoolean() {
     return myBoolean;
   }
@@ -111,7 +116,7 @@ public class OuterComposite {
 
   @Override
   public int hashCode() {
-    return Objects.hash(myNumber, myString, myBoolean);
+    return java.util.Objects.hash(myNumber, myString, myBoolean);
   }
   
   @Override
@@ -140,6 +145,7 @@ public class OuterComposite {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(myNumber);
     out.writeValue(myString);
     out.writeValue(myBoolean);
@@ -151,6 +157,7 @@ public class OuterComposite {
   }
 
   OuterComposite(Parcel in) {
+    
     
     myNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());myString = (String)in.readValue(null);myBoolean = (Boolean)in.readValue(null);
   }

@@ -3,21 +3,13 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * Model for testing reserved words
- **/
-
-@ApiModel(description = "Model for testing reserved words")
-
+ **/@Schema(description = "Model for testing reserved words")
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;
-
   /**
    **/
   public ModelReturn _return(Integer _return) {
@@ -26,7 +18,7 @@ public class ModelReturn   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("return")
   public Integer getReturn() {
     return _return;
@@ -57,7 +49,6 @@ public class ModelReturn   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ModelReturn {\n");
-    
     sb.append("    _return: ").append(toIndentedString(_return)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -74,4 +65,3 @@ public class ModelReturn   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

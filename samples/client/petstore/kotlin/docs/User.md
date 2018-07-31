@@ -1,17 +1,13 @@
-
 # User
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.Long** |  |  [optional]
-**username** | **kotlin.String** |  |  [optional]
-**firstName** | **kotlin.String** |  |  [optional]
-**lastName** | **kotlin.String** |  |  [optional]
-**email** | **kotlin.String** |  |  [optional]
-**password** | **kotlin.String** |  |  [optional]
-**phone** | **kotlin.String** |  |  [optional]
-**userStatus** | **kotlin.Int** | User Status |  [optional]
-
-
-
+**id** | [**kotlin.Long**](.md) |  |  [optional]
+**username** | [**kotlin.String**](.md) |  |  [optional]
+**firstName** | [**kotlin.String**](.md) |  |  [optional]
+**lastName** | [**kotlin.String**](.md) |  |  [optional]
+**email** | [**kotlin.String**](.md) |  |  [optional]
+**password** | [**kotlin.String**](.md) |  |  [optional]
+**phone** | [**kotlin.String**](.md) |  |  [optional]
+**userStatus** | [**kotlin.Int**](.md) | User Status |  [optional]

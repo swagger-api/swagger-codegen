@@ -20,6 +20,7 @@ import io.swagger.client.Configuration;
 import io.swagger.client.model.*;
 import io.swagger.client.Pair;
 
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -51,15 +52,15 @@ public class PetApi {
   }
 
   /**
-   * Add a new pet to the store* * @param pet Pet object that needs to be added to the store (required)
+   * Add a new pet to the store* * @param body Pet object that needs to be added to the store (required)
    * @throws ApiException if fails to make API call
    */
-  public void addPet(Pet pet) throws ApiException {
-    Object localVarPostBody = pet;
+  public void addPet(Pet body) throws ApiException {
+    Object localVarPostBody = body;
     
-    // verify the required parameter 'pet' is set
-    if (pet == null) {
-      throw new ApiException(400, "Missing the required parameter 'pet' when calling addPet");
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling addPet");
     }
     
     // create path and map variables
@@ -283,15 +284,15 @@ public class PetApi {
     
   }
   /**
-   * Update an existing pet* * @param pet Pet object that needs to be added to the store (required)
+   * Update an existing pet* * @param body Pet object that needs to be added to the store (required)
    * @throws ApiException if fails to make API call
    */
-  public void updatePet(Pet pet) throws ApiException {
-    Object localVarPostBody = pet;
+  public void updatePet(Pet body) throws ApiException {
+    Object localVarPostBody = body;
     
-    // verify the required parameter 'pet' is set
-    if (pet == null) {
-      throw new ApiException(400, "Missing the required parameter 'pet' when calling updatePet");
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling updatePet");
     }
     
     // create path and map variables
@@ -327,11 +328,12 @@ public class PetApi {
   }
   /**
    * Updates a pet in the store with form data* * @param petId ID of pet that needs to be updated (required)
-   * @param body  (optional)
+   * @param name  (optional)
+   * @param status  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void updatePetWithForm(Integer petId, Object body) throws ApiException {
-    Object localVarPostBody = body;
+  public void updatePetWithForm(Integer petId, String name, String status) throws ApiException {
+    Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -352,6 +354,10 @@ public class PetApi {
 
     
 
+    if (name != null)
+      localVarFormParams.put("name", name);
+    if (status != null)
+      localVarFormParams.put("status", status);
     
 
     final String[] localVarAccepts = {
@@ -372,12 +378,13 @@ public class PetApi {
   }
   /**
    * uploads an image* * @param petId ID of pet to update (required)
-   * @param body  (optional)
+   * @param additionalMetadata  (optional)
+   * @param file  (optional)
    * @return ModelApiResponse
    * @throws ApiException if fails to make API call
    */
-  public ModelApiResponse uploadFile(Integer petId, Object body) throws ApiException {
-    Object localVarPostBody = body;
+  public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, File file) throws ApiException {
+    Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -398,6 +405,10 @@ public class PetApi {
 
     
 
+    if (additionalMetadata != null)
+      localVarFormParams.put("additionalMetadata", additionalMetadata);
+    if (file != null)
+      localVarFormParams.put("file", file);
     
 
     final String[] localVarAccepts = {

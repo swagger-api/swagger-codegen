@@ -29,7 +29,7 @@ public interface FakeClassnameTags123Api {
    * To test class name in snake case
    * 
 
-   * @param client client model (required)
+   * @param body client model (required)
 
    * @return Call&lt;Client&gt;
    */
@@ -45,7 +45,7 @@ public interface FakeClassnameTags123Api {
     
   @PATCH("fake_classname_test")
   F.Promise<Response<Client>> testClassname(
-    @retrofit2.http.Body Client client
+    @retrofit2.http.Body Client body
   );
 
   

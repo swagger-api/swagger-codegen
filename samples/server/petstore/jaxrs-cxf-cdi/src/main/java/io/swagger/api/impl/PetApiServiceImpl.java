@@ -5,6 +5,7 @@ import io.swagger.model.*;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
+import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
@@ -23,7 +24,7 @@ import javax.ws.rs.core.SecurityContext;
 public class PetApiServiceImpl implements PetApiService {
   
       @Override
-      public Response addPet(Pet pet, SecurityContext securityContext) {
+      public Response addPet(Pet body, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
@@ -53,19 +54,19 @@ public class PetApiServiceImpl implements PetApiService {
   }
   
       @Override
-      public Response updatePet(Pet pet, SecurityContext securityContext) {
+      public Response updatePet(Pet body, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
   
       @Override
-      public Response updatePetWithForm(Integer petId, Object body, SecurityContext securityContext) {
+      public Response updatePetWithForm(Integer petId, String name, String status, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
   
       @Override
-      public Response uploadFile(Integer petId, Object body, SecurityContext securityContext) {
+      public Response uploadFile(Integer petId, String additionalMetadata, InputStream fileInputStream, Attachment fileDetail, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

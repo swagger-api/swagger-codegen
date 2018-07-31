@@ -3,24 +3,15 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;
-
   @JsonProperty("type")
   private String type = null;
-
   @JsonProperty("message")
   private String message = null;
-
   /**
    **/
   public ModelApiResponse code(Integer code) {
@@ -29,7 +20,7 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("code")
   public Integer getCode() {
     return code;
@@ -46,7 +37,7 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("type")
   public String getType() {
     return type;
@@ -63,7 +54,7 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -96,7 +87,6 @@ public class ModelApiResponse   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ModelApiResponse {\n");
-    
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
@@ -115,4 +105,3 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

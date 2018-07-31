@@ -19,13 +19,12 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 
 /**
  * Model for testing reserved words
- */@ApiModel(description = "Model for testing reserved words")
+ */@Schema(description = "Model for testing reserved words")
 
 public class ModelReturn {
 
@@ -42,7 +41,9 @@ public class ModelReturn {
   * Get _return
   * @return _return
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getReturn() {
     return _return;
   }
@@ -64,7 +65,7 @@ public class ModelReturn {
 
   @Override
   public int hashCode() {
-    return Objects.hash(_return);
+    return java.util.Objects.hash(_return);
   }
   
   @Override

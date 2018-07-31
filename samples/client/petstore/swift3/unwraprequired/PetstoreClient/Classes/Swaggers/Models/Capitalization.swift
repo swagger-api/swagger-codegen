@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Capitalization: JSONEncodable {
-
     public var smallCamel: String?
     public var capitalCamel: String?
     public var smallSnake: String?
@@ -41,4 +40,3 @@ open class Capitalization: JSONEncodable {
         return dictionary
     }
 }
-

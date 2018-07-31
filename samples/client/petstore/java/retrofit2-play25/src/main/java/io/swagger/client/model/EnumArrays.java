@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
@@ -129,7 +128,9 @@ public class EnumArrays {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -161,7 +162,9 @@ public class EnumArrays {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
@@ -184,7 +187,7 @@ public class EnumArrays {
 
   @Override
   public int hashCode() {
-    return Objects.hash(justSymbol, arrayEnum);
+    return java.util.Objects.hash(justSymbol, arrayEnum);
   }
   
   @Override

@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +103,9 @@ public class MapTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -135,7 +136,9 @@ public class MapTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
@@ -158,7 +161,7 @@ public class MapTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapMapOfString, mapOfEnumString);
+    return java.util.Objects.hash(mapMapOfString, mapOfEnumString);
   }
   
   @Override

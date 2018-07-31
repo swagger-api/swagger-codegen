@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Cat: Animal {
-
     public var declawed: Bool?
 
 
@@ -25,4 +24,3 @@ open class Cat: Animal {
         return dictionary
     }
 }
-

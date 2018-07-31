@@ -29,7 +29,7 @@ public interface AnotherFakeApi {
    * To test special tags
    * To test special tags
 
-   * @param client client model (required)
+   * @param body client model (required)
 
    * @return Call&lt;Client&gt;
 
@@ -46,7 +46,7 @@ public interface AnotherFakeApi {
     
   @PATCH("another-fake/dummy")
   Observable<Client> testSpecialTags(
-    @retrofit2.http.Body Client client
+    @retrofit2.http.Body Client body
   );
 
   

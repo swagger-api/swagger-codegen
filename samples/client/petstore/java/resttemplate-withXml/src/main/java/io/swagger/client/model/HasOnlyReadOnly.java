@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 
@@ -48,7 +47,9 @@ public class HasOnlyReadOnly {
   * Get bar
   * @return bar
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBar() {
     return bar;
   }
@@ -58,7 +59,9 @@ public class HasOnlyReadOnly {
   * Get foo
   * @return foo
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getFoo() {
     return foo;
   }
@@ -78,7 +81,7 @@ public class HasOnlyReadOnly {
 
   @Override
   public int hashCode() {
-    return Objects.hash(bar, foo);
+    return java.util.Objects.hash(bar, foo);
   }
   
   @Override

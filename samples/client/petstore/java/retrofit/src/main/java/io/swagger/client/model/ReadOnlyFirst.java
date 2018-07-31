@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 
 /**
@@ -40,7 +39,9 @@ public class ReadOnlyFirst {
   * Get bar
   * @return bar
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBar() {
     return bar;
   }
@@ -55,7 +56,9 @@ public class ReadOnlyFirst {
   * Get baz
   * @return baz
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBaz() {
     return baz;
   }
@@ -78,7 +81,7 @@ public class ReadOnlyFirst {
 
   @Override
   public int hashCode() {
-    return Objects.hash(bar, baz);
+    return java.util.Objects.hash(bar, baz);
   }
   
   @Override

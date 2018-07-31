@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -47,7 +46,9 @@ public class SpecialModelName {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
@@ -69,7 +70,7 @@ public class SpecialModelName {
 
   @Override
   public int hashCode() {
-    return Objects.hash($specialPropertyName);
+    return java.util.Objects.hash($specialPropertyName);
   }
   
   @Override

@@ -338,13 +338,13 @@ Object body = null; // Object |
 
 List<String> enumHeaderStringArray = Arrays.asList("enumHeaderStringArray_example"); // List<String> | Header parameter enum test (string array)
 
-String enumHeaderString = Arrays.asList("enumHeaderString_example"); // String | Header parameter enum test (string)
+String enumHeaderString = "enumHeaderString_example"; // String | Header parameter enum test (string)
 
 List<String> enumQueryStringArray = Arrays.asList("enumQueryStringArray_example"); // List<String> | Query parameter enum test (string array)
 
-String enumQueryString = Arrays.asList("enumQueryString_example"); // String | Query parameter enum test (string)
+String enumQueryString = "enumQueryString_example"; // String | Query parameter enum test (string)
 
-Integer enumQueryInteger = Arrays.asList(56); // Integer | Query parameter enum test (double)
+Integer enumQueryInteger = 56; // Integer | Query parameter enum test (double)
 
 try {
     apiInstance.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);

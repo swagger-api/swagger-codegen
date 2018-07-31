@@ -17,9 +17,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   * Get uuid
   * @return uuid
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public UUID getUuid() {
     return uuid;
   }
@@ -85,7 +86,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   * Get dateTime
   * @return dateTime
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -111,7 +114,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   * Get map
   * @return map
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, Animal> getMap() {
     return map;
   }
@@ -135,7 +140,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, dateTime, map);
+    return java.util.Objects.hash(uuid, dateTime, map);
   }
   
   @Override

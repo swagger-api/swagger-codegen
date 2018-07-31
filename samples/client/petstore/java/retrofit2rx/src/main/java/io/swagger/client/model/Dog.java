@@ -19,9 +19,8 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 
 /**
@@ -30,50 +29,8 @@ import java.io.IOException;
 
 public class Dog extends Animal {
 
-  @SerializedName("className")
-  private String className = null;
-  
-  @SerializedName("color")
-  private String color = "red";
-  
   @SerializedName("breed")
   private String breed = null;
-  
-  public Dog className(String className) {
-    this.className = className;
-    return this;
-  }
-
-  
-  /**
-  * Get className
-  * @return className
-  **/
-  @ApiModelProperty(required = true, value = "")
-  public String getClassName() {
-    return className;
-  }
-  public void setClassName(String className) {
-    this.className = className;
-  }
-  
-  public Dog color(String color) {
-    this.color = color;
-    return this;
-  }
-
-  
-  /**
-  * Get color
-  * @return color
-  **/
-  @ApiModelProperty(value = "")
-  public String getColor() {
-    return color;
-  }
-  public void setColor(String color) {
-    this.color = color;
-  }
   
   public Dog breed(String breed) {
     this.breed = breed;
@@ -85,7 +42,9 @@ public class Dog extends Animal {
   * Get breed
   * @return breed
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBreed() {
     return breed;
   }
@@ -102,15 +61,13 @@ public class Dog extends Animal {
       return false;
     }
     Dog dog = (Dog) o;
-    return Objects.equals(this.className, dog.className) &&
-        Objects.equals(this.color, dog.color) &&
-        Objects.equals(this.breed, dog.breed) &&
+    return Objects.equals(this.breed, dog.breed) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(className, color, breed, super.hashCode());
+    return java.util.Objects.hash(breed, super.hashCode());
   }
   
   @Override
@@ -118,8 +75,6 @@ public class Dog extends Animal {
     StringBuilder sb = new StringBuilder();
     sb.append("class Dog {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    className: ").append(toIndentedString(className)).append("\n");
-    sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    breed: ").append(toIndentedString(breed)).append("\n");
     sb.append("}");
     return sb.toString();

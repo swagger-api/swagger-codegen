@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**logoutUser**](UserApi.md#logoutUser) | **GET** /user/logout | Logs out current logged in user session
 [**updateUser**](UserApi.md#updateUser) | **PUT** /user/{username} | Updated user
 
-
 <a name="createUser"></a>
 # **createUser**
 > createUser(body)
@@ -57,16 +56,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="createUsersWithArrayInput"></a>
 # **createUsersWithArrayInput**
 > createUsersWithArrayInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```kotlin
@@ -103,16 +100,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="createUsersWithListInput"></a>
 # **createUsersWithListInput**
 > createUsersWithListInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```kotlin
@@ -149,8 +144,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="deleteUser"></a>
 # **deleteUser**
@@ -167,7 +162,7 @@ This can only be done by the logged in user.
 //import io.swagger.client.models.*
 
 val apiInstance = UserApi()
-val username : kotlin.String = username_example // kotlin.String | The name that needs to be deleted
+val username : kotlin.String =  // kotlin.String | The name that needs to be deleted
 try {
     apiInstance.deleteUser(username)
 } catch (e: ClientException) {
@@ -183,7 +178,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **kotlin.String**| The name that needs to be deleted |
+ **username** | [**kotlin.String**](.md)| The name that needs to be deleted |
 
 ### Return type
 
@@ -196,15 +191,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="getUserByName"></a>
 # **getUserByName**
 > User getUserByName(username)
 
 Get user by user name
-
-
 
 ### Example
 ```kotlin
@@ -213,7 +206,7 @@ Get user by user name
 //import io.swagger.client.models.*
 
 val apiInstance = UserApi()
-val username : kotlin.String = username_example // kotlin.String | The name that needs to be fetched. Use user1 for testing. 
+val username : kotlin.String =  // kotlin.String | The name that needs to be fetched. Use user1 for testing. 
 try {
     val result : User = apiInstance.getUserByName(username)
     println(result)
@@ -230,7 +223,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **kotlin.String**| The name that needs to be fetched. Use user1 for testing.  |
+ **username** | [**kotlin.String**](.md)| The name that needs to be fetched. Use user1 for testing.  |
 
 ### Return type
 
@@ -243,15 +236,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="loginUser"></a>
 # **loginUser**
 > kotlin.String loginUser(username, password)
 
 Logs user into the system
-
-
 
 ### Example
 ```kotlin
@@ -260,8 +251,8 @@ Logs user into the system
 //import io.swagger.client.models.*
 
 val apiInstance = UserApi()
-val username : kotlin.String = username_example // kotlin.String | The user name for login
-val password : kotlin.String = password_example // kotlin.String | The password for login in clear text
+val username : kotlin.String =  // kotlin.String | The user name for login
+val password : kotlin.String =  // kotlin.String | The password for login in clear text
 try {
     val result : kotlin.String = apiInstance.loginUser(username, password)
     println(result)
@@ -278,8 +269,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **kotlin.String**| The user name for login |
- **password** | **kotlin.String**| The password for login in clear text |
+ **username** | [**kotlin.String**](.md)| The user name for login |
+ **password** | [**kotlin.String**](.md)| The password for login in clear text |
 
 ### Return type
 
@@ -292,15 +283,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="logoutUser"></a>
 # **logoutUser**
 > logoutUser()
 
 Logs out current logged in user session
-
-
 
 ### Example
 ```kotlin
@@ -334,11 +323,11 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="updateUser"></a>
 # **updateUser**
-> updateUser(username, body)
+> updateUser(body, username)
 
 Updated user
 
@@ -351,10 +340,10 @@ This can only be done by the logged in user.
 //import io.swagger.client.models.*
 
 val apiInstance = UserApi()
-val username : kotlin.String = username_example // kotlin.String | name that need to be deleted
 val body : User =  // User | Updated user object
+val username : kotlin.String =  // kotlin.String | name that need to be deleted
 try {
-    apiInstance.updateUser(username, body)
+    apiInstance.updateUser(body, username)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#updateUser")
     e.printStackTrace()
@@ -368,8 +357,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **kotlin.String**| name that need to be deleted |
  **body** | [**User**](User.md)| Updated user object |
+ **username** | [**kotlin.String**](.md)| name that need to be deleted |
 
 ### Return type
 
@@ -381,6 +370,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 

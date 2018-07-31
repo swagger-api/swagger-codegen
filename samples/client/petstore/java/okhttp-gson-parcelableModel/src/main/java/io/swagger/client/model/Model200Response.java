@@ -19,15 +19,14 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
 /**
  * Model for testing model name starting with number
- */@ApiModel(description = "Model for testing model name starting with number")
+ */@Schema(description = "Model for testing model name starting with number")
 
 public class Model200Response {
 
@@ -47,7 +46,9 @@ public class Model200Response {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Integer getName() {
     return name;
   }
@@ -65,7 +66,9 @@ public class Model200Response {
   * Get propertyClass
   * @return propertyClass
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -88,7 +91,7 @@ public class Model200Response {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, propertyClass);
+    return java.util.Objects.hash(name, propertyClass);
   }
   
   @Override
@@ -116,6 +119,7 @@ public class Model200Response {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(name);
     out.writeValue(propertyClass);
     
@@ -126,6 +130,7 @@ public class Model200Response {
   }
 
   Model200Response(Parcel in) {
+    
     
     name = (Integer)in.readValue(null);propertyClass = (String)in.readValue(null);
   }

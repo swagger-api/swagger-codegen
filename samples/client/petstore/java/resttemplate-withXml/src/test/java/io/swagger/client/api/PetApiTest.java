@@ -157,10 +157,10 @@ public class PetApiTest {
     public void updatePetWithFormTest() {
         
         Integer petId = null;
+        String name = null;
+        String status = null;
         
-        Object body = null;
-        
-        api.updatePetWithForm(petId, body);
+        api.updatePetWithForm(petId, name, status);
 
         // TODO: test validations
     }
@@ -177,10 +177,10 @@ public class PetApiTest {
     public void uploadFileTest() {
         
         Integer petId = null;
+        String additionalMetadata = null;
+        java.io.File file = null;
         
-        Object body = null;
-        
-        ModelApiResponse response = api.uploadFile(petId, body);
+        ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
 
         // TODO: test validations
     }

@@ -17,8 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Category
@@ -44,7 +43,9 @@ public class Category {
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -62,7 +63,9 @@ public class Category {
   * Get name
   * @return name
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getName() {
     return name;
   }

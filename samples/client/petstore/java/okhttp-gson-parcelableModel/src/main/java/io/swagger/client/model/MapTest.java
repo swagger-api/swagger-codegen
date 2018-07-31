@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -105,7 +104,9 @@ public class MapTest {
   * Get mapMapOfString
   * @return mapMapOfString
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -131,7 +132,9 @@ public class MapTest {
   * Get mapOfEnumString
   * @return mapOfEnumString
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
@@ -154,7 +157,7 @@ public class MapTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapMapOfString, mapOfEnumString);
+    return java.util.Objects.hash(mapMapOfString, mapOfEnumString);
   }
   
   @Override
@@ -182,6 +185,7 @@ public class MapTest {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(mapMapOfString);
     out.writeValue(mapOfEnumString);
     
@@ -192,6 +196,7 @@ public class MapTest {
   }
 
   MapTest(Parcel in) {
+    
     
     mapMapOfString = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());mapOfEnumString = (Map<String, InnerEnum>)in.readValue(null);
   }

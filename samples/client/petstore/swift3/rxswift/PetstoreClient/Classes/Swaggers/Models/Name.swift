@@ -10,7 +10,6 @@ import Foundation
 
 /** Model for testing model name same as property name */
 open class Name: JSONEncodable {
-
     public var name: Int32?
     public var snakeCase: Int32?
     public var property: String?
@@ -30,4 +29,3 @@ open class Name: JSONEncodable {
         return dictionary
     }
 }
-

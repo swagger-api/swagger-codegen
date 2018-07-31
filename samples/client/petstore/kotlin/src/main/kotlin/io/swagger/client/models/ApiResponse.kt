@@ -19,10 +19,9 @@ package io.swagger.client.models
  * @param message 
  */
 data class ApiResponse (
+
     val code: kotlin.Int? = null,
     val type: kotlin.String? = null,
     val message: kotlin.String? = null
 ) {
-
 }
-

@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +142,9 @@ public class EnumArrays {
   * Get justSymbol
   * @return justSymbol
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -170,7 +171,9 @@ public class EnumArrays {
   * Get arrayEnum
   * @return arrayEnum
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
@@ -193,7 +196,7 @@ public class EnumArrays {
 
   @Override
   public int hashCode() {
-    return Objects.hash(justSymbol, arrayEnum);
+    return java.util.Objects.hash(justSymbol, arrayEnum);
   }
   
   @Override
@@ -221,6 +224,7 @@ public class EnumArrays {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(justSymbol);
     out.writeValue(arrayEnum);
     
@@ -231,6 +235,7 @@ public class EnumArrays {
   }
 
   EnumArrays(Parcel in) {
+    
     
     justSymbol = (JustSymbolEnum)in.readValue(null);arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
   }

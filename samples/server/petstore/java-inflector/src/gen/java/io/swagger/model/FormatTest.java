@@ -3,57 +3,38 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
-
-
-
-
-
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
-
   @JsonProperty("int32")
   private Integer int32 = null;
-
   @JsonProperty("int64")
   private Long int64 = null;
-
   @JsonProperty("number")
   private BigDecimal number = null;
-
   @JsonProperty("float")
   private Float _float = null;
-
   @JsonProperty("double")
   private Double _double = null;
-
   @JsonProperty("string")
   private String string = null;
-
   @JsonProperty("byte")
-  private byte[] _byte = null;
-
+  private String _byte = null;
   @JsonProperty("binary")
-  private byte[] binary = null;
-
+  private String binary = null;
   @JsonProperty("date")
   private Date date = null;
-
   @JsonProperty("dateTime")
   private Date dateTime = null;
-
   @JsonProperty("uuid")
   private UUID uuid = null;
-
   @JsonProperty("password")
   private String password = null;
-
   /**
    * minimum: 10
    * maximum: 100
@@ -64,7 +45,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("integer")
   public Integer getInteger() {
     return integer;
@@ -83,7 +64,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("int32")
   public Integer getInt32() {
     return int32;
@@ -100,7 +81,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("int64")
   public Long getInt64() {
     return int64;
@@ -110,8 +91,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 32.1
-   * maximum: 543.2
+   * minimum: 32
+   * maximum: 543
    **/
   public FormatTest number(BigDecimal number) {
     this.number = number;
@@ -119,7 +100,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("number")
   public BigDecimal getNumber() {
     return number;
@@ -129,8 +110,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 54.3
-   * maximum: 987.6
+   * minimum: 54
+   * maximum: 987
    **/
   public FormatTest _float(Float _float) {
     this._float = _float;
@@ -138,7 +119,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("float")
   public Float getFloat() {
     return _float;
@@ -148,8 +129,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 67.8
-   * maximum: 123.4
+   * minimum: 67
+   * maximum: 123
    **/
   public FormatTest _double(Double _double) {
     this._double = _double;
@@ -157,7 +138,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("double")
   public Double getDouble() {
     return _double;
@@ -174,7 +155,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("string")
   public String getString() {
     return string;
@@ -185,35 +166,35 @@ public class FormatTest   {
 
   /**
    **/
-  public FormatTest _byte(byte[] _byte) {
+  public FormatTest _byte(String _byte) {
     this._byte = _byte;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("byte")
-  public byte[] getByte() {
+  public String getByte() {
     return _byte;
   }
-  public void setByte(byte[] _byte) {
+  public void setByte(String _byte) {
     this._byte = _byte;
   }
 
   /**
    **/
-  public FormatTest binary(byte[] binary) {
+  public FormatTest binary(String binary) {
     this.binary = binary;
     return this;
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("binary")
-  public byte[] getBinary() {
+  public String getBinary() {
     return binary;
   }
-  public void setBinary(byte[] binary) {
+  public void setBinary(String binary) {
     this.binary = binary;
   }
 
@@ -225,7 +206,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("date")
   public Date getDate() {
     return date;
@@ -242,7 +223,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("dateTime")
   public Date getDateTime() {
     return dateTime;
@@ -259,7 +240,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("uuid")
   public UUID getUuid() {
     return uuid;
@@ -276,7 +257,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -319,7 +300,6 @@ public class FormatTest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class FormatTest {\n");
-    
     sb.append("    integer: ").append(toIndentedString(integer)).append("\n");
     sb.append("    int32: ").append(toIndentedString(int32)).append("\n");
     sb.append("    int64: ").append(toIndentedString(int64)).append("\n");
@@ -348,4 +328,3 @@ public class FormatTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

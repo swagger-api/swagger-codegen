@@ -2,7 +2,7 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.validation.constraints.*;
@@ -13,12 +13,15 @@ import javax.validation.constraints.*;
  * An order for a pets from the pet store
  **/
 
-import io.swagger.annotations.*;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@ApiModel(description = "An order for a pets from the pet store")
+@Schema(description = "An order for a pets from the pet store")
 
 public class Order   {
   
@@ -75,7 +78,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("id")
 
   public Long getId() {
@@ -97,7 +101,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("petId")
 
   public Long getPetId() {
@@ -119,7 +124,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("quantity")
 
   public Integer getQuantity() {
@@ -141,7 +147,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("shipDate")
 
   public java.util.Date getShipDate() {
@@ -165,7 +172,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "Order Status")
+  
+  @Schema(description = "Order Status")
   @JsonProperty("status")
 
   public StatusEnum getStatus() {
@@ -187,7 +195,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
   @JsonProperty("complete")
 
   public Boolean isisComplete() {

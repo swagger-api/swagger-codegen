@@ -9,16 +9,15 @@ import Foundation
 
 
 open class FormatTest: JSONEncodable {
-
     public var integer: Int32?
     public var int32: Int32?
     public var int64: Int64?
-    public var number: Double?
+    public var number: BigDecimal?
     public var float: Float?
     public var double: Double?
     public var string: String?
-    public var byte: Data?
-    public var binary: Data?
+    public var byte: String?
+    public var binary: String?
     public var date: ISOFullDate?
     public var dateTime: Date?
     public var uuid: UUID?
@@ -32,12 +31,12 @@ open class FormatTest: JSONEncodable {
         nillableDictionary["integer"] = self.integer?.encodeToJSON()
         nillableDictionary["int32"] = self.int32?.encodeToJSON()
         nillableDictionary["int64"] = self.int64?.encodeToJSON()
-        nillableDictionary["number"] = self.number
+        nillableDictionary["number"] = self.number?.encodeToJSON()
         nillableDictionary["float"] = self.float
         nillableDictionary["double"] = self.double
         nillableDictionary["string"] = self.string
-        nillableDictionary["byte"] = self.byte?.encodeToJSON()
-        nillableDictionary["binary"] = self.binary?.encodeToJSON()
+        nillableDictionary["byte"] = self.byte
+        nillableDictionary["binary"] = self.binary
         nillableDictionary["date"] = self.date?.encodeToJSON()
         nillableDictionary["dateTime"] = self.dateTime?.encodeToJSON()
         nillableDictionary["uuid"] = self.uuid?.encodeToJSON()
@@ -47,4 +46,3 @@ open class FormatTest: JSONEncodable {
         return dictionary
     }
 }
-

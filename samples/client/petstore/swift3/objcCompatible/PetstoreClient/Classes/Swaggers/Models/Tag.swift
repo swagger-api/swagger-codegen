@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Tag: JSONEncodable {
-
     public var id: Int64?
     public var idNum: NSNumber? {
         get {
@@ -30,4 +29,3 @@ open class Tag: JSONEncodable {
         return dictionary
     }
 }
-

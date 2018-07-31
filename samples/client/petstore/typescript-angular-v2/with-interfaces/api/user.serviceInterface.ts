@@ -13,7 +13,10 @@ import { Headers }                                           from '@angular/http
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+
+import { User } from '../model/user';
+
+
 import { Configuration }                                     from '../configuration';
 
 
@@ -74,9 +77,9 @@ export interface UserServiceInterface {
     /**
     * Updated user
     * This can only be done by the logged in user.
-    * @param username name that need to be deleted
     * @param body Updated user object
+    * @param username name that need to be deleted
     */
-    updateUser(username: string, body: User, extraHttpRequestParams?: any): Observable<{}>;
+    updateUser(body: User, username: string, extraHttpRequestParams?: any): Observable<{}>;
 
 }

@@ -21,12 +21,10 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Create user
      - POST /user
      - This can only be done by the logged in user.
-
      - parameter body: (body) Created user object 
      - returns: RequestBuilder<Void> 
      */
@@ -34,12 +32,10 @@ open class UserAPI: APIBase {
         let path = "/user"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
-
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -53,12 +49,9 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Creates list of users with given input array
      - POST /user/createWithArray
-     - 
-
      - parameter body: (body) List of user object 
      - returns: RequestBuilder<Void> 
      */
@@ -66,12 +59,10 @@ open class UserAPI: APIBase {
         let path = "/user/createWithArray"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
-
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -85,12 +76,9 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Creates list of users with given input array
      - POST /user/createWithList
-     - 
-
      - parameter body: (body) List of user object 
      - returns: RequestBuilder<Void> 
      */
@@ -98,12 +86,10 @@ open class UserAPI: APIBase {
         let path = "/user/createWithList"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
-
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -117,12 +103,10 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Delete user
      - DELETE /user/{username}
      - This can only be done by the logged in user.
-
      - parameter username: (path) The name that needs to be deleted 
      - returns: RequestBuilder<Void> 
      */
@@ -131,14 +115,12 @@ open class UserAPI: APIBase {
         let usernamePreEscape = "\(username)"
         let usernamePostEscape = usernamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{username}", with: usernamePostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -152,50 +134,9 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Get user by user name
      - GET /user/{username}
-     - 
-
-     - examples: [{contentType=application/xml, example=<User>
-  <id>123456789</id>
-  <username>aeiou</username>
-  <firstName>aeiou</firstName>
-  <lastName>aeiou</lastName>
-  <email>aeiou</email>
-  <password>aeiou</password>
-  <phone>aeiou</phone>
-  <userStatus>123</userStatus>
-</User>}, {contentType=application/json, example={
-  "firstName" : "firstName",
-  "lastName" : "lastName",
-  "password" : "password",
-  "userStatus" : 6,
-  "phone" : "phone",
-  "id" : 0,
-  "email" : "email",
-  "username" : "username"
-}}]
-     - examples: [{contentType=application/xml, example=<User>
-  <id>123456789</id>
-  <username>aeiou</username>
-  <firstName>aeiou</firstName>
-  <lastName>aeiou</lastName>
-  <email>aeiou</email>
-  <password>aeiou</password>
-  <phone>aeiou</phone>
-  <userStatus>123</userStatus>
-</User>}, {contentType=application/json, example={
-  "firstName" : "firstName",
-  "lastName" : "lastName",
-  "password" : "password",
-  "userStatus" : 6,
-  "phone" : "phone",
-  "id" : 0,
-  "email" : "email",
-  "username" : "username"
-}}]
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
      - returns: RequestBuilder<User> 
      */
@@ -204,14 +145,12 @@ open class UserAPI: APIBase {
         let usernamePreEscape = "\(username)"
         let usernamePostEscape = usernamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{username}", with: usernamePostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<User>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -226,34 +165,23 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Logs user into the system
      - GET /user/login
-     - 
-
      - responseHeaders: [X-Rate-Limit(Int32), X-Expires-After(Date)]
      - responseHeaders: [X-Rate-Limit(Int32), X-Expires-After(Date)]
-     - examples: [{contentType=application/xml, example=aeiou}, {contentType=application/json, example=""}]
-     - examples: [{contentType=application/xml, example=aeiou}, {contentType=application/json, example=""}]
      - parameter username: (query) The user name for login 
      - parameter password: (query) The password for login in clear text 
      - returns: RequestBuilder<String> 
      */
     open class func loginUserWithRequestBuilder(username: String, password: String) -> RequestBuilder<String> {
         let path = "/user/login"
-        let URLString = PetstoreClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "username": username, 
-            "password": password
-        ])
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<String>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
@@ -266,61 +194,52 @@ open class UserAPI: APIBase {
         }
     }
 
-
     /**
      Logs out current logged in user session
      - GET /user/logout
-     - 
-
      - returns: RequestBuilder<Void> 
      */
     open class func logoutUserWithRequestBuilder() -> RequestBuilder<Void> {
         let path = "/user/logout"
-        let URLString = PetstoreClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
     /**
      Updated user
-     - parameter username: (path) name that need to be deleted 
      - parameter body: (body) Updated user object 
+     - parameter username: (path) name that need to be deleted 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateUser(username: String, body: User, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
-        updateUserWithRequestBuilder(username: username, body: body).execute { (response, error) -> Void in
+    open class func updateUser(body: User, username: String, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+        updateUserWithRequestBuilder(body: body, username: username).execute { (response, error) -> Void in
             completion(error)
         }
     }
-
 
     /**
      Updated user
      - PUT /user/{username}
      - This can only be done by the logged in user.
-
-     - parameter username: (path) name that need to be deleted 
      - parameter body: (body) Updated user object 
+     - parameter username: (path) name that need to be deleted 
      - returns: RequestBuilder<Void> 
      */
-    open class func updateUserWithRequestBuilder(username: String, body: User) -> RequestBuilder<Void> {
+    open class func updateUserWithRequestBuilder(body: User, username: String) -> RequestBuilder<Void> {
         var path = "/user/{username}"
         let usernamePreEscape = "\(username)"
         let usernamePostEscape = usernamePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{username}", with: usernamePostEscape, options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
-
-        let url = NSURLComponents(string: URLString)
-
+        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
     }
 
 }
