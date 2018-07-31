@@ -1,6 +1,6 @@
 controllerPackage: io.swagger.controllers
 modelPackage:  io.swagger.model
-swaggerUrl: ./src/main/swagger/swagger.yaml
+swaggerUrl: ./src/main/resources/openapi3.yaml
 modelMappings:
   # to enable explicit mappings, use this syntax:
   DefinitionFromSwaggerSpecification: fully.qualified.path.to.Model
@@ -29,6 +29,7 @@ ModelReturn : io.swagger.model.ModelReturn
 Name : io.swagger.model.Name
 NumberOnly : io.swagger.model.NumberOnly
 Order : io.swagger.model.Order
+OuterComposite : io.swagger.model.OuterComposite
 OuterEnum : io.swagger.model.OuterEnum
 Pet : io.swagger.model.Pet
 ReadOnlyFirst : io.swagger.model.ReadOnlyFirst

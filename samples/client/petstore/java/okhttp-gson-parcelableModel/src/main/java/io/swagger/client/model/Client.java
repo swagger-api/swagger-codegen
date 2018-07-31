@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -44,7 +43,9 @@ public class Client {
   * Get client
   * @return client
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getClient() {
     return client;
   }
@@ -66,7 +67,7 @@ public class Client {
 
   @Override
   public int hashCode() {
-    return Objects.hash(client);
+    return java.util.Objects.hash(client);
   }
   
   @Override
@@ -93,6 +94,7 @@ public class Client {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(client);
     
   }
@@ -102,6 +104,7 @@ public class Client {
   }
 
   Client(Parcel in) {
+    
     
     client = (String)in.readValue(null);
   }

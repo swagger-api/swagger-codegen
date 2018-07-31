@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -107,7 +106,9 @@ public class Order {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
@@ -130,7 +131,9 @@ public class Order {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
@@ -153,7 +156,9 @@ public class Order {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -178,7 +183,9 @@ public class Order {
   @Valid
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
@@ -201,7 +208,9 @@ public class Order {
 
 
 
-@ApiModelProperty(value = "Order Status")
+
+  
+  @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -224,7 +233,9 @@ public class Order {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
@@ -251,7 +262,7 @@ public class Order {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
   
   @Override

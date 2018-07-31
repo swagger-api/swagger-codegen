@@ -27,7 +27,7 @@ public interface StoreApiService {
   
       public Response getOrderById(Integer orderId, SecurityContext securityContext);
   
-      public Response placeOrder(Order order, SecurityContext securityContext);
+      public Response placeOrder(Order body, SecurityContext securityContext);
   
 }
 

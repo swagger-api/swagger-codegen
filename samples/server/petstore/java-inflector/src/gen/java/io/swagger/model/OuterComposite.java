@@ -3,25 +3,16 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
-
-
-
-
-
 
 public class OuterComposite   {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;
-
   @JsonProperty("my_string")
   private String myString = null;
-
   @JsonProperty("my_boolean")
   private Boolean myBoolean = null;
-
   /**
    **/
   public OuterComposite myNumber(BigDecimal myNumber) {
@@ -30,7 +21,7 @@ public class OuterComposite   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("my_number")
   public BigDecimal getMyNumber() {
     return myNumber;
@@ -47,7 +38,7 @@ public class OuterComposite   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("my_string")
   public String getMyString() {
     return myString;
@@ -64,7 +55,7 @@ public class OuterComposite   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("my_boolean")
   public Boolean getMyBoolean() {
     return myBoolean;
@@ -97,7 +88,6 @@ public class OuterComposite   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OuterComposite {\n");
-    
     sb.append("    myNumber: ").append(toIndentedString(myNumber)).append("\n");
     sb.append("    myString: ").append(toIndentedString(myString)).append("\n");
     sb.append("    myBoolean: ").append(toIndentedString(myBoolean)).append("\n");
@@ -116,4 +106,3 @@ public class OuterComposite   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -9,7 +9,6 @@ import Foundation
 
 
 open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
-
     public var uuid: UUID?
     public var dateTime: Date?
     public var map: [String:Animal]?
@@ -31,4 +30,3 @@ open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
         return dictionary
     }
 }
-

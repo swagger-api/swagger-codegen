@@ -10,7 +10,6 @@ import Foundation
 
 /** Model for testing reserved words */
 open class Return: JSONEncodable {
-
     public var _return: Int32?
     public var _returnNum: NSNumber? {
         get {
@@ -29,4 +28,3 @@ open class Return: JSONEncodable {
         return dictionary
     }
 }
-

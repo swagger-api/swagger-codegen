@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * A category for a pet
  */
-export interface Category {
+export interface Category { 
     id?: number;
     name?: string;
 }

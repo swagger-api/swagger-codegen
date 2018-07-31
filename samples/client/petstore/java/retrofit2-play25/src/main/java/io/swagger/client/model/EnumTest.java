@@ -17,9 +17,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -175,7 +174,9 @@ public class EnumTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -198,7 +199,9 @@ public class EnumTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -221,7 +224,9 @@ public class EnumTest {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -246,7 +251,9 @@ public class EnumTest {
   @Valid
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
@@ -271,7 +278,7 @@ public class EnumTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
+    return java.util.Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
   
   @Override

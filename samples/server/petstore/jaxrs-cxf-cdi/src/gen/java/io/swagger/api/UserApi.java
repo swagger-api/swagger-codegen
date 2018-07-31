@@ -11,7 +11,17 @@ import javax.ws.rs.core.SecurityContext;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import io.swagger.annotations.*;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import java.io.InputStream;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
@@ -25,7 +35,7 @@ import javax.validation.constraints.*;
 @Path("/user")
 @RequestScoped
 
-@Api(description = "the user API")
+
 
 
 
@@ -43,11 +53,17 @@ public class UserApi  {
     
     @Consumes({ "*/*" })
     
-    @ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUser(@ApiParam(value = "Created user object" ,required=true) User user) {
-        return delegate.createUser(user, securityContext);
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
+    public Response createUser(
+
+@Parameter(description = "Created user object" ,required=true) User body
+) {
+        return delegate.createUser(body, securityContext);
     }
 
 
@@ -55,10 +71,16 @@ public class UserApi  {
     @Path("/createWithArray")
     @Consumes({ "*/*" })
     
-    @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true) List<User> body) {
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
+    public Response createUsersWithArrayInput(
+
+@Parameter(description = "List of user object" ,required=true) List<User> body
+) {
         return delegate.createUsersWithArrayInput(body, securityContext);
     }
 
@@ -67,10 +89,16 @@ public class UserApi  {
     @Path("/createWithList")
     @Consumes({ "*/*" })
     
-    @ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true) List<User> body) {
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
+    public Response createUsersWithListInput(
+
+@Parameter(description = "List of user object" ,required=true) List<User> body
+) {
         return delegate.createUsersWithListInput(body, securityContext);
     }
 
@@ -79,11 +107,17 @@ public class UserApi  {
     @Path("/{username}")
     
     
-    @ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathParam("username") String username) {
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
+    public Response deleteUser(
+
+@Parameter(description = "The name that needs to be deleted",required=true) @PathParam("username") String username
+) {
         return delegate.deleteUser(username, securityContext);
     }
 
@@ -92,12 +126,18 @@ public class UserApi  {
     @Path("/{username}")
     
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = User.class),
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username) {
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
+    public Response getUserByName(
+
+@Parameter(description = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username
+) {
         return delegate.getUserByName(username, securityContext);
     }
 
@@ -106,11 +146,20 @@ public class UserApi  {
     @Path("/login")
     
     @Produces({ "application/xml", "application/json" })
-    @ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = String.class),
-        @ApiResponse(code = 400, message = "Invalid username/password supplied", response = Void.class) })
-    public Response loginUser( @NotNull @ApiParam(value = "The user name for login",required=true)  @QueryParam("username") String username,  @NotNull @ApiParam(value = "The password for login in clear text",required=true)  @QueryParam("password") String password) {
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
+    
+    public Response loginUser( @NotNull 
+
+@Parameter(description = "The user name for login",required=true)  @QueryParam("username") String username
+,  @NotNull 
+
+@Parameter(description = "The password for login in clear text",required=true)  @QueryParam("password") String password
+) {
         return delegate.loginUser(username, password, securityContext);
     }
 
@@ -119,9 +168,12 @@ public class UserApi  {
     @Path("/logout")
     
     
-    @ApiOperation(value = "Logs out current logged in user session", notes = "", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
     public Response logoutUser() {
         return delegate.logoutUser(securityContext);
     }
@@ -131,12 +183,21 @@ public class UserApi  {
     @Path("/{username}")
     @Consumes({ "*/*" })
     
-    @ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user" })
+    
+    
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid user supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response updateUser(@ApiParam(value = "Updated user object" ,required=true) User user, @ApiParam(value = "name that need to be deleted",required=true) @PathParam("username") String username) {
-        return delegate.updateUser(user, username, securityContext);
+        @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
+    public Response updateUser(
+
+@Parameter(description = "Updated user object" ,required=true) User body
+, 
+
+@Parameter(description = "name that need to be deleted",required=true) @PathParam("username") String username
+) {
+        return delegate.updateUser(body, username, securityContext);
     }
 
 }

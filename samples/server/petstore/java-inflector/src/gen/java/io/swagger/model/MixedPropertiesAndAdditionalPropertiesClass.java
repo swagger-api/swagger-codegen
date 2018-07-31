@@ -3,30 +3,21 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
-
-
-
-
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
   private UUID uuid = null;
-
   @JsonProperty("dateTime")
   private Date dateTime = null;
-
   @JsonProperty("map")
   private Map<String, Animal> map = null;
-
   /**
    **/
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
@@ -35,7 +26,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("uuid")
   public UUID getUuid() {
     return uuid;
@@ -52,7 +43,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("dateTime")
   public Date getDateTime() {
     return dateTime;
@@ -69,7 +60,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map")
   public Map<String, Animal> getMap() {
     return map;
@@ -102,7 +93,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MixedPropertiesAndAdditionalPropertiesClass {\n");
-    
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");
     sb.append("    map: ").append(toIndentedString(map)).append("\n");
@@ -121,4 +111,3 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

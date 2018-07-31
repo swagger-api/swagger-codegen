@@ -30,7 +30,7 @@ For valid response try integer IDs with value &lt; 1000. Anything above 1000 or 
 
 StoreApi apiInstance = new StoreApi();
 
-String orderId = Arrays.asList("orderId_example"); // String | ID of the order that needs to be deleted
+String orderId = "orderId_example"; // String | ID of the order that needs to be deleted
 
 try {
     apiInstance.deleteOrder(orderId);
@@ -124,7 +124,7 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 
 StoreApi apiInstance = new StoreApi();
 
-Integer orderId = Arrays.asList(56); // Integer | ID of pet that needs to be fetched
+Integer orderId = 56; // Integer | ID of pet that needs to be fetched
 
 try {
     Order result = apiInstance.getOrderById(orderId);

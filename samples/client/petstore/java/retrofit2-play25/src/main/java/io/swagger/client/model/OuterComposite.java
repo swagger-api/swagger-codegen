@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -58,7 +57,9 @@ public class OuterComposite {
   @Valid
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -81,7 +82,9 @@ public class OuterComposite {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getMyString() {
     return myString;
   }
@@ -104,7 +107,9 @@ public class OuterComposite {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public Boolean getMyBoolean() {
     return myBoolean;
   }
@@ -128,7 +133,7 @@ public class OuterComposite {
 
   @Override
   public int hashCode() {
-    return Objects.hash(myNumber, myString, myBoolean);
+    return java.util.Objects.hash(myNumber, myString, myBoolean);
   }
   
   @Override

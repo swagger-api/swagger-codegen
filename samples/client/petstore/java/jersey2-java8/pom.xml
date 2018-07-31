@@ -180,11 +180,14 @@
   </profiles>
 
   <dependencies>
+    
+    
     <dependency>
-      <groupId>io.swagger</groupId>
+      <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
       <version>${swagger-core-version}</version>
     </dependency>
+    
 
     <!-- HTTP client: jersey-client -->
     <dependency>
@@ -241,7 +244,10 @@
     </dependency>
   </dependencies>
   <properties>
-    <swagger-core-version>1.5.15</swagger-core-version>
+    
+    
+    <swagger-core-version>2.0.0</swagger-core-version>
+    
     
     <jersey-version>2.25.1</jersey-version>
     

@@ -9,7 +9,6 @@ import Foundation
 
 
 open class ArrayTest: JSONEncodable {
-
     public var arrayOfString: [String]?
     public var arrayArrayOfInteger: [[Int64]]?
     public var arrayArrayOfModel: [[ReadOnlyFirst]]?
@@ -27,4 +26,3 @@ open class ArrayTest: JSONEncodable {
         return dictionary
     }
 }
-
