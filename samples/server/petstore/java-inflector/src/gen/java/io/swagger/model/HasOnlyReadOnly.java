@@ -3,21 +3,13 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class HasOnlyReadOnly   {
   @JsonProperty("bar")
   private String bar = null;
-
   @JsonProperty("foo")
   private String foo = null;
-
   /**
    **/
   public HasOnlyReadOnly bar(String bar) {
@@ -26,7 +18,7 @@ public class HasOnlyReadOnly   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("bar")
   public String getBar() {
     return bar;
@@ -43,7 +35,7 @@ public class HasOnlyReadOnly   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("foo")
   public String getFoo() {
     return foo;
@@ -75,7 +67,6 @@ public class HasOnlyReadOnly   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class HasOnlyReadOnly {\n");
-    
     sb.append("    bar: ").append(toIndentedString(bar)).append("\n");
     sb.append("    foo: ").append(toIndentedString(foo)).append("\n");
     sb.append("}");
@@ -93,4 +84,3 @@ public class HasOnlyReadOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

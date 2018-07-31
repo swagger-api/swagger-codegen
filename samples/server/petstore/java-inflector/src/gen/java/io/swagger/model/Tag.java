@@ -3,21 +3,13 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Tag   {
   @JsonProperty("id")
   private Long id = null;
-
   @JsonProperty("name")
   private String name = null;
-
   /**
    **/
   public Tag id(Long id) {
@@ -26,7 +18,7 @@ public class Tag   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -43,7 +35,7 @@ public class Tag   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -75,7 +67,6 @@ public class Tag   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Tag {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
@@ -93,4 +84,3 @@ public class Tag   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

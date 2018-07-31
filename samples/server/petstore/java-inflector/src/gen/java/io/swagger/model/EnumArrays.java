@@ -4,15 +4,9 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
 
 public class EnumArrays   {
   /**
@@ -45,10 +39,8 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
-
   /**
    * Gets or Sets arrayEnum
    */
@@ -79,10 +71,8 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
-
   /**
    **/
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
@@ -91,7 +81,7 @@ public class EnumArrays   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("just_symbol")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
@@ -108,7 +98,7 @@ public class EnumArrays   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("array_enum")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
@@ -140,7 +130,6 @@ public class EnumArrays   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class EnumArrays {\n");
-    
     sb.append("    justSymbol: ").append(toIndentedString(justSymbol)).append("\n");
     sb.append("    arrayEnum: ").append(toIndentedString(arrayEnum)).append("\n");
     sb.append("}");
@@ -158,4 +147,3 @@ public class EnumArrays   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -5,11 +5,6 @@ import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
 public class AnimalFarm extends ArrayList<Animal>  {
 
   @Override
@@ -49,4 +44,3 @@ public class AnimalFarm extends ArrayList<Animal>  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

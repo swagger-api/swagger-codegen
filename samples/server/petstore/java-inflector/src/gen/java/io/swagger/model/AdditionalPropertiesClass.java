@@ -3,24 +3,16 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;
-
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
-
   /**
    **/
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
@@ -29,7 +21,7 @@ public class AdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_property")
   public Map<String, String> getMapProperty() {
     return mapProperty;
@@ -46,7 +38,7 @@ public class AdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_of_map_property")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
@@ -78,7 +70,6 @@ public class AdditionalPropertiesClass   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AdditionalPropertiesClass {\n");
-    
     sb.append("    mapProperty: ").append(toIndentedString(mapProperty)).append("\n");
     sb.append("    mapOfMapProperty: ").append(toIndentedString(mapOfMapProperty)).append("\n");
     sb.append("}");
@@ -96,4 +87,3 @@ public class AdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

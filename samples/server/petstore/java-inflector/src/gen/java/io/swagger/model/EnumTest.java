@@ -4,14 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.OuterEnum;
-
-
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class EnumTest   {
   /**
@@ -46,10 +40,8 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
-
   /**
    * Gets or Sets enumInteger
    */
@@ -80,10 +72,8 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
-
   /**
    * Gets or Sets enumNumber
    */
@@ -114,13 +104,10 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
-
   @JsonProperty("outerEnum")
   private OuterEnum outerEnum = null;
-
   /**
    **/
   public EnumTest enumString(EnumStringEnum enumString) {
@@ -129,7 +116,7 @@ public class EnumTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("enum_string")
   public EnumStringEnum getEnumString() {
     return enumString;
@@ -146,7 +133,7 @@ public class EnumTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("enum_integer")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
@@ -163,7 +150,7 @@ public class EnumTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("enum_number")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
@@ -180,7 +167,7 @@ public class EnumTest   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("outerEnum")
   public OuterEnum getOuterEnum() {
     return outerEnum;
@@ -214,7 +201,6 @@ public class EnumTest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class EnumTest {\n");
-    
     sb.append("    enumString: ").append(toIndentedString(enumString)).append("\n");
     sb.append("    enumInteger: ").append(toIndentedString(enumInteger)).append("\n");
     sb.append("    enumNumber: ").append(toIndentedString(enumNumber)).append("\n");
@@ -234,4 +220,3 @@ public class EnumTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

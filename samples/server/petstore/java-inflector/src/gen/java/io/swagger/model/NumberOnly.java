@@ -3,19 +3,12 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
-
-
-
-
-
 
 public class NumberOnly   {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
-
   /**
    **/
   public NumberOnly justNumber(BigDecimal justNumber) {
@@ -24,7 +17,7 @@ public class NumberOnly   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("JustNumber")
   public BigDecimal getJustNumber() {
     return justNumber;
@@ -55,7 +48,6 @@ public class NumberOnly   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class NumberOnly {\n");
-    
     sb.append("    justNumber: ").append(toIndentedString(justNumber)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -72,4 +64,3 @@ public class NumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

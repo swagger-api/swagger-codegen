@@ -5,21 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Animal   {
   @JsonProperty("className")
   private String className = null;
-
   @JsonProperty("color")
   private String color = "red";
-
   /**
    **/
   public Animal className(String className) {
@@ -28,7 +20,7 @@ public class Animal   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("className")
   public String getClassName() {
     return className;
@@ -45,7 +37,7 @@ public class Animal   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("color")
   public String getColor() {
     return color;
@@ -77,7 +69,6 @@ public class Animal   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Animal {\n");
-    
     sb.append("    className: ").append(toIndentedString(className)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("}");
@@ -95,4 +86,3 @@ public class Animal   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
