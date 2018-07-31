@@ -1,22 +1,27 @@
-package io.swagger.v3.generator.model;
+package io.swagger.codegen.v3.service;
+
+import io.swagger.v3.parser.core.models.AuthorizationValue;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Options {
 
     private String lang;
     private String auth;
+    private AuthorizationValue authorizationValue = null;
     private String apiPackage;
     private String modelPackage;
     private String modelNamePrefix;
     private String modelNameSuffix;
-    protected List<String> systemProperties;
-    private List<String> instantiationTypes;
-    private List<String> typeMappings;
-    private List<String> additionalProperties;
-    private List<String> languageSpecificPrimitives;
-    private List<String> importMappings;
+    protected Map<String, String> systemProperties = new LinkedHashMap<>();
+    private Map<String, String> instantiationTypes = new LinkedHashMap<>();
+    private Map<String, String> typeMappings = new LinkedHashMap<>();
+    private Map<String, Object> additionalProperties = new LinkedHashMap<>();
+    private List<String> languageSpecificPrimitives = new ArrayList<>();
+    private Map<String, String> importMappings = new LinkedHashMap<>();
     private String invokerPackage;
     private String groupId;
     private String artifactId;
@@ -26,10 +31,12 @@ public class Options {
     private String gitRepoId;
     private String releaseNote;
     private String httpUserAgent;
-    private List<String> reservedWordsMappings;
+    private Map<String, String> reservedWordsMappings = new LinkedHashMap<>();
     private String ignoreFileOverride;
     private String templateVersion;
     private Boolean removeOperationIdPrefix;
+    private Boolean skipOverride;
+    private String outputDir = "";
 
     public Options lang(String lang) {
         this.lang = lang;
@@ -43,8 +50,20 @@ public class Options {
         this.lang = lang;
     }
 
-    public Options auth(String auth) {
-        this.auth = auth;
+    public Options authorizationValue(AuthorizationValue authorizationValue) {
+        this.authorizationValue = authorizationValue;
+        return this;
+    }
+
+    public AuthorizationValue getAuthorizationValue() {
+        return authorizationValue;
+    }
+    public void setAuthorizationValue(AuthorizationValue authorizationValue) {
+        this.authorizationValue = authorizationValue;
+    }
+
+    public Options auth(AuthorizationValue authorizationValue) {
+        this.authorizationValue = authorizationValue;
         return this;
     }
 
@@ -65,6 +84,18 @@ public class Options {
     }
     public void setApiPackage(String apiPackage) {
         this.apiPackage = apiPackage;
+    }
+
+    public Options outputDir(String outputDir) {
+        this.outputDir = outputDir;
+        return this;
+    }
+
+    public String getOutputDir() {
+        return outputDir;
+    }
+    public void setOutputDir(String outputDir) {
+        this.outputDir = outputDir;
     }
 
     public Options modelPackage(String modelPackage) {
@@ -103,105 +134,94 @@ public class Options {
         this.modelNameSuffix = modelNameSuffix;
     }
 
-    public Options systemProperties(List<String> systemProperties) {
+    public Options systemProperties(Map<String, String> systemProperties) {
         this.systemProperties = systemProperties;
         return this;
     }
 
-    public List<String> getSystemProperties() {
+    public Map<String, String> getSystemProperties() {
         return systemProperties;
     }
 
-    public void setSystemProperties(List<String> systemProperties) {
+    public void setSystemProperties(Map<String, String> systemProperties) {
         this.systemProperties = systemProperties;
     }
 
-    public Options instantiationTypes(List<String> instantiationTypes) {
+    public Options addSystemProperty(String key, String value) {
+        this.systemProperties.put(key, value);
+        return this;
+    }
+
+    public Options instantiationTypes(Map<String, String> instantiationTypes) {
         this.instantiationTypes = instantiationTypes;
         return this;
     }
 
-    public Options addInstantiationTypesItem(String instantiationTypesItem) {
-
-        if (this.instantiationTypes == null) {
-            this.instantiationTypes = new ArrayList<String>();
-        }
-
-        this.instantiationTypes.add(instantiationTypesItem);
-        return this;
-    }
-
-    public List<String> getInstantiationTypes() {
+    public Map<String, String> getInstantiationTypes() {
         return instantiationTypes;
     }
-    public void setInstantiationTypes(List<String> instantiationTypes) {
+
+    public void setInstantiationTypes(Map<String, String> instantiationTypes) {
         this.instantiationTypes = instantiationTypes;
     }
 
-    public Options typeMappings(List<String> typeMappings) {
+    public Options addInstantiationType(String key, String value) {
+        this.instantiationTypes.put(key, value);
+        return this;
+    }
+
+    public Options typeMappings(Map<String, String> typeMappings) {
         this.typeMappings = typeMappings;
         return this;
     }
 
-    public Options addTypeMappingsItem(String typeMappingsItem) {
-
-        if (this.typeMappings == null) {
-            this.typeMappings = new ArrayList<String>();
-        }
-
-        this.typeMappings.add(typeMappingsItem);
-        return this;
-    }
-
-    public List<String> getTypeMappings() {
+    public Map<String, String> getTypeMappings() {
         return typeMappings;
     }
-    public void setTypeMappings(List<String> typeMappings) {
+
+    public void setTypeMappings(Map<String, String> typeMappings) {
         this.typeMappings = typeMappings;
     }
 
-    public Options additionalProperties(List<String> additionalProperties) {
+    public Options addTypeMapping(String key, String value) {
+        this.typeMappings.put(key, value);
+        return this;
+    }
+
+    public Options additionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
         return this;
     }
 
-    public Options addAdditionalPropertiesItem(String additionalPropertiesItem) {
-
-        if (this.additionalProperties == null) {
-            this.additionalProperties = new ArrayList<String>();
-        }
-
-        this.additionalProperties.add(additionalPropertiesItem);
-        return this;
-    }
-
-    public List<String> getAdditionalProperties() {
+    public Map<String, Object> getAdditionalProperties() {
         return additionalProperties;
     }
-    public void setAdditionalProperties(List<String> additionalProperties) {
+
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }
 
-    public Options importMappings(List<String> importMappings) {
+    public Options addAdditionalProperty(String key, Object value) {
+        this.additionalProperties.put(key, value);
+        return this;
+    }
+
+    public Options importMappings(Map<String, String> importMappings) {
         this.importMappings = importMappings;
         return this;
     }
 
-    public Options addImportMappingsItem(String importMappingsItem) {
-
-        if (this.importMappings == null) {
-            this.importMappings = new ArrayList<String>();
-        }
-
-        this.importMappings.add(importMappingsItem);
-        return this;
-    }
-
-    public List<String> getImportMappings() {
+    public Map<String, String> getImportMappings() {
         return importMappings;
     }
-    public void setImportMappings(List<String> importMappings) {
+
+    public void setImportMappings(Map<String, String> importMappings) {
         this.importMappings = importMappings;
+    }
+
+    public Options addImportMapping(String key, String value) {
+        this.importMappings.put(key, value);
+        return this;
     }
 
     public Options invokerPackage(String invokerPackage) {
@@ -345,26 +365,22 @@ public class Options {
         this.httpUserAgent = httpUserAgent;
     }
 
-    public Options reservedWordsMappings(List<String> reservedWordsMappings) {
+    public Options reservedWordsMappings(Map<String, String> reservedWordsMappings) {
         this.reservedWordsMappings = reservedWordsMappings;
         return this;
     }
 
-    public Options addReservedWordsMappingsItem(String reservedWordsMappingsItem) {
-
-        if (this.reservedWordsMappings == null) {
-            this.reservedWordsMappings = new ArrayList<String>();
-        }
-
-        this.reservedWordsMappings.add(reservedWordsMappingsItem);
-        return this;
-    }
-
-    public List<String> getReservedWordsMappings() {
+    public  Map<String, String> getReservedWordsMappings() {
         return reservedWordsMappings;
     }
-    public void setReservedWordsMappings(List<String> reservedWordsMappings) {
+
+    public void setReservedWordsMappings(Map<String, String> reservedWordsMappings) {
         this.reservedWordsMappings = reservedWordsMappings;
+    }
+
+    public Options addAdditionalReservedWordMapping(String key, String value) {
+        this.reservedWordsMappings.put(key, value);
+        return this;
     }
 
     public Options ignoreFileOverride(String ignoreFileOverride) {
@@ -390,5 +406,18 @@ public class Options {
 
     public void setRemoveOperationIdPrefix(Boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+    }
+
+    public Options skipOverride(Boolean skipOverride) {
+        this.skipOverride = skipOverride;
+        return this;
+    }
+
+    public Boolean getSkipOverride() {
+        return skipOverride;
+    }
+
+    public void setSkipOverride(Boolean skipOverride) {
+        this.skipOverride = skipOverride;
     }
 }
