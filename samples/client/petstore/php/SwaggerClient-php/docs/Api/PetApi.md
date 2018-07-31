@@ -13,13 +13,10 @@ Method | HTTP request | Description
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
-
 # **addPet**
 > addPet($body)
 
 Add a new pet to the store
-
-
 
 ### Example
 ```php
@@ -61,8 +58,8 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/jsonapplication/xml
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -70,8 +67,6 @@ void (empty response body)
 > deletePet($pet_id, $api_key)
 
 Deletes a pet
-
-
 
 ### Example
 ```php
@@ -87,7 +82,7 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 789; // int | Pet id to delete
+$pet_id = 56; // int | Pet id to delete
 $api_key = "api_key_example"; // string | 
 
 try {
@@ -102,8 +97,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | **int**| Pet id to delete |
- **api_key** | **string**|  | [optional]
+ **pet_id** | [**int**](../Model/.md)| Pet id to delete |
+ **api_key** | [**string**](../Model/.md)|  | [optional]
 
 ### Return type
 
@@ -116,7 +111,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -169,7 +164,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -222,7 +217,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -237,7 +232,6 @@ Returns a single pet
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
-
 // Configure API key authorization: api_key
 $config = Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('api_key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -249,7 +243,7 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 789; // int | ID of pet to return
+$pet_id = 56; // int | ID of pet to return
 
 try {
     $result = $apiInstance->getPetById($pet_id);
@@ -264,7 +258,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | **int**| ID of pet to return |
+ **pet_id** | [**int**](../Model/.md)| ID of pet to return |
 
 ### Return type
 
@@ -277,7 +271,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -285,8 +279,6 @@ Name | Type | Description  | Notes
 > updatePet($body)
 
 Update an existing pet
-
-
 
 ### Example
 ```php
@@ -328,8 +320,8 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/jsonapplication/xml
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -337,8 +329,6 @@ void (empty response body)
 > updatePetWithForm($pet_id, $name, $status)
 
 Updates a pet in the store with form data
-
-
 
 ### Example
 ```php
@@ -354,9 +344,9 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 789; // int | ID of pet that needs to be updated
-$name = "name_example"; // string | Updated name of the pet
-$status = "status_example"; // string | Updated status of the pet
+$pet_id = 56; // int | ID of pet that needs to be updated
+$name = "name_example"; // string | 
+$status = "status_example"; // string | 
 
 try {
     $apiInstance->updatePetWithForm($pet_id, $name, $status);
@@ -370,9 +360,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | **int**| ID of pet that needs to be updated |
- **name** | **string**| Updated name of the pet | [optional]
- **status** | **string**| Updated status of the pet | [optional]
+ **pet_id** | [**int**](../Model/.md)| ID of pet that needs to be updated |
+ **name** | [**string**](../Model/.md)|  | [optional]
+ **status** | [**string**](../Model/.md)|  | [optional]
 
 ### Return type
 
@@ -385,7 +375,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -393,8 +383,6 @@ void (empty response body)
 > \Swagger\Client\Model\ApiResponse uploadFile($pet_id, $additional_metadata, $file)
 
 uploads an image
-
-
 
 ### Example
 ```php
@@ -410,9 +398,9 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 789; // int | ID of pet to update
-$additional_metadata = "additional_metadata_example"; // string | Additional data to pass to server
-$file = "/path/to/file.txt"; // \SplFileObject | file to upload
+$pet_id = 56; // int | ID of pet to update
+$additional_metadata = "additional_metadata_example"; // string | 
+$file = "file_example"; // \SplFileObject | 
 
 try {
     $result = $apiInstance->uploadFile($pet_id, $additional_metadata, $file);
@@ -427,9 +415,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | **int**| ID of pet to update |
- **additional_metadata** | **string**| Additional data to pass to server | [optional]
- **file** | **\SplFileObject**| file to upload | [optional]
+ **pet_id** | [**int**](../Model/.md)| ID of pet to update |
+ **additional_metadata** | [**string**](../Model/.md)|  | [optional]
+ **file** | **\SplFileObject****\SplFileObject**|  | [optional]
 
 ### Return type
 

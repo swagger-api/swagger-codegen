@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**logoutUser**](UserApi.md#logoutUser) | **GET** /user/logout | Logs out current logged in user session
 [**updateUser**](UserApi.md#updateUser) | **PUT** /user/{username} | Updated user
 
-
 # **createUser**
 > createUser($body)
 
@@ -57,8 +56,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -66,8 +65,6 @@ No authorization required
 > createUsersWithArrayInput($body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```php
@@ -105,8 +102,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -114,8 +111,6 @@ No authorization required
 > createUsersWithListInput($body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```php
@@ -153,8 +148,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -189,7 +184,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be deleted |
+ **username** | [**string**](../Model/.md)| The name that needs to be deleted |
 
 ### Return type
 
@@ -202,7 +197,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -210,8 +205,6 @@ No authorization required
 > \Swagger\Client\Model\User getUserByName($username)
 
 Get user by user name
-
-
 
 ### Example
 ```php
@@ -238,7 +231,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be fetched. Use user1 for testing. |
+ **username** | [**string**](../Model/.md)| The name that needs to be fetched. Use user1 for testing. |
 
 ### Return type
 
@@ -251,7 +244,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -259,8 +252,6 @@ No authorization required
 > string loginUser($username, $password)
 
 Logs user into the system
-
-
 
 ### Example
 ```php
@@ -288,8 +279,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The user name for login |
- **password** | **string**| The password for login in clear text |
+ **username** | [**string**](../Model/.md)| The user name for login |
+ **password** | [**string**](../Model/.md)| The password for login in clear text |
 
 ### Return type
 
@@ -302,7 +293,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -310,8 +301,6 @@ No authorization required
 > logoutUser()
 
 Logs out current logged in user session
-
-
 
 ### Example
 ```php
@@ -346,12 +335,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **updateUser**
-> updateUser($username, $body)
+> updateUser($body, $username)
 
 Updated user
 
@@ -367,11 +356,11 @@ $apiInstance = new Swagger\Client\Api\UserApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$username = "username_example"; // string | name that need to be deleted
 $body = new \Swagger\Client\Model\User(); // \Swagger\Client\Model\User | Updated user object
+$username = "username_example"; // string | name that need to be deleted
 
 try {
-    $apiInstance->updateUser($username, $body);
+    $apiInstance->updateUser($body, $username);
 } catch (Exception $e) {
     echo 'Exception when calling UserApi->updateUser: ', $e->getMessage(), PHP_EOL;
 }
@@ -382,8 +371,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| name that need to be deleted |
  **body** | [**\Swagger\Client\Model\User**](../Model/User.md)| Updated user object |
+ **username** | [**string**](../Model/.md)| name that need to be deleted |
 
 ### Return type
 
@@ -395,8 +384,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
