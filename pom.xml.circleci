@@ -843,8 +843,8 @@
                 <!-- test non-java projects -->
                 <!--<module>samples/client/petstore/go</module>-->
                 <!-- servers -->
-                <module>samples/server/petstore/java-vertx/rx</module>
-                <module>samples/server/petstore/java-vertx/async</module>
+                <!--<module>samples/server/petstore/java-vertx/rx</module>-->
+                <!--<module>samples/server/petstore/java-vertx/async</module>-->
                 <module>samples/server/petstore/java-inflector</module>
                 <!--<module>samples/server/petstore/java-pkmst</module>-->
                 <!--<module>samples/server/petstore/java-play-framework</module>-->
