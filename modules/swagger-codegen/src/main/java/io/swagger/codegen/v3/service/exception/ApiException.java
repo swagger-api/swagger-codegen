@@ -12,14 +12,22 @@
  * the License.
  */
 
-package io.swagger.v3.generator.exception;
+package io.swagger.codegen.v3.service.exception;
 
-import org.apache.http.HttpStatus;
+public class ApiException extends RuntimeException {
+    private static final long serialVersionUID = -5085112752305370687L;
+    private int code;
 
-public class BadRequestException extends ApiException {
-    private static final long serialVersionUID = -5540416398447252055L;
+    public ApiException(int code, String msg) {
+        super(msg);
+        this.code = code;
+    }
+    public ApiException(int code, String msg, Throwable e) {
+        super(msg, e);
+        this.code = code;
+    }
 
-    public BadRequestException(String msg) {
-        super(HttpStatus.SC_BAD_REQUEST, msg);
+    public int getCode() {
+        return code;
     }
 }

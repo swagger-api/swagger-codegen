@@ -12,7 +12,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>swagger-inflector</servlet-name>
-        <url-pattern>/v2/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
