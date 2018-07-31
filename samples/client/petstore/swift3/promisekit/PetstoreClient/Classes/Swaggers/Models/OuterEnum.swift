@@ -12,6 +12,5 @@ public enum OuterEnum: String {
     case placed = "placed"
     case approved = "approved"
     case delivered = "delivered"
-
     func encodeToJSON() -> Any { return self.rawValue }
 }
