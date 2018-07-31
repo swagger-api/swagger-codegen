@@ -56,7 +56,6 @@ Class | Method | HTTP request | Description
 *UserApi* | [**logoutUser**](docs/UserApi.md#logoutuser) | **GET** /user/logout | Logs out current logged in user session
 *UserApi* | [**updateUser**](docs/UserApi.md#updateuser) | **PUT** /user/{username} | Updated user
 
-
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
@@ -67,16 +66,12 @@ Class | Method | HTTP request | Description
  - [io.swagger.client.models.Tag](docs/Tag.md)
  - [io.swagger.client.models.User](docs/User.md)
 
-
 <a name="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
 <a name="api_key"></a>
 ### api_key
 
-- **Type**: API key
-- **API key parameter name**: api_key
-- **Location**: HTTP header
 
 <a name="petstore_auth"></a>
 ### petstore_auth
@@ -85,6 +80,5 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
-  - write:pets: modify pets in your account
-  - read:pets: read your pets
+  - : 
 

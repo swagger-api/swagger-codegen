@@ -236,7 +236,6 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
         }
     }
 
-    
     /**
     * Updated user
     * This can only be done by the logged in user.
