@@ -249,9 +249,10 @@ open class FakeAPI: APIBase {
     /**
      Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      - POST /fake
-     - Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트      - BASIC:
-       - type: http
-       - name: http_basic_test
+     - Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+     - BASIC:
+     - type: http
+     - name: http_basic_test
      - parameter body: (body)  
      - returns: RequestBuilder<Void> 
      */

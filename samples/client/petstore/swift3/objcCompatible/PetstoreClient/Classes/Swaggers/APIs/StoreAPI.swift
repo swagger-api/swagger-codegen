@@ -54,9 +54,10 @@ open class StoreAPI: APIBase {
     /**
      Returns pet inventories by status
      - GET /store/inventory
-     - Returns a map of status codes to quantities     - API Key:
-       - type: apiKey api_key 
-       - name: api_key
+     - Returns a map of status codes to quantities
+     - API Key:
+     - type: apiKey api_key 
+     - name: api_key
      - returns: RequestBuilder<[String:Int32]> 
      */
     open class func getInventoryWithRequestBuilder() -> RequestBuilder<[String:Int32]> {
