@@ -10,7 +10,6 @@ import Foundation
 
 open class OuterString: JSONEncodable {
 
-
     public init() {}
 
     // MARK: JSONEncodable
@@ -21,4 +20,3 @@ open class OuterString: JSONEncodable {
         return dictionary
     }
 }
-

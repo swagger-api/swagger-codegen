@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Category: JSONEncodable {
-
     public var id: Int64?
     public var name: String?
 
@@ -28,4 +27,3 @@ open class Category: JSONEncodable {
         return dictionary
     }
 }
-

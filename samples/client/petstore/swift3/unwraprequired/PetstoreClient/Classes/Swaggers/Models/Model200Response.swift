@@ -10,7 +10,6 @@ import Foundation
 
 /** Model for testing model name starting with number */
 open class Model200Response: JSONEncodable {
-
     public var name: Int32?
     public var _class: String?
 
@@ -29,4 +28,3 @@ open class Model200Response: JSONEncodable {
         return dictionary
     }
 }
-

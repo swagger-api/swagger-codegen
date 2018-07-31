@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Client: JSONEncodable {
-
     public var client: String?
 
 
@@ -25,4 +24,3 @@ open class Client: JSONEncodable {
         return dictionary
     }
 }
-

@@ -9,7 +9,6 @@ import Foundation
 
 
 open class List: JSONEncodable {
-
     public var _123List: String?
 
 
@@ -25,4 +24,3 @@ open class List: JSONEncodable {
         return dictionary
     }
 }
-
