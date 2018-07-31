@@ -47,7 +47,7 @@ export class StoreService {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -75,19 +75,17 @@ export class StoreService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
+        return this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -111,24 +109,20 @@ export class StoreService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
-        }
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.get<{ [key: string]: number; }>(`${this.basePath}/store/inventory`,
+        return this.httpClient.get(`${this.basePath}/store/inventory`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -160,16 +154,16 @@ export class StoreService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Order>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
+        return this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -201,21 +195,21 @@ export class StoreService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<Order>(`${this.basePath}/store/order`,
-            body,
+        return this.httpClient.post(`${this.basePath}/store/order`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -225,4 +219,3 @@ export class StoreService {
         );
     }
 
-}
