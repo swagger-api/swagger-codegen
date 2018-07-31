@@ -47,7 +47,7 @@ export class UserService {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -75,24 +75,22 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/user`,
-            body,
+        return this.httpClient.post(`${this.basePath}/user`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -121,24 +119,22 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/user/createWithArray`,
-            body,
+        return this.httpClient.post(`${this.basePath}/user/createWithArray`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -167,24 +163,22 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/user/createWithList`,
-            body,
+        return this.httpClient.post(`${this.basePath}/user/createWithList`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -213,19 +207,17 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
+        return this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -257,16 +249,16 @@ export class UserService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.get<User>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
+        return this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -296,10 +288,10 @@ export class UserService {
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (username !== undefined) {
+        if (username !== undefined && username !== null) {
             queryParameters = queryParameters.set('username', <any>username);
         }
-        if (password !== undefined) {
+        if (password !== undefined && password !== null) {
             queryParameters = queryParameters.set('password', <any>password);
         }
 
@@ -310,16 +302,16 @@ export class UserService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.get<string>(`${this.basePath}/user/login`,
+        return this.httpClient.get(`${this.basePath}/user/login`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -345,19 +337,17 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/user/logout`,
+        return this.httpClient.get(`${this.basePath}/user/logout`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -370,44 +360,42 @@ export class UserService {
     /**
      * Updated user
      * This can only be done by the logged in user.
-     * @param username name that need to be deleted
      * @param body Updated user object
+     * @param username name that need to be deleted
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser(username: string, body: User, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateUser(username: string, body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateUser(username: string, body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateUser(username: string, body: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling updateUser.');
-        }
+    public updateUser(body: User, username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateUser(body: User, username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateUser(body: User, username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateUser(body: User, username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
+        }
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
-            body,
+        return this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -417,4 +405,3 @@ export class UserService {
         );
     }
 
-}
