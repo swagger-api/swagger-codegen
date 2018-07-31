@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Cat: Animal {
-
     public var declawed: Bool?
     public var declawedNum: NSNumber? {
         get {
@@ -28,4 +27,3 @@ open class Cat: Animal {
         return dictionary
     }
 }
-

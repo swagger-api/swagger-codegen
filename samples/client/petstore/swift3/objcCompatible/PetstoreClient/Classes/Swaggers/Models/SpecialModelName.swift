@@ -9,7 +9,6 @@ import Foundation
 
 
 open class SpecialModelName: JSONEncodable {
-
     public var specialPropertyName: Int64?
     public var specialPropertyNameNum: NSNumber? {
         get {
@@ -28,4 +27,3 @@ open class SpecialModelName: JSONEncodable {
         return dictionary
     }
 }
-
