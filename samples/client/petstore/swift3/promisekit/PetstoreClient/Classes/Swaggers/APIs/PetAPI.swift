@@ -40,9 +40,10 @@ open class PetAPI: APIBase {
 
     /**
      Add a new pet to the store
-     - POST /pet     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - POST /pet
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter body: (body) Pet object that needs to be added to the store 
      - returns: RequestBuilder<Void> 
      */
@@ -87,9 +88,10 @@ open class PetAPI: APIBase {
 
     /**
      Deletes a pet
-     - DELETE /pet/{petId}     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - DELETE /pet/{petId}
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter petId: (path) Pet id to delete 
      - parameter apiKey: (header)  (optional)
      - returns: RequestBuilder<Void> 
@@ -150,9 +152,10 @@ open class PetAPI: APIBase {
     /**
      Finds Pets by status
      - GET /pet/findByStatus
-     - Multiple status values can be provided with comma separated strings     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - Multiple status values can be provided with comma separated strings
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter status: (query) Status values that need to be considered for filter 
      - returns: RequestBuilder<[Pet]> 
      */
@@ -196,9 +199,10 @@ open class PetAPI: APIBase {
     /**
      Finds Pets by tags
      - GET /pet/findByTags
-     - Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter tags: (query) Tags to filter by 
      - returns: RequestBuilder<[Pet]> 
      */
@@ -242,9 +246,10 @@ open class PetAPI: APIBase {
     /**
      Find pet by ID
      - GET /pet/{petId}
-     - Returns a single pet     - API Key:
-       - type: apiKey api_key 
-       - name: api_key
+     - Returns a single pet
+     - API Key:
+     - type: apiKey api_key 
+     - name: api_key
      - parameter petId: (path) ID of pet to return 
      - returns: RequestBuilder<Pet> 
      */
@@ -290,9 +295,10 @@ open class PetAPI: APIBase {
 
     /**
      Update an existing pet
-     - PUT /pet     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - PUT /pet
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter body: (body) Pet object that needs to be added to the store 
      - returns: RequestBuilder<Void> 
      */
@@ -339,9 +345,10 @@ open class PetAPI: APIBase {
 
     /**
      Updates a pet in the store with form data
-     - POST /pet/{petId}     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - POST /pet/{petId}
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter petId: (path) ID of pet that needs to be updated 
      - parameter name: (form)  (optional)
      - parameter status: (form)  (optional)
@@ -393,9 +400,10 @@ open class PetAPI: APIBase {
 
     /**
      uploads an image
-     - POST /pet/{petId}/uploadImage     - OAuth:
-       - type: oauth2
-       - name: petstore_auth
+     - POST /pet/{petId}/uploadImage
+     - OAuth:
+     - type: oauth2
+     - name: petstore_auth
      - parameter petId: (path) ID of pet to update 
      - parameter additionalMetadata: (form)  (optional)
      - parameter file: (form)  (optional)
