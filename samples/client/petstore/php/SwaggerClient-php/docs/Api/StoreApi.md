@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**getOrderById**](StoreApi.md#getOrderById) | **GET** /store/order/{order_id} | Find purchase order by ID
 [**placeOrder**](StoreApi.md#placeOrder) | **POST** /store/order | Place an order for a pet
 
-
 # **deleteOrder**
 > deleteOrder($order_id)
 
@@ -41,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_id** | **string**| ID of the order that needs to be deleted |
+ **order_id** | [**string**](../Model/.md)| ID of the order that needs to be deleted |
 
 ### Return type
 
@@ -54,7 +53,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -69,7 +68,6 @@ Returns a map of status codes to quantities
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
-
 // Configure API key authorization: api_key
 $config = Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('api_key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -126,7 +124,7 @@ $apiInstance = new Swagger\Client\Api\StoreApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$order_id = 789; // int | ID of pet that needs to be fetched
+$order_id = 56; // int | ID of pet that needs to be fetched
 
 try {
     $result = $apiInstance->getOrderById($order_id);
@@ -141,7 +139,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_id** | **int**| ID of pet that needs to be fetched |
+ **order_id** | [**int**](../Model/.md)| ID of pet that needs to be fetched |
 
 ### Return type
 
@@ -154,7 +152,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -162,8 +160,6 @@ No authorization required
 > \Swagger\Client\Model\Order placeOrder($body)
 
 Place an order for a pet
-
-
 
 ### Example
 ```php
@@ -202,8 +198,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: application/xmlapplication/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
