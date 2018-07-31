@@ -25,27 +25,21 @@ import io.swagger.client.models.Tag
  */
 data class Pet (
     val name: kotlin.String,
-    val photoUrls: kotlin.Array<kotlin.String>,
+    val photoUrls: kotlin.Array<kotlin.String>
+,
     val id: kotlin.Long? = null,
     val category: Category? = null,
     val tags: kotlin.Array<Tag>? = null,
     /* pet status in the store */
     val status: Pet.Status? = null
 ) {
-
     /**
     * pet status in the store
     * Values: available,pending,sold
     */
-    enum class Status(val value: kotlin.Any){
-    
+    enum class Status(val value: kotlin.String){
         available("available"),
-    
         pending("pending"),
-    
         sold("sold");
-    
     }
-
 }
-

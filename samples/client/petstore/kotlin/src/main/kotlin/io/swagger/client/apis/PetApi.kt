@@ -208,7 +208,6 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
         }
     }
 
-    
     /**
     * Updates a pet in the store with form data
     * 
@@ -242,7 +241,6 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
         }
     }
 
-    
     /**
     * uploads an image
     * 
