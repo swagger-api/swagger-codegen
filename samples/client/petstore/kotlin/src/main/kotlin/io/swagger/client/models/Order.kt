@@ -22,6 +22,7 @@ package io.swagger.client.models
  * @param complete 
  */
 data class Order (
+
     val id: kotlin.Long? = null,
     val petId: kotlin.Long? = null,
     val quantity: kotlin.Int? = null,
@@ -30,20 +31,13 @@ data class Order (
     val status: Order.Status? = null,
     val complete: kotlin.Boolean? = null
 ) {
-
     /**
     * Order Status
     * Values: placed,approved,delivered
     */
-    enum class Status(val value: kotlin.Any){
-    
+    enum class Status(val value: kotlin.String){
         placed("placed"),
-    
         approved("approved"),
-    
         delivered("delivered");
-    
     }
-
 }
-

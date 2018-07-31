@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Animal: JSONEncodable {
-
     public var className: String
     public var color: String?
 
@@ -28,4 +27,3 @@ open class Animal: JSONEncodable {
         return dictionary
     }
 }
-

@@ -9,8 +9,7 @@ import Foundation
 
 
 open class ArrayOfNumberOnly: JSONEncodable {
-
-    public var arrayNumber: [Double]?
+    public var arrayNumber: [BigDecimal]?
 
     public init() {}
 
@@ -23,4 +22,3 @@ open class ArrayOfNumberOnly: JSONEncodable {
         return dictionary
     }
 }
-

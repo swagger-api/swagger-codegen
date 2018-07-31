@@ -20,7 +20,7 @@ import javax.ws.rs.core.SecurityContext;
 
 public interface UserApiService {
   
-      public Response createUser(User user, SecurityContext securityContext);
+      public Response createUser(User body, SecurityContext securityContext);
   
       public Response createUsersWithArrayInput(List<User> body, SecurityContext securityContext);
   
@@ -34,7 +34,7 @@ public interface UserApiService {
   
       public Response logoutUser(SecurityContext securityContext);
   
-      public Response updateUser(User user, String username, SecurityContext securityContext);
+      public Response updateUser(User body, String username, SecurityContext securityContext);
   
 }
 

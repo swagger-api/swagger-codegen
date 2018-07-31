@@ -1,7 +1,7 @@
 package io.swagger.controllers;
 
-import io.swagger.inflector.models.RequestContext;
-import io.swagger.inflector.models.ResponseContext;
+import io.swagger.oas.inflector.models.RequestContext;
+import io.swagger.oas.inflector.models.ResponseContext;
 import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -10,9 +10,7 @@ import java.util.List;
 
 import io.swagger.model.*;
 
-import java.util.List;
 import io.swagger.model.User;
-
 
 public class UserController  {
   /** 
@@ -22,37 +20,37 @@ public class UserController  {
    **/
 
   /*
-    public ResponseContext createUser(RequestContext request , User body) {
+    public ResponseContext createUser(RequestContext request , User body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext createUsersWithArrayInput(RequestContext request , List<User> body) {
+    public ResponseContext createUsersWithArrayInput(RequestContext request , List<User> body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext createUsersWithListInput(RequestContext request , List<User> body) {
+    public ResponseContext createUsersWithListInput(RequestContext request , List<User> body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext deleteUser(RequestContext request , String username) {
+    public ResponseContext deleteUser(RequestContext request , String username ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext getUserByName(RequestContext request , String username) {
+    public ResponseContext getUserByName(RequestContext request , String username ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext loginUser(RequestContext request , String username, String password) {
+    public ResponseContext loginUser(RequestContext request , String username , String password ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -64,7 +62,7 @@ public class UserController  {
   */
 
   /*
-    public ResponseContext updateUser(RequestContext request , String username, User body) {
+    public ResponseContext updateUser(RequestContext request , User body , String username ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

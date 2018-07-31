@@ -9,7 +9,6 @@ import Foundation
 
 
 open class AdditionalPropertiesClass: JSONEncodable {
-
     public var mapProperty: [String:String]?
     public var mapOfMapProperty: [String:[String:String]]?
 
@@ -28,4 +27,3 @@ open class AdditionalPropertiesClass: JSONEncodable {
         return dictionary
     }
 }
-

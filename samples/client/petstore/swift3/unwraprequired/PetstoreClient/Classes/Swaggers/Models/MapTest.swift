@@ -9,13 +9,12 @@ import Foundation
 
 
 open class MapTest: JSONEncodable {
-
-    public enum MapOfEnumString: String { 
+    public enum MapOfEnumString: String {
         case upper = "UPPER"
         case lower = "lower"
     }
     public var mapMapOfString: [String:[String:String]]?
-    public var mapOfEnumString: [String:String]?
+        public var mapOfEnumString: [String:String]?
 
 
     public init(mapMapOfString: [String:[String:String]]?=nil, mapOfEnumString: [String:String]?=nil) {
@@ -31,4 +30,3 @@ open class MapTest: JSONEncodable {
         return dictionary
     }
 }
-

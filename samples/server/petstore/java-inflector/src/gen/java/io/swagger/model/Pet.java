@@ -4,34 +4,23 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
 
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;
-
   @JsonProperty("category")
   private Category category = null;
-
   @JsonProperty("name")
   private String name = null;
-
   @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
-
   @JsonProperty("tags")
   private List<Tag> tags = null;
-
   /**
    * pet status in the store
    */
@@ -64,10 +53,8 @@ public class Pet   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
-
   /**
    **/
   public Pet id(Long id) {
@@ -76,7 +63,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -93,7 +80,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("category")
   public Category getCategory() {
     return category;
@@ -110,7 +97,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -127,7 +114,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -144,7 +131,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
@@ -162,7 +149,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(value = "pet status in the store")
+  @Schema(description = "pet status in the store")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -198,7 +185,6 @@ public class Pet   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Pet {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
@@ -220,4 +206,3 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -22,7 +22,7 @@ import javax.ws.rs.core.SecurityContext;
 public class UserApiServiceImpl implements UserApiService {
   
       @Override
-      public Response createUser(User user, SecurityContext securityContext) {
+      public Response createUser(User body, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
@@ -64,7 +64,7 @@ public class UserApiServiceImpl implements UserApiService {
   }
   
       @Override
-      public Response updateUser(User user, String username, SecurityContext securityContext) {
+      public Response updateUser(User body, String username, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

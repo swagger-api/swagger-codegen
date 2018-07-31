@@ -9,7 +9,6 @@ import Foundation
 
 
 open class User: JSONEncodable {
-
     public var id: Int64?
     public var idNum: NSNumber? {
         get {
@@ -48,4 +47,3 @@ open class User: JSONEncodable {
         return dictionary
     }
 }
-

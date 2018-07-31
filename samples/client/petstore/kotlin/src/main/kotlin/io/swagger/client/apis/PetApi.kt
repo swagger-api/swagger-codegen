@@ -56,10 +56,10 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     * @param apiKey  (optional)
     * @return void
     */
-    fun deletePet(petId: kotlin.Long, apiKey: kotlin.String) : Unit {
+    fun deletePet(petId: kotlin.Int, apiKey: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("apiKey" to apiKey)
+        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("api_key" to apiKey)
         val localVariableConfig = RequestConfig(
             RequestMethod.DELETE,
             "/pet/{petId}".replace("{"+"petId"+"}", "$petId"),
@@ -90,7 +90,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     @Suppress("UNCHECKED_CAST")
     fun findPetsByStatus(status: kotlin.Array<kotlin.String>) : kotlin.Array<Pet> {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf("status" to toMultiValue(status.toList(), "csv"))
+        val localVariableQuery: MultiValueMap = mapOf("status" to toMultiValue(status.toList(), ""))
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
@@ -122,7 +122,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     @Suppress("UNCHECKED_CAST")
     fun findPetsByTags(tags: kotlin.Array<kotlin.String>) : kotlin.Array<Pet> {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf("tags" to toMultiValue(tags.toList(), "csv"))
+        val localVariableQuery: MultiValueMap = mapOf("tags" to toMultiValue(tags.toList(), ""))
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
@@ -152,7 +152,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     * @return Pet
     */
     @Suppress("UNCHECKED_CAST")
-    fun getPetById(petId: kotlin.Long) : Pet {
+    fun getPetById(petId: kotlin.Int) : Pet {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
@@ -212,11 +212,11 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     * Updates a pet in the store with form data
     * 
     * @param petId ID of pet that needs to be updated 
-    * @param name Updated name of the pet (optional)
-    * @param status Updated status of the pet (optional)
+    * @param name  (optional)
+    * @param status  (optional)
     * @return void
     */
-    fun updatePetWithForm(petId: kotlin.Long, name: kotlin.String, status: kotlin.String) : Unit {
+    fun updatePetWithForm(petId: kotlin.Int, name: kotlin.String, status: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = mapOf("name" to "$name", "status" to "$status")
         val localVariableQuery: MultiValueMap = mapOf()
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Content-Type" to "multipart/form-data")
@@ -245,12 +245,12 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     * uploads an image
     * 
     * @param petId ID of pet to update 
-    * @param additionalMetadata Additional data to pass to server (optional)
-    * @param file file to upload (optional)
+    * @param additionalMetadata  (optional)
+    * @param file  (optional)
     * @return ApiResponse
     */
     @Suppress("UNCHECKED_CAST")
-    fun uploadFile(petId: kotlin.Long, additionalMetadata: kotlin.String, file: java.io.File) : ApiResponse {
+    fun uploadFile(petId: kotlin.Int, additionalMetadata: kotlin.String, file: java.io.File) : ApiResponse {
         val localVariableBody: kotlin.Any? = mapOf("additionalMetadata" to "$additionalMetadata", "file" to "$file")
         val localVariableQuery: MultiValueMap = mapOf()
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Content-Type" to "multipart/form-data")

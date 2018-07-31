@@ -1,7 +1,7 @@
 package io.swagger.controllers;
 
-import io.swagger.inflector.models.RequestContext;
-import io.swagger.inflector.models.ResponseContext;
+import io.swagger.oas.inflector.models.RequestContext;
+import io.swagger.oas.inflector.models.ResponseContext;
 import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -13,7 +13,6 @@ import io.swagger.model.*;
 import java.util.Map;
 import io.swagger.model.Order;
 
-
 public class StoreController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
@@ -22,7 +21,7 @@ public class StoreController  {
    **/
 
   /*
-    public ResponseContext deleteOrder(RequestContext request , String orderId) {
+    public ResponseContext deleteOrder(RequestContext request , String orderId ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -34,13 +33,13 @@ public class StoreController  {
   */
 
   /*
-    public ResponseContext getOrderById(RequestContext request , Long orderId) {
+    public ResponseContext getOrderById(RequestContext request , Integer orderId ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext placeOrder(RequestContext request , Order body) {
+    public ResponseContext placeOrder(RequestContext request , Order body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

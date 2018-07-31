@@ -12,6 +12,5 @@ public enum EnumClass: String {
     case abc = "_abc"
     case efg = "-efg"
     case xyz = "(xyz)"
-
     func encodeToJSON() -> Any { return self.rawValue }
 }
