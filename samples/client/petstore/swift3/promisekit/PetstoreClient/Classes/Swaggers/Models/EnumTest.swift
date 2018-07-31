@@ -9,23 +9,22 @@ import Foundation
 
 
 open class EnumTest: JSONEncodable {
-
-    public enum EnumString: String { 
+    public enum EnumString: String {
         case upper = "UPPER"
         case lower = "lower"
         case empty = ""
     }
-    public enum EnumInteger: Int32 { 
+    public enum EnumInteger: Int32 {
         case _1 = 1
         case number1 = -1
     }
-    public enum EnumNumber: Double { 
+    public enum EnumNumber: Double {
         case _11 = 1.1
         case number12 = -1.2
     }
-    public var enumString: EnumString?
-    public var enumInteger: EnumInteger?
-    public var enumNumber: EnumNumber?
+        public var enumString: EnumString?
+        public var enumInteger: EnumInteger?
+        public var enumNumber: EnumNumber?
     public var outerEnum: OuterEnum?
 
     public init() {}
@@ -42,4 +41,3 @@ open class EnumTest: JSONEncodable {
         return dictionary
     }
 }
-
