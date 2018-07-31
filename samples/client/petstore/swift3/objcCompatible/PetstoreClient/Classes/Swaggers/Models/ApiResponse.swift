@@ -9,7 +9,6 @@ import Foundation
 
 
 open class ApiResponse: JSONEncodable {
-
     public var code: Int32?
     public var codeNum: NSNumber? {
         get {
@@ -32,4 +31,3 @@ open class ApiResponse: JSONEncodable {
         return dictionary
     }
 }
-

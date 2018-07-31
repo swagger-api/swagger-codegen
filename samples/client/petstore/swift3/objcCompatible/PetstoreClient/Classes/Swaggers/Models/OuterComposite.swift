@@ -9,7 +9,6 @@ import Foundation
 
 
 open class OuterComposite: JSONEncodable {
-
     public var myNumber: OuterNumber?
     public var myString: OuterString?
     public var myBoolean: OuterBoolean?
@@ -27,4 +26,3 @@ open class OuterComposite: JSONEncodable {
         return dictionary
     }
 }
-

@@ -9,7 +9,6 @@ import Foundation
 
 
 open class Dog: Animal {
-
     public var breed: String?
 
     
@@ -23,4 +22,3 @@ open class Dog: Animal {
         return dictionary
     }
 }
-
