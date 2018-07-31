@@ -4,28 +4,18 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
-
-
-
-
-
 
 public class Order   {
   @JsonProperty("id")
   private Long id = null;
-
   @JsonProperty("petId")
   private Long petId = null;
-
   @JsonProperty("quantity")
   private Integer quantity = null;
-
   @JsonProperty("shipDate")
   private Date shipDate = null;
-
   /**
    * Order Status
    */
@@ -58,13 +48,10 @@ public class Order   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
-
   @JsonProperty("complete")
   private Boolean complete = false;
-
   /**
    **/
   public Order id(Long id) {
@@ -73,7 +60,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -90,7 +77,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -107,7 +94,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -124,7 +111,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
@@ -142,7 +129,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "Order Status")
+  @Schema(description = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -159,7 +146,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("complete")
   public Boolean isComplete() {
     return complete;
@@ -195,7 +182,6 @@ public class Order   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Order {\n");
-    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
@@ -217,4 +203,3 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

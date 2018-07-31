@@ -3,21 +3,14 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
 public class ArrayOfArrayOfNumberOnly   {
   @JsonProperty("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;
-
   /**
    **/
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
@@ -26,7 +19,7 @@ public class ArrayOfArrayOfNumberOnly   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("ArrayArrayNumber")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
@@ -57,7 +50,6 @@ public class ArrayOfArrayOfNumberOnly   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ArrayOfArrayOfNumberOnly {\n");
-    
     sb.append("    arrayArrayNumber: ").append(toIndentedString(arrayArrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -74,4 +66,3 @@ public class ArrayOfArrayOfNumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

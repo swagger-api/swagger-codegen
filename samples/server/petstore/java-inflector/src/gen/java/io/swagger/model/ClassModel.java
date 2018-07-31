@@ -3,21 +3,13 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * Model for testing model with \&quot;_class\&quot; property
- **/
-
-@ApiModel(description = "Model for testing model with \"_class\" property")
-
+ **/@Schema(description = "Model for testing model with \"_class\" property")
 public class ClassModel   {
   @JsonProperty("_class")
   private String propertyClass = null;
-
   /**
    **/
   public ClassModel propertyClass(String propertyClass) {
@@ -26,7 +18,7 @@ public class ClassModel   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("_class")
   public String getPropertyClass() {
     return propertyClass;
@@ -57,7 +49,6 @@ public class ClassModel   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ClassModel {\n");
-    
     sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -74,4 +65,3 @@ public class ClassModel   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
