@@ -10,7 +10,6 @@ import Foundation
 
 /** Model for testing model with \&quot;_class\&quot; property */
 open class ClassModel: JSONEncodable {
-
     public var _class: String?
 
 
@@ -26,4 +25,3 @@ open class ClassModel: JSONEncodable {
         return dictionary
     }
 }
-
