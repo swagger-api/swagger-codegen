@@ -56,7 +56,7 @@ public interface FakeApi {
    * 
    * Test serialization of object with outer number type
 
-   * @param outercomposite Input composite as post body (optional)
+   * @param body Input composite as post body (optional)
 
    * @return Call&lt;OuterComposite&gt;
 
@@ -73,7 +73,7 @@ public interface FakeApi {
     
   @POST("fake/outer/composite")
   Call<OuterComposite> fakeOuterCompositeSerialize(
-    @retrofit2.http.Body OuterComposite outercomposite
+    @retrofit2.http.Body OuterComposite body
   );
 
   
@@ -131,7 +131,7 @@ public interface FakeApi {
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
 
-   * @param client client model (required)
+   * @param body client model (required)
 
    * @return Call&lt;Client&gt;
 
@@ -148,7 +148,7 @@ public interface FakeApi {
     
   @PATCH("fake")
   Call<Client> testClientModel(
-    @retrofit2.http.Body Client client
+    @retrofit2.http.Body Client body
   );
 
   

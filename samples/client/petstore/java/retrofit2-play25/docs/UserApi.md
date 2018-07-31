@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="createUser"></a>
 # **createUser**
-> Void createUser(user)
+> Void createUser(body)
 
 Create user
 
@@ -34,10 +34,10 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-User user = ; // User | Created user object
+User body = new User(); // User | Created user object
 
 try {
-    Void result = apiInstance.createUser(user);
+    Void result = apiInstance.createUser(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#createUser");
@@ -49,7 +49,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | [**User**](.md)| Created user object |
+ **body** | [**User**](User.md)| Created user object |
 
 
 ### Return type
@@ -82,7 +82,7 @@ Creates list of users with given input array
 
 UserApi apiInstance = new UserApi();
 
-List<User> body = ; // List<User> | List of user object
+List<User> body = Arrays.asList(new User()); // List<User> | List of user object
 
 try {
     Void result = apiInstance.createUsersWithArrayInput(body);
@@ -130,7 +130,7 @@ Creates list of users with given input array
 
 UserApi apiInstance = new UserApi();
 
-List<User> body = ; // List<User> | List of user object
+List<User> body = Arrays.asList(new User()); // List<User> | List of user object
 
 try {
     Void result = apiInstance.createUsersWithListInput(body);
@@ -180,7 +180,7 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The name that needs to be deleted
+String username = "username_example"; // String | The name that needs to be deleted
 
 try {
     Void result = apiInstance.deleteUser(username);
@@ -228,7 +228,7 @@ Get user by user name
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The name that needs to be fetched. Use user1 for testing. 
+String username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
 
 try {
     User result = apiInstance.getUserByName(username);
@@ -276,9 +276,9 @@ Logs user into the system
 
 UserApi apiInstance = new UserApi();
 
-String username = Arrays.asList("username_example"); // String | The user name for login
+String username = "username_example"; // String | The user name for login
 
-String password = Arrays.asList("password_example"); // String | The password for login in clear text
+String password = "password_example"; // String | The password for login in clear text
 
 try {
     String result = apiInstance.loginUser(username, password);
@@ -356,7 +356,7 @@ No authorization required
 
 <a name="updateUser"></a>
 # **updateUser**
-> Void updateUser(user, username)
+> Void updateUser(body, username)
 
 Updated user
 
@@ -372,12 +372,12 @@ This can only be done by the logged in user.
 
 UserApi apiInstance = new UserApi();
 
-User user = ; // User | Updated user object
+User body = new User(); // User | Updated user object
 
-String username = Arrays.asList("username_example"); // String | name that need to be deleted
+String username = "username_example"; // String | name that need to be deleted
 
 try {
-    Void result = apiInstance.updateUser(user, username);
+    Void result = apiInstance.updateUser(body, username);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#updateUser");
@@ -389,7 +389,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | [**User**](.md)| Updated user object |
+ **body** | [**User**](User.md)| Updated user object |
  **username** | [**String**](.md)| name that need to be deleted |
 
 

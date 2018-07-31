@@ -24,6 +24,7 @@ package io.swagger.client.models
  * @param userStatus User Status
  */
 data class User (
+
     val id: kotlin.Long? = null,
     val username: kotlin.String? = null,
     val firstName: kotlin.String? = null,
@@ -34,6 +35,4 @@ data class User (
     /* User Status */
     val userStatus: kotlin.Int? = null
 ) {
-
 }
-

@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**getOrderById**](StoreApi.md#getOrderById) | **GET** /store/order/{orderId} | Find purchase order by ID
 [**placeOrder**](StoreApi.md#placeOrder) | **POST** /store/order | Place an order for a pet
 
-
 <a name="deleteOrder"></a>
 # **deleteOrder**
 > deleteOrder(orderId)
@@ -25,7 +24,7 @@ For valid response try integer IDs with value &lt; 1000. Anything above 1000 or 
 //import io.swagger.client.models.*
 
 val apiInstance = StoreApi()
-val orderId : kotlin.String = orderId_example // kotlin.String | ID of the order that needs to be deleted
+val orderId : kotlin.String =  // kotlin.String | ID of the order that needs to be deleted
 try {
     apiInstance.deleteOrder(orderId)
 } catch (e: ClientException) {
@@ -41,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **kotlin.String**| ID of the order that needs to be deleted |
+ **orderId** | [**kotlin.String**](.md)| ID of the order that needs to be deleted |
 
 ### Return type
 
@@ -54,7 +53,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="getInventory"></a>
 # **getInventory**
@@ -97,7 +96,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: 
 
 <a name="getOrderById"></a>
 # **getOrderById**
@@ -114,7 +113,7 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 //import io.swagger.client.models.*
 
 val apiInstance = StoreApi()
-val orderId : kotlin.Long = 789 // kotlin.Long | ID of pet that needs to be fetched
+val orderId : kotlin.Int =  // kotlin.Int | ID of pet that needs to be fetched
 try {
     val result : Order = apiInstance.getOrderById(orderId)
     println(result)
@@ -131,7 +130,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **kotlin.Long**| ID of pet that needs to be fetched |
+ **orderId** | [**kotlin.Int**](.md)| ID of pet that needs to be fetched |
 
 ### Return type
 
@@ -144,15 +143,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="placeOrder"></a>
 # **placeOrder**
 > Order placeOrder(body)
 
 Place an order for a pet
-
-
 
 ### Example
 ```kotlin
@@ -190,6 +187,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: 
 

@@ -19,9 +19,8 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 
 /**
@@ -43,7 +42,9 @@ public class Dog extends Animal {
   * Get breed
   * @return breed
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBreed() {
     return breed;
   }
@@ -66,7 +67,7 @@ public class Dog extends Animal {
 
   @Override
   public int hashCode() {
-    return Objects.hash(breed, super.hashCode());
+    return java.util.Objects.hash(breed, super.hashCode());
   }
   
   @Override

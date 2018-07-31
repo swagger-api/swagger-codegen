@@ -13,7 +13,11 @@ import { Headers }                                           from '@angular/http
 
 import { Observable }                                        from 'rxjs/Observable';
 
-import * as models                                           from '../model/models';
+
+import { ApiResponse } from '../model/apiResponse';
+import { Pet } from '../model/pet';
+
+
 import { Configuration }                                     from '../configuration';
 
 
@@ -69,8 +73,8 @@ export interface PetServiceInterface {
     * Updates a pet in the store with form data
     * 
     * @param petId ID of pet that needs to be updated
-    * @param name Updated name of the pet
-    * @param status Updated status of the pet
+    * @param name 
+    * @param status 
     */
     updatePetWithForm(petId: number, name?: string, status?: string, extraHttpRequestParams?: any): Observable<{}>;
 
@@ -78,8 +82,8 @@ export interface PetServiceInterface {
     * uploads an image
     * 
     * @param petId ID of pet to update
-    * @param additionalMetadata Additional data to pass to server
-    * @param file file to upload
+    * @param additionalMetadata 
+    * @param file 
     */
     uploadFile(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: any): Observable<ApiResponse>;
 

@@ -52,16 +52,16 @@ public class UserApi {
      * Create user
      * This can only be done by the logged in user.
      * <p><b>0</b> - successful operation
-     * @param user Created user object
+     * @param body Created user object
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public void createUser(User user) throws RestClientException {
-        Object postBody = user;
+    public void createUser(User body) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'user' is set
-        if (user == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'user' when calling createUser");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling createUser");
         }
         
         String path = UriComponentsBuilder.fromPath("/user").build().toUriString();
@@ -309,17 +309,17 @@ public class UserApi {
      * This can only be done by the logged in user.
      * <p><b>400</b> - Invalid user supplied
      * <p><b>404</b> - User not found
-     * @param user Updated user object
+     * @param body Updated user object
      * @param username name that need to be deleted
      * @throws RestClientException if an error occurs while attempting to invoke the API
 
      */
-    public void updateUser(User user, String username) throws RestClientException {
-        Object postBody = user;
+    public void updateUser(User body, String username) throws RestClientException {
+        Object postBody = body;
         
-        // verify the required parameter 'user' is set
-        if (user == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'user' when calling updateUser");
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updateUser");
         }
         
         // verify the required parameter 'username' is set

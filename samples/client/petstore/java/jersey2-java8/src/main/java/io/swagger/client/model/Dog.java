@@ -17,9 +17,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Dog
@@ -41,7 +40,9 @@ public class Dog extends Animal {
   * Get breed
   * @return breed
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public String getBreed() {
     return breed;
   }
@@ -64,7 +65,7 @@ public class Dog extends Animal {
 
   @Override
   public int hashCode() {
-    return Objects.hash(breed, super.hashCode());
+    return java.util.Objects.hash(breed, super.hashCode());
   }
   
   @Override

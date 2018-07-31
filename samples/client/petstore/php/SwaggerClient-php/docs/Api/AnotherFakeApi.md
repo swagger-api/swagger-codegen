@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**testSpecialTags**](AnotherFakeApi.md#testSpecialTags) | **PATCH** /another-fake/dummy | To test special tags
 
-
 # **testSpecialTags**
 > \Swagger\Client\Model\Client testSpecialTags($body)
 

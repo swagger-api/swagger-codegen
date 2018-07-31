@@ -13,14 +13,11 @@ Method | HTTP request | Description
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
-
 <a name="addPet"></a>
 # **addPet**
 > addPet(body)
 
 Add a new pet to the store
-
-
 
 ### Example
 ```kotlin
@@ -57,16 +54,14 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="deletePet"></a>
 # **deletePet**
 > deletePet(petId, apiKey)
 
 Deletes a pet
-
-
 
 ### Example
 ```kotlin
@@ -75,8 +70,8 @@ Deletes a pet
 //import io.swagger.client.models.*
 
 val apiInstance = PetApi()
-val petId : kotlin.Long = 789 // kotlin.Long | Pet id to delete
-val apiKey : kotlin.String = apiKey_example // kotlin.String | 
+val petId : kotlin.Int =  // kotlin.Int | Pet id to delete
+val apiKey : kotlin.String =  // kotlin.String | 
 try {
     apiInstance.deletePet(petId, apiKey)
 } catch (e: ClientException) {
@@ -92,8 +87,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **kotlin.Long**| Pet id to delete |
- **apiKey** | **kotlin.String**|  | [optional]
+ **petId** | [**kotlin.Int**](.md)| Pet id to delete |
+ **apiKey** | [**kotlin.String**](.md)|  | [optional]
 
 ### Return type
 
@@ -106,7 +101,7 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="findPetsByStatus"></a>
 # **findPetsByStatus**
@@ -153,7 +148,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="findPetsByTags"></a>
 # **findPetsByTags**
@@ -200,7 +195,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="getPetById"></a>
 # **getPetById**
@@ -217,7 +212,7 @@ Returns a single pet
 //import io.swagger.client.models.*
 
 val apiInstance = PetApi()
-val petId : kotlin.Long = 789 // kotlin.Long | ID of pet to return
+val petId : kotlin.Int =  // kotlin.Int | ID of pet to return
 try {
     val result : Pet = apiInstance.getPetById(petId)
     println(result)
@@ -234,7 +229,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **kotlin.Long**| ID of pet to return |
+ **petId** | [**kotlin.Int**](.md)| ID of pet to return |
 
 ### Return type
 
@@ -247,15 +242,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: 
 
 <a name="updatePet"></a>
 # **updatePet**
 > updatePet(body)
 
 Update an existing pet
-
-
 
 ### Example
 ```kotlin
@@ -292,16 +285,14 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="updatePetWithForm"></a>
 # **updatePetWithForm**
 > updatePetWithForm(petId, name, status)
 
 Updates a pet in the store with form data
-
-
 
 ### Example
 ```kotlin
@@ -310,9 +301,9 @@ Updates a pet in the store with form data
 //import io.swagger.client.models.*
 
 val apiInstance = PetApi()
-val petId : kotlin.Long = 789 // kotlin.Long | ID of pet that needs to be updated
-val name : kotlin.String = name_example // kotlin.String | Updated name of the pet
-val status : kotlin.String = status_example // kotlin.String | Updated status of the pet
+val petId : kotlin.Int =  // kotlin.Int | ID of pet that needs to be updated
+val name : kotlin.String =  // kotlin.String | 
+val status : kotlin.String =  // kotlin.String | 
 try {
     apiInstance.updatePetWithForm(petId, name, status)
 } catch (e: ClientException) {
@@ -328,9 +319,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **kotlin.Long**| ID of pet that needs to be updated |
- **name** | **kotlin.String**| Updated name of the pet | [optional]
- **status** | **kotlin.String**| Updated status of the pet | [optional]
+ **petId** | [**kotlin.Int**](.md)| ID of pet that needs to be updated |
+ **name** | [**kotlin.String**](.md)|  | [optional]
+ **status** | [**kotlin.String**](.md)|  | [optional]
 
 ### Return type
 
@@ -342,16 +333,14 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/xml, application/json
+ - **Content-Type**: 
+ - **Accept**: Not defined
 
 <a name="uploadFile"></a>
 # **uploadFile**
 > ApiResponse uploadFile(petId, additionalMetadata, file)
 
 uploads an image
-
-
 
 ### Example
 ```kotlin
@@ -360,9 +349,9 @@ uploads an image
 //import io.swagger.client.models.*
 
 val apiInstance = PetApi()
-val petId : kotlin.Long = 789 // kotlin.Long | ID of pet to update
-val additionalMetadata : kotlin.String = additionalMetadata_example // kotlin.String | Additional data to pass to server
-val file : java.io.File = /path/to/file.txt // java.io.File | file to upload
+val petId : kotlin.Int =  // kotlin.Int | ID of pet to update
+val additionalMetadata : kotlin.String =  // kotlin.String | 
+val file : java.io.File = file_example // java.io.File | 
 try {
     val result : ApiResponse = apiInstance.uploadFile(petId, additionalMetadata, file)
     println(result)
@@ -379,9 +368,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **kotlin.Long**| ID of pet to update |
- **additionalMetadata** | **kotlin.String**| Additional data to pass to server | [optional]
- **file** | **java.io.File**| file to upload | [optional]
+ **petId** | [**kotlin.Int**](.md)| ID of pet to update |
+ **additionalMetadata** | [**kotlin.String**](.md)|  | [optional]
+ **file** | **java.io.File**|  | [optional]
 
 ### Return type
 
@@ -393,6 +382,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+ - **Content-Type**: 
+ - **Accept**: 
 

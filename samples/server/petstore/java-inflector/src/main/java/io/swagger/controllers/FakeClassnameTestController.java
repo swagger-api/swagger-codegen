@@ -1,7 +1,7 @@
 package io.swagger.controllers;
 
-import io.swagger.inflector.models.RequestContext;
-import io.swagger.inflector.models.ResponseContext;
+import io.swagger.oas.inflector.models.RequestContext;
+import io.swagger.oas.inflector.models.ResponseContext;
 import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -12,7 +12,6 @@ import io.swagger.model.*;
 
 import io.swagger.model.Client;
 
-
 public class FakeClassnameTestController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
@@ -21,7 +20,7 @@ public class FakeClassnameTestController  {
    **/
 
   /*
-    public ResponseContext testClassname(RequestContext request , Client body) {
+    public ResponseContext testClassname(RequestContext request , Client body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

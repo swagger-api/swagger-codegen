@@ -106,7 +106,10 @@ ext {
     play_version = "2.5.14"
     
     
-    swagger_annotations_version = "1.5.15"
+    
+    
+    swagger_annotations_version = "2.0.0"
+    
     junit_version = "4.12"
     
     
@@ -123,7 +126,10 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     
     
-    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    
+    
+    compile "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
+    
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
     compile "io.gsonfire:gson-fire:$json_fire_version"
     

@@ -19,9 +19,8 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.ReadOnlyFirst;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,9 @@ public class ArrayTest {
   * Get arrayOfString
   * @return arrayOfString
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -89,7 +90,9 @@ public class ArrayTest {
   * Get arrayArrayOfInteger
   * @return arrayArrayOfInteger
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -116,7 +119,9 @@ public class ArrayTest {
   * Get arrayArrayOfModel
   * @return arrayArrayOfModel
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
@@ -140,7 +145,7 @@ public class ArrayTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
+    return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
   
   @Override
@@ -169,6 +174,7 @@ public class ArrayTest {
   
   public void writeToParcel(Parcel out, int flags) {
     
+    
     out.writeValue(arrayOfString);
     out.writeValue(arrayArrayOfInteger);
     out.writeValue(arrayArrayOfModel);
@@ -180,6 +186,7 @@ public class ArrayTest {
   }
 
   ArrayTest(Parcel in) {
+    
     
     arrayOfString = (List<String>)in.readValue(null);arrayArrayOfInteger = (List<List<Long>>)in.readValue(List.class.getClassLoader());arrayArrayOfModel = (List<List<ReadOnlyFirst>>)in.readValue(List.class.getClassLoader());
   }

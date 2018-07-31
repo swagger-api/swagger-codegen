@@ -1,12 +1,8 @@
-
 # ApiResponse
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **kotlin.Int** |  |  [optional]
-**type** | **kotlin.String** |  |  [optional]
-**message** | **kotlin.String** |  |  [optional]
-
-
-
+**code** | [**kotlin.Int**](.md) |  |  [optional]
+**type** | [**kotlin.String**](.md) |  |  [optional]
+**message** | [**kotlin.String**](.md) |  |  [optional]

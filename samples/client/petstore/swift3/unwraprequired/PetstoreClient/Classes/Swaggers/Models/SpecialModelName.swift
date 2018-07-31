@@ -9,7 +9,6 @@ import Foundation
 
 
 open class SpecialModelName: JSONEncodable {
-
     public var specialPropertyName: Int64?
 
 
@@ -25,4 +24,3 @@ open class SpecialModelName: JSONEncodable {
         return dictionary
     }
 }
-

@@ -1,6 +1,6 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
@@ -8,7 +8,10 @@ import io.swagger.annotations.ApiModel;
 
 
 
-import io.swagger.annotations.ApiModelProperty;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,12 +26,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
   * A category for a pet
  **/
-@ApiModel(description="A category for a pet")
+@Schema(description="A category for a pet")
 
 public class Category  {
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 
@@ -36,7 +40,8 @@ public class Category  {
 
   
 
-  @ApiModelProperty(value = "")
+  
+  @Schema(description = "")
 
 
 

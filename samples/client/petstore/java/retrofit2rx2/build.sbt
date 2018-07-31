@@ -20,7 +20,10 @@ lazy val root = (project in file(".")).
       "com.squareup.retrofit2" % "adapter-rxjava2" % "2.3.0" % "compile",
       "io.reactivex.rxjava2" % "rxjava" % "2.1.1" % "compile",
       
-      "io.swagger" % "swagger-annotations" % "1.5.15" % "compile",
+      
+      
+      "io.swagger.core.v3" % "swagger-annotations" % "2.0.0" % "compile",
+      
       "org.apache.oltu.oauth2" % "org.apache.oltu.oauth2.client" % "1.0.2" % "compile",
       
       

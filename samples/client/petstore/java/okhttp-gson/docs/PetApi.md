@@ -79,9 +79,9 @@ Deletes a pet
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | Pet id to delete
+Integer petId = 56; // Integer | Pet id to delete
 
-String apiKey = Arrays.asList("apiKey_example"); // String | 
+String apiKey = "apiKey_example"; // String | 
 
 try {
     apiInstance.deletePet(petId, apiKey);
@@ -231,7 +231,7 @@ Returns a single pet
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet to return
+Integer petId = 56; // Integer | ID of pet to return
 
 try {
     Pet result = apiInstance.getPetById(petId);
@@ -326,11 +326,11 @@ Updates a pet in the store with form data
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet that needs to be updated
+Integer petId = 56; // Integer | ID of pet that needs to be updated
 
-String name = Arrays.asList("name_example"); // String | 
+String name = "name_example"; // String | 
 
-String status = Arrays.asList("status_example"); // String | 
+String status = "status_example"; // String | 
 
 try {
     apiInstance.updatePetWithForm(petId, name, status);
@@ -379,11 +379,11 @@ uploads an image
 
 PetApi apiInstance = new PetApi();
 
-Integer petId = Arrays.asList(56); // Integer | ID of pet to update
+Integer petId = 56; // Integer | ID of pet to update
 
-String additionalMetadata = Arrays.asList("additionalMetadata_example"); // String | 
+String additionalMetadata = "additionalMetadata_example"; // String | 
 
-File file = Arrays.asList(new File("file_example")); // File | 
+File file = new File("file_example"); // File | 
 
 try {
     ModelApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);

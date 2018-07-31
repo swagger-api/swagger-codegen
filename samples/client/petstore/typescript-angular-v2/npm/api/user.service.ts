@@ -49,7 +49,7 @@ export class UserService {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -62,7 +62,7 @@ export class UserService {
      * @summary Create user
      * @param body Created user object
      */
-    public createUser(body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUser(body: UserextraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUserWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -78,7 +78,7 @@ export class UserService {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithArrayInput(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUsersWithArrayInput(body: Array<User>extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUsersWithArrayInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -94,7 +94,7 @@ export class UserService {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithListInput(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUsersWithListInput(body: Array<User>extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUsersWithListInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -110,7 +110,7 @@ export class UserService {
      * @summary Delete user
      * @param username The name that needs to be deleted
      */
-    public deleteUser(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public deleteUser(username: stringextraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.deleteUserWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -126,7 +126,7 @@ export class UserService {
      * @summary Get user by user name
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
-    public getUserByName(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<User> {
+    public getUserByName(username: stringextraHttpRequestParams?: RequestOptionsArgs): Observable<User> {
         return this.getUserByNameWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -143,7 +143,7 @@ export class UserService {
      * @param username The user name for login
      * @param password The password for login in clear text
      */
-    public loginUser(username: string, password: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<string> {
+    public loginUser(username: stringpassword: stringextraHttpRequestParams?: RequestOptionsArgs): Observable<string> {
         return this.loginUserWithHttpInfo(username, password, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -172,11 +172,11 @@ export class UserService {
     /**
      * This can only be done by the logged in user.
      * @summary Updated user
-     * @param username name that need to be deleted
      * @param body Updated user object
+     * @param username name that need to be deleted
      */
-    public updateUser(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
-        return this.updateUserWithHttpInfo(username, body, extraHttpRequestParams)
+    public updateUser(body: Userusername: stringextraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+        return this.updateUserWithHttpInfo(body, username, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -202,18 +202,17 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
@@ -247,18 +246,17 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
@@ -292,18 +290,17 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
@@ -337,16 +334,14 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -380,13 +375,13 @@ export class UserService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -418,10 +413,10 @@ export class UserService {
         }
 
         let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
-        if (username !== undefined) {
+        if (username !== undefined && username !== null) {
             queryParameters.set('username', <any>username);
         }
-        if (password !== undefined) {
+        if (password !== undefined && password !== null) {
             queryParameters.set('password', <any>password);
         }
 
@@ -432,13 +427,13 @@ export class UserService {
             'application/xml',
             'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -466,16 +461,14 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
         ];
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -494,34 +487,33 @@ export class UserService {
     /**
      * Updated user
      * This can only be done by the logged in user.
-     * @param username name that need to be deleted
      * @param body Updated user object
+     * @param username name that need to be deleted
      
      */
-    public updateUserWithHttpInfo(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
-        if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling updateUser.');
-        }
+    public updateUserWithHttpInfo(body: User, username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
+        }
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
+            '*/*'
         ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
@@ -540,4 +532,3 @@ export class UserService {
         return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
     }
 
-}

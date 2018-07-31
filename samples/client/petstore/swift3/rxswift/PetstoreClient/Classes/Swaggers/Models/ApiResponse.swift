@@ -9,7 +9,6 @@ import Foundation
 
 
 open class ApiResponse: JSONEncodable {
-
     public var code: Int32?
     public var type: String?
     public var message: String?
@@ -27,4 +26,3 @@ open class ApiResponse: JSONEncodable {
         return dictionary
     }
 }
-

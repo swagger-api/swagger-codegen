@@ -17,8 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -67,7 +66,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -90,7 +91,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -113,7 +116,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -136,7 +141,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -159,7 +166,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "")
+
+  
+  @Schema(description = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -182,7 +191,9 @@ public class Capitalization {
 
 
 
-@ApiModelProperty(value = "Name of the pet ")
+
+  
+  @Schema(description = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
@@ -209,7 +220,7 @@ public class Capitalization {
 
   @Override
   public int hashCode() {
-    return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
+    return java.util.Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
   
   @Override

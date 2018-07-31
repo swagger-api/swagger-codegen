@@ -17,8 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 /**
@@ -41,7 +40,9 @@ public class NumberOnly {
   * Get justNumber
   * @return justNumber
   **/
-  @ApiModelProperty(value = "")
+  
+  
+  @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }

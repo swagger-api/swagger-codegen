@@ -12,11 +12,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 import org.apache.cxf.jaxrs.ext.multipart.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.jaxrs.PATCH;
+
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 
 
@@ -30,7 +34,7 @@ import io.swagger.jaxrs.PATCH;
  */
 
 @Path("/")
-@Api(value = "/", description = "")
+
 
 public interface UserApi  {
 
@@ -52,10 +56,13 @@ public interface UserApi  {
     @Consumes({ "*/*" })
 
 
-    @ApiOperation(value = "Create user", tags={  })
+    
+    
+    @Operation(summary = "Create user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
-    public void createUser(User user);
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
+    public void createUser(User body);
 
 
     
@@ -71,9 +78,12 @@ public interface UserApi  {
     @Consumes({ "*/*" })
 
 
-    @ApiOperation(value = "Creates list of users with given input array", tags={  })
+    
+    
+    @Operation(summary = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
     public void createUsersWithArrayInput(List<User> body);
 
 
@@ -90,9 +100,12 @@ public interface UserApi  {
     @Consumes({ "*/*" })
 
 
-    @ApiOperation(value = "Creates list of users with given input array", tags={  })
+    
+    
+    @Operation(summary = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
     public void createUsersWithListInput(List<User> body);
 
 
@@ -110,10 +123,13 @@ public interface UserApi  {
     @Path("/user/{username}")
 
 
-    @ApiOperation(value = "Delete user", tags={  })
+    
+    
+    @Operation(summary = "Delete user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid username supplied"),
-        @ApiResponse(code = 404, message = "User not found") })
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
     public void deleteUser(@PathParam("username") String username);
 
 
@@ -130,11 +146,14 @@ public interface UserApi  {
 
     @Produces({ "application/xml", "application/json" })
 
-    @ApiOperation(value = "Get user by user name", tags={  })
+    
+    
+    @Operation(summary = "Get user by user name", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = User.class),
-        @ApiResponse(code = 400, message = "Invalid username supplied"),
-        @ApiResponse(code = 404, message = "User not found") })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
     public User getUserByName(@PathParam("username") String username);
 
 
@@ -151,10 +170,13 @@ public interface UserApi  {
 
     @Produces({ "application/xml", "application/json" })
 
-    @ApiOperation(value = "Logs user into the system", tags={  })
+    
+    
+    @Operation(summary = "Logs user into the system", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = String.class),
-        @ApiResponse(code = 400, message = "Invalid username/password supplied") })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
+    
     public String loginUser(@QueryParam("username")String username, @QueryParam("password")String password);
 
 
@@ -169,9 +191,12 @@ public interface UserApi  {
     @Path("/user/logout")
 
 
-    @ApiOperation(value = "Logs out current logged in user session", tags={  })
+    
+    
+    @Operation(summary = "Logs out current logged in user session", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation") })
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    
     public void logoutUser();
 
 
@@ -191,12 +216,14 @@ public interface UserApi  {
     @Consumes({ "*/*" })
 
 
-    @ApiOperation(value = "Updated user", tags={  })
+    
+    
+    @Operation(summary = "Updated user", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid user supplied"),
-        @ApiResponse(code = 404, message = "User not found") })
-    public void updateUser(User user, @PathParam("username") String username);
+        @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    
+    public void updateUser(User body, @PathParam("username") String username);
 
 }
-
 

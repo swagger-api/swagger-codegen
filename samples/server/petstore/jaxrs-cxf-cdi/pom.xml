@@ -71,11 +71,14 @@
         </dependency>
 
         <!-- Swagger annotations -->
+        
+        
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>[1.5.3,1.5.16]</version>
+            <version>[2.0.0,2.0.1]</version>
         </dependency>
+        
         
 
        <!-- Bean Validation API support -->
