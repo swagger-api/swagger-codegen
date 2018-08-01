@@ -1,5 +1,6 @@
 package io.swagger.codegen.v3.utils;
 
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.CodegenModel;
 import io.swagger.codegen.v3.CodegenProperty;
 import io.swagger.v3.oas.models.Operation;
@@ -11,9 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
-import static io.swagger.codegen.languages.helpers.ExtensionHelper.getBooleanValue;
 
 public class ModelUtils {
     /**
@@ -100,7 +98,10 @@ public class ModelUtils {
             CodegenModel cm = (CodegenModel) mo.get("model");
 
             // for enum model
-            boolean isEnum = getBooleanValue(cm, IS_ENUM_EXT_NAME);
+            boolean isEnum = false;
+            if (cm.vendorExtensions.get(CodegenConstants.IS_ENUM_EXT_NAME) != null) {
+                isEnum = Boolean.parseBoolean(cm.vendorExtensions.get(CodegenConstants.IS_ALIAS_EXT_NAME).toString());
+            }
             if (Boolean.TRUE.equals(isEnum) && cm.allowableValues != null) {
                 Map<String, Object> allowableValues = cm.allowableValues;
                 List<Object> values = (List<Object>) allowableValues.get("values");
