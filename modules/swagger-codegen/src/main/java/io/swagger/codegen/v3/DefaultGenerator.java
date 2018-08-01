@@ -1,5 +1,31 @@
 package io.swagger.codegen.v3;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
+import com.github.jknack.handlebars.io.TemplateLoader;
+import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.v3.utils.ImplementationVersion;
+import io.swagger.codegen.v3.utils.URLPathUtil;
+import io.swagger.v3.core.util.Json;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.tags.Tag;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,35 +49,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
-import io.swagger.codegen.languages.helpers.ExtensionHelper;
-import io.swagger.codegen.v3.utils.URLPathUtil;
-import io.swagger.v3.core.util.Json;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
-import io.swagger.v3.oas.models.info.Contact;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.tags.Tag;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
 //import io.swagger.codegen.languages.AbstractJavaCodegen;
-import io.swagger.codegen.v3.utils.ImplementationVersion;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -374,7 +372,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     // Special handling of aliases only applies to Java
                     if (modelTemplate != null && modelTemplate.containsKey("model")) {
                         CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
-                        if (ExtensionHelper.getBooleanValue(codegenModel, CodegenConstants.IS_ALIAS_EXT_NAME)) {
+                        Map<String, Object> vendorExtensions = codegenModel.getVendorExtensions();
+                        boolean isAlias = false;
+                        if (vendorExtensions.get(CodegenConstants.IS_ALIAS_EXT_NAME) != null) {
+                            isAlias = Boolean.parseBoolean(vendorExtensions.get(CodegenConstants.IS_ALIAS_EXT_NAME).toString());
+                        }
+                        if (isAlias) {
                             continue;  // Don't create user-defined classes for aliases
                         }
                     }
