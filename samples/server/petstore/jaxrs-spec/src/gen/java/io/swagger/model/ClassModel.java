@@ -1,35 +1,22 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
-
-
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
  **/
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@ApiModel(description = "Model for testing model with \"_class\" property")
+@Schema(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel  implements Serializable {
-  
   private @Valid String propertyClass = null;
 
-  
   /**
-   
-   
-   
    **/
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
@@ -37,9 +24,8 @@ public class ClassModel  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("_class")
-
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -47,7 +33,6 @@ public class ClassModel  implements Serializable {
     this.propertyClass = propertyClass;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -87,6 +72,3 @@ public class ClassModel  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
