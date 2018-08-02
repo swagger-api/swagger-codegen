@@ -341,7 +341,7 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (isNotEmpty(inputSpec)) {
-            configurator.setInputSpec(inputSpec);
+            configurator.setInputSpecURL(inputSpec);
         }
 
         if (isNotEmpty(gitUserId)) {
