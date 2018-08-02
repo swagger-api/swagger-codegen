@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -25,30 +24,24 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ModelApiResponse {
 
-  
   @JsonProperty("code")
   private Integer code = null;
-  
-  
+
   @JsonProperty("type")
   private String type = null;
-  
-  
+
   @JsonProperty("message")
   private String message = null;
-  
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-  
+    
   /**
   * Get code
   * @return code
   **/
-  
-  
   @Schema(description = "")
   public Integer getCode() {
     return code;
@@ -56,19 +49,16 @@ public class ModelApiResponse {
   public void setCode(Integer code) {
     this.code = code;
   }
-  
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
 
-  
+    
   /**
   * Get type
   * @return type
   **/
-  
-  
   @Schema(description = "")
   public String getType() {
     return type;
@@ -76,19 +66,16 @@ public class ModelApiResponse {
   public void setType(String type) {
     this.type = type;
   }
-  
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
 
-  
+    
   /**
   * Get message
   * @return message
   **/
-  
-  
   @Schema(description = "")
   public String getMessage() {
     return message;
@@ -96,8 +83,6 @@ public class ModelApiResponse {
   public void setMessage(String message) {
     this.message = message;
   }
-  
-  
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -116,6 +101,7 @@ public class ModelApiResponse {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(code, type, message);
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -139,8 +125,5 @@ public class ModelApiResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-
