@@ -16,40 +16,6 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/logback.xml</exclude>
-                    </excludes>
-                    <archive>
-                        <manifestEntries>
-                            <mode>development</mode>
-                            <url>${project.url}</url>
-                            <implementation-version>${project.version}</implementation-version>
-                            <package>io.swagger</package>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/swagger-ui-master/dist</directory>
-                            <excludes>
-                                <exclude>index.html</exclude>
-                            </excludes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
@@ -75,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18.1</version>
+                <version>2.22.0</version>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -96,18 +62,27 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty-version}</version>
                 <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>8079</stopPort>
+                    <stopKey>STOP</stopKey>
                     <useTestScope>true</useTestScope>
                     <systemProperties>
                         <systemProperty>
                             <name>config</name>
-                            <value>src/test/resources/configuration.yaml</value>
+                            <value>src/main/resources/inflector.yaml</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>org.eclipse.jetty.util.log.Log</name>
+                            <value>org.eclipse.jetty.util.log.Slf4jLog</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>logback.configurationFile</name>
+                            <value>src/main/resources/logback.xml</value>
                         </systemProperty>
                     </systemProperties>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <stopPort>8079</stopPort>
-                    <stopKey>stopit</stopKey>
                     <httpConnector>
                         <port>8080</port>
                         <idleTimeout>60000</idleTimeout>
@@ -118,6 +93,7 @@
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
+                            <goal>stop</goal>
                             <goal>start</goal>
                         </goals>
                         <configuration>
@@ -135,25 +111,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>swagger-ui</id>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
-                            <unpack>true</unpack>
-                            <!--<skipCache>true</skipCache>-->
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>net.revelc.code</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <configuration>
@@ -165,6 +122,11 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
             <version>${project.version}</version>
@@ -175,24 +137,15 @@
             <version>${swagger-codegen-generators-version}</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-core</artifactId>
-            <version>${swagger-core-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.parser.v3</groupId>
-            <artifactId>swagger-parser-v3</artifactId>
-            <version>${swagger-parser-version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-inflector</artifactId>
             <version>${inflector-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.woodstox</groupId>
+                    <artifactId>woodstox-core-asl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -202,11 +155,11 @@
     </dependencies>
     <properties>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <jetty-version>9.2.9.v20150224</jetty-version>
+        <jetty-version>9.4.11.v20180605</jetty-version>
         <logback-version>1.0.1</logback-version>
         <inflector-version>2.0.0-rc2</inflector-version>
         <junit-version>4.8.2</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
-        <servlet-api.version>2.5</servlet-api.version>
+        <servlet-api.version>3.1.0</servlet-api.version>
     </properties>
 </project>

@@ -16,6 +16,10 @@ import io.swagger.v3.core.util.Json;
 import io.swagger.v3.parser.core.models.AuthorizationValue;
 import io.swagger.v3.parser.core.models.ParseOptions;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
+import io.swagger.v3.parser.util.ClasspathHelper;
+import io.swagger.v3.parser.util.RemoteUrl;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,6 +51,7 @@ public class CodegenConfigurator implements Serializable {
 
     private String lang;
     private String inputSpec;
+    private String inputSpecURL;
     private String outputDir;
     private boolean verbose;
     private boolean skipOverwrite;
@@ -51,6 +59,7 @@ public class CodegenConfigurator implements Serializable {
     private String templateDir;
     private String templateVersion;
     private String auth;
+    private AuthorizationValue authorizationValue;
     private String apiPackage;
     private String modelPackage;
     private String invokerPackage;
@@ -93,6 +102,15 @@ public class CodegenConfigurator implements Serializable {
 
     public String getInputSpec() {
         return inputSpec;
+    }
+
+    public String getInputSpecURL() {
+        return inputSpecURL;
+    }
+
+    public CodegenConfigurator setInputSpecURL(String inputSpecURL) {
+        this.inputSpecURL = inputSpecURL;
+        return this;
     }
 
     public String getOutputDir() {
@@ -194,6 +212,13 @@ public class CodegenConfigurator implements Serializable {
     public CodegenConfigurator setAuth(String auth) {
         this.auth = auth;
         return this;
+    }
+
+    public AuthorizationValue getAuthorizationValue() {
+        return authorizationValue;
+    }
+    public void setAuthorizationValue(AuthorizationValue authorizationValue) {
+        this.authorizationValue = authorizationValue;
     }
 
     public String getApiPackage() {
@@ -393,17 +418,81 @@ public class CodegenConfigurator implements Serializable {
         return this;
     }
 
+    public String loadSpecContent(String location, List<AuthorizationValue> auths) throws Exception{
+            location = location.replaceAll("\\\\","/");
+            String data = "";
+            if (location.toLowerCase().startsWith("http")) {
+                data = RemoteUrl.urlToString(location, auths);
+            } else {
+                final String fileScheme = "file:";
+                Path path;
+                if (location.toLowerCase().startsWith(fileScheme)) {
+                    path = Paths.get(URI.create(location));
+                } else {
+                    path = Paths.get(location);
+                }
+                if (Files.exists(path)) {
+                    data = FileUtils.readFileToString(path.toFile(), "UTF-8");
+                } else {
+                    data = ClasspathHelper.loadFileFromClasspath(location);
+                }
+            }
+            LOGGER.debug("Loaded raw data: {}", data);
+            return data;
+    }
+
     public ClientOptInput toClientOptInput() {
 
         Validate.notEmpty(lang, "language must be specified");
-        Validate.notEmpty(inputSpec, "input spec must be specified");
+
+        if (StringUtils.isBlank(inputSpec) && StringUtils.isBlank(inputSpecURL)) {
+            throw new IllegalArgumentException("input spec or URL must be specified");
+        }
 
         setVerboseFlags();
         setSystemProperties();
 
         CodegenConfig config = CodegenConfigLoader.forName(lang);
+        ClientOptInput input = new ClientOptInput();
+        final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
+        if (authorizationValue != null) {
+            authorizationValues.add(authorizationValue);
+        }
 
-        config.setInputSpec(inputSpec);
+        if (!StringUtils.isBlank(inputSpec)) {
+            config.setInputSpec(inputSpec);
+            SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, null);
+            OpenAPI openAPI = result.getOpenAPI();
+
+            input.opts(new ClientOpts())
+                    .openAPI(openAPI);
+
+        } else {
+            String specContent = null;
+            try {
+                specContent = loadSpecContent(inputSpecURL, authorizationValues);
+            } catch (Exception e) {
+                String msg = "Unable to read URL: " + inputSpecURL;
+                LOGGER.error(msg, e);
+                throw new IllegalArgumentException(msg);
+            }
+
+            if (StringUtils.isBlank(specContent)) {
+                String msg = "Empty content found in URL: " + inputSpecURL;
+                LOGGER.error(msg);
+                throw new IllegalArgumentException(msg);
+            }
+            config.setInputSpec(specContent);
+            ParseOptions options = new ParseOptions();
+            options.setResolve(true);
+            options.setFlatten(true);
+            SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
+            OpenAPI openAPI = result.getOpenAPI();
+
+            input.opts(new ClientOpts())
+                    .openAPI(openAPI);
+        }
+
         config.setOutputDir(outputDir);
         config.setSkipOverwrite(skipOverwrite);
         config.setIgnoreFilePathOverride(ignoreFileOverride);
@@ -440,79 +529,7 @@ public class CodegenConfigurator implements Serializable {
 
         config.additionalProperties().putAll(additionalProperties);
 
-        ClientOptInput input = new ClientOptInput()
-                .config(config);
-
-        final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
-
-        ParseOptions options = new ParseOptions();
-        options.setResolve(true);
-        options.setFlatten(true);
-        SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpec, authorizationValues, options);
-        OpenAPI openAPI = result.getOpenAPI();
-
-        input.opts(new ClientOpts())
-                .openAPI(openAPI);
-
-        return input;
-    }
-
-    public ClientOptInput toClientOptInput(String content) {
-
-        Validate.notEmpty(lang, "language must be specified");
-
-        setVerboseFlags();
-        setSystemProperties();
-
-        CodegenConfig config = CodegenConfigLoader.forName(lang);
-
-        config.setOutputDir(outputDir);
-        config.setSkipOverwrite(skipOverwrite);
-        config.setIgnoreFilePathOverride(ignoreFileOverride);
-        config.setRemoveOperationIdPrefix(removeOperationIdPrefix);
-
-        config.instantiationTypes().putAll(instantiationTypes);
-        config.typeMapping().putAll(typeMappings);
-        config.importMapping().putAll(importMappings);
-        config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
-        config.reservedWordsMappings().putAll(reservedWordMappings);
-
-        config.setLanguageArguments(codegenArguments);
-
-        checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
-        checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
-        checkAndSetAdditionalProperty(invokerPackage, CodegenConstants.INVOKER_PACKAGE);
-        checkAndSetAdditionalProperty(groupId, CodegenConstants.GROUP_ID);
-        checkAndSetAdditionalProperty(artifactId, CodegenConstants.ARTIFACT_ID);
-        checkAndSetAdditionalProperty(artifactVersion, CodegenConstants.ARTIFACT_VERSION);
-        checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
-        checkAndSetAdditionalProperty(templateVersion, CodegenConstants.TEMPLATE_VERSION);
-        checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
-        checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
-        checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
-        checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
-        checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
-        checkAndSetAdditionalProperty(httpUserAgent, CodegenConstants.HTTP_USER_AGENT);
-
-        handleDynamicProperties(config);
-
-        if (isNotEmpty(library)) {
-            config.setLibrary(library);
-        }
-
-        config.additionalProperties().putAll(additionalProperties);
-
-        ClientOptInput input = new ClientOptInput()
-                .config(config);
-
-        final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
-
-        SwaggerParseResult result = new OpenAPIParser().readContents(content, authorizationValues, null);
-        OpenAPI openAPI = result.getOpenAPI();
-
-        input.opts(new ClientOpts())
-                .openAPI(openAPI);
-
+        input.config(config);
         return input;
     }
 

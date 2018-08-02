@@ -555,7 +555,7 @@ public class GenerateTest {
             {
                 configurator.setLang(lang);
                 times = 1;
-                configurator.setInputSpec(spec);
+                configurator.setInputSpecURL(spec);
                 times = 1;
                 configurator.setOutputDir(outputDir);
             }

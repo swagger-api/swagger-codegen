@@ -10,26 +10,23 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/ui/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>swagger-inflector</servlet-name>
-        <url-pattern>/v2/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>DefaultServlet</servlet-name>
         <servlet-class>io.swagger.v3.generator.online.DefaultServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>GeneratorServlet</servlet-name>
-        <servlet-class>io.swagger.v3.generator.online.GeneratorServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>DefaultServlet</servlet-name>
-        <url-pattern>/api/swagger.json</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GeneratorServlet</servlet-name>
-        <url-pattern>/api/generator.json</url-pattern>
+        <url-pattern>/openapi.json</url-pattern>
     </servlet-mapping>
 
     <filter>

@@ -12,7 +12,7 @@
  * the License.
  */
 
-package io.swagger.v3.generator.exception;
+package io.swagger.codegen.v3.service.exception;
 
 import org.apache.http.HttpStatus;
 
@@ -21,5 +21,8 @@ public class NotFoundException extends ApiException {
 
     public NotFoundException(String msg) {
         super(HttpStatus.SC_NOT_FOUND, msg);
+    }
+    public NotFoundException(String msg, Throwable e) {
+        super(HttpStatus.SC_NOT_FOUND, msg, e);
     }
 }
