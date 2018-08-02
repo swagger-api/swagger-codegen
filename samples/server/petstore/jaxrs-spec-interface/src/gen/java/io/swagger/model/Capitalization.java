@@ -1,34 +1,18 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Capitalization   {
-  
-  private @Valid String smallCamel = null;
-  private @Valid String capitalCamel = null;
-  private @Valid String smallSnake = null;
-  private @Valid String capitalSnake = null;
-  private @Valid String scAETHFlowPoints = null;
-  private @Valid String ATT_NAME = null;
+  private @Valid String smallCamel = null;  private @Valid String capitalCamel = null;  private @Valid String smallSnake = null;  private @Valid String capitalSnake = null;  private @Valid String scAETHFlowPoints = null;  private @Valid String ATT_NAME = null;
 
-  
   /**
-   
-   
-   
    **/
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
@@ -36,9 +20,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("smallCamel")
-
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -46,11 +29,7 @@ public class Capitalization   {
     this.smallCamel = smallCamel;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
@@ -58,9 +37,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("CapitalCamel")
-
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -68,11 +46,7 @@ public class Capitalization   {
     this.capitalCamel = capitalCamel;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
@@ -80,9 +54,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("small_Snake")
-
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -90,11 +63,7 @@ public class Capitalization   {
     this.smallSnake = smallSnake;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
@@ -102,9 +71,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("Capital_Snake")
-
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -112,11 +80,7 @@ public class Capitalization   {
     this.capitalSnake = capitalSnake;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
@@ -124,9 +88,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("SCA_ETH_Flow_Points")
-
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -134,13 +97,8 @@ public class Capitalization   {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
 
-  
   /**
-   
    * Name of the pet 
-   
-   
-   
    **/
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
@@ -148,9 +106,8 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(value = "Name of the pet ")
+  @Schema(description = "Name of the pet ")
   @JsonProperty("ATT_NAME")
-
   public String getATTNAME() {
     return ATT_NAME;
   }
@@ -158,7 +115,6 @@ public class Capitalization   {
     this.ATT_NAME = ATT_NAME;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -208,6 +164,3 @@ public class Capitalization   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

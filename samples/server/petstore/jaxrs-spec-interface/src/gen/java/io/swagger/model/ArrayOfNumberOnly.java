@@ -3,30 +3,19 @@ package io.swagger.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ArrayOfNumberOnly   {
-  
   private @Valid List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
 
-  
   /**
-   
-   
-   
    **/
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
@@ -34,9 +23,8 @@ public class ArrayOfNumberOnly   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("ArrayNumber")
-
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
@@ -44,7 +32,6 @@ public class ArrayOfNumberOnly   {
     this.arrayNumber = arrayNumber;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -84,6 +71,3 @@ public class ArrayOfNumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

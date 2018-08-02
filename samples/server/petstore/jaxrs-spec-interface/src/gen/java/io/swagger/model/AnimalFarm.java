@@ -3,25 +3,18 @@ package io.swagger.model;
 import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class AnimalFarm extends ArrayList<Animal>  {
-  
 
-  
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -60,6 +53,3 @@ public class AnimalFarm extends ArrayList<Animal>  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

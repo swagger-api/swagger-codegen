@@ -1,29 +1,18 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SpecialModelName   {
-  
   private @Valid Long $specialPropertyName = null;
 
-  
   /**
-   
-   
-   
    **/
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
@@ -31,9 +20,8 @@ public class SpecialModelName   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("$special[property.name]")
-
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
@@ -41,7 +29,6 @@ public class SpecialModelName   {
     this.$specialPropertyName = $specialPropertyName;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -81,6 +68,3 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

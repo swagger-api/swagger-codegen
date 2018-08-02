@@ -1,31 +1,18 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ModelApiResponse   {
-  
-  private @Valid Integer code = null;
-  private @Valid String type = null;
-  private @Valid String message = null;
+  private @Valid Integer code = null;  private @Valid String type = null;  private @Valid String message = null;
 
-  
   /**
-   
-   
-   
    **/
   public ModelApiResponse code(Integer code) {
     this.code = code;
@@ -33,9 +20,8 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("code")
-
   public Integer getCode() {
     return code;
   }
@@ -43,11 +29,7 @@ public class ModelApiResponse   {
     this.code = code;
   }
 
-  
   /**
-   
-   
-   
    **/
   public ModelApiResponse type(String type) {
     this.type = type;
@@ -55,9 +37,8 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("type")
-
   public String getType() {
     return type;
   }
@@ -65,11 +46,7 @@ public class ModelApiResponse   {
     this.type = type;
   }
 
-  
   /**
-   
-   
-   
    **/
   public ModelApiResponse message(String message) {
     this.message = message;
@@ -77,9 +54,8 @@ public class ModelApiResponse   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("message")
-
   public String getMessage() {
     return message;
   }
@@ -87,7 +63,6 @@ public class ModelApiResponse   {
     this.message = message;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -131,6 +106,3 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
