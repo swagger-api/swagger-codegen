@@ -10,21 +10,15 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.auth;
 
 import io.swagger.client.Pair;
 
-
-
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 
-
 import java.util.Map;
 import java.util.List;
-
-
 
 
 public class HttpBasicAuth implements Authentication {
@@ -53,9 +47,6 @@ public class HttpBasicAuth implements Authentication {
       return;
     }
     String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
-
-
     headerParams.put("Authorization", "Basic " + Base64.getEncoder().encodeToString(str.getBytes(StandardCharsets.UTF_8)));
-
   }
 }
