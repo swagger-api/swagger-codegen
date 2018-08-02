@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -29,72 +28,70 @@ import java.util.UUID;
 
 public class FormatTest {
 
-  
   @JsonProperty("integer")
+
   private Integer integer = null;
-  
-  
+
   @JsonProperty("int32")
+
   private Integer int32 = null;
-  
-  
+
   @JsonProperty("int64")
+
   private Long int64 = null;
-  
-  
+
   @JsonProperty("number")
+
   private BigDecimal number = null;
-  
-  
+
   @JsonProperty("float")
+
   private Float _float = null;
-  
-  
+
   @JsonProperty("double")
+
   private Double _double = null;
-  
-  
+
   @JsonProperty("string")
+
   private String string = null;
-  
-  
+
   @JsonProperty("byte")
+
   private String _byte = null;
-  
-  
+
   @JsonProperty("binary")
+
   private String binary = null;
-  
-  
+
   @JsonProperty("date")
+
   private LocalDate date = null;
-  
-  
+
   @JsonProperty("dateTime")
+
   private OffsetDateTime dateTime = null;
-  
-  
+
   @JsonProperty("uuid")
+
   private UUID uuid = null;
-  
-  
+
   @JsonProperty("password")
+
   private String password = null;
-  
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;
   }
 
   
+
   /**
   * Get integer
   * minimum: 10
   * maximum: 100
   * @return integer
   **/
-  
-  
   @Schema(description = "")
   public Integer getInteger() {
     return integer;
@@ -102,21 +99,19 @@ public class FormatTest {
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
-  
   public FormatTest int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
 
   
+
   /**
   * Get int32
   * minimum: 20
   * maximum: 200
   * @return int32
   **/
-  
-  
   @Schema(description = "")
   public Integer getInt32() {
     return int32;
@@ -124,19 +119,17 @@ public class FormatTest {
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
-  
   public FormatTest int64(Long int64) {
     this.int64 = int64;
     return this;
   }
 
   
+
   /**
   * Get int64
   * @return int64
   **/
-  
-  
   @Schema(description = "")
   public Long getInt64() {
     return int64;
@@ -144,21 +137,19 @@ public class FormatTest {
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
-  
   public FormatTest number(BigDecimal number) {
     this.number = number;
     return this;
   }
 
   
+
   /**
   * Get number
   * minimum: 32
   * maximum: 543
   * @return number
   **/
-  
-  
   @Schema(required = true, description = "")
   public BigDecimal getNumber() {
     return number;
@@ -166,21 +157,19 @@ public class FormatTest {
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
-  
   public FormatTest _float(Float _float) {
     this._float = _float;
     return this;
   }
 
   
+
   /**
   * Get _float
   * minimum: 54
   * maximum: 987
   * @return _float
   **/
-  
-  
   @Schema(description = "")
   public Float getFloat() {
     return _float;
@@ -188,21 +177,19 @@ public class FormatTest {
   public void setFloat(Float _float) {
     this._float = _float;
   }
-  
   public FormatTest _double(Double _double) {
     this._double = _double;
     return this;
   }
 
   
+
   /**
   * Get _double
   * minimum: 67
   * maximum: 123
   * @return _double
   **/
-  
-  
   @Schema(description = "")
   public Double getDouble() {
     return _double;
@@ -210,19 +197,17 @@ public class FormatTest {
   public void setDouble(Double _double) {
     this._double = _double;
   }
-  
   public FormatTest string(String string) {
     this.string = string;
     return this;
   }
 
   
+
   /**
   * Get string
   * @return string
   **/
-  
-  
   @Schema(description = "")
   public String getString() {
     return string;
@@ -230,19 +215,17 @@ public class FormatTest {
   public void setString(String string) {
     this.string = string;
   }
-  
   public FormatTest _byte(String _byte) {
     this._byte = _byte;
     return this;
   }
 
   
+
   /**
   * Get _byte
   * @return _byte
   **/
-  
-  
   @Schema(required = true, description = "")
   public String getByte() {
     return _byte;
@@ -250,19 +233,17 @@ public class FormatTest {
   public void setByte(String _byte) {
     this._byte = _byte;
   }
-  
   public FormatTest binary(String binary) {
     this.binary = binary;
     return this;
   }
 
   
+
   /**
   * Get binary
   * @return binary
   **/
-  
-  
   @Schema(description = "")
   public String getBinary() {
     return binary;
@@ -270,19 +251,17 @@ public class FormatTest {
   public void setBinary(String binary) {
     this.binary = binary;
   }
-  
   public FormatTest date(LocalDate date) {
     this.date = date;
     return this;
   }
 
   
+
   /**
   * Get date
   * @return date
   **/
-  
-  
   @Schema(required = true, description = "")
   public LocalDate getDate() {
     return date;
@@ -290,19 +269,17 @@ public class FormatTest {
   public void setDate(LocalDate date) {
     this.date = date;
   }
-  
   public FormatTest dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
   
+
   /**
   * Get dateTime
   * @return dateTime
   **/
-  
-  
   @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
@@ -310,19 +287,17 @@ public class FormatTest {
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
-  
   public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
   
+
   /**
   * Get uuid
   * @return uuid
   **/
-  
-  
   @Schema(description = "")
   public UUID getUuid() {
     return uuid;
@@ -330,19 +305,17 @@ public class FormatTest {
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
-  
   public FormatTest password(String password) {
     this.password = password;
     return this;
   }
 
   
+
   /**
   * Get password
   * @return password
   **/
-  
-  
   @Schema(required = true, description = "")
   public String getPassword() {
     return password;
@@ -350,7 +323,6 @@ public class FormatTest {
   public void setPassword(String password) {
     this.password = password;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -379,7 +351,7 @@ public class FormatTest {
   public int hashCode() {
     return java.util.Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -413,8 +385,4 @@ public class FormatTest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-
