@@ -3,31 +3,20 @@ package io.swagger.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class MapTest  implements Serializable {
-  
-  private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
-public enum InnerEnum {
+  private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();public enum InnerEnum {
 
-    
     UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
-    
 
 
     private String value;
@@ -56,14 +45,9 @@ public enum InnerEnum {
         return null;
     }
 }
-
   private @Valid Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 
-  
   /**
-   
-   
-   
    **/
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
@@ -71,9 +55,8 @@ public enum InnerEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_map_of_string")
-
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -81,11 +64,7 @@ public enum InnerEnum {
     this.mapMapOfString = mapMapOfString;
   }
 
-  
   /**
-   
-   
-   
    **/
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
@@ -93,9 +72,8 @@ public enum InnerEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_of_enum_string")
-
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
@@ -103,7 +81,6 @@ public enum InnerEnum {
     this.mapOfEnumString = mapOfEnumString;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -145,6 +122,3 @@ public enum InnerEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

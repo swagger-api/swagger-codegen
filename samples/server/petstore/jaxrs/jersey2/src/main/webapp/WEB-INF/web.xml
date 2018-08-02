@@ -9,8 +9,7 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
-                io.swagger.jaxrs.listing,
-                io.swagger.sample.resource,
+                io.swagger.v3.jaxrs2.integration.resources,
                 io.swagger.api
             </param-value>
         </init-param>
@@ -22,32 +21,14 @@
             <param-name>jersey.config.server.wadl.disableWadl</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>openApi.configuration.prettyPrint</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-    <servlet>
-        <servlet-name>Jersey2Config</servlet-name>
-        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
-        <init-param>
-            <param-name>api.version</param-name>
-            <param-value>1.0.0</param-value>
-        </init-param>
-        <init-param>
-            <param-name>swagger.api.title</param-name>
-            <param-value>Swagger Server</param-value>
-        </init-param>
-        <init-param>
-            <param-name>swagger.api.basepath</param-name>
-            <param-value>http://petstore.swagger.io:80/v2</param-value>
-        </init-param>
-
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>Bootstrap</servlet-name>
-        <servlet-class>io.swagger.api.Bootstrap</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
+    
+    
     <servlet-mapping>
         <servlet-name>jersey</servlet-name>
         <url-pattern>/v2/*</url-pattern>

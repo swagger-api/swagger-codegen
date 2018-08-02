@@ -1,32 +1,19 @@
 package io.swagger.model;
 
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Tag  implements Serializable {
-  
-  private @Valid Long id = null;
-  private @Valid String name = null;
+  private @Valid Long id = null;  private @Valid String name = null;
 
-  
   /**
-   
-   
-   
    **/
   public Tag id(Long id) {
     this.id = id;
@@ -34,9 +21,8 @@ public class Tag  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -44,11 +30,7 @@ public class Tag  implements Serializable {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Tag name(String name) {
     this.name = name;
@@ -56,9 +38,8 @@ public class Tag  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("name")
-
   public String getName() {
     return name;
   }
@@ -66,7 +47,6 @@ public class Tag  implements Serializable {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -108,6 +88,3 @@ public class Tag  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

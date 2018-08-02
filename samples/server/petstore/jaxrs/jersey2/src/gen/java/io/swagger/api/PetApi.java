@@ -4,12 +4,18 @@ import io.swagger.model.*;
 import io.swagger.api.PetApiService;
 import io.swagger.api.factories.PetApiServiceFactory;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
-
 
 import java.util.Map;
 import java.util.List;
@@ -25,14 +31,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
-
 import javax.validation.constraints.*;
 
-
 @Path("/pet")
-
-
-@io.swagger.annotations.Api(description = "the pet API")
 
 
 public class PetApi  {
@@ -59,125 +60,137 @@ public class PetApi  {
       this.delegate = delegate;
    }
 
-
     @POST
     
     @Consumes({ "application/json", "application/xml" })
     
-    @io.swagger.annotations.ApiOperation(value = "Add a new pet to the store", notes = "", response = Void.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet pet
+    @Operation(summary = "Add a new pet to the store", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
+    public Response addPet(
+@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.addPet(pet,securityContext);
+        return delegate.addPet(body,securityContext);
     }
-
     @DELETE
     @Path("/{petId}")
     
     
-    @io.swagger.annotations.ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid pet value", response = Void.class) })
-    public Response deletePet(@ApiParam(value = "Pet id to delete",required=true) @PathParam("petId") Integer petId
-,@ApiParam(value = "" )@HeaderParam("api_key") String apiKey
+    @Operation(summary = "Deletes a pet", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid pet value") })
+    public Response deletePet(
+@Parameter(description = "Pet id to delete",required=true) @PathParam("petId") Integer petId
+
+,
+@Parameter(description = "" )@HeaderParam("api_key") String apiKey
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
     }
-
     @GET
     @Path("/findByStatus")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    public Response findPetsByStatus(@ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold") @QueryParam("status") List<String> status
+        @ApiResponse(responseCode = "400", description = "Invalid status value") })
+    public Response findPetsByStatus(
+@Parameter(description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
+) @QueryParam("status") List<String> status
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByStatus(status,securityContext);
     }
-
     @GET
     @Path("/findByTags")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
-    public Response findPetsByTags(@ApiParam(value = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
+        @ApiResponse(responseCode = "400", description = "Invalid tag value") })
+    public Response findPetsByTags(
+@Parameter(description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByTags(tags,securityContext);
     }
-
     @GET
     @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class),
+    @Operation(summary = "Find pet by ID", description = "Returns a single pet", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
-    public Response getPetById(@ApiParam(value = "ID of pet to return",required=true) @PathParam("petId") Integer petId
+        @ApiResponse(responseCode = "404", description = "Pet not found") })
+    public Response getPetById(
+@Parameter(description = "ID of pet to return",required=true) @PathParam("petId") Integer petId
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
     }
-
     @PUT
     
     @Consumes({ "application/json", "application/xml" })
     
-    @io.swagger.annotations.ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+    @Operation(summary = "Update an existing pet", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class),
+        @ApiResponse(responseCode = "404", description = "Pet not found"),
         
-        @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet pet
+        @ApiResponse(responseCode = "405", description = "Validation exception") })
+    public Response updatePet(
+@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updatePet(pet,securityContext);
+        return delegate.updatePet(body,securityContext);
     }
-
     @POST
     @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
     
-    @io.swagger.annotations.ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = Void.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response updatePetWithForm(@ApiParam(value = "ID of pet that needs to be updated",required=true) @PathParam("petId") Integer petId
-,@ApiParam(value = "" ) Object body
+    @Operation(summary = "Updates a pet in the store with form data", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
+    public Response updatePetWithForm(
+@Parameter(description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Integer petId
+
+,
+,
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updatePetWithForm(petId,body,securityContext);
+        return delegate.updatePetWithForm(petId,name,status,securityContext);
     }
-
     @POST
     @Path("/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "uploads an image", notes = "", response = ModelApiResponse.class, tags={ "pet", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
-    public Response uploadFile(@ApiParam(value = "ID of pet to update",required=true) @PathParam("petId") Integer petId
-,@ApiParam(value = "" ) Object body
+    @Operation(summary = "uploads an image", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    public Response uploadFile(
+@Parameter(description = "ID of pet to update",required=true) @PathParam("petId") Integer petId
+
+,
+,            @FormDataParam("file") InputStream fileInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadFile(petId,body,securityContext);
+        return delegate.uploadFile(petId,additionalMetadata,fileInputStream, fileDetail,securityContext);
     }
-
 }
-

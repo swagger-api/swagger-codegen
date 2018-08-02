@@ -4,11 +4,16 @@ import io.swagger.model.*;
 import io.swagger.api.FakeClassnameTestApiService;
 import io.swagger.api.factories.FakeClassnameTestApiServiceFactory;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import io.swagger.model.Client;
-
 
 import java.util.Map;
 import java.util.List;
@@ -24,14 +29,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
-
 import javax.validation.constraints.*;
 
-
 @Path("/fake_classname_test")
-
-
-@io.swagger.annotations.Api(description = "the fake_classname_test API")
 
 
 public class FakeClassnameTestApi  {
@@ -58,19 +58,18 @@ public class FakeClassnameTestApi  {
       this.delegate = delegate;
    }
 
-
     @PATCH
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test class name in snake case", notes = "", response = Client.class, tags={ "fake_classname_tags 123#$%^", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Response testClassname(@ApiParam(value = "client model" ,required=true) Client client
+    @Operation(summary = "To test class name in snake case", description = "", tags={ "fake_classname_tags 123#$%^" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+    public Response testClassname(
+@Parameter(description = "client model" ,required=true) Client body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testClassname(client,securityContext);
+        return delegate.testClassname(body,securityContext);
     }
-
 }
-

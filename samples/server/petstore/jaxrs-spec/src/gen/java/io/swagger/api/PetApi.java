@@ -1,13 +1,20 @@
 package io.swagger.api;
 
+import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
-
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Map;
 import java.util.List;
@@ -15,102 +22,105 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Path("/pet")
-@Api(description = "the pet API")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.java.JavaJAXRSSpecServerCodegen", date = "2018-04-04T20:14:22.579+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:45:22.616-05:00[America/Bogota]")
 public class PetApi {
 
-
-
     @POST
-    @ApiOperation(value = "Add a new pet to the store", notes = "", response = Void.class, tags={ "pet" })
+    @Operation(summary = "Add a new pet to the store", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 405, message = "Invalid input", response = Void.class)
+        @ApiResponse(responseCode = "405", description = "Invalid input") 
     })
-    public Response addPet(@Valid Pet pet) {
+    public Response addPet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @DELETE
     @Path("/{petId}")
-    @ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, tags={ "pet" })
+    @Operation(summary = "Deletes a pet", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid pet value", response = Void.class)
+        @ApiResponse(responseCode = "400", description = "Invalid pet value") 
     })
-    public Response deletePet(@PathParam("petId") @ApiParam("Pet id to delete") Integer petId,@HeaderParam("api_key")   String apiKey) {
+    public Response deletePet( @PathParam("petId")
+
+ @Parameter(description = "Pet id to delete") Integer petId
+,  @HeaderParam("api_key") 
+
+ String apiKey
+) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @GET
     @Path("/findByStatus")
-    @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", tags={ "pet" })
+    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class)
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
+        @ApiResponse(responseCode = "400", description = "Invalid status value") 
     })
-    public Response findPetsByStatus(@QueryParam("status") @NotNull   @ApiParam("Status values that need to be considered for filter")  List<String> status) {
+    public Response findPetsByStatus( @NotNull  @QueryParam("status") 
+
+ @Parameter(description = "Status values that need to be considered for filter")  List<String> status
+) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @GET
     @Path("/findByTags")
-    @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", tags={ "pet" })
+    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
-        @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class)
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
+        @ApiResponse(responseCode = "400", description = "Invalid tag value") 
     })
-    public Response findPetsByTags(@QueryParam("tags") @NotNull   @ApiParam("Tags to filter by")  List<String> tags) {
+    public Response findPetsByTags( @NotNull  @QueryParam("tags") 
+
+ @Parameter(description = "Tags to filter by")  List<String> tags
+) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @GET
     @Path("/{petId}")
-    @ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, tags={ "pet" })
+    @Operation(summary = "Find pet by ID", description = "Returns a single pet", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "Pet not found", response = Void.class)
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+        @ApiResponse(responseCode = "404", description = "Pet not found") 
     })
-    public Response getPetById(@PathParam("petId") @ApiParam("ID of pet to return") Integer petId) {
+    public Response getPetById( @PathParam("petId")
+
+ @Parameter(description = "ID of pet to return") Integer petId
+) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @PUT
-    @ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, tags={ "pet" })
+    @Operation(summary = "Update an existing pet", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "Pet not found", response = Void.class),
-        @ApiResponse(code = 405, message = "Validation exception", response = Void.class)
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+        @ApiResponse(responseCode = "404", description = "Pet not found"),
+        @ApiResponse(responseCode = "405", description = "Validation exception") 
     })
-    public Response updatePet(@Valid Pet pet) {
+    public Response updatePet(@Valid Pet body) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @POST
     @Path("/{petId}")
-    @ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = Void.class, tags={ "pet" })
+    @Operation(summary = "Updates a pet in the store with form data", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 405, message = "Invalid input", response = Void.class)
+        @ApiResponse(responseCode = "405", description = "Invalid input") 
     })
-    public Response updatePetWithForm(@PathParam("petId") @ApiParam("ID of pet that needs to be updated") Integer petId,@Valid Object body) {
+    public Response updatePetWithForm( @PathParam("petId")
+
+ @Parameter(description = "ID of pet that needs to be updated") Integer petId
+,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status) {
         return Response.ok().entity("magic!").build();
     }
-
-
     @POST
     @Path("/{petId}/uploadImage")
-    @ApiOperation(value = "uploads an image", notes = "", response = ModelApiResponse.class, tags={ "pet" })
+    @Operation(summary = "uploads an image", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class)
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) 
     })
-    public Response uploadFile(@PathParam("petId") @ApiParam("ID of pet to update") Integer petId,@Valid Object body) {
-        return Response.ok().entity("magic!").build();
-    }
+    public Response uploadFile( @PathParam("petId")
 
-}
+ @Parameter(description = "ID of pet to update") Integer petId
+,@FormParam(value = "additionalMetadata")  String additionalMetadata, @FormParam(value = "file") InputStream fileInputStream,
+   @FormParam(value = "file") Attachment fileDetail) {
+        return Response.ok().entity("magic!").build();
+    }}
