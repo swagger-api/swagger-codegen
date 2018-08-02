@@ -11,15 +11,10 @@ import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
 
 public class FakeApi {
   private ApiClient apiClient;
@@ -40,19 +35,15 @@ public class FakeApi {
     this.apiClient = apiClient;
   }
 
-  
   /**
    * 
    * Test serialization of outer boolean types
    * @param body Input boolean as post body (optional)
    * @return Boolean
    * @throws ApiException if fails to make API call
-   
-   
    */
   public Boolean fakeOuterBooleanSerialize(Boolean body) throws ApiException {
     Object localVarPostBody = body;
-    
     // create path and map variables
     String localVarPath = "/fake/outer/boolean".replaceAll("\\{format\\}","json");
 
@@ -61,12 +52,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -79,24 +67,18 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<Boolean> localVarReturnType = new GenericType<Boolean>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
   /**
    * 
    * Test serialization of object with outer number type
    * @param body Input composite as post body (optional)
    * @return OuterComposite
    * @throws ApiException if fails to make API call
-   
-   
    */
   public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws ApiException {
     Object localVarPostBody = body;
-    
     // create path and map variables
     String localVarPath = "/fake/outer/composite".replaceAll("\\{format\\}","json");
 
@@ -105,12 +87,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -123,24 +102,18 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<OuterComposite> localVarReturnType = new GenericType<OuterComposite>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
   /**
    * 
    * Test serialization of outer number types
    * @param body Input number as post body (optional)
    * @return BigDecimal
    * @throws ApiException if fails to make API call
-   
-   
    */
   public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws ApiException {
     Object localVarPostBody = body;
-    
     // create path and map variables
     String localVarPath = "/fake/outer/number".replaceAll("\\{format\\}","json");
 
@@ -149,12 +122,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -167,24 +137,18 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<BigDecimal> localVarReturnType = new GenericType<BigDecimal>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
   /**
    * 
    * Test serialization of outer string types
    * @param body Input string as post body (optional)
    * @return String
    * @throws ApiException if fails to make API call
-   
-   
    */
   public String fakeOuterStringSerialize(String body) throws ApiException {
     Object localVarPostBody = body;
-    
     // create path and map variables
     String localVarPath = "/fake/outer/string".replaceAll("\\{format\\}","json");
 
@@ -193,12 +157,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -211,29 +172,22 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<String> localVarReturnType = new GenericType<String>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
   /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Client
    * @throws ApiException if fails to make API call
-   
-   
    */
   public Client testClientModel(Client body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testClientModel");
     }
-    
     // create path and map variables
     String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
@@ -242,12 +196,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -260,28 +211,21 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
     return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
   /**
    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
    * @param body  (required)
    * @throws ApiException if fails to make API call
-   
-   
    */
   public void testEndpointParameters(Object body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testEndpointParameters");
     }
-    
     // create path and map variables
     String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
@@ -290,12 +234,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       
     };
@@ -308,11 +249,8 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] { "http_basic_test" };
 
-    
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
   /**
    * To test enum parameters
    * To test enum parameters
@@ -323,12 +261,9 @@ public class FakeApi {
    * @param enumQueryString Query parameter enum test (string) (optional)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @throws ApiException if fails to make API call
-   
-   
    */
   public void testEnumParameters(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
     Object localVarPostBody = body;
-    
     // create path and map variables
     String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
@@ -337,22 +272,16 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "enum_query_string_array", enumQueryStringArray));
-    
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "enum_query_string", enumQueryString));
-    
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "enum_query_integer", enumQueryInteger));
-    
 
     if (enumHeaderStringArray != null)
       localVarHeaderParams.put("enum_header_string_array", apiClient.parameterToString(enumHeaderStringArray));
-    if (enumHeaderString != null)
+if (enumHeaderString != null)
       localVarHeaderParams.put("enum_header_string", apiClient.parameterToString(enumHeaderString));
-    
 
     
-
     final String[] localVarAccepts = {
       
     };
@@ -365,27 +294,20 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
   /**
    * test inline additionalProperties
    * 
    * @param body request body (required)
    * @throws ApiException if fails to make API call
-   
-   
    */
   public void testInlineAdditionalProperties(Map<String, String> body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testInlineAdditionalProperties");
     }
-    
     // create path and map variables
     String localVarPath = "/fake/inline-additionalProperties".replaceAll("\\{format\\}","json");
 
@@ -394,12 +316,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       
     };
@@ -412,27 +331,20 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
   /**
    * test json serialization of form data
    * 
    * @param body  (required)
    * @throws ApiException if fails to make API call
-   
-   
    */
   public void testJsonFormData(Object body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testJsonFormData");
     }
-    
     // create path and map variables
     String localVarPath = "/fake/jsonFormData".replaceAll("\\{format\\}","json");
 
@@ -441,12 +353,9 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       
     };
@@ -459,10 +368,6 @@ public class FakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
 }
-

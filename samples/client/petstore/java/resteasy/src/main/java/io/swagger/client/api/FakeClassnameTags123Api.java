@@ -9,15 +9,10 @@ import javax.ws.rs.core.GenericType;
 
 import io.swagger.client.model.Client;
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
 
 public class FakeClassnameTags123Api {
   private ApiClient apiClient;
@@ -38,24 +33,19 @@ public class FakeClassnameTags123Api {
     this.apiClient = apiClient;
   }
 
-  
   /**
    * To test class name in snake case
    * 
    * @param body client model (required)
    * @return Client
    * @throws ApiException if fails to make API call
-   
-   
    */
   public Client testClassname(Client body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testClassname");
     }
-    
     // create path and map variables
     String localVarPath = "/fake_classname_test".replaceAll("\\{format\\}","json");
 
@@ -64,12 +54,9 @@ public class FakeClassnameTags123Api {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -82,11 +69,7 @@ public class FakeClassnameTags123Api {
 
     String[] localVarAuthNames = new String[] { "api_key_query" };
 
-    
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
     return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
 }
-
