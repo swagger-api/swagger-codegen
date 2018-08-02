@@ -20,7 +20,7 @@ public class GenerationRequest implements Serializable {
             this.name = name;
         }
 
-        String getTypeName() {
+        public String getTypeName() {
             return name;
         }
     }
@@ -34,7 +34,7 @@ public class GenerationRequest implements Serializable {
             this.name = name;
         }
 
-        String getCodegenVersionName() {
+        public String getCodegenVersionName() {
             return name;
         }
     }
