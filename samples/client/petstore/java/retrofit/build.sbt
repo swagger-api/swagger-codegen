@@ -11,10 +11,7 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       "com.squareup.okhttp" % "okhttp" % "2.7.5" % "compile",
       "com.squareup.retrofit" % "retrofit" % "1.9.0" % "compile",
-      
-      
       "io.swagger.core.v3" % "swagger-annotations" % "2.0.0" % "compile",
-      
       "org.apache.oltu.oauth2" % "org.apache.oltu.oauth2.client" % "1.0.2" % "compile",
       "joda-time" % "joda-time" % "2.9.3" % "compile",
       "junit" % "junit" % "4.12" % "test",
