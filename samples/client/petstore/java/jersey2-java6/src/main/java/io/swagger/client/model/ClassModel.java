@@ -31,7 +31,9 @@ public class ClassModel {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get propertyClass
   * @return propertyClass
   **/

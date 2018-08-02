@@ -41,6 +41,7 @@ public class ArrayOfArrayOfNumberOnly {
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
+
   /**
   * Get arrayArrayNumber
   * @return arrayArrayNumber

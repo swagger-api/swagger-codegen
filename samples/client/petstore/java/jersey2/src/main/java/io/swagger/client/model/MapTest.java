@@ -68,7 +68,8 @@ public class MapTest {
     return this;
   }
 
-    public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+  
+  public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
     if (this.mapMapOfString == null) {
       this.mapMapOfString = new HashMap<String, Map<String, String>>();
     }
@@ -91,7 +92,8 @@ public class MapTest {
     return this;
   }
 
-    public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+  
+  public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     if (this.mapOfEnumString == null) {
       this.mapOfEnumString = new HashMap<String, InnerEnum>();
     }

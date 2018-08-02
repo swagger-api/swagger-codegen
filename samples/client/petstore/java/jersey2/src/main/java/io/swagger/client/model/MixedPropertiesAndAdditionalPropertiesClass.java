@@ -43,7 +43,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get uuid
   * @return uuid
   **/
@@ -59,7 +61,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get dateTime
   * @return dateTime
   **/
@@ -75,7 +79,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+  
+  public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     if (this.map == null) {
       this.map = new HashMap<String, Animal>();
     }

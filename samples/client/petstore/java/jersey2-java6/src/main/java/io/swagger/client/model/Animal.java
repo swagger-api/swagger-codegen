@@ -41,7 +41,9 @@ public class Animal {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get className
   * @return className
   **/
@@ -57,7 +59,9 @@ public class Animal {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get color
   * @return color
   **/

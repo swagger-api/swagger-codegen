@@ -10,22 +10,23 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.TypeSelector;
 import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
-
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import io.swagger.client.model.*;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -33,29 +34,59 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
-
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 public class JSON {
     private Gson gson;
     private boolean isLenientOnJson = false;
     private DateTypeAdapter dateTypeAdapter = new DateTypeAdapter();
     private SqlDateTypeAdapter sqlDateTypeAdapter = new SqlDateTypeAdapter();
-    
-    
     private OffsetDateTimeTypeAdapter offsetDateTimeTypeAdapter = new OffsetDateTimeTypeAdapter();
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
-    
+
+    public static GsonBuilder createGson() {
+        GsonFireBuilder fireBuilder = new GsonFireBuilder()
+          .registerTypeSelector(Animal.class, new TypeSelector<Animal>() {
+            @Override
+            public Class<? extends Animal> getClassForElement(JsonElement readElement) {
+                Map<String, Class<? extends Animal>> classByDiscriminatorValue = new HashMap<>();
+
+                    classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
+                    classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
+                    classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, "className"));
+            }
+          })
+        ;
+        return fireBuilder.createGsonBuilder();
+    }
+
+    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
+        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
+        if(null == element) {
+            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
+        }
+        return element.getAsString();
+    }
+
+    private static <T> Class<? extends T> getClassByDiscriminator(Map<String, Class<? extends T>> classByDiscriminatorValue, String discriminatorValue) {
+        Class<? extends T> clazz = classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
+        if(null == clazz) {
+            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
+        }
+        return clazz;
+    }
 
     public JSON() {
-        gson = new GsonBuilder()
+        gson = createGson()
             .registerTypeAdapter(Date.class, dateTypeAdapter)
             .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
-            
-            
             .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
             .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
-            
             .create();
     }
 
@@ -122,8 +153,6 @@ public class JSON {
         }
     }
 
-    
-    
     /**
      * Gson TypeAdapter for JSR310 OffsetDateTime type
      */
@@ -219,7 +248,6 @@ public class JSON {
         return this;
     }
 
-    
     /**
      * Gson TypeAdapter for java.sql.Date type
      * If the dateFormat is null, a simple "yyyy-MM-dd" format will be used

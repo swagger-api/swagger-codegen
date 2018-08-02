@@ -98,7 +98,9 @@ public class EnumArrays {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get justSymbol
   * @return justSymbol
   **/
@@ -121,6 +123,7 @@ public class EnumArrays {
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
+
   /**
   * Get arrayEnum
   * @return arrayEnum

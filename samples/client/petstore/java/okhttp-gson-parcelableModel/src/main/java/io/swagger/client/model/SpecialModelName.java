@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -29,22 +28,19 @@ import android.os.Parcel;
  */
 
 public class SpecialModelName {
-
   @SerializedName("$special[property.name]")
   private Long $specialPropertyName = null;
-  
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
   
+
   /**
   * Get $specialPropertyName
   * @return $specialPropertyName
   **/
-  
-  
   @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
@@ -52,7 +48,6 @@ public class SpecialModelName {
   public void set$SpecialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -69,7 +64,7 @@ public class SpecialModelName {
   public int hashCode() {
     return java.util.Objects.hash($specialPropertyName);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -91,12 +86,9 @@ public class SpecialModelName {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
     
-    
     out.writeValue($specialPropertyName);
-    
   }
 
   public SpecialModelName() {
@@ -105,8 +97,8 @@ public class SpecialModelName {
 
   SpecialModelName(Parcel in) {
     
-    
     $specialPropertyName = (Long)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -122,6 +114,3 @@ public class SpecialModelName {
     }
   };
 }
-
-
-

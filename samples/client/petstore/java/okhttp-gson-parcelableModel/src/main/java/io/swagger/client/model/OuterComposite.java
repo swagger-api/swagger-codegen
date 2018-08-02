@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,28 +29,23 @@ import android.os.Parcel;
  */
 
 public class OuterComposite {
-
   @SerializedName("my_number")
   private BigDecimal myNumber = null;
-  
   @SerializedName("my_string")
   private String myString = null;
-  
   @SerializedName("my_boolean")
   private Boolean myBoolean = null;
-  
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;
   }
 
   
+
   /**
   * Get myNumber
   * @return myNumber
   **/
-  
-  
   @Schema(description = "")
   public BigDecimal getMyNumber() {
     return myNumber;
@@ -59,19 +53,17 @@ public class OuterComposite {
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
-  
   public OuterComposite myString(String myString) {
     this.myString = myString;
     return this;
   }
 
   
+
   /**
   * Get myString
   * @return myString
   **/
-  
-  
   @Schema(description = "")
   public String getMyString() {
     return myString;
@@ -79,19 +71,17 @@ public class OuterComposite {
   public void setMyString(String myString) {
     this.myString = myString;
   }
-  
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
   }
 
   
+
   /**
   * Get myBoolean
   * @return myBoolean
   **/
-  
-  
   @Schema(description = "")
   public Boolean getMyBoolean() {
     return myBoolean;
@@ -99,7 +89,6 @@ public class OuterComposite {
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -118,7 +107,7 @@ public class OuterComposite {
   public int hashCode() {
     return java.util.Objects.hash(myNumber, myString, myBoolean);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -142,14 +131,11 @@ public class OuterComposite {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(myNumber);
     out.writeValue(myString);
     out.writeValue(myBoolean);
-    
   }
 
   public OuterComposite() {
@@ -159,7 +145,11 @@ public class OuterComposite {
   OuterComposite(Parcel in) {
     
     
-    myNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());myString = (String)in.readValue(null);myBoolean = (Boolean)in.readValue(null);
+    myNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());
+    myString = (String)in.readValue(null);
+    
+    myBoolean = (Boolean)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -175,6 +165,3 @@ public class OuterComposite {
     }
   };
 }
-
-
-

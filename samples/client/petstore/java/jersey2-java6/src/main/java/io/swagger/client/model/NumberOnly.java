@@ -32,7 +32,9 @@ public class NumberOnly {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get justNumber
   * @return justNumber
   **/
