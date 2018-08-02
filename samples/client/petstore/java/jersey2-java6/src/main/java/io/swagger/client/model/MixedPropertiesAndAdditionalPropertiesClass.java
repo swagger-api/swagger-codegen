@@ -43,8 +43,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    
-  /**
+    /**
   * Get uuid
   * @return uuid
   **/
@@ -60,8 +59,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    
-  /**
+    /**
   * Get dateTime
   * @return dateTime
   **/
@@ -136,6 +134,5 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

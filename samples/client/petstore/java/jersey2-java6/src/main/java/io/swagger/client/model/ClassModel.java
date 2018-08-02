@@ -31,8 +31,7 @@ public class ClassModel {
     return this;
   }
 
-    
-  /**
+    /**
   * Get propertyClass
   * @return propertyClass
   **/
@@ -80,6 +79,5 @@ public class ClassModel {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

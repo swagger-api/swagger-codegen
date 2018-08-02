@@ -52,8 +52,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get id
   * @return id
   **/
@@ -69,8 +68,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get username
   * @return username
   **/
@@ -86,8 +84,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get firstName
   * @return firstName
   **/
@@ -103,8 +100,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get lastName
   * @return lastName
   **/
@@ -120,8 +116,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get email
   * @return email
   **/
@@ -137,8 +132,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get password
   * @return password
   **/
@@ -154,8 +148,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * Get phone
   * @return phone
   **/
@@ -171,8 +164,7 @@ public class User {
     return this;
   }
 
-    
-  /**
+    /**
   * User Status
   * @return userStatus
   **/
@@ -234,6 +226,5 @@ public class User {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

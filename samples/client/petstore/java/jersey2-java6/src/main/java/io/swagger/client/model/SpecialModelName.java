@@ -31,8 +31,7 @@ public class SpecialModelName {
     return this;
   }
 
-    
-  /**
+    /**
   * Get $specialPropertyName
   * @return $specialPropertyName
   **/
@@ -80,6 +79,5 @@ public class SpecialModelName {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

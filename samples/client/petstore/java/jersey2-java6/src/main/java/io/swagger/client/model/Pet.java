@@ -82,8 +82,7 @@ public class Pet {
     return this;
   }
 
-    
-  /**
+    /**
   * Get id
   * @return id
   **/
@@ -99,8 +98,7 @@ public class Pet {
     return this;
   }
 
-    
-  /**
+    /**
   * Get category
   * @return category
   **/
@@ -116,8 +114,7 @@ public class Pet {
     return this;
   }
 
-    
-  /**
+    /**
   * Get name
   * @return name
   **/
@@ -137,7 +134,6 @@ public class Pet {
     this.photoUrls.add(photoUrlsItem);
     return this;
   }
-  
   /**
   * Get photoUrls
   * @return photoUrls
@@ -161,7 +157,6 @@ public class Pet {
     this.tags.add(tagsItem);
     return this;
   }
-  
   /**
   * Get tags
   * @return tags
@@ -178,8 +173,7 @@ public class Pet {
     return this;
   }
 
-    
-  /**
+    /**
   * pet status in the store
   * @return status
   **/
@@ -237,6 +231,5 @@ public class Pet {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

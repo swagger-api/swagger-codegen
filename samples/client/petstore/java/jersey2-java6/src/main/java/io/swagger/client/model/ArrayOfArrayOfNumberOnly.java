@@ -41,7 +41,6 @@ public class ArrayOfArrayOfNumberOnly {
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
-  
   /**
   * Get arrayArrayNumber
   * @return arrayArrayNumber
@@ -90,6 +89,5 @@ public class ArrayOfArrayOfNumberOnly {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

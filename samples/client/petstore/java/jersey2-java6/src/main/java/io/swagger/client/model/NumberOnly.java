@@ -32,8 +32,7 @@ public class NumberOnly {
     return this;
   }
 
-    
-  /**
+    /**
   * Get justNumber
   * @return justNumber
   **/
@@ -81,6 +80,5 @@ public class NumberOnly {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

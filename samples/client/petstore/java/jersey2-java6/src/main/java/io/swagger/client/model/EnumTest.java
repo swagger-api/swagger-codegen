@@ -135,8 +135,7 @@ public class EnumTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get enumString
   * @return enumString
   **/
@@ -152,8 +151,7 @@ public class EnumTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get enumInteger
   * @return enumInteger
   **/
@@ -169,8 +167,7 @@ public class EnumTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get enumNumber
   * @return enumNumber
   **/
@@ -186,8 +183,7 @@ public class EnumTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get outerEnum
   * @return outerEnum
   **/
@@ -241,6 +237,5 @@ public class EnumTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

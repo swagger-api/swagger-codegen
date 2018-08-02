@@ -31,8 +31,7 @@ public class ModelReturn {
     return this;
   }
 
-    
-  /**
+    /**
   * Get _return
   * @return _return
   **/
@@ -80,6 +79,5 @@ public class ModelReturn {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

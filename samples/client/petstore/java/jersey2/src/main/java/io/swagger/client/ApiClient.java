@@ -15,9 +15,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 import org.glassfish.jersey.jackson.JacksonFeature;
-
 import org.glassfish.jersey.logging.LoggingFeature;
-
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.MultiPart;
@@ -26,11 +24,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -54,7 +49,6 @@ import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
-
 
 public class ApiClient {
   protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -606,10 +600,7 @@ public class ApiClient {
   public File downloadFileFromResponse(Response response) throws ApiException {
     try {
       File file = prepareDownloadFile(response);
-
       Files.copy(response.readEntity(InputStream.class), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-
       return file;
     } catch (IOException e) {
       throw new ApiException(e);
@@ -770,14 +761,12 @@ public class ApiClient {
     clientConfig.register(json);
     clientConfig.register(JacksonFeature.class);
     clientConfig.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
-    
     if (debugging) {
       clientConfig.register(new LoggingFeature(java.util.logging.Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), java.util.logging.Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, 1024*50 /* Log payloads up to 50K */));
       clientConfig.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY, LoggingFeature.Verbosity.PAYLOAD_ANY);
       // Set logger to ALL
       java.util.logging.Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME).setLevel(java.util.logging.Level.ALL);
     }
-    
     performAdditionalClientConfiguration(clientConfig);
     return ClientBuilder.newClient(clientConfig);
   }

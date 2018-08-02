@@ -34,8 +34,7 @@ public class Category {
     return this;
   }
 
-    
-  /**
+    /**
   * Get id
   * @return id
   **/
@@ -51,8 +50,7 @@ public class Category {
     return this;
   }
 
-    
-  /**
+    /**
   * Get name
   * @return name
   **/
@@ -102,6 +100,5 @@ public class Category {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }
