@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -28,25 +27,21 @@ import java.io.IOException;
 
 
 public class Animal {
-
   @SerializedName("className")
   private String className = null;
-  
   @SerializedName("color")
   private String color = "red";
-  
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
   
+
   /**
   * Get className
   * @return className
   **/
-  
-  
   @Schema(required = true, description = "")
   public String getClassName() {
     return className;
@@ -54,19 +49,17 @@ public class Animal {
   public void setClassName(String className) {
     this.className = className;
   }
-  
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
   
+
   /**
   * Get color
   * @return color
   **/
-  
-  
   @Schema(description = "")
   public String getColor() {
     return color;
@@ -74,7 +67,6 @@ public class Animal {
   public void setColor(String color) {
     this.color = color;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -92,7 +84,7 @@ public class Animal {
   public int hashCode() {
     return java.util.Objects.hash(className, color);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -115,8 +107,4 @@ public class Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

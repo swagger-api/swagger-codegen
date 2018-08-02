@@ -177,14 +177,11 @@
   </profiles>
 
   <dependencies>
-    
-    
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
       <version>${swagger-core-version}</version>
     </dependency>
-    
     <dependency>
       <groupId>com.squareup.retrofit</groupId>
       <artifactId>retrofit</artifactId>
@@ -206,7 +203,6 @@
       <version>${jodatime-version}</version>
   </dependency>
 
-    
 
     <!-- test dependencies -->
     <dependency>
@@ -217,10 +213,7 @@
     </dependency>
   </dependencies>
   <properties>
-    
-    
     <swagger-core-version>2.0.0</swagger-core-version>
-    
     <retrofit-version>1.9.0</retrofit-version>
     <okhttp-version>2.7.5</okhttp-version>
     <jodatime-version>2.9.9</jodatime-version>
