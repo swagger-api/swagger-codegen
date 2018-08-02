@@ -22,11 +22,9 @@
  * limitations under the License.
  */
 
-
 package io.swagger.api;
 
 import io.swagger.model.Client;
-
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -37,10 +35,7 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
-
-
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,23 +45,15 @@ import java.util.Map;
 
 
 
-
-
 /**
- 
  * Swagger Petstore
  *
- 
- 
  * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
- 
  * API tests for AnotherFakeApi 
  */
-
 public class AnotherFakeApiTest {
 
-    
 
     private AnotherFakeApi api;
     
@@ -76,40 +63,27 @@ public class AnotherFakeApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        
-
         api = JAXRSClientFactory.create("http://petstore.swagger.io:80/v2", AnotherFakeApi.class, providers);
-
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-
-
     }
 
-    
     /**
-     
      * To test special tags
      *
-     
      * To test special tags
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void testSpecialTagsTest() {
-        
-        Client client = null;
-        
-        //Client response = api.testSpecialTags(client);
+        Client body = null;
+        //Client response = api.testSpecialTags(body);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
 }

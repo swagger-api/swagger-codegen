@@ -1,15 +1,8 @@
 package io.swagger.model;
 
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,36 +12,19 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class Client  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String client = null;
-
-  
-  
  /**
-  
-  
    * Get client
-  
-  
-  
    * @return client
   **/
   @JsonProperty("client")
-
-
   public String getClient() {
     return client;
   }
 
-  
   public void setClient(String client) {
     this.client = client;
   }
@@ -57,11 +33,7 @@ public class Client  {
     this.client = client;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -84,7 +56,3 @@ public class Client  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

@@ -4,16 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import org.joda.time.LocalDate;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,136 +16,57 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class FormatTest  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer integer = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer int32 = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Long int64 = null;
-
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private BigDecimal number = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Float _float = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Double _double = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String string = null;
-
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private String _byte = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String binary = null;
-
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private LocalDate date = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Date dateTime = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private UUID uuid = null;
-
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private String password = null;
-
-  
-  
  /**
-  
-  
    * Get integer
-  
-  
    * minimum: 10
-  
-  
    * maximum: 100
-  
    * @return integer
   **/
   @JsonProperty("integer")
-
-
  @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
 
-  
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
@@ -161,32 +75,18 @@ public class FormatTest  {
     this.integer = integer;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get int32
-  
-  
    * minimum: 20
-  
-  
    * maximum: 200
-  
    * @return int32
   **/
   @JsonProperty("int32")
-
-
  @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
 
-  
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
@@ -195,28 +95,16 @@ public class FormatTest  {
     this.int32 = int32;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get int64
-  
-  
-  
    * @return int64
   **/
   @JsonProperty("int64")
-
-
   public Long getInt64() {
     return int64;
   }
 
-  
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
@@ -225,30 +113,19 @@ public class FormatTest  {
     this.int64 = int64;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get number
-  
-  
-  
+   * minimum: 32
+   * maximum: 543
    * @return number
   **/
   @JsonProperty("number")
-
-
   @NotNull
-
-  public BigDecimal getNumber() {
+ @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
     return number;
   }
 
-  
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
@@ -257,28 +134,18 @@ public class FormatTest  {
     this.number = number;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get _float
-  
-  
-  
+   * minimum: 54
+   * maximum: 987
    * @return _float
   **/
   @JsonProperty("float")
-
-
-  public Float getFloat() {
+ @DecimalMin("54") @DecimalMax("987")  public Float getFloat() {
     return _float;
   }
 
-  
   public void setFloat(Float _float) {
     this._float = _float;
   }
@@ -287,28 +154,18 @@ public class FormatTest  {
     this._float = _float;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get _double
-  
-  
-  
+   * minimum: 67
+   * maximum: 123
    * @return _double
   **/
   @JsonProperty("double")
-
-
-  public Double getDouble() {
+ @DecimalMin("67") @DecimalMax("123")  public Double getDouble() {
     return _double;
   }
 
-  
   public void setDouble(Double _double) {
     this._double = _double;
   }
@@ -317,28 +174,16 @@ public class FormatTest  {
     this._double = _double;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get string
-  
-  
-  
    * @return string
   **/
   @JsonProperty("string")
-
-
  @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
 
-  
   public void setString(String string) {
     this.string = string;
   }
@@ -347,30 +192,17 @@ public class FormatTest  {
     this.string = string;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get _byte
-  
-  
-  
    * @return _byte
   **/
   @JsonProperty("byte")
-
-
   @NotNull
-
  @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
     return _byte;
   }
 
-  
   public void setByte(String _byte) {
     this._byte = _byte;
   }
@@ -379,28 +211,16 @@ public class FormatTest  {
     this._byte = _byte;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get binary
-  
-  
-  
    * @return binary
   **/
   @JsonProperty("binary")
-
-
   public String getBinary() {
     return binary;
   }
 
-  
   public void setBinary(String binary) {
     this.binary = binary;
   }
@@ -409,30 +229,17 @@ public class FormatTest  {
     this.binary = binary;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get date
-  
-  
-  
    * @return date
   **/
   @JsonProperty("date")
-
-
   @NotNull
-
   public LocalDate getDate() {
     return date;
   }
 
-  
   public void setDate(LocalDate date) {
     this.date = date;
   }
@@ -441,28 +248,16 @@ public class FormatTest  {
     this.date = date;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get dateTime
-  
-  
-  
    * @return dateTime
   **/
   @JsonProperty("dateTime")
-
-
   public Date getDateTime() {
     return dateTime;
   }
 
-  
   public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
@@ -471,28 +266,16 @@ public class FormatTest  {
     this.dateTime = dateTime;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get uuid
-  
-  
-  
    * @return uuid
   **/
   @JsonProperty("uuid")
-
-
   public UUID getUuid() {
     return uuid;
   }
 
-  
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
@@ -501,30 +284,17 @@ public class FormatTest  {
     this.uuid = uuid;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get password
-  
-  
-  
    * @return password
   **/
   @JsonProperty("password")
-
-
   @NotNull
-
   public String getPassword() {
     return password;
   }
 
-  
   public void setPassword(String password) {
     this.password = password;
   }
@@ -533,11 +303,7 @@ public class FormatTest  {
     this.password = password;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -572,7 +338,3 @@ public class FormatTest  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

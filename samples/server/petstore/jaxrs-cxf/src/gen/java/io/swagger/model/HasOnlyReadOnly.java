@@ -1,15 +1,8 @@
 package io.swagger.model;
 
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,44 +12,22 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class HasOnlyReadOnly  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String bar = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String foo = null;
-
-  
-  
  /**
-  
-  
    * Get bar
-  
-  
-  
    * @return bar
   **/
   @JsonProperty("bar")
-
-
   public String getBar() {
     return bar;
   }
 
-  
   public void setBar(String bar) {
     this.bar = bar;
   }
@@ -65,28 +36,16 @@ public class HasOnlyReadOnly  {
     this.bar = bar;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get foo
-  
-  
-  
    * @return foo
   **/
   @JsonProperty("foo")
-
-
   public String getFoo() {
     return foo;
   }
 
-  
   public void setFoo(String foo) {
     this.foo = foo;
   }
@@ -95,11 +54,7 @@ public class HasOnlyReadOnly  {
     this.foo = foo;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -123,7 +78,3 @@ public class HasOnlyReadOnly  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-
