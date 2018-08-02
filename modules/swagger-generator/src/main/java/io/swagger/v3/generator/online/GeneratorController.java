@@ -321,7 +321,7 @@ public class GeneratorController {
             LOGGER.error("Could not delete files.", ex);
         }
         if (bytes != null) {
-            final String friendlyName = lang + "-" + type.name();
+            final String friendlyName = lang + "-" + type.getTypeName();
             return new ResponseContext().status(200)
                     .entity(bytes)
                     .contentType(MediaType.APPLICATION_OCTET_STREAM_TYPE)

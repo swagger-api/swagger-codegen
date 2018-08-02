@@ -41,10 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.21.0</version>
-                <configuration>
-                    <useManifestOnlyJar>false</useManifestOnlyJar>
-                </configuration>
+                <version>2.22.0</version>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -65,6 +62,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty-version}</version>
                 <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>8079</stopPort>
+                    <stopKey>STOP</stopKey>
                     <useTestScope>true</useTestScope>
                     <systemProperties>
                         <systemProperty>
@@ -83,8 +83,6 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <stopPort>8079</stopPort>
-                    <stopKey>stopit</stopKey>
                     <httpConnector>
                         <port>8080</port>
                         <idleTimeout>60000</idleTimeout>
@@ -95,6 +93,7 @@
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
+                            <goal>stop</goal>
                             <goal>start</goal>
                         </goals>
                         <configuration>
