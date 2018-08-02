@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -21,26 +20,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
- */@Schema(description = "Model for testing model with \"_class\" property")
-
+ */
+@Schema(description = "Model for testing model with \"_class\" property")
 public class ClassModel {
 
-  
   @JsonProperty("_class")
   private String propertyClass = null;
-  
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
   
+
   /**
   * Get propertyClass
   * @return propertyClass
   **/
-  
-  
   @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
@@ -48,7 +44,6 @@ public class ClassModel {
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,7 +60,7 @@ public class ClassModel {
   public int hashCode() {
     return java.util.Objects.hash(propertyClass);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -87,8 +82,4 @@ public class ClassModel {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

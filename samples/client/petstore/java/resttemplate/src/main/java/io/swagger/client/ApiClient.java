@@ -1,6 +1,5 @@
 package io.swagger.client;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -26,13 +24,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import org.threeten.bp.*;
 import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +54,6 @@ import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
-
 
 @Component("io.swagger.client.ApiClient")
 public class ApiClient {
@@ -313,14 +308,12 @@ public class ApiClient {
      */
     public ApiClient setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
-        
         for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
             if(converter instanceof AbstractJackson2HttpMessageConverter){
                 ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
                 mapper.setDateFormat(dateFormat);
             }
         }
-        
         return this;
     }
     
@@ -574,7 +567,6 @@ public class ApiClient {
      */
     protected RestTemplate buildRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
-        
         for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
             if(converter instanceof AbstractJackson2HttpMessageConverter){
                 ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
@@ -585,7 +577,6 @@ public class ApiClient {
                 mapper.registerModule(module);
             }
         }
-        
         // This allows us to read the response more than once - Necessary for debugging.
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         return restTemplate;
