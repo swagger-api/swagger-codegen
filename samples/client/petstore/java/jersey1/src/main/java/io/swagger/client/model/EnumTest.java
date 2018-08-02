@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -25,12 +24,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 public class EnumTest {
-
   /**
    * Gets or Sets enumString
    */
   public enum EnumStringEnum {
-    
     UPPER("UPPER"),
     LOWER("lower"),
     EMPTY("");
@@ -40,9 +37,7 @@ public class EnumTest {
     EnumStringEnum(String value) {
       this.value = value;
     }
-    
     @JsonValue
-    
     public String getValue() {
       return value;
     }
@@ -51,9 +46,7 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     @JsonCreator
-    
     public static EnumStringEnum fromValue(String text) {
       for (EnumStringEnum b : EnumStringEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -62,18 +55,14 @@ public class EnumTest {
       }
       return null;
     }
-    
+
   }
-  
-  
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
-  
   /**
    * Gets or Sets enumInteger
    */
   public enum EnumIntegerEnum {
-    
     NUMBER_1(1),
     NUMBER_MINUS_1(-1);
 
@@ -82,9 +71,7 @@ public class EnumTest {
     EnumIntegerEnum(Integer value) {
       this.value = value;
     }
-    
     @JsonValue
-    
     public Integer getValue() {
       return value;
     }
@@ -93,9 +80,7 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     @JsonCreator
-    
     public static EnumIntegerEnum fromValue(String text) {
       for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -104,18 +89,14 @@ public class EnumTest {
       }
       return null;
     }
-    
+
   }
-  
-  
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
-  
   /**
    * Gets or Sets enumNumber
    */
   public enum EnumNumberEnum {
-    
     NUMBER_1_DOT_1(1.1),
     NUMBER_MINUS_1_DOT_2(-1.2);
 
@@ -124,9 +105,7 @@ public class EnumTest {
     EnumNumberEnum(Double value) {
       this.value = value;
     }
-    
     @JsonValue
-    
     public Double getValue() {
       return value;
     }
@@ -135,9 +114,7 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     @JsonCreator
-    
     public static EnumNumberEnum fromValue(String text) {
       for (EnumNumberEnum b : EnumNumberEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -146,29 +123,23 @@ public class EnumTest {
       }
       return null;
     }
-    
+
   }
-  
-  
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
-  
-  
+
   @JsonProperty("outerEnum")
   private OuterEnum outerEnum = null;
-  
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-  
+    
   /**
   * Get enumString
   * @return enumString
   **/
-  
-  
   @Schema(description = "")
   public EnumStringEnum getEnumString() {
     return enumString;
@@ -176,19 +147,16 @@ public class EnumTest {
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
-  
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
-  
+    
   /**
   * Get enumInteger
   * @return enumInteger
   **/
-  
-  
   @Schema(description = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
@@ -196,19 +164,16 @@ public class EnumTest {
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
-  
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
-  
+    
   /**
   * Get enumNumber
   * @return enumNumber
   **/
-  
-  
   @Schema(description = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
@@ -216,19 +181,16 @@ public class EnumTest {
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
-  
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
 
-  
+    
   /**
   * Get outerEnum
   * @return outerEnum
   **/
-  
-  
   @Schema(description = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
@@ -236,7 +198,6 @@ public class EnumTest {
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -256,7 +217,7 @@ public class EnumTest {
   public int hashCode() {
     return java.util.Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -281,8 +242,5 @@ public class EnumTest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-
