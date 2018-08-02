@@ -28,7 +28,6 @@ schemes:
   - http
 paths:
   /pet:
-
     post:
       tags:
         - pet
