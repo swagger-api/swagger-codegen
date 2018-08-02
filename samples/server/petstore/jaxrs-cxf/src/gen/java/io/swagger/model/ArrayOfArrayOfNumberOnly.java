@@ -3,16 +3,9 @@ package io.swagger.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,36 +15,19 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class ArrayOfArrayOfNumberOnly  {
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private List<List<BigDecimal>> arrayArrayNumber = null;
-
-
-  
-  
  /**
-  
-  
    * Get arrayArrayNumber
-  
-  
-  
    * @return arrayArrayNumber
   **/
   @JsonProperty("ArrayArrayNumber")
-
-
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
 
-  
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
@@ -60,17 +36,12 @@ public class ArrayOfArrayOfNumberOnly  {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;
   }
-  
 
   public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -93,7 +64,3 @@ public class ArrayOfArrayOfNumberOnly  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

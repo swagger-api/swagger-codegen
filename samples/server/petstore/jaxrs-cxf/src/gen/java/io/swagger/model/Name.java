@@ -1,16 +1,9 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,67 +13,33 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * Model for testing model name same as property name
  **/
-@ApiModel(description="Model for testing model name same as property name")
-
+@Schema(description="Model for testing model name same as property name")
 public class Name  {
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private Integer name = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer snakeCase = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String property = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer _123Number = null;
-
-  
-  
  /**
-  
-  
    * Get name
-  
-  
-  
    * @return name
   **/
   @JsonProperty("name")
-
-
   @NotNull
-
   public Integer getName() {
     return name;
   }
 
-  
   public void setName(Integer name) {
     this.name = name;
   }
@@ -89,28 +48,16 @@ public class Name  {
     this.name = name;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get snakeCase
-  
-  
-  
    * @return snakeCase
   **/
   @JsonProperty("snake_case")
-
-
   public Integer getSnakeCase() {
     return snakeCase;
   }
 
-  
   public void setSnakeCase(Integer snakeCase) {
     this.snakeCase = snakeCase;
   }
@@ -119,28 +66,16 @@ public class Name  {
     this.snakeCase = snakeCase;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get property
-  
-  
-  
    * @return property
   **/
   @JsonProperty("property")
-
-
   public String getProperty() {
     return property;
   }
 
-  
   public void setProperty(String property) {
     this.property = property;
   }
@@ -149,28 +84,16 @@ public class Name  {
     this.property = property;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get _123Number
-  
-  
-  
    * @return _123Number
   **/
   @JsonProperty("123Number")
-
-
   public Integer get123Number() {
     return _123Number;
   }
 
-  
   public void set123Number(Integer _123Number) {
     this._123Number = _123Number;
   }
@@ -179,11 +102,7 @@ public class Name  {
     this._123Number = _123Number;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -209,7 +128,3 @@ public class Name  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

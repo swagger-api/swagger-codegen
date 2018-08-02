@@ -2,16 +2,9 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,46 +14,23 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class Animal  {
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
-
+  @Schema(required = true, description = "")
   private String className = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String color = "red";
-
-  
-  
  /**
-  
-  
    * Get className
-  
-  
-  
    * @return className
   **/
   @JsonProperty("className")
-
-
   @NotNull
-
   public String getClassName() {
     return className;
   }
 
-  
   public void setClassName(String className) {
     this.className = className;
   }
@@ -69,28 +39,16 @@ public class Animal  {
     this.className = className;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get color
-  
-  
-  
    * @return color
   **/
   @JsonProperty("color")
-
-
   public String getColor() {
     return color;
   }
 
-  
   public void setColor(String color) {
     this.color = color;
   }
@@ -99,11 +57,7 @@ public class Animal  {
     this.color = color;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -127,7 +81,3 @@ public class Animal  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

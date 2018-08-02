@@ -1,15 +1,8 @@
 package io.swagger.model;
 
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,44 +12,22 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class Category  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Long id = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String name = null;
-
-  
-  
  /**
-  
-  
    * Get id
-  
-  
-  
    * @return id
   **/
   @JsonProperty("id")
-
-
   public Long getId() {
     return id;
   }
 
-  
   public void setId(Long id) {
     this.id = id;
   }
@@ -65,28 +36,16 @@ public class Category  {
     this.id = id;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get name
-  
-  
-  
    * @return name
   **/
   @JsonProperty("name")
-
-
   public String getName() {
     return name;
   }
 
-  
   public void setName(String name) {
     this.name = name;
   }
@@ -95,11 +54,7 @@ public class Category  {
     this.name = name;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -123,7 +78,3 @@ public class Category  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

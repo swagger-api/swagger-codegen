@@ -1,16 +1,9 @@
 package io.swagger.model;
 
 import io.swagger.model.OuterEnum;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,17 +13,12 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class EnumTest  {
-  
 @XmlType(name="EnumStringEnum")
 @XmlEnum(String.class)
 public enum EnumStringEnum {
 
-    
 @XmlEnumValue("UPPER") UPPER(String.valueOf("UPPER")), @XmlEnumValue("lower") LOWER(String.valueOf("lower")), @XmlEnumValue("") EMPTY(String.valueOf(""));
-    
 
 
     private String value;
@@ -57,22 +45,14 @@ public enum EnumStringEnum {
         return null;
     }
 }
-
-
-  @ApiModelProperty(value = "")
-
-
-
-  private EnumStringEnum enumString = null;
-
   
+  @Schema(description = "")
+  private EnumStringEnum enumString = null;
 @XmlType(name="EnumIntegerEnum")
 @XmlEnum(Integer.class)
 public enum EnumIntegerEnum {
 
-    
 @XmlEnumValue("1") NUMBER_1(Integer.valueOf(1)), @XmlEnumValue("-1") NUMBER_MINUS_1(Integer.valueOf(-1));
-    
 
 
     private Integer value;
@@ -99,22 +79,14 @@ public enum EnumIntegerEnum {
         return null;
     }
 }
-
-
-  @ApiModelProperty(value = "")
-
-
-
-  private EnumIntegerEnum enumInteger = null;
-
   
+  @Schema(description = "")
+  private EnumIntegerEnum enumInteger = null;
 @XmlType(name="EnumNumberEnum")
 @XmlEnum(Double.class)
 public enum EnumNumberEnum {
 
-    
 @XmlEnumValue("1.1") NUMBER_1_DOT_1(Double.valueOf(1.1)), @XmlEnumValue("-1.2") NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
-    
 
 
     private Double value;
@@ -141,36 +113,17 @@ public enum EnumNumberEnum {
         return null;
     }
 }
-
-
-  @ApiModelProperty(value = "")
-
-
-
+  
+  @Schema(description = "")
   private EnumNumberEnum enumNumber = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private OuterEnum outerEnum = null;
-
-  
-  
  /**
-  
-  
    * Get enumString
-  
-  
-  
    * @return enumString
   **/
   @JsonProperty("enum_string")
-
-
   public String getEnumString() {
     if (enumString == null) {
       return null;
@@ -178,7 +131,6 @@ public enum EnumNumberEnum {
     return enumString.value();
   }
 
-  
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
@@ -187,23 +139,12 @@ public enum EnumNumberEnum {
     this.enumString = enumString;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get enumInteger
-  
-  
-  
    * @return enumInteger
   **/
   @JsonProperty("enum_integer")
-
-
   public Integer getEnumInteger() {
     if (enumInteger == null) {
       return null;
@@ -211,7 +152,6 @@ public enum EnumNumberEnum {
     return enumInteger.value();
   }
 
-  
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
@@ -220,23 +160,12 @@ public enum EnumNumberEnum {
     this.enumInteger = enumInteger;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get enumNumber
-  
-  
-  
    * @return enumNumber
   **/
   @JsonProperty("enum_number")
-
-
   public Double getEnumNumber() {
     if (enumNumber == null) {
       return null;
@@ -244,7 +173,6 @@ public enum EnumNumberEnum {
     return enumNumber.value();
   }
 
-  
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
@@ -253,28 +181,16 @@ public enum EnumNumberEnum {
     this.enumNumber = enumNumber;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get outerEnum
-  
-  
-  
    * @return outerEnum
   **/
   @JsonProperty("outerEnum")
-
-
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
 
-  
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
@@ -283,11 +199,7 @@ public enum EnumNumberEnum {
     this.outerEnum = outerEnum;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -313,7 +225,3 @@ public enum EnumNumberEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-
