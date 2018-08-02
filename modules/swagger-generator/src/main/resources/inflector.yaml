@@ -7,5 +7,5 @@ entityProcessors:
   - json
   - yaml
 
-#rootPath: /v2
-#environment: development
+#rootPath: /api
+environment: production

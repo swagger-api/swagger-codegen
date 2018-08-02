@@ -5,7 +5,10 @@
             <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
         </layout>
     </appender>
-    <root level="error">
+    <logger name="io.swagger" level="ERROR"/>
+    <logger name="org.eclipse.jetty.server" level="INFO"/>
+    <logger name="io.swagger.v3.generator.online" level="DEBUG"/>
+    <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

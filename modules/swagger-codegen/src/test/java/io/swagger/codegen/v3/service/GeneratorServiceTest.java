@@ -23,7 +23,7 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
-                .spec(loadSpecAsNode("3_0_0/petstore.json", false))
+                .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
                         new Options()
                                 .lang("jaxrs-jersey")
@@ -40,7 +40,7 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.SERVER)
-                .spec(loadSpecAsNode("2_0/petstore.json", false))
+                .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
                                 .lang("jaxrs")
@@ -57,7 +57,7 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
-                .spec(loadSpecAsNode("2_0/petstore.json", false))
+                .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
                                 .lang("jaxrs-jersey")
@@ -91,7 +91,7 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.CLIENT)
-                .spec(loadSpecAsNode("3_0_0/petstore.json", false))
+                .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
                         new Options()
                             .lang("java")
@@ -109,7 +109,7 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.CLIENT)
-                .spec(loadSpecAsNode("2_0/petstore.json", false))
+                .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
                                 .lang("java")
@@ -134,15 +134,22 @@ public class GeneratorServiceTest {
         }
     }
 
-    protected JsonNode loadSpecAsNode(final String file, boolean yaml) {
+    protected JsonNode loadSpecAsNode(final String file, boolean yaml, boolean v2) {
         InputStream in = null;
         String s = "";
         try {
             in = getClass().getClassLoader().getResourceAsStream(file);
             if (yaml) {
-                return Yaml.mapper().readTree(in);
+                if (v2) {
+                    return Yaml.mapper().readTree(in);
+                } else {
+                    return io.swagger.v3.core.util.Yaml.mapper().readTree(in);
+                }
             }
-            return Json.mapper().readTree(in);
+            if (v2) {
+                return Json.mapper().readTree(in);
+            }
+            return io.swagger.v3.core.util.Json.mapper().readTree(in);
         } catch (Exception e) {
             throw new RuntimeException("could not load file " + file);
         } finally {

@@ -27,7 +27,7 @@ public class GeneratorUtil {
         if (generationRequest.getSpec() == null) {
             inputSpec = null;
         } else if (!(generationRequest.getSpec() instanceof String)) {
-            inputSpec = Json.pretty(generationRequest.getSpec());
+            inputSpec = io.swagger.util.Json.pretty(generationRequest.getSpec());
         } else {
             inputSpec = (String)generationRequest.getSpec();
         }
@@ -60,7 +60,7 @@ public class GeneratorUtil {
             }
         } else {
             try {
-                JsonNode node = Json.mapper().readTree(inputSpec);
+                JsonNode node = io.swagger.util.Json.mapper().readTree(inputSpec);
                 if (!authorizationValues.isEmpty()) {
                     swagger = new SwaggerParser().read(node, authorizationValues, true);
                 } else {

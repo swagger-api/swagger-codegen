@@ -1,5 +1,8 @@
 package io.swagger.v3.generator.online;
 
+import io.swagger.v3.core.util.Json;
+import io.swagger.v3.core.util.Yaml;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -11,11 +14,10 @@ import java.io.IOException;
 public class DefaultServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = IOUtils.toString(getClass().getResourceAsStream("/generator.json"));
+        String yaml = IOUtils.toString(getClass().getResourceAsStream("/openapi.yaml"));
         response.setContentType(MediaType.APPLICATION_JSON);
         response.setStatus(HttpServletResponse.SC_OK);
-
-        response.getWriter().append(json);
-
+        OpenAPI openAPI = Yaml.mapper().readValue(yaml, OpenAPI.class);
+        response.getWriter().append(Json.pretty(openAPI));
     }
 }

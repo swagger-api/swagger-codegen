@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class GeneratorControllerIT {
 
-    static final String DEFAULT_HOST = "http://localhost:8080/v2";
+    static final String DEFAULT_HOST = "http://localhost:8080/api";
     private HttpClient client = HttpClientBuilder.create().build();
 
     @Test(enabled = false)
