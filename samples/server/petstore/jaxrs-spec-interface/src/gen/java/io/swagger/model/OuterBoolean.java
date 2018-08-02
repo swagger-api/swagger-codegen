@@ -1,24 +1,17 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class OuterBoolean   {
-  
 
-  
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -57,6 +50,3 @@ public class OuterBoolean   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

@@ -1,33 +1,21 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
-
-
 
 /**
  * Model for testing reserved words
  **/
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@ApiModel(description = "Model for testing reserved words")
+@Schema(description = "Model for testing reserved words")
 
 public class ModelReturn   {
-  
   private @Valid Integer _return = null;
 
-  
   /**
-   
-   
-   
    **/
   public ModelReturn _return(Integer _return) {
     this._return = _return;
@@ -35,9 +23,8 @@ public class ModelReturn   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("return")
-
   public Integer getReturn() {
     return _return;
   }
@@ -45,7 +32,6 @@ public class ModelReturn   {
     this._return = _return;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -85,6 +71,3 @@ public class ModelReturn   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

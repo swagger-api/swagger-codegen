@@ -4,33 +4,19 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Pet   {
-  
-  private @Valid Long id = null;
-  private @Valid Category category = null;
-  private @Valid String name = null;
-  private @Valid List<String> photoUrls = new ArrayList<String>();
-  private @Valid List<Tag> tags = new ArrayList<Tag>();
-public enum StatusEnum {
+  private @Valid Long id = null;  private @Valid Category category = null;  private @Valid String name = null;  private @Valid List<String> photoUrls = new ArrayList<String>();  private @Valid List<Tag> tags = new ArrayList<Tag>();public enum StatusEnum {
 
-    
     AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
-    
 
 
     private String value;
@@ -59,14 +45,9 @@ public enum StatusEnum {
         return null;
     }
 }
-
   private @Valid StatusEnum status = null;
 
-  
   /**
-   
-   
-   
    **/
   public Pet id(Long id) {
     this.id = id;
@@ -74,9 +55,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -84,11 +64,7 @@ public enum StatusEnum {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet category(Category category) {
     this.category = category;
@@ -96,9 +72,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("category")
-
   public Category getCategory() {
     return category;
   }
@@ -106,11 +81,7 @@ public enum StatusEnum {
     this.category = category;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet name(String name) {
     this.name = name;
@@ -118,11 +89,9 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
-
   @NotNull
-
   public String getName() {
     return name;
   }
@@ -130,11 +99,7 @@ public enum StatusEnum {
     this.name = name;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
@@ -142,11 +107,9 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
-
   @NotNull
-
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -154,11 +117,7 @@ public enum StatusEnum {
     this.photoUrls = photoUrls;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
@@ -166,9 +125,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("tags")
-
   public List<Tag> getTags() {
     return tags;
   }
@@ -176,13 +134,8 @@ public enum StatusEnum {
     this.tags = tags;
   }
 
-  
   /**
-   
    * pet status in the store
-   
-   
-   
    **/
   public Pet status(StatusEnum status) {
     this.status = status;
@@ -190,9 +143,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "pet status in the store")
+  @Schema(description = "pet status in the store")
   @JsonProperty("status")
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -200,7 +152,6 @@ public enum StatusEnum {
     this.status = status;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -250,6 +201,3 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
