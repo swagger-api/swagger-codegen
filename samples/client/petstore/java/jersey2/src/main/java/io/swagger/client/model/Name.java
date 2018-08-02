@@ -40,7 +40,9 @@ public class Name {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get name
   * @return name
   **/
@@ -64,7 +66,9 @@ public class Name {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get property
   * @return property
   **/

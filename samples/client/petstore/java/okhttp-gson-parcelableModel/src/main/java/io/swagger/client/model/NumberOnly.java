@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,22 +29,19 @@ import android.os.Parcel;
  */
 
 public class NumberOnly {
-
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;
-  
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
   
+
   /**
   * Get justNumber
   * @return justNumber
   **/
-  
-  
   @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
@@ -53,7 +49,6 @@ public class NumberOnly {
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -70,7 +65,7 @@ public class NumberOnly {
   public int hashCode() {
     return java.util.Objects.hash(justNumber);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -92,12 +87,9 @@ public class NumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
     
-    
     out.writeValue(justNumber);
-    
   }
 
   public NumberOnly() {
@@ -123,6 +115,3 @@ public class NumberOnly {
     }
   };
 }
-
-
-

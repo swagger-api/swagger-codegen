@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -31,13 +30,11 @@ import android.os.Parcel;
  */
 
 public class EnumArrays {
-
   /**
    * Gets or Sets justSymbol
    */
   @JsonAdapter(JustSymbolEnum.Adapter.class)
   public enum JustSymbolEnum {
-    
     GREATER_THAN_OR_EQUAL_TO(">="),
     DOLLAR("$");
 
@@ -46,7 +43,6 @@ public class EnumArrays {
     JustSymbolEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -55,7 +51,6 @@ public class EnumArrays {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static JustSymbolEnum fromValue(String text) {
       for (JustSymbolEnum b : JustSymbolEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -64,7 +59,6 @@ public class EnumArrays {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<JustSymbolEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final JustSymbolEnum enumeration) throws IOException {
@@ -77,17 +71,13 @@ public class EnumArrays {
         return JustSymbolEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("just_symbol")
+  }  @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
-  
   /**
    * Gets or Sets arrayEnum
    */
   @JsonAdapter(ArrayEnumEnum.Adapter.class)
   public enum ArrayEnumEnum {
-    
     FISH("fish"),
     CRAB("crab");
 
@@ -96,7 +86,6 @@ public class EnumArrays {
     ArrayEnumEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -105,7 +94,6 @@ public class EnumArrays {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static ArrayEnumEnum fromValue(String text) {
       for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -114,7 +102,6 @@ public class EnumArrays {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<ArrayEnumEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final ArrayEnumEnum enumeration) throws IOException {
@@ -127,23 +114,19 @@ public class EnumArrays {
         return ArrayEnumEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("array_enum")
+  }  @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
-  
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
   
+
   /**
   * Get justSymbol
   * @return justSymbol
   **/
-  
-  
   @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
@@ -151,28 +134,23 @@ public class EnumArrays {
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
-  
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
   }
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
-    
     if (this.arrayEnum == null) {
       this.arrayEnum = new ArrayList<ArrayEnumEnum>();
     }
-    
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
-  
+
   /**
   * Get arrayEnum
   * @return arrayEnum
   **/
-  
-  
   @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
@@ -180,7 +158,6 @@ public class EnumArrays {
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -198,7 +175,7 @@ public class EnumArrays {
   public int hashCode() {
     return java.util.Objects.hash(justSymbol, arrayEnum);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -221,13 +198,10 @@ public class EnumArrays {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(justSymbol);
     out.writeValue(arrayEnum);
-    
   }
 
   public EnumArrays() {
@@ -236,8 +210,10 @@ public class EnumArrays {
 
   EnumArrays(Parcel in) {
     
+    justSymbol = (JustSymbolEnum)in.readValue(null);
     
-    justSymbol = (JustSymbolEnum)in.readValue(null);arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
+    arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -253,6 +229,3 @@ public class EnumArrays {
     }
   };
 }
-
-
-

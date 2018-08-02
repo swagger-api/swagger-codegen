@@ -31,7 +31,9 @@ public class SpecialModelName {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get $specialPropertyName
   * @return $specialPropertyName
   **/

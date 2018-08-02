@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -29,37 +28,26 @@ import android.os.Parcel;
  */
 
 public class HasOnlyReadOnly {
-
   @SerializedName("bar")
   private String bar = null;
-  
   @SerializedName("foo")
   private String foo = null;
-  
-  
   /**
   * Get bar
   * @return bar
   **/
-  
-  
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
-  
   /**
   * Get foo
   * @return foo
   **/
-  
-  
   @Schema(description = "")
   public String getFoo() {
     return foo;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -77,7 +65,7 @@ public class HasOnlyReadOnly {
   public int hashCode() {
     return java.util.Objects.hash(bar, foo);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -100,13 +88,10 @@ public class HasOnlyReadOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(bar);
     out.writeValue(foo);
-    
   }
 
   public HasOnlyReadOnly() {
@@ -115,8 +100,10 @@ public class HasOnlyReadOnly {
 
   HasOnlyReadOnly(Parcel in) {
     
+    bar = (String)in.readValue(null);
     
-    bar = (String)in.readValue(null);foo = (String)in.readValue(null);
+    foo = (String)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -132,6 +119,3 @@ public class HasOnlyReadOnly {
     }
   };
 }
-
-
-

@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,22 +29,19 @@ import android.os.Parcel;
  */
 
 public class Dog extends Animal {
-
   @SerializedName("breed")
   private String breed = null;
-  
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
   
+
   /**
   * Get breed
   * @return breed
   **/
-  
-  
   @Schema(description = "")
   public String getBreed() {
     return breed;
@@ -53,7 +49,6 @@ public class Dog extends Animal {
   public void setBreed(String breed) {
     this.breed = breed;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -71,7 +66,7 @@ public class Dog extends Animal {
   public int hashCode() {
     return java.util.Objects.hash(breed, super.hashCode());
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -93,12 +88,9 @@ public class Dog extends Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
      super.writeToParcel(out, flags); 
-    
     out.writeValue(breed);
-    
   }
 
   public Dog() {
@@ -107,8 +99,8 @@ public class Dog extends Animal {
 
   Dog(Parcel in) {
      super(in); 
-    
     breed = (String)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -124,6 +116,3 @@ public class Dog extends Animal {
     }
   };
 }
-
-
-

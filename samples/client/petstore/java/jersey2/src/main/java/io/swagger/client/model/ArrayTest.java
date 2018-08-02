@@ -47,6 +47,7 @@ public class ArrayTest {
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
+
   /**
   * Get arrayOfString
   * @return arrayOfString
@@ -70,6 +71,7 @@ public class ArrayTest {
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
+
   /**
   * Get arrayArrayOfInteger
   * @return arrayArrayOfInteger
@@ -93,6 +95,7 @@ public class ArrayTest {
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
+
   /**
   * Get arrayArrayOfModel
   * @return arrayArrayOfModel

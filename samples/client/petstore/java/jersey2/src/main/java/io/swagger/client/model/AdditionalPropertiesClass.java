@@ -37,7 +37,8 @@ public class AdditionalPropertiesClass {
     return this;
   }
 
-    public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+  
+  public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
     if (this.mapProperty == null) {
       this.mapProperty = new HashMap<String, String>();
     }
@@ -60,7 +61,8 @@ public class AdditionalPropertiesClass {
     return this;
   }
 
-    public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+  
+  public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     if (this.mapOfMapProperty == null) {
       this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
     }

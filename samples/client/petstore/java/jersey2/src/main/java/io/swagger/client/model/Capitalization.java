@@ -46,7 +46,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get smallCamel
   * @return smallCamel
   **/
@@ -62,7 +64,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get capitalCamel
   * @return capitalCamel
   **/
@@ -78,7 +82,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get smallSnake
   * @return smallSnake
   **/
@@ -94,7 +100,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get capitalSnake
   * @return capitalSnake
   **/
@@ -110,7 +118,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Get scAETHFlowPoints
   * @return scAETHFlowPoints
   **/
@@ -126,7 +136,9 @@ public class Capitalization {
     return this;
   }
 
-    /**
+  
+
+  /**
   * Name of the pet 
   * @return ATT_NAME
   **/
