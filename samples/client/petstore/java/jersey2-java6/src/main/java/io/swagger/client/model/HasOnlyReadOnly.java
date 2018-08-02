@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -25,39 +24,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class HasOnlyReadOnly {
 
-  
   @JsonProperty("bar")
   private String bar = null;
-  
-  
+
   @JsonProperty("foo")
   private String foo = null;
-  
-  
   /**
   * Get bar
   * @return bar
   **/
-  
-  
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
-  
   /**
   * Get foo
   * @return foo
   **/
-  
-  
   @Schema(description = "")
   public String getFoo() {
     return foo;
   }
-  
-  
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -75,6 +62,7 @@ public class HasOnlyReadOnly {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(bar, foo);
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -97,8 +85,5 @@ public class HasOnlyReadOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-
