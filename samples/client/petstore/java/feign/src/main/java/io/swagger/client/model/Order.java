@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.OffsetDateTime;
 
 /**
@@ -27,27 +25,21 @@ import org.threeten.bp.OffsetDateTime;
 
 public class Order {
 
-  
   @JsonProperty("id")
   private Long id = null;
-  
-  
+
   @JsonProperty("petId")
   private Long petId = null;
-  
-  
+
   @JsonProperty("quantity")
   private Integer quantity = null;
-  
-  
+
   @JsonProperty("shipDate")
   private OffsetDateTime shipDate = null;
-  
   /**
    * Order Status
    */
   public enum StatusEnum {
-    
     PLACED("placed"),
     APPROVED("approved"),
     DELIVERED("delivered");
@@ -57,9 +49,7 @@ public class Order {
     StatusEnum(String value) {
       this.value = value;
     }
-    
     @JsonValue
-    
     public String getValue() {
       return value;
     }
@@ -68,9 +58,7 @@ public class Order {
     public String toString() {
       return String.valueOf(value);
     }
-    
     @JsonCreator
-    
     public static StatusEnum fromValue(String text) {
       for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -79,125 +67,115 @@ public class Order {
       }
       return null;
     }
-    
+
   }
-  
-  
   @JsonProperty("status")
   private StatusEnum status = null;
-  
-  
+
   @JsonProperty("complete")
   private Boolean complete = false;
-  
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-  
+    
   /**
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
-  
+    
   /**
   * Get petId
   * @return petId
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
   public void setPetId(Long petId) {
     this.petId = petId;
   }
-  
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
-  
+    
   /**
   * Get quantity
   * @return quantity
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
-  
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-  
+    
   /**
   * Get shipDate
   * @return shipDate
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
-  
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
+    
   /**
   * Order Status
   * @return status
   **/
-  @ApiModelProperty(value = "Order Status")
+  @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-  
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
-  
+    
   /**
   * Get complete
   * @return complete
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -217,9 +195,9 @@ public class Order {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -246,8 +224,5 @@ public class Order {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

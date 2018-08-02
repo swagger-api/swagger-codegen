@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ReadOnlyFirst
@@ -26,42 +24,36 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ReadOnlyFirst {
 
-  
   @JsonProperty("bar")
   private String bar = null;
-  
-  
+
   @JsonProperty("baz")
   private String baz = null;
-  
-  
   /**
   * Get bar
   * @return bar
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-  
+    
   /**
   * Get baz
   * @return baz
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public String getBaz() {
     return baz;
   }
   public void setBaz(String baz) {
     this.baz = baz;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -77,9 +69,9 @@ public class ReadOnlyFirst {
 
   @Override
   public int hashCode() {
-    return Objects.hash(bar, baz);
+    return java.util.Objects.hash(bar, baz);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -102,8 +94,5 @@ public class ReadOnlyFirst {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

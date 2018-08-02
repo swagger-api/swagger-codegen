@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Category
@@ -26,50 +24,45 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Category {
 
-  
   @JsonProperty("id")
   private Long id = null;
-  
-  
+
   @JsonProperty("name")
   private String name = null;
-  
   public Category id(Long id) {
     this.id = id;
     return this;
   }
 
-  
+    
   /**
   * Get id
   * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Category name(String name) {
     this.name = name;
     return this;
   }
 
-  
+    
   /**
   * Get name
   * @return name
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public String getName() {
     return name;
   }
   public void setName(String name) {
     this.name = name;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -85,9 +78,9 @@ public class Category {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return java.util.Objects.hash(id, name);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -110,8 +103,5 @@ public class Category {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-
