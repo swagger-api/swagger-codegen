@@ -31,8 +31,7 @@ public class Client {
     return this;
   }
 
-    
-  /**
+    /**
   * Get client
   * @return client
   **/
@@ -80,6 +79,5 @@ public class Client {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

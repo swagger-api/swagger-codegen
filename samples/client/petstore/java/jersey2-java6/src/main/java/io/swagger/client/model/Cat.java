@@ -32,8 +32,7 @@ public class Cat extends Animal {
     return this;
   }
 
-    
-  /**
+    /**
   * Get declawed
   * @return declawed
   **/
@@ -82,6 +81,5 @@ public class Cat extends Animal {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

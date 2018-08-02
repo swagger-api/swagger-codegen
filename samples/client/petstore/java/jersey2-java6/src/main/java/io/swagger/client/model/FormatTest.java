@@ -71,8 +71,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get integer
   * minimum: 10
   * maximum: 100
@@ -90,8 +89,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get int32
   * minimum: 20
   * maximum: 200
@@ -109,8 +107,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get int64
   * @return int64
   **/
@@ -126,8 +123,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get number
   * minimum: 32
   * maximum: 543
@@ -145,8 +141,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get _float
   * minimum: 54
   * maximum: 987
@@ -164,8 +159,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get _double
   * minimum: 67
   * maximum: 123
@@ -183,8 +177,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get string
   * @return string
   **/
@@ -200,8 +193,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get _byte
   * @return _byte
   **/
@@ -217,8 +209,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get binary
   * @return binary
   **/
@@ -234,8 +225,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get date
   * @return date
   **/
@@ -251,8 +241,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get dateTime
   * @return dateTime
   **/
@@ -268,8 +257,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get uuid
   * @return uuid
   **/
@@ -285,8 +273,7 @@ public class FormatTest {
     return this;
   }
 
-    
-  /**
+    /**
   * Get password
   * @return password
   **/
@@ -358,6 +345,5 @@ public class FormatTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

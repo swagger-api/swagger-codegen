@@ -38,8 +38,7 @@ public class OuterComposite {
     return this;
   }
 
-    
-  /**
+    /**
   * Get myNumber
   * @return myNumber
   **/
@@ -55,8 +54,7 @@ public class OuterComposite {
     return this;
   }
 
-    
-  /**
+    /**
   * Get myString
   * @return myString
   **/
@@ -72,8 +70,7 @@ public class OuterComposite {
     return this;
   }
 
-    
-  /**
+    /**
   * Get myBoolean
   * @return myBoolean
   **/
@@ -125,6 +122,5 @@ public class OuterComposite {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

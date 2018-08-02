@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -25,22 +24,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Client {
 
-  
   @JsonProperty("client")
   private String client = null;
-  
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-  
-  /**
+    /**
   * Get client
   * @return client
   **/
-  
-  
   @Schema(description = "")
   public String getClient() {
     return client;
@@ -48,7 +42,6 @@ public class Client {
   public void setClient(String client) {
     this.client = client;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,7 +58,7 @@ public class Client {
   public int hashCode() {
     return java.util.Objects.hash(client);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -87,8 +80,4 @@ public class Client {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

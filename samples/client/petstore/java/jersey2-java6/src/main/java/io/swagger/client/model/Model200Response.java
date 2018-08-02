@@ -34,8 +34,7 @@ public class Model200Response {
     return this;
   }
 
-    
-  /**
+    /**
   * Get name
   * @return name
   **/
@@ -51,8 +50,7 @@ public class Model200Response {
     return this;
   }
 
-    
-  /**
+    /**
   * Get propertyClass
   * @return propertyClass
   **/
@@ -102,6 +100,5 @@ public class Model200Response {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

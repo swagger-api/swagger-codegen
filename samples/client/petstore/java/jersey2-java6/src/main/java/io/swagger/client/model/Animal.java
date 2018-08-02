@@ -41,8 +41,7 @@ public class Animal {
     return this;
   }
 
-    
-  /**
+    /**
   * Get className
   * @return className
   **/
@@ -58,8 +57,7 @@ public class Animal {
     return this;
   }
 
-    
-  /**
+    /**
   * Get color
   * @return color
   **/
@@ -109,6 +107,5 @@ public class Animal {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

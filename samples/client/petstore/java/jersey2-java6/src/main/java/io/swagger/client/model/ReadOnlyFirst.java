@@ -42,8 +42,7 @@ public class ReadOnlyFirst {
     return this;
   }
 
-    
-  /**
+    /**
   * Get baz
   * @return baz
   **/
@@ -93,6 +92,5 @@ public class ReadOnlyFirst {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }
