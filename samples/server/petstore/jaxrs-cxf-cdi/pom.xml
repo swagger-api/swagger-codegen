@@ -71,16 +71,12 @@
         </dependency>
 
         <!-- Swagger annotations -->
-        
-        
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>[2.0.0,2.0.1]</version>
         </dependency>
         
-        
-
        <!-- Bean Validation API support -->
        <dependency>
            <groupId>javax.validation</groupId>
@@ -88,7 +84,6 @@
            <version>1.1.0.Final</version>
            <scope>provided</scope>
        </dependency>
-
 
     </dependencies>
 

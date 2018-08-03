@@ -7,20 +7,11 @@ import io.swagger.model.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.validation.constraints.*;
-
-
-
 /**
  * A pet for sale in the pet store
  **/
-
-
-
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
@@ -28,7 +19,6 @@ import javax.xml.bind.annotation.*;
 @Schema(description = "A pet for sale in the pet store")
 
 public class Pet   {
-  
   private Long id = null;
   private Category category = null;
   private String name = null;
@@ -38,9 +28,7 @@ public class Pet   {
 @XmlEnum(String.class)
 public enum StatusEnum {
 
-    
     @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
-    
 
 
     private String value;
@@ -67,14 +55,9 @@ public enum StatusEnum {
         return null;
     }
 }
-
   private StatusEnum status = null;
 
-  
   /**
-   
-   
-   
    **/
   public Pet id(Long id) {
     this.id = id;
@@ -85,7 +68,6 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -93,11 +75,7 @@ public enum StatusEnum {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet category(Category category) {
     this.category = category;
@@ -108,7 +86,6 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("category")
-
   public Category getCategory() {
     return category;
   }
@@ -116,11 +93,7 @@ public enum StatusEnum {
     this.category = category;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet name(String name) {
     this.name = name;
@@ -131,9 +104,7 @@ public enum StatusEnum {
   
   @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
-
   @NotNull
-
   public String getName() {
     return name;
   }
@@ -141,11 +112,7 @@ public enum StatusEnum {
     this.name = name;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
@@ -156,9 +123,7 @@ public enum StatusEnum {
   
   @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
-
   @NotNull
-
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -166,11 +131,7 @@ public enum StatusEnum {
     this.photoUrls = photoUrls;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
@@ -181,7 +142,6 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("tags")
-
   public List<Tag> getTags() {
     return tags;
   }
@@ -189,13 +149,8 @@ public enum StatusEnum {
     this.tags = tags;
   }
 
-  
   /**
-   
    * pet status in the store
-   
-   
-   
    **/
   public Pet status(StatusEnum status) {
     this.status = status;
@@ -206,7 +161,6 @@ public enum StatusEnum {
   
   @Schema(description = "pet status in the store")
   @JsonProperty("status")
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -214,7 +168,6 @@ public enum StatusEnum {
     this.status = status;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -264,6 +217,3 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
