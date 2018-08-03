@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -53,16 +52,18 @@ public class GeneratorController {
             LOGGER.debug("Parsed hidden options config");
             LOGGER.debug("Hidden clients: {}", hiddenOptions.clients());
             LOGGER.debug("Hidden servers: {}", hiddenOptions.servers());
+            LOGGER.debug("Hidden clientsV3: {}", hiddenOptions.clientsV3());
+            LOGGER.debug("Hidden serversV3: {}", hiddenOptions.serversV3());
         } catch (Exception e) {
-            LOGGER.warn("Failed to parse hidden options configuration file {}", HIDDEN_OPTIONS_CONFIG_FILE, e);
+            LOGGER.info("Failed to parse hidden options configuration file {}", HIDDEN_OPTIONS_CONFIG_FILE, e);
             hiddenOptions = HiddenOptions.getEmpty();
         }
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
 
         loader.forEach(config -> {
-            if ((config.getTag().equals(CodegenType.CLIENT) || config.getTag().equals(CodegenType.DOCUMENTATION)) && !hiddenOptions.isHiddenClient(config.getName()))  {
+            if ((config.getTag().equals(CodegenType.CLIENT) || config.getTag().equals(CodegenType.DOCUMENTATION)) && !hiddenOptions.isHiddenClientV3(config.getName()))  {
                 CLIENTS.add(config.getName());
-            } else if (config.getTag().equals(CodegenType.SERVER) && !hiddenOptions.isHiddenServer(config.getName())) {
+            } else if (config.getTag().equals(CodegenType.SERVER) && !hiddenOptions.isHiddenServerV3(config.getName())) {
                 SERVERS.add(config.getName());
             }
         });
@@ -119,7 +120,7 @@ public class GeneratorController {
                 LOGGER.error(msg, e);
                 return new ResponseContext()
                         .status(400)
-                        .contentType(MediaType.APPLICATION_JSON_TYPE)
+                        .contentType(MediaType.TEXT_PLAIN)
                         .entity(msg);
             }
             Map<String, CliOption> map = new LinkedHashMap<>();
@@ -141,7 +142,7 @@ public class GeneratorController {
                 LOGGER.error(msg, e);
                 return new ResponseContext()
                         .status(400)
-                        .contentType(MediaType.APPLICATION_JSON_TYPE)
+                        .contentType(MediaType.TEXT_PLAIN)
                         .entity(msg);
             }
             Map<String, io.swagger.codegen.v3.CliOption> map = new LinkedHashMap<>();
@@ -166,7 +167,7 @@ public class GeneratorController {
             LOGGER.error(msg, e);
             return new ResponseContext()
                     .status(400)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity(msg);
         }
 
@@ -175,7 +176,7 @@ public class GeneratorController {
             LOGGER.error(msg);
             return new ResponseContext()
                     .status(404)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity(msg);
         }
 
@@ -190,7 +191,7 @@ public class GeneratorController {
                 LOGGER.error(msg, ee);
                 return new ResponseContext()
                         .status(400)
-                        .contentType(MediaType.APPLICATION_JSON_TYPE)
+                        .contentType(MediaType.TEXT_PLAIN)
                         .entity(msg);
             }
         }
@@ -217,7 +218,10 @@ public class GeneratorController {
         destPath.replaceAll("//", "/");
 
         if(destPath.indexOf("..") != -1) {
-            throw new BadRequestException("Illegal output folder");
+            return new ResponseContext()
+                    .status(400)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .entity("Illegal output folder");
         }
 
         // remove leading slash (will typically not hurt)
@@ -240,6 +244,7 @@ public class GeneratorController {
         LOGGER.info("file zip file: " + outputFile.getAbsolutePath());
 
         return generate(generationRequest, outputRootFolder, outputContentFolder, outputFile);
+
     }
 
     protected static File getTmpFolder() {
@@ -264,7 +269,7 @@ public class GeneratorController {
             LOGGER.error(msg, e);
             return new ResponseContext()
                     .status(400)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity(msg);
         }
 
@@ -276,7 +281,7 @@ public class GeneratorController {
             LOGGER.error(msg, e);
             return new ResponseContext()
                     .status(500)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity(msg);
         }
         if (files.size() > 0) {
@@ -284,7 +289,7 @@ public class GeneratorController {
         } else {
             return new ResponseContext()
                     .status(500)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity("A target generation was attempted, but no files were created");
         }
 
@@ -298,14 +303,14 @@ public class GeneratorController {
         } catch (IOException e) {
             return new ResponseContext()
                     .status(500)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity("Could not generate zip file.");
         }
 
         if (!outputFile.exists()) {
             return new ResponseContext()
                     .status(500)
-                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .contentType(MediaType.TEXT_PLAIN)
                     .entity("File was not generated.");
         }
         byte[] bytes = null;
@@ -331,7 +336,7 @@ public class GeneratorController {
         }
         return new ResponseContext()
                 .status(500)
-                .contentType(MediaType.APPLICATION_JSON_TYPE)
+                .contentType(MediaType.TEXT_PLAIN)
                 .entity("Could not generate files.");
     }
 }

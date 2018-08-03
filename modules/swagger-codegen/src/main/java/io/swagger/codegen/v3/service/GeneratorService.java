@@ -25,7 +25,7 @@ public class GeneratorService {
             } catch (Exception e) {
                 String msg = "Error processing input options: " + e.getMessage();
                 LOGGER.error(msg, e);
-                throw new BadRequestException(msg, e);
+                throw new BadRequestException(msg);
             }
             optsV2 = clientOptInputV2;
         } else {
@@ -35,7 +35,7 @@ public class GeneratorService {
             } catch (Exception e) {
                 String msg = "Error processing input options: " + e.getMessage();
                 LOGGER.error(msg, e);
-                throw new BadRequestException(msg, e);
+                throw new BadRequestException(msg);
             }
             optsV3 = clientOptInput;
         }
