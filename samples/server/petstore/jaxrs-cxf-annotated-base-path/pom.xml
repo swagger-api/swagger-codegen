@@ -4,9 +4,7 @@
   <artifactId>swagger-cxf-annotated-basepath</artifactId>
   <packaging>war</packaging>
   <name>swagger-cxf-annotated-basepath</name>
-  
   <description>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key &#x60;special-key&#x60; to test the authorization filters.</description>
-  
   <version>1.0.0</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -39,7 +37,6 @@
             <idleTimeout>60000</idleTimeout>
           </httpConnector>
         </configuration>
-
         <dependencies>
           <dependency>
               <groupId>javax.validation</groupId>
@@ -47,7 +44,6 @@
               <version>${beanvalidation-version}</version>
           </dependency>
         </dependencies>
-
         <executions>
           <execution>
             <id>start-jetty</id>
@@ -101,8 +97,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-jaxrs</artifactId>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-jaxrs2</artifactId>
       <scope>compile</scope>
       <version>${swagger-core-version}</version>
     </dependency>
@@ -124,7 +120,6 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -132,7 +127,6 @@
         <version>${beanvalidation-version}</version>
         <scope>provided</scope>
     </dependency>
-
     <!-- CXF Client -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
@@ -156,7 +150,7 @@
     </dependency>
     <dependency>
         <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+        <artifactId>cxf-rt-rs-service-description-openapi-v3</artifactId>
         <version>${cxf-version}</version>
         <scope>compile</scope>
     </dependency>
@@ -178,17 +172,11 @@
         <version>${jackson-jaxrs-version}</version>
         <scope>compile</scope>
     </dependency>
-
-
     <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
         <artifactId>jackson-datatype-joda</artifactId>
         <version>${jackson-jaxrs-version}</version>
     </dependency>
-
-
-
-
   </dependencies>
   <repositories>
     <repository>
@@ -203,17 +191,13 @@
     <java.version>1.7</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <swagger-core-version>1.5.18</swagger-core-version>
+    <swagger-core-version>2.0.0</swagger-core-version>
     <jetty-version>9.2.9.v20150224</jetty-version>
     <junit-version>4.12</junit-version>
     <logback-version>1.1.7</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
-
     <beanvalidation-version>1.1.0.Final</beanvalidation-version>
-
-    
-    
-    <cxf-version>3.2.1</cxf-version>
+    <cxf-version>3.2.4</cxf-version>
     <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

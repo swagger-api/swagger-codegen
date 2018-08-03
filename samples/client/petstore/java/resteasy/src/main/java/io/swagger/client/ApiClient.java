@@ -43,7 +43,6 @@ import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
-
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private String basePath = "http://petstore.swagger.io:80/v2";
@@ -510,10 +509,7 @@ public class ApiClient {
   public File downloadFileFromResponse(Response response) throws ApiException {
     try {
       File file = prepareDownloadFile(response);
-
       Files.copy(response.readEntity(InputStream.class), file.toPath());
-
-
       return file;
     } catch (IOException e) {
       throw new ApiException(e);

@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -25,7 +24,6 @@ import android.os.Parcel;
  */
 
 public class AnimalFarm extends ArrayList<Animal> {
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -41,7 +39,7 @@ public class AnimalFarm extends ArrayList<Animal> {
   public int hashCode() {
     return java.util.Objects.hash(super.hashCode());
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -62,10 +60,7 @@ public class AnimalFarm extends ArrayList<Animal> {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
-    
   }
 
   public AnimalFarm() {
@@ -73,8 +68,6 @@ public class AnimalFarm extends ArrayList<Animal> {
   }
 
   AnimalFarm(Parcel in) {
-    
-    
   }
 
   public int describeContents() {
@@ -90,6 +83,3 @@ public class AnimalFarm extends ArrayList<Animal> {
     }
   };
 }
-
-
-

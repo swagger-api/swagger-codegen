@@ -13,9 +13,6 @@ Method | HTTP request | Description
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
-
-
-
 <a name="addPet"></a>
 # **addPet**
 > addPet(body)
@@ -29,11 +26,8 @@ Add a new pet to the store
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
-
 try {
     apiInstance.addPet(body);
 } catch (ApiException e) {
@@ -48,7 +42,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
 
-
 ### Return type
 
 null (empty response body)
@@ -61,7 +54,6 @@ null (empty response body)
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: Not defined
-
 
 <a name="deletePet"></a>
 # **deletePet**
@@ -76,13 +68,9 @@ Deletes a pet
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Integer petId = 56; // Integer | Pet id to delete
-
 String apiKey = "apiKey_example"; // String | 
-
 try {
     apiInstance.deletePet(petId, apiKey);
 } catch (ApiException e) {
@@ -98,7 +86,6 @@ Name | Type | Description  | Notes
  **petId** | [**Integer**](.md)| Pet id to delete |
  **apiKey** | [**String**](.md)|  | [optional]
 
-
 ### Return type
 
 null (empty response body)
@@ -111,7 +98,6 @@ null (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
-
 
 <a name="findPetsByStatus"></a>
 # **findPetsByStatus**
@@ -128,11 +114,8 @@ Multiple status values can be provided with comma separated strings
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 List<String> status = Arrays.asList("status_example"); // List<String> | Status values that need to be considered for filter
-
 try {
     List<Pet> result = apiInstance.findPetsByStatus(status);
     System.out.println(result);
@@ -148,7 +131,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **status** | [**List&lt;String&gt;**](String.md)| Status values that need to be considered for filter | [enum: available, pending, sold]
 
-
 ### Return type
 
 [**List&lt;Pet&gt;**](Pet.md)
@@ -161,7 +143,6 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
-
 
 <a name="findPetsByTags"></a>
 # **findPetsByTags**
@@ -178,11 +159,8 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 List<String> tags = Arrays.asList("tags_example"); // List<String> | Tags to filter by
-
 try {
     List<Pet> result = apiInstance.findPetsByTags(tags);
     System.out.println(result);
@@ -198,7 +176,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tags** | [**List&lt;String&gt;**](String.md)| Tags to filter by |
 
-
 ### Return type
 
 [**List&lt;Pet&gt;**](Pet.md)
@@ -211,7 +188,6 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
-
 
 <a name="getPetById"></a>
 # **getPetById**
@@ -228,11 +204,8 @@ Returns a single pet
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Integer petId = 56; // Integer | ID of pet to return
-
 try {
     Pet result = apiInstance.getPetById(petId);
     System.out.println(result);
@@ -248,7 +221,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | [**Integer**](.md)| ID of pet to return |
 
-
 ### Return type
 
 [**Pet**](Pet.md)
@@ -261,7 +233,6 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
-
 
 <a name="updatePet"></a>
 # **updatePet**
@@ -276,11 +247,8 @@ Update an existing pet
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
-
 try {
     apiInstance.updatePet(body);
 } catch (ApiException e) {
@@ -295,7 +263,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
 
-
 ### Return type
 
 null (empty response body)
@@ -308,7 +275,6 @@ null (empty response body)
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: Not defined
-
 
 <a name="updatePetWithForm"></a>
 # **updatePetWithForm**
@@ -323,15 +289,10 @@ Updates a pet in the store with form data
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Integer petId = 56; // Integer | ID of pet that needs to be updated
-
 String name = "name_example"; // String | 
-
 String status = "status_example"; // String | 
-
 try {
     apiInstance.updatePetWithForm(petId, name, status);
 } catch (ApiException e) {
@@ -348,7 +309,6 @@ Name | Type | Description  | Notes
  **name** | [**String**](.md)|  | [optional]
  **status** | [**String**](.md)|  | [optional]
 
-
 ### Return type
 
 null (empty response body)
@@ -361,7 +321,6 @@ null (empty response body)
 
  - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: Not defined
-
 
 <a name="uploadFile"></a>
 # **uploadFile**
@@ -376,15 +335,10 @@ uploads an image
 //import io.swagger.client.api.PetApi;
 
 
-
 PetApi apiInstance = new PetApi();
-
 Integer petId = 56; // Integer | ID of pet to update
-
 String additionalMetadata = "additionalMetadata_example"; // String | 
-
 File file = new File("file_example"); // File | 
-
 try {
     ModelApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
     System.out.println(result);
@@ -402,7 +356,6 @@ Name | Type | Description  | Notes
  **additionalMetadata** | [**String**](.md)|  | [optional]
  **file** | **File**|  | [optional]
 
-
 ### Return type
 
 [**ModelApiResponse**](ModelApiResponse.md)
@@ -415,6 +368,4 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
-
-
 

@@ -1,4 +1,3 @@
-
 # User
 
 ## Properties
@@ -12,7 +11,3 @@ Name | Type | Description | Notes
 **password** | **String** |  |  [optional]
 **phone** | **String** |  |  [optional]
 **userStatus** | **Integer** | User Status |  [optional]
-
-
-
-

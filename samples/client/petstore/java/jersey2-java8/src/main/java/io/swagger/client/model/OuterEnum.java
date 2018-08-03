@@ -10,26 +10,18 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
-
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
-
 /**
  * Gets or Sets OuterEnum
  */
-
 public enum OuterEnum {
-  
   PLACED("placed"),
-  
   APPROVED("approved"),
-  
   DELIVERED("delivered");
 
   private String value;
@@ -38,9 +30,7 @@ public enum OuterEnum {
     this.value = value;
   }
 
-
   @JsonValue
-
   public String getValue() {
     return value;
   }
@@ -50,9 +40,7 @@ public enum OuterEnum {
     return String.valueOf(value);
   }
 
-
   @JsonCreator
-
   public static OuterEnum fromValue(String text) {
     for (OuterEnum b : OuterEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
@@ -61,8 +49,4 @@ public enum OuterEnum {
     }
     return null;
   }
-
 }
-
-
-

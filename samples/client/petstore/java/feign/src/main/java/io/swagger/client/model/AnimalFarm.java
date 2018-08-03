@@ -10,23 +10,18 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import io.swagger.client.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
 
 /**
  * AnimalFarm
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2018-07-24T05:13:04.565-05:00[America/Bogota]")
-public class AnimalFarm extends ArrayList<Animal> implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-
+public class AnimalFarm extends ArrayList<Animal> {
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -42,7 +37,7 @@ public class AnimalFarm extends ArrayList<Animal> implements Serializable {
   public int hashCode() {
     return java.util.Objects.hash(super.hashCode());
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -63,8 +58,5 @@ public class AnimalFarm extends ArrayList<Animal> implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

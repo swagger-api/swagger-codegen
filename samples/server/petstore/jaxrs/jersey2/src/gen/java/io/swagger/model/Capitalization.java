@@ -10,314 +10,149 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * Capitalization
  */
-
 public class Capitalization   {
-  
-    
-      
-  
   @JsonProperty("smallCamel")
-  
-  
-  
-  
   private String smallCamel = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("CapitalCamel")
-  
-  
-  
-  
   private String capitalCamel = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("small_Snake")
-  
-  
-  
-  
   private String smallSnake = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("Capital_Snake")
-  
-  
-  
-  
   private String capitalSnake = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("SCA_ETH_Flow_Points")
-  
-  
-  
-  
   private String scAETHFlowPoints = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("ATT_NAME")
-  
-  
-  
-  
   private String ATT_NAME = null;
-  
 
-  
-  
-  
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get smallCamel
-  
-  
-  
    * @return smallCamel
    **/
- 
-  
   @JsonProperty("smallCamel")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getSmallCamel() {
     return smallCamel;
   }
-  
 
   public void setSmallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
   }
-  
 
-  
-  
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get capitalCamel
-  
-  
-  
    * @return capitalCamel
    **/
- 
-  
   @JsonProperty("CapitalCamel")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
-  
 
   public void setCapitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
   }
-  
 
-  
-  
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get smallSnake
-  
-  
-  
    * @return smallSnake
    **/
- 
-  
   @JsonProperty("small_Snake")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getSmallSnake() {
     return smallSnake;
   }
-  
 
   public void setSmallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
   }
-  
 
-  
-  
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get capitalSnake
-  
-  
-  
    * @return capitalSnake
    **/
- 
-  
   @JsonProperty("Capital_Snake")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
-  
 
   public void setCapitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
   }
-  
 
-  
-  
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get scAETHFlowPoints
-  
-  
-  
    * @return scAETHFlowPoints
    **/
- 
-  
   @JsonProperty("SCA_ETH_Flow_Points")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
-  
 
   public void setScAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
-  
 
-  
-  
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
   }
-  
-  
 
-  
   /**
-  
    * Name of the pet 
-  
-  
-  
-  
    * @return ATT_NAME
    **/
- 
-  
   @JsonProperty("ATT_NAME")
-  
-  @ApiModelProperty(value = "Name of the pet ")
-
+  @Schema(description = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
-  
 
   public void setATTNAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
   }
-  
-
-  
 
 
   @Override
@@ -341,8 +176,6 @@ public class Capitalization   {
   public int hashCode() {
     return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
-
-
 
 
   @Override
@@ -371,6 +204,3 @@ public class Capitalization   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

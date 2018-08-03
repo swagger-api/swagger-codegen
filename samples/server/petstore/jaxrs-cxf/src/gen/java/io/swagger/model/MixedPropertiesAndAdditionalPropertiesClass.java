@@ -6,16 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,52 +18,25 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private UUID uuid = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Date dateTime = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private Map<String, Animal> map = null;
-
-
-  
-  
  /**
-  
-  
    * Get uuid
-  
-  
-  
    * @return uuid
   **/
   @JsonProperty("uuid")
-
-
   public UUID getUuid() {
     return uuid;
   }
 
-  
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
@@ -79,28 +45,16 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
     this.uuid = uuid;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get dateTime
-  
-  
-  
    * @return dateTime
   **/
   @JsonProperty("dateTime")
-
-
   public Date getDateTime() {
     return dateTime;
   }
 
-  
   public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
@@ -109,28 +63,16 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
     this.dateTime = dateTime;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get map
-  
-  
-  
    * @return map
   **/
   @JsonProperty("map")
-
-
   public Map<String, Animal> getMap() {
     return map;
   }
 
-  
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
@@ -139,17 +81,12 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
     this.map = map;
     return this;
   }
-  
-  
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     this.map.put(key, mapItem);
     return this;
   }
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -174,7 +111,3 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

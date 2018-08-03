@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -26,22 +25,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Cat extends Animal {
 
-  
   @JsonProperty("declawed")
   private Boolean declawed = null;
-  
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-  
+    
   /**
   * Get declawed
   * @return declawed
   **/
-  
-  
   @Schema(description = "")
   public Boolean isDeclawed() {
     return declawed;
@@ -49,7 +44,6 @@ public class Cat extends Animal {
   public void setDeclawed(Boolean declawed) {
     this.declawed = declawed;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -67,7 +61,7 @@ public class Cat extends Animal {
   public int hashCode() {
     return java.util.Objects.hash(declawed, super.hashCode());
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -89,8 +83,5 @@ public class Cat extends Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

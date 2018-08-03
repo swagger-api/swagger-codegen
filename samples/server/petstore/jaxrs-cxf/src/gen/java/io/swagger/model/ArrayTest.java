@@ -3,16 +3,9 @@ package io.swagger.model;
 import io.swagger.model.ReadOnlyFirst;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,52 +15,25 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class ArrayTest  {
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private List<String> arrayOfString = null;
-
-
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private List<List<Long>> arrayArrayOfInteger = null;
-
-
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-
-
-  
-  
  /**
-  
-  
    * Get arrayOfString
-  
-  
-  
    * @return arrayOfString
   **/
   @JsonProperty("array_of_string")
-
-
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
 
-  
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
@@ -76,34 +42,21 @@ public class ArrayTest  {
     this.arrayOfString = arrayOfString;
     return this;
   }
-  
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get arrayArrayOfInteger
-  
-  
-  
    * @return arrayArrayOfInteger
   **/
   @JsonProperty("array_array_of_integer")
-
-
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
 
-  
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
@@ -112,34 +65,21 @@ public class ArrayTest  {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
   }
-  
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get arrayArrayOfModel
-  
-  
-  
    * @return arrayArrayOfModel
   **/
   @JsonProperty("array_array_of_model")
-
-
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
 
-  
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
@@ -148,17 +88,12 @@ public class ArrayTest  {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
   }
-  
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -183,7 +118,3 @@ public class ArrayTest  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

@@ -1,38 +1,19 @@
 package io.swagger.model;
 
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class User  implements Serializable {
-  
-  private @Valid Long id = null;
-  private @Valid String username = null;
-  private @Valid String firstName = null;
-  private @Valid String lastName = null;
-  private @Valid String email = null;
-  private @Valid String password = null;
-  private @Valid String phone = null;
-  private @Valid Integer userStatus = null;
+  private @Valid Long id = null;  private @Valid String username = null;  private @Valid String firstName = null;  private @Valid String lastName = null;  private @Valid String email = null;  private @Valid String password = null;  private @Valid String phone = null;  private @Valid Integer userStatus = null;
 
-  
   /**
-   
-   
-   
    **/
   public User id(Long id) {
     this.id = id;
@@ -40,9 +21,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -50,11 +30,7 @@ public class User  implements Serializable {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User username(String username) {
     this.username = username;
@@ -62,9 +38,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("username")
-
   public String getUsername() {
     return username;
   }
@@ -72,11 +47,7 @@ public class User  implements Serializable {
     this.username = username;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User firstName(String firstName) {
     this.firstName = firstName;
@@ -84,9 +55,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("firstName")
-
   public String getFirstName() {
     return firstName;
   }
@@ -94,11 +64,7 @@ public class User  implements Serializable {
     this.firstName = firstName;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User lastName(String lastName) {
     this.lastName = lastName;
@@ -106,9 +72,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("lastName")
-
   public String getLastName() {
     return lastName;
   }
@@ -116,11 +81,7 @@ public class User  implements Serializable {
     this.lastName = lastName;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User email(String email) {
     this.email = email;
@@ -128,9 +89,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("email")
-
   public String getEmail() {
     return email;
   }
@@ -138,11 +98,7 @@ public class User  implements Serializable {
     this.email = email;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User password(String password) {
     this.password = password;
@@ -150,9 +106,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("password")
-
   public String getPassword() {
     return password;
   }
@@ -160,11 +115,7 @@ public class User  implements Serializable {
     this.password = password;
   }
 
-  
   /**
-   
-   
-   
    **/
   public User phone(String phone) {
     this.phone = phone;
@@ -172,9 +123,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("phone")
-
   public String getPhone() {
     return phone;
   }
@@ -182,13 +132,8 @@ public class User  implements Serializable {
     this.phone = phone;
   }
 
-  
   /**
-   
    * User Status
-   
-   
-   
    **/
   public User userStatus(Integer userStatus) {
     this.userStatus = userStatus;
@@ -196,9 +141,8 @@ public class User  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "User Status")
+  @Schema(description = "User Status")
   @JsonProperty("userStatus")
-
   public Integer getUserStatus() {
     return userStatus;
   }
@@ -206,7 +150,6 @@ public class User  implements Serializable {
     this.userStatus = userStatus;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -260,6 +203,3 @@ public class User  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

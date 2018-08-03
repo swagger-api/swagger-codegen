@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -28,31 +27,25 @@ import java.util.List;
 
 public class ArrayOfNumberOnly {
 
-  
   @JsonProperty("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
-  
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
   }
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
-    
     if (this.arrayNumber == null) {
       this.arrayNumber = new ArrayList<BigDecimal>();
     }
-    
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
-  
+
   /**
   * Get arrayNumber
   * @return arrayNumber
   **/
-  
-  
   @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
@@ -60,7 +53,6 @@ public class ArrayOfNumberOnly {
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -77,7 +69,7 @@ public class ArrayOfNumberOnly {
   public int hashCode() {
     return java.util.Objects.hash(arrayNumber);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -99,8 +91,4 @@ public class ArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

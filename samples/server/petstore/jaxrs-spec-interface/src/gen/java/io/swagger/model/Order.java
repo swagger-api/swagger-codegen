@@ -1,32 +1,19 @@
 package io.swagger.model;
 
 import java.util.Date;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Order   {
-  
-  private @Valid Long id = null;
-  private @Valid Long petId = null;
-  private @Valid Integer quantity = null;
-  private @Valid Date shipDate = null;
-public enum StatusEnum {
+  private @Valid Long id = null;  private @Valid Long petId = null;  private @Valid Integer quantity = null;  private @Valid Date shipDate = null;public enum StatusEnum {
 
-    
     PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
-    
 
 
     private String value;
@@ -55,15 +42,9 @@ public enum StatusEnum {
         return null;
     }
 }
+  private @Valid StatusEnum status = null;  private @Valid Boolean complete = false;
 
-  private @Valid StatusEnum status = null;
-  private @Valid Boolean complete = false;
-
-  
   /**
-   
-   
-   
    **/
   public Order id(Long id) {
     this.id = id;
@@ -71,9 +52,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -81,11 +61,7 @@ public enum StatusEnum {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Order petId(Long petId) {
     this.petId = petId;
@@ -93,9 +69,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("petId")
-
   public Long getPetId() {
     return petId;
   }
@@ -103,11 +78,7 @@ public enum StatusEnum {
     this.petId = petId;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
@@ -115,9 +86,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("quantity")
-
   public Integer getQuantity() {
     return quantity;
   }
@@ -125,11 +95,7 @@ public enum StatusEnum {
     this.quantity = quantity;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Order shipDate(Date shipDate) {
     this.shipDate = shipDate;
@@ -137,9 +103,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("shipDate")
-
   public Date getShipDate() {
     return shipDate;
   }
@@ -147,13 +112,8 @@ public enum StatusEnum {
     this.shipDate = shipDate;
   }
 
-  
   /**
-   
    * Order Status
-   
-   
-   
    **/
   public Order status(StatusEnum status) {
     this.status = status;
@@ -161,9 +121,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "Order Status")
+  @Schema(description = "Order Status")
   @JsonProperty("status")
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -171,11 +130,7 @@ public enum StatusEnum {
     this.status = status;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Order complete(Boolean complete) {
     this.complete = complete;
@@ -183,9 +138,8 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("complete")
-
   public Boolean isisComplete() {
     return complete;
   }
@@ -193,7 +147,6 @@ public enum StatusEnum {
     this.complete = complete;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -243,6 +196,3 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

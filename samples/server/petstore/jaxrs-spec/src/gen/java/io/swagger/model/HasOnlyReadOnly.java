@@ -1,32 +1,19 @@
 package io.swagger.model;
 
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class HasOnlyReadOnly  implements Serializable {
-  
-  private @Valid String bar = null;
-  private @Valid String foo = null;
+  private @Valid String bar = null;  private @Valid String foo = null;
 
-  
   /**
-   
-   
-   
    **/
   public HasOnlyReadOnly bar(String bar) {
     this.bar = bar;
@@ -34,9 +21,8 @@ public class HasOnlyReadOnly  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("bar")
-
   public String getBar() {
     return bar;
   }
@@ -44,11 +30,7 @@ public class HasOnlyReadOnly  implements Serializable {
     this.bar = bar;
   }
 
-  
   /**
-   
-   
-   
    **/
   public HasOnlyReadOnly foo(String foo) {
     this.foo = foo;
@@ -56,9 +38,8 @@ public class HasOnlyReadOnly  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("foo")
-
   public String getFoo() {
     return foo;
   }
@@ -66,7 +47,6 @@ public class HasOnlyReadOnly  implements Serializable {
     this.foo = foo;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -108,6 +88,3 @@ public class HasOnlyReadOnly  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

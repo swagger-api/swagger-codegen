@@ -22,7 +22,6 @@
  * limitations under the License.
  */
 
-
 package io.swagger.api;
 
 import java.util.Map;
@@ -48,7 +47,11 @@ import java.util.Map;
 
 
 /**
- * API tests for StoreApi
+ * Swagger Petstore
+ *
+ * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ *
+ * API tests for StoreApi 
  */
 public class StoreApiTest {
 
@@ -67,7 +70,6 @@ public class StoreApiTest {
         ClientConfiguration config = WebClient.getConfig(client); 
     }
 
-    
     /**
      * Delete purchase order by ID
      *
@@ -79,13 +81,12 @@ public class StoreApiTest {
     @Test
     public void deleteOrderTest() {
         String orderId = null;
-	//api.deleteOrder(orderId);
+        //api.deleteOrder(orderId);
         
         // TODO: test validations
         
         
     }
-    
     /**
      * Returns pet inventories by status
      *
@@ -96,13 +97,12 @@ public class StoreApiTest {
      */
     @Test
     public void getInventoryTest() {
-	//Map<String, Integer> response = api.getInventory();
+        //Map<String, Integer> response = api.getInventory();
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
      * Find purchase order by ID
      *
@@ -113,18 +113,15 @@ public class StoreApiTest {
      */
     @Test
     public void getOrderByIdTest() {
-        Long orderId = null;
-	//Order response = api.getOrderById(orderId);
+        Integer orderId = null;
+        //Order response = api.getOrderById(orderId);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
      * Place an order for a pet
-     *
-     * 
      *
      * @throws ApiException
      *          if the Api call fails
@@ -132,11 +129,10 @@ public class StoreApiTest {
     @Test
     public void placeOrderTest() {
         Order body = null;
-	//Order response = api.placeOrder(body);
+        //Order response = api.placeOrder(body);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
 }

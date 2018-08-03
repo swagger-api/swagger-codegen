@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -29,25 +28,21 @@ import android.os.Parcel;
  */
 
 public class Tag {
-
   @SerializedName("id")
   private Long id = null;
-  
   @SerializedName("name")
   private String name = null;
-  
   public Tag id(Long id) {
     this.id = id;
     return this;
   }
 
   
+
   /**
   * Get id
   * @return id
   **/
-  
-  
   @Schema(description = "")
   public Long getId() {
     return id;
@@ -55,19 +50,17 @@ public class Tag {
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Tag name(String name) {
     this.name = name;
     return this;
   }
 
   
+
   /**
   * Get name
   * @return name
   **/
-  
-  
   @Schema(description = "")
   public String getName() {
     return name;
@@ -75,7 +68,6 @@ public class Tag {
   public void setName(String name) {
     this.name = name;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -93,7 +85,7 @@ public class Tag {
   public int hashCode() {
     return java.util.Objects.hash(id, name);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -116,13 +108,10 @@ public class Tag {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(id);
     out.writeValue(name);
-    
   }
 
   public Tag() {
@@ -131,8 +120,10 @@ public class Tag {
 
   Tag(Parcel in) {
     
+    id = (Long)in.readValue(null);
     
-    id = (Long)in.readValue(null);name = (String)in.readValue(null);
+    name = (String)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -148,6 +139,3 @@ public class Tag {
     }
   };
 }
-
-
-

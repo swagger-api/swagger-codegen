@@ -38,10 +38,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.swagger</groupId>
+      <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
       <scope>provided</scope>
-      <version>1.5.3</version>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -69,7 +69,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -77,7 +76,6 @@
         <version>1.1.0.Final</version>
         <scope>provided</scope>
     </dependency>
-
   </dependencies>
   <properties>
     <junit-version>4.8.1</junit-version>

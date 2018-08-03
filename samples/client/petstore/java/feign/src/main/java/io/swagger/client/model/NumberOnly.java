@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 /**
@@ -27,28 +25,25 @@ import java.math.BigDecimal;
 
 public class NumberOnly {
 
-  
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
-  
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-  
+    
   /**
   * Get justNumber
   * @return justNumber
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,9 +58,9 @@ public class NumberOnly {
 
   @Override
   public int hashCode() {
-    return Objects.hash(justNumber);
+    return java.util.Objects.hash(justNumber);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -87,8 +82,5 @@ public class NumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

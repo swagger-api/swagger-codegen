@@ -2,30 +2,20 @@ package io.swagger.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class EnumArrays  implements Serializable {
-  
 public enum JustSymbolEnum {
 
-    
     GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), DOLLAR(String.valueOf("$"));
-    
 
 
     private String value;
@@ -54,13 +44,9 @@ public enum JustSymbolEnum {
         return null;
     }
 }
+  private @Valid JustSymbolEnum justSymbol = null;public enum ArrayEnumEnum {
 
-  private @Valid JustSymbolEnum justSymbol = null;
-public enum ArrayEnumEnum {
-
-    
     FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
-    
 
 
     private String value;
@@ -89,14 +75,9 @@ public enum ArrayEnumEnum {
         return null;
     }
 }
-
   private @Valid List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
-  
   /**
-   
-   
-   
    **/
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
@@ -104,9 +85,8 @@ public enum ArrayEnumEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("just_symbol")
-
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -114,11 +94,7 @@ public enum ArrayEnumEnum {
     this.justSymbol = justSymbol;
   }
 
-  
   /**
-   
-   
-   
    **/
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
@@ -126,9 +102,8 @@ public enum ArrayEnumEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("array_enum")
-
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
@@ -136,7 +111,6 @@ public enum ArrayEnumEnum {
     this.arrayEnum = arrayEnum;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -178,6 +152,3 @@ public enum ArrayEnumEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

@@ -3,16 +3,9 @@ package io.swagger.model;
 import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,11 +15,7 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 public class AnimalFarm extends ArrayList<Animal> {
-  
-  
 
   @Override
   public String toString() {
@@ -48,7 +37,3 @@ public class AnimalFarm extends ArrayList<Animal> {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

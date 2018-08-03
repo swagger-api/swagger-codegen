@@ -3,20 +3,11 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
 import javax.validation.constraints.*;
-
-
-
 /**
  * A tag for a pet
  **/
-
-
-
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
@@ -24,15 +15,10 @@ import javax.xml.bind.annotation.*;
 @Schema(description = "A tag for a pet")
 
 public class Tag   {
-  
   private Long id = null;
   private String name = null;
 
-  
   /**
-   
-   
-   
    **/
   public Tag id(Long id) {
     this.id = id;
@@ -43,7 +29,6 @@ public class Tag   {
   
   @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -51,11 +36,7 @@ public class Tag   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Tag name(String name) {
     this.name = name;
@@ -66,7 +47,6 @@ public class Tag   {
   
   @Schema(description = "")
   @JsonProperty("name")
-
   public String getName() {
     return name;
   }
@@ -74,7 +54,6 @@ public class Tag   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -116,6 +95,3 @@ public class Tag   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

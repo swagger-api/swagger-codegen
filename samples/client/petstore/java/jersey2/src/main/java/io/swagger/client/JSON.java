@@ -1,20 +1,13 @@
 package io.swagger.client;
 
-
 import org.threeten.bp.*;
-
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
-
-
-
 import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
-
 
 import java.text.DateFormat;
 
 import javax.ws.rs.ext.ContextResolver;
-
 
 public class JSON implements ContextResolver<ObjectMapper> {
   private ObjectMapper mapper;
@@ -28,15 +21,11 @@ public class JSON implements ContextResolver<ObjectMapper> {
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
     mapper.setDateFormat(new RFC3339DateFormat());
-    
-    
-    
     ThreeTenModule module = new ThreeTenModule();
     module.addDeserializer(Instant.class, CustomInstantDeserializer.INSTANT);
     module.addDeserializer(OffsetDateTime.class, CustomInstantDeserializer.OFFSET_DATE_TIME);
     module.addDeserializer(ZonedDateTime.class, CustomInstantDeserializer.ZONED_DATE_TIME);
     mapper.registerModule(module);
-    
   }
 
   /**

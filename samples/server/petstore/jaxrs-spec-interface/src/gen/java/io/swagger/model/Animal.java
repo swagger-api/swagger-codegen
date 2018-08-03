@@ -2,31 +2,19 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Animal   {
-  
-  private @Valid String className = null;
-  private @Valid String color = "red";
+  private @Valid String className = null;  private @Valid String color = "red";
 
-  
   /**
-   
-   
-   
    **/
   public Animal className(String className) {
     this.className = className;
@@ -34,11 +22,9 @@ public class Animal   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("className")
-
   @NotNull
-
   public String getClassName() {
     return className;
   }
@@ -46,11 +32,7 @@ public class Animal   {
     this.className = className;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Animal color(String color) {
     this.color = color;
@@ -58,9 +40,8 @@ public class Animal   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("color")
-
   public String getColor() {
     return color;
   }
@@ -68,7 +49,6 @@ public class Animal   {
     this.color = color;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -110,6 +90,3 @@ public class Animal   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

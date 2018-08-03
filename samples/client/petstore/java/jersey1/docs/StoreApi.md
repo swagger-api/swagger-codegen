@@ -9,9 +9,6 @@ Method | HTTP request | Description
 [**getOrderById**](StoreApi.md#getOrderById) | **GET** /store/order/{order_id} | Find purchase order by ID
 [**placeOrder**](StoreApi.md#placeOrder) | **POST** /store/order | Place an order for a pet
 
-
-
-
 <a name="deleteOrder"></a>
 # **deleteOrder**
 > deleteOrder(orderId)
@@ -27,11 +24,8 @@ For valid response try integer IDs with value &lt; 1000. Anything above 1000 or 
 //import io.swagger.client.api.StoreApi;
 
 
-
 StoreApi apiInstance = new StoreApi();
-
 String orderId = "orderId_example"; // String | ID of the order that needs to be deleted
-
 try {
     apiInstance.deleteOrder(orderId);
 } catch (ApiException e) {
@@ -46,7 +40,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orderId** | [**String**](.md)| ID of the order that needs to be deleted |
 
-
 ### Return type
 
 null (empty response body)
@@ -59,7 +52,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
-
 
 <a name="getInventory"></a>
 # **getInventory**
@@ -76,9 +68,7 @@ Returns a map of status codes to quantities
 //import io.swagger.client.api.StoreApi;
 
 
-
 StoreApi apiInstance = new StoreApi();
-
 try {
     Map<String, Integer> result = apiInstance.getInventory();
     System.out.println(result);
@@ -90,7 +80,6 @@ try {
 
 ### Parameters
 This endpoint does not need any parameter.
-
 
 ### Return type
 
@@ -104,7 +93,6 @@ This endpoint does not need any parameter.
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
-
 
 <a name="getOrderById"></a>
 # **getOrderById**
@@ -121,11 +109,8 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 //import io.swagger.client.api.StoreApi;
 
 
-
 StoreApi apiInstance = new StoreApi();
-
 Integer orderId = 56; // Integer | ID of pet that needs to be fetched
-
 try {
     Order result = apiInstance.getOrderById(orderId);
     System.out.println(result);
@@ -141,7 +126,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orderId** | [**Integer**](.md)| ID of pet that needs to be fetched |
 
-
 ### Return type
 
 [**Order**](Order.md)
@@ -154,7 +138,6 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
-
 
 <a name="placeOrder"></a>
 # **placeOrder**
@@ -169,11 +152,8 @@ Place an order for a pet
 //import io.swagger.client.api.StoreApi;
 
 
-
 StoreApi apiInstance = new StoreApi();
-
 Order body = new Order(); // Order | order placed for purchasing the pet
-
 try {
     Order result = apiInstance.placeOrder(body);
     System.out.println(result);
@@ -189,7 +169,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**Order**](Order.md)| order placed for purchasing the pet |
 
-
 ### Return type
 
 [**Order**](Order.md)
@@ -202,6 +181,4 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: application/xml, application/json
-
-
 

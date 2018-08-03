@@ -10,126 +10,61 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * HasOnlyReadOnly
  */
-
 public class HasOnlyReadOnly   {
-  
-    
-      
-  
   @JsonProperty("bar")
-  
-  
-  
-  
   private String bar = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("foo")
-  
-  
-  
-  
   private String foo = null;
-  
 
-  
-  
-  
   public HasOnlyReadOnly bar(String bar) {
     this.bar = bar;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get bar
-  
-  
-  
    * @return bar
    **/
- 
-  
   @JsonProperty("bar")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
 
   public void setBar(String bar) {
     this.bar = bar;
   }
-  
 
-  
-  
   public HasOnlyReadOnly foo(String foo) {
     this.foo = foo;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get foo
-  
-  
-  
    * @return foo
    **/
- 
-  
   @JsonProperty("foo")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getFoo() {
     return foo;
   }
-  
 
   public void setFoo(String foo) {
     this.foo = foo;
   }
-  
-
-  
 
 
   @Override
@@ -149,8 +84,6 @@ public class HasOnlyReadOnly   {
   public int hashCode() {
     return Objects.hash(bar, foo);
   }
-
-
 
 
   @Override
@@ -175,6 +108,3 @@ public class HasOnlyReadOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

@@ -1,34 +1,21 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
-
-
 
 /**
  * Model for testing model name starting with number
  **/
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@ApiModel(description = "Model for testing model name starting with number")
+@Schema(description = "Model for testing model name starting with number")
 
 public class Model200Response   {
-  
-  private @Valid Integer name = null;
-  private @Valid String propertyClass = null;
+  private @Valid Integer name = null;  private @Valid String propertyClass = null;
 
-  
   /**
-   
-   
-   
    **/
   public Model200Response name(Integer name) {
     this.name = name;
@@ -36,9 +23,8 @@ public class Model200Response   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("name")
-
   public Integer getName() {
     return name;
   }
@@ -46,11 +32,7 @@ public class Model200Response   {
     this.name = name;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
@@ -58,9 +40,8 @@ public class Model200Response   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("class")
-
   public String getPropertyClass() {
     return propertyClass;
   }
@@ -68,7 +49,6 @@ public class Model200Response   {
     this.propertyClass = propertyClass;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -110,6 +90,3 @@ public class Model200Response   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

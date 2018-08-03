@@ -2,16 +2,7 @@ package io.swagger.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-
-
-
-
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,50 +12,26 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * A category for a pet
  **/
 @Schema(description="A category for a pet")
-
 public class Category  {
   
-
-  
   @Schema(description = "")
-
-
-
   private Long id = null;
-
-  
-
   
   @Schema(description = "")
-
-
-
   private String name = null;
-
-  
-  
  /**
-  
-  
    * Get id
-  
-  
-  
    * @return id
   **/
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
 
-  
   public void setId(Long id) {
     this.id = id;
   }
@@ -73,27 +40,16 @@ public class Category  {
     this.id = id;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get name
-  
-  
-  
    * @return name
   **/
   @JsonProperty("name")
-
   public String getName() {
     return name;
   }
 
-  
   public void setName(String name) {
     this.name = name;
   }
@@ -102,11 +58,7 @@ public class Category  {
     this.name = name;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -130,7 +82,3 @@ public class Category  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-
