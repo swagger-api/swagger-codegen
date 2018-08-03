@@ -27,3 +27,6 @@ servers:
 - ada-server
 - java-pkmst
 - scala-lagom-server
+
+clientsV3:
+- html
