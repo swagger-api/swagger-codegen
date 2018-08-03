@@ -22,9 +22,9 @@
 
 #include "../ApiClient.h"
 
-#include "ApiResponse.h"
+#include "../model/ApiResponse.h"
 #include "HttpContent.h"
-#include "Pet.h"
+#include "../model/Pet.h"
 #include <cpprest/details/basic_types.h>
 
 #include <boost/optional.hpp>

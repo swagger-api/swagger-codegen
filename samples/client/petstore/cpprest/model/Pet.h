@@ -22,9 +22,9 @@
 
 #include "../ModelBase.h"
 
-#include "Tag.h"
+#include "../model/Category.h"
+#include "../model/Tag.h"
 #include <cpprest/details/basic_types.h>
-#include "Category.h"
 #include <vector>
 
 namespace io {

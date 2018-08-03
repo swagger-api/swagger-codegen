@@ -22,7 +22,7 @@
 
 #include "../ApiClient.h"
 
-#include "Order.h"
+#include "../model/Order.h"
 #include <map>
 #include <cpprest/details/basic_types.h>
 
