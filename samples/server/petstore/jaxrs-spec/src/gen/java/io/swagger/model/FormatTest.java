@@ -4,48 +4,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import org.joda.time.LocalDate;
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FormatTest  implements Serializable {
-  
-  private @Valid Integer integer = null;
-  private @Valid Integer int32 = null;
-  private @Valid Long int64 = null;
-  private @Valid BigDecimal number = null;
-  private @Valid Float _float = null;
-  private @Valid Double _double = null;
-  private @Valid String string = null;
-  private @Valid String _byte = null;
-  private @Valid String binary = null;
-  private @Valid LocalDate date = null;
-  private @Valid Date dateTime = null;
-  private @Valid UUID uuid = null;
-  private @Valid String password = null;
+  private @Valid Integer integer = null;  private @Valid Integer int32 = null;  private @Valid Long int64 = null;  private @Valid BigDecimal number = null;  private @Valid Float _float = null;  private @Valid Double _double = null;  private @Valid String string = null;  private @Valid String _byte = null;  private @Valid String binary = null;  private @Valid LocalDate date = null;  private @Valid Date dateTime = null;  private @Valid UUID uuid = null;  private @Valid String password = null;
 
-  
   /**
-   
-   
    * minimum: 10
-   
-   
    * maximum: 100
-   
    **/
   public FormatTest integer(Integer integer) {
     this.integer = integer;
@@ -53,9 +27,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("integer")
-
  @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
@@ -63,15 +36,9 @@ public class FormatTest  implements Serializable {
     this.integer = integer;
   }
 
-  
   /**
-   
-   
    * minimum: 20
-   
-   
    * maximum: 200
-   
    **/
   public FormatTest int32(Integer int32) {
     this.int32 = int32;
@@ -79,9 +46,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("int32")
-
  @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
@@ -89,11 +55,7 @@ public class FormatTest  implements Serializable {
     this.int32 = int32;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest int64(Long int64) {
     this.int64 = int64;
@@ -101,9 +63,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("int64")
-
   public Long getInt64() {
     return int64;
   }
@@ -111,11 +72,9 @@ public class FormatTest  implements Serializable {
     this.int64 = int64;
   }
 
-  
   /**
-   
-   
-   
+   * minimum: 32
+   * maximum: 543
    **/
   public FormatTest number(BigDecimal number) {
     this.number = number;
@@ -123,23 +82,19 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("number")
-
   @NotNull
-
-  public BigDecimal getNumber() {
+ @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
     return number;
   }
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
 
-  
   /**
-   
-   
-   
+   * minimum: 54
+   * maximum: 987
    **/
   public FormatTest _float(Float _float) {
     this._float = _float;
@@ -147,21 +102,18 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("float")
-
-  public Float getFloat() {
+ @DecimalMin("54") @DecimalMax("987")  public Float getFloat() {
     return _float;
   }
   public void setFloat(Float _float) {
     this._float = _float;
   }
 
-  
   /**
-   
-   
-   
+   * minimum: 67
+   * maximum: 123
    **/
   public FormatTest _double(Double _double) {
     this._double = _double;
@@ -169,21 +121,16 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("double")
-
-  public Double getDouble() {
+ @DecimalMin("67") @DecimalMax("123")  public Double getDouble() {
     return _double;
   }
   public void setDouble(Double _double) {
     this._double = _double;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest string(String string) {
     this.string = string;
@@ -191,9 +138,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("string")
-
  @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
@@ -201,11 +147,7 @@ public class FormatTest  implements Serializable {
     this.string = string;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest _byte(String _byte) {
     this._byte = _byte;
@@ -213,11 +155,9 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("byte")
-
   @NotNull
-
  @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
     return _byte;
   }
@@ -225,11 +165,7 @@ public class FormatTest  implements Serializable {
     this._byte = _byte;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest binary(String binary) {
     this.binary = binary;
@@ -237,9 +173,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("binary")
-
   public String getBinary() {
     return binary;
   }
@@ -247,11 +182,7 @@ public class FormatTest  implements Serializable {
     this.binary = binary;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest date(LocalDate date) {
     this.date = date;
@@ -259,11 +190,9 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("date")
-
   @NotNull
-
   public LocalDate getDate() {
     return date;
   }
@@ -271,11 +200,7 @@ public class FormatTest  implements Serializable {
     this.date = date;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest dateTime(Date dateTime) {
     this.dateTime = dateTime;
@@ -283,9 +208,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("dateTime")
-
   public Date getDateTime() {
     return dateTime;
   }
@@ -293,11 +217,7 @@ public class FormatTest  implements Serializable {
     this.dateTime = dateTime;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
@@ -305,9 +225,8 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("uuid")
-
   public UUID getUuid() {
     return uuid;
   }
@@ -315,11 +234,7 @@ public class FormatTest  implements Serializable {
     this.uuid = uuid;
   }
 
-  
   /**
-   
-   
-   
    **/
   public FormatTest password(String password) {
     this.password = password;
@@ -327,11 +242,9 @@ public class FormatTest  implements Serializable {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("password")
-
   @NotNull
-
   public String getPassword() {
     return password;
   }
@@ -339,7 +252,6 @@ public class FormatTest  implements Serializable {
     this.password = password;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -403,6 +315,3 @@ public class FormatTest  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

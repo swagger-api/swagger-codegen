@@ -2,11 +2,17 @@ package io.swagger.api;
 
 import io.swagger.model.Client;
 
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Map;
 import java.util.List;
@@ -14,18 +20,13 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Path("/another-fake")
-@Api(description = "the another-fake API")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.java.JavaJAXRSSpecServerCodegen", date = "2018-04-04T20:14:19.902+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:42:18.406-05:00[America/Bogota]")
 public interface AnotherFakeApi {
-
-
 
     @PATCH
     @Path("/dummy")
-    @ApiOperation(value = "To test special tags", notes = "To test special tags", tags={ "$another-fake?" })
+    @Operation(summary = "To test special tags", description = "To test special tags", tags={ "$another-fake?" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    Client testSpecialTags(@Valid Client client);
-
-}
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+    Client testSpecialTags(@Valid Client body);}

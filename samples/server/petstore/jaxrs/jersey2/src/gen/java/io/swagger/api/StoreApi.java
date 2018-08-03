@@ -4,12 +4,17 @@ import io.swagger.model.*;
 import io.swagger.api.StoreApiService;
 import io.swagger.api.factories.StoreApiServiceFactory;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Map;
 import io.swagger.model.Order;
-
 
 import java.util.Map;
 import java.util.List;
@@ -25,14 +30,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
-
 import javax.validation.constraints.*;
 
-
 @Path("/store")
-
-
-@io.swagger.annotations.Api(description = "the store API")
 
 
 public class StoreApi  {
@@ -59,65 +59,65 @@ public class StoreApi  {
       this.delegate = delegate;
    }
 
-
     @DELETE
     @Path("/order/{order_id}")
     
     
-    @io.swagger.annotations.ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class, tags={ "store", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Order not found", response = Void.class) })
-    public Response deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
+        @ApiResponse(responseCode = "404", description = "Order not found") })
+    public Response deleteOrder(
+@Parameter(description = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteOrder(orderId,securityContext);
     }
-
     @GET
     @Path("/inventory")
     
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", tags={ "store", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
+    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", tags={ "store" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Response getInventory(@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getInventory(securityContext);
     }
-
     @GET
     @Path("/order/{order_id}")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, tags={ "store", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Order.class),
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Order not found", response = Void.class) })
-    public Response getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathParam("order_id") Integer orderId
+        @ApiResponse(responseCode = "404", description = "Order not found") })
+    public Response getOrderById(
+@Parameter(description = "ID of pet that needs to be fetched",required=true) @PathParam("order_id") Integer orderId
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getOrderById(orderId,securityContext);
     }
-
     @POST
     @Path("/order")
     @Consumes({ "*/*" })
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Order.class),
+    @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid Order", response = Void.class) })
-    public Response placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true) Order order
+        @ApiResponse(responseCode = "400", description = "Invalid Order") })
+    public Response placeOrder(
+@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.placeOrder(order,securityContext);
+        return delegate.placeOrder(body,securityContext);
     }
-
 }
-

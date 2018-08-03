@@ -16,11 +16,6 @@ import org.apache.cxf.jaxrs.model.wadl.DocTarget;
 
 import org.apache.cxf.jaxrs.ext.multipart.*;
 
-import io.swagger.annotations.Api;
-
-
-
-
 
 /**
  * Swagger Petstore
@@ -134,7 +129,7 @@ public class PetApiServiceImpl implements PetApi {
      
      */
     
-    public void updatePetWithForm(Integer petId, Object body) {
+    public void updatePetWithForm(Integer petId, String name, String status) {
         // TODO: Implement...
         
         
@@ -148,7 +143,7 @@ public class PetApiServiceImpl implements PetApi {
      
      */
     
-    public ModelApiResponse uploadFile(Integer petId, Object body) {
+    public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, org.apache.cxf.jaxrs.ext.multipart.Attachment fileDetails) {
         // TODO: Implement...
         
         return null;

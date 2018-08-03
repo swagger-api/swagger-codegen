@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,25 +29,19 @@ import android.os.Parcel;
  */
 
 public class Order {
-
   @SerializedName("id")
   private Long id = null;
-  
   @SerializedName("petId")
   private Long petId = null;
-  
   @SerializedName("quantity")
   private Integer quantity = null;
-  
   @SerializedName("shipDate")
   private OffsetDateTime shipDate = null;
-  
   /**
    * Order Status
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
-    
     PLACED("placed"),
     APPROVED("approved"),
     DELIVERED("delivered");
@@ -58,7 +51,6 @@ public class Order {
     StatusEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -67,7 +59,6 @@ public class Order {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static StatusEnum fromValue(String text) {
       for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -76,7 +67,6 @@ public class Order {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<StatusEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
@@ -89,26 +79,21 @@ public class Order {
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("status")
+  }  @SerializedName("status")
   private StatusEnum status = null;
-  
   @SerializedName("complete")
   private Boolean complete = false;
-  
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
   
+
   /**
   * Get id
   * @return id
   **/
-  
-  
   @Schema(description = "")
   public Long getId() {
     return id;
@@ -116,19 +101,17 @@ public class Order {
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
   
+
   /**
   * Get petId
   * @return petId
   **/
-  
-  
   @Schema(description = "")
   public Long getPetId() {
     return petId;
@@ -136,19 +119,17 @@ public class Order {
   public void setPetId(Long petId) {
     this.petId = petId;
   }
-  
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
   
+
   /**
   * Get quantity
   * @return quantity
   **/
-  
-  
   @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
@@ -156,19 +137,17 @@ public class Order {
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
-  
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
   
+
   /**
   * Get shipDate
   * @return shipDate
   **/
-  
-  
   @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
@@ -176,19 +155,17 @@ public class Order {
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
-  
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
+
   /**
   * Order Status
   * @return status
   **/
-  
-  
   @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
@@ -196,19 +173,17 @@ public class Order {
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-  
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
   
+
   /**
   * Get complete
   * @return complete
   **/
-  
-  
   @Schema(description = "")
   public Boolean isComplete() {
     return complete;
@@ -216,7 +191,6 @@ public class Order {
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -238,7 +212,7 @@ public class Order {
   public int hashCode() {
     return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -265,9 +239,7 @@ public class Order {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(id);
     out.writeValue(petId);
@@ -275,7 +247,6 @@ public class Order {
     out.writeValue(shipDate);
     out.writeValue(status);
     out.writeValue(complete);
-    
   }
 
   public Order() {
@@ -284,8 +255,18 @@ public class Order {
 
   Order(Parcel in) {
     
+    id = (Long)in.readValue(null);
     
-    id = (Long)in.readValue(null);petId = (Long)in.readValue(null);quantity = (Integer)in.readValue(null);shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());status = (StatusEnum)in.readValue(null);complete = (Boolean)in.readValue(null);
+    petId = (Long)in.readValue(null);
+    
+    quantity = (Integer)in.readValue(null);
+    
+    
+    shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
+    status = (StatusEnum)in.readValue(null);
+    
+    complete = (Boolean)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -301,6 +282,3 @@ public class Order {
     }
   };
 }
-
-
-

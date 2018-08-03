@@ -1,30 +1,18 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ReadOnlyFirst   {
-  
-  private @Valid String bar = null;
-  private @Valid String baz = null;
+  private @Valid String bar = null;  private @Valid String baz = null;
 
-  
   /**
-   
-   
-   
    **/
   public ReadOnlyFirst bar(String bar) {
     this.bar = bar;
@@ -32,9 +20,8 @@ public class ReadOnlyFirst   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("bar")
-
   public String getBar() {
     return bar;
   }
@@ -42,11 +29,7 @@ public class ReadOnlyFirst   {
     this.bar = bar;
   }
 
-  
   /**
-   
-   
-   
    **/
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
@@ -54,9 +37,8 @@ public class ReadOnlyFirst   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("baz")
-
   public String getBaz() {
     return baz;
   }
@@ -64,7 +46,6 @@ public class ReadOnlyFirst   {
     this.baz = baz;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -106,6 +87,3 @@ public class ReadOnlyFirst   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

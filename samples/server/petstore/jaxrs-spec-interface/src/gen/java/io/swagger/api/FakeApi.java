@@ -4,11 +4,17 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Map;
 import java.util.List;
@@ -16,81 +22,75 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Path("/fake")
-@Api(description = "the fake API")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.java.JavaJAXRSSpecServerCodegen", date = "2018-04-04T20:14:19.902+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:42:18.406-05:00[America/Bogota]")
 public interface FakeApi {
-
-
 
     @POST
     @Path("/outer/boolean")
-    @ApiOperation(value = "", notes = "Test serialization of outer boolean types", tags={ "fake" })
+    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class))) })
     Boolean fakeOuterBooleanSerialize(@Valid Boolean body);
-
-
     @POST
     @Path("/outer/composite")
-    @ApiOperation(value = "", notes = "Test serialization of object with outer number type", tags={ "fake" })
+    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
-    OuterComposite fakeOuterCompositeSerialize(@Valid OuterComposite outercomposite);
-
-
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class))) })
+    OuterComposite fakeOuterCompositeSerialize(@Valid OuterComposite body);
     @POST
     @Path("/outer/number")
-    @ApiOperation(value = "", notes = "Test serialization of outer number types", tags={ "fake" })
+    @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class))) })
     BigDecimal fakeOuterNumberSerialize(@Valid BigDecimal body);
-
-
     @POST
     @Path("/outer/string")
-    @ApiOperation(value = "", notes = "Test serialization of outer string types", tags={ "fake" })
+    @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Output string", response = String.class) })
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class))) })
     String fakeOuterStringSerialize(@Valid String body);
-
-
     @PATCH
-    @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", tags={ "fake" })
+    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    Client testClientModel(@Valid Client client);
-
-
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+    Client testClientModel(@Valid Client body);
     @POST
-    @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", tags={ "fake" })
+    @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
-        @ApiResponse(code = 404, message = "User not found", response = Void.class) })
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
+        @ApiResponse(responseCode = "404", description = "User not found") })
     void testEndpointParameters(@Valid Object body);
-
-
     @GET
-    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", tags={ "fake" })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
-        @ApiResponse(code = 404, message = "Not found", response = Void.class) })
-    void testEnumParameters(@Valid Object body,@HeaderParam("enum_header_string_array")   @ApiParam("Header parameter enum test (string array)") List<String> enumHeaderStringArray,@HeaderParam("enum_header_string")   @ApiParam("Header parameter enum test (string)") String enumHeaderString,@QueryParam("enum_query_string_array")   @ApiParam("Query parameter enum test (string array)")  List<String> enumQueryStringArray,@QueryParam("enum_query_string")   @ApiParam("Query parameter enum test (string)")  String enumQueryString,@QueryParam("enum_query_integer")   @ApiParam("Query parameter enum test (double)")  Integer enumQueryInteger);
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    void testEnumParameters(@Valid Object body,  @HeaderParam("enum_header_string_array") 
 
+ @Parameter(description = "Header parameter enum test (string array)") List<String> enumHeaderStringArray
+,  @HeaderParam("enum_header_string") 
 
+ @Parameter(description = "Header parameter enum test (string)") String enumHeaderString
+,  @QueryParam("enum_query_string_array") 
+
+ @Parameter(description = "Query parameter enum test (string array)")  List<String> enumQueryStringArray
+,  @QueryParam("enum_query_string") 
+
+ @Parameter(description = "Query parameter enum test (string)")  String enumQueryString
+,  @QueryParam("enum_query_integer") 
+
+ @Parameter(description = "Query parameter enum test (double)")  Integer enumQueryInteger
+);
     @POST
     @Path("/inline-additionalProperties")
-    @ApiOperation(value = "test inline additionalProperties", notes = "", tags={ "fake" })
+    @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
+        @ApiResponse(responseCode = "200", description = "successful operation") })
     void testInlineAdditionalProperties(@Valid Map<String, String> body);
-
-
     @GET
     @Path("/jsonFormData")
-    @ApiOperation(value = "test json serialization of form data", notes = "", tags={ "fake" })
+    @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    void testJsonFormData(@Valid Object body);
-
-}
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    void testJsonFormData(@Valid Object body);}

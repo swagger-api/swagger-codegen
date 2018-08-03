@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -32,16 +31,13 @@ import android.os.Parcel;
  */
 
 public class MapTest {
-
   @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
-  
   /**
    * Gets or Sets inner
    */
   @JsonAdapter(InnerEnum.Adapter.class)
   public enum InnerEnum {
-    
     UPPER("UPPER"),
     LOWER("lower");
 
@@ -50,7 +46,6 @@ public class MapTest {
     InnerEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -59,7 +54,6 @@ public class MapTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static InnerEnum fromValue(String text) {
       for (InnerEnum b : InnerEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -68,7 +62,6 @@ public class MapTest {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<InnerEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final InnerEnum enumeration) throws IOException {
@@ -81,22 +74,18 @@ public class MapTest {
         return InnerEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("map_of_enum_string")
+  }  @SerializedName("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
-  
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
   }
 
+  
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
-    
     if (this.mapMapOfString == null) {
       this.mapMapOfString = new HashMap<String, Map<String, String>>();
     }
-    
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
@@ -104,8 +93,6 @@ public class MapTest {
   * Get mapMapOfString
   * @return mapMapOfString
   **/
-  
-  
   @Schema(description = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
@@ -113,18 +100,16 @@ public class MapTest {
   public void setMapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
   }
-  
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
     return this;
   }
 
+  
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
-    
     if (this.mapOfEnumString == null) {
       this.mapOfEnumString = new HashMap<String, InnerEnum>();
     }
-    
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
@@ -132,8 +117,6 @@ public class MapTest {
   * Get mapOfEnumString
   * @return mapOfEnumString
   **/
-  
-  
   @Schema(description = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
@@ -141,7 +124,6 @@ public class MapTest {
   public void setMapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -159,7 +141,7 @@ public class MapTest {
   public int hashCode() {
     return java.util.Objects.hash(mapMapOfString, mapOfEnumString);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -182,13 +164,10 @@ public class MapTest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(mapMapOfString);
     out.writeValue(mapOfEnumString);
-    
   }
 
   public MapTest() {
@@ -198,7 +177,9 @@ public class MapTest {
   MapTest(Parcel in) {
     
     
-    mapMapOfString = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());mapOfEnumString = (Map<String, InnerEnum>)in.readValue(null);
+    mapMapOfString = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
+    mapOfEnumString = (Map<String, InnerEnum>)in.readValue(null);
+    
   }
 
   public int describeContents() {
@@ -214,6 +195,3 @@ public class MapTest {
     }
   };
 }
-
-
-

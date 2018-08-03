@@ -1,17 +1,10 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,54 +14,28 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * An order for a pets from the pet store
  **/
-@ApiModel(description="An order for a pets from the pet store")
-
+@Schema(description="An order for a pets from the pet store")
 public class Order  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Long id = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Long petId = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer quantity = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Date shipDate = null;
-
-  
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {
 
-    
 @XmlEnumValue("placed") PLACED(String.valueOf("placed")), @XmlEnumValue("approved") APPROVED(String.valueOf("approved")), @XmlEnumValue("delivered") DELIVERED(String.valueOf("delivered"));
-    
 
 
     private String value;
@@ -95,45 +62,24 @@ public enum StatusEnum {
         return null;
     }
 }
-
-
-  @ApiModelProperty(value = "Order Status")
-
+  
+  @Schema(description = "Order Status")
  /**
    * Order Status  
   **/
-
-
-
   private StatusEnum status = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Boolean complete = false;
-
-  
-  
  /**
-  
-  
    * Get id
-  
-  
-  
    * @return id
   **/
   @JsonProperty("id")
-
-
   public Long getId() {
     return id;
   }
 
-  
   public void setId(Long id) {
     this.id = id;
   }
@@ -142,28 +88,16 @@ public enum StatusEnum {
     this.id = id;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get petId
-  
-  
-  
    * @return petId
   **/
   @JsonProperty("petId")
-
-
   public Long getPetId() {
     return petId;
   }
 
-  
   public void setPetId(Long petId) {
     this.petId = petId;
   }
@@ -172,28 +106,16 @@ public enum StatusEnum {
     this.petId = petId;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get quantity
-  
-  
-  
    * @return quantity
   **/
   @JsonProperty("quantity")
-
-
   public Integer getQuantity() {
     return quantity;
   }
 
-  
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
@@ -202,28 +124,16 @@ public enum StatusEnum {
     this.quantity = quantity;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get shipDate
-  
-  
-  
    * @return shipDate
   **/
   @JsonProperty("shipDate")
-
-
   public Date getShipDate() {
     return shipDate;
   }
 
-  
   public void setShipDate(Date shipDate) {
     this.shipDate = shipDate;
   }
@@ -232,23 +142,12 @@ public enum StatusEnum {
     this.shipDate = shipDate;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
    * Order Status
-  
-  
-  
-  
    * @return status
   **/
   @JsonProperty("status")
-
-
   public String getStatus() {
     if (status == null) {
       return null;
@@ -256,7 +155,6 @@ public enum StatusEnum {
     return status.value();
   }
 
-  
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
@@ -265,28 +163,16 @@ public enum StatusEnum {
     this.status = status;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get complete
-  
-  
-  
    * @return complete
   **/
   @JsonProperty("complete")
-
-
   public Boolean isisComplete() {
     return complete;
   }
 
-  
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
@@ -295,11 +181,7 @@ public enum StatusEnum {
     this.complete = complete;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -327,7 +209,3 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

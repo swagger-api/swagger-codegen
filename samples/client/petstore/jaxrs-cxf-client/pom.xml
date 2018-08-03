@@ -4,9 +4,7 @@
   <artifactId>jaxrs-cxf-petstore-client</artifactId>
   <packaging>jar</packaging>
   <name>jaxrs-cxf-petstore-client</name>
-  
   <description>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key &#x60;special-key&#x60; to test the authorization filters.</description>
-  
   <version>1.0.0</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
@@ -39,7 +37,6 @@
             <idleTimeout>60000</idleTimeout>
           </httpConnector>
         </configuration>
-
         <executions>
           <execution>
             <id>start-jetty</id>
@@ -83,15 +80,12 @@
     </plugins>
   </build>
   <dependencies>
-    
-    
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-jaxrs2</artifactId>
       <scope>compile</scope>
       <version>${swagger-core-version}</version>
     </dependency>
-    
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -110,7 +104,6 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- CXF Client -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
@@ -150,15 +143,11 @@
         <version>${jackson-jaxrs-version}</version>
         <scope>compile</scope>
     </dependency>
-
-
     <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
         <artifactId>jackson-datatype-joda</artifactId>
         <version>${jackson-jaxrs-version}</version>
     </dependency>
-
-    
   </dependencies>
   <repositories>
     <repository>
@@ -173,15 +162,11 @@
     <java.version>1.7</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    
-    
     <swagger-core-version>2.0.0</swagger-core-version>
-    
     <jetty-version>9.2.9.v20150224</jetty-version>
     <junit-version>4.12</junit-version>
     <logback-version>1.1.7</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
-
     <cxf-version>3.2.4</cxf-version>
     <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

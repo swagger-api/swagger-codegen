@@ -1,20 +1,13 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,62 +17,31 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * A pet for sale in the pet store
  **/
-@ApiModel(description="A pet for sale in the pet store")
-
+@Schema(description="A pet for sale in the pet store")
 public class Pet  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Long id = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Category category = null;
-
   
-
-  @ApiModelProperty(example = "doggie", required = true, value = "")
-
-
-
+  @Schema(example = "doggie", required = true, description = "")
   private String name = null;
-
   
-
-  @ApiModelProperty(required = true, value = "")
-
-
+  @Schema(required = true, description = "")
   private List<String> photoUrls = new ArrayList<String>();
-
-
   
-
-  @ApiModelProperty(value = "")
-
-
+  @Schema(description = "")
   private List<Tag> tags = null;
-
-
-  
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
 public enum StatusEnum {
 
-    
 @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
-    
 
 
     private String value;
@@ -106,37 +68,21 @@ public enum StatusEnum {
         return null;
     }
 }
-
-
-  @ApiModelProperty(value = "pet status in the store")
-
+  
+  @Schema(description = "pet status in the store")
  /**
    * pet status in the store  
   **/
-
-
-
   private StatusEnum status = null;
-
-  
-  
  /**
-  
-  
    * Get id
-  
-  
-  
    * @return id
   **/
   @JsonProperty("id")
-
-
   public Long getId() {
     return id;
   }
 
-  
   public void setId(Long id) {
     this.id = id;
   }
@@ -145,28 +91,16 @@ public enum StatusEnum {
     this.id = id;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get category
-  
-  
-  
    * @return category
   **/
   @JsonProperty("category")
-
-
   public Category getCategory() {
     return category;
   }
 
-  
   public void setCategory(Category category) {
     this.category = category;
   }
@@ -175,30 +109,17 @@ public enum StatusEnum {
     this.category = category;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get name
-  
-  
-  
    * @return name
   **/
   @JsonProperty("name")
-
-
   @NotNull
-
   public String getName() {
     return name;
   }
 
-  
   public void setName(String name) {
     this.name = name;
   }
@@ -207,30 +128,17 @@ public enum StatusEnum {
     this.name = name;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get photoUrls
-  
-  
-  
    * @return photoUrls
   **/
   @JsonProperty("photoUrls")
-
-
   @NotNull
-
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
 
-  
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
@@ -239,34 +147,21 @@ public enum StatusEnum {
     this.photoUrls = photoUrls;
     return this;
   }
-  
 
   public Pet addPhotoUrlsItem(String photoUrlsItem) {
     this.photoUrls.add(photoUrlsItem);
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get tags
-  
-  
-  
    * @return tags
   **/
   @JsonProperty("tags")
-
-
   public List<Tag> getTags() {
     return tags;
   }
 
-  
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
@@ -275,29 +170,17 @@ public enum StatusEnum {
     this.tags = tags;
     return this;
   }
-  
 
   public Pet addTagsItem(Tag tagsItem) {
     this.tags.add(tagsItem);
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
    * pet status in the store
-  
-  
-  
-  
    * @return status
   **/
   @JsonProperty("status")
-
-
   public String getStatus() {
     if (status == null) {
       return null;
@@ -305,7 +188,6 @@ public enum StatusEnum {
     return status.value();
   }
 
-  
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
@@ -314,11 +196,7 @@ public enum StatusEnum {
     this.status = status;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -346,7 +224,3 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

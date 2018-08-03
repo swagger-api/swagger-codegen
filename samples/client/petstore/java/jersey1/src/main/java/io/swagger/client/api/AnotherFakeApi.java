@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-
 package io.swagger.client.api;
 
 import com.sun.jersey.api.client.GenericType;
@@ -21,14 +20,10 @@ import io.swagger.client.model.*;
 import io.swagger.client.Pair;
 
 import io.swagger.client.model.Client;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 public class AnotherFakeApi {
   private ApiClient apiClient;
@@ -50,18 +45,18 @@ public class AnotherFakeApi {
   }
 
   /**
-   * To test special tags* To test special tags* @param body client model (required)
+   * To test special tags
+   * To test special tags
+   * @param body client model (required)
    * @return Client
    * @throws ApiException if fails to make API call
    */
   public Client testSpecialTags(Client body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling testSpecialTags");
     }
-    
     // create path and map variables
     String localVarPath = "/another-fake/dummy";
 
@@ -71,12 +66,9 @@ public class AnotherFakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -89,11 +81,7 @@ public class AnotherFakeApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
     return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
   }
-  
 }
-

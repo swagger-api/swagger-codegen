@@ -4,42 +4,19 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-import io.swagger.annotations.*;
-
-@ApiModel(description="A User who is purchasing from the pet store")
-
+@Schema(description="A User who is purchasing from the pet store")
 public class User   {
+  private Long id = null;  private String username = null;  private String firstName = null;  private String lastName = null;  private String email = null;  private String password = null;  private String phone = null;  private Integer userStatus = null;
 
-  
-  private Long id = null;
-  private String username = null;
-  private String firstName = null;
-  private String lastName = null;
-  private String email = null;
-  private String password = null;
-  private String phone = null;
-  private Integer userStatus = null;
-
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -47,16 +24,11 @@ public class User   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("username")
-
   public String getUsername() {
     return username;
   }
@@ -64,16 +36,11 @@ public class User   {
     this.username = username;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("firstName")
-
   public String getFirstName() {
     return firstName;
   }
@@ -81,16 +48,11 @@ public class User   {
     this.firstName = firstName;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("lastName")
-
   public String getLastName() {
     return lastName;
   }
@@ -98,16 +60,11 @@ public class User   {
     this.lastName = lastName;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("email")
-
   public String getEmail() {
     return email;
   }
@@ -115,16 +72,11 @@ public class User   {
     this.email = email;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("password")
-
   public String getPassword() {
     return password;
   }
@@ -132,16 +84,11 @@ public class User   {
     this.password = password;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("phone")
-
   public String getPhone() {
     return phone;
   }
@@ -149,18 +96,12 @@ public class User   {
     this.phone = phone;
   }
 
-  
   /**
-   
    * User Status
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "User Status")
+  @Schema(description = "User Status")
   @JsonProperty("userStatus")
-
   public Integer getUserStatus() {
     return userStatus;
   }
@@ -168,7 +109,6 @@ public class User   {
     this.userStatus = userStatus;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -222,7 +162,3 @@ public class User   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

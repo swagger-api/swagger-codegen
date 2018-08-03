@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,25 +27,20 @@ import java.util.Map;
 
 public class AdditionalPropertiesClass {
 
-  
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;
-  
-  
+
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
-  
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;
   }
 
-  public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
-    
+    public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
     if (this.mapProperty == null) {
       this.mapProperty = new HashMap<>();
     }
-    
     this.mapProperty.put(key, mapPropertyItem);
     return this;
   }
@@ -55,25 +48,22 @@ public class AdditionalPropertiesClass {
   * Get mapProperty
   * @return mapProperty
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
   public void setMapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
   }
-  
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
     return this;
   }
 
-  public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
-    
+    public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     if (this.mapOfMapProperty == null) {
       this.mapOfMapProperty = new HashMap<>();
     }
-    
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
   }
@@ -81,14 +71,13 @@ public class AdditionalPropertiesClass {
   * Get mapOfMapProperty
   * @return mapOfMapProperty
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
   public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -104,9 +93,9 @@ public class AdditionalPropertiesClass {
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapProperty, mapOfMapProperty);
+    return java.util.Objects.hash(mapProperty, mapOfMapProperty);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -129,8 +118,5 @@ public class AdditionalPropertiesClass {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
+
 }
-
-
-

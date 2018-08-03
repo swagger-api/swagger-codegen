@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -35,28 +34,23 @@ import android.os.Parcel;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
-
   @SerializedName("uuid")
   private UUID uuid = null;
-  
   @SerializedName("dateTime")
   private OffsetDateTime dateTime = null;
-  
   @SerializedName("map")
   private Map<String, Animal> map = null;
-  
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
   
+
   /**
   * Get uuid
   * @return uuid
   **/
-  
-  
   @Schema(description = "")
   public UUID getUuid() {
     return uuid;
@@ -64,19 +58,17 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
-  
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
   
+
   /**
   * Get dateTime
   * @return dateTime
   **/
-  
-  
   @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
@@ -84,18 +76,16 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
-  
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
 
+  
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
-    
     if (this.map == null) {
       this.map = new HashMap<String, Animal>();
     }
-    
     this.map.put(key, mapItem);
     return this;
   }
@@ -103,8 +93,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   * Get map
   * @return map
   **/
-  
-  
   @Schema(description = "")
   public Map<String, Animal> getMap() {
     return map;
@@ -112,7 +100,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -131,7 +118,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public int hashCode() {
     return java.util.Objects.hash(uuid, dateTime, map);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -155,14 +142,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(uuid);
     out.writeValue(dateTime);
     out.writeValue(map);
-    
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass() {
@@ -172,7 +156,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
     
     
-    uuid = (UUID)in.readValue(UUID.class.getClassLoader());dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
+    uuid = (UUID)in.readValue(UUID.class.getClassLoader());
+    
+    dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
+    
+    map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
 
   public int describeContents() {
@@ -188,6 +176,3 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     }
   };
 }
-
-
-

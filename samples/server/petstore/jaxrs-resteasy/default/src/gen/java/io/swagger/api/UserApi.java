@@ -3,11 +3,16 @@ package io.swagger.api;
 import io.swagger.model.*;
 import io.swagger.api.UserApiService;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import io.swagger.model.User;
-
 
 import java.util.Map;
 import java.util.List;
@@ -21,126 +26,118 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.inject.Inject;
 
-
 import javax.validation.constraints.*;
-
-
 @Path("/user")
-
-
-@io.swagger.annotations.Api(description = "the user API")
 
 
 public class UserApi  {
 
     @Inject UserApiService service;
 
-
     @POST
     
     @Consumes({ "*/*" })
     
-    @io.swagger.annotations.ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUser(@ApiParam(value = "Created user object" ,required=true) User user,@Context SecurityContext securityContext)
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUser(
+@Parameter(description = "Created user object" ,required=true) User body
+,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return service.createUser(user,securityContext);
+        return service.createUser(body,securityContext);
     }
-
     @POST
     @Path("/createWithArray")
     @Consumes({ "*/*" })
     
-    @io.swagger.annotations.ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true) List<User> body,@Context SecurityContext securityContext)
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUsersWithArrayInput(
+@Parameter(description = "List of user object" ,required=true) List<User> body
+,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.createUsersWithArrayInput(body,securityContext);
     }
-
     @POST
     @Path("/createWithList")
     @Consumes({ "*/*" })
     
-    @io.swagger.annotations.ApiOperation(value = "Creates list of users with given input array", notes = "", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
-    public Response createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true) List<User> body,@Context SecurityContext securityContext)
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUsersWithListInput(
+@Parameter(description = "List of user object" ,required=true) List<User> body
+,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.createUsersWithListInput(body,securityContext);
     }
-
     @DELETE
     @Path("/{username}")
     
     
-    @io.swagger.annotations.ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
+        @ApiResponse(responseCode = "404", description = "User not found") })
     public Response deleteUser( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.deleteUser(username,securityContext);
     }
-
     @GET
     @Path("/{username}")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = User.class),
+    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
+        @ApiResponse(responseCode = "404", description = "User not found") })
     public Response getUserByName( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getUserByName(username,securityContext);
     }
-
     @GET
     @Path("/login")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = String.class),
+    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username/password supplied", response = Void.class) })
+        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
     public Response loginUser( @NotNull  @QueryParam("username") String username, @NotNull  @QueryParam("password") String password,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.loginUser(username,password,securityContext);
     }
-
     @GET
     @Path("/logout")
     
     
-    @io.swagger.annotations.ApiOperation(value = "Logs out current logged in user session", notes = "", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response logoutUser(@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.logoutUser(securityContext);
     }
-
     @PUT
     @Path("/{username}")
     @Consumes({ "*/*" })
     
-    @io.swagger.annotations.ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = Void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid user supplied", response = Void.class),
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response updateUser(@ApiParam(value = "Updated user object" ,required=true) User user, @PathParam("username") String username,@Context SecurityContext securityContext)
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    public Response updateUser(
+@Parameter(description = "Updated user object" ,required=true) User body
+, @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return service.updateUser(user,username,securityContext);
+        return service.updateUser(body,username,securityContext);
     }
-
 }
-

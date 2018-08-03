@@ -1,16 +1,9 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,57 +13,29 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * Describes the result of uploading an image resource
  **/
-@ApiModel(description="Describes the result of uploading an image resource")
-
+@Schema(description="Describes the result of uploading an image resource")
 public class ModelApiResponse  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer code = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String type = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String message = null;
-
-  
-  
  /**
-  
-  
    * Get code
-  
-  
-  
    * @return code
   **/
   @JsonProperty("code")
-
-
   public Integer getCode() {
     return code;
   }
 
-  
   public void setCode(Integer code) {
     this.code = code;
   }
@@ -79,28 +44,16 @@ public class ModelApiResponse  {
     this.code = code;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get type
-  
-  
-  
    * @return type
   **/
   @JsonProperty("type")
-
-
   public String getType() {
     return type;
   }
 
-  
   public void setType(String type) {
     this.type = type;
   }
@@ -109,28 +62,16 @@ public class ModelApiResponse  {
     this.type = type;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get message
-  
-  
-  
    * @return message
   **/
   @JsonProperty("message")
-
-
   public String getMessage() {
     return message;
   }
 
-  
   public void setMessage(String message) {
     this.message = message;
   }
@@ -139,11 +80,7 @@ public class ModelApiResponse  {
     this.message = message;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -168,7 +105,3 @@ public class ModelApiResponse  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

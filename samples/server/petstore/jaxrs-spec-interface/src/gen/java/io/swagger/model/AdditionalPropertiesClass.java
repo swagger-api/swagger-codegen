@@ -3,31 +3,19 @@ package io.swagger.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class AdditionalPropertiesClass   {
-  
-  private @Valid Map<String, String> mapProperty = new HashMap<String, String>();
-  private @Valid Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
+  private @Valid Map<String, String> mapProperty = new HashMap<String, String>();  private @Valid Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
 
-  
   /**
-   
-   
-   
    **/
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
@@ -35,9 +23,8 @@ public class AdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_property")
-
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -45,11 +32,7 @@ public class AdditionalPropertiesClass   {
     this.mapProperty = mapProperty;
   }
 
-  
   /**
-   
-   
-   
    **/
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
@@ -57,9 +40,8 @@ public class AdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("map_of_map_property")
-
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
@@ -67,7 +49,6 @@ public class AdditionalPropertiesClass   {
     this.mapOfMapProperty = mapOfMapProperty;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -109,6 +90,3 @@ public class AdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

@@ -1,16 +1,9 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 
-
-
-
-
-
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,49 +13,26 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 /**
   * Model for testing model name starting with number
  **/
-@ApiModel(description="Model for testing model name starting with number")
-
+@Schema(description="Model for testing model name starting with number")
 public class Model200Response  {
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private Integer name = null;
-
   
-
-  @ApiModelProperty(value = "")
-
-
-
+  @Schema(description = "")
   private String propertyClass = null;
-
-  
-  
  /**
-  
-  
    * Get name
-  
-  
-  
    * @return name
   **/
   @JsonProperty("name")
-
-
   public Integer getName() {
     return name;
   }
 
-  
   public void setName(Integer name) {
     this.name = name;
   }
@@ -71,28 +41,16 @@ public class Model200Response  {
     this.name = name;
     return this;
   }
-  
-  
-  
 
-  
  /**
-  
-  
    * Get propertyClass
-  
-  
-  
    * @return propertyClass
   **/
   @JsonProperty("class")
-
-
   public String getPropertyClass() {
     return propertyClass;
   }
 
-  
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
@@ -101,11 +59,7 @@ public class Model200Response  {
     this.propertyClass = propertyClass;
     return this;
   }
-  
-  
-  
 
-  
 
   @Override
   public String toString() {
@@ -129,7 +83,3 @@ public class Model200Response  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

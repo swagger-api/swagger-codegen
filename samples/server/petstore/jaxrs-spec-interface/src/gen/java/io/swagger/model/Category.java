@@ -1,30 +1,18 @@
 package io.swagger.model;
 
-
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Category   {
-  
-  private @Valid Long id = null;
-  private @Valid String name = null;
+  private @Valid Long id = null;  private @Valid String name = null;
 
-  
   /**
-   
-   
-   
    **/
   public Category id(Long id) {
     this.id = id;
@@ -32,9 +20,8 @@ public class Category   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
   public Long getId() {
     return id;
   }
@@ -42,11 +29,7 @@ public class Category   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   public Category name(String name) {
     this.name = name;
@@ -54,9 +37,8 @@ public class Category   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("name")
-
   public String getName() {
     return name;
   }
@@ -64,7 +46,6 @@ public class Category   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -106,6 +87,3 @@ public class Category   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

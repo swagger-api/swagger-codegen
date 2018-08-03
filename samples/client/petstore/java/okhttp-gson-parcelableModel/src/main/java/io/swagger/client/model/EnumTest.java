@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,13 +29,11 @@ import android.os.Parcel;
  */
 
 public class EnumTest {
-
   /**
    * Gets or Sets enumString
    */
   @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
-    
     UPPER("UPPER"),
     LOWER("lower"),
     EMPTY("");
@@ -46,7 +43,6 @@ public class EnumTest {
     EnumStringEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -55,7 +51,6 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static EnumStringEnum fromValue(String text) {
       for (EnumStringEnum b : EnumStringEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -64,7 +59,6 @@ public class EnumTest {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<EnumStringEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumStringEnum enumeration) throws IOException {
@@ -77,17 +71,13 @@ public class EnumTest {
         return EnumStringEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("enum_string")
+  }  @SerializedName("enum_string")
   private EnumStringEnum enumString = null;
-  
   /**
    * Gets or Sets enumInteger
    */
   @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
-    
     NUMBER_1(1),
     NUMBER_MINUS_1(-1);
 
@@ -96,7 +86,6 @@ public class EnumTest {
     EnumIntegerEnum(Integer value) {
       this.value = value;
     }
-    
     public Integer getValue() {
       return value;
     }
@@ -105,7 +94,6 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static EnumIntegerEnum fromValue(String text) {
       for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -114,7 +102,6 @@ public class EnumTest {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<EnumIntegerEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumIntegerEnum enumeration) throws IOException {
@@ -127,17 +114,13 @@ public class EnumTest {
         return EnumIntegerEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("enum_integer")
+  }  @SerializedName("enum_integer")
   private EnumIntegerEnum enumInteger = null;
-  
   /**
    * Gets or Sets enumNumber
    */
   @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
-    
     NUMBER_1_DOT_1(1.1),
     NUMBER_MINUS_1_DOT_2(-1.2);
 
@@ -146,7 +129,6 @@ public class EnumTest {
     EnumNumberEnum(Double value) {
       this.value = value;
     }
-    
     public Double getValue() {
       return value;
     }
@@ -155,7 +137,6 @@ public class EnumTest {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static EnumNumberEnum fromValue(String text) {
       for (EnumNumberEnum b : EnumNumberEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -164,7 +145,6 @@ public class EnumTest {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<EnumNumberEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumNumberEnum enumeration) throws IOException {
@@ -177,26 +157,21 @@ public class EnumTest {
         return EnumNumberEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  
-  @SerializedName("enum_number")
+  }  @SerializedName("enum_number")
   private EnumNumberEnum enumNumber = null;
-  
   @SerializedName("outerEnum")
   private OuterEnum outerEnum = null;
-  
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
   
+
   /**
   * Get enumString
   * @return enumString
   **/
-  
-  
   @Schema(description = "")
   public EnumStringEnum getEnumString() {
     return enumString;
@@ -204,19 +179,17 @@ public class EnumTest {
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
-  
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
   
+
   /**
   * Get enumInteger
   * @return enumInteger
   **/
-  
-  
   @Schema(description = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
@@ -224,19 +197,17 @@ public class EnumTest {
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
-  
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
   
+
   /**
   * Get enumNumber
   * @return enumNumber
   **/
-  
-  
   @Schema(description = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
@@ -244,19 +215,17 @@ public class EnumTest {
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
-  
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
 
   
+
   /**
   * Get outerEnum
   * @return outerEnum
   **/
-  
-  
   @Schema(description = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
@@ -264,7 +233,6 @@ public class EnumTest {
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -284,7 +252,7 @@ public class EnumTest {
   public int hashCode() {
     return java.util.Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -309,15 +277,12 @@ public class EnumTest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
   public void writeToParcel(Parcel out, int flags) {
-    
     
     out.writeValue(enumString);
     out.writeValue(enumInteger);
     out.writeValue(enumNumber);
     out.writeValue(outerEnum);
-    
   }
 
   public EnumTest() {
@@ -326,8 +291,14 @@ public class EnumTest {
 
   EnumTest(Parcel in) {
     
+    enumString = (EnumStringEnum)in.readValue(null);
     
-    enumString = (EnumStringEnum)in.readValue(null);enumInteger = (EnumIntegerEnum)in.readValue(null);enumNumber = (EnumNumberEnum)in.readValue(null);outerEnum = (OuterEnum)in.readValue(OuterEnum.class.getClassLoader());
+    enumInteger = (EnumIntegerEnum)in.readValue(null);
+    
+    enumNumber = (EnumNumberEnum)in.readValue(null);
+    
+    
+    outerEnum = (OuterEnum)in.readValue(OuterEnum.class.getClassLoader());
   }
 
   public int describeContents() {
@@ -343,6 +314,3 @@ public class EnumTest {
     }
   };
 }
-
-
-

@@ -2,11 +2,17 @@ package io.swagger.api;
 
 import io.swagger.model.Client;
 
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Map;
 import java.util.List;
@@ -14,17 +20,12 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Path("/fake_classname_test")
-@Api(description = "the fake_classname_test API")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.java.JavaJAXRSSpecServerCodegen", date = "2018-04-04T20:14:19.902+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:42:18.406-05:00[America/Bogota]")
 public interface FakeClassnameTestApi {
 
-
-
     @PATCH
-    @ApiOperation(value = "To test class name in snake case", notes = "", tags={ "fake_classname_tags 123#$%^" })
+    @Operation(summary = "To test class name in snake case", description = "", tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    Client testClassname(@Valid Client client);
-
-}
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+    Client testClassname(@Valid Client body);}

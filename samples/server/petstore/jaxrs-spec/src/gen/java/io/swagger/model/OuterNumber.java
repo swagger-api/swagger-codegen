@@ -1,26 +1,18 @@
 package io.swagger.model;
 
-
-
 import java.io.Serializable;
-
-
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-
-
-
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class OuterNumber  implements Serializable {
-  
 
-  
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -59,6 +51,3 @@ public class OuterNumber  implements Serializable {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

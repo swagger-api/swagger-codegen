@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client;
 
 import com.squareup.okhttp.*;
@@ -19,12 +18,9 @@ import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
 import okio.BufferedSink;
 import okio.Okio;
-
-
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
-
 
 import javax.net.ssl.*;
 import java.io.File;
@@ -42,7 +38,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
-
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +78,6 @@ public class ApiClient {
     public ApiClient() {
         httpClient = new OkHttpClient();
 
-        
 
         verifyingSsl = true;
 
@@ -238,8 +232,6 @@ public class ApiClient {
         return this;
     }
 
-    
-    
     public ApiClient setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
         this.json.setOffsetDateTimeFormat(dateFormat);
         return this;
@@ -250,7 +242,6 @@ public class ApiClient {
         return this;
     }
 
-    
     public ApiClient setLenientOnJson(boolean lenientOnJson) {
         this.json.setLenientOnJson(lenientOnJson);
         return this;
