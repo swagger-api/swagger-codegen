@@ -14,8 +14,8 @@ defmodule SwaggerPetstore.Model.Model200Response do
   ]
 
   @type t :: %__MODULE__{
-    :"name" => integer(),
-    :"class" => String.t
+    :"name" => integer() | nil,
+    :"class" => String.t | nil
   }
 end
 

@@ -13,7 +13,7 @@ defmodule SwaggerPetstore.Model.ArrayOfArrayOfNumberOnly do
   ]
 
   @type t :: %__MODULE__{
-    :"ArrayArrayNumber" => [[float()]]
+    :"ArrayArrayNumber" => [[float()]] | nil
   }
 end
 

@@ -13,7 +13,7 @@ defmodule SwaggerPetstore.Model.NumberOnly do
   ]
 
   @type t :: %__MODULE__{
-    :"JustNumber" => float()
+    :"JustNumber" => float() | nil
   }
 end
 

@@ -14,8 +14,8 @@ defmodule SwaggerPetstore.Model.MapTest do
   ]
 
   @type t :: %__MODULE__{
-    :"map_map_of_string" => %{optional(String.t) => %{optional(String.t) => String.t}},
-    :"map_of_enum_string" => %{optional(String.t) => String.t}
+    :"map_map_of_string" => %{optional(String.t) => %{optional(String.t) => String.t}} | nil,
+    :"map_of_enum_string" => %{optional(String.t) => String.t} | nil
   }
 end
 

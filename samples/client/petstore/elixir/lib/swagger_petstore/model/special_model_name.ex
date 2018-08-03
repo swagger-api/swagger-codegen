@@ -13,7 +13,7 @@ defmodule SwaggerPetstore.Model.SpecialModelName do
   ]
 
   @type t :: %__MODULE__{
-    :"$special[property.name]" => integer()
+    :"$special[property.name]" => integer() | nil
   }
 end
 

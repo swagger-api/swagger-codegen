@@ -13,7 +13,7 @@ defmodule SwaggerPetstore.Model.ClassModel do
   ]
 
   @type t :: %__MODULE__{
-    :"_class" => String.t
+    :"_class" => String.t | nil
   }
 end
 

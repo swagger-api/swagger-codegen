@@ -10,16 +10,18 @@ defmodule SwaggerPetstore.Model.EnumTest do
   @derive [Poison.Encoder]
   defstruct [
     :"enum_string",
+    :"enum_string_required",
     :"enum_integer",
     :"enum_number",
     :"outerEnum"
   ]
 
   @type t :: %__MODULE__{
-    :"enum_string" => String.t,
-    :"enum_integer" => integer(),
-    :"enum_number" => float(),
-    :"outerEnum" => OuterEnum
+    :"enum_string" => String.t | nil,
+    :"enum_string_required" => String.t | nil,
+    :"enum_integer" => integer() | nil,
+    :"enum_number" => float() | nil,
+    :"outerEnum" => OuterEnum | nil
   }
 end
 
