@@ -85,7 +85,9 @@ public class GeneratorControllerIT {
         GenerationRequest generationRequest = new GenerationRequest()
                 .spec(spec)
                 .options(new Options()
-                        .lang("java"));
+                        .lang("java")
+                        .addAdditionalProperty("useRuntimeException", true)
+                        .addAdditionalProperty("useRxJava", true));
         HttpEntity entity = new StringEntity(Json.pretty(generationRequest), "UTF-8");
 
         HttpPost post = new HttpPost(DEFAULT_HOST + "/generate");
