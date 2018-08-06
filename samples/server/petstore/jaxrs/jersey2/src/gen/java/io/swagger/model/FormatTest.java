@@ -10,662 +10,320 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * FormatTest
  */
-
 public class FormatTest   {
-  
-    
-      
-  
   @JsonProperty("integer")
-  
-  
-  
-  
   private Integer integer = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("int32")
-  
-  
-  
-  
   private Integer int32 = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("int64")
-  
-  
-  
-  
   private Long int64 = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("number")
-  
-  
-  
-  
   private BigDecimal number = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("float")
-  
-  
-  
-  
   private Float _float = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("double")
-  
-  
-  
-  
   private Double _double = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("string")
-  
-  
-  
-  
   private String string = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("byte")
-  
-  
-  
-  
   private String _byte = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("binary")
-  
-  
-  
-  
   private String binary = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("date")
-  
-  
-  
-  
   private Date date = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("dateTime")
-  
-  
-  
-  
   private Date dateTime = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("uuid")
-  
-  
-  
-  
   private UUID uuid = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("password")
-  
-  
-  
-  
   private String password = null;
-  
 
-  
-  
-  
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get integer
-  
-  
    * minimum: 10
-  
-  
    * maximum: 100
-  
    * @return integer
    **/
- 
-  
   @JsonProperty("integer")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
  @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
-  
 
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
-  
 
-  
-  
   public FormatTest int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get int32
-  
-  
    * minimum: 20
-  
-  
    * maximum: 200
-  
    * @return int32
    **/
- 
-  
   @JsonProperty("int32")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
  @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
-  
 
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
-  
 
-  
-  
   public FormatTest int64(Long int64) {
     this.int64 = int64;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get int64
-  
-  
-  
    * @return int64
    **/
- 
-  
   @JsonProperty("int64")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public Long getInt64() {
     return int64;
   }
-  
 
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
-  
 
-  
-  
   public FormatTest number(BigDecimal number) {
     this.number = number;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get number
-  
-  
-  
+   * minimum: 32
+   * maximum: 543
    * @return number
    **/
- 
-  
   @JsonProperty("number")
-  
-  @ApiModelProperty(required = true, value = "")
-
+  @Schema(required = true, description = "")
   @NotNull
-
-  public BigDecimal getNumber() {
+ @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
     return number;
   }
-  
 
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
-  
 
-  
-  
   public FormatTest _float(Float _float) {
     this._float = _float;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get _float
-  
-  
-  
+   * minimum: 54
+   * maximum: 987
    * @return _float
    **/
- 
-  
   @JsonProperty("float")
-  
-  @ApiModelProperty(value = "")
-
-  public Float getFloat() {
+  @Schema(description = "")
+ @DecimalMin("54") @DecimalMax("987")  public Float getFloat() {
     return _float;
   }
-  
 
   public void setFloat(Float _float) {
     this._float = _float;
   }
-  
 
-  
-  
   public FormatTest _double(Double _double) {
     this._double = _double;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get _double
-  
-  
-  
+   * minimum: 67
+   * maximum: 123
    * @return _double
    **/
- 
-  
   @JsonProperty("double")
-  
-  @ApiModelProperty(value = "")
-
-  public Double getDouble() {
+  @Schema(description = "")
+ @DecimalMin("67") @DecimalMax("123")  public Double getDouble() {
     return _double;
   }
-  
 
   public void setDouble(Double _double) {
     this._double = _double;
   }
-  
 
-  
-  
   public FormatTest string(String string) {
     this.string = string;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get string
-  
-  
-  
    * @return string
    **/
- 
-  
   @JsonProperty("string")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
  @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
-  
 
   public void setString(String string) {
     this.string = string;
   }
-  
 
-  
-  
   public FormatTest _byte(String _byte) {
     this._byte = _byte;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get _byte
-  
-  
-  
    * @return _byte
    **/
- 
-  
   @JsonProperty("byte")
-  
-  @ApiModelProperty(required = true, value = "")
-
+  @Schema(required = true, description = "")
   @NotNull
-
  @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
     return _byte;
   }
-  
 
   public void setByte(String _byte) {
     this._byte = _byte;
   }
-  
 
-  
-  
   public FormatTest binary(String binary) {
     this.binary = binary;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get binary
-  
-  
-  
    * @return binary
    **/
- 
-  
   @JsonProperty("binary")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getBinary() {
     return binary;
   }
-  
 
   public void setBinary(String binary) {
     this.binary = binary;
   }
-  
 
-  
-  
   public FormatTest date(Date date) {
     this.date = date;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get date
-  
-  
-  
    * @return date
    **/
- 
-  
   @JsonProperty("date")
-  
-  @ApiModelProperty(required = true, value = "")
-
+  @Schema(required = true, description = "")
   @NotNull
-
   public Date getDate() {
     return date;
   }
-  
 
   public void setDate(Date date) {
     this.date = date;
   }
-  
 
-  
-  
   public FormatTest dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get dateTime
-  
-  
-  
    * @return dateTime
    **/
- 
-  
   @JsonProperty("dateTime")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public Date getDateTime() {
     return dateTime;
   }
-  
 
   public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
-  
 
-  
-  
   public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get uuid
-  
-  
-  
    * @return uuid
    **/
- 
-  
   @JsonProperty("uuid")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public UUID getUuid() {
     return uuid;
   }
-  
 
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
-  
 
-  
-  
   public FormatTest password(String password) {
     this.password = password;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get password
-  
-  
-  
    * @return password
    **/
- 
-  
   @JsonProperty("password")
-  
-  @ApiModelProperty(required = true, value = "")
-
+  @Schema(required = true, description = "")
   @NotNull
-
   public String getPassword() {
     return password;
   }
-  
 
   public void setPassword(String password) {
     this.password = password;
   }
-  
-
-  
 
 
   @Override
@@ -696,8 +354,6 @@ public class FormatTest   {
   public int hashCode() {
     return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
   }
-
-
 
 
   @Override
@@ -733,6 +389,3 @@ public class FormatTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

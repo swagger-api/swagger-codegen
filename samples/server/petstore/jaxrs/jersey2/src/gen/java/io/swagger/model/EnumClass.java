@@ -10,39 +10,21 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonValue;
-
-
-
 import javax.validation.constraints.*;
 
-
-
-
-
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 
 /**
  * Gets or Sets EnumClass
  */
 public enum EnumClass {
-  
-  
-  
   _ABC("_abc"),
-  
-  _EFG("-efg"),
-  
-  _XYZ_("(xyz)");
-  
+    _EFG("-efg"),
+    _XYZ_("(xyz)");
 
   private String value;
 
@@ -55,7 +37,6 @@ public enum EnumClass {
     return String.valueOf(value);
   }
 
-
   @JsonCreator
   public static EnumClass fromValue(String text) {
     for (EnumClass b : EnumClass.values()) {
@@ -65,8 +46,4 @@ public enum EnumClass {
     }
     return null;
   }
-
 }
-
-
-
