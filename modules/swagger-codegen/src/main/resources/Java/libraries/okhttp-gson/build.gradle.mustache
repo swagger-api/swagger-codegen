@@ -108,10 +108,10 @@ dependencies {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: '{{nexus_url}}/content/repositories/releases') {
+            repository(url: '{{nexus_url}}/repository/internal-releases/') {
                 authentication(userName: '{{nexus_username}}', password: '{{{nexus_password}}}')
             }
-            snapshotRepository(url: '{{nexus_url}}/content/repositories/snapshots') {
+            snapshotRepository(url: '{{nexus_url}}/repository/internal-snapshots/') {
                 authentication(userName: '{{nexus_username}}', password: '{{{nexus_password}}}')
             }
             pom.version = '{{artifactVersion}}'
