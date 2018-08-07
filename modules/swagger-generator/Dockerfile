@@ -11,8 +11,8 @@ WORKDIR /generator
 COPY docker/jetty_base /generator/
 COPY target/*.war /generator/webapps/ROOT.war
 ENV JETTY_BASE /generator
-ARG hidden_options_path
-COPY ${hidden_options_path} /generator/resources/
+ARG HIDDEN_OPTIONS_DEFAULT_PATH
+COPY ${HIDDEN_OPTIONS_DEFAULT_PATH} /generator/resources/
 ARG HTTP_PORT
 ENV HTTP_PORT ${HTTP_PORT}
 ARG JAVA_MEM

@@ -14,6 +14,7 @@ import io.swagger.v3.generator.util.ZipUtil;
 import io.swagger.oas.inflector.models.RequestContext;
 import io.swagger.oas.inflector.models.ResponseContext;
 import io.swagger.v3.core.util.Json;
+import io.swagger.v3.parser.util.ClasspathHelper;
 import io.swagger.v3.parser.util.RemoteUrl;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,10 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,23 +46,16 @@ public class GeneratorController {
     static List<String> CLIENTSV2 = new ArrayList<>();
     static List<String> SERVERSV2 = new ArrayList<>();
 
-    private static ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    private static ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+    private static ObjectMapper jsonMapper = new ObjectMapper();
     private static HiddenOptions hiddenOptions;
     private static String HIDDEN_OPTIONS_CONFIG_FILE = "hiddenOptions.yaml";
+    private static String PROP_HIDDEN_OPTIONS_PATH = "HIDDEN_OPTIONS_PATH";
+    private static String PROP_HIDDEN_OPTIONS = "HIDDEN_OPTIONS";
 
     static {
-        InputStream inputStream = GeneratorController.class.getClassLoader().getResourceAsStream(HIDDEN_OPTIONS_CONFIG_FILE);
-        try {
-            hiddenOptions = mapper.readValue(inputStream, HiddenOptions.class);
-            LOGGER.debug("Parsed hidden options config");
-            LOGGER.debug("Hidden clients: {}", hiddenOptions.clients());
-            LOGGER.debug("Hidden servers: {}", hiddenOptions.servers());
-            LOGGER.debug("Hidden clientsV3: {}", hiddenOptions.clientsV3());
-            LOGGER.debug("Hidden serversV3: {}", hiddenOptions.serversV3());
-        } catch (Exception e) {
-            LOGGER.info("Failed to parse hidden options configuration file {}", HIDDEN_OPTIONS_CONFIG_FILE, e);
-            hiddenOptions = HiddenOptions.getEmpty();
-        }
+
+        hiddenOptions = loadHiddenOptions();
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
 
         loader.forEach(config -> {
@@ -81,6 +79,96 @@ public class GeneratorController {
         });
         Collections.sort(CLIENTSV2, String.CASE_INSENSITIVE_ORDER);
         Collections.sort(SERVERSV2, String.CASE_INSENSITIVE_ORDER);
+    }
+
+
+    public static HiddenOptions loadHiddenOptions() {
+        HiddenOptions options = null;
+        String hidden = System.getProperty(PROP_HIDDEN_OPTIONS);
+        if (StringUtils.isNotBlank(hidden)) {
+            options = loadHiddenOptionsFromEnv(hidden);
+        }
+        if (options == null) {
+            String hiddenPath = System.getProperty(PROP_HIDDEN_OPTIONS_PATH);
+            if (StringUtils.isNotBlank(hiddenPath)) {
+                options = loadHiddenOptions(hiddenPath);
+            }
+            if (options == null) {
+                InputStream inputStream = GeneratorController.class.getClassLoader().getResourceAsStream(HIDDEN_OPTIONS_CONFIG_FILE);
+                try {
+                    options = yamlMapper.readValue(inputStream, HiddenOptions.class);
+                } catch (Exception e) {
+                    LOGGER.info("Failed to parse hidden options configuration file {}", HIDDEN_OPTIONS_CONFIG_FILE, e);
+                    return HiddenOptions.getEmpty();
+                }
+
+            }
+        }
+        if (options != null) {
+            LOGGER.debug("Parsed hidden options config");
+            LOGGER.debug("Hidden clients: {}", options.clients());
+            LOGGER.debug("Hidden servers: {}", options.servers());
+            LOGGER.debug("Hidden clientsV3: {}", options.clientsV3());
+            LOGGER.debug("Hidden serversV3: {}", options.serversV3());
+            return options;
+        }
+        return HiddenOptions.getEmpty();
+    }
+
+    public static HiddenOptions loadHiddenOptionsFromEnv(String csv) {
+        try {
+            HiddenOptions options = new HiddenOptions();
+            String[] sections =csv.split("\\|");
+            for (String section: sections) {
+                LOGGER.error(section);
+                String [] keyval = section.split("\\:");
+                switch (keyval[0]) {
+                    case "clients":
+                        options.getClients().addAll(Arrays.asList(keyval[1].split("\\,")));
+                        break;
+                    case "clientsV3":
+                        options.getClientsV3().addAll(Arrays.asList(keyval[1].split("\\,")));
+                        break;
+                    case "servers":
+                        options.getServers().addAll(Arrays.asList(keyval[1].split("\\,")));
+                        break;
+                    case "serversV3":
+                        options.getServersV3().addAll(Arrays.asList(keyval[1].split("\\,")));
+                        break;
+                    default:
+                }
+            }
+            return options;
+        } catch (Exception e) {
+            LOGGER.info("Failed to parse hidden options. String {}", csv, e);
+            return null;
+        }
+    }
+    public static HiddenOptions loadHiddenOptions(String location) {
+        try {
+            String data = "";
+            location = location.replaceAll("\\\\", "/");
+            if (location.toLowerCase().startsWith("http")) {
+                data = RemoteUrl.urlToString(location, null);
+            } else {
+                final String fileScheme = "file:";
+                Path path;
+                if (location.toLowerCase().startsWith(fileScheme)) {
+                    path = Paths.get(URI.create(location));
+                } else {
+                    path = Paths.get(location);
+                }
+                if (Files.exists(path)) {
+                    data = FileUtils.readFileToString(path.toFile(), "UTF-8");
+                } else {
+                    data = ClasspathHelper.loadFileFromClasspath(location);
+                }
+            }
+            return yamlMapper.readValue(data, HiddenOptions.class);
+        } catch (Exception e) {
+            LOGGER.info("Failed to parse hidden options. Path {}", location, e);
+            return null;
+        }
     }
 
     public ResponseContext clientLanguages(RequestContext requestContext, String version) {
