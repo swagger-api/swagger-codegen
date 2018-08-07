@@ -50,12 +50,12 @@ public class PetApiServiceImpl extends PetApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response updatePetWithForm(Integer petId, , , SecurityContext securityContext) throws NotFoundException {
+    public Response updatePetWithForm(Integer petId, String name, String status, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response uploadFile(Integer petId, , InputStream fileInputStream, FormDataContentDisposition fileDetail, SecurityContext securityContext) throws NotFoundException {
+    public Response uploadFile(Integer petId, String additionalMetadata, InputStream fileInputStream, FormDataContentDisposition fileDetail, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
