@@ -152,18 +152,20 @@ cd /vagrant
 #### Public Pre-built Docker images
 
  - https://hub.docker.com/r/swaggerapi/swagger-generator-v3/ (official web service)
+ - https://hub.docker.com/r/swaggerapi/swagger-generator-v3-minimal/ (official minimal web service)
  - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli-v3/ (official CLI)
 
 
 ##### Swagger Generator Docker Image
 
-The Swagger Generator image can act as a self-hosted web application and API for generating code. This container can be  incorporated into a CI pipeline, and requires at least two HTTP requests and some docker orchestration to access generated code.
+The Swagger Generator image can act as a self-hosted web application and API for generating code.
+This container can be  incorporated into a CI pipeline, and requires some docker orchestration to access generated code.
 
-Example usage (note this assumes `jq` is installed for command line processing of JSON):
+Example usage:
 
 ```sh
 # Start container and save the container id
-CID=$(docker run -d swaggerapi/swagger-generator-v3)
+CID=$(docker run -d swaggerapi/swagger-generator-v3-minimal)
 # allow for startup
 sleep 5
 # Get the IP of the running container
