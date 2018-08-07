@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<Configure id="threadPool" class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+
+  <!-- =========================================================== -->
+  <!-- Configure the Server Thread Pool.                           -->
+  <!-- The server holds a common thread pool which is used by      -->
+  <!-- default as the executor used by all connectors and servlet  -->
+  <!-- dispatches.                                                 -->
+  <!--                                                             -->
+  <!-- Configuring a fixed thread pool is vital to controlling the -->
+  <!-- maximal memory footprint of the server and is a key tuning  -->
+  <!-- parameter for tuning.  In an application that rarely blocks -->
+  <!-- then maximal threads may be close to the number of 5*CPUs.  -->
+  <!-- In an application that frequently blocks, then maximal      -->
+  <!-- threads should be set as high as possible given the memory  -->
+  <!-- available.                                                  -->
+  <!--                                                             -->
+  <!-- Consult the javadoc of o.e.j.util.thread.QueuedThreadPool   -->
+  <!-- for all configuration that may be set here.                 -->
+  <!-- =========================================================== -->
+  <Set name="minThreads" type="int"><Property name="jetty.threadPool.minThreads" deprecated="threads.min" default="10"/></Set>
+  <Set name="maxThreads" type="int"><Property name="jetty.threadPool.maxThreads" deprecated="threads.max" default="200"/></Set>
+  <Set name="reservedThreads" type="int"><Property name="jetty.threadPool.reservedThreads" default="-1"/></Set>
+  <Set name="idleTimeout" type="int"><Property name="jetty.threadPool.idleTimeout" deprecated="threads.timeout" default="60000"/></Set>
+  <Set name="detailedDump" type="boolean"><Property name="jetty.threadPool.detailedDump" default="false"/></Set>
+</Configure>

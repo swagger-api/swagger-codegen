@@ -1,13 +1,22 @@
 FROM openjdk:8-jre-alpine
 
+WORKDIR /jetty_home
+COPY docker/jetty /jetty_home/
+COPY target/lib/jetty* /jetty_home/lib/
+RUN rm /jetty_home/lib/jetty-runner*
+COPY target/lib/javax.servlet-api* /jetty_home/lib/servlet-api-3.1.jar
+COPY target/lib/start.jar /jetty_home/
+ENV JETTY_HOME /jetty_home
 WORKDIR /generator
-RUN mkdir /generator/lib
-COPY src/main/resources/inflector.yaml /generator/
-COPY src/main/resources/openapi.yaml /generator/
-COPY target/lib/jetty-runner* /generator/jetty-runner.jar
-COPY target/*.war /generator/swagger-generator.war
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "/generator/jetty-runner.jar", "--classes", "/generator/lib", "/generator/swagger-generator.war"]
+COPY docker/jetty_base /generator/
+COPY target/*.war /generator/webapps/ROOT.war
+ENV JETTY_BASE /generator
+ARG hidden_options_path
+COPY ${hidden_options_path} /generator/resources/
+ARG HTTP_PORT
+ENV HTTP_PORT ${HTTP_PORT}
+ARG JAVA_MEM
+ENV JAVA_MEM ${JAVA_MEM}
+WORKDIR $JETTY_BASE
+CMD ["./start"]
 
