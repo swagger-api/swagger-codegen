@@ -1,13 +1,14 @@
 package io.swagger.v3.generator.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HiddenOptions {
-    private List<String> clients = Collections.EMPTY_LIST;
-    private List<String> servers = Collections.EMPTY_LIST;
-    private List<String> clientsV3 = Collections.EMPTY_LIST;
-    private List<String> serversV3 = Collections.EMPTY_LIST;
+    private List<String> clients = new ArrayList<>();
+    private List<String> servers = new ArrayList<>();
+    private List<String> clientsV3 = new ArrayList<>();
+    private List<String> serversV3 = new ArrayList<>();
 
     public static HiddenOptions getEmpty() {
         final HiddenOptions empty = new HiddenOptions();
@@ -26,6 +27,27 @@ public class HiddenOptions {
         this.servers = servers;
     }
 
+    public void setClientsV3(List<String> clientsV3) {
+        this.clientsV3 = clientsV3;
+    }
+
+    public void setServersV3(List<String> serversV3) {
+        this.serversV3 = serversV3;
+    }
+
+    public List<String> getClients() {
+        return clients;
+    }
+    public List<String> getClientsV3() {
+        return clientsV3;
+    }
+    public List<String> getServers() {
+        return servers;
+    }
+    public List<String> getServersV3() {
+        return serversV3;
+    }
+
     public boolean isHiddenClient(String client) {
         return clients == null ? false : clients.contains(client);
     }
@@ -40,14 +62,6 @@ public class HiddenOptions {
 
     public String servers() {
         return servers.toString();
-    }
-
-    public void setClientsV3(List<String> clientsV3) {
-        this.clientsV3 = clientsV3;
-    }
-
-    public void setServersV3(List<String> serversV3) {
-        this.serversV3 = serversV3;
     }
 
     public boolean isHiddenClientV3(String clientV3) {
