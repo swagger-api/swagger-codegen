@@ -65,8 +65,7 @@ public class AnotherFakeApi  {
     @Operation(summary = "To test special tags", description = "To test special tags", tags={ "$another-fake?" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
-    public Response testSpecialTags(
-@Parameter(description = "client model" ,required=true) Client body
+    public Response testSpecialTags(@Parameter(description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
