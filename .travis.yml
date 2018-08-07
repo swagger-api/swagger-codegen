@@ -93,4 +93,4 @@ after_success:
     fi;
 
 env:
-  - DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3 DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
+  - DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
