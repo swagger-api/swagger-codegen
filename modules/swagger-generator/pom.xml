@@ -130,7 +130,7 @@
         <profile>
             <id>docker</id>
             <properties>
-                <hidden.options.path>hiddenOptions.yaml</hidden.options.path>
+                <HIDDEN_OPTIONS_DEFAULT_PATH>hiddenOptions.yaml</HIDDEN_OPTIONS_DEFAULT_PATH>
                 <JAVA_MEM>1024m</JAVA_MEM>
                 <HTTP_PORT>8080</HTTP_PORT>
             </properties>
@@ -249,7 +249,7 @@
                                     <repository>swaggerapi/swagger-generator-v3</repository>
                                     <tag>${project.version}</tag>
                                     <buildArgs>
-                                        <hidden_options_path>${hidden.options.path}</hidden_options_path>
+                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
                                         <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
                                         <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
                                     </buildArgs>
