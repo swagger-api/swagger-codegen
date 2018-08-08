@@ -4,7 +4,7 @@ If Not Exist %executable% (
   mvn clean package
 )
 
-REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -DloggerPath=conf/log4j.properties
+REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -Dlogback.configurationFile=bin/logback.xml
 set ags=generate  --artifact-id "scala-akka-petstore-client" -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l akka-scala -o samples\client\petstore\akka-scala
 
 REM java %JAVA_OPTS% -jar %executable% %ags%
