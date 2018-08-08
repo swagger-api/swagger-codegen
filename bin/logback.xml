@@ -5,7 +5,7 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger name="io.swagger" level="debug"/>
+    <logger name="io.swagger" level="info"/>
     <root level="error">
         <appender-ref ref="STDOUT"/>
     </root>
