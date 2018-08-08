@@ -68,9 +68,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response deleteOrder(
-@Parameter(description = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
-
+    public Response deleteOrder(@Parameter(description = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteOrder(orderId,securityContext);
@@ -97,9 +95,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response getOrderById(
-@Parameter(description = "ID of pet that needs to be fetched",required=true) @PathParam("order_id") Integer orderId
-
+    public Response getOrderById(@Parameter(description = "ID of pet that needs to be fetched",required=true) @PathParam("order_id") Integer orderId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getOrderById(orderId,securityContext);
@@ -113,8 +109,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
-    public Response placeOrder(
-@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body
+    public Response placeOrder(@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

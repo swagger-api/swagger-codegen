@@ -65,8 +65,7 @@ public class FakeClassnameTestApi  {
     @Operation(summary = "To test class name in snake case", description = "", tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
-    public Response testClassname(
-@Parameter(description = "client model" ,required=true) Client body
+    public Response testClassname(@Parameter(description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

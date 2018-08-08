@@ -10,29 +10,15 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * OuterString
  */
-
 public class OuterString   {
-  
-  
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -49,8 +35,6 @@ public class OuterString   {
   public int hashCode() {
     return Objects.hash();
   }
-
-
 
 
   @Override
@@ -73,6 +57,3 @@ public class OuterString   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

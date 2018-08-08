@@ -67,8 +67,7 @@ public class PetApi  {
     @Operation(summary = "Add a new pet to the store", description = "", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response addPet(
-@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+    public Response addPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -81,9 +80,7 @@ public class PetApi  {
     @Operation(summary = "Deletes a pet", description = "", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public Response deletePet(
-@Parameter(description = "Pet id to delete",required=true) @PathParam("petId") Integer petId
-
+    public Response deletePet(@Parameter(description = "Pet id to delete",required=true) @PathParam("petId") Integer petId
 ,
 @Parameter(description = "" )@HeaderParam("api_key") String apiKey
 
@@ -100,10 +97,8 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
-    public Response findPetsByStatus(
-@Parameter(description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
+    public Response findPetsByStatus(@Parameter(description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
 ) @QueryParam("status") List<String> status
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByStatus(status,securityContext);
@@ -117,9 +112,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
-    public Response findPetsByTags(
-@Parameter(description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
-
+    public Response findPetsByTags(@Parameter(description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByTags(tags,securityContext);
@@ -135,9 +128,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getPetById(
-@Parameter(description = "ID of pet to return",required=true) @PathParam("petId") Integer petId
-
+    public Response getPetById(@Parameter(description = "ID of pet to return",required=true) @PathParam("petId") Integer petId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
@@ -153,8 +144,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "404", description = "Pet not found"),
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
-    public Response updatePet(
-@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+    public Response updatePet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -167,11 +157,9 @@ public class PetApi  {
     @Operation(summary = "Updates a pet in the store with form data", description = "", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updatePetWithForm(
-@Parameter(description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Integer petId
-
-,
-,
+    public Response updatePetWithForm(@Parameter(description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Integer petId
+,@Parameter(description = "")  @FormParam("name")  String name
+,@Parameter(description = "")  @FormParam("status")  String status
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updatePetWithForm(petId,name,status,securityContext);
@@ -183,11 +171,9 @@ public class PetApi  {
     @Operation(summary = "uploads an image", description = "", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
-    public Response uploadFile(
-@Parameter(description = "ID of pet to update",required=true) @PathParam("petId") Integer petId
-
-,
-,            @FormDataParam("file") InputStream fileInputStream,
+    public Response uploadFile(@Parameter(description = "ID of pet to update",required=true) @PathParam("petId") Integer petId
+,@Parameter(description = "")@FormDataParam("additionalMetadata")  String additionalMetadata
+,@FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
