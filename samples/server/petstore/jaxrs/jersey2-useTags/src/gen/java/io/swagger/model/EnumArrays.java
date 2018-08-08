@@ -10,51 +10,28 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * EnumArrays
  */
-
 public class EnumArrays   {
-  
-    
-    
   /**
    * Gets or Sets justSymbol
    */
   public enum JustSymbolEnum {
-    
-    
-        
-            
     GREATER_THAN_OR_EQUAL_TO(">="),
     
-            
     DOLLAR("$");
-            
-        
-    
 
     private String value;
 
@@ -78,35 +55,16 @@ public class EnumArrays   {
       return null;
     }
   }
-
-      
-  
   @JsonProperty("just_symbol")
-  
-  
-  
-  
   private JustSymbolEnum justSymbol = null;
-  
 
-  
-    
-    
   /**
    * Gets or Sets arrayEnum
    */
   public enum ArrayEnumEnum {
-    
-    
-        
-            
     FISH("fish"),
     
-            
     CRAB("crab");
-            
-        
-    
 
     private String value;
 
@@ -130,100 +88,54 @@ public class EnumArrays   {
       return null;
     }
   }
-
-      
-  
   @JsonProperty("array_enum")
-  
-  
-  
   private List<ArrayEnumEnum> arrayEnum = null;
-  
-  
 
-  
-  
-  
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get justSymbol
-  
-  
-  
    * @return justSymbol
    **/
- 
-  
   @JsonProperty("just_symbol")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
-  
 
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
-  
 
-  
-  
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
   }
-  
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
-    
     if (this.arrayEnum == null) {
       this.arrayEnum = new ArrayList<ArrayEnumEnum>();
     }
-    
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get arrayEnum
-  
-  
-  
    * @return arrayEnum
    **/
- 
-  
   @JsonProperty("array_enum")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
-  
 
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
-  
-
-  
 
 
   @Override
@@ -243,8 +155,6 @@ public class EnumArrays   {
   public int hashCode() {
     return Objects.hash(justSymbol, arrayEnum);
   }
-
-
 
 
   @Override
@@ -269,6 +179,3 @@ public class EnumArrays   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
