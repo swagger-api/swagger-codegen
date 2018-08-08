@@ -10,80 +10,41 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
-
 public class ClassModel   {
-  
-    
-      
-  
   @JsonProperty("_class")
-  
-  
-  
-  
   private String propertyClass = null;
-  
 
-  
-  
-  
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get propertyClass
-  
-  
-  
    * @return propertyClass
    **/
- 
-  
   @JsonProperty("_class")
-  
   @ApiModelProperty(value = "")
-
   public String getPropertyClass() {
     return propertyClass;
   }
-  
 
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
-  
-
-  
 
 
   @Override
@@ -102,8 +63,6 @@ public class ClassModel   {
   public int hashCode() {
     return Objects.hash(propertyClass);
   }
-
-
 
 
   @Override
@@ -127,6 +86,3 @@ public class ClassModel   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
