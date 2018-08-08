@@ -4,7 +4,7 @@ If Not Exist %executable% (
   mvn clean package
 )
 
-REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -DloggerPath=conf/log4j.properties
+REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -Dlogback.configurationFile=bin/logback.xml
 set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore-with-fake-endpoints-models-for-testing.yaml -l rust-server -o samples\server\petstore\rust-server
 
 REM java %JAVA_OPTS% -jar %executable% %ags%

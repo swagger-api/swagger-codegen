@@ -4,7 +4,7 @@ If Not Exist %executable% (
   mvn clean package
 )
 
-REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -DloggerPath=conf/log4j.properties
+REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -Dlogback.configurationFile=bin/logback.xml
 set ags=generate  --artifact-id "kotlin-petstore-client" -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l kotlin-client -o samples\client\petstore\kotlin
 
 java %JAVA_OPTS% -jar %executable% %ags%
