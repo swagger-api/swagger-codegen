@@ -10,130 +10,64 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * Animal
  */
-
 public class Animal   {
-  
-    
-      
-  
   @JsonProperty("className")
-  
-  
-  
-  
   private String className = null;
-  
 
-  
-    
-      
-  
   @JsonProperty("color")
-  
-  
-  
-  
   private String color = "red";
-  
 
-  
-  
-  
   public Animal className(String className) {
     this.className = className;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get className
-  
-  
-  
    * @return className
    **/
- 
-  
   @JsonProperty("className")
-  
-  @ApiModelProperty(required = true, value = "")
-
+  @Schema(required = true, description = "")
   @NotNull
-
   public String getClassName() {
     return className;
   }
-  
 
   public void setClassName(String className) {
     this.className = className;
   }
-  
 
-  
-  
   public Animal color(String color) {
     this.color = color;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get color
-  
-  
-  
    * @return color
    **/
- 
-  
   @JsonProperty("color")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public String getColor() {
     return color;
   }
-  
 
   public void setColor(String color) {
     this.color = color;
   }
-  
-
-  
 
 
   @Override
@@ -153,8 +87,6 @@ public class Animal   {
   public int hashCode() {
     return Objects.hash(className, color);
   }
-
-
 
 
   @Override
@@ -179,6 +111,3 @@ public class Animal   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
