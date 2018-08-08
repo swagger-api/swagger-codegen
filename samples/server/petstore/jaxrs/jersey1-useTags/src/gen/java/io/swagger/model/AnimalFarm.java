@@ -10,32 +10,18 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * AnimalFarm
  */
-
 public class AnimalFarm extends ArrayList<Animal>  {
-  
-  
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -52,8 +38,6 @@ public class AnimalFarm extends ArrayList<Animal>  {
   public int hashCode() {
     return Objects.hash();
   }
-
-
 
 
   @Override
@@ -76,6 +60,3 @@ public class AnimalFarm extends ArrayList<Animal>  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-

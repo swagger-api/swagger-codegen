@@ -10,80 +10,41 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-
-
-
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * NumberOnly
  */
-
 public class NumberOnly   {
-  
-    
-      
-  
   @JsonProperty("JustNumber")
-  
-  
-  
-  
   private BigDecimal justNumber = null;
-  
 
-  
-  
-  
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get justNumber
-  
-  
-  
    * @return justNumber
    **/
- 
-  
   @JsonProperty("JustNumber")
-  
   @ApiModelProperty(value = "")
-
   public BigDecimal getJustNumber() {
     return justNumber;
   }
-  
 
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
-  
-
-  
 
 
   @Override
@@ -102,8 +63,6 @@ public class NumberOnly   {
   public int hashCode() {
     return Objects.hash(justNumber);
   }
-
-
 
 
   @Override
@@ -127,6 +86,3 @@ public class NumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
