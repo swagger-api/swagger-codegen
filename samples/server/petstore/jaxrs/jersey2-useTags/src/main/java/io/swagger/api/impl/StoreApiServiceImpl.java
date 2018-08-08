@@ -6,7 +6,6 @@ import io.swagger.model.*;
 import java.util.Map;
 import io.swagger.model.Order;
 
-
 import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -17,36 +16,26 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
 import javax.validation.constraints.*;
-
-
-
 public class StoreApiServiceImpl extends StoreApiService {
-    
     @Override
     public Response deleteOrder(String orderId, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
-    
     @Override
     public Response getInventory(SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
-    
     @Override
     public Response getOrderById( @DecimalMin("1") @DecimalMax("5")Integer orderId, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
-    
     @Override
-    public Response placeOrder(Order order, SecurityContext securityContext) throws NotFoundException {
+    public Response placeOrder(Order body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
-    
 }
-

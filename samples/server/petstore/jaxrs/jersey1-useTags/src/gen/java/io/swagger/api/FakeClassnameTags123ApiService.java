@@ -7,7 +7,6 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import io.swagger.model.Client;
 
-
 import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -19,15 +18,8 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
 import javax.validation.constraints.*;
-
-
-
 public abstract class FakeClassnameTags123ApiService {
-  
-      public abstract Response testClassname(Client client,SecurityContext securityContext)
+      public abstract Response testClassname(Client body,SecurityContext securityContext)
       throws NotFoundException;
-  
 }
-

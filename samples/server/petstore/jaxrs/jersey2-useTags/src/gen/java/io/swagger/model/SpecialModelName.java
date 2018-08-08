@@ -10,79 +10,39 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
-
 import java.util.Objects;
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-
-
-
 
 /**
  * SpecialModelName
  */
-
 public class SpecialModelName   {
-  
-    
-      
-  
   @JsonProperty("$special[property.name]")
-  
-  
-  
-  
   private Long $specialPropertyName = null;
-  
 
-  
-  
-  
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
-  
-  
 
-  
   /**
-  
-  
    * Get $specialPropertyName
-  
-  
-  
    * @return $specialPropertyName
    **/
- 
-  
   @JsonProperty("$special[property.name]")
-  
-  @ApiModelProperty(value = "")
-
+  @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
-  
 
   public void set$SpecialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
   }
-  
-
-  
 
 
   @Override
@@ -101,8 +61,6 @@ public class SpecialModelName   {
   public int hashCode() {
     return Objects.hash($specialPropertyName);
   }
-
-
 
 
   @Override
@@ -126,6 +84,3 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
