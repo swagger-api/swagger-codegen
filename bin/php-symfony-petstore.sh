@@ -35,7 +35,7 @@ then
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
-export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
+export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
 ags="generate -t $SCRIPT_DIR/../modules/swagger-codegen/src/main/resources/php-symfony -i $SCRIPT_DIR/../modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l php-symfony -o $TARGET_DIR $@"
 
 # java $JAVA_OPTS -jar $executable $ags
