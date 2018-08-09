@@ -122,6 +122,7 @@ public class ModelUtils {
                     enumVar.put("name", toEnumVarName(enumName));
                     enumVar.put("value", toEnumValue(value.toString(), cm.dataType));
                     enumVars.add(enumVar);
+
                 }
                 cm.allowableValues.put("enumVars", enumVars);
             }
@@ -205,7 +206,7 @@ public class ModelUtils {
                 }
             }
             if (enumName != null) {
-                var.defaultValue = String.format("%s.%s", enumName, var.datatypeWithEnum);
+                var.defaultValue = String.format("%s.%s", var.datatypeWithEnum, enumName);
             }
         }
     }
