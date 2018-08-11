@@ -25,7 +25,8 @@ import java.util.Map;
 public class GeneratorControllerIT {
 
     protected final Logger LOGGER = LoggerFactory.getLogger(GeneratorControllerIT.class);
-    static final String DEFAULT_HOST = "http://localhost:8080/api";
+    static final String port = System.getProperty("JETTY_TEST_HTTP_PORT") == null ? "8080" : System.getProperty("JETTY_TEST_HTTP_PORT");
+    static final String DEFAULT_HOST = "http://localhost:" + port + "/api";
     private HttpClient client = HttpClientBuilder.create().build();
 
     @Test
