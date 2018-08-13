@@ -113,9 +113,9 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                type: "object"
+                additionalProperties:
+                  $ref: "#/components/schemas/CliOption"
 components:
   parameters:
     version:
@@ -308,3 +308,19 @@ components:
           description: Remove prefix of operationId, e.g. config_getId => getId
         skipOverride:
           type: boolean
+    CliOption:
+      type: "object"
+      properties:
+        optionName:
+          type: "string"
+        description:
+          type: "string"
+        type:
+          type: "string"
+          description: "Data type is based on the types supported by the JSON-Schema"
+        enum:
+          type: "object"
+          additionalProperties:
+            type: "string"
+        default:
+          type: "string"
