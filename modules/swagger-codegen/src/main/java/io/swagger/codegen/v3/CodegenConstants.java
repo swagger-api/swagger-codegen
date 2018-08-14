@@ -296,6 +296,15 @@ public class CodegenConstants {
     public static final String IS_APPLICATION_EXT_NAME = PREFIX_IS + "application";
     public static final String IS_IMPLICIT_EXT_NAME = PREFIX_IS + "implicit";
 
+    public static final String IS_GET_METHOD_EXT_NAME = PREFIX_IS + "get-method";
+    public static final String IS_POST_METHOD_EXT_NAME = PREFIX_IS + "post-method";
+    public static final String IS_PUT_METHOD_EXT_NAME = PREFIX_IS + "put-method";
+    public static final String IS_DELETE_METHOD_EXT_NAME = PREFIX_IS + "delete-method";
+    public static final String IS_HEAD_METHOD_EXT_NAME = PREFIX_IS + "head-method";
+    public static final String IS_TRACE_METHOD_EXT_NAME = PREFIX_IS + "trace-method";
+    public static final String IS_PATCH_METHOD_EXT_NAME = PREFIX_IS + "patch-method";
+    public static final String IS_OPTIONS_METHOD_EXT_NAME = PREFIX_IS + "options-method";
+
     public static final String HAS_MORE_EXT_NAME = PREFIX_HAS + "more";
     public static final String HAS_MORE_NON_READ_ONLY_EXT_NAME = PREFIX_HAS + "more-non-read-only";
     public static final String HAS_VALIDATION_EXT_NAME = PREFIX_HAS + "validation";
