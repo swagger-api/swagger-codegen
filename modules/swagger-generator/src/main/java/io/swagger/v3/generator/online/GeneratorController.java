@@ -120,7 +120,6 @@ public class GeneratorController {
             HiddenOptions options = new HiddenOptions();
             String[] sections =csv.split("\\|");
             for (String section: sections) {
-                LOGGER.error(section);
                 String [] keyval = section.split("\\:");
                 switch (keyval[0]) {
                     case "clients":
