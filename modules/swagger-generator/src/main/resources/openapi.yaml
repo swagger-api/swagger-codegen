@@ -131,7 +131,6 @@ components:
     GenerationRequest:
       x-swagger-router-model: io.swagger.codegen.v3.service.GenerationRequest
       required:
-      - spec
       - options
       properties:
         spec:
@@ -144,8 +143,8 @@ components:
           type: string
           description: type of the spec (client or server)
           enum:
-          - client
-          - server
+          - CLIENT
+          - SERVER
         codegenVersion:
           type: string
           description: codegen version to use
