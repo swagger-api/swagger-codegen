@@ -161,7 +161,7 @@ public class GeneratorUtil {
     public static void validateSpec(String lang, String inputSpec, String inputSpecURL) {
         Validate.notEmpty(lang, "language must be specified");
 
-        if ((StringUtils.isBlank(inputSpec) || "{}".equals(inputSpec)) && StringUtils.isBlank(inputSpecURL)) {
+        if ((StringUtils.isBlank(inputSpec) || "{}".equals(inputSpec) || "{ }".equals(inputSpec)) && StringUtils.isBlank(inputSpecURL)) {
             throw new BadRequestException("input spec or URL must be specified");
         }
 
