@@ -17,15 +17,15 @@ import io.swagger.client.Configuration;
 import io.swagger.client.Pair;
 
 
-public class FakeClassnameTags123ApiImpl implements FakeClassnameTags123Api {
+public class AnotherFakeApiImpl implements AnotherFakeApi {
 
     private ApiClient apiClient;
 
-    public FakeClassnameTags123ApiImpl() {
+    public AnotherFakeApiImpl() {
         this(null);
     }
 
-    public FakeClassnameTags123ApiImpl(ApiClient apiClient) {
+    public AnotherFakeApiImpl(ApiClient apiClient) {
         this.apiClient = apiClient != null ? apiClient : Configuration.getDefaultApiClient();
     }
 
@@ -38,22 +38,22 @@ public class FakeClassnameTags123ApiImpl implements FakeClassnameTags123Api {
     }
 
     /**
-     * To test class name in snake case
-     * To test class name in snake case
+     * To test special tags
+     * To test special tags
      * @param body client model (required)
      * @param resultHandler Asynchronous result handler
      */
-    public void testClassname(Client body, Handler<AsyncResult<Client>> resultHandler) {
+    public void testSpecialTags(Client body, Handler<AsyncResult<Client>> resultHandler) {
         Object localVarBody = body;
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            resultHandler.handle(ApiException.fail(400, "Missing the required parameter 'body' when calling testClassname"));
+            resultHandler.handle(ApiException.fail(400, "Missing the required parameter 'body' when calling testSpecialTags"));
             return;
         }
         
         // create path and map variables
-        String localVarPath = "/fake_classname_test";
+        String localVarPath = "/another-fake/dummy";
 
         // query params
         List<Pair> localVarQueryParams = new ArrayList<>();
@@ -67,7 +67,7 @@ public class FakeClassnameTags123ApiImpl implements FakeClassnameTags123Api {
         
         String[] localVarAccepts = { "application/json" };
         String[] localVarContentTypes = { "application/json" };
-        String[] localVarAuthNames = new String[] { "api_key_query" };
+        String[] localVarAuthNames = new String[] {  };
         TypeReference<Client> localVarReturnType = new TypeReference<Client>() {};
         apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarBody, localVarHeaderParams, localVarFormParams, localVarAccepts, localVarContentTypes, localVarAuthNames, localVarReturnType, resultHandler);
     }

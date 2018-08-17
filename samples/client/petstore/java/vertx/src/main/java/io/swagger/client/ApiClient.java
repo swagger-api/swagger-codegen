@@ -554,7 +554,11 @@ public class ApiClient {
                             handleFileDownload(httpResponse, handler);
                             return;
                         } else {
-                            resultContent = Json.decodeValue(httpResponse.body(), returnType);
+                            try {
+                                resultContent = Json.mapper.readValue(httpResponse.bodyAsString(), returnType);
+                            } catch (Exception e) {
+                                throw new DecodeException("Failed to decode:" + e.getMessage(), e);
+                            }
                         }
                         result = Future.succeededFuture(resultContent);
                     }
