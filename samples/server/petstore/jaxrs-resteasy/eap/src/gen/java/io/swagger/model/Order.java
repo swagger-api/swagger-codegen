@@ -5,24 +5,13 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
-
-
-
 import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-import io.swagger.annotations.*;
-
-@ApiModel(description="An order for a pets from the pet store")
-
+@Schema(description="An order for a pets from the pet store")
 public class Order   {
-
-  
   private Long id = null;
   private Long petId = null;
   private Integer quantity = null;
@@ -31,20 +20,11 @@ public class Order   {
    * Order Status
    */
   public enum StatusEnum {
-    
-    
     PLACED("placed"),
 
-    
-    
-    APPROVED("approved"),
+        APPROVED("approved"),
 
-    
-    
-    DELIVERED("delivered");
-    
-    
-    
+        DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {
@@ -57,36 +37,14 @@ public class Order   {
       return String.valueOf(value);
     }
   }
-
   private StatusEnum status = null;
   private Boolean complete = false;
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Long getId() {
     return id;
   }
@@ -94,32 +52,11 @@ public class Order   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("petId")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Long getPetId() {
     return petId;
   }
@@ -127,32 +64,11 @@ public class Order   {
     this.petId = petId;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("quantity")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Integer getQuantity() {
     return quantity;
   }
@@ -160,32 +76,11 @@ public class Order   {
     this.quantity = quantity;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("shipDate")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Date getShipDate() {
     return shipDate;
   }
@@ -193,34 +88,12 @@ public class Order   {
     this.shipDate = shipDate;
   }
 
-  
   /**
-   
    * Order Status
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "Order Status")
+  @Schema(description = "Order Status")
   @JsonProperty("status")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -228,32 +101,11 @@ public class Order   {
     this.status = status;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("complete")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Boolean isisComplete() {
     return complete;
   }
@@ -261,7 +113,6 @@ public class Order   {
     this.complete = complete;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -311,7 +162,3 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

@@ -41,9 +41,7 @@ public class UserApi  {
     @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public Response createUser(
-@Parameter(description = "Created user object" ,required=true) User body
-,@Context SecurityContext securityContext)
+    public Response createUser(@Parameter(description = "Created user object" ,required=true) User body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.createUser(body,securityContext);
     }
@@ -54,9 +52,7 @@ public class UserApi  {
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public Response createUsersWithArrayInput(
-@Parameter(description = "List of user object" ,required=true) List<User> body
-,@Context SecurityContext securityContext)
+    public Response createUsersWithArrayInput(@Parameter(description = "List of user object" ,required=true) List<User> body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.createUsersWithArrayInput(body,securityContext);
     }
@@ -67,9 +63,7 @@ public class UserApi  {
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public Response createUsersWithListInput(
-@Parameter(description = "List of user object" ,required=true) List<User> body
-,@Context SecurityContext securityContext)
+    public Response createUsersWithListInput(@Parameter(description = "List of user object" ,required=true) List<User> body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.createUsersWithListInput(body,securityContext);
     }
@@ -134,9 +128,7 @@ public class UserApi  {
         @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public Response updateUser(
-@Parameter(description = "Updated user object" ,required=true) User body
-, @PathParam("username") String username,@Context SecurityContext securityContext)
+    public Response updateUser(@Parameter(description = "Updated user object" ,required=true) User body, @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updateUser(body,username,securityContext);
     }

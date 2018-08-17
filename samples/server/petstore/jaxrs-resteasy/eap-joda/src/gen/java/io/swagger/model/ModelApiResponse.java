@@ -4,53 +4,21 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-import io.swagger.annotations.*;
-
-@ApiModel(description="Describes the result of uploading an image resource")
-
+@Schema(description="Describes the result of uploading an image resource")
 public class ModelApiResponse   {
-
-  
   private Integer code = null;
   private String type = null;
   private String message = null;
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("code")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Integer getCode() {
     return code;
   }
@@ -58,32 +26,11 @@ public class ModelApiResponse   {
     this.code = code;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("type")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public String getType() {
     return type;
   }
@@ -91,32 +38,11 @@ public class ModelApiResponse   {
     this.type = type;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("message")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public String getMessage() {
     return message;
   }
@@ -124,7 +50,6 @@ public class ModelApiResponse   {
     this.message = message;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -168,7 +93,3 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

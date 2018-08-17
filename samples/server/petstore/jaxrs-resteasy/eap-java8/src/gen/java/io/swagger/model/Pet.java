@@ -5,26 +5,15 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
-
-
-
 import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-import io.swagger.annotations.*;
-
-@ApiModel(description="A pet for sale in the pet store")
-
+@Schema(description="A pet for sale in the pet store")
 public class Pet   {
-
-  
   private Long id = null;
   private Category category = null;
   private String name = null;
@@ -34,20 +23,11 @@ public class Pet   {
    * pet status in the store
    */
   public enum StatusEnum {
-    
-    
     AVAILABLE("available"),
 
-    
-    
-    PENDING("pending"),
+        PENDING("pending"),
 
-    
-    
-    SOLD("sold");
-    
-    
-    
+        SOLD("sold");
     private String value;
 
     StatusEnum(String value) {
@@ -60,35 +40,13 @@ public class Pet   {
       return String.valueOf(value);
     }
   }
-
   private StatusEnum status = null;
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Long getId() {
     return id;
   }
@@ -96,32 +54,11 @@ public class Pet   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("category")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Category getCategory() {
     return category;
   }
@@ -129,34 +66,12 @@ public class Pet   {
     this.category = category;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(example = "doggie", required = true, value = "")
+  @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
-
   @NotNull
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public String getName() {
     return name;
   }
@@ -164,34 +79,12 @@ public class Pet   {
     this.name = name;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
-
   @NotNull
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -199,32 +92,11 @@ public class Pet   {
     this.photoUrls = photoUrls;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("tags")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public List<Tag> getTags() {
     return tags;
   }
@@ -232,34 +104,12 @@ public class Pet   {
     this.tags = tags;
   }
 
-  
   /**
-   
    * pet status in the store
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "pet status in the store")
+  @Schema(description = "pet status in the store")
   @JsonProperty("status")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -267,7 +117,6 @@ public class Pet   {
     this.status = status;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -317,7 +166,3 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-

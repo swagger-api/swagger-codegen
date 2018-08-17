@@ -4,52 +4,20 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
-
-
-
-import io.swagger.annotations.*;
-
-@ApiModel(description="A tag for a pet")
-
+@Schema(description="A tag for a pet")
 public class Tag   {
-
-  
   private Long id = null;
   private String name = null;
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("id")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public Long getId() {
     return id;
   }
@@ -57,32 +25,11 @@ public class Tag   {
     this.id = id;
   }
 
-  
   /**
-   
-   
-   
    **/
   
-  @ApiModelProperty(value = "")
+  @Schema(description = "")
   @JsonProperty("name")
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
   public String getName() {
     return name;
   }
@@ -90,7 +37,6 @@ public class Tag   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -132,7 +78,3 @@ public class Tag   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
-
-
