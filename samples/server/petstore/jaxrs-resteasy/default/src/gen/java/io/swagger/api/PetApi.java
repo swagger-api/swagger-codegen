@@ -41,12 +41,14 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     
-    @Operation(summary = "Add a new pet to the store", description = "", tags={ "pet" })
+    @Operation(summary = "Add a new pet to the store", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response addPet(
-@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
-,@Context SecurityContext securityContext)
+    public Response addPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.addPet(body,securityContext);
     }
@@ -54,12 +56,14 @@ public class PetApi  {
     @Path("/{petId}")
     
     
-    @Operation(summary = "Deletes a pet", description = "", tags={ "pet" })
+    @Operation(summary = "Deletes a pet", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public Response deletePet( @PathParam("petId") Integer petId,
-@Parameter(description = "" )@HeaderParam("api_key") String apiKey
-,@Context SecurityContext securityContext)
+    public Response deletePet( @PathParam("petId") Integer petId,@Parameter(description = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.deletePet(petId,apiKey,securityContext);
     }
@@ -67,7 +71,11 @@ public class PetApi  {
     @Path("/findByStatus")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", tags={ "pet" })
+    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
@@ -80,7 +88,11 @@ public class PetApi  {
     @Path("/findByTags")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", tags={ "pet" })
+    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
@@ -93,7 +105,9 @@ public class PetApi  {
     @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find pet by ID", description = "Returns a single pet", tags={ "pet" })
+    @Operation(summary = "Find pet by ID", description = "Returns a single pet", security = {
+        @SecurityRequirement(name = "api_key")
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
         
@@ -108,16 +122,18 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     
-    @Operation(summary = "Update an existing pet", description = "", tags={ "pet" })
+    @Operation(summary = "Update an existing pet", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found"),
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
-    public Response updatePet(
-@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
-,@Context SecurityContext securityContext)
+    public Response updatePet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updatePet(body,securityContext);
     }
@@ -125,14 +141,14 @@ public class PetApi  {
     @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
     
-    @Operation(summary = "Updates a pet in the store with form data", description = "", tags={ "pet" })
+    @Operation(summary = "Updates a pet in the store with form data", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updatePetWithForm( @PathParam("petId") Integer petId,
-@Parameter(description = "")@FormParam("name")  String name
-,
-@Parameter(description = "")@FormParam("status")  String status
-,@Context SecurityContext securityContext)
+    public Response updatePetWithForm( @PathParam("petId") Integer petId,@Parameter(description = "")@FormParam("name")  String name,@Parameter(description = "")@FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updatePetWithForm(petId,name,status,securityContext);
     }
@@ -140,7 +156,11 @@ public class PetApi  {
     @Path("/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @Operation(summary = "uploads an image", description = "", tags={ "pet" })
+    @Operation(summary = "uploads an image", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""
+        })
+    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
     public Response uploadFile(MultipartFormDataInput input, @PathParam("petId") Integer petId,@Context SecurityContext securityContext)
