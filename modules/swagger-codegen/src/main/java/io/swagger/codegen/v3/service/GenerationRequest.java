@@ -26,7 +26,7 @@ public class GenerationRequest implements Serializable {
     }
 
     public enum CodegenVersion {
-        v2("v2"), v3("v3");
+        v2("V2"), v3("V3");
 
         private String name;
 
