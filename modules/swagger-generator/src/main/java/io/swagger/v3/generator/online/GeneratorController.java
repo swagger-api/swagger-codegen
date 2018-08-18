@@ -171,7 +171,7 @@ public class GeneratorController {
     }
 
     public ResponseContext clientLanguages(RequestContext requestContext, String version) {
-        if ("v2".equals(version)) {
+        if ("V2".equals(version)) {
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
                     .entity(CLIENTSV2);
@@ -184,7 +184,7 @@ public class GeneratorController {
     }
 
     public ResponseContext serverLanguages(RequestContext requestContext, String version) {
-        if ("v2".equals(version)) {
+        if ("V2".equals(version)) {
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
                     .entity(SERVERSV2);
@@ -197,7 +197,7 @@ public class GeneratorController {
 
     public ResponseContext listOptions(RequestContext requestContext, String language, String version) {
 
-        if ("v2".equals(version)) {
+        if ("V2".equals(version)) {
             io.swagger.codegen.CodegenConfig config = null;
             try {
                 config = CodegenConfigLoader.forName(language);

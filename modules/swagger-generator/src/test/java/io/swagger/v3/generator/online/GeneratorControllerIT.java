@@ -31,7 +31,7 @@ public class GeneratorControllerIT {
 
     @Test
     public void testClientsV3() throws Exception {
-        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/clients?version=v3"));
+        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/clients?version=V3"));
         int responseCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(responseCode, 200);
 
@@ -43,7 +43,7 @@ public class GeneratorControllerIT {
 
     @Test
     public void testClientsV2() throws Exception {
-        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/clients?version=v2"));
+        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/clients?version=V2"));
         int responseCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(responseCode, 200);
 
@@ -54,7 +54,7 @@ public class GeneratorControllerIT {
     }
     @Test
     public void testServersV3() throws Exception {
-        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/servers?version=v3"));
+        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/servers?version=V3"));
         int responseCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(responseCode, 200);
 
@@ -66,7 +66,7 @@ public class GeneratorControllerIT {
 
     @Test
     public void testServersV2() throws Exception {
-        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/servers?version=v2"));
+        final HttpResponse response = client.execute(new HttpGet(DEFAULT_HOST + "/servers?version=V2"));
         int responseCode = response.getStatusLine().getStatusCode();
         Assert.assertEquals(responseCode, 200);
 
