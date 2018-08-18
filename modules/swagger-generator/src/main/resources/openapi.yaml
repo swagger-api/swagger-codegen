@@ -125,8 +125,8 @@ components:
       schema:
         type: string
         enum:
-        - v2
-        - v3
+        - V2
+        - V3
   schemas:
     GenerationRequest:
       x-swagger-router-model: io.swagger.codegen.v3.service.GenerationRequest
@@ -149,8 +149,8 @@ components:
           type: string
           description: codegen version to use
           enum:
-          - v2
-          - v3
+          - V2
+          - V3
         options:
           "$ref": "#/components/schemas/Options"
     AuthorizationValue:
