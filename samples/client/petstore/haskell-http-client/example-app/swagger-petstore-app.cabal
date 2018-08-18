@@ -1,8 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.20.0.
+-- This file has been generated from package.yaml by hpack version 0.28.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0a40afd0e6e2b593c40ae1588479e70d4f35af6ece13bf83bdf3c166c5ea4e7b
+-- hash: 69d44bfedf632d413b1bf530c82bfa8932090b20b6d3471b891aaef07b341934
 
 name:           swagger-petstore-app
 version:        0.1.0.0
@@ -16,7 +16,6 @@ copyright:      YEAR - AUTHOR
 license:        UnspecifiedLicense
 build-type:     Simple
 cabal-version:  >= 1.10
-
 extra-source-files:
     README.md
 

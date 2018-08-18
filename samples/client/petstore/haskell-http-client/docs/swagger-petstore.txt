@@ -725,6 +725,9 @@ PatternWithoutDelimiter :: Text -> PatternWithoutDelimiter
 newtype PetId
 PetId :: Integer -> PetId
 [unPetId] :: PetId -> Integer
+newtype Query
+Query :: Text -> Query
+[unQuery] :: Query -> Text
 newtype Status
 Status :: [E'Status2] -> Status
 [unStatus] :: Status -> [E'Status2]
@@ -956,10 +959,13 @@ mkEnumArrays :: EnumArrays
 
 -- | EnumTest
 data EnumTest
-EnumTest :: !(Maybe E'EnumString) -> !(Maybe E'EnumInteger) -> !(Maybe E'EnumNumber) -> !(Maybe OuterEnum) -> EnumTest
+EnumTest :: !(Maybe E'EnumString) -> !(E'EnumString) -> !(Maybe E'EnumInteger) -> !(Maybe E'EnumNumber) -> !(Maybe OuterEnum) -> EnumTest
 
 -- | "enum_string"
 [enumTestEnumString] :: EnumTest -> !(Maybe E'EnumString)
+
+-- | <i>Required</i> "enum_string_required"
+[enumTestEnumStringRequired] :: EnumTest -> !(E'EnumString)
 
 -- | "enum_integer"
 [enumTestEnumInteger] :: EnumTest -> !(Maybe E'EnumInteger)
@@ -976,7 +982,7 @@ EnumTest :: !(Maybe E'EnumString) -> !(Maybe E'EnumInteger) -> !(Maybe E'EnumNum
 
 -- | Construct a value of type <a>EnumTest</a> (by applying it's required
 --   fields, if any)
-mkEnumTest :: EnumTest
+mkEnumTest :: E'EnumString -> EnumTest
 
 -- | FormatTest
 data FormatTest
@@ -1871,6 +1877,8 @@ instance GHC.Show.Show SwaggerPetstore.Model.Tags
 instance GHC.Classes.Eq SwaggerPetstore.Model.Tags
 instance GHC.Show.Show SwaggerPetstore.Model.StatusText
 instance GHC.Classes.Eq SwaggerPetstore.Model.StatusText
+instance GHC.Show.Show SwaggerPetstore.Model.Query
+instance GHC.Classes.Eq SwaggerPetstore.Model.Query
 instance GHC.Show.Show SwaggerPetstore.Model.PetId
 instance GHC.Classes.Eq SwaggerPetstore.Model.PetId
 instance GHC.Show.Show SwaggerPetstore.Model.PatternWithoutDelimiter
@@ -2547,6 +2555,8 @@ module SwaggerPetstore.API.FakeClassnameTags123
 --   
 --   To test class name in snake case
 --   
+--   To test class name in snake case
+--   
 --   AuthMethod: <a>AuthApiKeyApiKeyQuery</a>
 testClassname :: (Consumes TestClassname MimeJSON, MimeRender MimeJSON Client) => Client -> SwaggerPetstoreRequest TestClassname MimeJSON Client MimeJSON
 data TestClassname
@@ -2606,6 +2616,16 @@ fakeOuterStringSerialize :: (Consumes FakeOuterStringSerialize contentType) => C
 data FakeOuterStringSerialize
 
 -- | <i>Body Param</i> "body" - Input string as post body
+
+-- | <pre>
+--   PUT /fake/body-with-query-params
+--   </pre>
+testBodyWithQueryParams :: (Consumes TestBodyWithQueryParams MimeJSON, MimeRender MimeJSON User) => User -> Query -> SwaggerPetstoreRequest TestBodyWithQueryParams MimeJSON NoContent MimeNoContent
+data TestBodyWithQueryParams
+
+-- | <pre>
+--   application/json
+--   </pre>
 
 -- | <pre>
 --   PATCH /fake
@@ -2776,6 +2796,8 @@ instance SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.Fake.TestEndpoin
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.Fake.TestClientModel SwaggerPetstore.Model.Client
 instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.Fake.TestClientModel SwaggerPetstore.MimeTypes.MimeJSON
 instance SwaggerPetstore.MimeTypes.Produces SwaggerPetstore.API.Fake.TestClientModel SwaggerPetstore.MimeTypes.MimeJSON
+instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.Fake.TestBodyWithQueryParams SwaggerPetstore.Model.User
+instance SwaggerPetstore.MimeTypes.Consumes SwaggerPetstore.API.Fake.TestBodyWithQueryParams SwaggerPetstore.MimeTypes.MimeJSON
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.Fake.FakeOuterStringSerialize SwaggerPetstore.Model.OuterString
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.Fake.FakeOuterNumberSerialize SwaggerPetstore.Model.OuterNumber
 instance SwaggerPetstore.Core.HasBodyParam SwaggerPetstore.API.Fake.FakeOuterCompositeSerialize SwaggerPetstore.Model.OuterComposite
@@ -2887,6 +2909,9 @@ enumArraysArrayEnumL :: Lens_' EnumArrays (Maybe [E'ArrayEnum])
 
 -- | <a>enumTestEnumString</a> Lens
 enumTestEnumStringL :: Lens_' EnumTest (Maybe E'EnumString)
+
+-- | <a>enumTestEnumStringRequired</a> Lens
+enumTestEnumStringRequiredL :: Lens_' EnumTest (E'EnumString)
 
 -- | <a>enumTestEnumInteger</a> Lens
 enumTestEnumIntegerL :: Lens_' EnumTest (Maybe E'EnumInteger)
