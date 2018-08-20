@@ -18,7 +18,7 @@ public class GeneratorService {
 
     public GeneratorService generationRequest(GenerationRequest generationRequest) {
         this.generationRequest = generationRequest;
-        if (GenerationRequest.CodegenVersion.v2.equals(generationRequest.getCodegenVersion())) {
+        if (GenerationRequest.CodegenVersion.V2.equals(generationRequest.getCodegenVersion())) {
             final io.swagger.codegen.ClientOptInput clientOptInputV2;
             try {
                 clientOptInputV2 = GeneratorUtil.getClientOptInputV2(generationRequest);
