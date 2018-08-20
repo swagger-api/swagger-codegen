@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Swagger Petstore
-  description: 'This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose.'
+  description: "This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\"
   termsOfService: http://swagger.io/terms/
   contact:
     email: apiteam@swagger.io
@@ -655,35 +655,6 @@ paths:
           enum:
           - 1
           - -2
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              properties:
-                enum_form_string_array:
-                  type: array
-                  description: Form parameter enum test (string array)
-                  items:
-                    type: string
-                    default: $
-                    enum:
-                    - '>'
-                    - $
-                enum_form_string:
-                  type: string
-                  description: Form parameter enum test (string)
-                  default: -efg
-                  enum:
-                  - _abc
-                  - -efg
-                  - (xyz)
-                enum_query_double:
-                  type: number
-                  description: Query parameter enum test (double)
-                  format: double
-                  enum:
-                  - "1.1"
-                  - -1.2
       responses:
         400:
           description: Invalid request
@@ -881,6 +852,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
+  /fake/enum/form:
+    post:
+      tags:
+      - fake
+      summary: To test enum parameters
+      description: To test enum parameters
+      operationId: testEnumRequestBody
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              properties:
+                enum_form_string_array:
+                  type: array
+                  description: Form parameter enum test (string array)
+                  items:
+                    type: string
+                    default: $
+                    enum:
+                    - '>'
+                    - $
+                enum_form_string:
+                  type: string
+                  description: Form parameter enum test (string)
+                  default: -efg
+                  enum:
+                  - _abc
+                  - -efg
+                  - (xyz)
+                enum_query_double:
+                  type: number
+                  description: Query parameter enum test (double)
+                  format: double
+                  enum:
+                  - "1.1"
+                  - -1.2
+      responses:
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: Not found
+          content: {}
   /fake/outer/number:
     post:
       tags:
@@ -962,7 +976,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OuterComposite'
   /fake/jsonFormData:
-    get:
+    post:
       tags:
       - fake
       summary: test json serialization of form data
