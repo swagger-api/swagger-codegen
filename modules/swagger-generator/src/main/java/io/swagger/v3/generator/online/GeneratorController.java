@@ -326,7 +326,7 @@ public class GeneratorController {
             outputContentFolder = outputRootFolder;
         }
         generationRequest.getOptions().setOutputDir(outputContentFolder.getAbsolutePath());
-        File outputFile = new File(getTmpFolder(), generationRequest.getOptions().getLang() + "-bundle.zip");
+        File outputFile = new File(getTmpFolder(), generationRequest.getLang() + "-bundle.zip");
 
         LOGGER.info("file zip file: " + outputFile.getAbsolutePath());
 
@@ -364,7 +364,7 @@ public class GeneratorController {
         try {
             files = generatorService.generate();
         } catch (Exception e) {
-            String msg = String.format("Error generating `%s` code : %s", generationRequest.getOptions().getLang(), e.getMessage());
+            String msg = String.format("Error generating `%s` code : %s", generationRequest.getLang(), e.getMessage());
             LOGGER.error(msg, e);
             return new ResponseContext()
                     .status(500)
@@ -372,7 +372,7 @@ public class GeneratorController {
                     .entity(msg);
         }
         if (files.size() > 0) {
-            return downloadFile(outputRootFolder, outputContentFolder, outputFile, generationRequest.getOptions().getLang(), generationRequest.getType());
+            return downloadFile(outputRootFolder, outputContentFolder, outputFile, generationRequest.getLang(), generationRequest.getType());
         } else {
             return new ResponseContext()
                     .status(500)

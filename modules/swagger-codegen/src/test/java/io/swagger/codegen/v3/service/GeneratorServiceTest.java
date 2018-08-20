@@ -23,10 +23,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
                 .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
                         new Options()
-                                .lang("jaxrs-jersey")
                                 .outputDir(getTmpFolder().getAbsolutePath())
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
@@ -40,10 +40,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs")
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
-                                .lang("jaxrs")
                                 .outputDir(getTmpFolder().getAbsolutePath())
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
@@ -57,10 +57,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
-                                .lang("jaxrs-jersey")
                                 .outputDir(getTmpFolder().getAbsolutePath())
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
@@ -73,10 +73,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
                 .specURL("3_0_0/petstore.json")
                 .options(
                         new Options()
-                                .lang("jaxrs-jersey")
                                 .outputDir(getTmpFolder().getAbsolutePath())
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
@@ -91,10 +91,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
                 .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
                         new Options()
-                            .lang("java")
                             .outputDir(getTmpFolder().getAbsolutePath())
                             .artifactId("swagger-petstore-jersey2")
                             .library("jersey2")
@@ -111,10 +111,10 @@ public class GeneratorServiceTest {
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
                         new Options()
-                                .lang("java")
                                 .outputDir(getTmpFolder().getAbsolutePath())
                                 .artifactId("swagger-petstore-jersey2")
                                 .library("jersey2")

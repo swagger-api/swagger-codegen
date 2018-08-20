@@ -32,7 +32,7 @@ public class GeneratorUtil {
             inputSpec = (String)generationRequest.getSpec();
         }
         String inputSpecURL = generationRequest.getSpecURL();
-        String lang = options.getLang();
+        String lang = generationRequest.getLang();
         validateSpec(lang, inputSpec, inputSpecURL);
 
         final List<io.swagger.models.auth.AuthorizationValue> authorizationValues = io.swagger.codegen.auth.AuthParser.parse(generationRequest.getOptions().getAuth());
@@ -177,7 +177,7 @@ public class GeneratorUtil {
             inputSpec = (String)generationRequest.getSpec();
         }
         String inputSpecURL = generationRequest.getSpecURL();
-        String lang = options.getLang();
+        String lang = generationRequest.getLang();
         validateSpec(lang, inputSpec, inputSpecURL);
 
         CodegenConfigurator configurator = new CodegenConfigurator();
