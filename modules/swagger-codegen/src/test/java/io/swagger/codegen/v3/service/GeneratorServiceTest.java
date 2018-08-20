@@ -21,7 +21,7 @@ public class GeneratorServiceTest {
 
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v3)
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
                 .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
@@ -38,7 +38,7 @@ public class GeneratorServiceTest {
 
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v2)
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.SERVER)
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
@@ -55,7 +55,7 @@ public class GeneratorServiceTest {
 
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v3)
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(
@@ -71,7 +71,7 @@ public class GeneratorServiceTest {
     public void testGeneratorServiceJava3RefSpec() {
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v3)
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
                 .specURL("3_0_0/petstore.json")
                 .options(
@@ -89,7 +89,7 @@ public class GeneratorServiceTest {
 
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v3)
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.CLIENT)
                 .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
                 .options(
@@ -109,7 +109,7 @@ public class GeneratorServiceTest {
     public void testGeneratorServiceJavaClient2() {
         GenerationRequest request = new GenerationRequest();
         request
-                .codegenVersion(GenerationRequest.CodegenVersion.v2)
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
                 .type(GenerationRequest.Type.CLIENT)
                 .spec(loadSpecAsNode("2_0/petstore.json", false, true))
                 .options(

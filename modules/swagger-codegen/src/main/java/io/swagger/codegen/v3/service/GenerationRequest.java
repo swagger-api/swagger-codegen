@@ -9,7 +9,7 @@ public class GenerationRequest implements Serializable {
     private String specURL = null;
     private Options options = new Options();
     private Type type = Type.CLIENT;
-    private CodegenVersion codegenVersion = CodegenVersion.v3;
+    private CodegenVersion codegenVersion = CodegenVersion.V3;
 
     public enum Type {
         CLIENT("client"), SERVER("server");
@@ -26,17 +26,7 @@ public class GenerationRequest implements Serializable {
     }
 
     public enum CodegenVersion {
-        v2("V2"), v3("V3");
-
-        private String name;
-
-        CodegenVersion(String name) {
-            this.name = name;
-        }
-
-        public String getCodegenVersionName() {
-            return name;
-        }
+        V2, V3;
     }
 
     public GenerationRequest spec(Object spec) {
