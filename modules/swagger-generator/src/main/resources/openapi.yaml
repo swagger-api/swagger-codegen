@@ -131,8 +131,13 @@ components:
     GenerationRequest:
       x-swagger-router-model: io.swagger.codegen.v3.service.GenerationRequest
       required:
-      - options
+      - lang
       properties:
+        lang:
+          type: string
+          title: language
+          description: client language to generate (required)
+          example: java
         spec:
           type: object
           description: spec in json format. . Alternative to `specURL`
@@ -170,15 +175,7 @@ components:
           description: Authorization type
     Options:
       x-swagger-router-model: io.swagger.codegen.v3.service.Options
-      required:
-      - lang
       properties:
-        lang:
-          type: string
-          title: language
-          description: client language to generate (maybe class name in classpath,
-            required)
-          example: java
         auth:
           type: string
           title: authorization

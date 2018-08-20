@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Options {
 
-    private String lang;
     private String auth;
     private AuthorizationValue authorizationValue = null;
     private String apiPackage;
@@ -37,18 +36,6 @@ public class Options {
     private Boolean removeOperationIdPrefix;
     private Boolean skipOverride;
     private String outputDir = "";
-
-    public Options lang(String lang) {
-        this.lang = lang;
-        return this;
-    }
-
-    public String getLang() {
-        return lang;
-    }
-    public void setLang(String lang) {
-        this.lang = lang;
-    }
 
     public Options authorizationValue(AuthorizationValue authorizationValue) {
         this.authorizationValue = authorizationValue;
