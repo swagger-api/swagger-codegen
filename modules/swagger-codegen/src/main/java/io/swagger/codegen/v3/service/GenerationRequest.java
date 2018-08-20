@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class GenerationRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String lang;
     private Object spec = null;
     private String specURL = null;
     private Options options = new Options();
@@ -28,6 +29,19 @@ public class GenerationRequest implements Serializable {
     public enum CodegenVersion {
         V2, V3;
     }
+
+    public GenerationRequest lang(String lang) {
+        this.lang = lang;
+        return this;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
 
     public GenerationRequest spec(Object spec) {
         this.spec = spec;
