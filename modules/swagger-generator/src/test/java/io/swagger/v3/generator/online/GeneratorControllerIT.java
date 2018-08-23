@@ -76,7 +76,7 @@ public class GeneratorControllerIT {
         Assert.assertTrue(jsonNode.toString().contains("jaxrs"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void generateJava() throws Exception {
         String json = FileUtils.readFileToString(new File("src/test/resources/petstore-oas3.json"));
         JsonNode node = Json.mapper().readTree(json);
