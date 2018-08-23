@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
-    @Test(description = "test generator service with java 3.0")
+    @Test(description = "test generator service with java 3.0", enabled = false)
     public void testGeneratorServiceJava3() {
 
         GenerationRequest request = new GenerationRequest();
@@ -33,7 +33,7 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
-    @Test(description = "test generator service with java 2.0")
+    @Test(description = "test generator service with java 2.0", enabled = false)
     public void testGeneratorServiceJava2() {
 
         GenerationRequest request = new GenerationRequest();
@@ -50,7 +50,7 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
-    @Test(description = "test generator service with java 3.0 and spec 2.0")
+    @Test(description = "test generator service with java 3.0 and spec 2.0", enabled = false)
     public void testGeneratorServiceJava3Spec2() {
 
         GenerationRequest request = new GenerationRequest();
@@ -67,7 +67,7 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
-    @Test(description = "test generator service with java 3.0, spec as ref to file")
+    @Test(description = "test generator service with java 3.0, spec as ref to file", enabled = false)
     public void testGeneratorServiceJava3RefSpec() {
         GenerationRequest request = new GenerationRequest();
         request
@@ -84,7 +84,7 @@ public class GeneratorServiceTest {
     }
 
 
-    @Test(description = "test generator service with java client 3.0")
+    @Test(description = "test generator service with java client 3.0", enabled = false)
     public void testGeneratorServiceJavaClient3() {
 
         GenerationRequest request = new GenerationRequest();
@@ -105,7 +105,7 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
-    @Test(description = "test generator service with java client 2.0")
+    @Test(description = "test generator service with java client 2.0", enabled = false)
     public void testGeneratorServiceJavaClient2() {
         GenerationRequest request = new GenerationRequest();
         request

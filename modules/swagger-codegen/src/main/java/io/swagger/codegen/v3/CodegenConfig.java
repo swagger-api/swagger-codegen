@@ -129,7 +129,7 @@ public interface CodegenConfig {
 
     Mustache.Compiler processCompiler(Mustache.Compiler compiler);
 
-//    TemplateEngine getTemplateEngine();
+    TemplateEngine getTemplateEngine();
 
     String sanitizeTag(String tag);
 
