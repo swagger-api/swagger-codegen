@@ -194,6 +194,9 @@ class {{classname}}(object):
         {{/hasConsumes}}
         # Authentication setting
         auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]  # noqa: E501
+{{#httpsig}}
+        auth_settings.append('httpsig')
+{{/httpsig}}        
 
         return self.api_client.call_api(
             '{{{path}}}', '{{httpMethod}}',

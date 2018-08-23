@@ -135,15 +135,16 @@ class ApiClient(object):
             post_params = self.parameters_to_tuples(post_params,
                                                     collection_formats)
 
-        # auth setting
-        self.update_params_for_auth(header_params, query_params, auth_settings)
-
         # body
         if body:
             body = self.sanitize_for_serialization(body)
 
         # request url
         url = self.configuration.host + resource_path
+
+        # auth setting
+        self.update_params_for_auth(header_params, query_params, auth_settings,
+                                    resource_path, body, method, url)
 
         # perform request and return response
         response_data = self.request(
@@ -482,12 +483,16 @@ class ApiClient(object):
         else:
             return content_types[0]
 
-    def update_params_for_auth(self, headers, querys, auth_settings):
+    def update_params_for_auth(self, headers, querys, auth_settings,
+                               resource_path, body, method, url):
         """Updates header and query params based on authentication setting.
 
         :param headers: Header parameters dict to be updated.
         :param querys: Query parameters tuple list to be updated.
         :param auth_settings: Authentication setting identifiers list.
+        :parm body: Body of message for signed requests
+        :param method: Method of request for signed requests
+        :param url: URL of reqeust for signed requests
         """
         if not auth_settings:
             return
@@ -495,7 +500,7 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
-                if not auth_setting['value']:
+                if 'value' not in auth_setting:
                     continue
                 elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']

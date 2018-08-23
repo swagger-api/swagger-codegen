@@ -23,6 +23,9 @@ REQUIRES.append("aiohttp")
 {{#tornado}}
 REQUIRES.append("tornado")
 {{/tornado}}
+{{#httpsig}}
+REQUIRES.append("pycrypto")
+{{/httpsig}}
 
 setup(
     name=NAME,

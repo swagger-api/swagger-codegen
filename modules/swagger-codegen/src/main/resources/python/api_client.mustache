@@ -21,6 +21,15 @@ from {{packageName}}.configuration import Configuration
 import {{modelPackage}}
 from {{packageName}} import rest
 
+{{#httpsig}}
+# these are needed for httpsig aka  
+# https://datatracker.ietf.org/doc/draft-cavage-http-signatures
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
+from Crypto.Hash import SHA256
+from base64 import b64encode
+from urlparse import urlparse
+{{/httpsig}}
 
 class ApiClient(object):
     """Generic API client for Swagger client library builds.
@@ -68,6 +77,9 @@ class ApiClient(object):
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = '{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/python{{/httpUserAgent}}'
+{{#httpsig}}
+        self.private_key = None # placeholder for cache of parsed key file
+{{/httpsig}}
 
     def __del__(self):
         self.pool.close()
@@ -132,15 +144,16 @@ class ApiClient(object):
             post_params = self.parameters_to_tuples(post_params,
                                                     collection_formats)
 
-        # auth setting
-        self.update_params_for_auth(header_params, query_params, auth_settings)
-
         # body
         if body:
             body = self.sanitize_for_serialization(body)
 
         # request url
         url = self.configuration.host + resource_path
+
+        # auth setting
+        self.update_params_for_auth(header_params, query_params, auth_settings,
+                                    resource_path, body, method, url)
 
         # perform request and return response
         response_data = {{#asyncio}}await {{/asyncio}}{{#tornado}}yield {{/tornado}}self.request(
@@ -488,12 +501,16 @@ class ApiClient(object):
         else:
             return content_types[0]
 
-    def update_params_for_auth(self, headers, querys, auth_settings):
+    def update_params_for_auth(self, headers, querys, auth_settings,
+                               resource_path, body, method, url):
         """Updates header and query params based on authentication setting.
 
         :param headers: Header parameters dict to be updated.
         :param querys: Query parameters tuple list to be updated.
         :param auth_settings: Authentication setting identifiers list.
+        :parm body: Body of message for signed requests
+        :param method: Method of request for signed requests
+        :param url: URL of reqeust for signed requests
         """
         if not auth_settings:
             return
@@ -501,12 +518,17 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = self.configuration.auth_settings().get(auth)
             if auth_setting:
-                if not auth_setting['value']:
+                if 'value' not in auth_setting:
                     continue
                 elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']
                 elif auth_setting['in'] == 'query':
                     querys.append((auth_setting['key'], auth_setting['value']))
+{{#httpsig}}
+                elif auth_setting['in'] == 'httpsig': # https://datatracker.ietf.org/doc/draft-cavage-http-signatures/?include_text=1
+                    self.prepare_auth_header(auth_setting, resource_path, method, body, querys, url)
+                    headers.update(self.default_headers) # headers may have changed, canonicalize
+{{/httpsig}}
                 else:
                     raise ValueError(
                         'Authentication token must be in `query` or `header`'
@@ -631,3 +653,131 @@ class ApiClient(object):
             if klass_name:
                 instance = self.__deserialize(data, klass_name)
         return instance
+{{#httpsig}}    
+
+    def get_sha256_digest(self, data):
+        """
+        :param data: Data set by User
+        :return: instance of digest object 
+        """
+        digest = SHA256.new()
+        digest.update(data)
+        
+        return digest
+    
+    def get_rsasig_b64encode(self, auth_settings, digest):
+        """
+        :param self.private_key : previously loaded and cached RSA key object. 
+        :param auth_settings['private_key_path'] : abs path to private key .pem file.
+        :param digest: digest to sign
+        :return: instance of digest object 
+        """
+        
+        if not self.private_key:
+        	try:
+        		key = open(auth_settings['private_key_path'], "r").read()
+        		rsakey = RSA.importKey(key)
+        	except IOError as e:
+        		print "I/O error reading key file {2} ({0}): {1}".format(e.errno, e.strerror, auth_settings['private_key_path'])	
+        		raise
+        	except: 
+        		print "Error with key file {2} ({0}): {1}".format(e.errno, e.strerror, auth_settings['private_key_path'])
+        		raise
+        	self.private_key = rsakey
+        	
+        rsakey = self.private_key
+        	
+        signer = PKCS1_v1_5.new(rsakey)
+        sign = signer.sign(digest)
+        
+        return b64encode(sign)
+    
+    def prepare_str_to_sign(self, req_tgt, hdrs):
+        """
+        :param req_tgt : Request Target as stored in http header.
+        :param hdrs: HTTP Headers to be signed.
+        :return: instance of digest object 
+        """
+        ss = []
+        ss.append("(request-target): {0}".format(req_tgt.lower()))
+    
+        for key, value in hdrs.items():
+            ss.append("{0}: {1}".format(key.lower(),value))
+        
+        return '\n'.join(ss)
+
+    def get_auth_header(self, auth_settings, hdrs, signed_msg):
+        """
+        This method prepares the Auth header string
+        
+        :param hdrs : HTTP Headers
+        :param signed_msg: Signed Digest
+        :return: instance of digest object 
+        """
+        
+        auth_str = ""
+        auth_str = auth_str + "Signature"
+    
+        auth_str = auth_str + " " + "keyId=\"" + auth_settings['api_key_id'] + "\"," + "algorithm=\"" + auth_settings['digest_algorithm'] + "\"," + "headers=\"(request-target)"
+    
+        for key, _ in hdrs.items():
+            auth_str = auth_str + " " + key.lower()
+        auth_str = auth_str + "\""
+    
+        auth_str = auth_str + "," + "signature=\"" + signed_msg.decode('ascii') + "\""
+    
+        return auth_str
+    
+    def prepare_auth_header(self, auth_settings, resource_path, method, body, query_params, url):
+        """
+        Method to perform operations required to prepare the auth header and eventually
+        add the signed headers to default_header object used by ApiClient class.
+        
+        https://datatracker.ietf.org/doc/draft-cavage-http-signatures/?include_text=1
+        
+        :param auth_setting: Authsettings dictionary
+        :param resource_path : resource path which is the api being called upon.
+        :param method: request type
+        :param body: body passed in the http request.
+        :param query_params: query parameters used by the API 
+        :return: instance of digest object 
+        """
+        if body is None:
+            body = ''
+        else:
+            body = json.dumps(body)
+        
+        parsedUrl = urlparse(url)
+        target_host = parsedUrl.netloc
+        target_path = parsedUrl.path
+        
+        request_target = method + " " + target_path
+        
+        if query_params:
+            raw_query = urlencode(query_params).replace('+', '%20')
+            request_target += "?" + raw_query
+        
+        from email.utils import formatdate
+        cdate=formatdate(timeval=None, localtime=False, usegmt=True)
+        
+        request_body = body.encode()
+        body_digest = self.get_sha256_digest(request_body)
+        b64_body_digest = b64encode(body_digest.digest())
+        
+        headers = {'Content-Type': 'application/json', 'Date' : cdate, 'Host' : target_host, 'Digest' : "SHA-256=" + b64_body_digest.decode('ascii')}
+        
+        string_to_sign = self.prepare_str_to_sign(request_target, headers)
+        
+        if auth_settings['digest_algorithm'] != 'rsa-sha256':
+                raise ValueError('only rsa-sha256 supported for digest_algorithm in httpsig')
+        digest = self.get_sha256_digest(string_to_sign.encode())
+        
+        b64_signed_msg = self.get_rsasig_b64encode(auth_settings, digest)
+        
+        auth_header = self.get_auth_header(auth_settings, headers, b64_signed_msg)
+        
+        self.set_default_header('Date', str(cdate))
+        self.set_default_header('Host', str(target_host))
+        self.set_default_header('Digest', 'SHA-256={0}'.format(b64_body_digest.decode('ascii')))
+        self.set_default_header('Authorization', str(auth_header))
+{{/httpsig}}

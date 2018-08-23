@@ -15,6 +15,7 @@ public class PythonClientCodegenTest {
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), true);
+        Assert.assertEquals(codegen.additionalProperties().get( CodegenConstants.HTTPSIG_OPTON), null);
     }
 
     @Test
@@ -25,6 +26,7 @@ public class PythonClientCodegenTest {
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+        Assert.assertEquals(codegen.additionalProperties().get( CodegenConstants.HTTPSIG_OPTON), null);
     }
 
     @Test
@@ -35,6 +37,7 @@ public class PythonClientCodegenTest {
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+        Assert.assertEquals(codegen.additionalProperties().get( CodegenConstants.HTTPSIG_OPTON), null);
     }
 
 }
