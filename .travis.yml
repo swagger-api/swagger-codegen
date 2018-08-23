@@ -5,7 +5,6 @@ jdk:
 
 cache:
   directories:
-  #- $HOME/.m2
   - $HOME/.ivy2
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
