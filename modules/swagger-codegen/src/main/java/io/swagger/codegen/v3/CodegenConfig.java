@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.github.jknack.handlebars.Handlebars;
+import com.samskivert.mustache.Mustache;
+import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
@@ -124,6 +126,10 @@ public interface CodegenConfig {
     void preprocessOpenAPI(OpenAPI openAPI);
 
     void processOpenAPI(OpenAPI openAPI);
+
+    Mustache.Compiler processCompiler(Mustache.Compiler compiler);
+
+    TemplateEngine getTemplateEngine();
 
     String sanitizeTag(String tag);
 

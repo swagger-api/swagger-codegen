@@ -5,6 +5,7 @@ import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
 import io.swagger.codegen.v3.utils.URLPathUtil;
 import io.swagger.v3.core.util.Json;
@@ -57,6 +58,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected ClientOptInput opts;
     protected OpenAPI openAPI;
     protected CodegenIgnoreProcessor ignoreProcessor;
+    protected TemplateEngine templateEngine;
     private Boolean generateApis = null;
     private Boolean generateModels = null;
     private Boolean generateSupportingFiles = null;
@@ -91,6 +93,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if(this.ignoreProcessor == null) {
             this.ignoreProcessor = new CodegenIgnoreProcessor(this.config.getOutputDir());
         }
+
+        this.templateEngine = config.getTemplateEngine();
 
         return this;
     }
@@ -573,8 +577,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                 if(ignoreProcessor.allowsFile(new File(outputFilename))) {
                     if (templateFile.endsWith("mustache")) {
-                        final com.github.jknack.handlebars.Template hTemplate = getHandlebars(templateFile);
-                        String rendered = hTemplate.apply(bundle);
+                        String rendered = templateEngine.getRendered(templateFile, bundle);
                         writeToFile(outputFilename, rendered);
                         files.add(new File(outputFilename));
                     } else {
@@ -734,8 +737,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         String adjustedOutputFilename = outputFilename.replaceAll("//", "/").replace('/', File.separatorChar);
         if(ignoreProcessor.allowsFile(new File(adjustedOutputFilename))) {
             String templateFile = getFullTemplateFile(config, templateName);
-            final com.github.jknack.handlebars.Template hTemplate = getHandlebars(templateFile);
-            String rendered = hTemplate.apply(templateData);
+            String rendered = templateEngine.getRendered(templateFile, templateData);
             writeToFile(adjustedOutputFilename, rendered);
             return new File(adjustedOutputFilename);
         }
@@ -1000,24 +1002,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         return authMethods;
-    }
-
-    private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
-        templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
-        String templateDir = config.templateDir().replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
-        if (templateFile.startsWith(templateDir)) {
-            templateFile = StringUtils.replaceOnce(templateFile, templateDir, StringUtils.EMPTY);
-        }
-        TemplateLoader templateLoader = null;
-        if (config.additionalProperties().get(CodegenConstants.TEMPLATE_DIR) != null) {
-            templateLoader = new FileTemplateLoader(templateDir, ".mustache");
-        } else {
-            templateLoader = new ClassPathTemplateLoader("/" + templateDir, ".mustache");
-        }
-        final Handlebars handlebars = new Handlebars(templateLoader);
-        handlebars.prettyPrint(true);
-        config.addHandlebarHelpers(handlebars);
-        return handlebars.compile(templateFile);
     }
 
     private boolean isJavaCodegen(String name) {
