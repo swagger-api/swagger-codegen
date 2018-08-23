@@ -1,11 +1,6 @@
 package io.swagger.codegen.v3;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
-import io.swagger.codegen.v3.templates.HandlebarTemplateEngine;
 import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
 import io.swagger.codegen.v3.utils.URLPathUtil;
@@ -95,8 +90,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             this.ignoreProcessor = new CodegenIgnoreProcessor(this.config.getOutputDir());
         }
 
-//        this.templateEngine = config.getTemplateEngine();
-        this.templateEngine = new HandlebarTemplateEngine(config);
+        this.templateEngine = config.getTemplateEngine();
 
         return this;
     }
