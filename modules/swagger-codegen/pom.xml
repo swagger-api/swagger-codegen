@@ -325,6 +325,7 @@
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen-generators</artifactId>
             <version>${swagger-codegen-generators-version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <repositories>
