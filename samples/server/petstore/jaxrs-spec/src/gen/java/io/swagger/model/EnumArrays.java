@@ -2,14 +2,17 @@ package io.swagger.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class EnumArrays   {
+public class EnumArrays  implements Serializable {
   
 
 public enum JustSymbolEnum {
@@ -42,7 +45,7 @@ public enum JustSymbolEnum {
     }
 }
 
-  private JustSymbolEnum justSymbol = null;
+  private @Valid JustSymbolEnum justSymbol = null;
 
 public enum ArrayEnumEnum {
 
@@ -74,7 +77,7 @@ public enum ArrayEnumEnum {
     }
 }
 
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
+  private @Valid List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
   /**
    **/
@@ -85,6 +88,7 @@ public enum ArrayEnumEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("just_symbol")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -101,6 +105,7 @@ public enum ArrayEnumEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("array_enum")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
@@ -149,3 +154,4 @@ public enum ArrayEnumEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import request = require('request');
+import localVarRequest = require('request');
 import http = require('http');
 import Promise = require('bluebird');
 
@@ -21,6 +21,120 @@ let defaultBasePath = 'https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \
 // ===============================================
 
 /* tslint:disable:no-unused-variable */
+let primitives = [
+                    "string",
+                    "boolean",
+                    "double",
+                    "integer",
+                    "long",
+                    "float",
+                    "number",
+                    "any"
+                 ];
+
+class ObjectSerializer {
+
+    public static findCorrectType(data: any, expectedType: string) {
+        if (data == undefined) {
+            return expectedType;
+        } else if (primitives.indexOf(expectedType.toLowerCase()) !== -1) {
+            return expectedType;
+        } else if (expectedType === "Date") {
+            return expectedType;
+        } else {
+            if (enumsMap[expectedType]) {
+                return expectedType;
+            }
+
+            if (!typeMap[expectedType]) {
+                return expectedType; // w/e we don't know the type
+            }
+
+            // Check the discriminator
+            let discriminatorProperty = typeMap[expectedType].discriminator;
+            if (discriminatorProperty == null) {
+                return expectedType; // the type does not have a discriminator. use it.
+            } else {
+                if (data[discriminatorProperty]) {
+                    return data[discriminatorProperty]; // use the type given in the discriminator
+                } else {
+                    return expectedType; // discriminator was not present (or an empty string)
+                }
+            }
+        }
+    }
+
+    public static serialize(data: any, type: string) {
+        if (data == undefined) {
+            return data;
+        } else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+            return data;
+        } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+            let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+            subType = subType.substring(0, subType.length - 1); // Type> => Type
+            let transformedData: any[] = [];
+            for (let index in data) {
+                let date = data[index];
+                transformedData.push(ObjectSerializer.serialize(date, subType));
+            }
+            return transformedData;
+        } else if (type === "Date") {
+            return data.toString();
+        } else {
+            if (enumsMap[type]) {
+                return data;
+            }
+            if (!typeMap[type]) { // in case we dont know the type
+                return data;
+            }
+
+            // get the map for the correct type.
+            let attributeTypes = typeMap[type].getAttributeTypeMap();
+            let instance: {[index: string]: any} = {};
+            for (let index in attributeTypes) {
+                let attributeType = attributeTypes[index];
+                instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
+            }
+            return instance;
+        }
+    }
+
+    public static deserialize(data: any, type: string) {
+        // polymorphism may change the actual type.
+        type = ObjectSerializer.findCorrectType(data, type);
+        if (data == undefined) {
+            return data;
+        } else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+            return data;
+        } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+            let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+            subType = subType.substring(0, subType.length - 1); // Type> => Type
+            let transformedData: any[] = [];
+            for (let index in data) {
+                let date = data[index];
+                transformedData.push(ObjectSerializer.deserialize(date, subType));
+            }
+            return transformedData;
+        } else if (type === "Date") {
+            return new Date(data);
+        } else {
+            if (enumsMap[type]) {// is Enum
+                return data;
+            }
+
+            if (!typeMap[type]) { // dont know the type
+                return data;
+            }
+            let instance = new typeMap[type]();
+            let attributeTypes = typeMap[type].getAttributeTypeMap();
+            for (let index in attributeTypes) {
+                let attributeType = attributeTypes[index];
+                instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
+            }
+            return instance;
+        }
+    }
+}
 
 /**
 * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
@@ -30,20 +144,40 @@ export class ModelReturn {
     * property description  *_/ ' \" =end -- \\r\\n \\n \\r
     */
     'return': number;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "return",
+            "baseName": "return",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return ModelReturn.attributeTypeMap;
+    }
 }
 
+
+let enumsMap: {[index: string]: any} = {
+}
+
+let typeMap: {[index: string]: any} = {
+    "ModelReturn": ModelReturn,
+}
 
 export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: request.Options): void;
+    applyToRequest(requestOptions: localVarRequest.Options): void;
 }
 
 export class HttpBasicAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
         }
@@ -56,7 +190,7 @@ export class ApiKeyAuth implements Authentication {
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (this.location == "query") {
             (<any>requestOptions.qs)[this.paramName] = this.apiKey;
         } else if (this.location == "header" && requestOptions && requestOptions.headers) {
@@ -68,7 +202,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
     public accessToken: string;
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (requestOptions && requestOptions.headers) {
             requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
         }
@@ -78,7 +212,7 @@ export class OAuth implements Authentication {
 export class VoidAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(_: request.Options): void {
+    applyToRequest(_: localVarRequest.Options): void {
         // Do nothing
     }
 }
@@ -123,55 +257,59 @@ export class FakeApi {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: FakeApiApiKeys, value: string) {
-        this.authentications[FakeApiApiKeys[key]].apiKey = value;
+        (this.authentications as any)[FakeApiApiKeys[key]].apiKey = value;
     }
 
     set accessToken(token: string) {
         this.authentications.petstore_auth.accessToken = token;
     }
     /**
-     * To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      * 
+     * @summary To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
      * @param test code inject * &#39; &quot; &#x3D;end  rn n r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
      */
     public testCodeInjectEndRnNR (test code inject * &#39; &quot; &#x3D;end  rn n r?: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/fake';
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
 
 
-        let useFormData = false;
+        let localVarUseFormData = false;
 
         if (test code inject * &#39; &quot; &#x3D;end  rn n r !== undefined) {
-            formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = test code inject * &#39; &quot; &#x3D;end  rn n r;
+            localVarFormParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = ObjectSerializer.serialize(test code inject * &#39; &quot; &#x3D;end  rn n r, "string");
         }
 
-        let requestOptions: request.Options = {
+        let localVarRequestOptions: localVarRequest.Options = {
             method: 'PUT',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
 
-        this.authentications.default.applyToRequest(requestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
 
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
             } else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
                         reject({ response: response, body: body });

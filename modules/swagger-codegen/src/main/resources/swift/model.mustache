@@ -33,10 +33,10 @@ public class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEnc
     {{^parent}}public init() {}{{/parent}}
 {{/unwrapRequired}}
 {{#unwrapRequired}}
-    public init({{#requiredVars}}{{^-first}}, {{/-first}}{{name}}: {{#isEnum}}{{datatypeWithEnum}}{{/isEnum}}{{^isEnum}}{{datatype}}{{/isEnum}}{{/requiredVars}}) {
-        {{#requiredVars}}
+    public init({{#allVars}}{{^-first}}, {{/-first}}{{name}}: {{#isEnum}}{{datatypeWithEnum}}{{/isEnum}}{{^isEnum}}{{datatype}}{{/isEnum}}{{^required}}?=nil{{/required}}{{/allVars}}) {
+        {{#allVars}}
         self.{{name}} = {{name}}
-        {{/requiredVars}}
+        {{/allVars}}
         {{#parent}}super.init({{#parentVars}}{{^-first}},{{/-first}}{{name}}: {{name}}{{/parentVars}}){{/parent}}
     }
 {{/unwrapRequired}}

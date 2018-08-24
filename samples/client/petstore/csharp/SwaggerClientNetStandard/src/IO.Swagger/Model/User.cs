@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -30,24 +31,24 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
-        /// <param name="Id">Id.</param>
-        /// <param name="Username">Username.</param>
-        /// <param name="FirstName">FirstName.</param>
-        /// <param name="LastName">LastName.</param>
-        /// <param name="Email">Email.</param>
-        /// <param name="Password">Password.</param>
-        /// <param name="Phone">Phone.</param>
-        /// <param name="UserStatus">User Status.</param>
-        public User(long? Id = default(long?), string Username = default(string), string FirstName = default(string), string LastName = default(string), string Email = default(string), string Password = default(string), string Phone = default(string), int? UserStatus = default(int?))
+        /// <param name="id">id.</param>
+        /// <param name="username">username.</param>
+        /// <param name="firstName">firstName.</param>
+        /// <param name="lastName">lastName.</param>
+        /// <param name="email">email.</param>
+        /// <param name="password">password.</param>
+        /// <param name="phone">phone.</param>
+        /// <param name="userStatus">User Status.</param>
+        public User(long? id = default(long?), string username = default(string), string firstName = default(string), string lastName = default(string), string email = default(string), string password = default(string), string phone = default(string), int? userStatus = default(int?))
         {
-            this.Id = Id;
-            this.Username = Username;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.Email = Email;
-            this.Password = Password;
-            this.Phone = Phone;
-            this.UserStatus = UserStatus;
+            this.Id = id;
+            this.Username = username;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+            this.Password = password;
+            this.Phone = phone;
+            this.UserStatus = userStatus;
         }
         
         /// <summary>
@@ -55,42 +56,50 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="id", EmitDefaultValue=false)]
         public long? Id { get; set; }
+
         /// <summary>
         /// Gets or Sets Username
         /// </summary>
         [DataMember(Name="username", EmitDefaultValue=false)]
         public string Username { get; set; }
+
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
         [DataMember(Name="firstName", EmitDefaultValue=false)]
         public string FirstName { get; set; }
+
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
         [DataMember(Name="lastName", EmitDefaultValue=false)]
         public string LastName { get; set; }
+
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
         [DataMember(Name="email", EmitDefaultValue=false)]
         public string Email { get; set; }
+
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
         [DataMember(Name="password", EmitDefaultValue=false)]
         public string Password { get; set; }
+
         /// <summary>
         /// Gets or Sets Phone
         /// </summary>
         [DataMember(Name="phone", EmitDefaultValue=false)]
         public string Phone { get; set; }
+
         /// <summary>
         /// User Status
         /// </summary>
         /// <value>User Status</value>
         [DataMember(Name="userStatus", EmitDefaultValue=false)]
         public int? UserStatus { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -115,7 +124,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -123,65 +132,63 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as User);
+            return this.Equals(input as User);
         }
 
         /// <summary>
         /// Returns true if User instances are equal
         /// </summary>
-        /// <param name="other">Instance of User to be compared</param>
+        /// <param name="input">Instance of User to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(User other)
+        public bool Equals(User input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
-                    this.Id.Equals(other.Id)
+                    this.Id == input.Id ||
+                    (this.Id != null &&
+                    this.Id.Equals(input.Id))
                 ) && 
                 (
-                    this.Username == other.Username ||
-                    this.Username != null &&
-                    this.Username.Equals(other.Username)
+                    this.Username == input.Username ||
+                    (this.Username != null &&
+                    this.Username.Equals(input.Username))
                 ) && 
                 (
-                    this.FirstName == other.FirstName ||
-                    this.FirstName != null &&
-                    this.FirstName.Equals(other.FirstName)
+                    this.FirstName == input.FirstName ||
+                    (this.FirstName != null &&
+                    this.FirstName.Equals(input.FirstName))
                 ) && 
                 (
-                    this.LastName == other.LastName ||
-                    this.LastName != null &&
-                    this.LastName.Equals(other.LastName)
+                    this.LastName == input.LastName ||
+                    (this.LastName != null &&
+                    this.LastName.Equals(input.LastName))
                 ) && 
                 (
-                    this.Email == other.Email ||
-                    this.Email != null &&
-                    this.Email.Equals(other.Email)
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
                 ) && 
                 (
-                    this.Password == other.Password ||
-                    this.Password != null &&
-                    this.Password.Equals(other.Password)
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
                 ) && 
                 (
-                    this.Phone == other.Phone ||
-                    this.Phone != null &&
-                    this.Phone.Equals(other.Phone)
+                    this.Phone == input.Phone ||
+                    (this.Phone != null &&
+                    this.Phone.Equals(input.Phone))
                 ) && 
                 (
-                    this.UserStatus == other.UserStatus ||
-                    this.UserStatus != null &&
-                    this.UserStatus.Equals(other.UserStatus)
+                    this.UserStatus == input.UserStatus ||
+                    (this.UserStatus != null &&
+                    this.UserStatus.Equals(input.UserStatus))
                 );
         }
 
@@ -191,28 +198,26 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.Id != null)
-                    hash = hash * 59 + this.Id.GetHashCode();
+                    hashCode = hashCode * 59 + this.Id.GetHashCode();
                 if (this.Username != null)
-                    hash = hash * 59 + this.Username.GetHashCode();
+                    hashCode = hashCode * 59 + this.Username.GetHashCode();
                 if (this.FirstName != null)
-                    hash = hash * 59 + this.FirstName.GetHashCode();
+                    hashCode = hashCode * 59 + this.FirstName.GetHashCode();
                 if (this.LastName != null)
-                    hash = hash * 59 + this.LastName.GetHashCode();
+                    hashCode = hashCode * 59 + this.LastName.GetHashCode();
                 if (this.Email != null)
-                    hash = hash * 59 + this.Email.GetHashCode();
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
                 if (this.Password != null)
-                    hash = hash * 59 + this.Password.GetHashCode();
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.Phone != null)
-                    hash = hash * 59 + this.Phone.GetHashCode();
+                    hashCode = hashCode * 59 + this.Phone.GetHashCode();
                 if (this.UserStatus != null)
-                    hash = hash * 59 + this.UserStatus.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.UserStatus.GetHashCode();
+                return hashCode;
             }
         }
     }

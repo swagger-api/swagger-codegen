@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -45,16 +46,19 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="uuid", EmitDefaultValue=false)]
         public Guid? Uuid { get; set; }
+
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
         [DataMember(Name="dateTime", EmitDefaultValue=false)]
         public DateTime? DateTime { get; set; }
+
         /// <summary>
         /// Gets or Sets Map
         /// </summary>
         [DataMember(Name="map", EmitDefaultValue=false)]
         public Dictionary<string, Animal> Map { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -82,40 +86,38 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as MixedPropertiesAndAdditionalPropertiesClass);
+            return this.Equals(input as MixedPropertiesAndAdditionalPropertiesClass);
         }
 
         /// <summary>
         /// Returns true if MixedPropertiesAndAdditionalPropertiesClass instances are equal
         /// </summary>
-        /// <param name="other">Instance of MixedPropertiesAndAdditionalPropertiesClass to be compared</param>
+        /// <param name="input">Instance of MixedPropertiesAndAdditionalPropertiesClass to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MixedPropertiesAndAdditionalPropertiesClass other)
+        public bool Equals(MixedPropertiesAndAdditionalPropertiesClass input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.Uuid == other.Uuid ||
-                    this.Uuid != null &&
-                    this.Uuid.Equals(other.Uuid)
+                    this.Uuid == input.Uuid ||
+                    (this.Uuid != null &&
+                    this.Uuid.Equals(input.Uuid))
                 ) && 
                 (
-                    this.DateTime == other.DateTime ||
-                    this.DateTime != null &&
-                    this.DateTime.Equals(other.DateTime)
+                    this.DateTime == input.DateTime ||
+                    (this.DateTime != null &&
+                    this.DateTime.Equals(input.DateTime))
                 ) && 
                 (
-                    this.Map == other.Map ||
+                    this.Map == input.Map ||
                     this.Map != null &&
-                    this.Map.SequenceEqual(other.Map)
+                    this.Map.SequenceEqual(input.Map)
                 );
         }
 
@@ -125,18 +127,16 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.Uuid != null)
-                    hash = hash * 59 + this.Uuid.GetHashCode();
+                    hashCode = hashCode * 59 + this.Uuid.GetHashCode();
                 if (this.DateTime != null)
-                    hash = hash * 59 + this.DateTime.GetHashCode();
+                    hashCode = hashCode * 59 + this.DateTime.GetHashCode();
                 if (this.Map != null)
-                    hash = hash * 59 + this.Map.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.Map.GetHashCode();
+                return hashCode;
             }
         }
     }

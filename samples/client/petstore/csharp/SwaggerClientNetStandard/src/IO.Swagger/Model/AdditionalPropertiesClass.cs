@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -30,12 +31,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdditionalPropertiesClass" /> class.
         /// </summary>
-        /// <param name="MapProperty">MapProperty.</param>
-        /// <param name="MapOfMapProperty">MapOfMapProperty.</param>
-        public AdditionalPropertiesClass(Dictionary<string, string> MapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> MapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
+        /// <param name="mapProperty">mapProperty.</param>
+        /// <param name="mapOfMapProperty">mapOfMapProperty.</param>
+        public AdditionalPropertiesClass(Dictionary<string, string> mapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> mapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
         {
-            this.MapProperty = MapProperty;
-            this.MapOfMapProperty = MapOfMapProperty;
+            this.MapProperty = mapProperty;
+            this.MapOfMapProperty = mapOfMapProperty;
         }
         
         /// <summary>
@@ -43,11 +44,13 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="map_property", EmitDefaultValue=false)]
         public Dictionary<string, string> MapProperty { get; set; }
+
         /// <summary>
         /// Gets or Sets MapOfMapProperty
         /// </summary>
         [DataMember(Name="map_of_map_property", EmitDefaultValue=false)]
         public Dictionary<string, Dictionary<string, string>> MapOfMapProperty { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -66,7 +69,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -74,35 +77,33 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as AdditionalPropertiesClass);
+            return this.Equals(input as AdditionalPropertiesClass);
         }
 
         /// <summary>
         /// Returns true if AdditionalPropertiesClass instances are equal
         /// </summary>
-        /// <param name="other">Instance of AdditionalPropertiesClass to be compared</param>
+        /// <param name="input">Instance of AdditionalPropertiesClass to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AdditionalPropertiesClass other)
+        public bool Equals(AdditionalPropertiesClass input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.MapProperty == other.MapProperty ||
+                    this.MapProperty == input.MapProperty ||
                     this.MapProperty != null &&
-                    this.MapProperty.SequenceEqual(other.MapProperty)
+                    this.MapProperty.SequenceEqual(input.MapProperty)
                 ) && 
                 (
-                    this.MapOfMapProperty == other.MapOfMapProperty ||
+                    this.MapOfMapProperty == input.MapOfMapProperty ||
                     this.MapOfMapProperty != null &&
-                    this.MapOfMapProperty.SequenceEqual(other.MapOfMapProperty)
+                    this.MapOfMapProperty.SequenceEqual(input.MapOfMapProperty)
                 );
         }
 
@@ -112,16 +113,14 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.MapProperty != null)
-                    hash = hash * 59 + this.MapProperty.GetHashCode();
+                    hashCode = hashCode * 59 + this.MapProperty.GetHashCode();
                 if (this.MapOfMapProperty != null)
-                    hash = hash * 59 + this.MapOfMapProperty.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.MapOfMapProperty.GetHashCode();
+                return hashCode;
             }
         }
     }

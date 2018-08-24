@@ -68,9 +68,13 @@ public class InlineModelResolver {
                                                 Model innerModel = modelFromProperty(op, modelName);
                                                 String existing = matchGenerated(innerModel);
                                                 if (existing != null) {
-                                                    am.setItems(new RefProperty(existing));
+                                                    RefProperty refProperty = new RefProperty(existing);
+                                                    refProperty.setRequired(op.getRequired());
+                                                    am.setItems(refProperty);
                                                 } else {
-                                                    am.setItems(new RefProperty(modelName));
+                                                    RefProperty refProperty = new RefProperty(modelName);
+                                                    refProperty.setRequired(op.getRequired());
+                                                    am.setItems(refProperty);
                                                     addGenerated(modelName, innerModel);
                                                     swagger.addDefinition(modelName, innerModel);
                                                 }
@@ -94,9 +98,13 @@ public class InlineModelResolver {
                                         Model model = modelFromProperty(op, modelName);
                                         String existing = matchGenerated(model);
                                         if (existing != null) {
-                                            response.setSchema(this.makeRefProperty(existing, property));
+                                            Property refProperty = this.makeRefProperty(existing, property);
+                                            refProperty.setRequired(op.getRequired());
+                                            response.setSchema(refProperty);
                                         } else {
-                                            response.setSchema(this.makeRefProperty(modelName, property));
+                                            Property refProperty = this.makeRefProperty(modelName, property);
+                                            refProperty.setRequired(op.getRequired());
+                                            response.setSchema(refProperty);
                                             addGenerated(modelName, model);
                                             swagger.addDefinition(modelName, model);
                                         }
@@ -114,9 +122,13 @@ public class InlineModelResolver {
                                             Model innerModel = modelFromProperty(op, modelName);
                                             String existing = matchGenerated(innerModel);
                                             if (existing != null) {
-                                                ap.setItems(this.makeRefProperty(existing, op));
+                                                Property refProperty = this.makeRefProperty(existing, op);
+                                                refProperty.setRequired(op.getRequired());
+                                                ap.setItems(refProperty);
                                             } else {
-                                                ap.setItems(this.makeRefProperty(modelName, op));
+                                                Property refProperty = this.makeRefProperty(modelName, op);
+                                                refProperty.setRequired(op.getRequired());
+                                                ap.setItems(refProperty);
                                                 addGenerated(modelName, innerModel);
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
@@ -135,9 +147,13 @@ public class InlineModelResolver {
                                             Model innerModel = modelFromProperty(op, modelName);
                                             String existing = matchGenerated(innerModel);
                                             if (existing != null) {
-                                                mp.setAdditionalProperties(new RefProperty(existing));
+                                                RefProperty refProperty = new RefProperty(existing);
+                                                refProperty.setRequired(op.getRequired());
+                                                mp.setAdditionalProperties(refProperty);
                                             } else {
-                                                mp.setAdditionalProperties(new RefProperty(modelName));
+                                                RefProperty refProperty = new RefProperty(modelName);
+                                                refProperty.setRequired(op.getRequired());
+                                                mp.setAdditionalProperties(refProperty);
                                                 addGenerated(modelName, innerModel);
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
@@ -161,7 +177,7 @@ public class InlineModelResolver {
 
                     Map<String, Property> properties = m.getProperties();
                     flattenProperties(properties, modelName);
-
+                    fixStringModel(m);
                 } else if (model instanceof ArrayModel) {
                     ArrayModel m = (ArrayModel) model;
                     Property inner = m.getItems();
@@ -174,9 +190,13 @@ public class InlineModelResolver {
                             if (existing == null) {
                                 swagger.addDefinition(innerModelName, innerModel);
                                 addGenerated(innerModelName, innerModel);
-                                m.setItems(new RefProperty(innerModelName));
+                                RefProperty refProperty = new RefProperty(innerModelName);
+                                refProperty.setRequired(op.getRequired());
+                                m.setItems(refProperty);
                             } else {
-                                m.setItems(new RefProperty(existing));
+                                RefProperty refProperty = new RefProperty(existing);
+                                refProperty.setRequired(op.getRequired());
+                                m.setItems(refProperty);
                             }
                         }
                     }
@@ -187,6 +207,21 @@ public class InlineModelResolver {
                         flattenProperties(properties, modelName);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * This function fix models that are string (mostly enum). Before this fix, the example
+     * would look something like that in the doc: "\"example from def\""
+     * @param m Model implementation
+     */
+    private void fixStringModel(ModelImpl m) {
+        if (m.getType() != null && m.getType().equals("string") && m.getExample() != null) {
+            String example = m.getExample().toString();
+            if (!example.isEmpty() && example.substring(0, 1).equals("\"") &&
+                    example.substring(example.length() - 1).equals("\"")) {
+                m.setExample(example.substring(1, example.length() - 1));
             }
         }
     }
@@ -256,9 +291,13 @@ public class InlineModelResolver {
                 String existing = matchGenerated(model);
 
                 if (existing != null) {
-                    propsToUpdate.put(key, new RefProperty(existing));
+                    RefProperty refProperty = new RefProperty(existing);
+                    refProperty.setRequired(op.getRequired());
+                    propsToUpdate.put(key, refProperty);
                 } else {
-                    propsToUpdate.put(key, new RefProperty(modelName));
+                    RefProperty refProperty = new RefProperty(modelName);
+                    refProperty.setRequired(op.getRequired());
+                    propsToUpdate.put(key, refProperty);
                     modelsToAdd.put(modelName, model);
                     addGenerated(modelName, model);
                     swagger.addDefinition(modelName, model);
@@ -275,9 +314,13 @@ public class InlineModelResolver {
                         Model innerModel = modelFromProperty(op, modelName);
                         String existing = matchGenerated(innerModel);
                         if (existing != null) {
-                            ap.setItems(new RefProperty(existing));
+                            RefProperty refProperty = new RefProperty(existing);
+                            refProperty.setRequired(op.getRequired());
+                            ap.setItems(refProperty);
                         } else {
-                            ap.setItems(new RefProperty(modelName));
+                            RefProperty refProperty = new RefProperty(modelName);
+                            refProperty.setRequired(op.getRequired());
+                            ap.setItems(refProperty);
                             addGenerated(modelName, innerModel);
                             swagger.addDefinition(modelName, innerModel);
                         }
@@ -295,9 +338,13 @@ public class InlineModelResolver {
                         Model innerModel = modelFromProperty(op, modelName);
                         String existing = matchGenerated(innerModel);
                         if (existing != null) {
-                            mp.setAdditionalProperties(new RefProperty(existing));
+                            RefProperty refProperty = new RefProperty(existing);
+                            refProperty.setRequired(op.getRequired());
+                            mp.setAdditionalProperties(refProperty);
                         } else {
-                            mp.setAdditionalProperties(new RefProperty(modelName));
+                            RefProperty refProperty = new RefProperty(modelName);
+                            refProperty.setRequired(op.getRequired());
+                            mp.setAdditionalProperties(refProperty);
                             addGenerated(modelName, innerModel);
                             swagger.addDefinition(modelName, innerModel);
                         }
@@ -384,10 +431,10 @@ public class InlineModelResolver {
 
     /**
      * Make a RefProperty
-     * 
-     * @param ref
-     * @param property
-     * @return
+     *
+     * @param ref new property name
+     * @param property Property
+     * @return {@link Property} A constructed Swagger property
      */
     public Property makeRefProperty(String ref, Property property) {
         RefProperty newProperty = new RefProperty(ref);
@@ -397,9 +444,9 @@ public class InlineModelResolver {
 
     /**
      * Copy vendor extensions from Property to another Property
-     * 
-     * @param source
-     * @param target
+     *
+     * @param source source property
+     * @param target target property
      */
     public void copyVendorExtensions(Property source, AbstractProperty target) {
         Map<String, Object> vendorExtensions = source.getVendorExtensions();

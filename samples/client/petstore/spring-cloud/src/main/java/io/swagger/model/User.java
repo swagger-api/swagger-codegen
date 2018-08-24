@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.*;
  * A User who is purchasing from the pet store
  */
 @ApiModel(description = "A User who is purchasing from the pet store")
+@Validated
 
 public class User   {
   @JsonProperty("id")
@@ -43,13 +45,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get id
    * @return id
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public Long getId() {
     return id;
   }
@@ -63,13 +65,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get username
    * @return username
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getUsername() {
     return username;
   }
@@ -83,13 +85,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get firstName
    * @return firstName
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getFirstName() {
     return firstName;
   }
@@ -103,13 +105,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get lastName
    * @return lastName
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getLastName() {
     return lastName;
   }
@@ -123,13 +125,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get email
    * @return email
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getEmail() {
     return email;
   }
@@ -143,13 +145,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get password
    * @return password
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getPassword() {
     return password;
   }
@@ -163,13 +165,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get phone
    * @return phone
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getPhone() {
     return phone;
   }
@@ -183,13 +185,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * User Status
    * @return userStatus
   **/
   @ApiModelProperty(value = "User Status")
 
-  @Valid
+
   public Integer getUserStatus() {
     return userStatus;
   }

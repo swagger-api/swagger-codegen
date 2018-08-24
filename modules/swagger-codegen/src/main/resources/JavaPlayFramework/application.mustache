@@ -15,6 +15,19 @@
 # HOCON will fall back to substituting environment variable:
 #mykey = ${JAVA_HOME}
 
+play.filters.headers.contentSecurityPolicy=null
+
+{{#useBeanValidation}}
+# When using bean validation with the swagger api, the validator will check that every constraint is respected
+# This is very useful when testing but could add a lot of overhead if you return a lot of data. Benchmark have
+# shown that the time it takes to validate is exponential.
+# If this is a concern in your application, or if you don't want to validate the output coming from your API for
+# respecting its contract, set the "output" property below to "false". Since there is not a lot of data as input for
+# an endpoint, I highly suggest you let the "input" property set to true.
+useInputBeanValidation=true
+useOutputBeanValidation=true
+{{/useBeanValidation}}
+
 {{#handleExceptions}}
 play.http.errorHandler="swagger.ErrorHandler"
 {{/handleExceptions}}
@@ -26,7 +39,7 @@ play.http.errorHandler="swagger.ErrorHandler"
 # Play uses Akka internally and exposes Akka Streams and actors in Websockets and
 # other streaming HTTP responses.
 akka {
-# "akka.log-config-on-start" is extraordinarly useful because it log the complete
+# "akka.log-config-on-start" is extraordinarily useful because it log the complete
 # configuration at INFO level, including defaults and overrides, so it s worth
 # putting at the very top.
 #
@@ -44,7 +57,7 @@ akka {
 # ~~~~~
 # The secret key is used to sign Play's session cookie.
 # This must be changed for production, but we don't recommend you change it in this file.
-play.crypto.secret = "changeme"
+play.http.secret.key = "changeme"
 
 ## Modules
 # https://www.playframework.com/documentation/latest/Modules
@@ -61,7 +74,17 @@ play.modules {
 # in the root package (the "app" directory), or you can define them
 # explicitly below.
 # If there are any built-in modules that you want to disable, you can list them here.
-#disabled += ""
+    {{#controllerOnly}}
+    disabled += "Module"
+    {{/controllerOnly}}
+    {{^useInterfaces}}
+    disabled += "Module"
+    {{/useInterfaces}}
+}
+
+play.assets {
+path = "/public"
+urlPrefix = "/assets"
 }
 
 ## IDE
@@ -263,7 +286,8 @@ csrf {
 # ~~~~~
 # Defines security headers that prevent XSS attacks.
 # If enabled, then all options are set to the below configuration by default:
-headers {
+play.filters.headers {
+
 # The X-Frame-Options header. If null, the header is not set.
 #frameOptions = "DENY"
 
@@ -277,7 +301,13 @@ headers {
 #permittedCrossDomainPolicies = "master-only"
 
 # The Content-Security-Policy header. If null, the header is not set.
-#contentSecurityPolicy = "default-src 'self'"
+contentSecurityPolicy = "default-src 'self'"
+
+# The Referrer-Policy header. If null, the header is not set.
+#referrerPolicy = "origin-when-cross-origin, strict-origin-when-cross-origin"
+
+# If true, allow an action to use .withHeaders to replace one or more of the above headers
+#allowActionSpecificHeaders = false
 }
 
 ## Allowed hosts filter configuration

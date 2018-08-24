@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -41,6 +42,7 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="client", EmitDefaultValue=false)]
         public string _Client { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -66,30 +68,28 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as ModelClient);
+            return this.Equals(input as ModelClient);
         }
 
         /// <summary>
         /// Returns true if ModelClient instances are equal
         /// </summary>
-        /// <param name="other">Instance of ModelClient to be compared</param>
+        /// <param name="input">Instance of ModelClient to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ModelClient other)
+        public bool Equals(ModelClient input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this._Client == other._Client ||
-                    this._Client != null &&
-                    this._Client.Equals(other._Client)
+                    this._Client == input._Client ||
+                    (this._Client != null &&
+                    this._Client.Equals(input._Client))
                 );
         }
 
@@ -99,14 +99,12 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this._Client != null)
-                    hash = hash * 59 + this._Client.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this._Client.GetHashCode();
+                return hashCode;
             }
         }
     }

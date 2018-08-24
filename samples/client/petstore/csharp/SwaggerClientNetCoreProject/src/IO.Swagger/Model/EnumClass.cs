@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -32,19 +33,19 @@ namespace IO.Swagger.Model
         /// Enum Abc for "_abc"
         /// </summary>
         [EnumMember(Value = "_abc")]
-        Abc,
+        Abc = 1,
         
         /// <summary>
         /// Enum Efg for "-efg"
         /// </summary>
         [EnumMember(Value = "-efg")]
-        Efg,
+        Efg = 2,
         
         /// <summary>
         /// Enum Xyz for "(xyz)"
         /// </summary>
         [EnumMember(Value = "(xyz)")]
-        Xyz
+        Xyz = 3
     }
 
 }

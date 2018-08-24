@@ -15,6 +15,7 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QBuffer>
+#include <QtGlobal>
 
 
 namespace Swagger {
@@ -261,6 +262,9 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
     // prepare connection
 
     QNetworkRequest request = QNetworkRequest(QUrl(input->url_str));
+    if (HttpRequestWorker::sslDefaultConfiguration != nullptr) {
+        request.setSslConfiguration(*HttpRequestWorker::sslDefaultConfiguration);
+    }
     request.setRawHeader("User-Agent", "Swagger-Client");
     foreach(QString key, input->headers.keys()) {
         request.setRawHeader(key.toStdString().c_str(), input->headers.value(key).toStdString().c_str());
@@ -292,24 +296,30 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         manager->deleteResource(request);
     }
     else {
-        QBuffer buff(&request_content);
-        manager->sendCustomRequest(request, input->http_method.toLatin1(), &buff);
+#if (QT_VERSION >= 0x050800)
+        manager->sendCustomRequest(request, input->http_method.toLatin1(), request_content);
+#else
+        QBuffer *buffer = new QBuffer;
+        buffer->setData(request_content);
+        buffer->open(QIODevice::ReadOnly);
+
+        QNetworkReply* reply = manager->sendCustomRequest(request, input->http_method.toLatin1(), buffer);
+        buffer->setParent(reply);
+#endif
     }
 
 }
 
 void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
     error_type = reply->error();
-    if (error_type == QNetworkReply::NoError) {
-        response = reply->readAll();
-    }
-    else {
-        error_str = reply->errorString();
-    }
+    response = reply->readAll();
+    error_str = reply->errorString();
 
     reply->deleteLater();
 
     emit on_execution_finished(this);
 }
+QSslConfiguration* HttpRequestWorker::sslDefaultConfiguration;
+
 
 }

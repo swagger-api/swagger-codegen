@@ -98,7 +98,9 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         additionalProperties.put("fnEnumEntry", new EnumEntryLambda());
         additionalProperties.put("onlyOneSuccess", onlyOneSuccess);
 
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
         final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
@@ -228,17 +230,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         }
 
         return super.toOperationId(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, operationId));
-    }
-
-    private String formatIdentifier(String name, boolean capitalized) {
-        String identifier = camelize(sanitizeName(name), true);
-        if (capitalized) {
-            identifier = StringUtils.capitalize(identifier);
-        }
-        if (identifier.matches("[a-zA-Z_$][\\w_$]+") && !isReservedWord(identifier)) {
-            return identifier;
-        }
-        return escapeReservedWord(identifier);
     }
 
     @Override

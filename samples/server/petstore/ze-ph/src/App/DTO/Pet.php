@@ -6,7 +6,7 @@ use Articus\DataTransfer\Annotation as DTA;
 
 /**
  */
-class Pet 
+class Pet
 {
     /**
      * @DTA\Data(field="id", nullable=true)
@@ -29,6 +29,7 @@ class Pet
     public $name;
     /**
      * @DTA\Data(field="photoUrls")
+     * TODO check validator and strategy are correct and can handle container item type
      * @DTA\Validator(name="Collection", options={"validators":{
      *     {"name":"Type", "options":{"type":"string"}}
      * }})
@@ -37,6 +38,7 @@ class Pet
     public $photo_urls;
     /**
      * @DTA\Data(field="tags", nullable=true)
+     * TODO check validator and strategy are correct and can handle container item type
      * @DTA\Strategy(name="ObjectArray", options={"type":\App\DTO\Tag::class})
      * @DTA\Validator(name="Collection", options={"validators":{
      *     {"name":"Dictionary", "options":{"type":\App\DTO\Tag::class}}
@@ -52,4 +54,3 @@ class Pet
      */
     public $status;
 }
-

@@ -22,6 +22,16 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 {{/useBeanValidation}}
 
+{{#appName}}
+/**
+ * {{{appName}}}
+ *
+ {{#appDescription}}
+ * <p>{{{appDescription}}}
+ *
+ {{/appDescription}}
+ */
+{{/appName}}
 @Path("{{^useAnnotatedBasePath}}/{{/useAnnotatedBasePath}}{{#useAnnotatedBasePath}}{{contextPath}}{{/useAnnotatedBasePath}}")
 @Api(value = "/", description = "{{description}}")
 {{#addConsumesProducesJson}}
@@ -32,6 +42,16 @@ public interface {{classname}}  {
 {{#operations}}
 {{#operation}}
 
+    {{#summary}}
+    /**
+     * {{summary}}
+     *
+     {{#notes}}
+     * {{notes}}
+     *
+     {{/notes}}
+     */
+    {{/summary}}
     @{{httpMethod}}
     {{#subresourceOperation}}@Path("{{{path}}}"){{/subresourceOperation}}
 {{#hasConsumes}}
@@ -42,7 +62,7 @@ public interface {{classname}}  {
 {{/hasProduces}}
     @ApiOperation(value = "{{{summary}}}", tags={ {{#vendorExtensions.x-tags}}"{{tag}}"{{#hasMore}}, {{/hasMore}}{{/vendorExtensions.x-tags}} })
     @ApiResponses(value = { {{#responses}}
-        @ApiResponse(code = {{{code}}}, message = "{{{message}}}"{{^vendorExtensions.x-java-is-response-void}}, response = {{{baseType}}}.class{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}{{/vendorExtensions.x-java-is-response-void}}){{#hasMore}},{{/hasMore}}{{/responses}} })
+        @ApiResponse(code = {{{code}}}, message = "{{{message}}}"{{^vendorExtensions.x-java-is-response-void}}, response = {{{baseType}}}.class{{#containerType}}, responseContainer = "{{{containerType}}}"{{/containerType}}{{/vendorExtensions.x-java-is-response-void}}){{#hasMore}},{{/hasMore}}{{/responses}} })
     public {{>returnTypes}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 {{/operation}}
 }

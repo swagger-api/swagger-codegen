@@ -14,10 +14,16 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
+import java.io.IOException;
 
 /**
  * EnumTest
@@ -27,14 +33,12 @@ public class EnumTest {
   /**
    * Gets or Sets enumString
    */
+  @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
-    @SerializedName("UPPER")
     UPPER("UPPER"),
     
-    @SerializedName("lower")
     LOWER("lower"),
     
-    @SerializedName("")
     EMPTY("");
 
     private String value;
@@ -43,9 +47,35 @@ public class EnumTest {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumStringEnum fromValue(String text) {
+      for (EnumStringEnum b : EnumStringEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumStringEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumStringEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumStringEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return EnumStringEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -53,13 +83,64 @@ public class EnumTest {
   private EnumStringEnum enumString = null;
 
   /**
+   * Gets or Sets enumStringRequired
+   */
+  @JsonAdapter(EnumStringRequiredEnum.Adapter.class)
+  public enum EnumStringRequiredEnum {
+    UPPER("UPPER"),
+    
+    LOWER("lower"),
+    
+    EMPTY("");
+
+    private String value;
+
+    EnumStringRequiredEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static EnumStringRequiredEnum fromValue(String text) {
+      for (EnumStringRequiredEnum b : EnumStringRequiredEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumStringRequiredEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumStringRequiredEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumStringRequiredEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return EnumStringRequiredEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+
+  @SerializedName("enum_string_required")
+  private EnumStringRequiredEnum enumStringRequired = null;
+
+  /**
    * Gets or Sets enumInteger
    */
+  @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
-    @SerializedName("1")
     NUMBER_1(1),
     
-    @SerializedName("-1")
     NUMBER_MINUS_1(-1);
 
     private Integer value;
@@ -68,9 +149,35 @@ public class EnumTest {
       this.value = value;
     }
 
+    public Integer getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumIntegerEnum fromValue(String text) {
+      for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumIntegerEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumIntegerEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumIntegerEnum read(final JsonReader jsonReader) throws IOException {
+        Integer value = jsonReader.nextInt();
+        return EnumIntegerEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -80,11 +187,10 @@ public class EnumTest {
   /**
    * Gets or Sets enumNumber
    */
+  @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
-    @SerializedName("1.1")
     NUMBER_1_DOT_1(1.1),
     
-    @SerializedName("-1.2")
     NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;
@@ -93,9 +199,35 @@ public class EnumTest {
       this.value = value;
     }
 
+    public Double getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static EnumNumberEnum fromValue(String text) {
+      for (EnumNumberEnum b : EnumNumberEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<EnumNumberEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final EnumNumberEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public EnumNumberEnum read(final JsonReader jsonReader) throws IOException {
+        Double value = jsonReader.nextDouble();
+        return EnumNumberEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
@@ -121,6 +253,24 @@ public class EnumTest {
 
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
+  }
+
+  public EnumTest enumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
+    return this;
+  }
+
+   /**
+   * Get enumStringRequired
+   * @return enumStringRequired
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public EnumStringRequiredEnum getEnumStringRequired() {
+    return enumStringRequired;
+  }
+
+  public void setEnumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
   }
 
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
@@ -188,6 +338,7 @@ public class EnumTest {
     }
     EnumTest enumTest = (EnumTest) o;
     return Objects.equals(this.enumString, enumTest.enumString) &&
+        Objects.equals(this.enumStringRequired, enumTest.enumStringRequired) &&
         Objects.equals(this.enumInteger, enumTest.enumInteger) &&
         Objects.equals(this.enumNumber, enumTest.enumNumber) &&
         Objects.equals(this.outerEnum, enumTest.outerEnum);
@@ -195,7 +346,7 @@ public class EnumTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
+    return Objects.hash(enumString, enumStringRequired, enumInteger, enumNumber, outerEnum);
   }
 
 
@@ -205,6 +356,7 @@ public class EnumTest {
     sb.append("class EnumTest {\n");
     
     sb.append("    enumString: ").append(toIndentedString(enumString)).append("\n");
+    sb.append("    enumStringRequired: ").append(toIndentedString(enumStringRequired)).append("\n");
     sb.append("    enumInteger: ").append(toIndentedString(enumInteger)).append("\n");
     sb.append("    enumNumber: ").append(toIndentedString(enumNumber)).append("\n");
     sb.append("    outerEnum: ").append(toIndentedString(outerEnum)).append("\n");
@@ -222,6 +374,6 @@ public class EnumTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

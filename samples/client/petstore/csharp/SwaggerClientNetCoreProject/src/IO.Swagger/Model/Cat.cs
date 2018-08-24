@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,47 +36,18 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
-        /// <param name="ClassName">ClassName (required).</param>
-        /// <param name="Color">Color (default to &quot;red&quot;).</param>
         /// <param name="Declawed">Declawed.</param>
-        public Cat(string ClassName = default(string), string Color = "red", bool? Declawed = default(bool?))
+        public Cat(bool? Declawed = default(bool?), string ClassName = "Cat", string Color = "red") : base(ClassName, Color)
         {
-            // to ensure "ClassName" is required (not null)
-            if (ClassName == null)
-            {
-                throw new InvalidDataException("ClassName is a required property for Cat and cannot be null");
-            }
-            else
-            {
-                this.ClassName = ClassName;
-            }
-            // use default value if no "Color" provided
-            if (Color == null)
-            {
-                this.Color = "red";
-            }
-            else
-            {
-                this.Color = Color;
-            }
             this.Declawed = Declawed;
         }
         
-        /// <summary>
-        /// Gets or Sets ClassName
-        /// </summary>
-        [DataMember(Name="className", EmitDefaultValue=false)]
-        public string ClassName { get; set; }
-        /// <summary>
-        /// Gets or Sets Color
-        /// </summary>
-        [DataMember(Name="color", EmitDefaultValue=false)]
-        public string Color { get; set; }
         /// <summary>
         /// Gets or Sets Declawed
         /// </summary>
         [DataMember(Name="declawed", EmitDefaultValue=false)]
         public bool? Declawed { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -84,8 +56,7 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Cat {\n");
-            sb.Append("  ClassName: ").Append(ClassName).Append("\n");
-            sb.Append("  Color: ").Append(Color).Append("\n");
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
             sb.Append("  Declawed: ").Append(Declawed).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -95,7 +66,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public  new string ToJson()
+        public override string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -103,40 +74,28 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Cat);
+            return this.Equals(input as Cat);
         }
 
         /// <summary>
         /// Returns true if Cat instances are equal
         /// </summary>
-        /// <param name="other">Instance of Cat to be compared</param>
+        /// <param name="input">Instance of Cat to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Cat other)
+        public bool Equals(Cat input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
-            return 
+            return base.Equals(input) && 
                 (
-                    this.ClassName == other.ClassName ||
-                    this.ClassName != null &&
-                    this.ClassName.Equals(other.ClassName)
-                ) && 
-                (
-                    this.Color == other.Color ||
-                    this.Color != null &&
-                    this.Color.Equals(other.Color)
-                ) && 
-                (
-                    this.Declawed == other.Declawed ||
-                    this.Declawed != null &&
-                    this.Declawed.Equals(other.Declawed)
+                    this.Declawed == input.Declawed ||
+                    (this.Declawed != null &&
+                    this.Declawed.Equals(input.Declawed))
                 );
         }
 
@@ -146,18 +105,12 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
-                if (this.ClassName != null)
-                    hash = hash * 59 + this.ClassName.GetHashCode();
-                if (this.Color != null)
-                    hash = hash * 59 + this.Color.GetHashCode();
+                int hashCode = base.GetHashCode();
                 if (this.Declawed != null)
-                    hash = hash * 59 + this.Declawed.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.Declawed.GetHashCode();
+                return hashCode;
             }
         }
     }

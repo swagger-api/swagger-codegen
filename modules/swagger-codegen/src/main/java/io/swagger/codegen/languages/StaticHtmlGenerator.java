@@ -74,7 +74,7 @@ public class StaticHtmlGenerator extends DefaultCodegen implements CodegenConfig
     
     /**
      * Convert Markdown (CommonMark) to HTML. This class also disables normal HTML
-     * escaping in the Mustache engine (see {@link #processCompiler(Compiler)} above.)
+     * escaping in the Mustache engine (see {@link DefaultCodegen#processCompiler(Compiler)} above.)
      */
    @Override
     public String escapeText(String input) {
@@ -168,6 +168,14 @@ public class StaticHtmlGenerator extends DefaultCodegen implements CodegenConfig
         if (input == null)
             return "";
         return markdownConverter.toHtml(input);
+    }
+
+    // DefaultCodegen converts model names to UpperCamelCase
+    // but for static HTML, we want the names to be preserved as coded in the OpenApi
+    // so HTML links work
+    @Override
+    public String toModelName(final String name) {
+        return name;
     }
 
     public void preprocessSwagger(Swagger swagger) {

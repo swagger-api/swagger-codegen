@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -28,69 +29,29 @@ namespace IO.Swagger.Model
     public partial class EnumTest :  IEquatable<EnumTest>
     {
         /// <summary>
-        /// Gets or Sets EnumString
+        /// Defines EnumString
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum EnumStringEnum
         {
             
             /// <summary>
-            /// Enum UPPER for "UPPER"
+            /// Enum UPPER for value: UPPER
             /// </summary>
             [EnumMember(Value = "UPPER")]
-            UPPER,
+            UPPER = 1,
             
             /// <summary>
-            /// Enum Lower for "lower"
+            /// Enum Lower for value: lower
             /// </summary>
             [EnumMember(Value = "lower")]
-            Lower,
+            Lower = 2,
             
             /// <summary>
-            /// Enum Empty for ""
+            /// Enum Empty for value: 
             /// </summary>
             [EnumMember(Value = "")]
-            Empty
-        }
-
-        /// <summary>
-        /// Gets or Sets EnumInteger
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum EnumIntegerEnum
-        {
-            
-            /// <summary>
-            /// Enum NUMBER_1 for 1
-            /// </summary>
-            [EnumMember(Value = "1")]
-            NUMBER_1 = 1,
-            
-            /// <summary>
-            /// Enum NUMBER_MINUS_1 for -1
-            /// </summary>
-            [EnumMember(Value = "-1")]
-            NUMBER_MINUS_1 = -1
-        }
-
-        /// <summary>
-        /// Gets or Sets EnumNumber
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum EnumNumberEnum
-        {
-            
-            /// <summary>
-            /// Enum NUMBER_1_DOT_1 for 1.1
-            /// </summary>
-            [EnumMember(Value = "1.1")]
-            NUMBER_1_DOT_1,
-            
-            /// <summary>
-            /// Enum NUMBER_MINUS_1_DOT_2 for -1.2
-            /// </summary>
-            [EnumMember(Value = "-1.2")]
-            NUMBER_MINUS_1_DOT_2
+            Empty = 3
         }
 
         /// <summary>
@@ -99,35 +60,78 @@ namespace IO.Swagger.Model
         [DataMember(Name="enum_string", EmitDefaultValue=false)]
         public EnumStringEnum? EnumString { get; set; }
         /// <summary>
+        /// Defines EnumInteger
+        /// </summary>
+        public enum EnumIntegerEnum
+        {
+            
+            /// <summary>
+            /// Enum NUMBER_1 for value: 1
+            /// </summary>
+            
+            NUMBER_1 = 1,
+            
+            /// <summary>
+            /// Enum NUMBER_MINUS_1 for value: -1
+            /// </summary>
+            
+            NUMBER_MINUS_1 = -1
+        }
+
+        /// <summary>
         /// Gets or Sets EnumInteger
         /// </summary>
         [DataMember(Name="enum_integer", EmitDefaultValue=false)]
         public EnumIntegerEnum? EnumInteger { get; set; }
+        /// <summary>
+        /// Defines EnumNumber
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum EnumNumberEnum
+        {
+            
+            /// <summary>
+            /// Enum NUMBER_1_DOT_1 for value: 1.1
+            /// </summary>
+            [EnumMember(Value = "1.1")]
+            NUMBER_1_DOT_1 = 1,
+            
+            /// <summary>
+            /// Enum NUMBER_MINUS_1_DOT_2 for value: -1.2
+            /// </summary>
+            [EnumMember(Value = "-1.2")]
+            NUMBER_MINUS_1_DOT_2 = 2
+        }
+
         /// <summary>
         /// Gets or Sets EnumNumber
         /// </summary>
         [DataMember(Name="enum_number", EmitDefaultValue=false)]
         public EnumNumberEnum? EnumNumber { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumTest" /> class.
-        /// </summary>
-        /// <param name="EnumString">EnumString.</param>
-        /// <param name="EnumInteger">EnumInteger.</param>
-        /// <param name="EnumNumber">EnumNumber.</param>
-        /// <param name="OuterEnum">OuterEnum.</param>
-        public EnumTest(EnumStringEnum? EnumString = default(EnumStringEnum?), EnumIntegerEnum? EnumInteger = default(EnumIntegerEnum?), EnumNumberEnum? EnumNumber = default(EnumNumberEnum?), OuterEnum OuterEnum = default(OuterEnum))
-        {
-            this.EnumString = EnumString;
-            this.EnumInteger = EnumInteger;
-            this.EnumNumber = EnumNumber;
-            this.OuterEnum = OuterEnum;
-        }
-        
-        /// <summary>
         /// Gets or Sets OuterEnum
         /// </summary>
         [DataMember(Name="outerEnum", EmitDefaultValue=false)]
-        public OuterEnum OuterEnum { get; set; }
+        public OuterEnum? OuterEnum { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumTest" /> class.
+        /// </summary>
+        /// <param name="enumString">enumString.</param>
+        /// <param name="enumInteger">enumInteger.</param>
+        /// <param name="enumNumber">enumNumber.</param>
+        /// <param name="outerEnum">outerEnum.</param>
+        public EnumTest(EnumStringEnum? enumString = default(EnumStringEnum?), EnumIntegerEnum? enumInteger = default(EnumIntegerEnum?), EnumNumberEnum? enumNumber = default(EnumNumberEnum?), OuterEnum? outerEnum = default(OuterEnum?))
+        {
+            this.EnumString = enumString;
+            this.EnumInteger = enumInteger;
+            this.EnumNumber = enumNumber;
+            this.OuterEnum = outerEnum;
+        }
+        
+
+
+
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -148,7 +152,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -156,45 +160,43 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as EnumTest);
+            return this.Equals(input as EnumTest);
         }
 
         /// <summary>
         /// Returns true if EnumTest instances are equal
         /// </summary>
-        /// <param name="other">Instance of EnumTest to be compared</param>
+        /// <param name="input">Instance of EnumTest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(EnumTest other)
+        public bool Equals(EnumTest input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.EnumString == other.EnumString ||
-                    this.EnumString != null &&
-                    this.EnumString.Equals(other.EnumString)
+                    this.EnumString == input.EnumString ||
+                    (this.EnumString != null &&
+                    this.EnumString.Equals(input.EnumString))
                 ) && 
                 (
-                    this.EnumInteger == other.EnumInteger ||
-                    this.EnumInteger != null &&
-                    this.EnumInteger.Equals(other.EnumInteger)
+                    this.EnumInteger == input.EnumInteger ||
+                    (this.EnumInteger != null &&
+                    this.EnumInteger.Equals(input.EnumInteger))
                 ) && 
                 (
-                    this.EnumNumber == other.EnumNumber ||
-                    this.EnumNumber != null &&
-                    this.EnumNumber.Equals(other.EnumNumber)
+                    this.EnumNumber == input.EnumNumber ||
+                    (this.EnumNumber != null &&
+                    this.EnumNumber.Equals(input.EnumNumber))
                 ) && 
                 (
-                    this.OuterEnum == other.OuterEnum ||
-                    this.OuterEnum != null &&
-                    this.OuterEnum.Equals(other.OuterEnum)
+                    this.OuterEnum == input.OuterEnum ||
+                    (this.OuterEnum != null &&
+                    this.OuterEnum.Equals(input.OuterEnum))
                 );
         }
 
@@ -204,20 +206,18 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.EnumString != null)
-                    hash = hash * 59 + this.EnumString.GetHashCode();
+                    hashCode = hashCode * 59 + this.EnumString.GetHashCode();
                 if (this.EnumInteger != null)
-                    hash = hash * 59 + this.EnumInteger.GetHashCode();
+                    hashCode = hashCode * 59 + this.EnumInteger.GetHashCode();
                 if (this.EnumNumber != null)
-                    hash = hash * 59 + this.EnumNumber.GetHashCode();
+                    hashCode = hashCode * 59 + this.EnumNumber.GetHashCode();
                 if (this.OuterEnum != null)
-                    hash = hash * 59 + this.OuterEnum.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.OuterEnum.GetHashCode();
+                return hashCode;
             }
         }
     }

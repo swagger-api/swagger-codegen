@@ -41,8 +41,12 @@ public class EnumArrays {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -75,8 +79,12 @@ public class EnumArrays {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -180,6 +188,6 @@ public class EnumArrays {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

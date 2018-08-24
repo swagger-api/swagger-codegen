@@ -4,20 +4,23 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Pet   {
+public class Pet  implements Serializable {
   
-  private Long id = null;
-  private Category category = null;
-  private String name = null;
-  private List<String> photoUrls = new ArrayList<String>();
-  private List<Tag> tags = new ArrayList<Tag>();
+  private @Valid Long id = null;
+  private @Valid Category category = null;
+  private @Valid String name = null;
+  private @Valid List<String> photoUrls = new ArrayList<String>();
+  private @Valid List<Tag> tags = new ArrayList<Tag>();
 
 public enum StatusEnum {
 
@@ -49,7 +52,7 @@ public enum StatusEnum {
     }
 }
 
-  private StatusEnum status = null;
+  private @Valid StatusEnum status = null;
 
   /**
    **/
@@ -60,6 +63,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -76,6 +80,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("category")
   public Category getCategory() {
     return category;
   }
@@ -92,6 +97,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
+  @JsonProperty("name")
   @NotNull
   public String getName() {
     return name;
@@ -109,6 +115,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(required = true, value = "")
+  @JsonProperty("photoUrls")
   @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -126,6 +133,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
   }
@@ -143,6 +151,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "pet status in the store")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -199,3 +208,4 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

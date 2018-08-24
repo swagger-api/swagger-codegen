@@ -1,4 +1,4 @@
-# IO.Swagger..PetApi
+# IO.Swagger.Api.PetApi
 
 All URIs are relative to *http://petstore.swagger.io/v2*
 
@@ -171,7 +171,7 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var status = new List<string>(); // List<string> | Status values that need to be considered for filter
+            var status = status_example;  // List<string> | Status values that need to be considered for filter
 
             try
             {
@@ -192,7 +192,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**List<string>**](string.md)| Status values that need to be considered for filter | 
+ **status** | **List<string>**| Status values that need to be considered for filter | 
 
 ### Return type
 

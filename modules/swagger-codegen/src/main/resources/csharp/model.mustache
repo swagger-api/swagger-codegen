@@ -12,6 +12,13 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+{{#models}}
+{{#model}}
+{{#discriminator}}
+using JsonSubTypes;
+{{/discriminator}}
+{{/model}}
+{{/models}}
 {{^netStandard}}
 {{#generatePropertyChanged}}
 using PropertyChanged;
@@ -19,6 +26,7 @@ using System.ComponentModel;
 {{/generatePropertyChanged}}
 using System.ComponentModel.DataAnnotations;
 {{/netStandard}}
+using SwaggerDateConverter = {{packageName}}.Client.SwaggerDateConverter;
 
 {{#models}}
 {{#model}}

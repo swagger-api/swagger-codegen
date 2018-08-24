@@ -14,9 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +40,10 @@ public class MapTest implements Parcelable {
   /**
    * Gets or Sets inner
    */
+  @JsonAdapter(InnerEnum.Adapter.class)
   public enum InnerEnum {
-    @SerializedName("UPPER")
     UPPER("UPPER"),
     
-    @SerializedName("lower")
     LOWER("lower");
 
     private String value;
@@ -47,15 +52,43 @@ public class MapTest implements Parcelable {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
+    }
+
+    public static InnerEnum fromValue(String text) {
+      for (InnerEnum b : InnerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<InnerEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final InnerEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public InnerEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return InnerEnum.fromValue(String.valueOf(value));
+      }
     }
   }
 
   @SerializedName("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
 
+  public MapTest() {
+  }
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
@@ -149,24 +182,18 @@ public class MapTest implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
-  public void writeToParcel(Parcel out, int flags) {
-     
-    out.writeValue(mapMapOfString);
 
+
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeValue(mapMapOfString);
     out.writeValue(mapOfEnumString);
   }
 
-  public MapTest() {
-    super();
-  }
-
   MapTest(Parcel in) {
-    
     mapMapOfString = (Map<String, Map<String, String>>)in.readValue(Map.class.getClassLoader());
     mapOfEnumString = (Map<String, InnerEnum>)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

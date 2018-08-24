@@ -2,6 +2,7 @@ package io.swagger.model;
 
 import io.swagger.model.Animal;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,16 +12,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Dog extends Animal {
   
   @ApiModelProperty(value = "")
   private String breed = null;
-
  /**
    * Get breed
    * @return breed
   **/
+  @JsonProperty("breed")
   public String getBreed() {
     return breed;
   }

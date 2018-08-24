@@ -1,14 +1,17 @@
 package io.swagger.model;
 
 import io.swagger.model.OuterEnum;
+import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class EnumTest   {
+public class EnumTest  implements Serializable {
   
 
 public enum EnumStringEnum {
@@ -41,7 +44,7 @@ public enum EnumStringEnum {
     }
 }
 
-  private EnumStringEnum enumString = null;
+  private @Valid EnumStringEnum enumString = null;
 
 public enum EnumIntegerEnum {
 
@@ -73,7 +76,7 @@ public enum EnumIntegerEnum {
     }
 }
 
-  private EnumIntegerEnum enumInteger = null;
+  private @Valid EnumIntegerEnum enumInteger = null;
 
 public enum EnumNumberEnum {
 
@@ -105,8 +108,8 @@ public enum EnumNumberEnum {
     }
 }
 
-  private EnumNumberEnum enumNumber = null;
-  private OuterEnum outerEnum = null;
+  private @Valid EnumNumberEnum enumNumber = null;
+  private @Valid OuterEnum outerEnum = null;
 
   /**
    **/
@@ -117,6 +120,7 @@ public enum EnumNumberEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_string")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -133,6 +137,7 @@ public enum EnumNumberEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_integer")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -149,6 +154,7 @@ public enum EnumNumberEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("enum_number")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -165,6 +171,7 @@ public enum EnumNumberEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("outerEnum")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
@@ -217,3 +224,4 @@ public enum EnumNumberEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

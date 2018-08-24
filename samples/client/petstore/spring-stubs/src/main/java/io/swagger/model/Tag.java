@@ -5,11 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * A tag for a pet
  */
 @ApiModel(description = "A tag for a pet")
+@Validated
 
 public class Tag   {
   @JsonProperty("id")
@@ -23,11 +27,13 @@ public class Tag   {
     return this;
   }
 
-   /**
+  /**
    * Get id
    * @return id
   **/
   @ApiModelProperty(value = "")
+
+
   public Long getId() {
     return id;
   }
@@ -41,11 +47,13 @@ public class Tag   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
   **/
   @ApiModelProperty(value = "")
+
+
   public String getName() {
     return name;
   }

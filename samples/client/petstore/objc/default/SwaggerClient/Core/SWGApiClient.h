@@ -34,6 +34,27 @@ extern NSString *const SWGResponseObjectErrorKey;
 
 @property(nonatomic, strong) id<SWGSanitizer> sanitizer;
 
+/**
+ * Gets if the client is unreachable
+ *
+ * @return The client offline state
+ */
++(BOOL) getOfflineState;
+
+/**
+ * Sets the client reachability, this may be overridden by the reachability manager if reachability changes
+ *
+ * @param status The client reachability status.
+ */
++(void) setReachabilityStatus:(AFNetworkReachabilityStatus) status;
+
+/**
+ * Gets the client reachability
+ *
+ * @return The client reachability.
+ */
++(AFNetworkReachabilityStatus) getReachabilityStatus;
+
 @property (nonatomic, strong) NSDictionary< NSString *, AFHTTPRequestSerializer <AFURLRequestSerialization> *>* requestSerializerForContentType;
 
 /**
@@ -45,7 +66,7 @@ extern NSString *const SWGResponseObjectErrorKey;
 /**
  * Updates header parameters and query parameters for authentication
  *
- * @param headers The header parameter will be udpated, passed by pointer to pointer.
+ * @param headers The header parameter will be updated, passed by pointer to pointer.
  * @param querys The query parameters will be updated, passed by pointer to pointer.
  * @param authSettings The authentication names NSArray.
  */

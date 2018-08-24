@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -27,26 +28,26 @@ namespace IO.Swagger.Model
     [DataContract]
     public partial class MapTest :  IEquatable<MapTest>
     {
-
         /// <summary>
-        /// Gets or Sets Inner
+        /// Defines Inner
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum InnerEnum
         {
             
             /// <summary>
-            /// Enum UPPER for "UPPER"
+            /// Enum UPPER for value: UPPER
             /// </summary>
             [EnumMember(Value = "UPPER")]
-            UPPER,
+            UPPER = 1,
             
             /// <summary>
-            /// Enum Lower for "lower"
+            /// Enum Lower for value: lower
             /// </summary>
             [EnumMember(Value = "lower")]
-            Lower
+            Lower = 2
         }
+
 
         /// <summary>
         /// Gets or Sets MapOfEnumString
@@ -56,12 +57,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
-        /// <param name="MapMapOfString">MapMapOfString.</param>
-        /// <param name="MapOfEnumString">MapOfEnumString.</param>
-        public MapTest(Dictionary<string, Dictionary<string, string>> MapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> MapOfEnumString = default(Dictionary<string, InnerEnum>))
+        /// <param name="mapMapOfString">mapMapOfString.</param>
+        /// <param name="mapOfEnumString">mapOfEnumString.</param>
+        public MapTest(Dictionary<string, Dictionary<string, string>> mapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> mapOfEnumString = default(Dictionary<string, InnerEnum>))
         {
-            this.MapMapOfString = MapMapOfString;
-            this.MapOfEnumString = MapOfEnumString;
+            this.MapMapOfString = mapMapOfString;
+            this.MapOfEnumString = mapOfEnumString;
         }
         
         /// <summary>
@@ -69,6 +70,8 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="map_map_of_string", EmitDefaultValue=false)]
         public Dictionary<string, Dictionary<string, string>> MapMapOfString { get; set; }
+
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -87,7 +90,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -95,35 +98,33 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as MapTest);
+            return this.Equals(input as MapTest);
         }
 
         /// <summary>
         /// Returns true if MapTest instances are equal
         /// </summary>
-        /// <param name="other">Instance of MapTest to be compared</param>
+        /// <param name="input">Instance of MapTest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MapTest other)
+        public bool Equals(MapTest input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.MapMapOfString == other.MapMapOfString ||
+                    this.MapMapOfString == input.MapMapOfString ||
                     this.MapMapOfString != null &&
-                    this.MapMapOfString.SequenceEqual(other.MapMapOfString)
+                    this.MapMapOfString.SequenceEqual(input.MapMapOfString)
                 ) && 
                 (
-                    this.MapOfEnumString == other.MapOfEnumString ||
+                    this.MapOfEnumString == input.MapOfEnumString ||
                     this.MapOfEnumString != null &&
-                    this.MapOfEnumString.SequenceEqual(other.MapOfEnumString)
+                    this.MapOfEnumString.SequenceEqual(input.MapOfEnumString)
                 );
         }
 
@@ -133,16 +134,14 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.MapMapOfString != null)
-                    hash = hash * 59 + this.MapMapOfString.GetHashCode();
+                    hashCode = hashCode * 59 + this.MapMapOfString.GetHashCode();
                 if (this.MapOfEnumString != null)
-                    hash = hash * 59 + this.MapOfEnumString.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.MapOfEnumString.GetHashCode();
+                return hashCode;
             }
         }
     }

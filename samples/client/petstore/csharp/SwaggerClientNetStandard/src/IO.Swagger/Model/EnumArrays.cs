@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -28,44 +29,23 @@ namespace IO.Swagger.Model
     public partial class EnumArrays :  IEquatable<EnumArrays>
     {
         /// <summary>
-        /// Gets or Sets JustSymbol
+        /// Defines JustSymbol
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum JustSymbolEnum
         {
             
             /// <summary>
-            /// Enum GreaterThanOrEqualTo for ">="
+            /// Enum GreaterThanOrEqualTo for value: >=
             /// </summary>
             [EnumMember(Value = ">=")]
-            GreaterThanOrEqualTo,
+            GreaterThanOrEqualTo = 1,
             
             /// <summary>
-            /// Enum Dollar for "$"
+            /// Enum Dollar for value: $
             /// </summary>
             [EnumMember(Value = "$")]
-            Dollar
-        }
-
-
-        /// <summary>
-        /// Gets or Sets ArrayEnum
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum ArrayEnumEnum
-        {
-            
-            /// <summary>
-            /// Enum Fish for "fish"
-            /// </summary>
-            [EnumMember(Value = "fish")]
-            Fish,
-            
-            /// <summary>
-            /// Enum Crab for "crab"
-            /// </summary>
-            [EnumMember(Value = "crab")]
-            Crab
+            Dollar = 2
         }
 
         /// <summary>
@@ -74,6 +54,27 @@ namespace IO.Swagger.Model
         [DataMember(Name="just_symbol", EmitDefaultValue=false)]
         public JustSymbolEnum? JustSymbol { get; set; }
         /// <summary>
+        /// Defines ArrayEnum
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum ArrayEnumEnum
+        {
+            
+            /// <summary>
+            /// Enum Fish for value: fish
+            /// </summary>
+            [EnumMember(Value = "fish")]
+            Fish = 1,
+            
+            /// <summary>
+            /// Enum Crab for value: crab
+            /// </summary>
+            [EnumMember(Value = "crab")]
+            Crab = 2
+        }
+
+
+        /// <summary>
         /// Gets or Sets ArrayEnum
         /// </summary>
         [DataMember(Name="array_enum", EmitDefaultValue=false)]
@@ -81,14 +82,16 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArrays" /> class.
         /// </summary>
-        /// <param name="JustSymbol">JustSymbol.</param>
-        /// <param name="ArrayEnum">ArrayEnum.</param>
-        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>))
+        /// <param name="justSymbol">justSymbol.</param>
+        /// <param name="arrayEnum">arrayEnum.</param>
+        public EnumArrays(JustSymbolEnum? justSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> arrayEnum = default(List<ArrayEnumEnum>))
         {
-            this.JustSymbol = JustSymbol;
-            this.ArrayEnum = ArrayEnum;
+            this.JustSymbol = justSymbol;
+            this.ArrayEnum = arrayEnum;
         }
         
+
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -107,7 +110,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -115,35 +118,33 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as EnumArrays);
+            return this.Equals(input as EnumArrays);
         }
 
         /// <summary>
         /// Returns true if EnumArrays instances are equal
         /// </summary>
-        /// <param name="other">Instance of EnumArrays to be compared</param>
+        /// <param name="input">Instance of EnumArrays to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(EnumArrays other)
+        public bool Equals(EnumArrays input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.JustSymbol == other.JustSymbol ||
-                    this.JustSymbol != null &&
-                    this.JustSymbol.Equals(other.JustSymbol)
+                    this.JustSymbol == input.JustSymbol ||
+                    (this.JustSymbol != null &&
+                    this.JustSymbol.Equals(input.JustSymbol))
                 ) && 
                 (
-                    this.ArrayEnum == other.ArrayEnum ||
+                    this.ArrayEnum == input.ArrayEnum ||
                     this.ArrayEnum != null &&
-                    this.ArrayEnum.SequenceEqual(other.ArrayEnum)
+                    this.ArrayEnum.SequenceEqual(input.ArrayEnum)
                 );
         }
 
@@ -153,16 +154,14 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.JustSymbol != null)
-                    hash = hash * 59 + this.JustSymbol.GetHashCode();
+                    hashCode = hashCode * 59 + this.JustSymbol.GetHashCode();
                 if (this.ArrayEnum != null)
-                    hash = hash * 59 + this.ArrayEnum.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.ArrayEnum.GetHashCode();
+                return hashCode;
             }
         }
     }

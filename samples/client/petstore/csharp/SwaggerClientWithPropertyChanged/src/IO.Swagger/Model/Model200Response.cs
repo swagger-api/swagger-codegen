@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,12 +36,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Model200Response" /> class.
         /// </summary>
-        /// <param name="Name">Name.</param>
-        /// <param name="_Class">_Class.</param>
-        public Model200Response(int? Name = default(int?), string _Class = default(string))
+        /// <param name="name">name.</param>
+        /// <param name="_class">_class.</param>
+        public Model200Response(int? name = default(int?), string _class = default(string))
         {
-            this.Name = Name;
-            this._Class = _Class;
+            this.Name = name;
+            this.Class = _class;
         }
         
         /// <summary>
@@ -48,11 +49,13 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="name", EmitDefaultValue=false)]
         public int? Name { get; set; }
+
         /// <summary>
-        /// Gets or Sets _Class
+        /// Gets or Sets Class
         /// </summary>
         [DataMember(Name="class", EmitDefaultValue=false)]
-        public string _Class { get; set; }
+        public string Class { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -62,7 +65,7 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class Model200Response {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  _Class: ").Append(_Class).Append("\n");
+            sb.Append("  Class: ").Append(Class).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -71,7 +74,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -79,35 +82,33 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Model200Response);
+            return this.Equals(input as Model200Response);
         }
 
         /// <summary>
         /// Returns true if Model200Response instances are equal
         /// </summary>
-        /// <param name="other">Instance of Model200Response to be compared</param>
+        /// <param name="input">Instance of Model200Response to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Model200Response other)
+        public bool Equals(Model200Response input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
+                    this.Name == input.Name ||
+                    (this.Name != null &&
+                    this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this._Class == other._Class ||
-                    this._Class != null &&
-                    this._Class.Equals(other._Class)
+                    this.Class == input.Class ||
+                    (this.Class != null &&
+                    this.Class.Equals(input.Class))
                 );
         }
 
@@ -117,16 +118,14 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.Name != null)
-                    hash = hash * 59 + this.Name.GetHashCode();
-                if (this._Class != null)
-                    hash = hash * 59 + this._Class.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.Class != null)
+                    hashCode = hashCode * 59 + this.Class.GetHashCode();
+                return hashCode;
             }
         }
 
@@ -156,7 +155,7 @@ namespace IO.Swagger.Model
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        { 
+        {
             yield break;
         }
     }

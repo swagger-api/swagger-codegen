@@ -5,8 +5,10 @@ import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import io.swagger.util.Json;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.testng.AssertJUnit.*;
@@ -327,6 +329,48 @@ public class InlineModelResolverTest {
 
         ModelImpl impl = (ModelImpl) body;
         assertNotNull(impl.getProperties().get("address"));
+    }
+
+    @Test
+    public void resolveInlineBodyParameterWithRequired() throws Exception {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ModelImpl()
+                                        .property("address", new ObjectProperty()
+                                                .property("street", new StringProperty()
+                                                        .required(true))
+                                                .required(true))
+                                        .property("name", new StringProperty())))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Operation operation = swagger.getPaths().get("/hello").getGet();
+        BodyParameter bp = (BodyParameter)operation.getParameters().get(0);
+        assertTrue(bp.getSchema() instanceof RefModel);
+
+        Model body = swagger.getDefinitions().get("body");
+        assertTrue(body instanceof ModelImpl);
+
+        ModelImpl impl = (ModelImpl) body;
+        assertNotNull(impl.getProperties().get("address"));
+
+        Property addressProperty = impl.getProperties().get("address");
+        assertTrue(addressProperty instanceof RefProperty);
+        assertTrue(addressProperty.getRequired());
+
+        Model helloAddress = swagger.getDefinitions().get("hello_address");
+        assertTrue(helloAddress instanceof ModelImpl);
+
+        ModelImpl addressImpl = (ModelImpl) helloAddress;
+        assertNotNull(addressImpl);
+
+        Property streetProperty = addressImpl.getProperties().get("street");
+        assertTrue(streetProperty instanceof  StringProperty);
+        assertTrue(streetProperty.getRequired());
     }
     
     @Test
@@ -946,5 +990,24 @@ public class InlineModelResolverTest {
         assertTrue(inlineProp instanceof ObjectProperty);
         ObjectProperty op = (ObjectProperty) inlineProp;
         assertNull(op.getProperties());
-    }    
+    }
+
+    @Test
+    public void testEmptyExampleOnStrinngTypeModels() {
+        Swagger swagger = new Swagger();
+
+        RefProperty refProperty = new RefProperty();
+        refProperty.set$ref("#/definitions/Test");
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .response(200, new Response()
+                                .schema(new ArrayProperty()
+                                        .items(refProperty)))));
+
+        swagger.addDefinition("Test", new ModelImpl()
+                .example(StringUtils.EMPTY)
+                .type("string"));
+        new InlineModelResolver().flatten(swagger);
+    }
 }

@@ -1,0 +1,52 @@
+{
+  "name": "{{{npmName}}}",
+  "version": "{{{npmVersion}}}",
+  "description": "swagger client for {{{npmName}}}",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "swagger-client"
+  ],
+  "license": "Unlicense",
+  {{#useNgPackagr}}
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  },
+  {{/useNgPackagr}}
+  {{^useNgPackagr}}
+  "main": "dist/index.js",
+  "module": "dist/index.js",  
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "ngc",
+    "postinstall": "npm run build"
+  },
+  {{/useNgPackagr}}
+  "peerDependencies": {
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "{{#useRxJS6}}^6.1.0{{/useRxJS6}}{{^useRxJS6}}^5.4.0{{/useRxJS6}}",
+    "zone.js": "^0.7.6"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^{{ngVersion}}",
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "@angular/platform-browser": "^{{ngVersion}}",{{#useNgPackagr}}
+    "ng-packagr": {{#useOldNgPackagr}}"^1.6.0"{{/useOldNgPackagr}}{{^useOldNgPackagr}}"^2.4.1"{{/useOldNgPackagr}},{{/useNgPackagr}}
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "{{#useRxJS6}}^6.1.0{{/useRxJS6}}{{^useRxJS6}}^5.4.0{{/useRxJS6}}",
+    "zone.js": "^0.7.6",
+    "typescript": ">=2.1.5 <2.8"
+  }{{#npmRepository}},{{/npmRepository}}
+{{#npmRepository}}
+  "publishConfig": {
+    "registry": "{{{npmRepository}}}"
+  }
+{{/npmRepository}}
+}
