@@ -308,7 +308,7 @@ namespace {{packageName}}.Client
                 return flattenedString.ToString();
             }
             else
-                return Convert.ToString (obj);
+                return Convert.ToString (obj, Configuration.FormatProvider);
         }
 
         /// <summary>

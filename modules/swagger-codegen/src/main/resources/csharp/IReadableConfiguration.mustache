@@ -1,5 +1,6 @@
 {{>partial_header}}
 
+using System;
 using System.Collections.Generic;
 
 namespace {{packageName}}.Client
@@ -38,6 +39,12 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <value>Date time foramt.</value>
         string DateTimeFormat { get; }
+
+        /// <summary>
+        /// Gets the format provider.
+        /// </summary>
+        /// <value>Format provider.</value>
+        IFormatProvider FormatProvider { get; }
 
         /// <summary>
         /// Gets the default header.
