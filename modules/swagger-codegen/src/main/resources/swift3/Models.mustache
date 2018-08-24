@@ -11,28 +11,32 @@ protocol JSONEncodable {
 }
 
 public enum ErrorResponse : Error {
-    case HttpError(statusCode: Int, data: Data?, error: Error)
+    case HttpError(path: String, URLString: String, statusCode: Int, data: Data?, error: Error)
     case DecodeError(response: Data?, decodeError: DecodeError)
 }
 
 open class Response<T> {
+    open let path: String
+    open let URLString: String
     open let statusCode: Int
     open let header: [String: String]
     open let body: T?
 
-    public init(statusCode: Int, header: [String: String], body: T?) {
+    public init(path: String, URLString: String, statusCode: Int, header: [String: String], body: T?) {
+        self.path = path
+        self.URLString = URLString
         self.statusCode = statusCode
         self.header = header
         self.body = body
     }
 
-    public convenience init(response: HTTPURLResponse, body: T?) {
+    public convenience init(path: String, URLString: String, response: HTTPURLResponse, body: T?) {
         let rawHeader = response.allHeaderFields
         var header = [String:String]()
         for case let (key, value) as (String, String) in rawHeader {
             header[key] = value
         }
-        self.init(statusCode: response.statusCode, header: header, body: body)
+        self.init(path: path, URLString: URLString, statusCode: response.statusCode, header: header, body: body)
     }
 }
 

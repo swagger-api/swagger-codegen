@@ -179,6 +179,13 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
 
+                // handle HTTP 204 No Content
+                // NSNull would crash decoders
+                if response.response?.statusCode == 204 && response.result.value is NSNull {
+                    completion(response: nil, error: nil)
+                    return
+                }
+
                 if () is T {
                     completion(response: Response(response: response.response!, body: () as! T), error: nil)
                     return

@@ -60,8 +60,8 @@ class JSONEncodingWrapper: ParameterEncoding {
 private var managerStore = SynchronizedDictionary<String, Alamofire.SessionManager>()
 
 open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required public init(method: String, URLString: String, parameters: Any?, isBody: Bool, headers: [String : String] = [:]) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
+    required public init(method: String, path: String, URLString: String, parameters: Any?, isBody: Bool, headers: [String : String] = [:]) {
+        super.init(method: method, path: path, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
     /**
@@ -134,7 +134,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     }
                     self.processRequest(request: upload, managerId, completion)
                 case .failure(let encodingError):
-                    completion(nil, ErrorResponse.HttpError(statusCode: 415, data: nil, error: encodingError))
+                    completion(nil, ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: 415, data: nil, error: encodingError))
                 }
             })
         } else {
@@ -166,13 +166,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if stringResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.HttpError(statusCode: stringResponse.response?.statusCode ?? 500, data: stringResponse.data, error: stringResponse.result.error as Error!)
+                        ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: stringResponse.response?.statusCode ?? 500, data: stringResponse.data, error: stringResponse.result.error as Error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: stringResponse.response!,
                         body: ((stringResponse.result.value ?? "") as! T)
                     ),
@@ -186,13 +188,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if voidResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.HttpError(statusCode: voidResponse.response?.statusCode ?? 500, data: voidResponse.data, error: voidResponse.result.error!)
+                        ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: voidResponse.response?.statusCode ?? 500, data: voidResponse.data, error: voidResponse.result.error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: voidResponse.response!,
                         body: nil),
                     nil
@@ -205,13 +209,15 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if dataResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.HttpError(statusCode: dataResponse.response?.statusCode ?? 500, data: dataResponse.data, error: dataResponse.result.error!)
+                        ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: dataResponse.response?.statusCode ?? 500, data: dataResponse.data, error: dataResponse.result.error!)
                     )
                     return
                 }
 
                 completion(
                     Response(
+                        path: self.path,
+                        URLString: self.URLString,
                         response: dataResponse.response!,
                         body: (dataResponse.data as! T)
                     ),
@@ -255,6 +261,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
 
                     completion(
                         Response(
+                            path: self.path,
+                            URLString: self.URLString,
                             response: dataResponse.response!,
                             body: (filePath as! T)
                         ),
@@ -262,9 +270,9 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     )
 
                 } catch let requestParserError as DownloadException {
-                    completion(nil, ErrorResponse.HttpError(statusCode: 400, data:  dataResponse.data, error: requestParserError))
+                    completion(nil, ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: 400, data: dataResponse.data, error: requestParserError))
                 } catch let error {
-                    completion(nil, ErrorResponse.HttpError(statusCode: 400, data: dataResponse.data, error: error))
+                    completion(nil, ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: 400, data: dataResponse.data, error: error))
                 }
                 return
             })
@@ -273,7 +281,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 cleanupRequest()
 
                 if response.result.isFailure {
-                    completion(nil, ErrorResponse.HttpError(statusCode: response.response?.statusCode ?? 500, data: response.data, error: response.result.error!))
+                    completion(nil, ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: response.response?.statusCode ?? 500, data: response.data, error: response.result.error!))
                     return
                 }
 
@@ -285,24 +293,24 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
 
                 if () is T {
-                    completion(Response(response: response.response!, body: (() as! T)), nil)
+                    completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: (() as! T)), nil)
                     return
                 }
                 if let json: Any = response.result.value {
                     let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
                     switch decoded {
-                    case let .success(object): completion(Response(response: response.response!, body: object), nil)
+                    case let .success(object): completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: object), nil)
                     case let .failure(error): completion(nil, ErrorResponse.DecodeError(response: response.data, decodeError: error))
                     }
                     return
                 } else if "" is T {
                     // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
                     // https://github.com/swagger-api/swagger-parser/pull/34
-                    completion(Response(response: response.response!, body: ("" as! T)), nil)
+                    completion(Response(path: self.path, URLString: self.URLString, response: response.response!, body: ("" as! T)), nil)
                     return
                 }
 
-                completion(nil, ErrorResponse.HttpError(statusCode: 500, data: nil, error: NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
+                completion(nil, ErrorResponse.HttpError(path: self.path, URLString: self.URLString, statusCode: 500, data: nil, error: NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
             }
         }
     }

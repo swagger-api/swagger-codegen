@@ -24,6 +24,10 @@ public enum {{classname}}: {{dataType}} {
 }
 {{/isEnum}}
 {{^isEnum}}
+{{#allVars.isEmpty}}
+public typealias {{classname}} = {{dataType}}
+{{/allVars.isEmpty}}
+{{^allVars.isEmpty}}
 open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncodable{{/parent}} {
 
 {{#vars}}
@@ -98,7 +102,7 @@ open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncod
         return dictionary
     }
 }
-
+{{/allVars.isEmpty}}
 {{/isEnum}}
 {{/isArrayModel}}
 {{/model}}

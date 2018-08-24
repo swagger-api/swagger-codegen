@@ -44,6 +44,15 @@ class Decoders {
         decoders[key] = { decoder($0) as! AnyObject }
     }
 
+    static func decode<T>(clazz: T.Type, discriminator: String, source: AnyObject) -> T {
+        let key = discriminator;
+        if let decoder = decoders[key] {
+            return decoder(source) as! T
+        } else {
+            fatalError("Source \(source) is not convertible to type \(clazz): Maybe swagger file is insufficient")
+        }
+    }
+    
     static func decode<T>(clazz clazz: [T].Type, source: AnyObject) -> [T] {
         let array = source as! [AnyObject]
         return array.map { Decoders.decode(clazz: T.self, source: $0) }
@@ -158,6 +167,12 @@ class Decoders {
             // Decoder for {{{classname}}}
             Decoders.addDecoder(clazz: {{{classname}}}.self) { (source: AnyObject) -> {{{classname}}} in
                 let sourceDictionary = source as! [NSObject:AnyObject]
+                {{#discriminator}}
+                // Check discriminator to support inheritance
+                if let discriminator = sourceDictionary["{{discriminator}}"] as? String where discriminator != "{{classname}}" {
+                   return Decoders.decode({{classname}}.self, discriminator: discriminator, source: source)
+                }
+                {{/discriminator}}
                 {{#unwrapRequired}}
                 let instance = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{#isEnum}}{{name}}: {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "")! {{/isEnum}}{{^isEnum}}{{name}}: Decoders.decode(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]!){{/isEnum}}{{/requiredVars}})
                 {{#optionalVars}}
@@ -173,6 +188,17 @@ class Decoders {
                 let instance = {{classname}}(){{#vars}}{{#isEnum}}
                 instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "") {{/isEnum}}{{^isEnum}}
                 instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]){{/isEnum}}{{/vars}}
+                {{#parentVars}}
+                {{#-first}}
+                // Read in the parent variables.
+                {{/-first}}
+                {{#isEnum}}
+                instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "")
+                {{/isEnum}}
+                {{^isEnum}}
+                instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"])
+                {{/isEnum}}
+                {{/parentVars}}
                 {{/unwrapRequired}}
                 return instance
             }{{/model}}

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.datatype.joda.*;
 {{/java8}}
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -32,8 +33,8 @@ public class JacksonJsonProvider extends JacksonJaxbJsonProvider {
 {{^java8}}
             .registerModule(new JodaModule())
 {{/java8}}
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .setDateFormat(new RFC3339DateFormat());
-
         setMapper(objectMapper);
     }
 }
