@@ -26,6 +26,7 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
         // Custom mappings for swagger type -> java type
         importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
         importMapping.put("PagedResource", "com.mypurecloud.sdk.v2.PagedResource");
+        importMapping.put("ArrayNode", "com.fasterxml.jackson.databind.node.ArrayNode");
 
         // Add special reserved words
         reservedWords.add("null");
