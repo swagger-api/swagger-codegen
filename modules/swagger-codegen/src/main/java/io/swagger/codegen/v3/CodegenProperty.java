@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class CodegenProperty implements Cloneable, VendorExtendable {
+public class CodegenProperty extends CodegenObject implements Cloneable {
     public String baseName, complexType, getter, setter, description, datatype,
           datatypeWithEnum, dataFormat, name, min, max, defaultValue, defaultValueWithParam,
           baseType, containerType, title;
@@ -41,7 +41,6 @@ public class CodegenProperty implements Cloneable, VendorExtendable {
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
-    public Map<String, Object> vendorExtensions = new HashMap<>();
     public String discriminatorValue;
 
     public String nameInCamelCase; // property name in camel case
@@ -304,14 +303,6 @@ public class CodegenProperty implements Cloneable, VendorExtendable {
         this.items = items;
     }
 
-    public Map<String, Object> getVendorExtensions() {
-        return vendorExtensions;
-    }
-
-    public void setVendorExtensions(Map<String, Object> vendorExtensions) {
-        this.vendorExtensions = vendorExtensions;
-    }
-
     public String getNameInCamelCase() {
         return nameInCamelCase;
     }
@@ -366,6 +357,10 @@ public class CodegenProperty implements Cloneable, VendorExtendable {
 
     public void setXmlNamespace(String xmlNamespace) {
         this.xmlNamespace = xmlNamespace;
+    }
+
+    public Boolean getMoreNonReadOnly() {
+        return getBooleanValue(CodegenConstants.HAS_MORE_NON_READ_ONLY_EXT_NAME);
     }
 
     @Override

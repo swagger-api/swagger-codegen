@@ -1,21 +1,27 @@
 package io.swagger.codegen.v3;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CodegenResponse implements VendorExtendable {
+public class CodegenResponse extends CodegenObject {
     public final List<CodegenProperty> headers = new ArrayList<CodegenProperty>();
     public String code, message;
     public List<Map<String, Object>> examples;
     public String dataType, baseType, containerType;
     public Object schema;
     public String jsonSchema;
-    public Map<String, Object> vendorExtensions = new HashMap<>();
 
     public boolean isWildcard() {
         return "0".equals(code) || "default".equals(code);
+    }
+
+    public Boolean getSimpleType() {
+        return getBooleanValue(CodegenConstants.IS_SIMPLE_TYPE_EXT_NAME);
+    }
+
+    public Boolean getPrimitiveType() {
+        return getBooleanValue(CodegenConstants.IS_PRIMITIVE_TYPE_EXT_NAME);
     }
 
     @Override
@@ -100,10 +106,5 @@ public class CodegenResponse implements VendorExtendable {
 
     public String getJsonSchema() {
         return jsonSchema;
-    }
-
-    @Override
-    public Map<String, Object> getVendorExtensions() {
-        return this.vendorExtensions;
     }
 }

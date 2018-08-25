@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
 
-public class CodegenOperation implements VendorExtendable {
+public class CodegenOperation extends CodegenObject {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
     public boolean returnTypeIsPrimitive, returnSimpleType, subresourceOperation;
     public String path, operationId, returnType, httpMethod, returnBaseType,
@@ -458,8 +458,59 @@ public class CodegenOperation implements VendorExtendable {
         return operationIdSnakeCase;
     }
 
-    @Override
-    public Map<String, Object> getVendorExtensions() {
-        return this.vendorExtensions;
+    public Boolean getIsRestfulIndex() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_INDEX_EXT_NAME);
+    }
+
+    public Boolean getIsRestfulShow() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_SHOW_EXT_NAME);
+    }
+
+    public Boolean getIsRestfulCreate() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_CREATE_EXT_NAME);
+    }
+
+    public Boolean getIsRestfulUpdate() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_UPDATE_EXT_NAME);
+    }
+
+    public Boolean getIsRestfulDestroy() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_UPDATE_EXT_NAME);
+    }
+
+    public Boolean getIsRestful() {
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_EXT_NAME);
+    }
+
+    public Boolean getIsDeprecated() {
+        return getBooleanValue(CodegenConstants.IS_DEPRECATED_EXT_NAME);
+    }
+
+    public Boolean getHasAuthMethods() {
+        return getBooleanValue(CodegenConstants.HAS_AUTH_METHODS_EXT_NAME);
+    }
+
+    public Boolean getHasConsumes() {
+        return getBooleanValue(CodegenConstants.HAS_CONSUMES_EXT_NAME);
+    }
+
+    public Boolean getHasProduces() {
+        return getBooleanValue(CodegenConstants.HAS_PRODUCES_EXT_NAME);
+    }
+
+    public Boolean getHasParams() {
+        return getBooleanValue(CodegenConstants.HAS_PARAMS_EXT_NAME);
+    }
+
+    public Boolean getHasOptionalParams() {
+        return getBooleanValue(CodegenConstants.HAS_OPTIONAL_PARAMS_EXT_NAME);
+    }
+
+    public Boolean getHasRequiredParams() {
+        return getBooleanValue(CodegenConstants.HAS_REQUIRED_PARAMS_EXT_NAME);
+    }
+
+    public Boolean getHasReference() {
+        return getBooleanValue(CodegenConstants.HAS_REFERENCE_EXT_NAME);
     }
 }
