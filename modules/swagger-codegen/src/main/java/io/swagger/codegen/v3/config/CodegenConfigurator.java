@@ -461,7 +461,10 @@ public class CodegenConfigurator implements Serializable {
 
         if (!StringUtils.isBlank(inputSpec)) {
             config.setInputSpec(inputSpec);
-            SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, null);
+            ParseOptions options = new ParseOptions();
+            options.setResolve(true);
+            options.setFlatten(true);
+            SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
 
             input.opts(new ClientOpts())
