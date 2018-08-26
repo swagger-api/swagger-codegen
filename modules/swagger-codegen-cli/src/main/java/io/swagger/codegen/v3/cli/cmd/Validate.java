@@ -1,6 +1,7 @@
 package io.swagger.codegen.v3.cli.cmd;
 
 import io.swagger.v3.parser.OpenAPIV3Parser;
+import io.swagger.v3.parser.core.models.AuthorizationValue;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Validate implements Runnable {
         System.out.println("Validating spec file (" + spec + ")");
 
         OpenAPIV3Parser parser = new OpenAPIV3Parser();;
-        List<String> messageList = parser.readWithInfo(spec, null).getMessages();
+        List<String> messageList = parser.readWithInfo(spec, (List<AuthorizationValue>) null).getMessages();
         Set<String> messages = new HashSet<String>(messageList);
 
         for (String message : messages) {
