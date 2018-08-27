@@ -15,7 +15,6 @@ public class CodegenParameter extends CodegenObject {
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
-    public Map<String, Object> vendorExtensions = new HashMap<>();
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
@@ -320,10 +319,6 @@ public class CodegenParameter extends CodegenObject {
 
     public CodegenProperty getItems() {
         return items;
-    }
-
-    public Map<String, Object> getVendorExtensions() {
-        return vendorExtensions;
     }
 
     public boolean getRequired() {
