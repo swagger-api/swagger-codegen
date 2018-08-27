@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class CodegenModel implements VendorExtendable {
+public class CodegenModel extends CodegenObject {
 
     public String parent, parentSchema;
     public List<String> interfaces;
@@ -44,8 +44,6 @@ public class CodegenModel implements VendorExtendable {
     public boolean emptyVars;
     public ExternalDocumentation externalDocumentation;
 
-    public Map<String, Object> vendorExtensions = new HashMap<>();
-
     //The type of the value from additional properties. Used in map like objects.
     public String additionalPropertiesType;
 
@@ -54,6 +52,34 @@ public class CodegenModel implements VendorExtendable {
         // store the complete closure of owned and inherited properties in allVars and allMandatory.
         allVars = vars;
         allMandatory = mandatory;
+    }
+
+    public Boolean getHasVars() {
+        return getBooleanValue(CodegenConstants.HAS_VARS_EXT_NAME);
+    }
+
+    public Boolean getHasOnlyReadOnly() {
+        return getBooleanValue(CodegenConstants.HAS_ONLY_READ_ONLY_EXT_NAME);
+    }
+
+    public Boolean getHasMoreModels() {
+        return getBooleanValue(CodegenConstants.HAS_MORE_MODELS_EXT_NAME);
+    }
+
+    public Boolean getHasEnums() {
+        return getBooleanValue(CodegenConstants.HAS_ENUMS_EXT_NAME);
+    }
+
+    public Boolean getHasRequired() {
+        return getBooleanValue(CodegenConstants.HAS_REQUIRED_PARAMS_EXT_NAME);
+    }
+
+    public Boolean getHasOptional() {
+        return getBooleanValue(CodegenConstants.HAS_OPTIONAL_EXT_NAME);
+    }
+
+    public Boolean getHasChildren() {
+        return getBooleanValue(CodegenConstants.HAS_CHILDREN_EXT_NAME);
     }
 
     @Override
@@ -436,14 +462,6 @@ public class CodegenModel implements VendorExtendable {
 
     public void setExternalDocumentation(ExternalDocumentation externalDocumentation) {
         this.externalDocumentation = externalDocumentation;
-    }
-
-    public Map<String, Object> getVendorExtensions() {
-        return vendorExtensions;
-    }
-
-    public void setVendorExtensions(Map<String, Object> vendorExtensions) {
-        this.vendorExtensions = vendorExtensions;
     }
 
     public String getAdditionalPropertiesType() {

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.models.security.Scopes;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CodegenSecurity implements VendorExtendable {
+public class CodegenSecurity extends CodegenObject {
     public String name;
     public String type;
     // ApiKey specific
@@ -13,7 +13,6 @@ public class CodegenSecurity implements VendorExtendable {
     // Oauth specific
     public String flow, authorizationUrl, tokenUrl;
     public Scopes scopes;
-    public Map<String, Object> vendorExtensions = new HashMap<>();
 
     @Override
     public String toString() {
@@ -83,8 +82,39 @@ public class CodegenSecurity implements VendorExtendable {
         return scopes;
     }
 
-    @Override
-    public Map<String, Object> getVendorExtensions() {
-        return this.vendorExtensions;
+    public Boolean getIsBasic() {
+        return getBooleanValue(CodegenConstants.IS_BASIC_EXT_NAME);
+    }
+
+    public Boolean getIsOAuth() {
+        return getBooleanValue(CodegenConstants.IS_OAUTH_EXT_NAME);
+    }
+
+    public Boolean getIsApiKey() {
+        return getBooleanValue(CodegenConstants.IS_API_KEY_EXT_NAME);
+    }
+
+    public Boolean getIsKeyInQuery() {
+        return getBooleanValue(CodegenConstants.IS_KEY_IN_QUERY_EXT_NAME);
+    }
+
+    public Boolean getIsKeyInHeader() {
+        return getBooleanValue(CodegenConstants.IS_KEY_IN_HEADER_EXT_NAME);
+    }
+
+    public Boolean getIsCode() {
+        return getBooleanValue(CodegenConstants.IS_CODE_EXT_NAME);
+    }
+
+    public Boolean getIsPassword() {
+        return getBooleanValue(CodegenConstants.IS_PASSWORD_EXT_NAME);
+    }
+
+    public Boolean getIsApplication() {
+        return getBooleanValue(CodegenConstants.IS_APPLICATION_EXT_NAME);
+    }
+
+    public Boolean getIsImplicit() {
+        return getBooleanValue(CodegenConstants.IS_IMPLICIT_EXT_NAME);
     }
 }
