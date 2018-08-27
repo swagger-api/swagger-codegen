@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-public class CodegenParameter implements VendorExtendable {
+public class CodegenParameter extends CodegenObject {
     public boolean secondaryParam, notFile;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
           collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
@@ -68,6 +68,30 @@ public class CodegenParameter implements VendorExtendable {
      * See http://json-schema.org/latest/json-schema-validation.html#anchor14
      */
     public Number multipleOf;
+
+    public Boolean getIsFormParam() {
+        return getBooleanValue(CodegenConstants.IS_FORM_PARAM_EXT_NAME);
+    }
+
+    public Boolean getIsQueryParam() {
+        return getBooleanValue(CodegenConstants.IS_QUERY_PARAM_EXT_NAME);
+    }
+
+    public Boolean getIsPathParam() {
+        return getBooleanValue(CodegenConstants.IS_PATH_PARAM_EXT_NAME);
+    }
+
+    public Boolean getIsHeaderParam() {
+        return getBooleanValue(CodegenConstants.IS_HEADER_PARAM_EXT_NAME);
+    }
+
+    public Boolean getIsCookieParam() {
+        return getBooleanValue(CodegenConstants.IS_COOKIE_PARAM_EXT_NAME);
+    }
+
+    public Boolean getIsBodyParam() {
+        return getBooleanValue(CodegenConstants.IS_BODY_PARAM_EXT_NAME);
+    }
     
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
