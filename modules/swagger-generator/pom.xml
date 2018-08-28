@@ -128,6 +128,13 @@
             </properties>
         </profile>
         <profile>
+            <id>release</id>
+            <properties>
+                <docker-latest-tag>latest</docker-latest-tag>
+                <dockerfile.tag.skip>false</dockerfile.tag.skip>
+            </properties>
+        </profile>
+        <profile>
             <id>docker</id>
             <properties>
                 <HIDDEN_OPTIONS_DEFAULT_PATH>hiddenOptions.yaml</HIDDEN_OPTIONS_DEFAULT_PATH>
@@ -241,13 +248,13 @@
                         <version>1.4.3</version>
                         <executions>
                             <execution>
-                                <id>default</id>
+                                <id>build</id>
                                 <goals>
                                     <goal>build</goal>
                                 </goals>
                                 <configuration>
                                     <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>${project.version}</tag>
+                                    <tag>${docker-latest-tag}</tag>
                                     <buildArgs>
                                         <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
                                         <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
@@ -259,12 +266,20 @@
                                 <id>tag</id>
                                 <goals>
                                     <goal>tag</goal>
-                                    <!-- TODO skip for now until clarified -->
-                                    <!--<goal>push</goal>-->
                                 </goals>
                                 <configuration>
                                     <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>push</id>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${docker-latest-tag}</tag>
                                 </configuration>
                             </execution>
                         </executions>
@@ -307,6 +322,8 @@
         </dependency>
     </dependencies>
     <properties>
+        <dockerfile.tag.skip>true</dockerfile.tag.skip>
+        <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.4.11.v20180605</jetty-version>
         <inflector-version>2.0.0-rc2</inflector-version>
