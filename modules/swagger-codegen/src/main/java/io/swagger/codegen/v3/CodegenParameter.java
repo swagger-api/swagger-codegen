@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.List;
 
 public class CodegenParameter extends CodegenObject {
-    public boolean secondaryParam, notFile;
+    public boolean secondaryParam;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
           collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
 
@@ -94,7 +94,6 @@ public class CodegenParameter extends CodegenObject {
     
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
-        output.notFile = this.notFile;
         output.secondaryParam = this.secondaryParam;
         output.baseName = this.baseName;
         output.paramName = this.paramName;
@@ -177,8 +176,6 @@ public class CodegenParameter extends CodegenObject {
             return false;
         if (jsonSchema != null ? !jsonSchema.equals(that.jsonSchema) : that.jsonSchema != null)
             return false;
-        if (notFile != that.notFile)
-            return false;
         if (_enum != null ? !_enum.equals(that._enum) : that._enum != null)
             return false;
         if (allowableValues != null ? !allowableValues.equals(that.allowableValues) : that.allowableValues != null)
@@ -229,7 +226,6 @@ public class CodegenParameter extends CodegenObject {
         result = 31 * result + (defaultValue != null ? defaultValue.hashCode() : 0);
         result = 31 * result + (example != null ? example.hashCode() : 0);
         result = 31 * result + (jsonSchema != null ? jsonSchema.hashCode() : 0);
-        result = 31 * result + (notFile ? 13:31);
         result = 31 * result + (_enum != null ? _enum.hashCode() : 0);
         result = 31 * result + (allowableValues != null ? allowableValues.hashCode() : 0);
         result = 31 * result + (items != null ? items.hashCode() : 0);
@@ -305,8 +301,8 @@ public class CodegenParameter extends CodegenObject {
         return jsonSchema;
     }
 
-    public boolean getIsNotFile() {
-        return notFile;
+    public boolean getNotFile() {
+        return !getIsFile();
     }
 
     public List<String> get_enum() {
