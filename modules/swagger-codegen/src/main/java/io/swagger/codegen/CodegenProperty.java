@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen;
+
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +46,10 @@ public class CodegenProperty {
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
     public CodegenModel codegenModel;
+
+    public String getTypeScriptType() {
+        return PureCloudJavaScriptClientCodegen.getTypeScriptResponseType(datatype);
+    }
 
     @Override
     public String toString() {

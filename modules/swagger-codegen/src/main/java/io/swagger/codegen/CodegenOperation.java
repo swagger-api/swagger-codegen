@@ -2,6 +2,8 @@ package io.swagger.codegen;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen;
 import io.swagger.models.ExternalDocs;
 
 import java.util.ArrayList;
@@ -39,6 +41,25 @@ public class CodegenOperation {
     public String nickname; // legacy support
     public String operationIdLowerCase; // for mardown documentation
     public Boolean deprecated;
+
+
+    public String getTypeScriptResponseType() {
+        CodegenResponse defaultResponseType = null;
+
+        // Find the default response. Should be a 2xx response
+        for (CodegenResponse cr : responses) {
+            if (cr.isDefault) {
+                defaultResponseType = cr;
+                break;
+            }
+        }
+
+        // No default means the 2xx response doesn't have a body
+        if (defaultResponseType == null || defaultResponseType.dataType == null)
+            return "void";
+
+        return PureCloudJavaScriptClientCodegen.getTypeScriptResponseType(defaultResponseType.dataType);
+    }
 
 
     /**

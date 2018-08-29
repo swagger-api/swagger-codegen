@@ -1,5 +1,6 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen;
 import io.swagger.models.Model;
 
 import java.util.ArrayList;
@@ -44,6 +45,21 @@ public class CodegenParameter {
             this.Item1 = item1;
             this.Item2 = item2;
         }
+    }
+
+    public String getTypeScriptType() {
+        String computedDataType = dataType;
+
+        // Body params have dataType of Object since the JS SDK doesn't use models (see PureCloudJavaScriptClientCodegen::setParameterExampleValue()),
+        // but the typescript model should have the actual type
+        if (isBodyParam != null && isBodyParam && dataType != null && dataType.equals("Object")) {
+            computedDataType = baseType;
+            if (isContainer != null && isContainer  && !computedDataType.startsWith("[")) {
+                computedDataType = "[" + computedDataType + "]";
+            }
+        }
+
+        return PureCloudJavaScriptClientCodegen.getTypeScriptResponseType(computedDataType);
     }
 
     /**
