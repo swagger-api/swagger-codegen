@@ -62,6 +62,7 @@ void Tag::fromJson(web::json::value& val)
     {
         setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
     }
+
 }
 
 void Tag::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -112,6 +113,7 @@ void Tag::setId(int64_t value)
     m_Id = value;
     m_IdIsSet = true;
 }
+
 bool Tag::idIsSet() const
 {
     return m_IdIsSet;
@@ -120,6 +122,11 @@ bool Tag::idIsSet() const
 void Tag::unsetId()
 {
     m_IdIsSet = false;
+}
+
+std::shared_ptr<int64_t> Tag::getNewidInstance()
+{
+    return std::make_shared<int64_t>();
 }
 
 utility::string_t Tag::getName() const
@@ -133,6 +140,7 @@ void Tag::setName(utility::string_t value)
     m_Name = value;
     m_NameIsSet = true;
 }
+
 bool Tag::nameIsSet() const
 {
     return m_NameIsSet;
@@ -141,6 +149,11 @@ bool Tag::nameIsSet() const
 void Tag::unsetName()
 {
     m_NameIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> Tag::getNewnameInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 }

@@ -102,6 +102,7 @@ void Order::fromJson(web::json::value& val)
     {
         setComplete(ModelBase::boolFromJson(val[utility::conversions::to_string_t("complete")]));
     }
+
 }
 
 void Order::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -185,6 +186,7 @@ void Order::setId(int64_t value)
     m_Id = value;
     m_IdIsSet = true;
 }
+
 bool Order::idIsSet() const
 {
     return m_IdIsSet;
@@ -193,6 +195,11 @@ bool Order::idIsSet() const
 void Order::unsetId()
 {
     m_IdIsSet = false;
+}
+
+std::shared_ptr<int64_t> Order::getNewidInstance()
+{
+    return std::make_shared<int64_t>();
 }
 
 int64_t Order::getPetId() const
@@ -206,6 +213,7 @@ void Order::setPetId(int64_t value)
     m_PetId = value;
     m_PetIdIsSet = true;
 }
+
 bool Order::petIdIsSet() const
 {
     return m_PetIdIsSet;
@@ -214,6 +222,11 @@ bool Order::petIdIsSet() const
 void Order::unsetPetId()
 {
     m_PetIdIsSet = false;
+}
+
+std::shared_ptr<int64_t> Order::getNewpetIdInstance()
+{
+    return std::make_shared<int64_t>();
 }
 
 int32_t Order::getQuantity() const
@@ -227,6 +240,7 @@ void Order::setQuantity(int32_t value)
     m_Quantity = value;
     m_QuantityIsSet = true;
 }
+
 bool Order::quantityIsSet() const
 {
     return m_QuantityIsSet;
@@ -235,6 +249,11 @@ bool Order::quantityIsSet() const
 void Order::unsetQuantity()
 {
     m_QuantityIsSet = false;
+}
+
+std::shared_ptr<int32_t> Order::getNewquantityInstance()
+{
+    return std::make_shared<int32_t>();
 }
 
 utility::datetime Order::getShipDate() const
@@ -248,6 +267,7 @@ void Order::setShipDate(utility::datetime value)
     m_ShipDate = value;
     m_ShipDateIsSet = true;
 }
+
 bool Order::shipDateIsSet() const
 {
     return m_ShipDateIsSet;
@@ -256,6 +276,11 @@ bool Order::shipDateIsSet() const
 void Order::unsetShipDate()
 {
     m_ShipDateIsSet = false;
+}
+
+std::shared_ptr<utility::datetime> Order::getNewshipDateInstance()
+{
+    return std::make_shared<utility::datetime>();
 }
 
 utility::string_t Order::getStatus() const
@@ -269,6 +294,7 @@ void Order::setStatus(utility::string_t value)
     m_Status = value;
     m_StatusIsSet = true;
 }
+
 bool Order::statusIsSet() const
 {
     return m_StatusIsSet;
@@ -277,6 +303,11 @@ bool Order::statusIsSet() const
 void Order::unsetStatus()
 {
     m_StatusIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> Order::getNewstatusInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 bool Order::isComplete() const
@@ -290,6 +321,7 @@ void Order::setComplete(bool value)
     m_Complete = value;
     m_CompleteIsSet = true;
 }
+
 bool Order::completeIsSet() const
 {
     return m_CompleteIsSet;
@@ -298,6 +330,11 @@ bool Order::completeIsSet() const
 void Order::unsetComplete()
 {
     m_CompleteIsSet = false;
+}
+
+std::shared_ptr<bool> Order::getNewcompleteInstance()
+{
+    return std::make_shared<bool>();
 }
 
 }

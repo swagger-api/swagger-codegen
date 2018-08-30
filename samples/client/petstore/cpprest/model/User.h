@@ -20,7 +20,8 @@
 #define IO_SWAGGER_CLIENT_MODEL_User_H_
 
 
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -60,6 +61,9 @@ public:
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
+    
+    std::shared_ptr<int64_t> getNewidInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -67,6 +71,9 @@ public:
     bool usernameIsSet() const;
     void unsetUsername();
     void setUsername(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewusernameInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -74,6 +81,9 @@ public:
     bool firstNameIsSet() const;
     void unsetFirstName();
     void setFirstName(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewfirstNameInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -81,6 +91,9 @@ public:
     bool lastNameIsSet() const;
     void unsetLastName();
     void setLastName(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewlastNameInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -88,6 +101,9 @@ public:
     bool emailIsSet() const;
     void unsetEmail();
     void setEmail(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewemailInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -95,6 +111,9 @@ public:
     bool passwordIsSet() const;
     void unsetPassword();
     void setPassword(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewpasswordInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -102,6 +121,9 @@ public:
     bool phoneIsSet() const;
     void unsetPhone();
     void setPhone(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewphoneInstance();
+       
     /// <summary>
     /// User Status
     /// </summary>
@@ -109,6 +131,9 @@ public:
     bool userStatusIsSet() const;
     void unsetUserStatus();
     void setUserStatus(int32_t value);
+    
+    std::shared_ptr<int32_t> getNewuserStatusInstance();
+       
 
 protected:
     int64_t m_Id;

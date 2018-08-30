@@ -20,7 +20,8 @@
 #define IO_SWAGGER_CLIENT_MODEL_Category_H_
 
 
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -60,6 +61,9 @@ public:
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
+    
+    std::shared_ptr<int64_t> getNewidInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -67,6 +71,9 @@ public:
     bool nameIsSet() const;
     void unsetName();
     void setName(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewnameInstance();
+       
 
 protected:
     int64_t m_Id;

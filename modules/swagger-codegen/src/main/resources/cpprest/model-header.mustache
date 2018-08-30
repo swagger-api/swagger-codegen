@@ -10,7 +10,8 @@
 
 {{^parent}}
 {{{defaultInclude}}}
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 {{/parent}}
 
 {{#imports}}{{{this}}}
@@ -55,6 +56,19 @@ public:
     void unset{{name}}();
     {{/required}}
     void {{setter}}({{{datatype}}} value);
+    
+    {{#isString}}
+    std::shared_ptr<{{{datatype}}}> getNew{{nameInCamelCase}}Instance();
+    {{/isString}}
+    {{#isContainer}}
+    std::shared_ptr<{{{datatype}}}> getNew{{nameInCamelCase}}Instance();
+    {{/isContainer}}
+    {{^isString}}
+    {{^isContainer}}
+    std::shared_ptr<{{baseType}}> getNew{{nameInCamelCase}}Instance();
+    {{/isContainer}}
+    {{/isString}}
+       
     {{/isInherited}}
     {{/vars}}
 

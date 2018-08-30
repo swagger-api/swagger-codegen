@@ -89,7 +89,7 @@ void Pet::fromJson(web::json::value& val)
     {
         if(!val[utility::conversions::to_string_t("category")].is_null())
         {
-            std::shared_ptr<Category> newItem(new Category());
+            std::shared_ptr<Category> newItem = getNewcategoryInstance();
             newItem->fromJson(val[utility::conversions::to_string_t("category")]);
             setCategory( newItem );
         }
@@ -127,6 +127,7 @@ void Pet::fromJson(web::json::value& val)
     {
         setStatus(ModelBase::stringFromJson(val[utility::conversions::to_string_t("status")]));
     }
+
 }
 
 void Pet::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -246,6 +247,7 @@ void Pet::setId(int64_t value)
     m_Id = value;
     m_IdIsSet = true;
 }
+
 bool Pet::idIsSet() const
 {
     return m_IdIsSet;
@@ -254,6 +256,11 @@ bool Pet::idIsSet() const
 void Pet::unsetId()
 {
     m_IdIsSet = false;
+}
+
+std::shared_ptr<int64_t> Pet::getNewidInstance()
+{
+    return std::make_shared<int64_t>();
 }
 
 std::shared_ptr<Category> Pet::getCategory() const
@@ -267,6 +274,7 @@ void Pet::setCategory(std::shared_ptr<Category> value)
     m_Category = value;
     m_CategoryIsSet = true;
 }
+
 bool Pet::categoryIsSet() const
 {
     return m_CategoryIsSet;
@@ -275,6 +283,11 @@ bool Pet::categoryIsSet() const
 void Pet::unsetCategory()
 {
     m_CategoryIsSet = false;
+}
+
+std::shared_ptr<Category> Pet::getNewcategoryInstance()
+{
+    return std::make_shared<Category>();
 }
 
 utility::string_t Pet::getName() const
@@ -288,6 +301,7 @@ void Pet::setName(utility::string_t value)
     m_Name = value;
     
 }
+
 std::vector<utility::string_t>& Pet::getPhotoUrls()
 {
     return m_PhotoUrls;
@@ -298,6 +312,7 @@ void Pet::setPhotoUrls(std::vector<utility::string_t> value)
     m_PhotoUrls = value;
     
 }
+
 std::vector<std::shared_ptr<Tag>>& Pet::getTags()
 {
     return m_Tags;
@@ -308,6 +323,7 @@ void Pet::setTags(std::vector<std::shared_ptr<Tag>> value)
     m_Tags = value;
     m_TagsIsSet = true;
 }
+
 bool Pet::tagsIsSet() const
 {
     return m_TagsIsSet;
@@ -316,6 +332,11 @@ bool Pet::tagsIsSet() const
 void Pet::unsetTags()
 {
     m_TagsIsSet = false;
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<Tag>>> Pet::getNewtagsInstance()
+{
+    return std::make_shared<std::vector<std::shared_ptr<Tag>>>();
 }
 
 utility::string_t Pet::getStatus() const
@@ -329,6 +350,7 @@ void Pet::setStatus(utility::string_t value)
     m_Status = value;
     m_StatusIsSet = true;
 }
+
 bool Pet::statusIsSet() const
 {
     return m_StatusIsSet;
@@ -337,6 +359,11 @@ bool Pet::statusIsSet() const
 void Pet::unsetStatus()
 {
     m_StatusIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> Pet::getNewstatusInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 }

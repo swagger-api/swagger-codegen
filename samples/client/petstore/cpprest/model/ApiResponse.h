@@ -20,7 +20,8 @@
 #define IO_SWAGGER_CLIENT_MODEL_ApiResponse_H_
 
 
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -60,6 +61,9 @@ public:
     bool codeIsSet() const;
     void unsetCode();
     void setCode(int32_t value);
+    
+    std::shared_ptr<int32_t> getNewcodeInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -67,6 +71,9 @@ public:
     bool typeIsSet() const;
     void unsetType();
     void setType(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewtypeInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -74,6 +81,9 @@ public:
     bool messageIsSet() const;
     void unsetMessage();
     void setMessage(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewmessageInstance();
+       
 
 protected:
     int32_t m_Code;

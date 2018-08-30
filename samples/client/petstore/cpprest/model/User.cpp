@@ -122,6 +122,7 @@ void User::fromJson(web::json::value& val)
     {
         setUserStatus(ModelBase::int32_tFromJson(val[utility::conversions::to_string_t("userStatus")]));
     }
+
 }
 
 void User::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -225,6 +226,7 @@ void User::setId(int64_t value)
     m_Id = value;
     m_IdIsSet = true;
 }
+
 bool User::idIsSet() const
 {
     return m_IdIsSet;
@@ -233,6 +235,11 @@ bool User::idIsSet() const
 void User::unsetId()
 {
     m_IdIsSet = false;
+}
+
+std::shared_ptr<int64_t> User::getNewidInstance()
+{
+    return std::make_shared<int64_t>();
 }
 
 utility::string_t User::getUsername() const
@@ -246,6 +253,7 @@ void User::setUsername(utility::string_t value)
     m_Username = value;
     m_UsernameIsSet = true;
 }
+
 bool User::usernameIsSet() const
 {
     return m_UsernameIsSet;
@@ -254,6 +262,11 @@ bool User::usernameIsSet() const
 void User::unsetUsername()
 {
     m_UsernameIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewusernameInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getFirstName() const
@@ -267,6 +280,7 @@ void User::setFirstName(utility::string_t value)
     m_FirstName = value;
     m_FirstNameIsSet = true;
 }
+
 bool User::firstNameIsSet() const
 {
     return m_FirstNameIsSet;
@@ -275,6 +289,11 @@ bool User::firstNameIsSet() const
 void User::unsetFirstName()
 {
     m_FirstNameIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewfirstNameInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getLastName() const
@@ -288,6 +307,7 @@ void User::setLastName(utility::string_t value)
     m_LastName = value;
     m_LastNameIsSet = true;
 }
+
 bool User::lastNameIsSet() const
 {
     return m_LastNameIsSet;
@@ -296,6 +316,11 @@ bool User::lastNameIsSet() const
 void User::unsetLastName()
 {
     m_LastNameIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewlastNameInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getEmail() const
@@ -309,6 +334,7 @@ void User::setEmail(utility::string_t value)
     m_Email = value;
     m_EmailIsSet = true;
 }
+
 bool User::emailIsSet() const
 {
     return m_EmailIsSet;
@@ -317,6 +343,11 @@ bool User::emailIsSet() const
 void User::unsetEmail()
 {
     m_EmailIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewemailInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getPassword() const
@@ -330,6 +361,7 @@ void User::setPassword(utility::string_t value)
     m_Password = value;
     m_PasswordIsSet = true;
 }
+
 bool User::passwordIsSet() const
 {
     return m_PasswordIsSet;
@@ -338,6 +370,11 @@ bool User::passwordIsSet() const
 void User::unsetPassword()
 {
     m_PasswordIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewpasswordInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t User::getPhone() const
@@ -351,6 +388,7 @@ void User::setPhone(utility::string_t value)
     m_Phone = value;
     m_PhoneIsSet = true;
 }
+
 bool User::phoneIsSet() const
 {
     return m_PhoneIsSet;
@@ -359,6 +397,11 @@ bool User::phoneIsSet() const
 void User::unsetPhone()
 {
     m_PhoneIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> User::getNewphoneInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 int32_t User::getUserStatus() const
@@ -372,6 +415,7 @@ void User::setUserStatus(int32_t value)
     m_UserStatus = value;
     m_UserStatusIsSet = true;
 }
+
 bool User::userStatusIsSet() const
 {
     return m_UserStatusIsSet;
@@ -380,6 +424,11 @@ bool User::userStatusIsSet() const
 void User::unsetUserStatus()
 {
     m_UserStatusIsSet = false;
+}
+
+std::shared_ptr<int32_t> User::getNewuserStatusInstance()
+{
+    return std::make_shared<int32_t>();
 }
 
 }

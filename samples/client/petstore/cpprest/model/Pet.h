@@ -20,7 +20,8 @@
 #define IO_SWAGGER_CLIENT_MODEL_Pet_H_
 
 
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 
 #include "Tag.h"
 #include <cpprest/details/basic_types.h>
@@ -63,6 +64,9 @@ public:
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
+    
+    std::shared_ptr<int64_t> getNewidInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -70,16 +74,25 @@ public:
     bool categoryIsSet() const;
     void unsetCategory();
     void setCategory(std::shared_ptr<Category> value);
+    
+    std::shared_ptr<Category> getNewcategoryInstance();
+       
     /// <summary>
     /// 
     /// </summary>
     utility::string_t getName() const;
         void setName(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewnameInstance();
+       
     /// <summary>
     /// 
     /// </summary>
     std::vector<utility::string_t>& getPhotoUrls();
         void setPhotoUrls(std::vector<utility::string_t> value);
+    
+    std::shared_ptr<std::vector<utility::string_t>> getNewphotoUrlsInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -87,6 +100,9 @@ public:
     bool tagsIsSet() const;
     void unsetTags();
     void setTags(std::vector<std::shared_ptr<Tag>> value);
+    
+    std::shared_ptr<std::vector<std::shared_ptr<Tag>>> getNewtagsInstance();
+       
     /// <summary>
     /// pet status in the store
     /// </summary>
@@ -94,6 +110,9 @@ public:
     bool statusIsSet() const;
     void unsetStatus();
     void setStatus(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewstatusInstance();
+       
 
 protected:
     int64_t m_Id;

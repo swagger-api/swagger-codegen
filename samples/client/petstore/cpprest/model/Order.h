@@ -20,7 +20,8 @@
 #define IO_SWAGGER_CLIENT_MODEL_Order_H_
 
 
-#include "../ModelBase.h"
+#include "ModelBase.h"
+#include "Object.h"
 
 #include <cpprest/details/basic_types.h>
 
@@ -60,6 +61,9 @@ public:
     bool idIsSet() const;
     void unsetId();
     void setId(int64_t value);
+    
+    std::shared_ptr<int64_t> getNewidInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -67,6 +71,9 @@ public:
     bool petIdIsSet() const;
     void unsetPetId();
     void setPetId(int64_t value);
+    
+    std::shared_ptr<int64_t> getNewpetIdInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -74,6 +81,9 @@ public:
     bool quantityIsSet() const;
     void unsetQuantity();
     void setQuantity(int32_t value);
+    
+    std::shared_ptr<int32_t> getNewquantityInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -81,6 +91,9 @@ public:
     bool shipDateIsSet() const;
     void unsetShipDate();
     void setShipDate(utility::datetime value);
+    
+    std::shared_ptr<utility::datetime> getNewshipDateInstance();
+       
     /// <summary>
     /// Order Status
     /// </summary>
@@ -88,6 +101,9 @@ public:
     bool statusIsSet() const;
     void unsetStatus();
     void setStatus(utility::string_t value);
+    
+    std::shared_ptr<utility::string_t> getNewstatusInstance();
+       
     /// <summary>
     /// 
     /// </summary>
@@ -95,6 +111,9 @@ public:
     bool completeIsSet() const;
     void unsetComplete();
     void setComplete(bool value);
+    
+    std::shared_ptr<bool> getNewcompleteInstance();
+       
 
 protected:
     int64_t m_Id;

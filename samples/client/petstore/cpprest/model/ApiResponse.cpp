@@ -72,6 +72,7 @@ void ApiResponse::fromJson(web::json::value& val)
     {
         setMessage(ModelBase::stringFromJson(val[utility::conversions::to_string_t("message")]));
     }
+
 }
 
 void ApiResponse::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -131,6 +132,7 @@ void ApiResponse::setCode(int32_t value)
     m_Code = value;
     m_CodeIsSet = true;
 }
+
 bool ApiResponse::codeIsSet() const
 {
     return m_CodeIsSet;
@@ -139,6 +141,11 @@ bool ApiResponse::codeIsSet() const
 void ApiResponse::unsetCode()
 {
     m_CodeIsSet = false;
+}
+
+std::shared_ptr<int32_t> ApiResponse::getNewcodeInstance()
+{
+    return std::make_shared<int32_t>();
 }
 
 utility::string_t ApiResponse::getType() const
@@ -152,6 +159,7 @@ void ApiResponse::setType(utility::string_t value)
     m_Type = value;
     m_TypeIsSet = true;
 }
+
 bool ApiResponse::typeIsSet() const
 {
     return m_TypeIsSet;
@@ -160,6 +168,11 @@ bool ApiResponse::typeIsSet() const
 void ApiResponse::unsetType()
 {
     m_TypeIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> ApiResponse::getNewtypeInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 utility::string_t ApiResponse::getMessage() const
@@ -173,6 +186,7 @@ void ApiResponse::setMessage(utility::string_t value)
     m_Message = value;
     m_MessageIsSet = true;
 }
+
 bool ApiResponse::messageIsSet() const
 {
     return m_MessageIsSet;
@@ -181,6 +195,11 @@ bool ApiResponse::messageIsSet() const
 void ApiResponse::unsetMessage()
 {
     m_MessageIsSet = false;
+}
+
+std::shared_ptr<utility::string_t> ApiResponse::getNewmessageInstance()
+{
+    return std::make_shared<utility::string_t>();
 }
 
 }
