@@ -290,6 +290,11 @@
     </profiles>
     <dependencies>
         <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${swagger-parser-version-v1}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet-api.version}</version>
@@ -324,6 +329,7 @@
     <properties>
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
+        <swagger-parser-version-v1>1.0.38-SNAPSHOT</swagger-parser-version-v1>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.4.11.v20180605</jetty-version>
         <inflector-version>2.0.0-rc2</inflector-version>
