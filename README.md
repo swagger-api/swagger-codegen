@@ -109,6 +109,26 @@ On a mac, it's even easier with `brew`:
 brew install swagger-codegen
 ```
 
+For Ubuntu/Debian users, it is also easy by executing the following script:
+```
+# JAVA (needed for swagger)
+sudo apt install default-jre -y
+
+# SWAGGER
+if [ -f /usr/local/share/swagger-codegen/swagger-codegen-cli.jar ]; then
+  sudo rm /usr/local/share/swagger-codegen/swagger-codegen-cli.jar;
+else
+  sudo mkdir -p /usr/local/share/swagger-codegen
+fi;
+
+echo "Getting swagger-codegen-cli"
+sudo wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar -O /usr/local/share/swagger-codegen/swagger-codegen-cli.jar
+
+echo 'java -jar /usr/local/share/swagger-codegen/swagger-codegen-cli.jar $@' | sudo tee /usr/local/bin/swagger-codegen
+
+sudo chmod 0777 /usr/local/bin/swagger-codegen
+```
+
 To build from source, you need the following installed and available in your `$PATH:`
 
 * [Java 7 or 8](http://java.oracle.com)
