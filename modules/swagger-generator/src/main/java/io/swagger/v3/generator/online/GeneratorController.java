@@ -386,7 +386,7 @@ public class GeneratorController {
 
         final ZipUtil zipUtil = new ZipUtil();
         try {
-            zipUtil.compressFiles(Arrays.asList(outputContentFolder.listFiles()), outputFile.getAbsolutePath());
+            zipUtil.compressFiles(Arrays.asList(outputRootFolder.listFiles()), outputFile.getAbsolutePath());
         } catch (IOException e) {
             return new ResponseContext()
                     .status(500)
