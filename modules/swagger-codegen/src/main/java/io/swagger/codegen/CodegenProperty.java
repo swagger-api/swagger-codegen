@@ -44,6 +44,15 @@ public class CodegenProperty {
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
 
+    public CodegenProperty() {
+        // Initialize to prevent NPE
+        this.isInteger = false;
+        this.isLong = false;
+        this.isFloat = false;
+        this.isDouble = false;
+        this.isBoolean = false;
+    }
+
     @Override
     public String toString() {
         return String.format("%s(%s)", baseName, datatype);

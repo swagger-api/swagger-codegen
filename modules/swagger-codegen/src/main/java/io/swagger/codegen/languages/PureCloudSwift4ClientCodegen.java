@@ -7,12 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PureCloudSwiftClientCodegen extends SwiftCodegen {
+public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
     private static String OPERATION_ID_PROPERTY_NAME = "x-purecloud-method-name";
 
-    protected Logger LOGGER = LoggerFactory.getLogger(PureCloudSwiftClientCodegen.class);
+    protected Logger LOGGER = LoggerFactory.getLogger(PureCloudSwift4ClientCodegen.class);
 
-    public PureCloudSwiftClientCodegen() {
+    public PureCloudSwift4ClientCodegen() {
         super();
 
         // Use default templates

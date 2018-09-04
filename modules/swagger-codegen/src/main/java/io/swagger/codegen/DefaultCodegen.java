@@ -2728,7 +2728,7 @@ public class DefaultCodegen {
             m = p.matcher(word);
         }
 
-        if (lowercaseFirstLetter) {
+        if (lowercaseFirstLetter && !Objects.equals(word, "")) {
             word = word.substring(0, 1).toLowerCase() + word.substring(1);
         }
 
