@@ -156,9 +156,32 @@ cd /vagrant
  - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli-v3/ (official CLI)
 
 
-##### Swagger Generator Docker Image
+##### Swagger Generator  Docker Image
 
-The Swagger Generator image can act as a self-hosted web application and API for generating code.
+The Swagger Generator image provides a ready to use web application (swagger-generator) providing code generation services.
+
+Image accepts the following env variables:
+JAVA_MEM e.g. 1024m
+
+- `HTTP_PORT` e.g. `8080`
+- `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
+- `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
+e.g. `servers:foo,bar|clientsV3:wtf,isthis` where category can be `clients`, `servers`, `clientsV3`, `serversV3`
+
+An example of running the container:
+
+`docker pull swaggerapi/swagger-generator-v3`
+
+`docker run -e "HIDDEN_OPTIONS=servers:foo,bar|clientsV3:fgf,sdsd" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3`
+
+or
+
+`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3`
+
+##### Swagger Generator "Minimal" Docker Image
+
+The Swagger Generator "Minimal" image can act as a self-hosted web application and API for generating code.
+
 This container can be  incorporated into a CI pipeline, and requires some docker orchestration to access generated code.
 
 Example usage:
