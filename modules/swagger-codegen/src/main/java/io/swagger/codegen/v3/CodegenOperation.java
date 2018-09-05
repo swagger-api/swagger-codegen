@@ -36,7 +36,6 @@ public class CodegenOperation extends CodegenObject {
     public List<Map<String, String>> examples;
     public List<Map<String, String>> requestBodyExamples;
     public ExternalDocumentation externalDocs;
-    public Map<String, Object> vendorExtensions = new HashMap<>();
     public String nickname; // legacy support
     public String operationIdLowerCase; // for markdown documentation
     public String operationIdCamelCase; // for class names
