@@ -52,7 +52,7 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-[3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)(https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.0/)| 2018-09-05 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+[3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)(https://oss.sonatype.org/content/repositories/releases/io/swagger/codegen/v3/swagger-codegen-cli/3.0.0/)| 2018-09-06 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
 2.4.0 (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
 [2.3.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.1) (**current stable**) | 2018-01-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.1](https://github.com/swagger-api/swagger-codegen/tree/v2.3.1)
 [2.3.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.0) | 2017-12-21   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.0](https://github.com/swagger-api/swagger-codegen/tree/v2.3.0)
@@ -68,12 +68,12 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 8 runtime at a minimum):
 
 ```sh
-wget http://central.maven.org/maven2/io/swagge/codegen/v3/swagger-codegen-cli/3.0.0/swagger-codegen-cli-3.0.0.jar -O swagger-codegen-cli.jar
+wget http://central.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.0/swagger-codegen-cli-3.0.0.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
 
-For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagge/codegen/v3/swagger-codegen-cli/3.0.0/swagger-codegen-cli-3.0.0.jar`
+For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar http://central.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.0/swagger-codegen-cli-3.0.0.jar`
 
 On a mac, it's even easier with `brew`:
 ```sh
@@ -158,6 +158,7 @@ cd /vagrant
 
 ##### Swagger Generator  Docker Image
 
+See also [online generators](#online-generators)
 The Swagger Generator image provides a ready to use web application (swagger-generator) providing code generation services.
 
 Image accepts the following env variables:
@@ -180,6 +181,8 @@ or
 
 ##### Swagger Generator "Minimal" Docker Image
 
+See also [online generators](#online-generators)
+
 The Swagger Generator "Minimal" image can act as a self-hosted web application and API for generating code.
 
 This container can be  incorporated into a CI pipeline, and requires some docker orchestration to access generated code.
@@ -199,11 +202,9 @@ curl -X POST \
            -H 'content-type: application/json' \
            -d '{
            "specURL" : "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
-           "options" : {
-             "lang" : "jaxrs-jersey"
-           },
+           "lang" : "jaxrs-jersey",
            "type" : "SERVER",
-           "codegenVersion" : "v3"
+           "codegenVersion" : "V3"
          }' > result.zip
 # Shutdown the swagger generator image
 docker stop $CID && docker rm $CID
@@ -650,7 +651,13 @@ cd /var/tmp/perl/petstore
 
 ## Online generators
 
-One can also generate API client or server using the online generators (https://generator3.swagger.io)
+`swagger-generator` module exposes codegen as a web service, with it's own `swagger-js` based web UI, and available docker image `swaggerapi/swagger-generator-v3`
+Such web service is deployed at https://generator3.swagger.io/ui, or it can be easily deployed as docker container.
+
+The OpenAPI specification of generator service APIs are available either via UI exposed by web service (e.g. https://generator3.swagger.io/ui), as exposed YAML (https://generator3.swagger.io/openapi.json)
+or in source code repo (https://github.com/swagger-api/swagger-codegen/blob/3.0.0/modules/swagger-generator/src/main/resources/openapi.yaml)
+
+Please note that both V2 (for v2 specs) and V3 generators (for v3 and v2 specs converted during generation) are supported, by providing property `codegenVersion` (e.g `"codegenVersion" : "v3"`)
 
 For example, to generate a java API client, simply send the following HTTP request using curl:
 ```sh
@@ -663,7 +670,7 @@ curl -X POST \
     "lang" : "java"
   },
   "type" : "CLIENT",
-  "codegenVersion" : "v3"
+  "codegenVersion" : "V3"
 }'
 ```
 The response will contain a zipped file containing the generated code.
@@ -680,12 +687,12 @@ To customize the SDK, you can specify language specific options  with the follow
     }
   },
   "type" : "CLIENT",
-  "codegenVersion" : "v3"
+  "codegenVersion" : "V3"
 }
 ```
 in which the `options` `additionalProperties` for a language can be obtained by submitting a `GET` request to `https://generator3.swagger.io/api/options?language={language}&version={codegenVersion}`:
 
-For example, `curlhttps://generator3.swagger.io/api/options?language=java&version=v3` returns (truncated output):
+For example, `curlhttps://generator3.swagger.io/api/options?language=java&version=V3` returns (truncated output):
 
 ```json
 {
@@ -729,6 +736,28 @@ Instead of using `specURL` with an URL to the OpenAPI/Swagger spec, one can incl
   }
 }
 ```
+
+
+### Docker image (`swaggerapi/swagger-generator-v3`)
+
+Docker image accepts the following env variables:
+
+- `JAVA_MEM` e.g. `1024m`
+- `HTTP_PORT` e.g. `8080`
+- `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
+- `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
+e.g. `servers:foo,bar|clientsV3:wtf,isthis` where `category` can be `clients`, `servers`, `clientsV3`, `serversV3`
+
+An example of running the container:
+
+`docker run -e "HIDDEN_OPTIONS=servers:foo,bar|clientsV3:fgf,sdsd" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3:3.0.0`
+
+or
+
+`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3:3.0.0`
+
+
+
 
 Guidelines for Contribution
 ---------------------------
