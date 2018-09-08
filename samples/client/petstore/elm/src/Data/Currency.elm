@@ -11,7 +11,7 @@
 -}
 
 
-module Data.Tag exposing (Tag, tagDecoder, tagEncoder)
+module Data.Currency exposing (Currency, currencyDecoder, currencyEncoder)
 
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (optional, required)
@@ -20,29 +20,19 @@ import Maybe exposing (map, withDefault)
 
 
 {-
-   A tag for a pet
+   some description 
 -}
 
 
-type alias Tag =
-    { id : Maybe Int
-    , name : Maybe String
-    }
+type alias Currency
+    = String
 
 
-tagDecoder : Decoder Tag
-tagDecoder =
-    Decode.succeed Tag
-        |> optional "id" (Decode.nullable Decode.int) Nothing
-        |> optional "name" (Decode.nullable Decode.string) Nothing
+currencyDecoder : Decoder Currency
+currencyDecoder =
+    Decode.string
 
 
-
-tagEncoder : Tag -> Encode.Value
-tagEncoder model =
-    Encode.object
-        [ ( "id", withDefault Encode.null (map (Encode.int) model.id) )
-        , ( "name", withDefault Encode.null (map (Encode.string) model.name) )
-        ]
-
-
+currencyEncoder : Currency -> Encode.Value
+currencyEncoder =
+    Encode.string

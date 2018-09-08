@@ -1,7 +1,6 @@
 module DateOnly exposing (DateOnly, dateOnlyDecoder, dateOnlyEncoder)
 
-import Date
-import Date.Extra exposing (fromIsoString, toFormattedString)
+import Date exposing (format, fromIsoString)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
 
@@ -18,7 +17,7 @@ dateOnlyDecoder =
 
 dateOnlyEncoder : DateOnly -> Encode.Value
 dateOnlyEncoder model =
-    Encode.string <| toFormattedString "yyyy-MM-dd" model
+    Encode.string <| format "yyyy-MM-dd" model
 
 
 decodeIsoString : String -> Decoder DateOnly

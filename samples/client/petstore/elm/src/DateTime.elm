@@ -1,13 +1,13 @@
 module DateTime exposing (DateTime, dateTimeDecoder, dateTimeEncoder)
 
-import Date
-import Date.Extra exposing (fromIsoString, toIsoString)
+import Iso8601 exposing (fromTime, toTime)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode
+import Time exposing (Posix)
 
 
 type alias DateTime =
-    Date.Date
+    Posix
 
 
 dateTimeDecoder : Decoder DateTime
@@ -18,16 +18,16 @@ dateTimeDecoder =
 
 dateTimeEncoder : DateTime -> Encode.Value
 dateTimeEncoder model =
-    Encode.string <| toIsoString model
+    Encode.string <| fromTime model
 
 
 decodeIsoString : String -> Decoder DateTime
 decodeIsoString str =
-    case fromIsoString str of
-        Just date ->
+    case toTime str of
+        Ok date ->
             Decode.succeed date
 
-        Nothing ->
+        Err e ->
             Decode.fail <|
                 "Cannot convert "
                     ++ str

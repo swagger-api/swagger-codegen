@@ -15,7 +15,7 @@ module Data.Order exposing (Order, Status(..), orderDecoder, orderEncoder)
 
 import DateTime exposing (DateTime, dateTimeDecoder, dateTimeEncoder)
 import Json.Decode as Decode exposing (Decoder)
-import Json.Decode.Pipeline exposing (decode, optional, required)
+import Json.Decode.Pipeline exposing (optional, required)
 import Json.Encode as Encode
 import Maybe exposing (map, withDefault)
 
@@ -44,7 +44,7 @@ type Status
 
 orderDecoder : Decoder Order
 orderDecoder =
-    decode Order
+    Decode.succeed Order
         |> optional "id" (Decode.nullable Decode.int) Nothing
         |> optional "petId" (Decode.nullable Decode.int) Nothing
         |> optional "quantity" (Decode.nullable Decode.int) Nothing
@@ -57,12 +57,12 @@ orderDecoder =
 orderEncoder : Order -> Encode.Value
 orderEncoder model =
     Encode.object
-        [ ( "id", withDefault Encode.null (map Encode.int model.id) )
-        , ( "petId", withDefault Encode.null (map Encode.int model.petId) )
-        , ( "quantity", withDefault Encode.null (map Encode.int model.quantity) )
-        , ( "shipDate", withDefault Encode.null (map dateTimeEncoder model.shipDate) )
-        , ( "status", withDefault Encode.null (map statusEncoder model.status) )
-        , ( "complete", withDefault Encode.null (map Encode.bool model.complete) )
+        [ ( "id", withDefault Encode.null (map (Encode.int) model.id) )
+        , ( "petId", withDefault Encode.null (map (Encode.int) model.petId) )
+        , ( "quantity", withDefault Encode.null (map (Encode.int) model.quantity) )
+        , ( "shipDate", withDefault Encode.null (map (dateTimeEncoder) model.shipDate) )
+        , ( "status", withDefault Encode.null (map (statusEncoder) model.status) )
+        , ( "complete", withDefault Encode.null (map (Encode.bool) model.complete) )
         ]
 
 

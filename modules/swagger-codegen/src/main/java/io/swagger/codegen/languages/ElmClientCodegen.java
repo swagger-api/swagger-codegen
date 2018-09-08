@@ -132,7 +132,7 @@ public class ElmClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("DateTime.mustache", "src", "DateTime.elm"));
         supportingFiles.add(new SupportingFile("Main.mustache", "src", "Main.elm"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("elm-package.mustache", "", "elm-package.json"));
+        supportingFiles.add(new SupportingFile("elm.mustache", "", "elm.json"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
     }
 
@@ -374,8 +374,7 @@ public class ElmClientCodegen extends DefaultCodegen implements CodegenConfig {
         for (CodegenOperation op : ops) {
             String path = op.path;
             for (CodegenParameter param : op.pathParams) {
-              final String var = param.isString ? param.paramName : "toString " + param.paramName;
-                path = path.replace("{" + param.paramName + "}", "\" ++ " + var + " ++ \"");
+              path = path.replace("{" + param.paramName + "}", "\" ++ " + convertToString(param) + " ++ \"");
             }
             op.path = ("\"" + path + "\"").replaceAll(" \\+\\+ \"\"", "");
 
@@ -412,6 +411,17 @@ public class ElmClientCodegen extends DefaultCodegen implements CodegenConfig {
         operations.put("elmImports", elmImports);
 
         return operations;
+    }
+
+    private String convertToString(CodegenParameter param){
+        String converter = "";
+        if (param.isInteger){
+            converter = "String.fromInt ";
+        }
+        else if (param.isFloat){
+            converter = "String.fromFloat ";
+        }
+        return converter + param.paramName;
     }
 
     @Override
