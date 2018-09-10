@@ -19,7 +19,7 @@ class UserApi extends _$UserApiClient implements ApiClient {
     /// Create user
     ///
     /// This can only be done by the logged in user.
-    @PostReq(path: '/user')
+    @PostReq(path: "/user")
     Future<void> createUser(
         
         @AsJson() User body
@@ -28,7 +28,7 @@ class UserApi extends _$UserApiClient implements ApiClient {
     /// Creates list of users with given input array
     ///
     /// 
-    @PostReq(path: '/user/createWithArray')
+    @PostReq(path: "/user/createWithArray")
     Future<void> createUsersWithArrayInput(
         
         @AsJson() List<User> body
@@ -37,7 +37,7 @@ class UserApi extends _$UserApiClient implements ApiClient {
     /// Creates list of users with given input array
     ///
     /// 
-    @PostReq(path: '/user/createWithList')
+    @PostReq(path: "/user/createWithList")
     Future<void> createUsersWithListInput(
         
         @AsJson() List<User> body
@@ -46,23 +46,23 @@ class UserApi extends _$UserApiClient implements ApiClient {
     /// Delete user
     ///
     /// This can only be done by the logged in user.
-    @DeleteReq(path: '/user/:username')
+    @DeleteReq(path: "/user/:username")
     Future<void> deleteUser(
-        String username
+            @PathParam("username") String username
     );
 
     /// Get user by user name
     ///
     /// 
-    @GetReq(path: '/user/:username')
+    @GetReq(path: "/user/:username")
     Future<User> getUserByName(
-        String username
+            @PathParam("username") String username
     );
 
     /// Logs user into the system
     ///
     /// 
-    @GetReq(path: '/user/login')
+    @GetReq(path: "/user/login")
     Future<String> loginUser(
         
         @QueryParam("username") String username, 
@@ -73,16 +73,16 @@ class UserApi extends _$UserApiClient implements ApiClient {
     /// Logs out current logged in user session
     ///
     /// 
-    @GetReq(path: '/user/logout')
+    @GetReq(path: "/user/logout")
     Future<void> logoutUser(
     );
 
     /// Updated user
     ///
     /// This can only be done by the logged in user.
-    @PutReq(path: '/user/:username')
+    @PutReq(path: "/user/:username")
     Future<void> updateUser(
-        String username
+            @PathParam("username") String username
         ,
         @AsJson() User body
     );

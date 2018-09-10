@@ -51,7 +51,7 @@ abstract class _$UserApiClient implements ApiClient {
         .path("/user/login")
         .query("username", username)
         .query("password", password);
-    return req.one(convert: serializers.oneFrom);
+    return req.one();
   }
 
   Future<void> logoutUser() async {

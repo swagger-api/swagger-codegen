@@ -17,8 +17,20 @@ abstract class _$StoreApiClient implements ApiClient {
   }
 
   Future<Map<String, int>> getInventory() async {
-    var req = base.get.path(basePath).path("/store/inventory");
-    return serializers.from(await req.go().body);
+    var req = base.get
+        .metadata({
+          "auth": [
+            {
+              "type": "apiKey",
+              "name": "api_key",
+              "keyName": "api_key",
+              "where": "header",
+            }
+          ],
+        })
+        .path(basePath)
+        .path("/store/inventory");
+    return req.one().then((v) => serializers.mapFrom<int>(v));
   }
 
   Future<Order> getOrderById(int orderId) async {
