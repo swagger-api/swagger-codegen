@@ -8,6 +8,7 @@ import io.swagger.codegen.ClientOpts;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.auth.AuthParser;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
@@ -64,6 +65,8 @@ public class CodegenConfigurator implements Serializable {
     private Map<String, String> importMappings = new HashMap<String, String>();
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
     private Map<String, String>  reservedWordMappings = new HashMap<String, String>();
+    private Map<String, String>  supportFilesMapping = new HashMap<String, String>();
+
 
     private String gitUserId="GIT_USER_ID";
     private String gitRepoId="GIT_REPO_ID";
@@ -400,6 +403,9 @@ public class CodegenConfigurator implements Serializable {
         config.importMapping().putAll(importMappings);
         config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
         config.reservedWordsMappings().putAll(reservedWordMappings);
+        for(String supportFileTemplate:supportFilesMapping.keySet()) {
+            config.supportingFiles().add(new SupportingFile(supportFileTemplate,supportFilesMapping.get(supportFileTemplate)));
+        }
 
         checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
         checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
@@ -510,6 +516,20 @@ public class CodegenConfigurator implements Serializable {
             }
         }
         return null;
+    }
+
+    public Map<String, String> getSupportFilesMapping() {
+        return supportFilesMapping;
+    }
+
+    public CodegenConfigurator setSupportFilesMapping(Map<String, String> supportFilesMapping) {
+        this.supportFilesMapping = supportFilesMapping;
+        return this;
+    }
+
+    public CodegenConfigurator addSupportFilesMapping(String key, String value) {
+        this.supportFilesMapping.put(key, value);
+        return this;
     }
 
 }

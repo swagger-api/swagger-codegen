@@ -19,7 +19,7 @@ public class CodegenOperation {
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
             isRestful, isDeprecated;
     public String path, operationId, returnType, httpMethod, returnBaseType,
-            returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
+            returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator, description;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
     public CodegenParameter bodyParam;
     public List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
@@ -314,6 +314,8 @@ public class CodegenOperation {
             return false;
         if ( operationIdLowerCase != null ? !operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase != null )
             return false;
+        if (description != null ? !description.equals(that.description) : that.description != null)
+            return false;
         return operationIdCamelCase != null ? operationIdCamelCase.equals(that.operationIdCamelCase) : that.operationIdCamelCase == null;
 
     }
@@ -370,6 +372,7 @@ public class CodegenOperation {
         result = 31 * result + (operationIdOriginal != null ? operationIdOriginal.hashCode() : 0);
         result = 31 * result + (operationIdLowerCase != null ? operationIdLowerCase.hashCode() : 0);
         result = 31 * result + (operationIdCamelCase != null ? operationIdCamelCase.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 }

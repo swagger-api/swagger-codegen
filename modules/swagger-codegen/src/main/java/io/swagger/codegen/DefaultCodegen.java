@@ -2063,6 +2063,7 @@ public class DefaultCodegen {
         op.path = path;
         op.operationId = toOperationId(operationId);
         op.summary = escapeText(operation.getSummary());
+        op.description = escapeText(operation.getDescription());
         op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
         op.hasConsumes = false;

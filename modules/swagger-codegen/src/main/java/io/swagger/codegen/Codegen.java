@@ -48,6 +48,8 @@ public class Codegen extends DefaultGenerator {
         options.addOption("d", "debug-info", false, "prints additional info for debugging");
         options.addOption("a", "auth", true, "adds authorization headers when fetching the swagger definitions remotely. Pass in a URL-encoded string of name:header with a comma separating multiple values");
         options.addOption("c", "config", true, "location of the configuration file");
+        options.addOption("m", "support", true, "location of the configuration file");
+
 
         ClientOptInput clientOptInput = new ClientOptInput();
         ClientOpts clientOpts = new ClientOpts();
