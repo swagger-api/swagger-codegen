@@ -123,7 +123,7 @@ public interface {{classname}} {
         {{#examples}}
             if (getAcceptHeader().get().contains("{{{contentType}}}")) {
                 try {
-                    String exampleString = "{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}";
+                    String exampleString = {{#lambdaSplitString}}{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{#lambdaTrimWhitespace}}{{{example}}}{{/lambdaTrimWhitespace}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}{{/lambdaSplitString}};
                     return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(getObjectMapper().get().readValue(exampleString, {{>exampleReturnTypes}}.class), HttpStatus.NOT_IMPLEMENTED){{#async}}){{/async}};
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type {{{contentType}}}", e);
