@@ -42,6 +42,8 @@ java $JAVA_OPTS -jar $executable $ags
 # The current petstore test will then work for both: the browser library and the vm library.
 
 cd samples/client/petstore/dart-jaguar/swagger
+pub get
 pub run build_runner build --delete-conflicting-outputs
 cd ../flutter_petstore/swagger
+pub get
 pub run build_runner build --delete-conflicting-outputs
