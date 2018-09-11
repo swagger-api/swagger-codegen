@@ -19,10 +19,11 @@ import io.swagger.client.{ApiInvoker, ApiException}
 import com.sun.jersey.multipart.FormDataMultiPart
 import com.sun.jersey.multipart.file.FileDataBodyPart
 
-import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.{MediaType, Response}
 
 import java.io.File
 import java.util.Date
+import java.util.TimeZone
 
 import scala.collection.mutable.HashMap
 
@@ -34,6 +35,7 @@ import java.net.URI
 
 import com.wordnik.swagger.client.ClientResponseReaders.Json4sFormatsReader._
 import com.wordnik.swagger.client.RequestWriters.Json4sFormatsWriter._
+import javax.ws.rs.core.Response.Status.Family
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
@@ -46,9 +48,18 @@ class FakeApi(
   val defBasePath: String = "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r",
   defApiInvoker: ApiInvoker = ApiInvoker
 ) {
-
+  private lazy val dateTimeFormatter = {
+    val formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+    formatter
+  }
+  private val dateFormatter = {
+    val formatter = new SimpleDateFormat("yyyy-MM-dd")
+    formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+    formatter
+  }
   implicit val formats = new org.json4s.DefaultFormats {
-    override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
+    override def dateFormatter = dateTimeFormatter
   }
   implicit val stringReader: ClientResponseReader[String] = ClientResponseReaders.StringReader
   implicit val unitReader: ClientResponseReader[Unit] = ClientResponseReaders.UnitReader
@@ -110,7 +121,11 @@ class FakeApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
 
     val resFuture = client.submit("PUT", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-      process(reader.read(resp))
+      val status = Response.Status.fromStatusCode(resp.statusCode)
+      status.getFamily match {
+        case Family.SUCCESSFUL => process(reader.read(resp))
+        case _ => throw new ApiException(resp.statusCode, resp.statusText)
+      }
     }
   }
 

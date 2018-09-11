@@ -20,7 +20,7 @@ import io.swagger.client.{ApiInvoker, ApiException}
 import com.sun.jersey.multipart.FormDataMultiPart
 import com.sun.jersey.multipart.file.FileDataBodyPart
 
-import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.{MediaType, Response}
 
 import java.io.File
 import java.util.Date
@@ -36,6 +36,7 @@ import java.net.URI
 
 import com.wordnik.swagger.client.ClientResponseReaders.Json4sFormatsReader._
 import com.wordnik.swagger.client.RequestWriters.Json4sFormatsWriter._
+import javax.ws.rs.core.Response.Status.Family
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
@@ -199,7 +200,11 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("DELETE", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-      process(reader.read(resp))
+      val status = Response.Status.fromStatusCode(resp.statusCode)
+      status.getFamily match {
+        case Family.SUCCESSFUL => process(reader.read(resp))
+        case _ => throw new ApiException(resp.statusCode, resp.statusText)
+      }
     }
   }
 
@@ -214,7 +219,11 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-      process(reader.read(resp))
+      val status = Response.Status.fromStatusCode(resp.statusCode)
+      status.getFamily match {
+        case Family.SUCCESSFUL => process(reader.read(resp))
+        case _ => throw new ApiException(resp.statusCode, resp.statusText)
+      }
     }
   }
 
@@ -230,7 +239,11 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-      process(reader.read(resp))
+      val status = Response.Status.fromStatusCode(resp.statusCode)
+      status.getFamily match {
+        case Family.SUCCESSFUL => process(reader.read(resp))
+        case _ => throw new ApiException(resp.statusCode, resp.statusText)
+      }
     }
   }
 
@@ -246,7 +259,11 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("POST", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-      process(reader.read(resp))
+      val status = Response.Status.fromStatusCode(resp.statusCode)
+      status.getFamily match {
+        case Family.SUCCESSFUL => process(reader.read(resp))
+        case _ => throw new ApiException(resp.statusCode, resp.statusText)
+      }
     }
   }
 
