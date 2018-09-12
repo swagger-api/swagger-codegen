@@ -22,6 +22,7 @@ public class CodegenParameter {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
+    public String enumName;
 
     public Map<String, Object> getAllowableValues() {
         if (this.allowableValues != null)

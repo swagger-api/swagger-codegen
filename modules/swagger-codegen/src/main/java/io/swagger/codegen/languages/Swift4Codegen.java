@@ -41,7 +41,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
     protected boolean lenientTypeCast = false;
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
-    protected String sourceFolder = "Classes" + File.separator;
+    protected String sourceFolder = "Classes" + File.separator + "Swaggers";
 
     @Override
     public CodegenType getTag() {
