@@ -25,6 +25,7 @@ public class CodegenParameter {
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
     public CodegenModel codegenModel;
+    public String enumName;
 
     public Map<String, Object> getAllowableValues() {
         if (this.allowableValues != null)
