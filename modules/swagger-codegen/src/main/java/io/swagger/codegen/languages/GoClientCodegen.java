@@ -19,6 +19,7 @@ public class GoClientCodegen extends AbstractGoCodegen {
     protected String packageVersion = "1.0.0";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    public static final String WITH_XML = "withXml";
 
     public GoClientCodegen() {
         super();
@@ -31,6 +32,9 @@ public class GoClientCodegen extends AbstractGoCodegen {
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
         embeddedTemplateDir = templateDir = "go";
+
+        // default HIDE_GENERATION_TIMESTAMP to true
+        hideGenerationTimestamp = Boolean.TRUE;
 
         setReservedWordsLowerCase(
             Arrays.asList(
@@ -49,20 +53,13 @@ public class GoClientCodegen extends AbstractGoCodegen {
 
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Go package version.")
                 .defaultValue("1.0.0"));
+        cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
 
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
-
-        // default HIDE_GENERATION_TIMESTAMP to true
-        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
-        }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
@@ -95,6 +92,13 @@ public class GoClientCodegen extends AbstractGoCodegen {
         supportingFiles.add(new SupportingFile("client.mustache", "", "client.go"));
         supportingFiles.add(new SupportingFile("response.mustache", "", "response.go"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
+
+        if(additionalProperties.containsKey(WITH_XML)) {
+            setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
+            if ( withXml ) {
+                additionalProperties.put(WITH_XML, "true");
+            }
+        }
     }
 
     /**

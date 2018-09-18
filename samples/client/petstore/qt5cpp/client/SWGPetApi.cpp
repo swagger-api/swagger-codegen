@@ -13,6 +13,7 @@
 #include "SWGPetApi.h"
 #include "SWGHelpers.h"
 #include "SWGModelFactory.h"
+#include "SWGQObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -147,7 +148,7 @@ SWGPetApi::findPetsByStatus(QList<QString*>* status) {
         foreach(QString* t, *status) {
           if (fullPath.indexOf("?") > 0)
             fullPath.append("&");
-          else 
+          else
             fullPath.append("?");
           fullPath.append("status=").append(stringValue(t));
         }
@@ -155,7 +156,7 @@ SWGPetApi::findPetsByStatus(QList<QString*>* status) {
       else if (QString("csv").indexOf("ssv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("status=");
         qint32 count = 0;
@@ -169,7 +170,7 @@ SWGPetApi::findPetsByStatus(QList<QString*>* status) {
       else if (QString("csv").indexOf("tsv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("status=");
         qint32 count = 0;
@@ -220,16 +221,18 @@ SWGPetApi::findPetsByStatusCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-
+    auto wrapper = new SWGQObjectWrapper<QList<SWGPet*>*> (output);
+    wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
+        auto objwrapper = new SWGQObjectWrapper<SWGPet*> (o);
+        objwrapper->deleteLater();
         output->append(o);
     }
-
-        worker->deleteLater();
+    worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
         emit findPetsByStatusSignal(output);
@@ -252,7 +255,7 @@ SWGPetApi::findPetsByTags(QList<QString*>* tags) {
         foreach(QString* t, *tags) {
           if (fullPath.indexOf("?") > 0)
             fullPath.append("&");
-          else 
+          else
             fullPath.append("?");
           fullPath.append("tags=").append(stringValue(t));
         }
@@ -260,7 +263,7 @@ SWGPetApi::findPetsByTags(QList<QString*>* tags) {
       else if (QString("csv").indexOf("ssv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("tags=");
         qint32 count = 0;
@@ -274,7 +277,7 @@ SWGPetApi::findPetsByTags(QList<QString*>* tags) {
       else if (QString("csv").indexOf("tsv") == 0) {
         if (fullPath.indexOf("?") > 0)
           fullPath.append("&");
-        else 
+        else
           fullPath.append("?");
         fullPath.append("tags=");
         qint32 count = 0;
@@ -325,16 +328,18 @@ SWGPetApi::findPetsByTagsCallback(SWGHttpRequestWorker * worker) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
-
+    auto wrapper = new SWGQObjectWrapper<QList<SWGPet*>*> (output);
+    wrapper->deleteLater();
     foreach(QJsonValue obj, jsonArray) {
         SWGPet* o = new SWGPet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
+        auto objwrapper = new SWGQObjectWrapper<SWGPet*> (o);
+        objwrapper->deleteLater();
         output->append(o);
     }
-
-        worker->deleteLater();
+    worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
         emit findPetsByTagsSignal(output);
@@ -385,11 +390,10 @@ SWGPetApi::getPetByIdCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-
-    
-
     QString json(worker->response);
     SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
+    auto wrapper = new SWGQObjectWrapper<SWGPet*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {
@@ -556,11 +560,10 @@ SWGPetApi::uploadFileCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-
-    
-
     QString json(worker->response);
     SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
+    auto wrapper = new SWGQObjectWrapper<SWGApiResponse*> (output);
+    wrapper->deleteLater();
     worker->deleteLater();
 
     if (worker->error_type == QNetworkReply::NoError) {

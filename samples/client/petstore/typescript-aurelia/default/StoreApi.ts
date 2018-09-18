@@ -55,6 +55,7 @@ export class StoreApi extends Api {
    * Creates a new StoreApi class.
    *
    * @param httpClient The Aurelia HTTP client to be injected.
+   * @param authStorage A storage for authentication data.
    */
   constructor(httpClient: HttpClient, authStorage: AuthStorage) {
     super(httpClient, authStorage);
@@ -71,7 +72,7 @@ export class StoreApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/store/order/{orderId}`
-      .replace(`{${'orderId'}}`, encodeURIComponent(String(${params['orderId']})));
+      .replace(`{${'orderId'}}`, encodeURIComponent(`${params['orderId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method
@@ -126,7 +127,7 @@ export class StoreApi extends Api {
 
     // Create URL to call
     const url = `${this.basePath}/store/order/{orderId}`
-      .replace(`{${'orderId'}}`, encodeURIComponent(String(${params['orderId']})));
+      .replace(`{${'orderId'}}`, encodeURIComponent(`${params['orderId']}`));
 
     const response = await this.httpClient.createRequest(url)
       // Set HTTP method

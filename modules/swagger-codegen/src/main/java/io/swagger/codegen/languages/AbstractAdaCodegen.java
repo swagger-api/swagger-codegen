@@ -14,8 +14,8 @@ import io.swagger.util.Json;
 import java.util.*;
 
 abstract public class AbstractAdaCodegen extends DefaultCodegen implements CodegenConfig {
-    protected String packageName = "swagger";
-    protected String projectName = "Swagger";
+    protected String packageName = "defaultPackage";
+    protected String projectName = "defaultProject";
     protected List<Map<String, Object>> orderedModels;
     protected Map<String, List<String>> modelDepends;
     protected Map<String, String> nullableTypeMapping;
@@ -142,13 +142,6 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList("integer", "boolean", "Integer", "Character", "Boolean", "long", "float", "double"));
-    }
-
-    protected void addOption(String key, String description, String defaultValue) {
-        CliOption option = new CliOption(key, description);
-        if (defaultValue != null)
-            option.defaultValue(defaultValue);
-        cliOptions.add(option);
     }
 
     public String toFilename(String name) {
@@ -459,32 +452,6 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         return objs;
     }
 
-    /**
-     * Check if type1 depends on type2 recursively.
-     *
-     * @param type1 first model type name
-     * @param type2 second model type name
-     * @return true if type1 depends on type2
-     */
-    private Boolean dependsOn(String type1, String type2) {
-        final String fullTypeName = modelPackage + ".Models." + type2;
-        if (type1.equals(type2) || type1.equals(fullTypeName)) {
-            return true;
-        }
-        final List<String> lhsList = modelDepends.get(type1);
-        if (lhsList != null) {
-            for (final String S : lhsList) {
-                if (S.equals(type2) || S.equals(fullTypeName)) {
-                    return true;
-                }
-                if (dependsOn(S, type2)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // Collect the model dependencies.
@@ -504,58 +471,60 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
                         if (!d.contains(item.datatype)) {
                             // LOGGER.info("Model " + m.name + " uses " + p.datatype);
                             d.add(item.datatype);
-                            isModel = true;
                         }
+                        isModel = true;
                     }
                     p.vendorExtensions.put("x-is-model-type", isModel);
                 }
-                modelDepends.put(m.classname, d);
+                // let us work with fully qualified names only
                 modelDepends.put(modelPackage + ".Models." + m.classname, d);
                 orderedModels.add(model);
             }
         }
 
-        // Sort the models according to dependencies so that model that depend
-        // on others appear at end of the list.
-        final Map<String, List<String>> deps = modelDepends;
-        Collections.sort(orderedModels, new Comparator<Map<String, Object>>() {
-            @Override
-            public int compare(Map<String, Object> lhs, Map<String, Object> rhs) {
-                Object v = lhs.get("model");
-                String lhsName = ((CodegenModel) v).classname;
-                v = rhs.get("model");
-                String rhsName = ((CodegenModel) v).classname;
-                List<String> lhsList = deps.get(lhsName);
-                List<String> rhsList = deps.get(rhsName);
-                if (dependsOn(lhsName, rhsName)) {
-                    // LOGGER.info("Type " + lhsName + " depends on " + rhsName);
-                    return 1;
+        // Sort models using dependencies:
+        //   List revisedOrderedModels <- ()
+        //   if you have N model, do N passes. In each pass look for an independent model
+        //   cycle over orderedModels
+        //     if I find a model that has no dependencies, or all of its dependencies are in revisedOrderedModels, consider it the independentModel
+        //   put the independentModel at the end of revisedOrderedModels, and remove it from orderedModels
+        //   
+        List<Map<String, Object>> revisedOrderedModels = new ArrayList<Map<String, Object>>();
+        List<String> collectedModelNames = new ArrayList<String>();
+        int sizeOrderedModels = orderedModels.size();
+        for (int i=0;i<sizeOrderedModels;i++) {
+            Map<String, Object> independentModel = null;
+            String independentModelName = null;
+            for (Map<String, Object> model : orderedModels) {
+                // let us work with fully qualified names only
+                String modelName = modelPackage + ".Models." + ((CodegenModel) model.get("model")).classname;
+                boolean dependent = false;
+                for (String dependency : modelDepends.get(modelName)) {
+                    if (!collectedModelNames.contains(dependency)) {
+                        dependent = true;
+                    }
                 }
-                if (dependsOn(rhsName, lhsName)) {
-                    // LOGGER.info("Type " + rhsName + " depends on " + lhsName);
-                    return -1;
+                if (!dependent) {
+                    // this model was independent
+                    independentModel = model;
+                    independentModelName = modelName;
                 }
-                // Put models without dependencies first.
-                if (lhsList == null) {
-                    // LOGGER.info("  Empty " + lhsName + ", no check " + rhsName);
-                    return -1;
-                }
-                if (rhsList == null) {
-                    // LOGGER.info("  No check " + lhsName + ", empty " + rhsName);
-                    return 1;
-                }
-                // Sort models on their name.
-                // LOGGER.info("Compare " + lhsName + "<" + rhsName);
-                return lhsName.compareTo(rhsName);
             }
-        });
-        /* for (Map<String, Object> model : orderedModels) {
-            Object v = model.get("model");
-            if (v instanceof CodegenModel) {
-                CodegenModel m = (CodegenModel) v;
-                LOGGER.info("Order: " + m.name);
+            if (null != independentModel) {
+                // I have find an independentModel. Add it to revisedOrderedModels, and remove from orderedModels
+                revisedOrderedModels.add(independentModel);
+                collectedModelNames.add(independentModelName);
+                orderedModels.remove(independentModel);
             }
-        } */
+        }
+        // bookkeeping:
+        // if I still have elements in orderedModels:
+        //   if it's NOT last time I postProcessModels(), it means there are some dependencies that were not considered yet. That's not a problem
+        //   if it's last iteration, there are circular dependencies.
+        //  In any case, I add models still in orderedModels to revisedOrderedModels
+        revisedOrderedModels.addAll(orderedModels);
+        orderedModels = revisedOrderedModels;
+
         return postProcessModelsEnum(objs);
     }
 
