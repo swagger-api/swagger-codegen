@@ -11,7 +11,7 @@ public class CodegenResponse {
     public List<Map<String, Object>> examples;
     public String dataType, baseType, containerType;
     public boolean hasHeaders;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBoolean, isDate, isDateTime;
+    public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBoolean, isDate, isDateTime, isUuid;
     public boolean isDefault;
     public boolean simpleType;
     public boolean primitiveType;
@@ -22,6 +22,10 @@ public class CodegenResponse {
     public Object schema;
     public String jsonSchema;
     public Map<String, Object> vendorExtensions;
+
+    public boolean isWildcard() {
+        return "0".equals(code) || "default".equals(code);
+    }
 
     @Override
     public String toString() {
@@ -65,12 +69,13 @@ public class CodegenResponse {
             return false;
         if (isFile != that.isFile)
             return false;
+        if (isNumeric != that.isNumeric)
+            return false;
         if (schema != null ? !schema.equals(that.schema) : that.schema != null)
             return false;
         if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
             return false;
         return jsonSchema != null ? jsonSchema.equals(that.jsonSchema) : that.jsonSchema == null;
-
     }
 
     @Override
@@ -84,6 +89,7 @@ public class CodegenResponse {
         result = 31 * result + (baseType != null ? baseType.hashCode() : 0);
         result = 31 * result + (containerType != null ? containerType.hashCode() : 0);
         result = 31 * result + (isDefault ? 13:31);
+        result = 31 * result + (isNumeric ? 13:31);
         result = 31 * result + (simpleType ? 13:31);
         result = 31 * result + (primitiveType ? 13:31);
         result = 31 * result + (isMapContainer ? 13:31);

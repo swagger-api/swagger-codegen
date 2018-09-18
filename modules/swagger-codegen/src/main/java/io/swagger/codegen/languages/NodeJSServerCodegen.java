@@ -19,17 +19,20 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NodeJSServerCodegen.class);
-
+    protected String implFolder = "service";
     public static final String GOOGLE_CLOUD_FUNCTIONS = "googleCloudFunctions";
     public static final String EXPORTED_NAME = "exportedName";
+    public static final String SERVER_PORT = "serverPort";
 
     protected String apiVersion = "1.0.0";
-    protected int serverPort = 8080;
     protected String projectName = "swagger-server";
+    protected String defaultServerPort = "8080";
 
     protected boolean googleCloudFunctions;
     protected String exportedName;
@@ -80,17 +83,21 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
          * are available in models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
+        additionalProperties.put("implFolder", implFolder);
+
+        supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", File.separator), "writer.js"));
 
         cliOptions.add(CliOption.newBoolean(GOOGLE_CLOUD_FUNCTIONS,
-            "When specified, it will generate the code which runs within Google Cloud Functions "
-                + "instead of standalone Node.JS server. See "
-                + "https://cloud.google.com/functions/docs/quickstart for the details of how to "
-                + "deploy the generated code."));
+                "When specified, it will generate the code which runs within Google Cloud Functions "
+                        + "instead of standalone Node.JS server. See "
+                        + "https://cloud.google.com/functions/docs/quickstart for the details of how to "
+                        + "deploy the generated code."));
         cliOptions.add(new CliOption(EXPORTED_NAME,
-            "When the generated code will be deployed to Google Cloud Functions, this option can be "
-                + "used to update the name of the exported function. By default, it refers to the "
-                + "basePath. This does not affect normal standalone nodejs server code."));
+                "When the generated code will be deployed to Google Cloud Functions, this option can be "
+                        + "used to update the name of the exported function. By default, it refers to the "
+                        + "basePath. This does not affect normal standalone nodejs server code."));
+        cliOptions.add(new CliOption(SERVER_PORT,
+                "TCP port to listen on."));
     }
 
     @Override
@@ -145,6 +152,23 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         return toApiName(name);
     }
 
+
+    @Override
+    public String apiFilename(String templateName, String tag) {
+        String result = super.apiFilename(templateName, tag);
+
+        if (templateName.equals("service.mustache")) {
+            String stringToMatch = File.separator + "controllers" + File.separator;
+            String replacement = File.separator + implFolder + File.separator;
+            result = result.replaceAll(Pattern.quote(stringToMatch), replacement);
+        }
+        return result;
+    }
+
+    private String implFileFolder(String output) {
+        return outputFolder + File.separator + output + File.separator + apiPackage().replace('.', File.separatorChar);
+    }
+
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
      * those terms here.  This logic is only called if a variable matches the reserved words
@@ -152,7 +176,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -259,7 +283,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
 
         if (additionalProperties.containsKey(GOOGLE_CLOUD_FUNCTIONS)) {
             setGoogleCloudFunctions(
-                Boolean.valueOf(additionalProperties.get(GOOGLE_CLOUD_FUNCTIONS).toString()));
+                    Boolean.valueOf(additionalProperties.get(GOOGLE_CLOUD_FUNCTIONS).toString()));
         }
 
         if (additionalProperties.containsKey(EXPORTED_NAME)) {
@@ -276,8 +300,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         //   "controller.js")
         // );
         supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "api",
-                        "swagger.yaml")
+                "api",
+                "swagger.yaml")
         );
         if (getGoogleCloudFunctions()) {
             writeOptional(outputFolder, new SupportingFile("index-gcf.mustache", "", "index.js"));
@@ -296,14 +320,23 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public void preprocessSwagger(Swagger swagger) {
         String host = swagger.getHost();
-        String port = "8080";
-        if (host != null) {
+        String port = defaultServerPort;
+
+        if (!StringUtils.isEmpty(host)) {
             String[] parts = host.split(":");
             if (parts.length > 1) {
                 port = parts[1];
             }
+        } else {
+            // host is empty, default to https://localhost
+            host = "http://localhost";
+            LOGGER.warn("'host' in the specification is empty or undefined. Default to http://localhost.");
         }
-        this.additionalProperties.put("serverPort", port);
+
+        if (additionalProperties.containsKey(SERVER_PORT)) {
+            port = additionalProperties.get(SERVER_PORT).toString();
+        }
+        this.additionalProperties.put(SERVER_PORT, port);
 
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
@@ -326,14 +359,14 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             if (!host.endsWith(".cloudfunctions.net")) {
                 LOGGER.warn("Host " + host + " seems not matching with cloudfunctions.net URL.");
             }
-           if (!additionalProperties.containsKey(EXPORTED_NAME)) {
+            if (!additionalProperties.containsKey(EXPORTED_NAME)) {
                 String basePath = swagger.getBasePath();
                 if (basePath == null || basePath.equals("/")) {
                     LOGGER.warn("Cannot find the exported name properly. Using 'openapi' as the exported name");
                     basePath = "/openapi";
                 }
                 additionalProperties.put(EXPORTED_NAME, basePath.substring(1));
-           }
+            }
         }
 
         // need vendor extensions for x-swagger-router-controller
@@ -361,7 +394,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         }
     }
 
-        @Override
+    @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         Swagger swagger = (Swagger)objs.get("swagger");
         if(swagger != null) {
@@ -370,7 +403,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                 module.addSerializer(Double.class, new JsonSerializer<Double>() {
                     @Override
                     public void serialize(Double val, JsonGenerator jgen,
-                                   SerializerProvider provider) throws IOException, JsonProcessingException {
+                                          SerializerProvider provider) throws IOException, JsonProcessingException {
                         jgen.writeNumber(new BigDecimal(val));
                     }
                 });

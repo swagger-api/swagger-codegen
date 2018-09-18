@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# flake8: noqa
+
 """
 Run the tests.
 $ pip install nose (optional)
@@ -21,23 +23,28 @@ HOST = 'http://petstore.swagger.io/v2'
 class ApiClientTests(unittest.TestCase):
 
     def setUp(self):
-        self.api_client = petstore_api.ApiClient(HOST)
+        self.api_client = petstore_api.ApiClient()
 
     def test_configuration(self):
-        petstore_api.configuration.api_key['api_key'] = '123456'
-        petstore_api.configuration.api_key_prefix['api_key'] = 'PREFIX'
-        petstore_api.configuration.username = 'test_username'
-        petstore_api.configuration.password = 'test_password'
+        config = petstore_api.Configuration()
+        config.host = 'http://localhost/'
+
+        config.api_key['api_key'] = '123456'
+        config.api_key_prefix['api_key'] = 'PREFIX'
+        config.username = 'test_username'
+        config.password = 'test_password'
 
         header_params = {'test1': 'value1'}
         query_params = {'test2': 'value2'}
         auth_settings = ['api_key', 'unknown']
 
+        client = petstore_api.ApiClient(config)
+
         # test prefix
-        self.assertEqual('PREFIX', petstore_api.configuration.api_key_prefix['api_key'])
+        self.assertEqual('PREFIX', client.configuration.api_key_prefix['api_key'])
 
         # update parameters based on auth setting
-        self.api_client.update_params_for_auth(header_params, query_params, auth_settings)
+        client.update_params_for_auth(header_params, query_params, auth_settings)
 
         # test api key auth
         self.assertEqual(header_params['test1'], 'value1')
@@ -45,8 +52,8 @@ class ApiClientTests(unittest.TestCase):
         self.assertEqual(query_params['test2'], 'value2')
 
         # test basic auth
-        self.assertEqual('test_username', petstore_api.configuration.username)
-        self.assertEqual('test_password', petstore_api.configuration.password)
+        self.assertEqual('test_username', client.configuration.username)
+        self.assertEqual('test_password', client.configuration.password)
 
     def test_select_header_accept(self):
         accepts = ['APPLICATION/JSON', 'APPLICATION/XML']
@@ -139,9 +146,8 @@ class ApiClientTests(unittest.TestCase):
                     "status": "available",
                     "photoUrls": ["http://foo.bar.com/3",
                                   "http://foo.bar.com/4"]}
-        pet = petstore_api.Pet()
+        pet = petstore_api.Pet(name=pet_dict["name"], photo_urls=pet_dict["photoUrls"])
         pet.id = pet_dict["id"]
-        pet.name = pet_dict["name"]
         cate = petstore_api.Category()
         cate.id = pet_dict["category"]["id"]
         cate.name = pet_dict["category"]["name"]
@@ -154,7 +160,6 @@ class ApiClientTests(unittest.TestCase):
         tag2.name = pet_dict["tags"][1]["name"]
         pet.tags = [tag1, tag2]
         pet.status = pet_dict["status"]
-        pet.photo_urls = pet_dict["photoUrls"]
 
         data = pet
         result = self.api_client.sanitize_for_serialization(data)

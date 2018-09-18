@@ -23,6 +23,11 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Swift (2.x) generator is no longer actively maintained. Please use 
+ * 'swift3' or 'swift4' generator instead.
+ */
+
 public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PROJECT_NAME = "projectName";
     public static final String RESPONSE_AS = "responseAs";
@@ -61,7 +66,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String getHelp() {
-        return "Generates a swift client library.";
+        return "Generates a Swift (2.x) client library. IMPORTANT NOTE: this generator (swfit 2.x)  is no longer actively maintained so please use 'swift3' or 'swift4' generator instead.";
     }
 
     public SwiftCodegen() {
@@ -72,6 +77,9 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         embeddedTemplateDir = templateDir = "swift";
         apiPackage = File.separator + "APIs";
         modelPackage = File.separator + "Models";
+
+        // default HIDE_GENERATION_TIMESTAMP to true
+        hideGenerationTimestamp = Boolean.TRUE;
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
@@ -112,15 +120,15 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
                     "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
                     "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
                     "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                    "required", "right", "set", "Type", "unowned", "weak")
+                    "required", "right", "set", "Type", "unowned", "weak", "Data")
                 );
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("array", "Array");
         typeMapping.put("List", "Array");
         typeMapping.put("map", "Dictionary");
-        typeMapping.put("date", "NSDate");
-        typeMapping.put("Date", "NSDate");
+        typeMapping.put("date", "ISOFullDate");
+        typeMapping.put("Date", "ISOFullDate");
         typeMapping.put("DateTime", "NSDate");
         typeMapping.put("boolean", "Bool");
         typeMapping.put("string", "String");
@@ -158,7 +166,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(POD_SCREENSHOTS, "Screenshots used for Podspec"));
         cliOptions.add(new CliOption(POD_DOCUMENTATION_URL, "Documentation URL used for Podspec"));
         cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
 
     }
@@ -166,13 +174,6 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public void processOpts() {
         super.processOpts();
-        // default HIDE_GENERATION_TIMESTAMP to true
-        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
-        }
 
         // Setup project name
         if (additionalProperties.containsKey(PROJECT_NAME)) {

@@ -9,6 +9,7 @@ import Foundation
 
 
 open class HasOnlyReadOnly: JSONEncodable {
+
     public var bar: String?
     public var foo: String?
 
@@ -19,7 +20,9 @@ open class HasOnlyReadOnly: JSONEncodable {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["bar"] = self.bar
         nillableDictionary["foo"] = self.foo
+
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
 }
+

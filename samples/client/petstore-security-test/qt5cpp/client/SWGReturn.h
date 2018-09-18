@@ -42,13 +42,13 @@ public:
     SWGReturn* fromJson(QString &jsonString);
 
     qint32 getReturn();
-    void setReturn(qint32 return);
+    void setReturn(qint32 _return);
 
 
 private:
-    qint32 return;
+    qint32 _return;
 };
 
-} /* namespace Swagger */
+}
 
 #endif /* SWGReturn_H_ */

@@ -1,5 +1,6 @@
 package io.swagger.codegen.swift3;
 
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.languages.Swift3Codegen;
@@ -84,6 +85,18 @@ public class Swift3CodegenTest {
         Assert.assertTrue(op.responses.get(0).isBinary);
     }
 
+    @Test(description = "returns ISOFullDate when response format is date")
+    public void dateTest() {
+        final Swagger model = new SwaggerParser().read("src/test/resources/2_0/datePropertyTest.json");
+        final DefaultCodegen codegen = new Swift3Codegen();
+        final String path = "/tests/dateResponse";
+        final Operation p = model.getPaths().get(path).getPost();
+        final CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions());
+
+        Assert.assertEquals(op.returnType, "ISOFullDate");
+        Assert.assertEquals(op.bodyParam.dataType, "ISOFullDate");
+    }
+
     @Test
     public void testDefaultPodAuthors() throws Exception {
         // Given
@@ -108,6 +121,35 @@ public class Swift3CodegenTest {
         // Then
         final String podAuthors = (String) swiftCodegen.additionalProperties().get(Swift3Codegen.POD_AUTHORS);
         Assert.assertEquals(podAuthors, swaggerDevs);
+    }
+
+    @Test
+    public void testInitialConfigValues() throws Exception {
+        final Swift3Codegen codegen = new Swift3Codegen();
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
+        Assert.assertEquals(codegen.isHideGenerationTimestamp(), true);
+    }
+
+    @Test
+    public void testSettersForConfigValues() throws Exception {
+        final Swift3Codegen codegen = new Swift3Codegen();
+        codegen.setHideGenerationTimestamp(false);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+        Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+    }
+
+    @Test
+    public void testAdditionalPropertiesPutForConfigValues() throws Exception {
+        final Swift3Codegen codegen = new Swift3Codegen();
+        codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);
+        codegen.processOpts();
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+        Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
     }
 
 }

@@ -14,10 +14,16 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -29,6 +35,9 @@ public class Cat extends Animal implements Parcelable {
   @SerializedName("declawed")
   private Boolean declawed = null;
 
+  public Cat() {
+    super();
+  }
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
@@ -39,7 +48,7 @@ public class Cat extends Animal implements Parcelable {
    * @return declawed
   **/
   @ApiModelProperty(value = "")
-  public Boolean getDeclawed() {
+  public Boolean isDeclawed() {
     return declawed;
   }
 
@@ -87,21 +96,18 @@ public class Cat extends Animal implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     super.writeToParcel(out, flags);  
+    super.writeToParcel(out, flags);
     out.writeValue(declawed);
   }
 
-  public Cat() {
-    super();
-  }
-
   Cat(Parcel in) {
-     super(in); 
+    super(in);
     declawed = (Boolean)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

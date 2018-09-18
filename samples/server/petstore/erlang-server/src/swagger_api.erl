@@ -4,6 +4,8 @@
 -export([request_param_info/2]).
 -export([populate_request/3]).
 -export([validate_response/4]).
+%% exported to silence swagger complains
+-export([get_value/3, validate_response_body/4]).
 
 -type operation_id() :: atom().
 -type request_param() :: atom().
@@ -405,11 +407,15 @@ populate_request_params(OperationID, [FieldParams | T], Req0, ValidatorState, Mo
 
 populate_request_param(OperationID, Name, Req0, ValidatorState) ->
     #{rules := Rules, source := Source} = request_param_info(OperationID, Name),
-    {Value, Req} = get_value(Source, Name, Req0),
-    case prepare_param(Rules, Name, Value, ValidatorState) of
-        {ok, Result} -> {ok, Name, Result, Req};
-        {error, Reason} ->
-            {error, Reason, Req}
+    case get_value(Source, Name, Req0) of
+        {error, Reason, Req} ->
+            {error, Reason, Req};
+        {Value, Req} ->
+            case prepare_param(Rules, Name, Value, ValidatorState) of
+                {ok, Result} -> {ok, Name, Result, Req};
+                {error, Reason} ->
+                    {error, Reason, Req}
+            end
     end.
 
 -spec validate_response(
@@ -599,7 +605,7 @@ validate(Rule = {enum, Values}, Name, Value, _ValidatorState) ->
     end;
 
 validate(Rule = {max, Max}, Name, Value, _ValidatorState) ->
-    case Value >= Max of
+    case Value =< Max of
         true -> ok;
         false -> validation_error(Rule, Name)
     end;
@@ -611,7 +617,7 @@ validate(Rule = {exclusive_max, ExclusiveMax}, Name, Value, _ValidatorState) ->
     end;
 
 validate(Rule = {min, Min}, Name, Value, _ValidatorState) ->
-    case Value =< Min of
+    case Value >= Min of
         true -> ok;
         false -> validation_error(Rule, Name)
     end;
@@ -677,10 +683,17 @@ validation_error(ViolatedRule, Name) ->
 validation_error(ViolatedRule, Name, Info) ->
     throw({wrong_param, Name, ViolatedRule, Info}).
 
+-spec get_value(body | qs_val | header | binding, Name :: any(), Req0 :: cowboy_req:req()) ->
+    {Value :: any(), Req :: cowboy_req:req()} | 
+    {error, Reason :: any(), Req :: cowboy_req:req()}.
 get_value(body, _Name, Req0) ->
     {ok, Body, Req} = cowboy_req:body(Req0),
-    Value = prepare_body(Body),
-    {Value, Req};
+    case prepare_body(Body) of
+        {error, Reason} ->
+            {error, Reason, Req};
+        Value ->
+            {Value, Req}
+    end;
 
 get_value(qs_val, Name, Req0) ->
     {QS, Req} = cowboy_req:qs_vals(Req0),
@@ -700,7 +713,13 @@ get_value(binding, Name, Req0) ->
 prepare_body(Body) ->
     case Body of
         <<"">> -> <<"">>;
-        _ -> jsx:decode(Body, [return_maps])
+        _ ->
+            try
+                jsx:decode(Body, [return_maps]) 
+            catch
+              error:_ ->
+                {error, {invalid_body, not_json, Body}}
+            end
     end.
 
 validate_with_schema(Body, Definition, ValidatorState) ->

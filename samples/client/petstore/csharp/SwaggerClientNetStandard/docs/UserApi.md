@@ -1,6 +1,6 @@
 # IO.Swagger.Api.UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -36,7 +36,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var body = new User(); // User | Created user object
 
@@ -81,8 +80,6 @@ No authorization required
 
 Creates list of users with given input array
 
-
-
 ### Example
 ```csharp
 using System;
@@ -97,7 +94,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var body = new List<User>(); // List<User> | List of user object
 
@@ -142,8 +138,6 @@ No authorization required
 
 Creates list of users with given input array
 
-
-
 ### Example
 ```csharp
 using System;
@@ -158,7 +152,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var body = new List<User>(); // List<User> | List of user object
 
@@ -219,7 +212,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var username = username_example;  // string | The name that needs to be deleted
 
@@ -264,8 +256,6 @@ No authorization required
 
 Get user by user name
 
-
-
 ### Example
 ```csharp
 using System;
@@ -280,7 +270,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing. 
 
@@ -326,8 +315,6 @@ No authorization required
 
 Logs user into the system
 
-
-
 ### Example
 ```csharp
 using System;
@@ -342,7 +329,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var username = username_example;  // string | The user name for login
             var password = password_example;  // string | The password for login in clear text
@@ -390,8 +376,6 @@ No authorization required
 
 Logs out current logged in user session
 
-
-
 ### Example
 ```csharp
 using System;
@@ -406,7 +390,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
 
             try
@@ -463,7 +446,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new UserApi();
             var username = username_example;  // string | name that need to be deleted
             var body = new User(); // User | Updated user object

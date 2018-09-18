@@ -14,15 +14,21 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import org.joda.time.DateTime;
+import org.threeten.bp.OffsetDateTime;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -35,11 +41,13 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   private UUID uuid = null;
 
   @SerializedName("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @SerializedName("map")
   private Map<String, Animal> map = null;
 
+  public MixedPropertiesAndAdditionalPropertiesClass() {
+  }
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
@@ -58,7 +66,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
     this.uuid = uuid;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(DateTime dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -68,11 +76,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -145,27 +153,20 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(uuid);
-
     out.writeValue(dateTime);
-
     out.writeValue(map);
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass() {
-    super();
-  }
-
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
-    
-    uuid = (UUID)in.readValue(null);
-    dateTime = (DateTime)in.readValue(null);
+    uuid = (UUID)in.readValue(UUID.class.getClassLoader());
+    dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
     map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
-  
+
   public int describeContents() {
     return 0;
   }

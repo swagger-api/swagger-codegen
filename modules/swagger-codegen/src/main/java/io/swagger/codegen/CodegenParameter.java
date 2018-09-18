@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.List;
 
 public class CodegenParameter {
-    public boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
+    public boolean isFormParam, isQueryParam, isFilterParam, isPathParam, isHeaderParam,
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
@@ -14,7 +14,7 @@ public class CodegenParameter {
 
     public String example; // example value (x-example)
     public String jsonSchema;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
+    public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime, isUuid;
     public boolean isListContainer, isMapContainer;
     public boolean isFile, notFile;
     public boolean isEnum;
@@ -97,6 +97,7 @@ public class CodegenParameter {
         output.baseType = this.baseType;
         output.isFormParam = this.isFormParam;
         output.isQueryParam = this.isQueryParam;
+        output.isFilterParam = this.isFilterParam;
         output.isPathParam = this.isPathParam;
         output.isHeaderParam = this.isHeaderParam;
         output.isCookieParam = this.isCookieParam;
@@ -133,13 +134,16 @@ public class CodegenParameter {
         output.isBinary = this.isBinary;
         output.isByteArray = this.isByteArray;
         output.isString = this.isString;
+        output.isNumeric = this.isNumeric;
         output.isInteger = this.isInteger;
         output.isLong = this.isLong;
         output.isDouble = this.isDouble;
         output.isFloat = this.isFloat;
+        output.isNumber = this.isNumber;
         output.isBoolean = this.isBoolean;
         output.isDate = this.isDate;
         output.isDateTime = this.isDateTime;
+        output.isUuid = this.isUuid;
         output.isListContainer = this.isListContainer;
         output.isMapContainer = this.isMapContainer;
 
@@ -162,6 +166,8 @@ public class CodegenParameter {
         if (isFormParam != that.isFormParam)
             return false;
         if (isQueryParam != that.isQueryParam)
+            return false;
+        if (isFilterParam != that.isFilterParam)
             return false;
         if (isPathParam != that.isPathParam)
             return false;
@@ -209,9 +215,13 @@ public class CodegenParameter {
             return false;
         if (isString != that.isString)
             return false;
+        if (isNumeric != that.isNumeric)
+            return false;
         if (isInteger != that.isInteger)
             return false;
         if (isLong != that.isLong)
+            return false;
+        if (isNumber != that.isNumber)
             return false;
         if (isFloat != that.isFloat)
             return false;
@@ -226,6 +236,8 @@ public class CodegenParameter {
         if (isDate != that.isDate)
             return false;
         if (isDateTime != that.isDateTime)
+            return false;
+        if (isUuid != that.isUuid)
             return false;
         if (isListContainer != that.isListContainer)
             return false;
@@ -274,6 +286,7 @@ public class CodegenParameter {
     @Override
     public int hashCode() {
         int result = isFormParam ? 13:31;
+        result = 31 * result + (isFilterParam ? 13:31);
         result = 31 * result + (isQueryParam ? 13:31);
         result = 31 * result + (isPathParam ? 13:31);
         result = 31 * result + (isHeaderParam ? 13:31);
@@ -298,15 +311,18 @@ public class CodegenParameter {
         result = 31 * result + (example != null ? example.hashCode() : 0);
         result = 31 * result + (jsonSchema != null ? jsonSchema.hashCode() : 0);
         result = 31 * result + (isString ? 13:31);
+        result = 31 * result + (isNumeric ? 13:31);
         result = 31 * result + (isInteger ? 13:31);
         result = 31 * result + (isLong ? 13:31);
         result = 31 * result + (isFloat ? 13:31);
+        result = 31 * result + (isNumber ? 13:31);
         result = 31 * result + (isDouble ? 13:31);
         result = 31 * result + (isByteArray ? 13:31);
         result = 31 * result + (isBinary ? 13:31);
         result = 31 * result + (isBoolean ? 13:31);
         result = 31 * result + (isDate ? 13:31);
         result = 31 * result + (isDateTime ? 13:31);
+        result = 31 * result + (isUuid ? 13:31);
         result = 31 * result + (isListContainer ? 13:31);
         result = 31 * result + (isMapContainer ? 13:31);
         result = 31 * result + (isFile ? 13:31);

@@ -1,0 +1,75 @@
+=begin
+{{> api_info}}
+=end
+
+require 'spec_helper'
+
+describe {{moduleName}}::Configuration do
+  let(:config) { {{moduleName}}::Configuration.default }
+  let(:impersonation_token) { OrderCloud::AccessToken.new({:access_token => 'sI3PGLztu7HXfLoHobb9', :expires_in => 1000, :token_type => 'Bearer' }) }
+  let(:access_token) { OrderCloud::AccessToken.new({:access_token => 'HteOBUPWe7ccTSpQKLVC', :expires_in => 1000, :token_type => 'Bearer' }) }
+
+  before(:each) do
+    {{moduleName}}::Configuration.reset
+    require 'uri'
+    uri = URI.parse("{{{basePath}}}")
+    {{moduleName}}.configure do |c|
+      c.host = uri.host
+      c.base_path = uri.path
+    end
+  end
+
+  describe '#base_url' do
+    it 'should have the default value' do
+      # uncomment below to test default value of the base path
+      #expect(config.base_url).to eq("{{{basePath}}}")
+    end
+
+    it 'should remove trailing slashes' do
+      [nil, '', '/', '//'].each do |base_path|
+        config.base_path = base_path
+        # uncomment below to test trailing slashes
+        #expect(config.base_url).to eq("{{{basePath}}}")
+      end
+    end
+  end
+
+  describe '#get_access_token' do
+    it 'returns the access_token if not impersonating' do
+      config.access_token = access_token
+      expect(config.get_access_token).to be(access_token)
+    end
+
+    it 'returns the impersonation token' do
+      config.access_token = access_token
+      config.impersonation_token = impersonation_token
+      expect(config.get_access_token).to be(impersonation_token)
+    end
+  end
+
+{{#isOAuth}}
+  describe '#auth_settings' do
+    it 'returns the access_token if not impersonating' do
+      config.access_token = access_token
+      expect(config.auth_settings['oauth2'][:value]).to eq("Bearer #{access_token}")
+    end
+
+    it 'returns the impersating token' do
+      config.access_token = access_token
+      config.impersonation_token = impersonation_token
+      expect(config.auth_settings['oauth2'][:value]).to eq("Bearer #{impersonation_token}")
+    end
+  end
+{{/isOAuth}}
+
+  describe '#impersonation' do
+    it 'should be false when no impersonation token is set' do
+      expect(config.impersonating?).to be_falsey
+    end
+
+    it 'should be true when impersonation token is set' do
+      config.impersonation_token = impersonation_token
+      expect(config.impersonating?).to be_truthy
+    end
+  end
+end

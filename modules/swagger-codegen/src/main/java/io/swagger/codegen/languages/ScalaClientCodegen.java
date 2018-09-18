@@ -1,10 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -20,6 +16,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-scala-client";
     protected String artifactVersion = "1.0.0";
+    protected String clientName = "AsyncClient";
 
     public ScalaClientCodegen() {
         super();
@@ -51,10 +48,14 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("asyncHttpClient", asyncHttpClient);
         additionalProperties.put("authScheme", authScheme);
         additionalProperties.put("authPreemptive", authPreemptive);
+        additionalProperties.put("clientName", clientName);
+        additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
                 (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
+        supportingFiles.add(new SupportingFile("client.mustache",
+                (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         // gradle settings
@@ -75,7 +76,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         importMapping.remove("Set");
         importMapping.remove("Map");
 
-        importMapping.put("DateTime", "org.joda.time.DateTime");
+        importMapping.put("Date", "java.util.Date");
         importMapping.put("ListBuffer", "scala.collection.mutable.ListBuffer");
 
         typeMapping = new HashMap<String, String>();
@@ -90,14 +91,14 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("byte", "Byte");
         typeMapping.put("short", "Short");
         typeMapping.put("char", "Char");
-        typeMapping.put("long", "Long");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
         typeMapping.put("file", "File");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
-        typeMapping.put("ByteArray", "String");
+        typeMapping.put("binary", "Array[Byte]");
+        typeMapping.put("ByteArray", "Array[Byte]");
+        typeMapping.put("ArrayByte", "Array[Byte]");
+        typeMapping.put("date-time", "Date");
+        typeMapping.put("DateTime", "Date");
 
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "HashMap");
@@ -108,7 +109,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     @Override
     public void processOpts() {
         super.processOpts();
-    
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
             setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
         }
@@ -183,7 +183,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
 
     @Override
     public String getHelp() {
-        return "Generates a Scala client library.";
+        return "Generates a Scala client library (beta).";
     }
 
     @Override
@@ -203,7 +203,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
 
     @Override
     public String toModelName(final String name) {
-        final String sanitizedName = sanitizeName(modelNamePrefix + name + modelNameSuffix);
+        final String sanitizedName = sanitizeName(modelNamePrefix + this.stripPackageName(name) + modelNameSuffix);
     
         // camelize the model name
         // phone_number => PhoneNumber
@@ -227,9 +227,8 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     }
 
     @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
+    public String toEnumName(CodegenProperty property) {
+        return formatIdentifier(stripPackageName(property.baseName), true);
     }
 
 }

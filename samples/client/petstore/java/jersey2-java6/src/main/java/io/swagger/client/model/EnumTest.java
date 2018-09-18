@@ -42,8 +42,12 @@ public class EnumTest {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -76,8 +80,12 @@ public class EnumTest {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public Integer getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -110,8 +118,12 @@ public class EnumTest {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public Double getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -250,6 +262,6 @@ public class EnumTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

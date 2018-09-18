@@ -1,0 +1,6 @@
+io.swagger.generator
+io.swagger.generator.exception
+io.swagger.generator.model
+io.swagger.generator.online
+io.swagger.generator.resource
+io.swagger.generator.util

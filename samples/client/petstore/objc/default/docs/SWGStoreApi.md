@@ -97,7 +97,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**NSDictionary<NSString*, NSNumber*>***](NSDictionary.md)
+**NSDictionary<NSString*, NSNumber*>***
 
 ### Authorization
 
@@ -193,7 +193,7 @@ SWGStoreApi*apiInstance = [[SWGStoreApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SWGOrder***](SWGOrder*.md)| order placed for purchasing the pet | [optional] 
+ **body** | [**SWGOrder***](SWGOrder.md)| order placed for purchasing the pet | [optional] 
 
 ### Return type
 

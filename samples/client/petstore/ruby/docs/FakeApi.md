@@ -4,9 +4,203 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**fake_outer_boolean_serialize**](FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
+[**fake_outer_composite_serialize**](FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
+[**fake_outer_number_serialize**](FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
+[**fake_outer_string_serialize**](FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
+[**test_inline_additional_properties**](FakeApi.md#test_inline_additional_properties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
+[**test_json_form_data**](FakeApi.md#test_json_form_data) | **GET** /fake/jsonFormData | test json serialization of form data
+
+
+# **fake_outer_boolean_serialize**
+> OuterBoolean fake_outer_boolean_serialize(opts)
+
+
+
+Test serialization of outer boolean types
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+opts = { 
+  body: Petstore::OuterBoolean.new # OuterBoolean | Input boolean as post body
+}
+
+begin
+  result = api_instance.fake_outer_boolean_serialize(opts)
+  p result
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->fake_outer_boolean_serialize: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional] 
+
+### Return type
+
+[**OuterBoolean**](OuterBoolean.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+
+# **fake_outer_composite_serialize**
+> OuterComposite fake_outer_composite_serialize(opts)
+
+
+
+Test serialization of object with outer number type
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+opts = { 
+  body: Petstore::OuterComposite.new # OuterComposite | Input composite as post body
+}
+
+begin
+  result = api_instance.fake_outer_composite_serialize(opts)
+  p result
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->fake_outer_composite_serialize: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterComposite**](OuterComposite.md)| Input composite as post body | [optional] 
+
+### Return type
+
+[**OuterComposite**](OuterComposite.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+
+# **fake_outer_number_serialize**
+> OuterNumber fake_outer_number_serialize(opts)
+
+
+
+Test serialization of outer number types
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+opts = { 
+  body: Petstore::OuterNumber.new # OuterNumber | Input number as post body
+}
+
+begin
+  result = api_instance.fake_outer_number_serialize(opts)
+  p result
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->fake_outer_number_serialize: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional] 
+
+### Return type
+
+[**OuterNumber**](OuterNumber.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+
+# **fake_outer_string_serialize**
+> OuterString fake_outer_string_serialize(opts)
+
+
+
+Test serialization of outer string types
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+opts = { 
+  body: Petstore::OuterString.new # OuterString | Input string as post body
+}
+
+begin
+  result = api_instance.fake_outer_string_serialize(opts)
+  p result
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->fake_outer_string_serialize: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional] 
+
+### Return type
+
+[**OuterString**](OuterString.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
 
 
 # **test_client_model**
@@ -76,25 +270,25 @@ end
 
 api_instance = Petstore::FakeApi.new
 
-number = 3.4 # Float | None
+number = 8.14 # Float | None
 
 double = 1.2 # Float | None
 
-pattern_without_delimiter = "pattern_without_delimiter_example" # String | None
+pattern_without_delimiter = 'pattern_without_delimiter_example' # String | None
 
-byte = "B" # String | None
+byte = 'B' # String | None
 
 opts = { 
   integer: 56, # Integer | None
   int32: 56, # Integer | None
   int64: 789, # Integer | None
   float: 3.4, # Float | None
-  string: "string_example", # String | None
-  binary: "B", # String | None
-  date: Date.parse("2013-10-20"), # Date | None
-  date_time: DateTime.parse("2013-10-20T19:20:30+01:00"), # DateTime | None
-  password: "password_example", # String | None
-  callback: "callback_example" # String | None
+  string: 'string_example', # String | None
+  binary: 'B', # String | None
+  date: Date.parse('2013-10-20'), # Date | None
+  date_time: DateTime.parse('2013-10-20T19:20:30+01:00'), # DateTime | None
+  password: 'password_example', # String | None
+  callback: 'callback_example' # String | None
 }
 
 begin
@@ -154,12 +348,12 @@ require 'petstore'
 api_instance = Petstore::FakeApi.new
 
 opts = { 
-  enum_form_string_array: ["enum_form_string_array_example"], # Array<String> | Form parameter enum test (string array)
-  enum_form_string: "-efg", # String | Form parameter enum test (string)
-  enum_header_string_array: ["enum_header_string_array_example"], # Array<String> | Header parameter enum test (string array)
-  enum_header_string: "-efg", # String | Header parameter enum test (string)
-  enum_query_string_array: ["enum_query_string_array_example"], # Array<String> | Query parameter enum test (string array)
-  enum_query_string: "-efg", # String | Query parameter enum test (string)
+  enum_form_string_array: ['enum_form_string_array_example'], # Array<String> | Form parameter enum test (string array)
+  enum_form_string: '-efg', # String | Form parameter enum test (string)
+  enum_header_string_array: ['enum_header_string_array_example'], # Array<String> | Header parameter enum test (string array)
+  enum_header_string: '-efg', # String | Header parameter enum test (string)
+  enum_query_string_array: ['enum_query_string_array_example'], # Array<String> | Query parameter enum test (string array)
+  enum_query_string: '-efg', # String | Query parameter enum test (string)
   enum_query_integer: 56, # Integer | Query parameter enum test (double)
   enum_query_double: 1.2 # Float | Query parameter enum test (double)
 }
@@ -197,6 +391,101 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: */*
+
+
+
+# **test_inline_additional_properties**
+> test_inline_additional_properties(param)
+
+test inline additionalProperties
+
+
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+param = nil # Object | request body
+
+
+begin
+  #test inline additionalProperties
+  api_instance.test_inline_additional_properties(param)
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->test_inline_additional_properties: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | **Object**| request body | 
+
+### Return type
+
+nil (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+
+
+# **test_json_form_data**
+> test_json_form_data(param, param2)
+
+test json serialization of form data
+
+
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+param = 'param_example' # String | field1
+
+param2 = 'param2_example' # String | field2
+
+
+begin
+  #test json serialization of form data
+  api_instance.test_json_form_data(param, param2)
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->test_json_form_data: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | **String**| field1 | 
+ **param2** | **String**| field2 | 
+
+### Return type
+
+nil (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 
 

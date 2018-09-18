@@ -3,17 +3,15 @@ package io.swagger.codegen.plugin;
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
@@ -22,10 +20,17 @@ import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiat
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -48,7 +53,7 @@ import io.swagger.codegen.config.CodegenConfigurator;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class CodeGenMojo extends AbstractMojo {
 
-    @Parameter(name="verbose", required = false, defaultValue = "false")
+    @Parameter(name = "verbose", required = false, defaultValue = "false")
     private boolean verbose;
 
     /**
@@ -60,8 +65,7 @@ public class CodeGenMojo extends AbstractMojo {
     /**
      * Location of the output directory.
      */
-    @Parameter(name = "output",
-            property = "swagger.codegen.maven.plugin.output",
+    @Parameter(name = "output", property = "swagger.codegen.maven.plugin.output",
             defaultValue = "${project.build.directory}/generated-sources/swagger")
     private File output;
 
@@ -90,10 +94,10 @@ public class CodeGenMojo extends AbstractMojo {
     private File templateDirectory;
 
     /**
-     * Adds authorization headers when fetching the swagger definitions remotely.
-     " Pass in a URL-encoded string of name:header with a comma separating multiple values
+     * Adds authorization headers when fetching the swagger definitions remotely. " Pass in a
+     * URL-encoded string of name:header with a comma separating multiple values
      */
-    @Parameter(name="auth")
+    @Parameter(name = "auth")
     private String auth;
 
     /**
@@ -105,8 +109,14 @@ public class CodeGenMojo extends AbstractMojo {
     /**
      * Specifies if the existing files should be overwritten during the generation.
      */
-    @Parameter(name="skipOverwrite", required=false)
+    @Parameter(name = "skipOverwrite", required = false)
     private Boolean skipOverwrite;
+
+    /**
+     * Specifies if the existing files should be overwritten during the generation.
+     */
+    @Parameter(name = "removeOperationIdPrefix", required = false)
+    private Boolean removeOperationIdPrefix;
 
     /**
      * The package to use for generated api objects/classes
@@ -175,6 +185,45 @@ public class CodeGenMojo extends AbstractMojo {
     private Map<?, ?> configOptions;
 
     /**
+     * A map of types and the types they should be instantiated as
+     */
+    @Parameter(name = "instantiationTypes")
+    private List<String> instantiationTypes;
+
+    /**
+     * A map of classes and the import that should be used for that class
+     */
+    @Parameter(name = "importMappings")
+    private List<String> importMappings;
+
+    /**
+     * A map of swagger spec types and the generated code types to use for them
+     */
+    @Parameter(name = "typeMappings")
+    private List<String> typeMappings;
+
+    /**
+     * A map of additional language specific primitive types
+     */
+    @Parameter(name = "languageSpecificPrimitives")
+    private List<String> languageSpecificPrimitives;
+
+    /**
+     * A map of additional properties that can be referenced by the mustache templates
+     * <additionalProperties>
+     *     <additionalProperty>key=value</additionalProperty>
+     * </additionalProperties>
+     */
+    @Parameter(name = "additionalProperties")
+    private List<String> additionalProperties;
+
+    /**
+     * A map of reserved names and how they should be escaped
+     */
+    @Parameter(name = "reservedWordsMappings")
+    private List<String> reservedWordsMappings;
+
+    /**
      * Generate the apis
      */
     @Parameter(name = "generateApis", required = false)
@@ -187,7 +236,7 @@ public class CodeGenMojo extends AbstractMojo {
     private Boolean generateModels = true;
 
     /**
-     * A comma separated list of models to generate.  All models is the default.
+     * A comma separated list of models to generate. All models is the default.
      */
     @Parameter(name = "modelsToGenerate", required = false)
     private String modelsToGenerate = "";
@@ -199,11 +248,11 @@ public class CodeGenMojo extends AbstractMojo {
     private Boolean generateSupportingFiles = true;
 
     /**
-     * A comma separated list of models to generate.  All models is the default.
+     * A comma separated list of models to generate. All models is the default.
      */
     @Parameter(name = "supportingFilesToGenerate", required = false)
     private String supportingFilesToGenerate = "";
-    
+
     /**
      * Generate the model tests
      */
@@ -229,14 +278,20 @@ public class CodeGenMojo extends AbstractMojo {
     private Boolean generateApiDocumentation = true;
 
     /**
+     * Generate the api documentation
+     */
+    @Parameter(name = "withXml", required = false)
+    private Boolean withXml = false;
+
+    /**
      * Skip the execution.
      */
     @Parameter(name = "skip", property = "codegen.skip", required = false, defaultValue = "false")
     private Boolean skip;
 
     /**
-     * Add the output directory to the project as a source root, so that the
-     * generated java types are compiled and included in the project artifact.
+     * Add the output directory to the project as a source root, so that the generated java types
+     * are compiled and included in the project artifact.
      */
     @Parameter(defaultValue = "true")
     private boolean addCompileSourceRoot = true;
@@ -261,7 +316,7 @@ public class CodeGenMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
 
-        if(skip) {
+        if (skip) {
             getLog().info("Code generation is skipped.");
             // Even when no new sources are generated, the existing ones should
             // still be compiled if needed.
@@ -269,33 +324,37 @@ public class CodeGenMojo extends AbstractMojo {
             return;
         }
 
-        //attempt to read from config file
+        // attempt to read from config file
         CodegenConfigurator configurator = CodegenConfigurator.fromFile(configurationFile);
 
-        //if a config file wasn't specified or we were unable to read it
-        if(configurator == null) {
+        // if a config file wasn't specified or we were unable to read it
+        if (configurator == null) {
             configurator = new CodegenConfigurator();
         }
 
         configurator.setVerbose(verbose);
 
-        if(skipOverwrite != null) {
+        if (skipOverwrite != null) {
             configurator.setSkipOverwrite(skipOverwrite);
         }
 
-        if(isNotEmpty(inputSpec)) {
+        if (removeOperationIdPrefix != null) {
+            configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
+        if (isNotEmpty(inputSpec)) {
             configurator.setInputSpec(inputSpec);
         }
 
-        if(isNotEmpty(gitUserId)) {
+        if (isNotEmpty(gitUserId)) {
             configurator.setGitUserId(gitUserId);
         }
 
-        if(isNotEmpty(gitRepoId)) {
+        if (isNotEmpty(gitRepoId)) {
             configurator.setGitRepoId(gitRepoId);
         }
 
-        if(isNotEmpty(ignoreFileOverride)) {
+        if (isNotEmpty(ignoreFileOverride)) {
             configurator.setIgnoreFileOverride(ignoreFileOverride);
         }
 
@@ -303,43 +362,43 @@ public class CodeGenMojo extends AbstractMojo {
 
         configurator.setOutputDir(output.getAbsolutePath());
 
-        if(isNotEmpty(auth)) {
+        if (isNotEmpty(auth)) {
             configurator.setAuth(auth);
         }
 
-        if(isNotEmpty(apiPackage)) {
+        if (isNotEmpty(apiPackage)) {
             configurator.setApiPackage(apiPackage);
         }
 
-        if(isNotEmpty(modelPackage)) {
+        if (isNotEmpty(modelPackage)) {
             configurator.setModelPackage(modelPackage);
         }
 
-        if(isNotEmpty(invokerPackage)) {
+        if (isNotEmpty(invokerPackage)) {
             configurator.setInvokerPackage(invokerPackage);
         }
 
-        if(isNotEmpty(groupId)) {
+        if (isNotEmpty(groupId)) {
             configurator.setGroupId(groupId);
         }
 
-        if(isNotEmpty(artifactId)) {
+        if (isNotEmpty(artifactId)) {
             configurator.setArtifactId(artifactId);
         }
 
-        if(isNotEmpty(artifactVersion)) {
+        if (isNotEmpty(artifactVersion)) {
             configurator.setArtifactVersion(artifactVersion);
         }
 
-        if(isNotEmpty(library)) {
+        if (isNotEmpty(library)) {
             configurator.setLibrary(library);
         }
 
-        if(isNotEmpty(modelNamePrefix)) {
+        if (isNotEmpty(modelNamePrefix)) {
             configurator.setModelNamePrefix(modelNamePrefix);
         }
 
-        if(isNotEmpty(modelNameSuffix)) {
+        if (isNotEmpty(modelNameSuffix)) {
             configurator.setModelNameSuffix(modelNameSuffix);
         }
 
@@ -349,61 +408,102 @@ public class CodeGenMojo extends AbstractMojo {
 
         // Set generation options
         if (null != generateApis && generateApis) {
-            System.setProperty("apis", "");
+            System.setProperty(CodegenConstants.APIS, "");
         } else {
-            System.clearProperty("apis");
+            System.clearProperty(CodegenConstants.APIS);
         }
 
         if (null != generateModels && generateModels) {
-            System.setProperty("models", modelsToGenerate);
+            System.setProperty(CodegenConstants.MODELS, modelsToGenerate);
         } else {
-            System.clearProperty("models");
+            System.clearProperty(CodegenConstants.MODELS);
         }
 
         if (null != generateSupportingFiles && generateSupportingFiles) {
-            System.setProperty("supportingFiles", supportingFilesToGenerate);
+            System.setProperty(CodegenConstants.SUPPORTING_FILES, supportingFilesToGenerate);
         } else {
-            System.clearProperty("supportingFiles");
+            System.clearProperty(CodegenConstants.SUPPORTING_FILES);
         }
-        
-        System.setProperty("modelTests", generateModelTests.toString());
-        System.setProperty("modelDocs", generateModelDocumentation.toString());
-        System.setProperty("apiTests", generateApiTests.toString());
-        System.setProperty("apiDocs", generateApiDocumentation.toString());
+
+        System.setProperty(CodegenConstants.MODEL_TESTS, generateModelTests.toString());
+        System.setProperty(CodegenConstants.MODEL_DOCS, generateModelDocumentation.toString());
+        System.setProperty(CodegenConstants.API_TESTS, generateApiTests.toString());
+        System.setProperty(CodegenConstants.API_DOCS, generateApiDocumentation.toString());
+        System.setProperty(CodegenConstants.WITH_XML, withXml.toString());
 
         if (configOptions != null) {
-
-            if(configOptions.containsKey("instantiation-types")) {
-                applyInstantiationTypesKvp(configOptions.get("instantiation-types").toString(), configurator);
+            // Retained for backwards-compataibility with configOptions -> instantiation-types
+            if (instantiationTypes == null && configOptions.containsKey("instantiation-types")) {
+                applyInstantiationTypesKvp(configOptions.get("instantiation-types").toString(),
+                        configurator);
             }
 
-            if(configOptions.containsKey("import-mappings")) {
-                applyImportMappingsKvp(configOptions.get("import-mappings").toString(), configurator);
+            // Retained for backwards-compataibility with configOptions -> import-mappings
+            if (importMappings == null && configOptions.containsKey("import-mappings")) {
+                applyImportMappingsKvp(configOptions.get("import-mappings").toString(),
+                        configurator);
             }
 
-            if(configOptions.containsKey("type-mappings")) {
+            // Retained for backwards-compataibility with configOptions -> type-mappings
+            if (typeMappings == null && configOptions.containsKey("type-mappings")) {
                 applyTypeMappingsKvp(configOptions.get("type-mappings").toString(), configurator);
             }
 
-            if(configOptions.containsKey("language-specific-primitives")) {
-                applyLanguageSpecificPrimitivesCsv(configOptions.get("language-specific-primitives").toString(), configurator);
+            // Retained for backwards-compataibility with configOptions -> language-specific-primitives
+            if (languageSpecificPrimitives == null && configOptions.containsKey("language-specific-primitives")) {
+                applyLanguageSpecificPrimitivesCsv(configOptions
+                        .get("language-specific-primitives").toString(), configurator);
             }
 
-            if(configOptions.containsKey("additional-properties")) {
-                applyAdditionalPropertiesKvp(configOptions.get("additional-properties").toString(), configurator);
+            // Retained for backwards-compataibility with configOptions -> additional-properties
+            if (additionalProperties == null && configOptions.containsKey("additional-properties")) {
+                applyAdditionalPropertiesKvp(configOptions.get("additional-properties").toString(),
+                        configurator);
             }
-            
-            if(configOptions.containsKey("reserved-words-mappings")) {
-                applyReservedWordsMappingsKvp(configOptions.get("reserved-words-mappings").toString(), configurator);
+
+            // Retained for backwards-compataibility with configOptions -> reserved-words-mappings
+            if (reservedWordsMappings == null && configOptions.containsKey("reserved-words-mappings")) {
+                applyReservedWordsMappingsKvp(configOptions.get("reserved-words-mappings")
+                        .toString(), configurator);
             }
+        }
+
+        //Apply Instantiation Types
+        if (instantiationTypes != null && (configOptions == null || !configOptions.containsKey("instantiation-types"))) {
+            applyInstantiationTypesKvpList(instantiationTypes, configurator);
+        }
+
+        //Apply Import Mappings
+        if (importMappings != null && (configOptions == null || !configOptions.containsKey("import-mappings"))) {
+            applyImportMappingsKvpList(importMappings, configurator);
+        }
+
+        //Apply Type Mappings
+        if (typeMappings != null && (configOptions == null || !configOptions.containsKey("type-mappings"))) {
+            applyTypeMappingsKvpList(typeMappings, configurator);
+        }
+
+        //Apply Language Specific Primitives
+        if (languageSpecificPrimitives != null && (configOptions == null || !configOptions.containsKey("language-specific-primitives"))) {
+            applyLanguageSpecificPrimitivesCsvList(languageSpecificPrimitives, configurator);
+        }
+
+        //Apply Additional Properties
+        if (additionalProperties != null && (configOptions == null || !configOptions.containsKey("additional-properties"))) {
+            applyAdditionalPropertiesKvpList(additionalProperties, configurator);
+        }
+
+        //Apply Reserved Words Mappings
+        if (reservedWordsMappings != null && (configOptions == null || !configOptions.containsKey("reserved-words-mappings"))) {
+            applyReservedWordsMappingsKvpList(reservedWordsMappings, configurator);
         }
 
         if (environmentVariables != null) {
 
-            for(String key : environmentVariables.keySet()) {
+            for (String key : environmentVariables.keySet()) {
                 originalEnvironmentVariables.put(key, System.getProperty(key));
                 String value = environmentVariables.get(key);
-                if(value == null) {
+                if (value == null) {
                     // don't put null values
                     value = "";
                 }
@@ -411,23 +511,24 @@ public class CodeGenMojo extends AbstractMojo {
                 configurator.addSystemProperty(key, value);
             }
         }
-        
+
         final ClientOptInput input = configurator.toClientOptInput();
         final CodegenConfig config = input.getConfig();
 
-        if(configOptions != null) {
+        if (configOptions != null) {
             for (CliOption langCliOption : config.cliOptions()) {
                 if (configOptions.containsKey(langCliOption.getOpt())) {
-                    input.getConfig().additionalProperties().put(langCliOption.getOpt(),
-                            configOptions.get(langCliOption.getOpt()));
+                    input.getConfig().additionalProperties()
+                            .put(langCliOption.getOpt(), configOptions.get(langCliOption.getOpt()));
                 }
             }
         }
 
-        if(configHelp) {
+        if (configHelp) {
             for (CliOption langCliOption : config.cliOptions()) {
                 System.out.println("\t" + langCliOption.getOpt());
-                System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
+                System.out.println("\t    "
+                        + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
                 System.out.println();
             }
             return;
@@ -438,26 +539,31 @@ public class CodeGenMojo extends AbstractMojo {
             // Maven logs exceptions thrown by plugins only if invoked with -e
             // I find it annoying to jump through hoops to get basic diagnostic information,
             // so let's log it in any case:
-            getLog().error(e); 
-            throw new MojoExecutionException("Code generation failed. See above for the full exception.");
+            getLog().error(e);
+            throw new MojoExecutionException(
+                    "Code generation failed. See above for the full exception.");
         }
 
         addCompileSourceRootIfConfigured();
     }
 
     private void addCompileSourceRootIfConfigured() {
-        if(addCompileSourceRoot) {
-            final Object sourceFolderObject = configOptions == null ? null : configOptions.get(CodegenConstants.SOURCE_FOLDER);
-            final String sourceFolder =  sourceFolderObject == null ? "src/main/java" : sourceFolderObject.toString();
+        if (addCompileSourceRoot) {
+            final Object sourceFolderObject =
+                    configOptions == null ? null : configOptions
+                            .get(CodegenConstants.SOURCE_FOLDER);
+            final String sourceFolder =
+                    sourceFolderObject == null ? "src/main/java" : sourceFolderObject.toString();
 
             String sourceJavaFolder = output.toString() + "/" + sourceFolder;
             project.addCompileSourceRoot(sourceJavaFolder);
         }
 
-        // Reset all environment variables to their original value. This prevents unexpected behaviour
+        // Reset all environment variables to their original value. This prevents unexpected
+        // behaviour
         // when running the plugin multiple consecutive times with different configurations.
-        for(Map.Entry<String, String> entry : originalEnvironmentVariables.entrySet()) {
-            if(entry.getValue() == null) {
+        for (Map.Entry<String, String> entry : originalEnvironmentVariables.entrySet()) {
+            if (entry.getValue() == null) {
                 System.clearProperty(entry.getKey());
             } else {
                 System.setProperty(entry.getKey(), entry.getValue());

@@ -1,0 +1,19 @@
+PODS:
+  - Alamofire (4.5.0)
+  - PetstoreClient (0.0.1):
+    - Alamofire (~> 4.5.0)
+
+DEPENDENCIES:
+  - PetstoreClient (from `../`)
+
+EXTERNAL SOURCES:
+  PetstoreClient:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  PetstoreClient: fef7934ac90bd28c2b81cc5234615112f9ace5f5
+
+PODFILE CHECKSUM: 417049e9ed0e4680602b34d838294778389bd418
+
+COCOAPODS: 1.4.0

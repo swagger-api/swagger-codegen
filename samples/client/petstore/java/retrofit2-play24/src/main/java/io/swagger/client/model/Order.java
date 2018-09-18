@@ -14,13 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.DateTime;
+import java.time.OffsetDateTime;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Order
@@ -37,7 +39,7 @@ public class Order {
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
-  private DateTime shipDate = null;
+  private OffsetDateTime shipDate = null;
 
   /**
    * Order Status
@@ -55,8 +57,12 @@ public class Order {
       this.value = value;
     }
 
-    @Override
     @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
     public String toString() {
       return String.valueOf(value);
     }
@@ -132,7 +138,7 @@ public class Order {
     this.quantity = quantity;
   }
 
-  public Order shipDate(DateTime shipDate) {
+  public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
@@ -141,12 +147,13 @@ public class Order {
    * Get shipDate
    * @return shipDate
   **/
+  @Valid
   @ApiModelProperty(value = "")
-  public DateTime getShipDate() {
+  public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(DateTime shipDate) {
+  public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -178,7 +185,7 @@ public class Order {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 
@@ -235,6 +242,6 @@ public class Order {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

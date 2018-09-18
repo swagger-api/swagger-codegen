@@ -9,15 +9,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * MapTest
  */
+@Validated
 
 public class MapTest   {
   @JsonProperty("map_map_of_string")
+  @Valid
   private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
@@ -52,6 +55,7 @@ public class MapTest   {
   }
 
   @JsonProperty("map_of_enum_string")
+  @Valid
   private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
@@ -67,13 +71,14 @@ public class MapTest   {
     return this;
   }
 
-   /**
+  /**
    * Get mapMapOfString
    * @return mapMapOfString
   **/
   @ApiModelProperty(value = "")
 
   @Valid
+
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -95,13 +100,13 @@ public class MapTest   {
     return this;
   }
 
-   /**
+  /**
    * Get mapOfEnumString
    * @return mapOfEnumString
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

@@ -3,16 +3,19 @@ package io.swagger.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class MapTest   {
+public class MapTest  implements Serializable {
   
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
 
 public enum InnerEnum {
 
@@ -44,7 +47,7 @@ public enum InnerEnum {
     }
 }
 
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private @Valid Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 
   /**
    **/
@@ -55,6 +58,7 @@ public enum InnerEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("map_map_of_string")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -71,6 +75,7 @@ public enum InnerEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("map_of_enum_string")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
@@ -119,3 +124,4 @@ public enum InnerEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

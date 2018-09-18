@@ -1,0 +1,184 @@
+# {{packageName}}
+{{#appDescription}}
+{{{appDescription}}}
+{{/appDescription}}
+
+For more information, see the official [OrderCloud](https://devcenter.ordercloud.io) website.
+
+- API version: {{appVersion}}
+- Build date: {{generatedDate}}
+
+## Requirements.
+
+Python 2.7 and 3.4+
+
+## Installation & Usage
+### pip install
+
+Make sure you have `pip` installed. Then run:
+
+```sh
+pip install OrderCloud
+```
+(you may need to run `pip` with root permission: `sudo pip install OrderCloud`)
+
+Then import the package:
+```python
+import {{{packageName}}} 
+```
+
+### Setuptools
+
+Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
+
+```sh
+python setup.py install --user
+```
+(or `sudo python setup.py install` to install the package for all users)
+
+Then import the package:
+```python
+import {{{packageName}}}
+```
+
+## Getting Started
+
+Please follow the [installation procedure](#installation--usage) and then run the following:
+
+```python
+#Import the OrderCloud SDK
+import {{{packageName}}} as oc
+#We have to configure these settings before we can use the API
+oc.configuration.client_id = "YOUR_CLIENT_ID" #Grab your Client ID from the OrderCloud Developer Center and paste it here! 
+oc.configuration.scopes = ["FullAccess"]
+
+#This is a shortcut for authenticating with the password grant type
+oc.auth.login("USERNAME","PASSWORD")
+#This will acquire an access token and store it in oc.configuration.access_token
+
+#Now we can use the API, to check if everything worked, this should return the currently authenticated user.
+print(oc.MeApi.get())
+
+```
+
+## Documentation for API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+Class | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}*{{classname}}* | [**{{operationId}}**]({{apiDocPath}}{{classname}}.md#{{operationIdLowerCase}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
+## Documentation For Models
+
+{{#models}}{{#model}} - [{{{classname}}}]({{modelDocPath}}{{{classname}}}.md)
+{{/model}}{{/models}}
+
+## Documentation For Authorization
+
+There are four ways to authenticate into an app. All of them acquire an access token and store it in `OrderCloud.configuration.access_token`. 
+
+### Simple user/pass 
+
+This is most commonly used when a human user is logging into the app:
+
+```python
+OrderCloud.auth.login(user,password)
+```
+
+### Elevated user/pass
+
+This is a more stricter form for when you have a `client_secret` set up for your app in the developer center and it needs to be pass in:
+
+```python
+OrderCloud.auth.login(user,password,client_secret)
+```
+
+### Client secret 
+
+This is for when a backend system needs to interact with the app:
+
+```python
+OrderCloud.auth.authenticate(client_secret)
+```
+
+### Anonymous shopping
+
+For when you need to allow anyone to publically access the app:
+
+```python
+OrderCloud.auth.authenticate()
+```
+
+Check the OrderCloud [Authentication guide](https://devcenter.ordercloud.io/docs/guides/authentication/workflows) for more detailed information!
+
+{{^authMethods}} All endpoints do not require authorization.
+{{/authMethods}}{{#authMethods}}{{#last}} Authentication schemes defined for the API:{{/last}}{{/authMethods}}
+{{#authMethods}}## {{{name}}}
+
+{{#isApiKey}}- **Type**: API key
+- **API key parameter name**: {{{keyParamName}}}
+- **Location**: {{#isKeyInQuery}}URL query string{{/isKeyInQuery}}{{#isKeyInHeader}}HTTP header{{/isKeyInHeader}}
+{{/isApiKey}}
+{{#isBasic}}- **Type**: HTTP basic authentication
+{{/isBasic}}
+{{#isOAuth}}- **Type**: OAuth
+- **Flow**: {{{flow}}}
+- **Authorization URL**: {{#authMethods}}{{{tokenUrl}}}{{/authMethods}}
+- **Scopes**: {{^scopes}}N/A{{/scopes}}
+{{#scopes}} - **{{{scope}}}**: {{{description}}}
+{{/scopes}}
+{{/isOAuth}}
+
+{{/authMethods}}
+
+## Impersonating 
+
+The SDK also includes a helpful class `OrderCloud.impersonation` for impersonating users. It has two functions:
+
+```python
+OrderCloud.impersonation.start(access_token)
+```
+
+Now any API calls you make will be on behalf of that user. To stop the impersonation, just do:
+
+```python
+OrderCloud.impersonation.stop()
+```
+
+Even though it was stopped, it still saves the original access token. So the next time you call start, you can call it with no arguments and it will use the last one. 
+
+Here is a full working example:
+
+```python
+#Import the library
+import OrderCloud as oc
+#Configure client id and scopes
+oc.configuration.client_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+oc.configuration.scopes = ["FullAccess"]
+#Acquire and store the access token
+oc.auth.login("user","pass")
+print(oc.MeApi.get())#Should print out the user you just logged in with
+
+#Get an impersonation token 
+token_request = oc.ImpersonateTokenRequest(client_id="[INSERT YOUR BUYER APP CLIENT ID]",claims=[])
+resp = oc.UserApi.get_access_token("buyer_id","user_id",token_request)
+print(resp.access_token) #This is our access token
+
+#Start the impersonation
+oc.impersonation.start(resp.access_token)
+
+print(oc.MeApi.get()) #Should give us the information of the user we just impersonated
+
+oc.impersonation.stop()
+
+print(oc.MeApi.get()) #Our original user is back now 
+
+```
+
+
+## Author
+
+{{#apiInfo}}{{#apis}}{{^hasMore}}{{infoEmail}}
+{{/hasMore}}{{/apis}}{{/apiInfo}}

@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -158,6 +159,6 @@ public class ArrayTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

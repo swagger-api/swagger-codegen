@@ -9,7 +9,7 @@
       "email" : "apiteam@swagger.io"
     },
     "license" : {
-      "name" : "Apache 2.0",
+      "name" : "Apache-2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
@@ -166,7 +166,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "deprecated" : true
       }
     },
     "/pet/{petId}" : {
@@ -634,6 +635,35 @@
         }
       }
     },
+    "/fake_classname_test" : {
+      "patch" : {
+        "tags" : [ "fake_classname_tags 123#$%^" ],
+        "summary" : "To test class name in snake case",
+        "operationId" : "testClassname",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "client model",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Client"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Client"
+            }
+          }
+        },
+        "security" : [ {
+          "api_key_query" : [ ]
+        } ]
+      }
+    },
     "/fake" : {
       "get" : {
         "tags" : [ "fake" ],
@@ -876,6 +906,182 @@
           }
         }
       }
+    },
+    "/fake/outer/number" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "Test serialization of outer number types",
+        "operationId" : "fakeOuterNumberSerialize",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Input number as post body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OuterNumber"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Output number",
+            "schema" : {
+              "$ref" : "#/definitions/OuterNumber"
+            }
+          }
+        }
+      }
+    },
+    "/fake/outer/string" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "Test serialization of outer string types",
+        "operationId" : "fakeOuterStringSerialize",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Input string as post body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OuterString"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Output string",
+            "schema" : {
+              "$ref" : "#/definitions/OuterString"
+            }
+          }
+        }
+      }
+    },
+    "/fake/outer/boolean" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "Test serialization of outer boolean types",
+        "operationId" : "fakeOuterBooleanSerialize",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Input boolean as post body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OuterBoolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Output boolean",
+            "schema" : {
+              "$ref" : "#/definitions/OuterBoolean"
+            }
+          }
+        }
+      }
+    },
+    "/fake/outer/composite" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "Test serialization of object with outer number type",
+        "operationId" : "fakeOuterCompositeSerialize",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Input composite as post body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OuterComposite"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Output composite",
+            "schema" : {
+              "$ref" : "#/definitions/OuterComposite"
+            }
+          }
+        }
+      }
+    },
+    "/fake/jsonFormData" : {
+      "get" : {
+        "tags" : [ "fake" ],
+        "summary" : "test json serialization of form data",
+        "description" : "",
+        "operationId" : "testJsonFormData",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "param",
+          "in" : "formData",
+          "description" : "field1",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "param2",
+          "in" : "formData",
+          "description" : "field2",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/fake/inline-additionalProperties" : {
+      "post" : {
+        "tags" : [ "fake" ],
+        "summary" : "test inline additionalProperties",
+        "description" : "",
+        "operationId" : "testInlineAdditionalProperties",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "param",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/another-fake/dummy" : {
+      "patch" : {
+        "tags" : [ "$another-fake?" ],
+        "summary" : "To test special tags",
+        "description" : "To test special tags",
+        "operationId" : "test_special_tags",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "client model",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Client"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Client"
+            }
+          }
+        }
+      }
     }
   },
   "securityDefinitions" : {
@@ -892,6 +1098,11 @@
       "type" : "apiKey",
       "name" : "api_key",
       "in" : "header"
+    },
+    "api_key_query" : {
+      "type" : "apiKey",
+      "name" : "api_key_query",
+      "in" : "query"
     },
     "http_basic_test" : {
       "type" : "basic"
@@ -1215,7 +1426,8 @@
         },
         "byte" : {
           "type" : "string",
-          "format" : "byte"
+          "format" : "byte",
+          "pattern" : "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
         },
         "binary" : {
           "type" : "string",
@@ -1475,6 +1687,29 @@
     "OuterEnum" : {
       "type" : "string",
       "enum" : [ "placed", "approved", "delivered" ]
+    },
+    "OuterComposite" : {
+      "type" : "object",
+      "properties" : {
+        "my_number" : {
+          "$ref" : "#/definitions/OuterNumber"
+        },
+        "my_string" : {
+          "$ref" : "#/definitions/OuterString"
+        },
+        "my_boolean" : {
+          "$ref" : "#/definitions/OuterBoolean"
+        }
+      }
+    },
+    "OuterNumber" : {
+      "type" : "number"
+    },
+    "OuterString" : {
+      "type" : "string"
+    },
+    "OuterBoolean" : {
+      "type" : "boolean"
     }
   },
   "externalDocs" : {

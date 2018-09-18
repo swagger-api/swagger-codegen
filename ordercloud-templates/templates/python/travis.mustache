@@ -1,0 +1,20 @@
+language: python
+python:
+- '2.7'
+- '3.2'
+- '3.3'
+- '3.4'
+- '3.5'
+install: pip install -r requirements.txt
+script: nosetests
+deploy:
+  provider: pypi
+  branch: master
+  on:
+    tags: true
+  username: blc
+  password:
+    secure: fDT2gu0gWcc7wHt5waBSzn4DZ419SAY9gxpxriDhdLvAf1bj15NvoMLi+PM2SfWFGTJcr9k+2acZCg+AJdJVt+D6BTL/Qghr+XTy99BmkHUipLUg2c8SKXeRBl21/vt6xd+cl9ua8X+uRlh6YaJzzZu6Vqr698Cve5+EIM/KNfGutwC/fenD6PpJMukKqzy3AFbGwZ4fiHhviJJnl4Av1LZdYmRnXddk3H9tjr2r7EEEH9KIkjS7hu3B/9wFzuyJ+Md/HKNWX0ZtnihcnmvwwdcIc6YsiHhrJFVvWd6NzQzeOig7zILr3KwkdDylRocn2M34XZf16DrHLm1p7R9BHvV7yI4Do2AbqHOVDUzYcSRy5aDdZ79aeiKrR3Q8kkLfXr+w56SDzHghH/kQ98l7LFpIFtZ/NKsqVr9s+sPuhTKlLlOMwpVeAFXS+vUI8crFKRjvhiEhfghj1UTYp/ajKltORuixnACdSnRduZH92MYCzGHFVPJxBubRJ49Wv7w6RIi2Na2iVT6J0atQDzqloyFsb35cmVaIMWaESyB67WRORo3KeXuaF/8rXgUELVm92gbHmq93l12VJT/DW52GoQPHOFeYv+ULKu28JqiLptdcbz1xxgy4e1vsNh4oqqs5pWIHk0pc9hxwqEcTDNjTuxTCVLQJKhqF1lbiVIBisyQ=
+
+notifications:
+  slack: four51:7JMOT6XhPXuBi1XWcxdqy4MV

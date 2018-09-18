@@ -4,6 +4,18 @@ package io.swagger.codegen;
  * A class for storing constants that are used throughout the project.
  */
 public class CodegenConstants {
+    /* System Properties */
+    // NOTE: We may want to move these to a separate class to avoid confusion or modification.
+    public static final String APIS = "apis";
+    public static final String MODELS = "models";
+    public static final String SUPPORTING_FILES = "supportingFiles";
+    public static final String MODEL_TESTS = "modelTests";
+    public static final String MODEL_DOCS = "modelDocs";
+    public static final String API_TESTS = "apiTests";
+    public static final String API_DOCS = "apiDocs";
+    public static final String WITH_XML = "withXml";
+    /* /end System Properties */
+
     public static final String API_PACKAGE = "apiPackage";
     public static final String API_PACKAGE_DESC = "package for generated api classes";
 
@@ -96,6 +108,7 @@ public class CodegenConstants {
     public static final String ENSURE_UNIQUE_PARAMS = "ensureUniqueParams";
     public static final String ENSURE_UNIQUE_PARAMS_DESC = "Whether to ensure parameter names are unique in an operation (rename parameters that are not).";
 
+    public static final String PROJECT_NAME = "projectName";
     public static final String PACKAGE_NAME = "packageName";
     public static final String PACKAGE_VERSION = "packageVersion";
 
@@ -107,6 +120,8 @@ public class CodegenConstants {
     public static final String PACKAGE_DESCRIPTION_DESC = "Specifies a AssemblyDescription for the .NET Framework global assembly attributes stored in the AssemblyInfo file.";
     public static final String PACKAGE_COMPANY = "packageCompany";
     public static final String PACKAGE_COMPANY_DESC = "Specifies an AssemblyCompany for the .NET Framework global assembly attributes stored in the AssemblyInfo file.";
+    public static final String PACKAGE_AUTHORS = "packageAuthors";
+    public static final String PACKAGE_AUTHORS_DESC = "Specifies Authors property in the .NET Core project file.";
     public static final String PACKAGE_COPYRIGHT = "packageCopyright";
     public static final String PACKAGE_COPYRIGHT_DESC = "Specifies an AssemblyCopyright for the .NET Framework global assembly attributes stored in the AssemblyInfo file.";
 
@@ -117,6 +132,9 @@ public class CodegenConstants {
 
     public static final String OPTIONAL_ASSEMBLY_INFO = "optionalAssemblyInfo";
     public static final String OPTIONAL_ASSEMBLY_INFO_DESC = "Generate AssemblyInfo.cs.";
+
+    public static final String NETCORE_PROJECT_FILE = "netCoreProjectFile";
+    public static final String NETCORE_PROJECT_FILE_DESC = "Use the new format (.NET Core) for .NET project files (.csproj).";
 
     public static final String USE_COLLECTION = "useCollection";
     public static final String USE_COLLECTION_DESC = "Deserialize array types to Collection<T> instead of List<T>.";
@@ -140,6 +158,10 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
     public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
+    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
+
+    public static final String ENUM_PROPERTY_NAMING = "enumPropertyNaming";
+    public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
 
     public static final String MODEL_NAME_PREFIX = "modelNamePrefix";
     public static final String MODEL_NAME_PREFIX_DESC = "Prefix that will be prepended to all model names. Default is the empty string.";
@@ -165,11 +187,23 @@ public class CodegenConstants {
     public static final String SUPPORTS_ES6 = "supportsES6";
     public static final String SUPPORTS_ES6_DESC = "Generate code that conforms to ES6.";
 
+    public static final String SUPPORTS_ASYNC = "supportsAsync";
+    public static final String SUPPORTS_ASYNC_DESC = "Generate code that supports async operations.";
+
     public static final String EXCLUDE_TESTS = "excludeTests";
     public static final String EXCLUDE_TESTS_DESC = "Specifies that no tests are to be generated.";
 
+    // Not user-configurable. System provided for use in templates.
+
+    public static final String GENERATE_APIS = "generateApis";
+    public static final String GENERATE_API_DOCS = "generateApiDocs";
+
     public static final String GENERATE_API_TESTS = "generateApiTests";
     public static final String GENERATE_API_TESTS_DESC = "Specifies that api tests are to be generated.";
+
+    // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_MODELS = "generateModels";
+    public static final String GENERATE_MODEL_DOCS = "generateModelDocs";
 
     public static final String GENERATE_MODEL_TESTS = "generateModelTests";
     public static final String GENERATE_MODEL_TESTS_DESC = "Specifies that model tests are to be generated.";
@@ -183,7 +217,15 @@ public class CodegenConstants {
     public static final String NON_PUBLIC_API = "nonPublicApi";
     public static final String NON_PUBLIC_API_DESC = "Generates code with reduced access modifiers; allows embedding elsewhere without exposing non-public API calls to consumers.";
 
+    public static final String VALIDATABLE = "validatable";
+    public static final String VALIDATABLE_DESC = "Generates self-validatable models.";
+
     public static final String IGNORE_FILE_OVERRIDE = "ignoreFileOverride";
     public static final String IGNORE_FILE_OVERRIDE_DESC = "Specifies an override location for the .swagger-codegen-ignore file. Most useful on initial generation.";
 
+    public static final String REMOVE_OPERATION_ID_PREFIX = "removeOperationIdPrefix";
+    public static final String REMOVE_OPERATION_ID_PREFIX_DESC = "Remove prefix of operationId, e.g. config_getId => getId";
+
+    public static final String STRIP_PACKAGE_NAME = "stripPackageName";
+    public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
 }

@@ -1,0 +1,178 @@
+# OrderCloud.io's Angular SDK
+
+> The official client library for building Angular ({{ngVersion}}+) solutions on [OrderCloud.io's](https://developer.ordercloud.io/documentation) B2B ecommerce platform
+
+This SDK aims to greatly improve developer productivity and reduce errors by providing discoverable, strongly-typed wrappers for all public endpoints and request/response models.
+
+All included methods are a 1:1 reflection of the API with the *addition* of the `OcAuthService` for authentication and the `OcTokenService` exposed as a convenience service for setting and getting authentication tokens
+
+### Acknowledgement
+
+This Angular SDK is made possible by leveraging [Swagger's](https://swagger.io/) open source tools with our Open API Specification: `https://api.ordercloud.io/v1/swagger`
+
+### Requirements
+* angular {{ngVersion}}+
+* [ngx-cookie](https://github.com/salemdar/ngx-cookie) 4.0.0+
+
+### Installation
+
+From the npm registry:
+
+```
+npm install --save @ordercloud/angular-sdk
+```
+
+### Configuration
+
+In your root app module:
+
+```typescript
+import { OrderCloudModule, Configuration } from '@ordercloud/angular-sdk';
+
+@NgModule({
+  declarations: [...],
+  imports: [
+    OrderCloudModule.forRoot(() => new Configuration({})),
+     ...
+  ],
+  providers: [...]
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+### Your First API Call
+
+Now that your app is configured you can authenticate and make your
+first api call!
+
+```typescript
+import { OcAuthService, OcTokenService, OcMeService } from '@ordercloud/angular-sdk';
+
+@Component({
+  selector: '...',
+  templateUrl: '...',
+  styleUrls: ['...']
+})
+
+export class LoginComponent {
+  constructor(
+    private ocAuthService: OcAuthService,
+    private ocTokenService: OcTokenService,
+    private ocMeService: OcMeService
+  ) { }
+
+  login() {
+    let username = 'myUsername';
+    let password = 'myPassword123';
+    let clientid = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX';
+    let scope = [ 'Shopper' ];
+
+    // login as this user
+    return this.ocAuthService.Login(username, password, clientid, scope).subscribe(
+        authResponse => {
+          
+          // set the access token in the cookies, now any subsequent calls to the api
+          // will automatically have this token set in the headers
+          this.ocTokenService.SetAccess(authResponse.access_token);
+
+          // make call to get that user's details
+          this.ocMeService.Get().subscribe(
+            currentUser => {
+
+              // because we set that user's token a ocMeService.Get will return details for that user
+              console.log(currentUser)
+            }
+          )
+        }
+      );
+  }
+}
+```
+### Filtering
+
+All of the [filtering options](https://developer.ordercloud.io/documentation/platform-guides/basic-api-features/filtering)  you love from the API are available through the SDK as well. Simply pass in a key/value pair to the filters object on list calls where the `key` is any top-level API model *or* a custom indexed xp value and the `value` is the value you'd like to filter on.
+
+Let's run through a couple scenarios and what the call will look like with the SDK:
+
+My products where xp.Featured is true
+``` typescript
+return this.ocMeService.ListProducts({filters: {'xp.Featured': true})
+```
+
+My orders submitted after April 20th, 2018
+```typescript
+return this.ocMeService.ListOrders( {filters: {DateSubmitted: '>2018-04-20'}})
+```
+
+Users with the last name starting with Smith:
+``` typescript
+return this.ocUserService('my-mock-buyerid', {filters: {LastName: 'Smith*'})
+```
+
+Users with the last name starting with Smith *or* users with the last name *ending* with Jones 
+```typescript
+return this.ocUserService('my-mock-buyerid', {filters: {LastName: 'Smith*|*Jones'}})
+```
+
+My products where xp.Color is not red *and* not blue
+```typescript
+return this.ocProductService.List({filters: {'xp.Color': ['!red', '!blue']}});
+```
+
+And of course you can mix and match filters to your heart's content.
+
+### Impersonation
+
+Impersonation allows a seller user to make an api call on behalf of another user. The SDK enables this by exposing the `As()` method for each service. 
+
+Assuming you are already authenticated and have the required ImpersonationConfigs set up for your organization, an impersonation call will look something like this:
+
+```typescript
+import { OcAuthService, OcTokenService, MeService } from '@ordercloud/angular-sdk';
+
+@Component({
+  selector: '...',
+  templateUrl: '...',
+  styleUrls: ['...']
+})
+
+export class ImpersonationExample {
+  constructor(
+    private ocAuthService: OcAuthService,
+    private ocTokenService: OcTokenService,
+    private ocMeService: OcMeService
+  ) { }
+
+  impersonate() {
+    const impersonationRequest = {
+      ClientID: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', // clientid of the user to impersonate
+      Roles: ['Shopper'] // roles you are requesting
+    };
+    this.ocUserService.GetAccessToken('examplebuyerid', 'exampleuserid', impersonationRequest)
+      .subscribe(response => {
+        // store impersonation token, any impersonation calls will now use this token
+        this.ocTokenService.setImpersonation(response.access_token);
+        this.ocMeService.As().Get()
+          .subscribe(impersonatedUser => {
+            console.log(impersonatedUser);
+          });
+
+      });
+  }
+}
+```
+
+### Http Responses
+This SDK takes advantage of the version of the [HTTP service](https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361) introduced in Angular 4.3
+
+Every method can be configured with `observe` and `reportProgress` by setting their values in the options object. If omitted they will default to `'body'` and `false` respectively.
+
+### Getting Help
+
+The [API reference](https://developer.ordercloud.io/documentation/api-reference) should be your go to reference but if you get stuck or have some feedback about this SDK please drop us a line on our [community slack channel](https://developer.ordercloud.io/community) or ask a question on [StackOverflow](https://stackoverflow.com/questions/tagged/ordercloud) just use the tag `ordercloud`.
+
+
+### Contributing
+
+Because this SDK is generated with the help of the swagger codegen we can't accept PR's on this project directly (as they would simply get overwritten when regenerated) but please open an issue if you notice any bugs, typos, or have general feedback about the SDK. We really want to make this SDK a pleasure to use!

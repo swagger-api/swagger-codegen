@@ -14,10 +14,16 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.ReadOnlyFirst;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
@@ -37,6 +43,8 @@ public class ArrayTest implements Parcelable {
   @SerializedName("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
 
+  public ArrayTest() {
+  }
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
@@ -158,27 +166,20 @@ public class ArrayTest implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(arrayOfString);
-
     out.writeValue(arrayArrayOfInteger);
-
     out.writeValue(arrayArrayOfModel);
   }
 
-  public ArrayTest() {
-    super();
-  }
-
   ArrayTest(Parcel in) {
-    
     arrayOfString = (List<String>)in.readValue(null);
     arrayArrayOfInteger = (List<List<Long>>)in.readValue(List.class.getClassLoader());
     arrayArrayOfModel = (List<List<ReadOnlyFirst>>)in.readValue(List.class.getClassLoader());
   }
-  
+
   public int describeContents() {
     return 0;
   }

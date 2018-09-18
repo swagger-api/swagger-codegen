@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Capitalization
  */
+@Validated
 
 public class Capitalization   {
   @JsonProperty("smallCamel")
@@ -36,13 +38,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Get smallCamel
    * @return smallCamel
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -56,13 +58,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Get capitalCamel
    * @return capitalCamel
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -76,13 +78,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Get smallSnake
    * @return smallSnake
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -96,13 +98,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Get capitalSnake
    * @return capitalSnake
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -116,13 +118,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Get scAETHFlowPoints
    * @return scAETHFlowPoints
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
+
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -136,13 +138,13 @@ public class Capitalization   {
     return this;
   }
 
-   /**
+  /**
    * Name of the pet 
    * @return ATT_NAME
   **/
   @ApiModelProperty(value = "Name of the pet ")
 
-  @Valid
+
   public String getATTNAME() {
     return ATT_NAME;
   }

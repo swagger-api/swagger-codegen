@@ -1,0 +1,164 @@
+{{>partial_header}}
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.IO;
+{{^supportsUWP}}
+using System.Web;
+{{/supportsUWP}}
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Flurl;
+using Flurl.Http;
+using {{packageName}}.Client;
+using {{packageName}}.Model;
+
+namespace {{packageName}}.Api
+{
+
+  /// <summary>
+  /// API Auth is responsible for request access token and starting/stopping impersonation.
+  /// </summary>
+  public class AuthApi
+  {
+    /// <summary>
+    /// Creates the base body content for OAuth2 flow.
+    /// </summary>
+    /// <param name="grantType">Grant type for OAuth2 flow.</param>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns></returns>
+    private static Dictionary<string,string>BaseBodyForAuth(string grantType, string clientID = null, params string[] scope)
+    {
+      var body = new Dictionary<string, string>();   
+      body.Add("client_id", clientID ?? Configuration.Default.ClientID);
+      body.Add("scope", (scope != null && scope.Length > 0) ? string.Join(" ", scope) : string.Join(" ", Configuration.Default.Scopes));
+      body.Add("grant_type", grantType);
+
+      return body;
+    }
+
+    /// <summary>
+    /// Call the Auth API to request an access token and sets it in the Configuration class 
+    /// </summary>
+    /// <param name="body">The OAuth2.0 variables to be sent in the request</param>
+    /// <returns>bool</returns>
+    private static async Task RequestAccessToken(Dictionary<string, string> body)
+    {
+      // http://tutorials.jenkov.com/oauth2/resource-owner-credentials-request-response.html
+      var resp = await Configuration.Default.AuthURL
+        .AppendPathSegment("OAuth/Token")
+        .AllowHttpStatus("4xx")
+        .PostUrlEncodedAsync(body)
+        .ReceiveJson();
+
+      if (((IDictionary<string, object>)resp).ContainsKey("error"))
+        throw new ApiException(400, resp.error);
+
+      Configuration.Default.AccessToken = new AccessToken(resp.access_token, Convert.ToInt32(resp.expires_in), resp.token_type);
+    }
+
+    /// <summary>
+    /// Get an access token using the password OAuth2 flow.
+    /// </summary>
+    /// <param name="username">The username to use for login.</param>
+    /// <param name="password">Password associated with username.</param>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns>bool</returns>
+    public async Task Login(string username, string password, string clientID = null, params string[] scope)
+    {
+      var body = BaseBodyForAuth("password", clientID, scope);
+      body.Add("username", username);
+      body.Add("password", password);
+
+      await AuthApi.RequestAccessToken(body);
+    }
+
+    /// <summary>
+    /// Get an access token using the password OAuth2 flow with a secret.
+    /// </summary>
+    /// <param name="clientSecret">The client secret to use for login.</param>
+    /// <param name="username">The username to use for login.</param>
+    /// <param name="password">Password associated with username.</param>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns>bool</returns>
+    public async Task ElevatedLogin(string clientSecret, string username, string password, string clientID = null, params string[] scope)
+    {
+      var body = BaseBodyForAuth("password", clientID, scope);
+      body.Add("username", username);
+      body.Add("password", password);
+      body.Add("client_secret", clientSecret);
+
+      await AuthApi.RequestAccessToken(body);
+    }
+
+    /// <summary>
+    /// Get an access token using the client secret OAuth2 flow with a secret.
+    /// </summary>
+    /// <param name="clientSecret">The client secret to use for login.</param>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns>bool</returns>
+    public async Task ClientCredentials(string clientSecret, string clientID = null, params string[] scope) 
+    {
+      var body = BaseBodyForAuth("client_credentials", clientID, scope);
+      body.Add("client_secret", clientSecret);
+
+      await AuthApi.RequestAccessToken(body);
+    }
+
+    /// <summary>
+    /// Get an access token using the refresh token OAuth2 workflow.
+    /// </summary>
+    /// <param name="refreshToken">The refresh token code to use to get another token.</param>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns>bool</returns>
+    public async Task RefreshToken(string refreshToken, string clientID = null, params string[] scope)
+    {
+      var body = BaseBodyForAuth("refresh_token", clientID, scope);
+      body.Add("refresh_token", refreshToken);
+
+      await AuthApi.RequestAccessToken(body);
+    }
+
+    /// <summary>
+    /// Get an access token using the anonymous OAuth2 workflow.
+    /// </summary>
+    /// <param name="clientID">Client ID (optional).</param>
+    /// <param name="scope">scope roles to give to authenticated user.</param>
+    /// <returns>bool</returns>
+    public async Task Anonymous(string clientID = null, params string[] scope)
+    {
+      var body = BaseBodyForAuth("client_credentials", clientID, scope);
+
+      await AuthApi.RequestAccessToken(body);
+    }
+
+    /// <summary>
+    /// Starts impersonation.
+    /// </summary>
+    /// <param name="impersonationAccessToken">User tokent to be used for impersonation</param>
+    public void StartImpersonate(AccessToken impersonationAccessToken)
+    {
+        Configuration.Default.StayImpersonating = true;
+        Configuration.Default.ImpersonationToken = impersonationAccessToken;
+    }
+
+    /// <summary>
+    /// Stops impersonation.
+    /// </summary>
+    public void StopImpersonate()
+    {
+        Configuration.Default.StayImpersonating = false;
+        Configuration.Default.ImpersonationToken = null;
+    }
+  }
+}

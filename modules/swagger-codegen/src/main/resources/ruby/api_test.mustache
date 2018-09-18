@@ -19,21 +19,25 @@ require 'json'
   end
 
   describe 'test an instance of {{classname}}' do
-    it 'should create an instact of {{classname}}' do
+    it 'should create an instance of {{classname}}' do
       expect(@instance).to be_instance_of({{moduleName}}::{{classname}})
     end
   end
 
 {{#operation}}
   # unit tests for {{operationId}}
+  {{#summary}}
   # {{summary}}
+  {{/summary}}
+  {{#notes}}
   # {{notes}}
+  {{/notes}}
 {{#allParams}}{{#required}}  # @param {{paramName}} {{description}}
 {{/required}}{{/allParams}}  # @param [Hash] opts the optional parameters
 {{#allParams}}{{^required}}  # @option opts [{{{dataType}}}] :{{paramName}} {{description}}
 {{/required}}{{/allParams}}  # @return [{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}]
   describe '{{operationId}} test' do
-    it "should work" do
+    it 'should work' do
       # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
     end
   end

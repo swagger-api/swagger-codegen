@@ -49,7 +49,7 @@ SWGPetApi*apiInstance = [[SWGPetApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SWGPet***](SWGPet*.md)| Pet object that needs to be added to the store | [optional] 
+ **body** | [**SWGPet***](SWGPet.md)| Pet object that needs to be added to the store | [optional] 
 
 ### Return type
 
@@ -246,13 +246,13 @@ Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error cond
 ```objc
 SWGDefaultConfiguration *apiConfig = [SWGDefaultConfiguration sharedConfig];
 
-// Configure OAuth2 access token for authorization: (authentication scheme: petstore_auth)
-[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
-
 // Configure API key authorization: (authentication scheme: api_key)
 [apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"api_key"];
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"api_key"];
+
+// Configure OAuth2 access token for authorization: (authentication scheme: petstore_auth)
+[apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 
 
 NSNumber* petId = @789; // ID of pet that needs to be fetched
@@ -283,7 +283,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[petstore_auth](../README.md#petstore_auth), [api_key](../README.md#api_key)
+[api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 
@@ -327,7 +327,7 @@ SWGPetApi*apiInstance = [[SWGPetApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SWGPet***](SWGPet*.md)| Pet object that needs to be added to the store | [optional] 
+ **body** | [**SWGPet***](SWGPet.md)| Pet object that needs to be added to the store | [optional] 
 
 ### Return type
 

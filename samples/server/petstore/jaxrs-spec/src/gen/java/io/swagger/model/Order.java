@@ -1,19 +1,22 @@
 package io.swagger.model;
 
 import java.util.Date;
+import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Order   {
+public class Order  implements Serializable {
   
-  private Long id = null;
-  private Long petId = null;
-  private Integer quantity = null;
-  private Date shipDate = null;
+  private @Valid Long id = null;
+  private @Valid Long petId = null;
+  private @Valid Integer quantity = null;
+  private @Valid Date shipDate = null;
 
 public enum StatusEnum {
 
@@ -45,8 +48,8 @@ public enum StatusEnum {
     }
 }
 
-  private StatusEnum status = null;
-  private Boolean complete = false;
+  private @Valid StatusEnum status = null;
+  private @Valid Boolean complete = false;
 
   /**
    **/
@@ -57,6 +60,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -73,6 +77,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("petId")
   public Long getPetId() {
     return petId;
   }
@@ -89,6 +94,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
@@ -105,6 +111,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
+  @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
   }
@@ -122,6 +129,7 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "Order Status")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -138,7 +146,8 @@ public enum StatusEnum {
 
   
   @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+  @JsonProperty("complete")
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
@@ -194,3 +203,4 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

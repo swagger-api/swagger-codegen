@@ -14,9 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -29,6 +35,8 @@ public class NumberOnly implements Parcelable {
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;
 
+  public NumberOnly() {
+  }
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
@@ -86,21 +94,16 @@ public class NumberOnly implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(justNumber);
   }
 
-  public NumberOnly() {
-    super();
+  NumberOnly(Parcel in) {
+    justNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());
   }
 
-  NumberOnly(Parcel in) {
-    
-    justNumber = (BigDecimal)in.readValue(null);
-  }
-  
   public int describeContents() {
     return 0;
   }

@@ -1,2 +1,4 @@
-tsconfig.json
+# Do not overwrite package.json file when re-generating typescript-node client
+# as the package file as been modified to include dependencies required for
+# testing the generated client.
 package.json

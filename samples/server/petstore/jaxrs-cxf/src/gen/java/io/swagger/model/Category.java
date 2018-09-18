@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,18 +11,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Category  {
   
   @ApiModelProperty(value = "")
   private Long id = null;
+
   @ApiModelProperty(value = "")
   private String name = null;
-
  /**
    * Get id
    * @return id
   **/
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -39,6 +42,7 @@ public class Category  {
    * Get name
    * @return name
   **/
+  @JsonProperty("name")
   public String getName() {
     return name;
   }

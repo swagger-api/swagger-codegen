@@ -8,16 +8,22 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * AdditionalPropertiesClass
  */
+@Validated
 
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
+  @Valid
   private Map<String, String> mapProperty = null;
 
   @JsonProperty("map_of_map_property")
+  @Valid
   private Map<String, Map<String, String>> mapOfMapProperty = null;
 
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
@@ -33,11 +39,13 @@ public class AdditionalPropertiesClass   {
     return this;
   }
 
-   /**
+  /**
    * Get mapProperty
    * @return mapProperty
   **/
   @ApiModelProperty(value = "")
+
+
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -59,11 +67,14 @@ public class AdditionalPropertiesClass   {
     return this;
   }
 
-   /**
+  /**
    * Get mapOfMapProperty
    * @return mapOfMapProperty
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

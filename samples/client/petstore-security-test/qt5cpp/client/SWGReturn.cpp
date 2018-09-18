@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 SWGReturn::SWGReturn(QString* json) {
     init();
     this->fromJson(*json);
@@ -38,7 +37,7 @@ SWGReturn::~SWGReturn() {
 
 void
 SWGReturn::init() {
-    return = 0;
+    _return = 0;
 }
 
 void
@@ -57,7 +56,7 @@ SWGReturn::fromJson(QString &json) {
 
 void
 SWGReturn::fromJsonObject(QJsonObject &pJson) {
-    ::Swagger::setValue(&return, pJson["return"], "qint32", "");
+    ::Swagger::setValue(&_return, pJson["return"], "qint32", "");
 }
 
 QString
@@ -74,21 +73,20 @@ QJsonObject*
 SWGReturn::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     
-    obj->insert("return", QJsonValue(return));
+    obj->insert("return", QJsonValue(_return));
 
     return obj;
 }
 
 qint32
 SWGReturn::getReturn() {
-    return return;
+    return _return;
 }
 void
-SWGReturn::setReturn(qint32 return) {
-    this->return = return;
+SWGReturn::setReturn(qint32 _return) {
+    this->_return = _return;
 }
 
 
-
-} /* namespace Swagger */
+}
 

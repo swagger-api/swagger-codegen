@@ -14,9 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -34,6 +40,8 @@ public class ModelApiResponse implements Parcelable {
   @SerializedName("message")
   private String message = null;
 
+  public ModelApiResponse() {
+  }
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
@@ -131,27 +139,20 @@ public class ModelApiResponse implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(code);
-
     out.writeValue(type);
-
     out.writeValue(message);
   }
 
-  public ModelApiResponse() {
-    super();
-  }
-
   ModelApiResponse(Parcel in) {
-    
     code = (Integer)in.readValue(null);
     type = (String)in.readValue(null);
     message = (String)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

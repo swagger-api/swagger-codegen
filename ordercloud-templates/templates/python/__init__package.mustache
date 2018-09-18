@@ -1,0 +1,25 @@
+# coding: utf-8
+
+{{>partial_header}}
+
+from __future__ import absolute_import
+
+# import models into sdk package
+{{#models}}{{#model}}from .models.{{classFilename}} import {{classname}}
+{{/model}}{{/models}}
+# import apis into sdk package
+{{#apiInfo}}{{#apis}}from .apis.{{classVarName}} import {{classname}}
+{{classname}} = {{classname}}()
+{{/apis}}{{/apiInfo}}
+# import ApiClient
+from .api_client import ApiClient
+
+from .configuration import Configuration
+
+configuration = Configuration()
+
+#import the auth class
+from .apis.auth_api import Auth
+from .apis.auth_api import Impersonation
+auth = Auth()
+impersonation = Impersonation()

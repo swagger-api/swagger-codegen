@@ -12,6 +12,7 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
@@ -44,6 +45,8 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private static final String MODEL_NAMESPACE = "Models";
     private static final String IMMUTABLE_OPTION = "immutable";
     private static final String USE_BASE_PATH = "writeModulePath";
+    private static final String PACKAGE_CONTEXT = "packageContext";
+    private static final String ASYNC_SERVER = "asyncServer";
 
     private static final Map<String, Predicate<Property>> propertyToSwaggerTypeMapping =
             createPropertyToSwaggerTypeMapping();
@@ -54,6 +57,9 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private final Set<String> parentModels = new HashSet<>();
     private final Multimap<String, CodegenModel> childrenByParent = ArrayListMultimap.create();
     private final BiMap<String, String> modelNameMapping = HashBiMap.create();
+
+    /** If set to true, we will generate c# async endpoints and service interfaces */
+    private boolean asyncServer = false;
 
     public NancyFXServerCodegen() {
         outputFolder = "generated-code" + File.separator + getName();
@@ -75,6 +81,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addOption(SOURCE_FOLDER, SOURCE_FOLDER_DESC, sourceFolder);
         addOption(INTERFACE_PREFIX, INTERFACE_PREFIX_DESC, interfacePrefix);
         addOption(OPTIONAL_PROJECT_GUID,OPTIONAL_PROJECT_GUID_DESC, null);
+        addOption(PACKAGE_CONTEXT, "Optionally overrides the PackageContext which determines the namespace (namespace=packageName.packageContext). If not set, packageContext will default to basePath.", null);
 
         // CLI Switches
         addSwitch(SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_BY_REQUIRED_FLAG_DESC, sortParamsByRequiredFlag);
@@ -84,6 +91,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addSwitch(RETURN_ICOLLECTION, RETURN_ICOLLECTION_DESC, returnICollection);
         addSwitch(IMMUTABLE_OPTION, "Enabled by default. If disabled generates model classes with setters", true);
         addSwitch(USE_BASE_PATH, "Enabled by default. If disabled, module paths will not mirror api base path", true);
+        addSwitch(ASYNC_SERVER, "Set to true to enable the generation of async routes/endpoints.", this.asyncServer);
         typeMapping.putAll(nodaTimeTypesMappings());
         languageSpecificPrimitives.addAll(nodaTimePrimitiveTypes());
 
@@ -113,6 +121,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         modelPackage = isNullOrEmpty(packageName) ? MODEL_NAMESPACE : packageName + "." + MODEL_NAMESPACE;
 
         supportingFiles.add(new SupportingFile("parameters.mustache", sourceFile("Utils"), "Parameters.cs"));
+        supportingFiles.add(new SupportingFile("localDateConverter.mustache", sourceFile("Utils"), "LocalDateConverter.cs"));
         supportingFiles.add(new SupportingFile("packages.config.mustache", sourceFolder(), "packages.config"));
         supportingFiles.add(new SupportingFile("nuspec.mustache", sourceFolder(), packageName + ".nuspec"));
 
@@ -123,6 +132,12 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         
         if (additionalProperties.containsKey(OPTIONAL_PROJECT_GUID)) {
             setPackageGuid((String) additionalProperties.get(OPTIONAL_PROJECT_GUID));
+        }
+
+        if (additionalProperties.containsKey(ASYNC_SERVER)) {
+            setAsyncServer(convertPropertyToBooleanAndWriteBack(ASYNC_SERVER));
+        } else {
+            additionalProperties.put(ASYNC_SERVER, this.asyncServer);
         }
 
         additionalProperties.put("packageGuid", packageGuid);
@@ -196,7 +211,11 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     public void setPackageGuid(String packageGuid) {
         this.packageGuid = packageGuid;
     }
-    
+
+    public void setAsyncServer(boolean asyncServer) {
+        this.asyncServer = asyncServer;
+    }
+
     @Override
     public String apiFileFolder() {
         return outputFolder + File.separator + sourceFolder() + File.separator + API_NAMESPACE;
@@ -228,34 +247,13 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private void postProcessParentModels(final Map<String, Object> models) {
         log.debug("Processing parents:  " + parentModels);
         for (final String parent : parentModels) {
-            final CodegenModel parentModel = modelByName(parent, models);
+            final CodegenModel parentModel = ModelUtils.getModelByName(parent, models);
             parentModel.hasChildren = true;
             final Collection<CodegenModel> childrenModels = childrenByParent.get(parent);
             for (final CodegenModel child : childrenModels) {
                 processParentPropertiesInChildModel(parentModel, child);
             }
         }
-    }
-
-    private CodegenModel modelByName(final String name, final Map<String, Object> models) {
-        final Object data = models.get(name);
-        if (data instanceof Map) {
-            final Map<?, ?> dataMap = (Map<?, ?>) data;
-            final Object dataModels = dataMap.get("models");
-            if (dataModels instanceof List) {
-                final List<?> dataModelsList = (List<?>) dataModels;
-                for (final Object entry : dataModelsList) {
-                    if (entry instanceof Map) {
-                        final Map<?, ?> entryMap = (Map<?, ?>) entry;
-                        final Object model = entryMap.get("model");
-                        if (model instanceof CodegenModel) {
-                            return (CodegenModel) model;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private void processParentPropertiesInChildModel(final CodegenModel parent, final CodegenModel child) {
@@ -355,7 +353,8 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
 
     @Override
     public void preprocessSwagger(final Swagger swagger) {
-        additionalProperties.put("packageContext", sanitizeName(swagger.getBasePath()));
+        final String packageContextOption = (String) additionalProperties.get(PACKAGE_CONTEXT);
+        additionalProperties.put("packageContext", packageContextOption == null ? sanitizeName(swagger.getBasePath()) : packageContextOption);
         final Object basePathOption = additionalProperties.get(USE_BASE_PATH);
         additionalProperties.put("baseContext", basePathOption == null ? swagger.getBasePath() : "/");
     }
@@ -393,12 +392,12 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     private static Map<String, String> nodaTimeTypesMappings() {
         return ImmutableMap.of(
                 "time", "LocalTime?",
-                "date", "ZonedDateTime?",
+                "date", "LocalDate?",
                 "datetime", "ZonedDateTime?");
     }
 
     private static Set<String> nodaTimePrimitiveTypes() {
-        return ImmutableSet.of("LocalTime?", "ZonedDateTime?");
+        return ImmutableSet.of("LocalTime?", "LocalDate?","ZonedDateTime?");
     }
 
     private class DependencyInfo {

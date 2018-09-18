@@ -9,7 +9,6 @@ import java.util.Objects;
 
 import io.swagger.models.ExternalDocs;
 
-
 public class CodegenModel {
     public String parent, parentSchema;
     public List<String> interfaces;
@@ -19,12 +18,13 @@ public class CodegenModel {
     public List<CodegenModel> interfaceModels;
     public List<CodegenModel> children;
 
-    public String name, classname, title, description, classVarName, modelJson, dataType;
+    public String name, classname, title, description, classVarName, modelJson, dataType, xmlPrefix, xmlNamespace, xmlName;
     public String classFilename; // store the class file name, mainly used for import
     public String unescapedDescription;
     public String discriminator;
     public String defaultValue;
     public String arrayModelType;
+    public boolean isAlias; // Is this effectively an alias of another simple type
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
     public List<CodegenProperty> requiredVars = new ArrayList<CodegenProperty>(); // a list of required properties
     public List<CodegenProperty> optionalVars = new ArrayList<CodegenProperty>(); // a list of optional properties
@@ -39,7 +39,7 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, isArrayModel, hasChildren;
+    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, hasOptional, isArrayModel, hasChildren;
     public boolean hasOnlyReadOnly = true; // true if all properties are read-only
     public ExternalDocs externalDocs;
 
@@ -90,6 +90,12 @@ public class CodegenModel {
         if (modelJson != null ? !modelJson.equals(that.modelJson) : that.modelJson != null)
             return false;
         if (dataType != null ? !dataType.equals(that.dataType) : that.dataType != null)
+            return false;
+        if (xmlPrefix != null ? !xmlPrefix.equals(that.xmlPrefix) : that.xmlPrefix != null)
+            return false;
+        if (xmlNamespace != null ? !xmlNamespace.equals(that.xmlNamespace) : that.xmlNamespace != null)
+            return false;
+        if (xmlName != null ? !xmlName.equals(that.xmlName) : that.xmlName != null)
             return false;
         if (classFilename != null ? !classFilename.equals(that.classFilename) : that.classFilename != null)
             return false;
@@ -151,6 +157,9 @@ public class CodegenModel {
         result = 31 * result + (classVarName != null ? classVarName.hashCode() : 0);
         result = 31 * result + (modelJson != null ? modelJson.hashCode() : 0);
         result = 31 * result + (dataType != null ? dataType.hashCode() : 0);
+        result = 31 * result + (xmlPrefix != null ? xmlPrefix.hashCode() : 0);
+        result = 31 * result + (xmlNamespace != null ? xmlNamespace.hashCode() : 0);
+        result = 31 * result + (xmlName != null ? xmlName.hashCode() : 0);
         result = 31 * result + (classFilename != null ? classFilename.hashCode() : 0);
         result = 31 * result + (unescapedDescription != null ? unescapedDescription.hashCode() : 0);
         result = 31 * result + (discriminator != null ? discriminator.hashCode() : 0);

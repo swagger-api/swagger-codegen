@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,66 +36,66 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="FormatTest" /> class.
         /// </summary>
-        /// <param name="Integer">Integer.</param>
-        /// <param name="Int32">Int32.</param>
-        /// <param name="Int64">Int64.</param>
-        /// <param name="Number">Number (required).</param>
-        /// <param name="_Float">_Float.</param>
-        /// <param name="_Double">_Double.</param>
-        /// <param name="_String">_String.</param>
-        /// <param name="_Byte">_Byte (required).</param>
-        /// <param name="Binary">Binary.</param>
-        /// <param name="Date">Date (required).</param>
-        /// <param name="DateTime">DateTime.</param>
-        /// <param name="Uuid">Uuid.</param>
-        /// <param name="Password">Password (required).</param>
-        public FormatTest(int? Integer = default(int?), int? Int32 = default(int?), long? Int64 = default(long?), decimal? Number = default(decimal?), float? _Float = default(float?), double? _Double = default(double?), string _String = default(string), byte[] _Byte = default(byte[]), byte[] Binary = default(byte[]), DateTime? Date = default(DateTime?), DateTime? DateTime = default(DateTime?), Guid? Uuid = default(Guid?), string Password = default(string))
+        /// <param name="integer">integer.</param>
+        /// <param name="int32">int32.</param>
+        /// <param name="int64">int64.</param>
+        /// <param name="number">number (required).</param>
+        /// <param name="_float">_float.</param>
+        /// <param name="_double">_double.</param>
+        /// <param name="_string">_string.</param>
+        /// <param name="_byte">_byte (required).</param>
+        /// <param name="binary">binary.</param>
+        /// <param name="date">date (required).</param>
+        /// <param name="dateTime">dateTime.</param>
+        /// <param name="uuid">uuid.</param>
+        /// <param name="password">password (required).</param>
+        public FormatTest(int? integer = default(int?), int? int32 = default(int?), long? int64 = default(long?), decimal? number = default(decimal?), float? _float = default(float?), double? _double = default(double?), string _string = default(string), byte[] _byte = default(byte[]), byte[] binary = default(byte[]), DateTime? date = default(DateTime?), DateTime? dateTime = default(DateTime?), Guid? uuid = default(Guid?), string password = default(string))
         {
-            // to ensure "Number" is required (not null)
-            if (Number == null)
+            // to ensure "number" is required (not null)
+            if (number == null)
             {
-                throw new InvalidDataException("Number is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("number is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Number = Number;
+                this.Number = number;
             }
-            // to ensure "_Byte" is required (not null)
-            if (_Byte == null)
+            // to ensure "_byte" is required (not null)
+            if (_byte == null)
             {
-                throw new InvalidDataException("_Byte is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("_byte is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this._Byte = _Byte;
+                this.Byte = _byte;
             }
-            // to ensure "Date" is required (not null)
-            if (Date == null)
+            // to ensure "date" is required (not null)
+            if (date == null)
             {
-                throw new InvalidDataException("Date is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("date is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Date = Date;
+                this.Date = date;
             }
-            // to ensure "Password" is required (not null)
-            if (Password == null)
+            // to ensure "password" is required (not null)
+            if (password == null)
             {
-                throw new InvalidDataException("Password is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("password is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Password = Password;
+                this.Password = password;
             }
-            this.Integer = Integer;
-            this.Int32 = Int32;
-            this.Int64 = Int64;
-            this._Float = _Float;
-            this._Double = _Double;
-            this._String = _String;
-            this.Binary = Binary;
-            this.DateTime = DateTime;
-            this.Uuid = Uuid;
+            this.Integer = integer;
+            this.Int32 = int32;
+            this.Int64 = int64;
+            this.Float = _float;
+            this.Double = _double;
+            this.String = _string;
+            this.Binary = binary;
+            this.DateTime = dateTime;
+            this.Uuid = uuid;
         }
         
         /// <summary>
@@ -102,66 +103,80 @@ namespace IO.Swagger.Model
         /// </summary>
         [DataMember(Name="integer", EmitDefaultValue=false)]
         public int? Integer { get; set; }
+
         /// <summary>
         /// Gets or Sets Int32
         /// </summary>
         [DataMember(Name="int32", EmitDefaultValue=false)]
         public int? Int32 { get; set; }
+
         /// <summary>
         /// Gets or Sets Int64
         /// </summary>
         [DataMember(Name="int64", EmitDefaultValue=false)]
         public long? Int64 { get; set; }
+
         /// <summary>
         /// Gets or Sets Number
         /// </summary>
         [DataMember(Name="number", EmitDefaultValue=false)]
         public decimal? Number { get; set; }
+
         /// <summary>
-        /// Gets or Sets _Float
+        /// Gets or Sets Float
         /// </summary>
         [DataMember(Name="float", EmitDefaultValue=false)]
-        public float? _Float { get; set; }
+        public float? Float { get; set; }
+
         /// <summary>
-        /// Gets or Sets _Double
+        /// Gets or Sets Double
         /// </summary>
         [DataMember(Name="double", EmitDefaultValue=false)]
-        public double? _Double { get; set; }
+        public double? Double { get; set; }
+
         /// <summary>
-        /// Gets or Sets _String
+        /// Gets or Sets String
         /// </summary>
         [DataMember(Name="string", EmitDefaultValue=false)]
-        public string _String { get; set; }
+        public string String { get; set; }
+
         /// <summary>
-        /// Gets or Sets _Byte
+        /// Gets or Sets Byte
         /// </summary>
         [DataMember(Name="byte", EmitDefaultValue=false)]
-        public byte[] _Byte { get; set; }
+        public byte[] Byte { get; set; }
+
         /// <summary>
         /// Gets or Sets Binary
         /// </summary>
         [DataMember(Name="binary", EmitDefaultValue=false)]
         public byte[] Binary { get; set; }
+
         /// <summary>
         /// Gets or Sets Date
         /// </summary>
         [DataMember(Name="date", EmitDefaultValue=false)]
+        [JsonConverter(typeof(SwaggerDateConverter))]
         public DateTime? Date { get; set; }
+
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
         [DataMember(Name="dateTime", EmitDefaultValue=false)]
         public DateTime? DateTime { get; set; }
+
         /// <summary>
         /// Gets or Sets Uuid
         /// </summary>
         [DataMember(Name="uuid", EmitDefaultValue=false)]
         public Guid? Uuid { get; set; }
+
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
         [DataMember(Name="password", EmitDefaultValue=false)]
         public string Password { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -174,10 +189,10 @@ namespace IO.Swagger.Model
             sb.Append("  Int32: ").Append(Int32).Append("\n");
             sb.Append("  Int64: ").Append(Int64).Append("\n");
             sb.Append("  Number: ").Append(Number).Append("\n");
-            sb.Append("  _Float: ").Append(_Float).Append("\n");
-            sb.Append("  _Double: ").Append(_Double).Append("\n");
-            sb.Append("  _String: ").Append(_String).Append("\n");
-            sb.Append("  _Byte: ").Append(_Byte).Append("\n");
+            sb.Append("  Float: ").Append(Float).Append("\n");
+            sb.Append("  Double: ").Append(Double).Append("\n");
+            sb.Append("  String: ").Append(String).Append("\n");
+            sb.Append("  Byte: ").Append(Byte).Append("\n");
             sb.Append("  Binary: ").Append(Binary).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  DateTime: ").Append(DateTime).Append("\n");
@@ -191,7 +206,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -199,90 +214,88 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as FormatTest);
+            return this.Equals(input as FormatTest);
         }
 
         /// <summary>
         /// Returns true if FormatTest instances are equal
         /// </summary>
-        /// <param name="other">Instance of FormatTest to be compared</param>
+        /// <param name="input">Instance of FormatTest to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FormatTest other)
+        public bool Equals(FormatTest input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this.Integer == other.Integer ||
-                    this.Integer != null &&
-                    this.Integer.Equals(other.Integer)
+                    this.Integer == input.Integer ||
+                    (this.Integer != null &&
+                    this.Integer.Equals(input.Integer))
                 ) && 
                 (
-                    this.Int32 == other.Int32 ||
-                    this.Int32 != null &&
-                    this.Int32.Equals(other.Int32)
+                    this.Int32 == input.Int32 ||
+                    (this.Int32 != null &&
+                    this.Int32.Equals(input.Int32))
                 ) && 
                 (
-                    this.Int64 == other.Int64 ||
-                    this.Int64 != null &&
-                    this.Int64.Equals(other.Int64)
+                    this.Int64 == input.Int64 ||
+                    (this.Int64 != null &&
+                    this.Int64.Equals(input.Int64))
                 ) && 
                 (
-                    this.Number == other.Number ||
-                    this.Number != null &&
-                    this.Number.Equals(other.Number)
+                    this.Number == input.Number ||
+                    (this.Number != null &&
+                    this.Number.Equals(input.Number))
                 ) && 
                 (
-                    this._Float == other._Float ||
-                    this._Float != null &&
-                    this._Float.Equals(other._Float)
+                    this.Float == input.Float ||
+                    (this.Float != null &&
+                    this.Float.Equals(input.Float))
                 ) && 
                 (
-                    this._Double == other._Double ||
-                    this._Double != null &&
-                    this._Double.Equals(other._Double)
+                    this.Double == input.Double ||
+                    (this.Double != null &&
+                    this.Double.Equals(input.Double))
                 ) && 
                 (
-                    this._String == other._String ||
-                    this._String != null &&
-                    this._String.Equals(other._String)
+                    this.String == input.String ||
+                    (this.String != null &&
+                    this.String.Equals(input.String))
                 ) && 
                 (
-                    this._Byte == other._Byte ||
-                    this._Byte != null &&
-                    this._Byte.Equals(other._Byte)
+                    this.Byte == input.Byte ||
+                    (this.Byte != null &&
+                    this.Byte.Equals(input.Byte))
                 ) && 
                 (
-                    this.Binary == other.Binary ||
-                    this.Binary != null &&
-                    this.Binary.Equals(other.Binary)
+                    this.Binary == input.Binary ||
+                    (this.Binary != null &&
+                    this.Binary.Equals(input.Binary))
                 ) && 
                 (
-                    this.Date == other.Date ||
-                    this.Date != null &&
-                    this.Date.Equals(other.Date)
+                    this.Date == input.Date ||
+                    (this.Date != null &&
+                    this.Date.Equals(input.Date))
                 ) && 
                 (
-                    this.DateTime == other.DateTime ||
-                    this.DateTime != null &&
-                    this.DateTime.Equals(other.DateTime)
+                    this.DateTime == input.DateTime ||
+                    (this.DateTime != null &&
+                    this.DateTime.Equals(input.DateTime))
                 ) && 
                 (
-                    this.Uuid == other.Uuid ||
-                    this.Uuid != null &&
-                    this.Uuid.Equals(other.Uuid)
+                    this.Uuid == input.Uuid ||
+                    (this.Uuid != null &&
+                    this.Uuid.Equals(input.Uuid))
                 ) && 
                 (
-                    this.Password == other.Password ||
-                    this.Password != null &&
-                    this.Password.Equals(other.Password)
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
                 );
         }
 
@@ -292,38 +305,36 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
+                int hashCode = 41;
                 if (this.Integer != null)
-                    hash = hash * 59 + this.Integer.GetHashCode();
+                    hashCode = hashCode * 59 + this.Integer.GetHashCode();
                 if (this.Int32 != null)
-                    hash = hash * 59 + this.Int32.GetHashCode();
+                    hashCode = hashCode * 59 + this.Int32.GetHashCode();
                 if (this.Int64 != null)
-                    hash = hash * 59 + this.Int64.GetHashCode();
+                    hashCode = hashCode * 59 + this.Int64.GetHashCode();
                 if (this.Number != null)
-                    hash = hash * 59 + this.Number.GetHashCode();
-                if (this._Float != null)
-                    hash = hash * 59 + this._Float.GetHashCode();
-                if (this._Double != null)
-                    hash = hash * 59 + this._Double.GetHashCode();
-                if (this._String != null)
-                    hash = hash * 59 + this._String.GetHashCode();
-                if (this._Byte != null)
-                    hash = hash * 59 + this._Byte.GetHashCode();
+                    hashCode = hashCode * 59 + this.Number.GetHashCode();
+                if (this.Float != null)
+                    hashCode = hashCode * 59 + this.Float.GetHashCode();
+                if (this.Double != null)
+                    hashCode = hashCode * 59 + this.Double.GetHashCode();
+                if (this.String != null)
+                    hashCode = hashCode * 59 + this.String.GetHashCode();
+                if (this.Byte != null)
+                    hashCode = hashCode * 59 + this.Byte.GetHashCode();
                 if (this.Binary != null)
-                    hash = hash * 59 + this.Binary.GetHashCode();
+                    hashCode = hashCode * 59 + this.Binary.GetHashCode();
                 if (this.Date != null)
-                    hash = hash * 59 + this.Date.GetHashCode();
+                    hashCode = hashCode * 59 + this.Date.GetHashCode();
                 if (this.DateTime != null)
-                    hash = hash * 59 + this.DateTime.GetHashCode();
+                    hashCode = hashCode * 59 + this.DateTime.GetHashCode();
                 if (this.Uuid != null)
-                    hash = hash * 59 + this.Uuid.GetHashCode();
+                    hashCode = hashCode * 59 + this.Uuid.GetHashCode();
                 if (this.Password != null)
-                    hash = hash * 59 + this.Password.GetHashCode();
-                return hash;
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
+                return hashCode;
             }
         }
     }

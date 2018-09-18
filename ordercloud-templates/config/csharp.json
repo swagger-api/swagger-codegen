@@ -1,0 +1,8 @@
+{
+  "packageName": "OrderCloudSDK",
+  "packageVersion": "1.0.56",
+  "useDateTimeOffset": true,
+  "optionalAssemblyInfo": true,
+  "supportsAsync": true,
+  "appDescription": "This package is an SDK for OrderCloud's API written in C#. All of the methods for the most part are a 1:1 reflection of the API. This guide will cover how to install and get started with OrderCloud C# package."
+}

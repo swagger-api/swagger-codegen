@@ -1,20 +1,34 @@
 <?php
+
 namespace App;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Zend\Stratigility\ErrorMiddlewareInterface;
+use Zend\Stdlib\ErrorHandler;
 
-class ErrorMiddleware implements ErrorMiddlewareInterface
+class ErrorMiddleware implements MiddlewareInterface
 {
-    /**
-     * @inheritDoc
-     */
-    public function __invoke($error, Request $request, Response $response, callable $out = null)
+    public function process(Request $request, DelegateInterface $delegate)
     {
-        $response = $response->withStatus(500, 'Internal server error');
-        $response->getBody()->write((string)$error);
-        error_log((string) $error);
-        return ($out === null)? $response : $out($request, $response);
+        $result = null;
+        try {
+            ErrorHandler::start();
+            $result = $delegate->process($request);
+            ErrorHandler::stop(true);
+            if (!($result instanceof Response)) {
+                throw new \RuntimeException(sprintf(
+                    'Invalid response: expecting %s, got %s',
+                    Response::class,
+                    is_object($result)? get_class($result) : gettype($result)
+                ));
+            }
+        }
+        catch (\Exception $error) {
+            $result = (new \Zend\Diactoros\Response())->withStatus(500, 'Internal server error');
+            error_log((string)$error);
+        }
+        return $result;
     }
 }

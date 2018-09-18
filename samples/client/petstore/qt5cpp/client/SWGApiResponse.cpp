@@ -22,10 +22,9 @@
 
 namespace Swagger {
 
-
-SWGApiResponse::SWGApiResponse(QString* json) {
+SWGApiResponse::SWGApiResponse(QString json) {
     init();
-    this->fromJson(*json);
+    this->fromJson(json);
 }
 
 SWGApiResponse::SWGApiResponse() {
@@ -39,25 +38,26 @@ SWGApiResponse::~SWGApiResponse() {
 void
 SWGApiResponse::init() {
     code = 0;
+    m_code_isSet = false;
     type = new QString("");
+    m_type_isSet = false;
     message = new QString("");
+    m_message_isSet = false;
 }
 
 void
 SWGApiResponse::cleanup() {
-    
 
-    if(type != nullptr) {
+    if(type != nullptr) { 
         delete type;
     }
-
-    if(message != nullptr) {
+    if(message != nullptr) { 
         delete message;
     }
 }
 
 SWGApiResponse*
-SWGApiResponse::fromJson(QString &json) {
+SWGApiResponse::fromJson(QString json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -66,31 +66,36 @@ SWGApiResponse::fromJson(QString &json) {
 }
 
 void
-SWGApiResponse::fromJsonObject(QJsonObject &pJson) {
+SWGApiResponse::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&code, pJson["code"], "qint32", "");
+    
     ::Swagger::setValue(&type, pJson["type"], "QString", "QString");
+    
     ::Swagger::setValue(&message, pJson["message"], "QString", "QString");
+    
 }
 
 QString
 SWGApiResponse::asJson ()
 {
-    QJsonObject* obj = this->asJsonObject();
-    
-    QJsonDocument doc(*obj);
+    QJsonObject obj = this->asJsonObject();
+    QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
     return QString(bytes);
 }
 
-QJsonObject*
+QJsonObject
 SWGApiResponse::asJsonObject() {
-    QJsonObject* obj = new QJsonObject();
-    
-    obj->insert("code", QJsonValue(code));
-
-    toJsonValue(QString("type"), type, obj, QString("QString"));
-
-    toJsonValue(QString("message"), message, obj, QString("QString"));
+    QJsonObject obj;
+    if(m_code_isSet){
+        obj.insert("code", QJsonValue(code));
+    }
+    if(type != nullptr && *type != QString("")){
+        toJsonValue(QString("type"), type, obj, QString("QString"));
+    }
+    if(message != nullptr && *message != QString("")){
+        toJsonValue(QString("message"), message, obj, QString("QString"));
+    }
 
     return obj;
 }
@@ -102,6 +107,7 @@ SWGApiResponse::getCode() {
 void
 SWGApiResponse::setCode(qint32 code) {
     this->code = code;
+    this->m_code_isSet = true;
 }
 
 QString*
@@ -111,6 +117,7 @@ SWGApiResponse::getType() {
 void
 SWGApiResponse::setType(QString* type) {
     this->type = type;
+    this->m_type_isSet = true;
 }
 
 QString*
@@ -120,9 +127,19 @@ SWGApiResponse::getMessage() {
 void
 SWGApiResponse::setMessage(QString* message) {
     this->message = message;
+    this->m_message_isSet = true;
 }
 
 
-
-} /* namespace Swagger */
+bool
+SWGApiResponse::isSet(){
+    bool isObjectUpdated = false;
+    do{
+        if(m_code_isSet){ isObjectUpdated = true; break;}
+        if(type != nullptr && *type != QString("")){ isObjectUpdated = true; break;}
+        if(message != nullptr && *message != QString("")){ isObjectUpdated = true; break;}
+    }while(false);
+    return isObjectUpdated;
+}
+}
 
