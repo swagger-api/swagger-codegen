@@ -72,6 +72,11 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
     @Override
     public void postProcessParameter(CodegenParameter parameter) {
         if (parameter.isEnum) {
+            if (parameter.datatypeWithEnum.startsWith("["))
+                parameter.enumName = parameter.datatypeWithEnum.substring(1, parameter.datatypeWithEnum.length() - 1);
+            else
+                parameter.enumName = parameter.datatypeWithEnum;
+
             if (parameter.allowableValues == null || !parameter.allowableValues.containsKey("values")) return;
 
             ArrayList values = (ArrayList)parameter.allowableValues.get("values");
@@ -89,6 +94,26 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
             }
             parameter.allowableValues.clear();
             parameter.allowableValues.put("enumVars", enumVars);
+        }
+    }
+
+    @Override
+    protected void postProcessProperty(CodegenProperty property) {
+        super.postProcessProperty(property);
+
+        if (property.isContainer != null && property.isContainer &&
+            property.isListContainer != null && property.isListContainer &&
+            property.containerType != null && property.containerType.equals("array") &&
+            property.items != null && property.items.isEnum) {
+
+            property.isEnum = true;
+
+            if (property.datatypeWithEnum.startsWith("["))
+                property.enumName = property.datatypeWithEnum.substring(1, property.datatypeWithEnum.length() - 1);
+            else
+                property.enumName = property.datatypeWithEnum;
+
+            property.allowableValues = property.items.allowableValues;
         }
     }
 }

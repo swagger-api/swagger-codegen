@@ -1612,16 +1612,9 @@ public class DefaultCodegen {
                 }
                 property.items = cp;
                 if (property.items.isEnum) {
-                    property.isEnum = true;
                     property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType, property.items.datatypeWithEnum);
-                    if (property.datatypeWithEnum.startsWith("["))
-                        property.enumName = property.datatypeWithEnum.substring(1, property.datatypeWithEnum.length() - 1);
-                    else
-                        property.enumName = property.datatypeWithEnum;
                     if(property.defaultValue != null)
                         property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
-
-                    property.allowableValues = property.items.allowableValues;
                 }
             }
       	} else if (p instanceof MapProperty) {
@@ -1641,7 +1634,18 @@ public class DefaultCodegen {
         } else {
             setNonArrayMapProperty(property, type);
         }
+
+        postProcessProperty(property);
+
         return property;
+    }
+
+    /**
+     * Override with any special handling of conversion from swagger property to codegen property
+     * @param property The codegen property
+     */
+    protected void postProcessProperty(CodegenProperty property) {
+
     }
 
     protected void setNonArrayMapProperty(CodegenProperty property, String type) {
@@ -2106,12 +2110,6 @@ public class DefaultCodegen {
                 p.datatypeWithEnum = model.datatypeWithEnum;
             }
             p.isEnum = model.isEnum;
-            if (p.isEnum) {
-                if (p.datatypeWithEnum.startsWith("["))
-                    p.enumName = p.datatypeWithEnum.substring(1, p.datatypeWithEnum.length() - 1);
-                else
-                    p.enumName = p.datatypeWithEnum;
-            }
             p._enum = model._enum;
             p.allowableValues = model.allowableValues;
             if(model.items != null && model.items.isEnum) {
