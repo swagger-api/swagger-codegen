@@ -518,6 +518,19 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     }
 
     @Override
+    public String toApiName(String name) {
+        if (name.equals("Me") || name.equals("MessageSenders"))
+            return name;
+        else if (name.endsWith("y")) {
+            return name.substring(0, name.length() - 1) + "ies";
+        }
+        else if (name.endsWith("s")) {
+            return name + "es";
+        }
+        return name + "s";
+    }
+
+    @Override
     public String toModelName(String name) {
         name = sanitizeName(name);  // FIXME parameter should not be assigned. Also declare it as "final"
 
