@@ -41,6 +41,8 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
                 .defaultValue(SWAGGER_FILENAME_DEFAULT_YAML));
 
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+
+        System.setProperty(CodegenConstants.SUPPORTING_FILES, Boolean.TRUE.toString());
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.swagger.codegen.languages;
 import java.io.File;
 
 import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
                 "output filename")
                 .defaultValue(SWAGGER_FILENAME_DEFAULT_JSON));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+
+        System.setProperty(CodegenConstants.SUPPORTING_FILES, Boolean.TRUE.toString());
     }
 
     @Override
