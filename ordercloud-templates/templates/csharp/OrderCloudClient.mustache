@@ -1,0 +1,47 @@
+{{>partial_header}}
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.IO;
+{{^supportsUWP}}
+using System.Web;
+{{/supportsUWP}}
+using System.Linq;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
+using RestSharp;
+{{#apiPackage}}
+using {{packageName}}.Api;
+{{/apiPackage}}
+using {{packageName}}.Client;
+
+namespace {{packageName}}.Client
+{
+    /// <summary>
+    /// OrderCloud client is mainly responsible for allowing all Api methods to be chained off of the same base object.
+    /// </summary>
+    public class OrderCloudClient
+    {
+        public OrderCloudClient(Configuration config = null) 
+        {
+            this.apiClient = new ApiClient(config);
+            this.Auth = new AuthApi();
+            {{#apiInfo}}{{#apis}}this.{{{classVarName}}} = new {{{classname}}}();
+            {{/apis}}{{/apiInfo}}
+            this.As = new Func<OrderCloudClient>(delegate ()
+            {
+                this.apiClient.Configuration.Impersonate = true;
+                return this;
+            });
+        }
+
+        public ApiClient apiClient { get; }
+        public AuthApi Auth { get; }
+        {{#apiInfo}}{{#apis}}public {{{classname}}} {{{classVarName}}} { get; }
+        {{/apis}}{{/apiInfo}}
+        public Func<OrderCloudClient> As { get; }
+    }
+}

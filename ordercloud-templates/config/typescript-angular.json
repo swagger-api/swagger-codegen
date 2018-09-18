@@ -1,0 +1,15 @@
+{
+    "readme": "All available configurations are listed here. The first set are unchanged defaults. Those after the space are customized",
+    "sortParamsByRequiredFlag": true,
+    "ensureUniqueParams": true,
+    "allowUnicodeIdentifiers": true,
+    "modelPropertyNaming": "original",
+    "snapshot": false,
+    "ngVersion": "6.0.0",
+    "withInterfaces": false,
+
+    "supportsES6": true,
+    "npmName": "@ordercloud/angular-sdk",
+    "npmVersion": "0.0.1-20",
+    "npmRepository": "https://github.com/ordercloud-api/angular-client"
+}

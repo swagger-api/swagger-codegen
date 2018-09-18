@@ -1,0 +1,232 @@
+{{>licenseInfo}}
+
+(function(root, factory) {
+    if (typeof define === 'function' && define.and) {
+        // AMD. Register as an anonymous module.
+        define(['ApiClient', 'model/AccessToken'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // CommonJS-like environments that support module.exports, like Node.
+        module.exports = factory(require('../ApiClient'), require('../model/AccessToken'));
+    } else {
+        if (!root.OrderCloud) {
+            root.OrderCloud = {};
+        }
+        root.OrderCloud.Auth = factory(root.OrderCloud.ApiClient, root.OrderCloud.AccessToken);
+    }
+}(this, function(ApiClient, AccessToken) {
+    'use strict';
+
+    /**
+     * Auth service.
+     * @module api/Auth
+     */
+
+    /**
+     * Constructs a new Auth. 
+     * @alias module:api/Auth
+     * @class
+     * @param {module:ApiClient} apiClient Optional API client implementation to use,
+     * default to {@link module:ApiClient#instance} if unspecified.
+     */
+
+    var exports = function(apiClient) {
+        this.apiClient = apiClient || ApiClient.instance;
+
+        /**
+         * @param {String} username of the user logging in
+         * @param {String} password of the user logging in
+         * @param {String} clientID of the application the user is logging into
+         * @param {Array.<String>} scope is a string array of roles the application has access to
+         */
+        this.Login = function(username, password, clientID, scope) {
+            if (username == undefined || username == null) {
+                throw new Error("Missing the required parameter 'username' when calling Login");
+            }
+
+            if (password == undefined || password == null) {
+                throw new Error("Missing the required parameter 'password' when calling Login");
+            }
+
+            if (clientID == undefined || clientID == null) {
+                throw new Error("Missing the required parameter 'clientID' when calling Login");
+            }
+
+            if (scope == undefined || scope == null) {
+                throw new Error("Missing the required parameter 'scope' when calling Login");
+            }
+
+            var postBody = 'grant_type=password&scope=' + this.apiClient.buildCollectionParam(scope, 'plus') + '&client_id=' + clientID + '&username=' + username + '&password=' + password;
+
+            var pathParams = {};
+            var queryParams = {};
+            var headerParams = {};
+            var formParams = {};
+
+            var authNames = null;
+            var contentTypes = ['application/x-www-form-urlencoded'];
+            var accepts = ['application/json'];
+            var returnType = AccessToken;
+
+            return this.apiClient.callAuth(
+                '/oauth/token', 'POST',
+                pathParams, queryParams, headerParams, formParams, postBody,
+                authNames, contentTypes, accepts, returnType
+            );         
+        }
+
+        /**
+         * @param {String} clientSecret of the application
+         * @param {String} username of the user logging in
+         * @param {String} password of the user logging in
+         * @param {String} clientID of the application the user is logging into
+         * @param {Array.<String>} scope is a string array of roles the application has access to
+         */
+        this.ElevatedLogin= function(clientSecret, username, password, clientID, scope) {
+            if (clientSecret == undefined || clientSecret == null) {
+                throw new Error("Missing the required parameter 'clientSecret' when calling ElevatedLogin")
+            }
+
+            if (username == undefined || username == null) {
+                throw new Error("Missing the required parameter 'username' when calling ElevatedLogin");
+            }
+
+            if (password == undefined || password == null) {
+                throw new Error("Missing the required parameter 'password' when calling ElevatedLogin");
+            }
+
+            if (clientID == undefined || clientID == null) {
+                throw new Error("Missing the required parameter 'clientID' when calling ElevatedLogin");
+            }
+
+            if (scope == undefined || scope == null) {
+                throw new Error("Missing the required parameter 'scope' when calling ElevatedLogin");
+            }
+
+            var postBody = 'grant_type=password&scope=' + this.apiClient.buildCollectionParam(scope, 'plus') + '&client_secret=' + clientSecret + '&client_id=' + clientID + '&username=' + username + '&password=' + password;
+
+            var pathParams = {};
+            var queryParams = {};
+            var headerParams = {};
+            var formParams = {};
+
+            var authNames = null;
+            var contentTypes = ['application/x-www-form-urlencoded'];
+            var accepts = ['application/json'];
+            var returnType = AccessToken;
+
+            return this.apiClient.callAuth(
+                '/oauth/token', 'POST',
+                pathParams, queryParams, headerParams, formParams, postBody,
+                authNames, contentTypes, accepts, returnType
+            );  
+        }
+
+        /**
+         * @param {String} clientSecret of the application
+         * @param {String} clientID of the application the user is logging into
+         * @param {Array.<String>} scope is a string array of roles the application has access to
+         */
+        this.ClientCredentials = function(clientSecret, clientID, scope) {
+            if (clientSecret == undefined || clientSecret == null) {
+                throw new Error("Missing the required parameter 'clientSecret' when calling ElevatedLogin")
+            }
+
+            if (clientID == undefined || clientID == null) {
+                throw new Error("Missing the required parameter 'clientID' when calling ElevatedLogin");
+            }
+
+            if (scope == undefined || scope == null) {
+                throw new Error("Missing the required parameter 'scope' when calling ElevatedLogin");
+            }
+
+            var postBody = 'grant_type=client_credentials&scope=' + this.apiClient.buildCollectionParam(scope, 'plus') + '&client_secret=' + clientSecret + '&client_id=' + clientID;
+
+            var pathParams = {};
+            var queryParams = {};
+            var headerParams = {};
+            var formParams = {};
+
+            var authNames = null;
+            var contentTypes = ['application/x-www-form-urlencoded'];
+            var accepts = ['application/json'];
+            var returnType = AccessToken;
+            
+            return this.apiClient.callAuth(
+                '/oauth/token', 'POST',
+                pathParams, queryParams, headerParams, formParams, postBody,
+                authNames, contentTypes, accepts, returnType
+            ); 
+        }
+
+        /**
+         * @param {String} refreshToken of the application
+         * @param {String} clientID of the application the user is logging into
+         * @param {Array.<String>} scope is a string array of roles the application has access to
+         */
+        this.RefreshToken = function(refreshToken, clientID, scope) {
+            if (refreshToken == undefined || refreshToken == null) {
+                throw new Error("Missing the required parameter 'refreshToken' when calling RefreshToken")
+            }
+
+            if (clientID == undefined || clientID == null) {
+                throw new Error("Missing the required parameter 'clientID' when calling RefreshToken");
+            }
+
+            if (scope == undefined || scope == null) {
+                throw new Error("Missing the required parameter 'scope' when calling RefreshToken");
+            }
+
+            var postBody = 'grant_type=refresh_token&scope=' + this.apiClient.buildCollectionParam(scope, 'plus') + '&refresh_token=' + refreshToken + '&client_id=' + clientID;
+
+            var pathParams = {};
+            var queryParams = {};
+            var headerParams = {};
+            var formParams = {};
+
+            var authNames = null;
+            var contentTypes = ['application/x-www-form-urlencoded'];
+            var accepts = ['application/json'];
+            var returnType = AccessToken;
+
+            return this.apiClient.callAuth(
+                '/oauth/token', 'POST',
+                pathParams, queryParams, headerParams, formParams, postBody,
+                authNames, contentTypes, accepts, returnType
+            );
+        }
+
+        /**
+         * @param {String} clientID of the application the user is logging into
+         * @param {Array.<String>} scope is a string array of roles the application has access to
+         */
+        this.Anonymous = function(clientID, scope) {
+            if (clientID == undefined || clientID == null) {
+                throw new Error("Missing the required parameter 'clientID' when calling RefreshToken");
+            }
+
+            if (scope == undefined || scope == null) {
+                throw new Error("Missing the required parameter 'scope' when calling RefreshToken");
+            }
+
+            var postBody = 'grant_type=client_credentials&scope=' + this.apiClient.buildCollectionParam(scope, 'plus') + '&client_id=' + clientID;
+
+            var pathParams = {};
+            var queryParams = {};
+            var headerParams = {};
+            var formParams = {};
+
+            var authNames = null;
+            var contentTypes = ['application/x-www-form-urlencoded'];
+            var accepts = ['application/json'];
+            var returnType = AccessToken;
+
+            return this.apiClient.callAuth(
+                '/oauth/token', 'POST',
+                pathParams, queryParams, headerParams, formParams, postBody,
+                authNames, contentTypes, accepts, returnType
+            );
+        }
+    };
+
+    return exports;
+}));

@@ -1,0 +1,46 @@
+{
+  "name": "{{{npmName}}}",
+  "version": "{{{npmVersion}}}",
+  "description": "angular {{{npmName}}}+ typescript sdk for building on top of the ordercloud platform",
+  "author": "ordercloud.io",
+  "repository": {
+    "type": "git",
+    "url": "{{{npmRepository}}}"
+  },
+  "keywords": [
+    "ordercloud",
+    "four51",
+    "b2b",
+    "angular",
+    "angular2",
+    "ecommerce"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "postinstall": "npm run build"
+  },
+  "peerDependencies": {
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "core-js": "^2.5.4",
+    "rxjs": "^{{#useRxjsVersion6Imports}}6.0.0{{/useRxjsVersion6Imports}}{{^useRxjsVersion6Imports}}5.4.0{{/useRxjsVersion6Imports}}",
+    "zone.js": "<1.0.0",
+    "ngx-cookie": "^4.0.0"
+  },
+  "devDependencies": {
+    "@angular/core": "^{{ngVersion}}",
+    "@angular/http": "^{{ngVersion}}",
+    "@angular/common": "^{{ngVersion}}",
+    "@angular/compiler": "^{{ngVersion}}",
+    "@angular/platform-browser": "^{{ngVersion}}",
+    "rxjs": "^{{#useRxjsVersion6Imports}}6.0.0{{/useRxjsVersion6Imports}}{{^useRxjsVersion6Imports}}5.4.0{{/useRxjsVersion6Imports}}",
+    "zone.js": "<1",
+    "typescript": "^2.1.5",
+    "ngx-cookie": "^4.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+export * from './{{ classFilename }}';
+import { {{ classname }} } from './{{ classFilename }}';
+{{/operations}}
+{{/apis}}
+export * from './auth.service';
+import { OcAuthService } from './auth.service';
+export * from './token.service';
+import { OcTokenService } from './token.service';
+export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}, OcAuthService, OcTokenService];
+{{/apiInfo}}

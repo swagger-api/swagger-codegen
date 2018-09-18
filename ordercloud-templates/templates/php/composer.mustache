@@ -1,0 +1,40 @@
+{
+    "name": "{{#composerVendorName}}{{.}}{{/composerVendorName}}{{^composerVendorName}}{{gitUserId}}{{/composerVendorName}}/{{#composerProjectName}}{{.}}{{/composerProjectName}}{{^composerProjectName}}{{gitRepoId}}{{/composerProjectName}}",
+    {{#artifactVersion}}
+    "version": "{{artifactVersion}}",
+    {{/artifactVersion}}
+    "description": "{{description}}",
+    "keywords": [
+        "php",
+        "sdk",
+        "api",
+        "ordercloud",
+        "b2b",
+        "ecommerce"
+    ],
+    "homepage": "http://ordercloud.io",
+    "license": "Apache v2",
+    "authors": [
+        {
+            "name": "Four51",
+            "homepage": "http://ordercloud.io"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8",
+        "satooshi/php-coveralls": "~1.0",
+        "squizlabs/php_codesniffer": "~2.6"
+    },
+    "autoload": {
+        "psr-4": { "{{escapedInvokerPackage}}\\" : "{{srcBasePath}}/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "{{escapedInvokerPackage}}\\" : "{{testBasePath}}/" }
+    }
+}

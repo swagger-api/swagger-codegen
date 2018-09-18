@@ -1,0 +1,8 @@
+{
+  "projectName": "OrderCloud",
+  "unwrapRequired": "true",
+  "podSource": "",
+  "podAuthors": "OrderCloud.io <tech@ordercloud.io>",
+  "podSocialMediaURL": "http://twitter.com/OrderCloudIO",
+  "swiftUseApiNamespace": "OrderCloud"
+}

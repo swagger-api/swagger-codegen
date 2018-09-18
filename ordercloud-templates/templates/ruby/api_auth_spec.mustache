@@ -1,0 +1,146 @@
+=begin
+{{> api_info}}
+=end
+
+require 'spec_helper'
+
+describe "ApiAuth" do
+  let(:valid_client_id) { 'A015750C-B342-4B78-B0B8-32AAD7ACE076' }
+  let(:valid_username) { 'cobrien451' }
+  let(:valid_password) { 'fails345' }
+  let(:valid_client_secret) { 'potato' }
+
+  let(:invalid_client_id) { 've1fYQ0NXME13wa5JetO' }
+  let(:invalid_username) { 'invaliduser' }
+  let(:invalid_password) { 'invalidpassword' }
+  let(:invalid_client_secret) { 'L6kzJlz1ewwYYeVozNCs' }
+
+  let(:scopes) { ['FullAccess'] }
+  let(:bad_auth_url) { 'thisshouldnotwork.com' }
+
+  let(:impersonation_token) { OrderCloud::AccessToken.new({:access_token => '4QAtuGBvK8bj22XdT0H5', :expires_in => 1000, :token_type => 'Bearer' }) }
+
+  let(:config) { {{moduleName}}::Configuration.default }
+  before(:each) do
+    {{moduleName}}::Configuration.reset
+    {{moduleName}}.configure { |c|
+      c.auth_url = "https://auth.ordercloud.io/oauth/token"
+    }
+  end
+
+  describe '#password_flow' do
+    context 'with valid data' do
+      it 'does not raise error and set an access token' do
+        {{moduleName}}.configure { |c|
+          c.client_id = valid_client_id
+          c.scopes = scopes
+        }
+        expect{ {{moduleName}}::ApiAuth::login(valid_username, valid_password)}.to_not raise_error
+        expect(config.access_token).to_not be_nil
+      end
+    end
+
+    context 'with invalid id or empty data' do
+      it 'fails if the auth url is invalid' do
+        {{moduleName}}.configure { |c|
+          c.client_id = valid_client_id
+          c.scopes = scopes
+          c.auth_url = bad_auth_url
+        }
+        expect { {{moduleName}}::ApiAuth::login(valid_username, valid_password)}.to raise_error(ArgumentError)
+        expect(config.access_token).to be_nil
+      end
+
+      it 'fails if the client id is not provided' do
+        {{moduleName}}.configure { |c|
+          c.scopes = scopes
+        }
+        expect { {{moduleName}}::ApiAuth::login(valid_username, valid_password)}.to raise_error(NoMethodError)
+        expect(config.access_token).to be_nil
+      end
+
+      it 'fails if the client id is invalid' do
+        {{moduleName}}.configure { |c|
+          c.client_id = invalid_client_id
+          c.scopes = scopes
+        }
+        expect { {{moduleName}}::ApiAuth::login(valid_username, valid_password)}.to raise_error(NoMethodError)
+        expect(config.access_token).to be_nil
+      end
+
+      it 'fails if invalid login/username' do
+        {{moduleName}}.configure { |c|
+          c.client_id = valid_client_id
+          c.scopes = @scopes
+        }
+        expect { {{moduleName}}::ApiAuth::login(invalid_username, invalid_password)}.to raise_error(NoMethodError)
+        expect(config.access_token).to be_nil
+      end
+    end
+  end
+
+  describe '#client_credentials_flow' do
+    it 'does not raise error and set an access token' do
+      {{moduleName}}.configure { |c|
+        c.client_id = valid_client_id
+        c.scopes = scopes
+      }
+      expect{ {{moduleName}}::ApiAuth::authenticate()}.to_not raise_error
+      expect(config.access_token).to_not be_nil
+    end
+
+    it 'fails if the auth url is invalid' do
+      {{moduleName}}.configure { |c|
+        c.client_id = valid_client_id
+        c.scopes = scopes
+        c.auth_url = bad_auth_url
+      }
+      expect { {{moduleName}}::ApiAuth::authenticate}.to raise_error(ArgumentError)
+      expect(config.access_token).to be_nil
+    end
+
+    it 'fails if the client id is not provided' do
+      {{moduleName}}.configure { |c|
+        c.scopes = scopes
+      }
+      expect { {{moduleName}}::ApiAuth::authenticate}.to raise_error(NoMethodError)
+      expect(config.access_token).to be_nil
+    end
+
+    it 'fails if the client id is invalid' do
+      {{moduleName}}.configure { |c|
+        c.client_id = invalid_client_id
+        c.scopes = scopes
+      }
+      expect { {{moduleName}}::ApiAuth::authenticate}.to raise_error(NoMethodError)
+      expect(config.access_token).to be_nil
+    end
+  end
+
+  describe '#impersonation' do
+    it 'succeeds when provided a token' do
+      expect{ {{moduleName}}::ApiAuth.start_impersonate(impersonation_token)}.to_not raise_error
+      expect(config.impersonating?).to be_truthy
+    end
+
+    it 'fails to start if not provided an impersonation token' do
+      expect{ {{moduleName}}::ApiAuth.start_impersonate(nil)}.to raise_error(ArgumentError)
+    end
+
+    it 'stops impersonating properly' do
+      {{moduleName}}::ApiAuth.start_impersonate(impersonation_token)
+      expect(config.impersonating?).to be_truthy
+
+      {{moduleName}}::ApiAuth.stop_impersonate()
+      expect(config.impersonating?).to be_falsey
+    end
+
+    it 'returns the proper access tokens' do
+      {{moduleName}}::ApiAuth.start_impersonate(impersonation_token)
+      expect(config.get_access_token).to eq(impersonation_token)
+
+      {{moduleName}}::ApiAuth.stop_impersonate()
+      expect(config.get_access_token).to_not eq(impersonation_token)
+    end
+  end
+end

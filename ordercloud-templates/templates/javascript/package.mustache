@@ -1,0 +1,31 @@
+{
+  "name": "ordercloud-javascript-sdk",
+  "version": "{{{projectVersion}}}",
+  "description": "{{{projectDescription}}}",
+  "author": "Four51 Inc. <ordercloud@four51.com>",
+  "license": "MIT",
+  "main": "{{sourceFolder}}{{#invokerPackage}}/{{invokerPackage}}{{/invokerPackage}}/index.js",
+  "browser": "dist/ordercloud-javascript-sdk.min.js",
+  "scripts": {
+    "build": "npm run concat && npm run minify",
+    "concat": "browserify ./src/index.js --outfile ./dist/ordercloud-javascript-sdk.js --standalone OrderCloudSDK",
+    "minify": "uglifyjs --compress unused=false --mangle --output dist/ordercloud-javascript-sdk.min.js -- dist/ordercloud-javascript-sdk.js",
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ordercloud-api/OrderCloud-JavaScript-SDK"
+  },
+  "dependencies": {
+    "superagent": "3.8.2"
+  },
+  "devDependencies": {
+    "bowserify": "^10.2.1",
+    "expect.js": "~0.3.1",
+    "fs": "0.0.1-security",
+    "glob": "7.1.1",
+    "mocha": "~2.3.4",
+    "sinon": "1.17.3",
+    "uglify-js": "2.7.5"
+  }
+}

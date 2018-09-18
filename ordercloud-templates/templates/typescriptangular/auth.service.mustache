@@ -1,0 +1,319 @@
+{{> licenseInfo }}
+/* tslint:disable:no-unused-variable member-ordering */
+
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent
+}                                                            from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import { Observable }                                        from 'rxjs{{#useRxjsVersion6Imports}}';{{/useRxjsVersion6Imports}}{{^useRxjsVersion6Imports}}/Observable';{{/useRxjsVersion6Imports}}
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
+import { AccessToken }                                       from '../model/accessToken';
+
+
+
+@Injectable()
+export class OcAuthService {
+
+    protected authPath = 'https://auth.ordercloud.io/oauth/token';
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
+
+    constructor(protected httpClient: HttpClient, @Optional() configuration: Configuration) {
+        if (configuration && configuration.authPath) {
+            this.authPath = configuration.authPath;
+        }
+    }
+
+    /**
+     * @description this workflow is most approprivate for client apps where user is a human, ie a registered user
+     * 
+     * @param username of the user logging in
+     * @param password of the user logging in
+     * @param clientID of the application the user is logging into
+     * @param scope roles being requested - space delimited string or array
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public Login(username: string, password: string, clientID: string, scope: string | string[], observe?: 'body', reportProgress?: boolean): Observable<AccessToken>;
+    public Login(username: string, password: string, clientID: string, scope: string | string[], observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessToken>>;
+    public Login(username: string, password: string, clientID: string, scope: string | string[], observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessToken>>;
+    public Login(username: string, password: string, clientID: string, scope: string | string[], observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling _login.');
+        }
+        if (password === null || password === undefined) {
+            throw new Error('Required parameter password was null or undefined when calling _login.');
+        }
+        if (clientID === null || clientID === undefined) {
+            throw new Error('Required parameter clientID was null or undefined when calling _login.');
+        }
+        if (scope === null || scope === undefined) {
+            throw new Error('Required parameter scope was null or undefined when calling _login.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/plain; charset=utf-8'
+        ];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        if (typeof scope !== 'string') {
+            scope = scope.join(' ');
+        }
+        let authRequest = `grant_type=password&scope=${scope}&client_id=${clientID}&username=${username}&password=${password}`;
+        return this.httpClient.post<AccessToken>(this.authPath,
+            authRequest,
+            {
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @description similar to login except client secret is also required, adding another level of security
+     * 
+     * @param clientSecret of the application
+     * @param username of the user logging in
+     * @param password of the user logging in
+     * @param clientID of the application the user is logging into
+     * @param scope roles being requested - space delimited string or array
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public ElevatedLogin(clientSecret: string, username: string, password: string, clientID: string, scope: string | string[], observe?: 'body', reportProgress?: boolean): Observable<AccessToken>;
+    public ElevatedLogin(clientSecret: string, username: string, password: string, clientID: string, scope: string | string[], observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessToken>>;
+    public ElevatedLogin(clientSecret: string, username: string, password: string, clientID: string, scope: string | string[], observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessToken>>;
+    public ElevatedLogin(clientSecret: string, username: string, password: string, clientID: string, scope: string | string[], observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        if (clientSecret === null || clientSecret === undefined) {
+            throw new Error('Required parameter clientSecret was null or undefined when calling ElevatedLogin.');
+        }
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling ElevatedLogin.');
+        }
+        if (password === null || password === undefined) {
+            throw new Error('Required parameter password was null or undefined when calling ElevatedLogin.');
+        }
+        if (clientID === null || clientID === undefined) {
+            throw new Error('Required parameter clientID was null or undefined when calling ElevatedLogin.');
+        }
+        if (scope === null || scope === undefined) {
+            throw new Error('Required parameter scope was null or undefined when calling ElevatedLogin.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/plain; charset=utf-8'
+        ];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        if (typeof scope !== 'string') {
+            scope = scope.join(' ');
+        }
+        let authRequest = `grant_type=client_credentials&scope=${scope}&client_id=${clientID}&username=${username}&password=${password}&client_secret=${clientSecret}`;
+        return this.httpClient.post<AccessToken>(this.authPath,
+            authRequest,
+            {
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @description this workflow is best suited for a backend system
+     * 
+     * @param clientSecret of the application
+     * @param clientID of the application the user is logging into
+     * @param scope roles being requested - space delimited string or array
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public ClientCredentials(clientSecret: string, clientID: string, scope: string | string[], observe?: 'body', reportProgress?: boolean): Observable<AccessToken>;
+    public ClientCredentials(clientSecret: string, clientID: string, scope: string | string[], observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessToken>>;
+    public ClientCredentials(clientSecret: string, clientID: string, scope: string | string[], observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessToken>>;
+    public ClientCredentials(clientSecret: string, clientID: string, scope: string | string[], observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        if (clientSecret === null || clientSecret === undefined) {
+            throw new Error('Required parameter clientSecret was null or undefined when calling ClientCredentials.');
+        }
+        if (clientID === null || clientID === undefined) {
+            throw new Error('Required parameter clientID was null or undefined when calling ClientCredentials.');
+        }
+        if (scope === null || scope === undefined) {
+            throw new Error('Required parameter scope was null or undefined when calling ClientCredentials.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/plain; charset=utf-8'
+        ];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        if (typeof scope !== 'string') {
+            scope = scope.join(' ');
+        }
+        let authRequest = `grant_type=password&scope=${scope}&client_id=${clientID}&client_secret=${clientSecret}`;
+        return this.httpClient.post<AccessToken>(this.authPath,
+            authRequest,
+            {
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @description extend your users' session by getting a new access token with a refresh token. refresh tokens must be enabled in the dashboard
+     * 
+     * @param refreshToken of the application
+     * @param clientID of the application the user is logging into
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public RefreshToken(refreshToken: string, clientID: string, observe?: 'body', reportProgress?: boolean): Observable<AccessToken>;
+    public RefreshToken(refreshToken: string, clientID: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessToken>>;
+    public RefreshToken(refreshToken: string, clientID: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessToken>>;
+    public RefreshToken(refreshToken: string, clientID: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        if (refreshToken === null || refreshToken === undefined) {
+            throw new Error('Required parameter refreshToken was null or undefined when calling RefreshToken.');
+        }
+        if (clientID === null || clientID === undefined) {
+            throw new Error('Required parameter clientID was null or undefined when calling RefreshToken.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/plain; charset=utf-8'
+        ];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+        let authRequest = `grant_type=refresh_token&client_id=${clientID}&refresh_token=${refreshToken}`;
+        return this.httpClient.post<AccessToken>(this.authPath,
+            authRequest,
+            {
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @description allow users to browse your catalog without signing in - must have anonymous template user set in dashboard
+     * 
+     * @param clientID of the application the user is logging into
+     * @param scope roles being requested - space delimited string or array
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public Anonymous(clientID: string, scope: string | string[], observe?: 'body', reportProgress?: boolean): Observable<AccessToken>;
+    public Anonymous(clientID: string, scope: string | string[], observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessToken>>;
+    public Anonymous(clientID: string, scope: string | string[], observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessToken>>;
+    public Anonymous(clientID: string, scope: string | string[], observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        if (clientID === null || clientID === undefined) {
+            throw new Error('Required parameter clientID was null or undefined when calling Anonymous.');
+        }
+        if (scope === null || scope === undefined) {
+            throw new Error('Required parameter scope was null or undefined when calling Anonymous.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json',
+            'text/plain; charset=utf-8'
+        ];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+        if (typeof scope !== 'string') {
+            scope = scope.join(' ');
+        }
+        let authRequest = `grant_type=client_credentials&client_id=${clientID}&scope=${scope}`;
+        return this.httpClient.post<AccessToken>(this.authPath,
+            authRequest,
+            {
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+}

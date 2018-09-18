@@ -1,0 +1,15 @@
+language: php
+sudo: false
+php:
+    - 5.6
+    - 7.0
+    - hhvm
+
+before_install:
+  - composer install
+
+script:
+  - phpunit --bootstrap ./vendor/autoload.php test/
+
+notifications:
+   slack: four51:7JMOT6XhPXuBi1XWcxdqy4MV

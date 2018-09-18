@@ -1,0 +1,119 @@
+=begin
+{{> api_info}}
+=end
+
+require 'uri'
+require 'singleton'
+
+module {{moduleName}}
+  class ApiAuth
+    include Singleton
+
+    private
+    def self._base_body_for_auth(grant_type, client_secret = nil, client_id = nil, scope = nil)
+      body = {
+        :client_id => {{moduleName}}::Configuration.default.client_id,
+        :scope => {{moduleName}}::Configuration.default.scopes.join(" "),
+        :grant_type => grant_type,
+      }
+
+      if client_id
+        body = body.merge({ :client_id => client_id })
+      end
+
+      if scope
+        body = body.merge({ :scope => scope.join(" ") })
+      end
+
+      if client_secret
+        body = body.merge({ :client_secret => client_secret })
+      end
+
+      body
+    end
+
+    private
+    def self._request_access_token(body)
+      request = Typhoeus::Request.new(
+        {{moduleName}}::Configuration.default.auth_url,
+        method: :post,
+        body: URI.encode_www_form(body)
+      )
+      request.on_complete do |response|
+        if response.success?
+          token = JSON.parse(response.body)
+          {{moduleName}}::Configuration.default.access_token = OrderCloud::AccessToken.new({
+            :access_token => token["access_token"], 
+            :expires_in => token["expires_in"],
+            :token_type => token["token_type"]
+          })
+        elsif response.timed_out?
+          fail "HTTP Request timed out"
+        elsif response.code == 0
+          fail ArgumentError, "Empty response! Make sure you've set a Default User Context ID in the developer center. This is because the generated access token needs to be associated with some user."
+        else
+          fail NoMethodError, "Http request failed with #{response.code.to_s}. #{response.body}"
+        end
+      end
+      request.run
+    end
+
+    def self.login(username, password, client_id = nil, scope = nil)
+      body = _base_body_for_auth("password", nil, client_id, scope)
+
+      body = body.merge({
+        :username => username,
+        :password => password
+      })
+
+      _request_access_token(body)
+    end
+
+    def self.elevated_login(username, password, client_secret, client_id = nil, scope = nil)
+      body = _base_body_for_auth("password", client_secret, client_id, scope)
+
+      body = body.merge({
+        :username => username,
+        :password => password
+      })
+
+      _request_access_token(body)
+    end
+
+    def self.authenticate(client_secret = nil)
+      body = _base_body_for_auth("client_credentials", client_secret)
+
+      _request_access_token(body)
+    end
+
+    def self.client_secret(client_secret, client_id = nil, scope = nil)
+      body = _base_body_for_auth("client_credentials", client_secret, client_id, scope)
+
+      _request_access_token(body)
+    end
+
+    def self.anonymous(client_id = nil, scope = nil)
+      body = _base_body_for_auth("client_credentials", nil, client_id, scope)
+
+      _request_access_token(body)
+    end
+
+    def self.refresh_token(refresh_token, client_id = nil, scope = nil)
+      body = _base_body_for_auth("refresh_token", nil, client_id, scope)
+
+      _request_access_token(body)
+    end
+
+    def self.start_impersonate(impersonation_access_token)
+      if not impersonation_access_token
+        fail ArgumentError, "You must provide an access token in order to impersonate. Use UserApi.get_access_token to get an impersonation token"
+      end
+
+      {{moduleName}}::Configuration.default.impersonation_token = impersonation_access_token
+    end
+
+    def self.stop_impersonate
+      {{moduleName}}::Configuration.default.impersonation_token = nil 
+    end
+  end
+end
