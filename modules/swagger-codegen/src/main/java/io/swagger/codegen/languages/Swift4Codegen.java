@@ -295,9 +295,9 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("AlamofireImplementations.mustache",
                 sourceFolder,
                 "AlamofireImplementations.swift"));
-        supportingFiles.add(new SupportingFile("Configuration.mustache",
+        supportingFiles.add(new SupportingFile("SdkConfiguration.mustache",
                 sourceFolder,
-                "Configuration.swift"));
+                "SdkConfiguration.swift"));
         supportingFiles.add(new SupportingFile("Extensions.mustache",
                 sourceFolder,
                 "Extensions.swift"));
