@@ -1,7 +1,7 @@
 library swagger.api;
 
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart';
 
 part 'api_client.dart';
@@ -16,8 +16,10 @@ part 'api/pet_api.dart';
 part 'api/store_api.dart';
 part 'api/user_api.dart';
 
+part 'model/amount.dart';
 part 'model/api_response.dart';
 part 'model/category.dart';
+part 'model/currency.dart';
 part 'model/order.dart';
 part 'model/pet.dart';
 part 'model/tag.dart';
