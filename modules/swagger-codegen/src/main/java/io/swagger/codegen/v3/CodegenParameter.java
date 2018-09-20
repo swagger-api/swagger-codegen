@@ -11,6 +11,7 @@ public class CodegenParameter extends CodegenObject {
           collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
 
     public String example; // example value (x-example)
+    public String testExample;
     public String jsonSchema;
     public List<String> _enum;
     public Map<String, Object> allowableValues;
@@ -120,6 +121,7 @@ public class CodegenParameter extends CodegenObject {
         output.jsonSchema = this.jsonSchema;
         output.defaultValue = this.defaultValue;
         output.example = this.example;
+        output.testExample = this.testExample;
         if (this._enum != null) {
             output._enum = new ArrayList<String>(this._enum);
         }
@@ -295,6 +297,10 @@ public class CodegenParameter extends CodegenObject {
 
     public String getExample() {
         return example;
+    }
+
+    public String getTestExample() {
+        return testExample;
     }
 
     public String getJsonSchema() {
