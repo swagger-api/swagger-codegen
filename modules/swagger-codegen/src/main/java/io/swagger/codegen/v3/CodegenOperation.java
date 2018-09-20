@@ -17,8 +17,7 @@ import java.util.Arrays;
 public class CodegenOperation extends CodegenObject {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
     public boolean returnTypeIsPrimitive, returnSimpleType, subresourceOperation;
-    public String path, operationId, returnType, httpMethod, returnBaseType,
-            returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse;
+    public String path, operationId, returnType, httpMethod, returnBaseType, returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, testPath;
     public Discriminator discriminator;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
     public CodegenParameter bodyParam;
@@ -351,6 +350,10 @@ public class CodegenOperation extends CodegenObject {
 
     public String getDefaultResponse() {
         return defaultResponse;
+    }
+
+    public String getTestPath() {
+        return testPath;
     }
 
     public Discriminator getDiscriminator() {
