@@ -71,6 +71,7 @@ public class ScalaLagomServerCodegen extends AbstractScalaCodegen implements Cod
     typeMapping.put("long", "Long");
     typeMapping.put("double", "Double");
     typeMapping.put("object", "Any");
+    typeMapping.put(null, "Any");
     typeMapping.put("file", "File");
 
     //TODO binary should be mapped to byte array
