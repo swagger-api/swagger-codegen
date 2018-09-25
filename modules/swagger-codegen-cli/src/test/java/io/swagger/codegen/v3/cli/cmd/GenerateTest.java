@@ -623,7 +623,7 @@ public class GenerateTest {
 
         Assert.assertEquals(generate.lang, "java");
         Assert.assertEquals(generate.library, "jersey2");
-        Assert.assertEquals(generate.additionalProperties.size(), 2);
+        Assert.assertEquals(generate.additionalProperties.size(), 3);
         Assert.assertEquals(generate.additionalProperties.get(0), "serializableModel=true");
         Assert.assertEquals(generate.additionalProperties.get(1), "withXml=true");
 
@@ -636,7 +636,7 @@ public class GenerateTest {
 
         Assert.assertEquals(generate.lang, "java");
         Assert.assertEquals(generate.library, "jersey2");
-        Assert.assertEquals(generate.additionalProperties.size(), 2);
+        Assert.assertEquals(generate.additionalProperties.size(), 3);
         Assert.assertEquals(generate.additionalProperties.get(0), "serializableModel=true");
         Assert.assertEquals(generate.additionalProperties.get(1), "withXml=true");
     }

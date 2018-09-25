@@ -50,6 +50,11 @@ components:
           title: "template version"
           description: "version of the template used on generation."
           x-option: "--template-version"
+        templateEngine:
+          type: "string"
+          title: "template engine"
+          description: "template engine to generate files, currently supported: 'mustache' and 'handlebars'."
+          x-option: "--template-engine"
         auth:
           type: "string"
           title: "authorization"
