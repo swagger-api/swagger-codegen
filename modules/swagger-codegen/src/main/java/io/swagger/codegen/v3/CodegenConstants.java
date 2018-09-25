@@ -230,6 +230,8 @@ public class CodegenConstants {
     public static final String USE_OAS2 = "useOas2";
     public static final String USE_OAS2_DESC = "use OpenAPI v2.0 (Swagger 1.5.x)";
 
+    public static final String TEMPLATE_ENGINE = "templateEngine";
+
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";
     public static final String IS_ARRAY_MODEL_EXT_NAME = PREFIX_IS + "array-model";
@@ -322,5 +324,8 @@ public class CodegenConstants {
     public static final String MODEL_TESTS_OPTION = "--model-tests";
     public static final String API_TESTS_OPTION = "--api-tests";
     public static final String USE_OAS2_OPTION = "--use-oas2";
+
+    public static final String HANDLEBARS_TEMPLATE_ENGINE = "handlebars";
+    public static final String MUSTACHE_TEMPLATE_ENGINE = "mustache";
 
 }

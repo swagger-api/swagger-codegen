@@ -1,6 +1,7 @@
 package io.swagger.codegen.v3.cli.cmd;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.cli.CLIHelper;
 import io.swagger.codegen.v3.ClientOptInput;
 import io.swagger.codegen.v3.CodegenArgument;
@@ -47,6 +48,7 @@ public class Generate implements Runnable {
     protected String spec;
     protected String templateDir;
     protected String templateVersion;
+    protected String templateEngine;
     protected String auth;
     protected List<String> systemProperties = new ArrayList<>();
     protected String configFile;
@@ -97,6 +99,10 @@ public class Generate implements Runnable {
 
     public void setTemplateVersion(String templateVersion) {
         this.templateVersion = templateVersion;
+    }
+
+    public void setTemplateEngine(String templateEngine) {
+        this.templateEngine = templateEngine;
     }
 
     public void setAuth(String auth) {
@@ -316,6 +322,12 @@ public class Generate implements Runnable {
 
         if (codegenArguments != null && !codegenArguments.isEmpty()) {
             configurator.setCodegenArguments(codegenArguments);
+        }
+
+        if (CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE.equalsIgnoreCase(templateEngine)) {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.TEMPLATE_ENGINE, CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE));
+        } else {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.TEMPLATE_ENGINE, CodegenConstants.MUSTACHE_TEMPLATE_ENGINE));
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);
