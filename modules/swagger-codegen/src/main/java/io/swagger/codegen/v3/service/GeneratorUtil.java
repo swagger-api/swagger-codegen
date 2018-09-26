@@ -13,6 +13,8 @@ import io.swagger.parser.SwaggerParser;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,8 @@ import java.util.Map;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class GeneratorUtil {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(GeneratorUtil.class);
 
     public static io.swagger.codegen.ClientOptInput getClientOptInputV2(GenerationRequest generationRequest) {
         final Options options = generationRequest.getOptions();
@@ -67,6 +71,7 @@ public class GeneratorUtil {
                     swagger = new SwaggerParser().read(node, true);
                 }
             } catch (Exception e) {
+                LOGGER.error("Exception parsing input spec", e);
                 throw new BadRequestException("The swagger specification supplied was not valid");
             }
         }

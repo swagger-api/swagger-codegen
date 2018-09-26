@@ -329,7 +329,6 @@
     <properties>
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
-        <swagger-parser-version-v1>1.0.38</swagger-parser-version-v1>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.4.11.v20180605</jetty-version>
         <inflector-version>2.0.0-rc2</inflector-version>
