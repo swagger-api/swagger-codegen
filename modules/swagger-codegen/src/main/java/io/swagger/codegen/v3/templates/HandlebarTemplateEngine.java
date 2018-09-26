@@ -25,6 +25,11 @@ public class HandlebarTemplateEngine implements TemplateEngine {
         return hTemplate.apply(templateData);
     }
 
+    @Override
+    public String gerName() {
+        return CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE;
+    }
+
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
         templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
         String templateDir = config.templateDir().replace(".mustache", StringUtils.EMPTY).replace("\\", "/");

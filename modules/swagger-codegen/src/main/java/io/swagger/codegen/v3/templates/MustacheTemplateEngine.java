@@ -3,6 +3,7 @@ package io.swagger.codegen.v3.templates;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.v3.CodegenConfig;
+import io.swagger.codegen.v3.CodegenConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,11 @@ public class MustacheTemplateEngine implements TemplateEngine {
                 .compile(template);
 
         return tmpl.execute(templateData);
+    }
+
+    @Override
+    public String gerName() {
+        return CodegenConstants.MUSTACHE_TEMPLATE_ENGINE;
     }
 
     public String readTemplate(String name) {
