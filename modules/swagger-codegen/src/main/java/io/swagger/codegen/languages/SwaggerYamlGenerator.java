@@ -8,9 +8,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.swagger.codegen.*;
+import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.jackson.mixin.ResponseSchemaMixin;
+import io.swagger.models.Model;
 import io.swagger.models.Response;
 import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
 import io.swagger.util.DeserializationModule;
 import io.swagger.util.Yaml;
 import org.apache.commons.io.FileUtils;
@@ -19,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfig {
 
@@ -41,8 +46,6 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
                 .defaultValue(SWAGGER_FILENAME_DEFAULT_YAML));
 
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-
-        System.setProperty(CodegenConstants.SUPPORTING_FILES, Boolean.TRUE.toString());
     }
 
     @Override
@@ -99,7 +102,15 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
     public String escapeUnsafeCharacters(String input) {
         // just return the original string
         return input;
-    }   
+    }
+
+    @Override
+    protected List<Map<String, String>> getExamples(Map<String, Model> definitions, Map<String, Object> examples, List<String> produces, Object object) {
+        if (examples == null || examples.isEmpty()) {
+            return null;
+        }
+        return super.getExamples(definitions, examples, produces, object);
+    }
 
     private void configureMapper(ObjectMapper mapper) {
         Module deserializerModule = new DeserializationModule(true, true);

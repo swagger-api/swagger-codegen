@@ -32,9 +32,6 @@ public class RubyClientCodegenTest {
   @BeforeMethod
   public void setUp() throws Exception {
       folder.create();
-      if (System.getProperty(CodegenConstants.SUPPORTING_FILES) != null) {
-          System.clearProperty(CodegenConstants.SUPPORTING_FILES);
-      }
   }
 
   @AfterMethod
