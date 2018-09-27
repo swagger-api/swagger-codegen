@@ -10,8 +10,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * A tag for a pet
  */
+@ApiModel(description = "A tag for a pet")
 @Validated
 
 public class Tag   {
