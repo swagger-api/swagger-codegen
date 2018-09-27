@@ -16,9 +16,18 @@
         <url-pattern>/ui/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/index.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/oauth2-redirect.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>swagger-inflector</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>DefaultServlet</servlet-name>
