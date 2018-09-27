@@ -7,5 +7,5 @@ public interface TemplateEngine {
 
     String getRendered(String templateFile, Map<String, Object> templateData) throws IOException;
 
-    String gerName();
+    String getName();
 }
