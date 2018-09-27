@@ -15,8 +15,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Pet
+ * A pet for sale in the pet store
  */
+@ApiModel(description = "A pet for sale in the pet store")
 @Validated
 
 public class Pet   {
