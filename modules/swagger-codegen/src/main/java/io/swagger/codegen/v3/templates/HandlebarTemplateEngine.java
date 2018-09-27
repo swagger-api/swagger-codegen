@@ -26,7 +26,7 @@ public class HandlebarTemplateEngine implements TemplateEngine {
     }
 
     @Override
-    public String gerName() {
+    public String getName() {
         return CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE;
     }
 
