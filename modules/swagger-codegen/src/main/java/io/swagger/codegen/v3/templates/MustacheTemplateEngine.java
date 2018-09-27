@@ -46,7 +46,7 @@ public class MustacheTemplateEngine implements TemplateEngine {
     }
 
     @Override
-    public String gerName() {
+    public String getName() {
         return CodegenConstants.MUSTACHE_TEMPLATE_ENGINE;
     }
 
