@@ -28,19 +28,19 @@ public class StoreApiController implements StoreApi {
     public StoreApiController(StoreApiDelegate delegate) {
         this.delegate = delegate;
     }
-    public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathVariable("order_id") String orderId) {
+    public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathVariable("order_id") String orderId) throws Exception {
         return delegate.deleteOrder(orderId);
     }
 
-    public ResponseEntity<Map<String, Integer>> getInventory() {
+    public ResponseEntity<Map<String, Integer>> getInventory() throws Exception {
         return delegate.getInventory();
     }
 
-    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(5L) @ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathVariable("order_id") Long orderId) {
+    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(5L) @ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathVariable("order_id") Long orderId) throws Exception {
         return delegate.getOrderById(orderId);
     }
 
-    public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body) {
+    public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body) throws Exception {
         return delegate.placeOrder(body);
     }
 
