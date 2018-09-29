@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**fake_outer_composite_serialize**](FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
 [**fake_outer_number_serialize**](FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
 [**fake_outer_string_serialize**](FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
+[**test_body_with_query_params**](FakeApi.md#test_body_with_query_params) | **PUT** /fake/body-with-query-params | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
@@ -203,6 +204,52 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **test_body_with_query_params**
+> test_body_with_query_params(body, query)
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import petstore_api
+from petstore_api.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = petstore_api.FakeApi()
+body = petstore_api.User() # User | 
+query = 'query_example' # str | 
+
+try:
+    api_instance.test_body_with_query_params(body, query)
+except ApiException as e:
+    print("Exception when calling FakeApi->test_body_with_query_params: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**User**](User.md)|  | 
+ **query** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **test_client_model**
 > Client test_client_model(body)
 
@@ -252,7 +299,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback)
+> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, _float=_float, string=string, binary=binary, _date=_date, date_time=date_time, password=password, param_callback=param_callback)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -280,17 +327,17 @@ byte = 'B' # str | None
 integer = 56 # int | None (optional)
 int32 = 56 # int | None (optional)
 int64 = 789 # int | None (optional)
-float = 3.4 # float | None (optional)
+_float = 3.4 # float | None (optional)
 string = 'string_example' # str | None (optional)
 binary = 'B' # str | None (optional)
-date = '2013-10-20' # date | None (optional)
+_date = '2013-10-20' # date | None (optional)
 date_time = '2013-10-20T19:20:30+01:00' # datetime | None (optional)
 password = 'password_example' # str | None (optional)
 param_callback = 'param_callback_example' # str | None (optional)
 
 try:
     # Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-    api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback)
+    api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, _float=_float, string=string, binary=binary, _date=_date, date_time=date_time, password=password, param_callback=param_callback)
 except ApiException as e:
     print("Exception when calling FakeApi->test_endpoint_parameters: %s\n" % e)
 ```
@@ -306,10 +353,10 @@ Name | Type | Description  | Notes
  **integer** | **int**| None | [optional] 
  **int32** | **int**| None | [optional] 
  **int64** | **int**| None | [optional] 
- **float** | **float**| None | [optional] 
+ **_float** | **float**| None | [optional] 
  **string** | **str**| None | [optional] 
  **binary** | **str**| None | [optional] 
- **date** | **date**| None | [optional] 
+ **_date** | **date**| None | [optional] 
  **date_time** | **datetime**| None | [optional] 
  **password** | **str**| None | [optional] 
  **param_callback** | **str**| None | [optional] 
