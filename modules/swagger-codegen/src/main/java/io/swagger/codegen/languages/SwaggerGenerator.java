@@ -1,8 +1,13 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.models.Model;
+import io.swagger.models.properties.Property;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -81,7 +86,15 @@ public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
     public String escapeQuotationMark(String input) { 
         // just return the original string
         return input;
-    } 
+    }
+
+    @Override
+    protected List<Map<String, String>> getExamples(Map<String, Model> definitions, Map<String, Object> examples, List<String> produces, Object object) {
+        if (examples == null || examples.isEmpty()) {
+            return null;
+        }
+        return super.getExamples(definitions, examples, produces, object);
+    }
 
     @Override
     public String escapeUnsafeCharacters(String input) { 

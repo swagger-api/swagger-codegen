@@ -142,19 +142,19 @@ class PetApiTests(unittest.TestCase):
         self.assertNotEqual(pet_api.api_client.configuration.host, pet_api2.api_client.configuration.host)
 
     def test_async_request(self):
-        thread = self.pet_api.add_pet(body=self.pet, async=True)
+        thread = self.pet_api.add_pet(body=self.pet, async_req=True)
         response = thread.get()
         self.assertIsNone(response)
 
-        thread = self.pet_api.get_pet_by_id(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
         result = thread.get()
         self.assertIsInstance(result, petstore_api.Pet)
 
     def test_async_with_result(self):
-        self.pet_api.add_pet(body=self.pet, async=False)
+        self.pet_api.add_pet(body=self.pet, async_req=False)
 
-        thread = self.pet_api.get_pet_by_id(self.pet.id, async=True)
-        thread2 = self.pet_api.get_pet_by_id(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
+        thread2 = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
 
         response = thread.get()
         response2 = thread2.get()
@@ -165,7 +165,7 @@ class PetApiTests(unittest.TestCase):
     def test_async_with_http_info(self):
         self.pet_api.add_pet(body=self.pet)
 
-        thread = self.pet_api.get_pet_by_id_with_http_info(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id_with_http_info(self.pet.id, async_req=True)
         data, status, headers = thread.get()
 
         self.assertIsInstance(data, petstore_api.Pet)
@@ -174,7 +174,7 @@ class PetApiTests(unittest.TestCase):
     def test_async_exception(self):
         self.pet_api.add_pet(body=self.pet)
 
-        thread = self.pet_api.get_pet_by_id("-9999999999999", async=True)
+        thread = self.pet_api.get_pet_by_id("-9999999999999", async_req=True)
 
         exception = None
         try:
