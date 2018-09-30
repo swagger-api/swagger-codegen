@@ -89,9 +89,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if(this.ignoreProcessor == null) {
             this.ignoreProcessor = new CodegenIgnoreProcessor(this.config.getOutputDir());
         }
-
-        this.templateEngine = config.getTemplateEngine();
-
         return this;
     }
 
@@ -199,6 +196,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (this.openAPI.getExtensions() != null) {
             config.vendorExtensions().putAll(this.openAPI.getExtensions());
         }
+
+        this.templateEngine = config.getTemplateEngine();
 
         URL url = URLPathUtil.getServerURL(openAPI);
 
