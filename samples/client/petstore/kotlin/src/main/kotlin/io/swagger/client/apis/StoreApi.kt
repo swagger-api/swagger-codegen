@@ -15,18 +15,24 @@ import io.swagger.client.models.Order
 
 import io.swagger.client.infrastructure.*
 
-class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
+class StoreApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Delete purchase order by ID
-    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+    * For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
     * @param orderId ID of the order that needs to be deleted 
     * @return void
     */
-    fun deleteOrder(orderId: kotlin.String) : Unit {
+    fun deleteOrder(orderId: kotlin.Long) : Unit {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        
+        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
+        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
+        localVariableHeaders.putAll(contentHeaders)
+        localVariableHeaders.putAll(acceptsHeaders)
+        
         val localVariableConfig = RequestConfig(
             RequestMethod.DELETE,
             "/store/order/{orderId}".replace("{"+"orderId"+"}", "$orderId"),
@@ -57,7 +63,13 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     fun getInventory() : kotlin.collections.Map<kotlin.String, kotlin.Int> {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        
+        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/json")
+        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
+        localVariableHeaders.putAll(contentHeaders)
+        localVariableHeaders.putAll(acceptsHeaders)
+        
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/store/inventory",
@@ -81,7 +93,7 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
 
     /**
     * Find purchase order by ID
-    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+    * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
     * @param orderId ID of pet that needs to be fetched 
     * @return Order
     */
@@ -89,7 +101,13 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     fun getOrderById(orderId: kotlin.Long) : Order {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        
+        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
+        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
+        localVariableHeaders.putAll(contentHeaders)
+        localVariableHeaders.putAll(acceptsHeaders)
+        
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/store/order/{orderId}".replace("{"+"orderId"+"}", "$orderId"),
@@ -121,7 +139,13 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     fun placeOrder(body: Order) : Order {
         val localVariableBody: kotlin.Any? = body
         val localVariableQuery: MultiValueMap = mapOf()
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        
+        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
+        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
+        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
+        localVariableHeaders.putAll(contentHeaders)
+        localVariableHeaders.putAll(acceptsHeaders)
+        
         val localVariableConfig = RequestConfig(
             RequestMethod.POST,
             "/store/order",
