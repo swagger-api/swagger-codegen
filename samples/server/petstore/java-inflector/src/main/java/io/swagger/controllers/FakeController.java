@@ -11,6 +11,9 @@ import java.util.List;
 import io.swagger.model.*;
 
 import java.math.BigDecimal;
+import io.swagger.model.Body2;
+import io.swagger.model.Body4;
+import io.swagger.model.Body5;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 
@@ -52,13 +55,19 @@ public class FakeController  {
   */
 
   /*
-    public ResponseContext testEndpointParameters(RequestContext request , Object body ) {
+    public ResponseContext testEndpointParameters(RequestContext request , Body2 body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testEnumParameters(RequestContext request , Object body , List<String> enumHeaderStringArray , String enumHeaderString , List<String> enumQueryStringArray , String enumQueryString , Integer enumQueryInteger ) {
+    public ResponseContext testEnumParameters(RequestContext request , List<String> enumHeaderStringArray , String enumHeaderString , List<String> enumQueryStringArray , String enumQueryString , Integer enumQueryInteger ) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext testEnumRequestBody(RequestContext request , Body4 body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -70,7 +79,7 @@ public class FakeController  {
   */
 
   /*
-    public ResponseContext testJsonFormData(RequestContext request , Object body ) {
+    public ResponseContext testJsonFormData(RequestContext request , Body5 body ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

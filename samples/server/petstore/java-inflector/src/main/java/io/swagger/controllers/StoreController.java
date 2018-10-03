@@ -33,7 +33,7 @@ public class StoreController  {
   */
 
   /*
-    public ResponseContext getOrderById(RequestContext request , Integer orderId ) {
+    public ResponseContext getOrderById(RequestContext request , Long orderId ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
