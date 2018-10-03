@@ -10,6 +10,12 @@ AnimalFarm : io.swagger.model.AnimalFarm
 ArrayOfArrayOfNumberOnly : io.swagger.model.ArrayOfArrayOfNumberOnly
 ArrayOfNumberOnly : io.swagger.model.ArrayOfNumberOnly
 ArrayTest : io.swagger.model.ArrayTest
+Body : io.swagger.model.Body
+Body1 : io.swagger.model.Body1
+Body2 : io.swagger.model.Body2
+Body3 : io.swagger.model.Body3
+Body4 : io.swagger.model.Body4
+Body5 : io.swagger.model.Body5
 Capitalization : io.swagger.model.Capitalization
 Cat : io.swagger.model.Cat
 Category : io.swagger.model.Category
