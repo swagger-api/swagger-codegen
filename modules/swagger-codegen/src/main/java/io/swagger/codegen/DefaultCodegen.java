@@ -2332,6 +2332,8 @@ public class DefaultCodegen {
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
 
+        configureDataForTestTemplate(op);
+
         return op;
     }
 
@@ -3836,5 +3838,55 @@ public class DefaultCodegen {
         if (defaultValue != null)
             option.defaultValue(defaultValue.toString());
         cliOptions.add(option);
+    }
+
+    protected void configureDataForTestTemplate(CodegenOperation codegenOperation) {
+        final String httpMethod = codegenOperation.httpMethod;
+        String path = codegenOperation.path;
+        if ("GET".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-get-method", Boolean.TRUE);
+        }
+        if ("POST".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-post-method", Boolean.TRUE);
+        }
+        if ("PUT".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-put-method", Boolean.TRUE);
+        }
+        if ("DELETE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-delete-method", Boolean.TRUE);
+        }
+        if ("HEAD".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("TRACE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-trace-method", Boolean.TRUE);
+        }
+        if ("PATCH".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("OPTIONS".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-options-method", Boolean.TRUE);
+        }
+        if (path.contains("{")) {
+            while(path.contains("{")) {
+                final String pathParam = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
+                final String paramName = pathParam.replace("{", StringUtils.EMPTY).replace("}", StringUtils.EMPTY);
+
+                CodegenParameter codegenParameter = null;
+
+                for (CodegenParameter parameter : codegenOperation.pathParams) {
+                    if (parameter.baseName.equalsIgnoreCase(paramName)) {
+                        codegenParameter = parameter;
+                        break;
+                    }
+                }
+
+                if (codegenParameter == null || codegenParameter.testExample == null) {
+                    return;
+                }
+                path = path.replace(pathParam, codegenParameter.testExample);
+            }
+        }
+        codegenOperation.testPath = path;
     }
 }
