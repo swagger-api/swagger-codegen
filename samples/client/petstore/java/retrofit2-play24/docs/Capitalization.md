@@ -1,4 +1,3 @@
-
 # Capitalization
 
 ## Properties
@@ -10,7 +9,3 @@ Name | Type | Description | Notes
 **capitalSnake** | **String** |  |  [optional]
 **scAETHFlowPoints** | **String** |  |  [optional]
 **ATT_NAME** | **String** | Name of the pet  |  [optional]
-
-
-
-

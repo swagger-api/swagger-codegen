@@ -26,13 +26,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Dog extends Animal {
 
   @JsonProperty("breed")
+
   private String breed = null;
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
-    
+  
+
   /**
   * Get breed
   * @return breed
@@ -82,6 +84,5 @@ public class Dog extends Animal {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

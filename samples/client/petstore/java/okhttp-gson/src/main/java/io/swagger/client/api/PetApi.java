@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
 import io.swagger.client.ApiCallback;
@@ -22,27 +21,20 @@ import io.swagger.client.Pair;
 import io.swagger.client.ProgressRequestBody;
 import io.swagger.client.ProgressResponseBody;
 
-
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-
-
 
 
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
-
 import java.lang.reflect.Type;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 public class PetApi {
     private ApiClient apiClient;
@@ -63,7 +55,6 @@ public class PetApi {
         this.apiClient = apiClient;
     }
 
-    
     /**
      * Build call for addPet
      * @param body Pet object that needs to be added to the store (required)
@@ -71,7 +62,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call addPetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -116,19 +106,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call addPetValidateBeforeCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling addPet(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = addPetCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -140,7 +125,6 @@ public class PetApi {
      * 
      * @param body Pet object that needs to be added to the store (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void addPet(Pet body) throws ApiException {
         addPetWithHttpInfo(body);
@@ -152,7 +136,6 @@ public class PetApi {
      * @param body Pet object that needs to be added to the store (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> addPetWithHttpInfo(Pet body) throws ApiException {
         com.squareup.okhttp.Call call = addPetValidateBeforeCall(body, null, null);
@@ -166,7 +149,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call addPetAsync(Pet body, final ApiCallback<Void> callback) throws ApiException {
 
@@ -193,7 +175,6 @@ public class PetApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for deletePet
      * @param petId Pet id to delete (required)
@@ -202,7 +183,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call deletePetCall(Integer petId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -250,19 +230,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call deletePetValidateBeforeCall(Integer petId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'petId' is set
         if (petId == null) {
             throw new ApiException("Missing the required parameter 'petId' when calling deletePet(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = deletePetCall(petId, apiKey, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -275,7 +250,6 @@ public class PetApi {
      * @param petId Pet id to delete (required)
      * @param apiKey  (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void deletePet(Integer petId, String apiKey) throws ApiException {
         deletePetWithHttpInfo(petId, apiKey);
@@ -288,7 +262,6 @@ public class PetApi {
      * @param apiKey  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> deletePetWithHttpInfo(Integer petId, String apiKey) throws ApiException {
         com.squareup.okhttp.Call call = deletePetValidateBeforeCall(petId, apiKey, null, null);
@@ -303,7 +276,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call deletePetAsync(Integer petId, String apiKey, final ApiCallback<Void> callback) throws ApiException {
 
@@ -330,7 +302,6 @@ public class PetApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for findPetsByStatus
      * @param status Status values that need to be considered for filter (required)
@@ -338,7 +309,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call findPetsByStatusCall(List<String> status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -349,7 +319,7 @@ public class PetApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (status != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("status", status));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -385,19 +355,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call findPetsByStatusValidateBeforeCall(List<String> status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'status' is set
         if (status == null) {
             throw new ApiException("Missing the required parameter 'status' when calling findPetsByStatus(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = findPetsByStatusCall(status, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -410,7 +375,6 @@ public class PetApi {
      * @param status Status values that need to be considered for filter (required)
      * @return List&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public List<Pet> findPetsByStatus(List<String> status) throws ApiException {
         ApiResponse<List<Pet>> resp = findPetsByStatusWithHttpInfo(status);
@@ -423,7 +387,6 @@ public class PetApi {
      * @param status Status values that need to be considered for filter (required)
      * @return ApiResponse&lt;List&lt;Pet&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<List<Pet>> findPetsByStatusWithHttpInfo(List<String> status) throws ApiException {
         com.squareup.okhttp.Call call = findPetsByStatusValidateBeforeCall(status, null, null);
@@ -438,7 +401,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call findPetsByStatusAsync(List<String> status, final ApiCallback<List<Pet>> callback) throws ApiException {
 
@@ -466,7 +428,6 @@ public class PetApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for findPetsByTags
      * @param tags Tags to filter by (required)
@@ -474,7 +435,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call findPetsByTagsCall(List<String> tags, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -485,7 +445,7 @@ public class PetApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (tags != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("tags", tags));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -521,19 +481,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call findPetsByTagsValidateBeforeCall(List<String> tags, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'tags' is set
         if (tags == null) {
             throw new ApiException("Missing the required parameter 'tags' when calling findPetsByTags(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = findPetsByTagsCall(tags, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -546,7 +501,6 @@ public class PetApi {
      * @param tags Tags to filter by (required)
      * @return List&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public List<Pet> findPetsByTags(List<String> tags) throws ApiException {
         ApiResponse<List<Pet>> resp = findPetsByTagsWithHttpInfo(tags);
@@ -559,7 +513,6 @@ public class PetApi {
      * @param tags Tags to filter by (required)
      * @return ApiResponse&lt;List&lt;Pet&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<List<Pet>> findPetsByTagsWithHttpInfo(List<String> tags) throws ApiException {
         com.squareup.okhttp.Call call = findPetsByTagsValidateBeforeCall(tags, null, null);
@@ -574,7 +527,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call findPetsByTagsAsync(List<String> tags, final ApiCallback<List<Pet>> callback) throws ApiException {
 
@@ -602,7 +554,6 @@ public class PetApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for getPetById
      * @param petId ID of pet to return (required)
@@ -610,7 +561,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call getPetByIdCall(Integer petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -656,19 +606,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call getPetByIdValidateBeforeCall(Integer petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'petId' is set
         if (petId == null) {
             throw new ApiException("Missing the required parameter 'petId' when calling getPetById(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = getPetByIdCall(petId, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -681,7 +626,6 @@ public class PetApi {
      * @param petId ID of pet to return (required)
      * @return Pet
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public Pet getPetById(Integer petId) throws ApiException {
         ApiResponse<Pet> resp = getPetByIdWithHttpInfo(petId);
@@ -694,7 +638,6 @@ public class PetApi {
      * @param petId ID of pet to return (required)
      * @return ApiResponse&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Pet> getPetByIdWithHttpInfo(Integer petId) throws ApiException {
         com.squareup.okhttp.Call call = getPetByIdValidateBeforeCall(petId, null, null);
@@ -709,7 +652,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call getPetByIdAsync(Integer petId, final ApiCallback<Pet> callback) throws ApiException {
 
@@ -737,7 +679,6 @@ public class PetApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for updatePet
      * @param body Pet object that needs to be added to the store (required)
@@ -745,7 +686,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call updatePetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -790,19 +730,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updatePetValidateBeforeCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updatePet(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = updatePetCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -814,7 +749,6 @@ public class PetApi {
      * 
      * @param body Pet object that needs to be added to the store (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void updatePet(Pet body) throws ApiException {
         updatePetWithHttpInfo(body);
@@ -826,7 +760,6 @@ public class PetApi {
      * @param body Pet object that needs to be added to the store (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> updatePetWithHttpInfo(Pet body) throws ApiException {
         com.squareup.okhttp.Call call = updatePetValidateBeforeCall(body, null, null);
@@ -840,7 +773,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call updatePetAsync(Pet body, final ApiCallback<Void> callback) throws ApiException {
 
@@ -867,7 +799,6 @@ public class PetApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for updatePetWithForm
      * @param petId ID of pet that needs to be updated (required)
@@ -877,7 +808,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call updatePetWithFormCall(Integer petId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -927,19 +857,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updatePetWithFormValidateBeforeCall(Integer petId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'petId' is set
         if (petId == null) {
             throw new ApiException("Missing the required parameter 'petId' when calling updatePetWithForm(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = updatePetWithFormCall(petId, name, status, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -953,7 +878,6 @@ public class PetApi {
      * @param name  (optional)
      * @param status  (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void updatePetWithForm(Integer petId, String name, String status) throws ApiException {
         updatePetWithFormWithHttpInfo(petId, name, status);
@@ -967,7 +891,6 @@ public class PetApi {
      * @param status  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> updatePetWithFormWithHttpInfo(Integer petId, String name, String status) throws ApiException {
         com.squareup.okhttp.Call call = updatePetWithFormValidateBeforeCall(petId, name, status, null, null);
@@ -983,7 +906,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call updatePetWithFormAsync(Integer petId, String name, String status, final ApiCallback<Void> callback) throws ApiException {
 
@@ -1010,7 +932,6 @@ public class PetApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for uploadFile
      * @param petId ID of pet to update (required)
@@ -1020,7 +941,6 @@ public class PetApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call uploadFileCall(Integer petId, String additionalMetadata, File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -1070,19 +990,14 @@ public class PetApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call uploadFileValidateBeforeCall(Integer petId, String additionalMetadata, File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'petId' is set
         if (petId == null) {
             throw new ApiException("Missing the required parameter 'petId' when calling uploadFile(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = uploadFileCall(petId, additionalMetadata, file, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -1097,7 +1012,6 @@ public class PetApi {
      * @param file  (optional)
      * @return ModelApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, File file) throws ApiException {
         ApiResponse<ModelApiResponse> resp = uploadFileWithHttpInfo(petId, additionalMetadata, file);
@@ -1112,7 +1026,6 @@ public class PetApi {
      * @param file  (optional)
      * @return ApiResponse&lt;ModelApiResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<ModelApiResponse> uploadFileWithHttpInfo(Integer petId, String additionalMetadata, File file) throws ApiException {
         com.squareup.okhttp.Call call = uploadFileValidateBeforeCall(petId, additionalMetadata, file, null, null);
@@ -1129,7 +1042,6 @@ public class PetApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call uploadFileAsync(Integer petId, String additionalMetadata, File file, final ApiCallback<ModelApiResponse> callback) throws ApiException {
 
@@ -1157,5 +1069,4 @@ public class PetApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
 }

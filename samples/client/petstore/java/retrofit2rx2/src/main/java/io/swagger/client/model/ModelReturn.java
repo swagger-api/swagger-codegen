@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -24,25 +23,23 @@ import java.io.IOException;
 
 /**
  * Model for testing reserved words
- */@Schema(description = "Model for testing reserved words")
-
+ */
+@Schema(description = "Model for testing reserved words")
 public class ModelReturn {
 
   @SerializedName("return")
   private Integer _return = null;
-  
   public ModelReturn _return(Integer _return) {
     this._return = _return;
     return this;
   }
 
   
+
   /**
   * Get _return
   * @return _return
   **/
-  
-  
   @Schema(description = "")
   public Integer getReturn() {
     return _return;
@@ -50,7 +47,6 @@ public class ModelReturn {
   public void setReturn(Integer _return) {
     this._return = _return;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -67,7 +63,7 @@ public class ModelReturn {
   public int hashCode() {
     return java.util.Objects.hash(_return);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -89,8 +85,4 @@ public class ModelReturn {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

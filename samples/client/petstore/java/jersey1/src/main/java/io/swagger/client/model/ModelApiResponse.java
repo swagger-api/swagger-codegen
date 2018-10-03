@@ -25,19 +25,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ModelApiResponse {
 
   @JsonProperty("code")
+
   private Integer code = null;
 
   @JsonProperty("type")
+
   private String type = null;
 
   @JsonProperty("message")
+
   private String message = null;
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-    
+  
+
   /**
   * Get code
   * @return code
@@ -54,7 +58,8 @@ public class ModelApiResponse {
     return this;
   }
 
-    
+  
+
   /**
   * Get type
   * @return type
@@ -71,7 +76,8 @@ public class ModelApiResponse {
     return this;
   }
 
-    
+  
+
   /**
   * Get message
   * @return message
@@ -124,6 +130,5 @@ public class ModelApiResponse {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

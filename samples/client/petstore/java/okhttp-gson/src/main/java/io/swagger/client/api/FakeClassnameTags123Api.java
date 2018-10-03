@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
 import io.swagger.client.ApiCallback;
@@ -22,25 +21,18 @@ import io.swagger.client.Pair;
 import io.swagger.client.ProgressRequestBody;
 import io.swagger.client.ProgressResponseBody;
 
-
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-
-
 import io.swagger.client.model.Client;
 
-
 import java.lang.reflect.Type;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 public class FakeClassnameTags123Api {
     private ApiClient apiClient;
@@ -61,7 +53,6 @@ public class FakeClassnameTags123Api {
         this.apiClient = apiClient;
     }
 
-    
     /**
      * Build call for testClassname
      * @param body client model (required)
@@ -69,7 +60,6 @@ public class FakeClassnameTags123Api {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testClassnameCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -114,19 +104,14 @@ public class FakeClassnameTags123Api {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testClassnameValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testClassname(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = testClassnameCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -139,7 +124,6 @@ public class FakeClassnameTags123Api {
      * @param body client model (required)
      * @return Client
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public Client testClassname(Client body) throws ApiException {
         ApiResponse<Client> resp = testClassnameWithHttpInfo(body);
@@ -152,7 +136,6 @@ public class FakeClassnameTags123Api {
      * @param body client model (required)
      * @return ApiResponse&lt;Client&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Client> testClassnameWithHttpInfo(Client body) throws ApiException {
         com.squareup.okhttp.Call call = testClassnameValidateBeforeCall(body, null, null);
@@ -167,7 +150,6 @@ public class FakeClassnameTags123Api {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testClassnameAsync(Client body, final ApiCallback<Client> callback) throws ApiException {
 
@@ -195,5 +177,4 @@ public class FakeClassnameTags123Api {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
 }

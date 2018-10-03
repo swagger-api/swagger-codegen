@@ -69,7 +69,8 @@ public class EnumArrays {
         return JustSymbolEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("just_symbol")
+  }
+  @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
   /**
    * Gets or Sets arrayEnum
@@ -112,7 +113,8 @@ public class EnumArrays {
         return ArrayEnumEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("array_enum")
+  }
+  @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;

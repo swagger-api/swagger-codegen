@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
 import io.swagger.client.ApiCallback;
@@ -22,27 +21,20 @@ import io.swagger.client.Pair;
 import io.swagger.client.ProgressRequestBody;
 import io.swagger.client.ProgressResponseBody;
 
-
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-
-
 
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
-
 import java.lang.reflect.Type;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 
 public class FakeApi {
     private ApiClient apiClient;
@@ -63,7 +55,6 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
-    
     /**
      * Build call for fakeOuterBooleanSerialize
      * @param body Input boolean as post body (optional)
@@ -71,7 +62,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterBooleanSerializeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -117,13 +107,9 @@ public class FakeApi {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterBooleanSerializeValidateBeforeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        
-        
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -136,7 +122,6 @@ public class FakeApi {
      * @param body Input boolean as post body (optional)
      * @return Boolean
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public Boolean fakeOuterBooleanSerialize(Boolean body) throws ApiException {
         ApiResponse<Boolean> resp = fakeOuterBooleanSerializeWithHttpInfo(body);
@@ -149,7 +134,6 @@ public class FakeApi {
      * @param body Input boolean as post body (optional)
      * @return ApiResponse&lt;Boolean&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Boolean> fakeOuterBooleanSerializeWithHttpInfo(Boolean body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeValidateBeforeCall(body, null, null);
@@ -164,7 +148,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterBooleanSerializeAsync(Boolean body, final ApiCallback<Boolean> callback) throws ApiException {
 
@@ -192,7 +175,6 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for fakeOuterCompositeSerialize
      * @param body Input composite as post body (optional)
@@ -200,7 +182,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterCompositeSerializeCall(OuterComposite body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -246,13 +227,9 @@ public class FakeApi {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterCompositeSerializeValidateBeforeCall(OuterComposite body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        
-        
         com.squareup.okhttp.Call call = fakeOuterCompositeSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -265,7 +242,6 @@ public class FakeApi {
      * @param body Input composite as post body (optional)
      * @return OuterComposite
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws ApiException {
         ApiResponse<OuterComposite> resp = fakeOuterCompositeSerializeWithHttpInfo(body);
@@ -278,7 +254,6 @@ public class FakeApi {
      * @param body Input composite as post body (optional)
      * @return ApiResponse&lt;OuterComposite&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<OuterComposite> fakeOuterCompositeSerializeWithHttpInfo(OuterComposite body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterCompositeSerializeValidateBeforeCall(body, null, null);
@@ -293,7 +268,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterCompositeSerializeAsync(OuterComposite body, final ApiCallback<OuterComposite> callback) throws ApiException {
 
@@ -321,7 +295,6 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for fakeOuterNumberSerialize
      * @param body Input number as post body (optional)
@@ -329,7 +302,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterNumberSerializeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -375,13 +347,9 @@ public class FakeApi {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterNumberSerializeValidateBeforeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        
-        
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -394,7 +362,6 @@ public class FakeApi {
      * @param body Input number as post body (optional)
      * @return BigDecimal
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws ApiException {
         ApiResponse<BigDecimal> resp = fakeOuterNumberSerializeWithHttpInfo(body);
@@ -407,7 +374,6 @@ public class FakeApi {
      * @param body Input number as post body (optional)
      * @return ApiResponse&lt;BigDecimal&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<BigDecimal> fakeOuterNumberSerializeWithHttpInfo(BigDecimal body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeValidateBeforeCall(body, null, null);
@@ -422,7 +388,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterNumberSerializeAsync(BigDecimal body, final ApiCallback<BigDecimal> callback) throws ApiException {
 
@@ -450,7 +415,6 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for fakeOuterStringSerialize
      * @param body Input string as post body (optional)
@@ -458,7 +422,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterStringSerializeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -504,13 +467,9 @@ public class FakeApi {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterStringSerializeValidateBeforeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        
-        
         com.squareup.okhttp.Call call = fakeOuterStringSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -523,7 +482,6 @@ public class FakeApi {
      * @param body Input string as post body (optional)
      * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public String fakeOuterStringSerialize(String body) throws ApiException {
         ApiResponse<String> resp = fakeOuterStringSerializeWithHttpInfo(body);
@@ -536,7 +494,6 @@ public class FakeApi {
      * @param body Input string as post body (optional)
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<String> fakeOuterStringSerializeWithHttpInfo(String body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterStringSerializeValidateBeforeCall(body, null, null);
@@ -551,7 +508,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call fakeOuterStringSerializeAsync(String body, final ApiCallback<String> callback) throws ApiException {
 
@@ -579,7 +535,6 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for testClientModel
      * @param body client model (required)
@@ -587,7 +542,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testClientModelCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -632,19 +586,14 @@ public class FakeApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testClientModelValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testClientModel(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = testClientModelCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -657,7 +606,6 @@ public class FakeApi {
      * @param body client model (required)
      * @return Client
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public Client testClientModel(Client body) throws ApiException {
         ApiResponse<Client> resp = testClientModelWithHttpInfo(body);
@@ -670,7 +618,6 @@ public class FakeApi {
      * @param body client model (required)
      * @return ApiResponse&lt;Client&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Client> testClientModelWithHttpInfo(Client body) throws ApiException {
         com.squareup.okhttp.Call call = testClientModelValidateBeforeCall(body, null, null);
@@ -685,7 +632,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testClientModelAsync(Client body, final ApiCallback<Client> callback) throws ApiException {
 
@@ -713,7 +659,6 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    
     /**
      * Build call for testEndpointParameters
      * @param body  (required)
@@ -721,7 +666,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testEndpointParametersCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -766,19 +710,14 @@ public class FakeApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testEndpointParametersValidateBeforeCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testEndpointParameters(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = testEndpointParametersCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -790,7 +729,6 @@ public class FakeApi {
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void testEndpointParameters(Object body) throws ApiException {
         testEndpointParametersWithHttpInfo(body);
@@ -802,7 +740,6 @@ public class FakeApi {
      * @param body  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> testEndpointParametersWithHttpInfo(Object body) throws ApiException {
         com.squareup.okhttp.Call call = testEndpointParametersValidateBeforeCall(body, null, null);
@@ -816,7 +753,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testEndpointParametersAsync(Object body, final ApiCallback<Void> callback) throws ApiException {
 
@@ -843,7 +779,6 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for testEnumParameters
      * @param body  (optional)
@@ -856,7 +791,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testEnumParametersCall(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -867,7 +801,7 @@ public class FakeApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (enumQueryStringArray != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("enum_query_string_array", enumQueryStringArray));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "enum_query_string_array", enumQueryStringArray));
         if (enumQueryString != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("enum_query_string", enumQueryString));
         if (enumQueryInteger != null)
@@ -912,13 +846,9 @@ public class FakeApi {
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testEnumParametersValidateBeforeCall(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        
-        
         com.squareup.okhttp.Call call = testEnumParametersCall(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -935,7 +865,6 @@ public class FakeApi {
      * @param enumQueryString Query parameter enum test (string) (optional)
      * @param enumQueryInteger Query parameter enum test (double) (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void testEnumParameters(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
         testEnumParametersWithHttpInfo(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
@@ -952,7 +881,6 @@ public class FakeApi {
      * @param enumQueryInteger Query parameter enum test (double) (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> testEnumParametersWithHttpInfo(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
         com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, null, null);
@@ -971,7 +899,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testEnumParametersAsync(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ApiCallback<Void> callback) throws ApiException {
 
@@ -998,7 +925,6 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for testInlineAdditionalProperties
      * @param body request body (required)
@@ -1006,7 +932,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testInlineAdditionalPropertiesCall(Map<String, String> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -1051,19 +976,14 @@ public class FakeApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testInlineAdditionalPropertiesValidateBeforeCall(Map<String, String> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testInlineAdditionalProperties(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = testInlineAdditionalPropertiesCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -1075,7 +995,6 @@ public class FakeApi {
      * 
      * @param body request body (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void testInlineAdditionalProperties(Map<String, String> body) throws ApiException {
         testInlineAdditionalPropertiesWithHttpInfo(body);
@@ -1087,7 +1006,6 @@ public class FakeApi {
      * @param body request body (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> testInlineAdditionalPropertiesWithHttpInfo(Map<String, String> body) throws ApiException {
         com.squareup.okhttp.Call call = testInlineAdditionalPropertiesValidateBeforeCall(body, null, null);
@@ -1101,7 +1019,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testInlineAdditionalPropertiesAsync(Map<String, String> body, final ApiCallback<Void> callback) throws ApiException {
 
@@ -1128,7 +1045,6 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
     /**
      * Build call for testJsonFormData
      * @param body  (required)
@@ -1136,7 +1052,6 @@ public class FakeApi {
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
-        
      */
     public com.squareup.okhttp.Call testJsonFormDataCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
@@ -1181,19 +1096,14 @@ public class FakeApi {
     
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testJsonFormDataValidateBeforeCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testJsonFormData(Async)");
         }
         
-        
         com.squareup.okhttp.Call call = testJsonFormDataCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
         
         
         
@@ -1205,7 +1115,6 @@ public class FakeApi {
      * 
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public void testJsonFormData(Object body) throws ApiException {
         testJsonFormDataWithHttpInfo(body);
@@ -1217,7 +1126,6 @@ public class FakeApi {
      * @param body  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-        
      */
     public ApiResponse<Void> testJsonFormDataWithHttpInfo(Object body) throws ApiException {
         com.squareup.okhttp.Call call = testJsonFormDataValidateBeforeCall(body, null, null);
@@ -1231,7 +1139,6 @@ public class FakeApi {
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-        
      */
     public com.squareup.okhttp.Call testJsonFormDataAsync(Object body, final ApiCallback<Void> callback) throws ApiException {
 
@@ -1258,5 +1165,4 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
-    
 }

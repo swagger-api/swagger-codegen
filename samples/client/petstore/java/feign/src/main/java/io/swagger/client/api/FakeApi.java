@@ -138,7 +138,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   public static class TestEnumParametersQueryParams extends HashMap<String, Object> {
     public TestEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
-      put("enum_query_string_array", EncodingUtils.encode(value));
+      put("enum_query_string_array", EncodingUtils.encodeCollection(value, "multi"));
       return this;
     }
     public TestEnumParametersQueryParams enumQueryString(final String value) {
