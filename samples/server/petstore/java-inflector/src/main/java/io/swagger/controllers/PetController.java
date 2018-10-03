@@ -28,7 +28,7 @@ public class PetController  {
   */
 
   /*
-    public ResponseContext deletePet(RequestContext request , Integer petId , String apiKey ) {
+    public ResponseContext deletePet(RequestContext request , Long petId , String apiKey ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -46,7 +46,7 @@ public class PetController  {
   */
 
   /*
-    public ResponseContext getPetById(RequestContext request , Integer petId ) {
+    public ResponseContext getPetById(RequestContext request , Long petId ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -58,13 +58,13 @@ public class PetController  {
   */
 
   /*
-    public ResponseContext updatePetWithForm(RequestContext request , Integer petId ,  ,  ) {
+    public ResponseContext updatePetWithForm(RequestContext request , Long petId ,  String name,  String status) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext uploadFile(RequestContext request , Integer petId ,  ,  FormDataContentDisposition fileDetail) {
+    public ResponseContext uploadFile(RequestContext request , Long petId ,  String additionalMetadata,  File file) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
