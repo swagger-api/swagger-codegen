@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,38 +29,32 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "ArrayOfArrayOfNumberOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ArrayOfArrayOfNumberOnly")
-public class ArrayOfArrayOfNumberOnly {
+@JacksonXmlRootElement(localName = "ArrayOfArrayOfNumberOnly")public class ArrayOfArrayOfNumberOnly {
 
-  
   @JsonProperty("ArrayArrayNumber")
   
   
   @XmlElement(name="arrayArrayNumber")
   
+
   private List<List<BigDecimal>> arrayArrayNumber = null;
-  
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;
   }
 
   public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
-    
     if (this.arrayArrayNumber == null) {
       this.arrayArrayNumber = new ArrayList<List<BigDecimal>>();
     }
-    
     this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
-  
+
   /**
   * Get arrayArrayNumber
   * @return arrayArrayNumber
   **/
-  
-  
   @Schema(description = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
@@ -69,7 +62,6 @@ public class ArrayOfArrayOfNumberOnly {
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -86,7 +78,7 @@ public class ArrayOfArrayOfNumberOnly {
   public int hashCode() {
     return java.util.Objects.hash(arrayArrayNumber);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -108,8 +100,4 @@ public class ArrayOfArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

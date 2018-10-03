@@ -31,19 +31,23 @@ import org.threeten.bp.OffsetDateTime;
 public class MixedPropertiesAndAdditionalPropertiesClass {
 
   @JsonProperty("uuid")
+
   private UUID uuid = null;
 
   @JsonProperty("dateTime")
+
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("map")
+
   private Map<String, Animal> map = null;
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-    
+  
+
   /**
   * Get uuid
   * @return uuid
@@ -60,7 +64,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    
+  
+
   /**
   * Get dateTime
   * @return dateTime
@@ -77,7 +82,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return this;
   }
 
-    public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+  
+  public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     if (this.map == null) {
       this.map = new HashMap<>();
     }
@@ -136,6 +142,5 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

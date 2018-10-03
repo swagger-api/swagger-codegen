@@ -69,7 +69,8 @@ public class EnumTest {
         return EnumStringEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("enum_string")
+  }
+  @SerializedName("enum_string")
   private EnumStringEnum enumString = null;
   /**
    * Gets or Sets enumInteger
@@ -112,7 +113,8 @@ public class EnumTest {
         return EnumIntegerEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("enum_integer")
+  }
+  @SerializedName("enum_integer")
   private EnumIntegerEnum enumInteger = null;
   /**
    * Gets or Sets enumNumber
@@ -155,8 +157,10 @@ public class EnumTest {
         return EnumNumberEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("enum_number")
+  }
+  @SerializedName("enum_number")
   private EnumNumberEnum enumNumber = null;
+
   @SerializedName("outerEnum")
   private OuterEnum outerEnum = null;
   public EnumTest enumString(EnumStringEnum enumString) {

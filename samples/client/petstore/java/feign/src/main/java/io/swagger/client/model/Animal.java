@@ -32,16 +32,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Animal {
 
   @JsonProperty("className")
+
   private String className = null;
 
   @JsonProperty("color")
+
   private String color = "red";
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-    
+  
+
   /**
   * Get className
   * @return className
@@ -58,7 +61,8 @@ public class Animal {
     return this;
   }
 
-    
+  
+
   /**
   * Get color
   * @return color
@@ -109,6 +113,5 @@ public class Animal {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

@@ -26,13 +26,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Cat extends Animal {
 
   @JsonProperty("declawed")
+
   private Boolean declawed = null;
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-    
+  
+
   /**
   * Get declawed
   * @return declawed
@@ -82,6 +84,5 @@ public class Cat extends Animal {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

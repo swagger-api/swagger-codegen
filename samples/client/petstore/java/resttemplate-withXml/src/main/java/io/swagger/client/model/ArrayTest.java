@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -30,54 +29,48 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "ArrayTest")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ArrayTest")
-public class ArrayTest {
+@JacksonXmlRootElement(localName = "ArrayTest")public class ArrayTest {
 
-  
   @JsonProperty("array_of_string")
   
   
   @XmlElement(name="null")
   
+
   private List<String> arrayOfString = null;
-  
-  
+
   @JsonProperty("array_array_of_integer")
   
   
   @XmlElement(name="arrayArrayOfInteger")
   
+
   private List<List<Long>> arrayArrayOfInteger = null;
-  
-  
+
   @JsonProperty("array_array_of_model")
   
   
   @XmlElement(name="arrayArrayOfModel")
   
+
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
-  
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
   }
 
   public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
-    
     if (this.arrayOfString == null) {
       this.arrayOfString = new ArrayList<String>();
     }
-    
     this.arrayOfString.add(arrayOfStringItem);
     return this;
   }
-  
+
   /**
   * Get arrayOfString
   * @return arrayOfString
   **/
-  
-  
   @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
@@ -85,28 +78,23 @@ public class ArrayTest {
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
-  
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
   }
 
   public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
-    
     if (this.arrayArrayOfInteger == null) {
       this.arrayArrayOfInteger = new ArrayList<List<Long>>();
     }
-    
     this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
     return this;
   }
-  
+
   /**
   * Get arrayArrayOfInteger
   * @return arrayArrayOfInteger
   **/
-  
-  
   @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
@@ -114,28 +102,23 @@ public class ArrayTest {
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
-  
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
   }
 
   public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
-    
     if (this.arrayArrayOfModel == null) {
       this.arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
     }
-    
     this.arrayArrayOfModel.add(arrayArrayOfModelItem);
     return this;
   }
-  
+
   /**
   * Get arrayArrayOfModel
   * @return arrayArrayOfModel
   **/
-  
-  
   @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
@@ -143,7 +126,6 @@ public class ArrayTest {
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -162,7 +144,7 @@ public class ArrayTest {
   public int hashCode() {
     return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -186,8 +168,4 @@ public class ArrayTest {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

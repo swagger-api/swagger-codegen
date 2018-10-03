@@ -25,28 +25,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Capitalization {
 
   @JsonProperty("smallCamel")
+
   private String smallCamel = null;
 
   @JsonProperty("CapitalCamel")
+
   private String capitalCamel = null;
 
   @JsonProperty("small_Snake")
+
   private String smallSnake = null;
 
   @JsonProperty("Capital_Snake")
+
   private String capitalSnake = null;
 
   @JsonProperty("SCA_ETH_Flow_Points")
+
   private String scAETHFlowPoints = null;
 
   @JsonProperty("ATT_NAME")
+
   private String ATT_NAME = null;
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
 
-    
+  
+
   /**
   * Get smallCamel
   * @return smallCamel
@@ -63,7 +70,8 @@ public class Capitalization {
     return this;
   }
 
-    
+  
+
   /**
   * Get capitalCamel
   * @return capitalCamel
@@ -80,7 +88,8 @@ public class Capitalization {
     return this;
   }
 
-    
+  
+
   /**
   * Get smallSnake
   * @return smallSnake
@@ -97,7 +106,8 @@ public class Capitalization {
     return this;
   }
 
-    
+  
+
   /**
   * Get capitalSnake
   * @return capitalSnake
@@ -114,7 +124,8 @@ public class Capitalization {
     return this;
   }
 
-    
+  
+
   /**
   * Get scAETHFlowPoints
   * @return scAETHFlowPoints
@@ -131,7 +142,8 @@ public class Capitalization {
     return this;
   }
 
-    
+  
+
   /**
   * Name of the pet 
   * @return ATT_NAME
@@ -190,6 +202,5 @@ public class Capitalization {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }
