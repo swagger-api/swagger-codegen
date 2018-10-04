@@ -59,7 +59,8 @@ public class StoreApi  {
     @Path("/inventory")
     
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", tags={ "store" })
+    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
+        @SecurityRequirement(name = "api_key")    }, tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Response getInventory() {
